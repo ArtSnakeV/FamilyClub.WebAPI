@@ -1,0 +1,6 @@
+@FamilyClub.WebAPI_HostAddress = http://localhost:5053
+
+GET {{FamilyClub.WebAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
