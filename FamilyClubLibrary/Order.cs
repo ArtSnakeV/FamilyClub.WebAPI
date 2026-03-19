@@ -9,7 +9,7 @@ namespace FamilyClubLibrary
         public int Id { get; set; }
 
         public int UserId { get; set; }
-        public User User { get; set; } = default!; // For navigation
+        public ClubMember ClubMember { get; set; } = default!; // For navigation
 
         public DateTime OrderDate { get; set; } = DateTime.UtcNow; // Default Now 
 

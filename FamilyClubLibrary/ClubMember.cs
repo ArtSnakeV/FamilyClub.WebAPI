@@ -5,7 +5,7 @@ using System.Text;
 
 namespace FamilyClubLibrary
 {
-    public class User : IdentityUser
+    public class ClubMember : IdentityUser
     {
         public string? Name { get; set; }
 
