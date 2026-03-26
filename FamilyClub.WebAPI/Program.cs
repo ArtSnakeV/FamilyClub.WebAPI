@@ -28,13 +28,11 @@ builder.Services.AddOpenApi();
 
 builder.Services.AddEndpointsApiExplorer();
 
-// Connection string
-string connStr = builder.Configuration.GetConnectionString("FamilyClubContext")
-    ?? throw new InvalidOperationException("Connection string 'FamilyClubContext' not found!");
-
+// Тимчасово зберігаємо всі дані у пам'яті доки не маємо бази даних
+// Temporary saving data in memory until we get a proper database
 // DB CONTEXT
 builder.Services.AddDbContext<FamilyClubContext>(options => {
-    options.UseSqlServer(connStr);
+    options.UseInMemoryDatabase("FamilyClubDb");
 });
 
 // Identity
