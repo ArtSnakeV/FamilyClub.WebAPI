@@ -41,6 +41,7 @@ builder.Services.AddDbContext<FamilyClubContext>(options => {
     //options.UseSqlServer(connStr);
     options.UseNpgsql(connStr, npgsql =>
         npgsql.MigrationsAssembly("FamilyClub.DAL"));
+});
 
 // Identity
 builder.Services.AddIdentity<ClubMember, IdentityRole>()
