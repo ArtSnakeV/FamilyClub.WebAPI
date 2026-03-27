@@ -29,12 +29,17 @@ builder.Services.AddOpenApi();
 builder.Services.AddEndpointsApiExplorer();
 
 // Connection string
-string connStr = builder.Configuration.GetConnectionString("FamilyClubContext")
-    ?? throw new InvalidOperationException("Connection string 'FamilyClubContext' not found!");
+//string connStr = builder.Configuration.GetConnectionString("FamilyClubContext")
+//    ?? throw new InvalidOperationException("Connection string 'FamilyClubContext' not found!");
+
+string connStr = builder.Configuration.GetConnectionString("FamilyClub_DB")
+    ?? throw new InvalidOperationException("Connection string 'FamilyClub_DB' not found!");
 
 // DB CONTEXT
 builder.Services.AddDbContext<FamilyClubContext>(options => {
-    options.UseSqlServer(connStr);
+    //options.UseSqlServer(connStr);
+    options.UseNpgsql(connStr, npgsql =>
+        npgsql.MigrationsAssembly("FamilyClub.DAL"));
 });
 
 // Identity
