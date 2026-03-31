@@ -29,14 +29,23 @@ builder.Services.AddOpenApi();
 
 builder.Services.AddEndpointsApiExplorer();
 
+
 // Connection string
-string connStr = builder.Configuration.GetConnectionString("FamilyClubContext")
-    ?? throw new InvalidOperationException("Connection string 'FamilyClubContext' not found!");
+//string connStr = builder.Configuration.GetConnectionString("FamilyClubContext")
+//    ?? throw new InvalidOperationException("Connection string 'FamilyClubContext' not found!");
+
+string connStr = builder.Configuration.GetConnectionString("FamilyClub_DB")
+    ?? throw new InvalidOperationException("Connection string 'FamilyClub_DB' not found!");
 
 // DB CONTEXT
 builder.Services.AddDbContext<FamilyClubContext>(options => {
-    //options.UseSqlServer(connStr);
-    options.UseNpgsql(connStr);
+    options.UseNpgsql(connStr, npgsql =>
+    {
+        npgsql.MigrationsAssembly("FamilyClub.DAL");
+        npgsql.UseAdminDatabase("defaultdb");
+
+    });
+    options.UseSnakeCaseNamingConvention(); // Line to use automatic snake_case naming convention for PostgreSQL
 });
 
 // Identity
@@ -97,6 +106,6 @@ app.MapControllers();
 //app.MapControllerRoute(
 //    name: "default",
 //    pattern: "{controller=Home}/{action=Index}/{id?}");
-
+//1
 
 app.Run();
