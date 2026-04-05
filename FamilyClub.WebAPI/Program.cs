@@ -73,6 +73,9 @@ builder.Services.AddScoped<ICategoryService,  CategoryService>();
 // Series
 builder.Services.AddScoped<ISeriesRepository, SeriesRepository>();
 builder.Services.AddScoped<ISeriesService, SeriesService>();
+// Promotion
+builder.Services.AddScoped<IPromotionRepository,  PromotionRepository>();
+builder.Services.AddScoped<IPromotionService, PromotionService>();
 
 
 
