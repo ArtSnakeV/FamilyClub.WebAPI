@@ -57,11 +57,30 @@ builder.Services.AddIdentity<ClubMember, IdentityRole>()
     .AddEntityFrameworkStores<FamilyClubContext>()
     .AddDefaultTokenProviders();
 
+// Publisher
 builder.Services.AddScoped<IPublisherRepository, PublisherRepository>();
 builder.Services.AddScoped<IAuthorRepository, AuthorRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IPublisherService, PublisherService>();
+
 builder.Services.AddScoped<IAuthorService, AuthorService>();
+// Language
+builder.Services.AddScoped<ILanguageRepository, LanguageRepository>();
+builder.Services.AddScoped<ILanguageService, LanguageService>();
+// Translator
+builder.Services.AddScoped<ITranslatorRepository, TranslatorRepository>();
+builder.Services.AddScoped<ITranslatorService, TranslatorService>();
+// Category
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<ICategoryService,  CategoryService>();
+// Series
+builder.Services.AddScoped<ISeriesRepository, SeriesRepository>();
+builder.Services.AddScoped<ISeriesService, SeriesService>();
+// Promotion
+builder.Services.AddScoped<IPromotionRepository,  PromotionRepository>();
+builder.Services.AddScoped<IPromotionService, PromotionService>();
+
+
 
 // Customize Identity cookie
 //builder.Services.ConfigureApplicationCookie(
