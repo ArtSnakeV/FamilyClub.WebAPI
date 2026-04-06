@@ -59,8 +59,11 @@ builder.Services.AddIdentity<ClubMember, IdentityRole>()
 
 // Publisher
 builder.Services.AddScoped<IPublisherRepository, PublisherRepository>();
+builder.Services.AddScoped<IAuthorRepository, AuthorRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IPublisherService, PublisherService>();
+
+builder.Services.AddScoped<IAuthorService, AuthorService>();
 // Language
 builder.Services.AddScoped<ILanguageRepository, LanguageRepository>();
 builder.Services.AddScoped<ILanguageService, LanguageService>();
