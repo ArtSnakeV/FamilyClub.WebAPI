@@ -3,32 +3,33 @@ using FamilyClub.BLL.Interfaces;
 using FamilyClub.DAL.Interfaces;
 using FamilyClubLibrary;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System.Xml.Linq;
 
 namespace FamilyClub.BLL.Services;
 
 public class ClubMemberService : IClubMemberService
 {
-    private readonly IClubMemberRepository _clubMemberRepository;
-    private readonly IUnitOfWork _unitOfWork;
+    private readonly IUnitOfWork _unitOfWork; // We do not use it now, but it can be used later if we decide to update some other entities together with ClubMember
     private readonly UserManager<ClubMember> _userManager;
 
-    public ClubMemberService(IClubMemberRepository clubMemberRepository, IUnitOfWork unitOfWork, UserManager<ClubMember> userManager)
+    public ClubMemberService(IUnitOfWork unitOfWork, UserManager<ClubMember> userManager)
     {
-        _clubMemberRepository = clubMemberRepository;
         _unitOfWork = unitOfWork;
         _userManager = userManager;
     }
 
     public async Task<IEnumerable<ClubMemberReadDto>> GetAllAsync(CancellationToken cancellationToken = default)
     {
-        var clubMembers = await _clubMemberRepository.GetAllAsync(cancellationToken);
+        var clubMembers = await _userManager.Users.ToListAsync<ClubMember>(cancellationToken);
         return clubMembers.Select(MapToReadDto);
     }
 
-    public async Task<ClubMemberReadDto?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
+    public async Task<ClubMemberReadDto?> GetByIdAsync(string id, CancellationToken cancellationToken = default)
     {
-        var clubMember = await _clubMemberRepository.GetByIdAsync(id, cancellationToken);
+        cancellationToken.ThrowIfCancellationRequested(); // Checking for cancellation before starting the operation
+
+        var clubMember = await _userManager.FindByIdAsync(id);
         return clubMember is null ? null : MapToReadDto(clubMember);
     }
 
@@ -56,9 +57,9 @@ public class ClubMemberService : IClubMemberService
         return MapToReadDto(clubMember);
     }
 
-    public async Task<bool> UpdateAsync(int id, UpdateClubMemberDto dto, CancellationToken cancellationToken = default)
+    public async Task<bool> UpdateAsync(string id, UpdateClubMemberDto dto, CancellationToken cancellationToken = default)
     {
-        var clubMember = await _clubMemberRepository.GetByIdAsync(id, cancellationToken);
+        var clubMember = await _userManager.FindByIdAsync(id);
         if (clubMember is null)
         {
             return false;
@@ -68,39 +69,48 @@ public class ClubMemberService : IClubMemberService
         clubMember.PhoneNumber = dto.PhoneNumber;
         clubMember.DateOfBirth = dto.DateOfBirth;
 
-        _clubMemberRepository.Update(clubMember);
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
+        cancellationToken.ThrowIfCancellationRequested(); // Checking for cancellation before starting the update operation
+
+        var result = await _userManager.UpdateAsync(clubMember);
+        if (!result.Succeeded) return false;
 
         return true;
     }
 
-    public async Task<bool> DeleteAsync(int id, CancellationToken cancellationToken = default)
+    public async Task<bool> DeleteAsync(string id, CancellationToken cancellationToken = default)
     {
-        var clubMember = await _clubMemberRepository.GetByIdAsync(id, cancellationToken);
+        var clubMember = await _userManager.FindByIdAsync(id);
         if (clubMember is null)
         {
             return false;
         }
 
-        _clubMemberRepository.Delete(clubMember);
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
+        await _userManager.DeleteAsync(clubMember);
 
         return true;
     }
 
+    public async Task<ClubMemberReadDto?> GetByEmailAsync(string email, CancellationToken cancellationToken = default)
+    {
+        cancellationToken.ThrowIfCancellationRequested(); // Checking for cancellation before starting the operation
 
-    // Always returning ReadMapToReadDto to ensure consistent output format
+        var clubMember = await _userManager.FindByEmailAsync(email);
+        return clubMember is null ? null : MapToReadDto(clubMember);
+    }
+
+    // We always return ReadMapToReadDto to ensure consistent output format
     private static ClubMemberReadDto MapToReadDto(ClubMember clubMember)
     {
         return new ClubMemberReadDto
         {
             Id = clubMember.Id,
-            Email = clubMember.Email ?? clubMember.UserName,
+            Email = clubMember.Email ?? clubMember.UserName!,
             Name = clubMember.Name,
             Surname = clubMember.Surname,
-            PhoneNumber = clubMember.PhoneNumber,
+            PhoneNumber = clubMember.PhoneNumber!,
             DateOfBirth = clubMember.DateOfBirth
         };
     }
+    
 }
 
