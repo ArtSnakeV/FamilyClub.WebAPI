@@ -34,7 +34,7 @@ public class ClubMemberController : ControllerBase
         return Ok(clubMember);
     }
 
-    [HttpGet("{email:string}")]
+    [HttpGet("{**email}")]
     public async Task<ActionResult<ClubMemberReadDto>> GetByEmailAsync(string email, CancellationToken cancellationToken)
     {
         var clubMember = await _clubMemberService.GetByEmailAsync(email, cancellationToken);
