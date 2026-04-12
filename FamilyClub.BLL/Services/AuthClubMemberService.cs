@@ -8,6 +8,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using FamilyClub.BLL.Mapping;
 
 
 namespace FamilyClub.BLL.Services;
@@ -16,10 +17,12 @@ public class AuthClubMemberService : IAuthClubMemberService
 {
     private readonly UserManager<ClubMember> _userManager;
     private readonly IConfiguration _configuration;
+    private readonly RoleManager<IdentityRole> _roleManager;
 
-    public AuthClubMemberService(UserManager<ClubMember> userManager, IConfiguration configuration)
+    public AuthClubMemberService(UserManager<ClubMember> userManager, IConfiguration configuration, RoleManager<IdentityRole> roleManager)
     {
         _userManager = userManager;
+        _roleManager = roleManager;
         _configuration = configuration;
     }
 
@@ -27,6 +30,12 @@ public class AuthClubMemberService : IAuthClubMemberService
     {
         var clubMember = new ClubMember { UserName = dto.Email, Email = dto.Email, PhoneNumber = dto.PhoneNumber, Name = dto.Name, Surname = dto.Surname, DateOfBirth = dto.DateOfBirth };
         var result = await _userManager.CreateAsync(clubMember, dto.Password);
+        // Checking, if role `User` exists if not, creating and adding this role to newly added `User` by default
+        if (!await _roleManager.RoleExistsAsync("User"))
+        {
+            await _roleManager.CreateAsync(new IdentityRole("User"));
+        }
+        await _userManager.AddToRoleAsync(clubMember, "User"); // Automatic adding role `User` for our self-registered User
 
         if (!result.Succeeded)
         {
@@ -34,7 +43,7 @@ public class AuthClubMemberService : IAuthClubMemberService
             throw new Exception($"User registration failed: {errors}");
         }
 
-        return MapToReadDto(clubMember);
+        return ClubMemberMapper.MapToReadDto(clubMember);
     }
 
     public async Task<AuthResponseClubMemberDTO> LoginAsync(LoginClubMemberDto dto, CancellationToken cancellationToken = default)
@@ -76,7 +85,7 @@ public class AuthClubMemberService : IAuthClubMemberService
 
 
         return new AuthResponseClubMemberDTO{
-            ClubMember = MapToReadDto(clubMember as ClubMember),
+            ClubMember = ClubMemberMapper.MapToReadDto(clubMember as ClubMember),
             Token = new JwtSecurityTokenHandler().WriteToken(token),
             Expiration = expiration 
         };
@@ -88,17 +97,4 @@ public class AuthClubMemberService : IAuthClubMemberService
         return Task.CompletedTask;
     }
 
-    // We always return ReadMapToReadDto to ensure consistent output format
-    private static ClubMemberReadDto MapToReadDto(ClubMember clubMember)
-    {
-        return new ClubMemberReadDto
-        {
-            Id = clubMember.Id,
-            Email = clubMember.Email ?? clubMember.UserName!,
-            Name = clubMember.Name,
-            Surname = clubMember.Surname,
-            PhoneNumber = clubMember.PhoneNumber!,
-            DateOfBirth = clubMember.DateOfBirth
-        };
-    }
 }

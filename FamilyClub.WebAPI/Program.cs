@@ -91,8 +91,10 @@ builder.Services.AddScoped<IOrderItemService, OrderItemService>();
 // ClubMember
 //builder.Services.AddScoped<IClubMemberRepository, ClubMemberRepository>();
 builder.Services.AddScoped<IClubMemberService, ClubMemberService>();
-// Authentification
+// Authentification (Login, Register, Logout)
 builder.Services.AddScoped<IAuthClubMemberService, AuthClubMemberService>();
+// RoleClubMember
+builder.Services.AddScoped<IRoleClubMemberService, RoleClubMemberService>();
 
 
 //Review

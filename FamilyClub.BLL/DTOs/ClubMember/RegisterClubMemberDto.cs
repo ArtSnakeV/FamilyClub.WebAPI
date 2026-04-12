@@ -15,7 +15,8 @@ public class RegisterClubMemberDto
     [Required(ErrorMessage = "Phone number is required")]
     [Phone(ErrorMessage = "Invalid phone number format")]
     public string PhoneNumber { get; set; } = string.Empty;
-       
+
+    public List<string> SelectedRoles { get; set; } = new List<string>(); // Field to store 
 
     public string? Name { get; set; }
     public string? Surname { get; set; }

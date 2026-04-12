@@ -20,7 +20,7 @@ public class AuthClubMemberController : ControllerBase
     {
         try
         {
-            var registeredUser = await _authService.RegisterAsync(dto, cancellationToken);
+            var registeredUser = await _authService.RegisterAsync(dto, cancellationToken);            
             return Ok(registeredUser);
         }
         catch (Exception ex)
