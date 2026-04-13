@@ -95,7 +95,8 @@ builder.Services.AddScoped<IClubMemberService, ClubMemberService>();
 builder.Services.AddScoped<IAuthClubMemberService, AuthClubMemberService>();
 // RoleClubMember
 builder.Services.AddScoped<IRoleClubMemberService, RoleClubMemberService>();
-
+// ClaimsClubMember
+builder.Services.AddScoped<IClaimsClubMemberService, ClaimsClubMemberService>();
 
 //Review
 builder.Services.AddScoped<IReviewRepository, ReviewRepository>();
