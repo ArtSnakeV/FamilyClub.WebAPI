@@ -63,6 +63,33 @@ public class ClaimsClubMemberService : IClaimsClubMemberService
         return result.Succeeded;
     }
 
+    public async Task<bool> UpdateClaimAsync(UpdateClaimClubMemberDto dto, CancellationToken cancellationToken = default)
+    {
+        var user = await _userManager.FindByIdAsync(dto.MemberId);
+        if (user == null)
+            return false;
+
+        var claims = await _userManager.GetClaimsAsync(user);
+
+        // Find the old claim
+        var oldClaim = claims.FirstOrDefault(c =>
+            c.Type == dto.OldClaimType &&
+            c.Value == dto.OldClaimValue);
+
+        if (oldClaim == null)
+            return false;
+
+        // Remove old claim
+        var removeResult = await _userManager.RemoveClaimAsync(user, oldClaim);
+        if (!removeResult.Succeeded)
+            return false;
+
+        // Add new claim
+        var newClaim = new Claim(dto.NewClaimType, dto.NewClaimValue);
+        var addResult = await _userManager.AddClaimAsync(user, newClaim);
+
+        return addResult.Succeeded;
+    }
 
     private static ClaimsClubMemberDto MapToReadDto(System.Security.Claims.Claim claim)
     {

@@ -68,4 +68,21 @@ public class ClaimsClubMemberController : ControllerBase
 
         return Ok("Claim removed successfully.");
     }
+
+    // UPDATE: api/ClaimsClubMember/{memberId}/update
+    [HttpPut("{memberId}/update")]
+    public async Task<IActionResult> UpdateClaim(
+    [FromRoute] string memberId,
+    [FromBody] UpdateClaimClubMemberDto dto,
+    CancellationToken cancellationToken)
+    {
+        dto.MemberId = memberId;
+
+        var result = await _claimsService.UpdateClaimAsync(dto, cancellationToken);
+
+        if (!result)
+            return BadRequest("Claim could not be updated.");
+
+        return Ok("Claim updated successfully.");
+    }
 }

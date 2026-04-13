@@ -9,5 +9,6 @@ public interface IClaimsClubMemberService
     Task<IEnumerable<ClaimsClubMemberDto>> GetClaimsAsync(string memberId, CancellationToken cancellationToken = default);
     Task<bool> AddClaimAsync(AddClaimClubMemberDto dto, CancellationToken cancellationToken = default);
     Task<bool> RemoveClaimAsync(AddClaimClubMemberDto dto, CancellationToken cancellationToken = default);
+    Task<bool> UpdateClaimAsync(UpdateClaimClubMemberDto dto, CancellationToken cancellationToken = default);
 }
 
