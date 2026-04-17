@@ -38,11 +38,18 @@ namespace FamilyClub.BLL.Services
 				Quantity = dto.Quantity,
 				UnitPrice = dto.UnitPrice,
 				ProductId = dto.ProductId,
+				OrderId = dto.OrderId,
 			};
 
-			await _orderItemRepository.AddAsync(orderItem, cancellationToken);
-			await _unitOfWork.SaveChangesAsync(cancellationToken);
-
+			try
+			{
+				await _orderItemRepository.AddAsync(orderItem, cancellationToken);
+				await _unitOfWork.SaveChangesAsync(cancellationToken);
+			}
+			catch (Exception ex)
+			{
+				throw new Exception(ex.ToString());
+			}
 			return MapToReadDto(orderItem);
 		}
 
@@ -57,6 +64,7 @@ namespace FamilyClub.BLL.Services
 			orderItem.Quantity = dto.Quantity;
 			orderItem.UnitPrice = dto.UnitPrice;
 			orderItem.ProductId = dto.ProductId;
+			orderItem.OrderId = dto.OrderId;
 
 			_orderItemRepository.Update(orderItem);
 			await _unitOfWork.SaveChangesAsync(cancellationToken);

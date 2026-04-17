@@ -6,7 +6,7 @@ namespace FamilyClub.BLL.DTOs.OrderItem
 {
 	public class OrderItemDTO
 	{
-		public int Id { get; set; }
+		public int? Id { get; set; }
 
 		public int Quantity { get; set; }
 
