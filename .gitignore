@@ -407,3 +407,5 @@ FodyWeavers.xsd
 # typescript
 *.tsbuildinfo
 *next-env.d.ts
+
+.idea/

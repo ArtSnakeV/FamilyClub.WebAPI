@@ -1,12 +1,15 @@
-using FamilyClub.DAL.EF;
-using FamilyClub.DAL.Interfaces;
-using FamilyClub.DAL.Repositories;
-using FamilyClub.DAL.EF.DB;
-using FamilyClubLibrary;
 using FamilyClub.BLL.Interfaces;
 using FamilyClub.BLL.Services;
+using FamilyClub.DAL.EF;
+using FamilyClub.DAL.EF.DB;
+using FamilyClub.DAL.Interfaces;
+using FamilyClub.DAL.Repositories;
+using FamilyClubLibrary;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -85,6 +88,22 @@ builder.Services.AddScoped<IOrderService, OrderService>();
 //OrderItem
 builder.Services.AddScoped<IOrderItemRepository, OrderItemRepository>();
 builder.Services.AddScoped<IOrderItemService, OrderItemService>();
+// ClubMember
+//builder.Services.AddScoped<IClubMemberRepository, ClubMemberRepository>();
+builder.Services.AddScoped<IClubMemberService, ClubMemberService>();
+// Authentification (Login, Register, Logout)
+builder.Services.AddScoped<IAuthClubMemberService, AuthClubMemberService>();
+// RoleClubMember
+builder.Services.AddScoped<IRoleClubMemberService, RoleClubMemberService>();
+// ClaimsClubMember
+builder.Services.AddScoped<IClaimsClubMemberService, ClaimsClubMemberService>();
+
+//Review
+builder.Services.AddScoped<IReviewRepository, ReviewRepository>();
+builder.Services.AddScoped<IReviewService, ReviewService>();
+//Product
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<IProductService, ProductService>();
 
 // Customize Identity cookie
 //builder.Services.ConfigureApplicationCookie(
@@ -92,6 +111,32 @@ builder.Services.AddScoped<IOrderItemService, OrderItemService>();
 //        options.LoginPath = "/Account/Login";
 //        options.AccessDeniedPath = "/Account/AccessDenied";
 //    });
+
+// JWT authentification
+var jwtSettings = builder.Configuration.GetSection("Jwt");
+var secretKey = jwtSettings["Key"]
+    ?? throw new InvalidOperationException("JWT Secret Key is not configured.");
+var key = Encoding.ASCII.GetBytes(secretKey);
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = jwtSettings["Issuer"],
+            ValidAudience = jwtSettings["Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(key)
+        };
+    });
+
+
 
 // Adding AutoMapper
 builder.Services.AddAutoMapper(cfg =>

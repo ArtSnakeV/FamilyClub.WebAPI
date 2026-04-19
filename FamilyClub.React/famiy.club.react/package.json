@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "cross-env NODE_EXTRA_CA_CERTS=%USERPROFILE%\\.aspnet\\https\\dev-cert.pem next dev",
     "build": "next build",
     "start": "next start",
     "lint": "eslint"
