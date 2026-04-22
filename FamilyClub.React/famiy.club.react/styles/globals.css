@@ -1,0 +1,63 @@
+@import "tailwindcss";
+
+:root {
+
+  /* 1. BRAND COLORS (КОЛЬОРИ БРЕНДУ) */
+  --color-black: #242424; /* Black (Чорний) */
+  --color-white: #F5F3EE; /* White (Білий) */
+  --color-brown: #7E4D1E; /* Brown (Коричневий) */
+  --color-green: #005B33; /* Green (Зелений) */
+
+  /* SEMANTIC TOKENS (СЕМАНТИЧНІ ТОКЕНИ) */
+
+  /* Foreground color from Figma (Колір переднього плану з Figma) */
+  --foreground-primary: var(--color-black); /* Primary foreground (Основний передній план) */
+  --foreground-on-dark: var(--color-white); /* Foreground on dark background (Передній план на темному фоні) */
+  --foreground-accent: var(--color-brown); /* Accent foreground (Акцентний передній план) */
+
+  /* Background color from Figma (Колір фона з Figma) */
+  --background-main: var(--color-white); /* Main background (Основний фон) */
+  --background-dark: var(--color-black); /* Dark background (Темний фон) */
+  --background-surface: var(--color-green); /* Surface background (Фон поверхні) */
+
+  /* Actions/Status (Дії/Статуси) */
+  --color-success: var(--color-green); /* Success (Успіх) */
+  --color-primary-action: var(--color-brown); /* Primary action (Основна дія) */
+
+  /* Using basic variables for theme support */
+  --background: var(--background-main);
+  --foreground: var(--foreground-primary);
+
+  --font-geist-sans: 'Source Sans Pro', Source Sans 3, Segoe UIf, Roboto, Helvetica, Arial, sans-serif; /* Geist Sans font (Шрифт Geist Sans) */
+  --font-geist-mono: 'Roboto Mono', monospace, Consolas, 'Courier New'; /* Geist Mono font (Шрифт Geist Mono) */
+}
+
+@theme inline {
+  /* Colors (Кольори) */
+  --color-brand-black: var(--color-black);
+  --color-brand-white: var(--color-white);
+  --color-brand-brown: var(--color-brown);
+  --color-brand-green: var(--color-green);
+  
+  /* Semantic Tokens ( Семантичні кольори) */
+  --color-success: var(--color-green);
+  --color-primary-action: var(--color-brown);
+  --color-surface: var(--background-surface);
+
+  /* Fonts (Шрифти) */
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: white) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans);
+}

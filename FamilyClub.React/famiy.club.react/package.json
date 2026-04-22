@@ -6,15 +6,18 @@
     "dev": "cross-env NODE_EXTRA_CA_CERTS=%USERPROFILE%\\.aspnet\\https\\dev-cert.pem next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "update-api": "npx openapi-generator-cli generate -i https://localhost:7069/swagger/v1/swagger.json -g typescript-fetch -o ./src/lib/api/generated",
+    "api-sync": "npx @openapitools/openapi-generator-cli generate -i swagger.json -g typescript-fetch -o generated --additional-properties=typescriptThreePlus=true"
   },
   "dependencies": {
     "cross-env": "^10.1.0",
-    "next": "16.2.1",
+    "next": "^16.2.4",
     "react": "19.2.4",
     "react-dom": "19.2.4"
   },
   "devDependencies": {
+    "@openapitools/openapi-generator-cli": "^2.31.1",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
