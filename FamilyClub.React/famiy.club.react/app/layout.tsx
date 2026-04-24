@@ -2,6 +2,7 @@ import { categoriesService } from "@/lib/api/services";
 import type { Metadata } from "next";
 import "../styles/globals.css";
 import Link from "next/link";
+import UpNavigation from "./header/UpNavigation";
 
 export const metadata: Metadata = {
   title: "My App",
@@ -9,19 +10,18 @@ export const metadata: Metadata = {
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  
+
 
   return (
     <html lang="en">
-      
-
       <body className="antialiased bg-background text-foreground font-sans">
-        <header>
-          <nav className="p-4 border-b border-black/5 bg-white/50 backdrop-blur-md">
-             {/* Navigatioin */}
-             <div className="max-w-7xl mx-auto">Logo & Menu HEADER</div>
-             <Link href='/categories/all' className="text-primary-action hover:underline">Categories</Link>
-          </nav>
+        <header className="h-[75px] bg-[#F5F3EE] shadow-sm">
+          <div className="h-659px">
+            <UpNavigation />
+          </div>
+
+
+          {/* <Link href='/categories/all' className="text-primary-action hover:underline">Categories</Link> */}
         </header>
 
         <main className="p-6 max-w-7xl mx-auto min-h-screen">
@@ -33,7 +33,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         </footer>
 
 
-      </body>      
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+      </body>
     </html>
   );
 }
