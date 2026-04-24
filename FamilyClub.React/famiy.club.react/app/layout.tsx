@@ -24,16 +24,15 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   
 
   return (
-    <html lang="uk" className={`${sourceSans.variable} ${robotoMono.variable}`}>
+    <html lang="en">
+      <body className="antialiased bg-background text-foreground font-sans">
+        <header className="h-[75px] bg-[#F5F3EE] shadow-sm">
+          <div className="h-659px">
+            <UpNavigation />
+          </div>
       
 
-      <body className="antialiased bg-background text-foreground font-sans">
-        <header>
-          <nav className="p-4 border-b border-black/5 bg-white/50 backdrop-blur-md">
-             {/* Navigatioin */}
-             <div className="max-w-7xl mx-auto">Logo & Menu HEADER</div>
-             <Link href='/categories/all' className="text-primary-action hover:underline">Categories</Link>
-          </nav>
+          {/* <Link href='/categories/all' className="text-primary-action hover:underline">Categories</Link> */}
         </header>
 
         <main className="p-6 max-w-7xl mx-auto min-h-screen">
