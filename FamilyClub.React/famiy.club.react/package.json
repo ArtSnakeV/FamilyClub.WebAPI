@@ -11,6 +11,7 @@
     "api-sync": "npx @openapitools/openapi-generator-cli generate -i swagger.json -g typescript-fetch -o generated --additional-properties=typescriptThreePlus=true"
   },
   "dependencies": {
+    "bootstrap": "^5.3.8",
     "cross-env": "^10.1.0",
     "next": "^16.2.4",
     "react": "19.2.4",

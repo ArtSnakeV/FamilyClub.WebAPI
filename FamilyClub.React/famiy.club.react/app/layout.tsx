@@ -2,6 +2,7 @@ import { categoriesService } from "@/lib/api/services";
 import type { Metadata } from "next";
 import "../styles/globals.css";
 import Link from "next/link";
+import UpNavigation from "./header/UpNavigation";
 import Footer from "@/components/layout/Footer";
 import { Source_Sans_3, Roboto_Mono } from 'next/font/google';
 const sourceSans = Source_Sans_3({
@@ -21,19 +22,20 @@ export const metadata: Metadata = {
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  
+
 
   return (
+    <html lang="en">
+      <body className="antialiased bg-background text-foreground font-sans">
+        <header className="h-[75px] bg-[#F5F3EE] shadow-sm">
+          <div className="h-659px">
+            <UpNavigation />
+          </div>
+
     <html lang="uk" className={`${sourceSans.variable} ${robotoMono.variable}`}>
       
 
-      <body className="antialiased bg-background text-foreground font-sans">
-        <header>
-          <nav className="p-4 border-b border-black/5 bg-white/50 backdrop-blur-md">
-             {/* Navigatioin */}
-             <div className="max-w-7xl mx-auto">Logo & Menu HEADER</div>
-             <Link href='/categories/all' className="text-primary-action hover:underline">Categories</Link>
-          </nav>
+          {/* <Link href='/categories/all' className="text-primary-action hover:underline">Categories</Link> */}
         </header>
 
         <main className="p-6 max-w-7xl mx-auto min-h-screen">
@@ -43,7 +45,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <Footer />
 
 
-      </body>      
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+      </body>
     </html>
   );
 }
