@@ -28,12 +28,34 @@
   --background: var(--background-main);
   --foreground: var(--foreground-primary);
 
+
   --font-geist-sans: 'Source Sans Pro', Source Sans 3, Segoe UIf, Roboto, Helvetica, Arial, sans-serif; /* Geist Sans font (Шрифт Geist Sans) */
   --font-geist-mono: 'Roboto Mono', monospace, Consolas, 'Courier New'; /* Geist Mono font (Шрифт Geist Mono) */
+
+
+
+
+
+  /* FOOTER and it's content */
+  /* Footer Title */
+  --footer-title-color: var(--foreground-primary);
+  --footer-title-font-size: 32px;
+  --footer-title-font-weight: 600;
+  --footer-title-line-height: 150%;
+  --footer-title-letter-spacing: -0.011em;
+  /* Footer Text */
+  --footer-text-color: var(--foreground-primary);
+  --footer-text-font-size: 18px;
+  --footer-text-font-weight: 400;
+  --footer-text-line-height: 150%;
+  --footer-text-letter-spacing: -0.011em;
+  --footer-inner-div-border-color: #F5F3EE; /* Border color for inner div in footer (Колір границі для внутреннего div в футере) */
+  
+  
 }
 
 @theme inline {
-  /* Colors (Кольори) */
+  /* Brand Colors (Кольори) */
   --color-brand-black: var(--color-black);
   --color-brand-white: var(--color-white);
   --color-brand-brown: var(--color-brown);
@@ -47,12 +69,19 @@
   /* Fonts (Шрифти) */
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
+
+  /* Footer (Футер) */
+  --color-footer-inner: var(--footer-inner-div-border-color); /* inner div border color for footer (колір границі для внутреннего div в футере) */
+  --color-footer-divider: var(--footer-divider-color);
+
+
 }
 
 @media (prefers-color-scheme: white) {
   :root {
     --background: #0a0a0a;
-    --foreground: #ededed;
+    --foreground: #6b1818;
   }
 }
 
@@ -60,4 +89,33 @@ body {
   background-color: var(--background);
   color: var(--foreground);
   font-family: var(--font-geist-sans);
+}
+
+
+/* Footer classes (Класи футера) */
+.footer-title {
+  font-family: var(--font-mono); /* Roboto Mono из Figma */
+    font-weight: 600;
+    font-size: 32px;
+    line-height: 1.5;
+    letter-spacing: -0.011em;
+    color: var(--brand-black);
+    display: flex;
+    align-items: left;
+    justify-content: left;
+}
+.footer-text {
+  font-family: var(--font-sans); /* Source Sans Pro из Figma */
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 1.5;
+    letter-spacing: -0.011em;
+    color: var(--brand-black);
+    transition: opacity 0.2s ease;
+}
+.shadow-footer-heavy {
+  box-shadow: var(--shadow-footer-heavy);
+}
+.footer-text:hover {
+    opacity: 0.7;
 }

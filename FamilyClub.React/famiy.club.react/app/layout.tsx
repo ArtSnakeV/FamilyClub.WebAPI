@@ -2,6 +2,18 @@ import { categoriesService } from "@/lib/api/services";
 import type { Metadata } from "next";
 import "../styles/globals.css";
 import Link from "next/link";
+import Footer from "@/components/layout/Footer";
+import { Source_Sans_3, Roboto_Mono } from 'next/font/google';
+const sourceSans = Source_Sans_3({
+  subsets: ['cyrillic', 'latin'],
+  variable: '--font-sans', // Назва CSS змінної для використання шрифту в стилях
+});
+
+const robotoMono = Roboto_Mono({
+  subsets: ['cyrillic', 'latin'],
+  variable: '--font-mono',
+});
+
 
 export const metadata: Metadata = {
   title: "My App",
@@ -12,7 +24,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   
 
   return (
-    <html lang="en">
+    <html lang="uk" className={`${sourceSans.variable} ${robotoMono.variable}`}>
       
 
       <body className="antialiased bg-background text-foreground font-sans">
@@ -28,9 +40,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           {children}
         </main>
 
-        <footer className="p-10 border-t border-black/5 text-center text-sm opacity-50">
-          <p>© 2026 Our awesome project's footer</p>
-        </footer>
+        <Footer />
 
 
       </body>      
