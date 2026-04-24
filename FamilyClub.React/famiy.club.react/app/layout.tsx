@@ -31,8 +31,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <div className="h-659px">
             <UpNavigation />
           </div>
-
-    <html lang="uk" className={`${sourceSans.variable} ${robotoMono.variable}`}>
       
 
           {/* <Link href='/categories/all' className="text-primary-action hover:underline">Categories</Link> */}
