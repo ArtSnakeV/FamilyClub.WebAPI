@@ -18,7 +18,7 @@ export default function NewCategoryPage() {
       });
       
       router.push("/"); // Go back home
-      router.refresh(); // Refresh layout to show new category in nav
+      router.refresh(); // Refresh footer to show new category in nav
     } catch (error) {
       alert("Failed to create category!");
     }

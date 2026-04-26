@@ -2,8 +2,8 @@ import { categoriesService } from "@/lib/api/services";
 import type { Metadata } from "next";
 import "../styles/globals.css";
 import Link from "next/link";
-import UpNavigation from "./header/UpNavigation";
-import Footer from "@/components/layout/Footer";
+import UpNavigation from "./layout/header/UpNavigation";
+import Footer from "@/app/layout/footer/Footer";
 import { Source_Sans_3, Roboto_Mono } from 'next/font/google';
 const sourceSans = Source_Sans_3({
   subsets: ['cyrillic', 'latin'],
@@ -42,8 +42,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
         <Footer />
 
-
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
       </body>
     </html>
   );
@@ -95,7 +93,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 //       lang="en"
 //       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
 //     >
-//       <body className="min-h-full flex flex-col">{children}</body>
+//       <main_page className="min-h-full flex flex-col">{children}</main_page>
 //     </html>
 //   );
 // }
