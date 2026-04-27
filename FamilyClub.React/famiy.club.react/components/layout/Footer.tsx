@@ -7,9 +7,10 @@ const Footer = () => {
     const currentYear = new Date().getFullYear();
 
     return (
+
+
         /* Root footer container (Кореневий контейнер футера) */
         <footer className="w-full min-h-[696px] flex flex-col justify-end overflow-visible">
-
             {/* 
                 1. MAIN INNER BLOCK (ГОЛОВНИЙ ВНУТРІШНІЙ БЛОК) 
                 - backgroundImage: sets the footer background (встановлює фон футера)
@@ -94,74 +95,74 @@ const Footer = () => {
                         </div>
 
                         {/* --- COLUMN 3: CONTACT INFO (КОЛОНКА 3: КОНТАКТНА ІНФОРМАЦІЯ) --- */}
-<div className="flex flex-col items-start w-full md:w-[295px] gap-[25px]">
-    <h2 className="footer-title">Контакти</h2>
+                        <div className="flex flex-col items-start w-full md:w-[295px] gap-[25px]">
+                            <h2 className="footer-title">Контакти</h2>
 
-    <div className="flex flex-col items-start gap-[15px]">
+                            <div className="flex flex-col items-start gap-[15px]">
 
-        {/* 1. Address Row (Рядок з адресою) */}
-        <div className="flex items-center gap-[15px]">
-            {/* Standardized container: 34px width (Стандартизований контейнер: ширина 34px) */}
-            <div className="w-[34px] h-[34px] flex items-center justify-center">
-                <Image
-                    src="/images/Layout/Footer/AddressIcon.svg"
-                    width={21.41} 
-                    height={27.36}
-                    alt="Address"
-                />
-            </div>
-            <p className="footer-text h-[27px] flex items-center">
-                «Libria», a/c 64, Львів 79000
-            </p>
-        </div>
+                                {/* 1. Address Row (Рядок з адресою) */}
+                                <div className="flex items-center gap-[15px]">
+                                    {/* Standardized container: 34px width (Стандартизований контейнер: ширина 34px) */}
+                                    <div className="w-[34px] h-[34px] flex items-center justify-center">
+                                        <Image
+                                            src="/images/Layout/Footer/AddressIcon.svg"
+                                            width={21.41}
+                                            height={27.36}
+                                            alt="Address"
+                                        />
+                                    </div>
+                                    <p className="footer-text h-[27px] flex items-center">
+                                        «Libria», a/c 64, Львів 79000
+                                    </p>
+                                </div>
 
-        {/* 2. Phone Row (Рядок з телефоном) */}
-        <div className="flex items-center gap-[15px]">
-            <div className="w-[34px] h-[34px] flex items-center justify-center">
-                <Image
-                    src="/images/Layout/Footer/PhoneIcon.svg"
-                    width={25.6}
-                    height={28.8}
-                    alt="Phone"
-                />
-            </div>
-            <a href="tel:08005553535" className="footer-text h-[27px] flex items-center hover:opacity-70 transition-opacity">
-                0 (800) 555 35 35
-            </a>
-        </div>
+                                {/* 2. Phone Row (Рядок з телефоном) */}
+                                <div className="flex items-center gap-[15px]">
+                                    <div className="w-[34px] h-[34px] flex items-center justify-center">
+                                        <Image
+                                            src="/images/Layout/Footer/PhoneIcon.svg"
+                                            width={25.6}
+                                            height={28.8}
+                                            alt="Phone"
+                                        />
+                                    </div>
+                                    <a href="tel:08005553535" className="footer-text h-[27px] flex items-center hover:opacity-70 transition-opacity">
+                                        0 (800) 555 35 35
+                                    </a>
+                                </div>
 
-        {/* 3. Email Row (Рядок з поштою) */}
-        <div className="flex items-center gap-[15px]">
-            <div className="w-[34px] h-[34px] flex items-center justify-center">
-                <Image
-                    src="/images/Layout/Footer/EmailIcon.svg"
-                    width={25.6}
-                    height={19.2}
-                    alt="Email"
-                />
-            </div>
-            <a href="mailto:help@libria.com" className="footer-text h-[27px] flex items-center hover:opacity-70 transition-opacity">
-                help@libria.com
-            </a>
-        </div>
+                                {/* 3. Email Row (Рядок з поштою) */}
+                                <div className="flex items-center gap-[15px]">
+                                    <div className="w-[34px] h-[34px] flex items-center justify-center">
+                                        <Image
+                                            src="/images/Layout/Footer/EmailIcon.svg"
+                                            width={25.6}
+                                            height={19.2}
+                                            alt="Email"
+                                        />
+                                    </div>
+                                    <a href="mailto:help@libria.com" className="footer-text h-[27px] flex items-center hover:opacity-70 transition-opacity">
+                                        help@libria.com
+                                    </a>
+                                </div>
 
-        {/* 4. Social Media Row (Рядок з іконками соцмереж) */}
-        <div className="flex items-center gap-[25px] mt-[10px] w-full">
-            <Link href="#" className="hover:scale-110 transition-transform">
-                <Image src="/images/Layout/Footer/TelegramIcon.svg" width={41} height={40} alt="Telegram" />
-            </Link>
-            <Link href="#" className="hover:scale-110 transition-transform">
-                <Image src="/images/Layout/Footer/FacebookIcon.svg" width={40} height={40} alt="Facebook" />
-            </Link>
-            <Link href="#" className="hover:scale-110 transition-transform">
-                <Image src="/images/Layout/Footer/InstagrammIcon.svg" width={40} height={40} alt="Instagram" />
-            </Link>
-            <Link href="#" className="hover:scale-110 transition-transform">
-                <Image src="/images/Layout/Footer/ViberIcon.svg" width={40} height={40} alt="Viber" />
-            </Link>
-        </div>
-    </div>
-</div>
+                                {/* 4. Social Media Row (Рядок з іконками соцмереж) */}
+                                <div className="flex items-center gap-[25px] mt-[10px] w-full">
+                                    <Link href="#" className="hover:scale-110 transition-transform">
+                                        <Image src="/images/Layout/Footer/TelegramIcon.svg" width={41} height={40} alt="Telegram" />
+                                    </Link>
+                                    <Link href="#" className="hover:scale-110 transition-transform">
+                                        <Image src="/images/Layout/Footer/FacebookIcon.svg" width={40} height={40} alt="Facebook" />
+                                    </Link>
+                                    <Link href="#" className="hover:scale-110 transition-transform">
+                                        <Image src="/images/Layout/Footer/InstagrammIcon.svg" width={40} height={40} alt="Instagram" />
+                                    </Link>
+                                    <Link href="#" className="hover:scale-110 transition-transform">
+                                        <Image src="/images/Layout/Footer/ViberIcon.svg" width={40} height={40} alt="Viber" />
+                                    </Link>
+                                </div>
+                            </div>
+                        </div>
 
                     </div>
                 </div>
