@@ -16,9 +16,9 @@ export default function PersonIco() {
                         height={27}
                     />
                 </div>
-                <p className="w-[95px] h-[24px] text-[#242424] font-normal text-[16px] leading-[150%] tracking-[-0.011em] text-center relative left-[14px]">
+                <Link href="/login" className="w-[95px] h-[24px] text-[#242424] font-normal text-[16px] leading-[150%] tracking-[-0.011em] text-center relative left-[14px]">
                     Авторуватися
-                </p>
+                </Link>
             </div>
         </>
     )
