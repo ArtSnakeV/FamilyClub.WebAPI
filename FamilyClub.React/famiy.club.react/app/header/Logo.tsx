@@ -7,7 +7,7 @@ export default function Logo() {
         <>
             <Link
                 href="/"
-                className="absolute top-[0px]"
+                className="absolute top-[0px] pb-[0px] mb-[0px]"
             >
                 <Image
                     src="/images/logo.png"
