@@ -21,9 +21,10 @@ namespace FamilyClub.DAL.EF.DB
 				serviceProvider.GetRequiredService<DbContextOptions<FamilyClubContext>>();
 
 			using (FamilyClubContext context = new FamilyClubContext(options))
-			{
-				await context.Database.EnsureCreatedAsync();
-			}
+            {
+                await context.Database.EnsureCreatedAsync();
+
+            }
 
 
             /////////////////////////////////////////////

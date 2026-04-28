@@ -3,7 +3,6 @@ import type { Metadata } from "next";
 import "../styles/globals.css";
 import Link from "next/link";
 import UpNavigation from "./header/UpNavigation";
-import DropDownList from "./header/dropdownlist/DropDownList";
 
 export const metadata: Metadata = {
   title: "My App",
@@ -20,6 +19,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <div className="max-w-7xl mx-auto flex items-center ">
             <UpNavigation />
           </div>
+
+
+          {/* <Link href='/categories/all' className="text-primary-action hover:underline">Categories</Link> */}
         </header>
         <div className="relative z-10 max-w-7xl mx-auto flex gap-2 -mt-[60px] left-[22px]">
             <DropDownList />
@@ -29,12 +31,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           {children}
         </main>
 
-        <footer className="p-10 border-t border-black/5 text-center text-sm opacity-50">
-          <p>© 2026 Our awesome project's footer</p>
-        </footer>
+        <Footer />
 
-
-
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
       </body>
     </html >
   );
@@ -86,7 +85,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 //       lang="en"
 //       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
 //     >
-//       <body className="min-h-full flex flex-col">{children}</body>
+//       <main_page className="min-h-full flex flex-col">{children}</main_page>
 //     </html>
 //   );
 // }
