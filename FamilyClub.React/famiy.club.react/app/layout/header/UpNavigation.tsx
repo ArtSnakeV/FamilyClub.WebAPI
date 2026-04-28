@@ -8,13 +8,16 @@ import IcoPeople from "./IcoPeople";
 import IcoFavorite from "./IcoFavorite";
 import IcoShopping from "./IcoShopping";
 
+
 export default function UpNavigation() {
   return (
     <>
-      <div className="max-w-7xl mx-auto flex items-center h-full px-4 relative overflow-visible flex-nowrap justify-between h-[145px]">
-        <Logo />
+      <div className="max-w-7xl mx-auto flex items-center h-full px-4 relative flex-nowrap justify-between">
+        <Link href="/">
+          <Logo />
+        </Link>
         {/* ml60 як по іншому змістити вліво ? */}
-        <div className="flex items-center w-[1000px] ml-60 gap-6 h-[80px]">  
+        <div className="flex items-center w-[1000px] ml-60 gap-6 mt-[11px]">
 
           <div className="w-[110px] gap-5 h-[50px] flex items-center justify-center">
             <UaCircle />
@@ -25,7 +28,7 @@ export default function UpNavigation() {
           </div>
 
           <div className="flex relative items-center gap-4 h-[50px] w-[384px] left-[6vw] ">
-            <PersonIco />
+              <PersonIco />
             <div className="flex items-center h-[50px] w-[170px] mt-[8px] gap-[10px]">
               <div className=" relative w-[50px] h-[50px] ">
                 <IcoPeople />
@@ -39,8 +42,8 @@ export default function UpNavigation() {
             </div>
           </div>
         </div>
-      </div>
 
+      </div>
     </>
   );
 }
