@@ -2,7 +2,9 @@ import { categoriesService } from "@/lib/api/services";
 import type { Metadata } from "next";
 import "../styles/globals.css";
 import Link from "next/link";
-import UpNavigation from "./header/UpNavigation";
+import UpNavigation from "./layout/header/UpNavigation";
+import DropDownList from "./layout/header/dropdownlist/DropDownList";
+import Footer from "./layout/footer/Footer";
 
 export const metadata: Metadata = {
   title: "My App",
