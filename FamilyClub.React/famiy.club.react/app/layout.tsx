@@ -3,8 +3,19 @@ import type { Metadata } from "next";
 import "../styles/globals.css";
 import Link from "next/link";
 import UpNavigation from "./layout/header/UpNavigation";
+import Footer from "@/app/layout/footer/Footer";
+import { Source_Sans_3, Roboto_Mono } from 'next/font/google';
 import DropDownList from "./layout/header/dropdownlist/DropDownList";
-import Footer from "./layout/footer/Footer";
+const sourceSans = Source_Sans_3({
+  subsets: ['cyrillic', 'latin'],
+  variable: '--font-sans', // Назва CSS змінної для використання шрифту в стилях
+});
+
+const robotoMono = Roboto_Mono({
+  subsets: ['cyrillic', 'latin'],
+  variable: '--font-mono',
+});
+
 
 export const metadata: Metadata = {
   title: "My App",
@@ -26,7 +37,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           {/* <Link href='/categories/all' className="text-primary-action hover:underline">Categories</Link> */}
         </header>
         <div className="relative z-10 max-w-7xl mx-auto flex gap-2 -mt-[60px] left-[22px]">
-            <DropDownList />
+          <DropDownList />
         </div>
 
         <main className="p-6 max-w-7xl mx-auto min-h-screen">
@@ -35,9 +46,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
         <Footer />
 
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
       </body>
-    </html >
+    </html>
   );
 }
 
