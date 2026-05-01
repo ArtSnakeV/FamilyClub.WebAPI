@@ -1,22 +1,21 @@
 "use client";
 
+import { Configuration, ProductDto, ProductsApi } from "@/lib/api/generated";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import Image from "next/image";
-import { useEffect, useState } from "react";
-import { CategoriesApi } from "@/lib/api/generated/apis/CategoriesApi";
-import { Configuration, type CategoryDto } from "@/lib/api/generated";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
-export default function DropDownCategories() {
-  const [categories, setCategories] = useState<CategoryDto[]>([]);
+export default function DropDownPrice() {
+  const [products, setProducts] = useState<ProductDto[]>([]);
 
   useEffect(() => {
     const config = new Configuration({
       basePath: "https://localhost:7069",
     });
-    const api = new CategoriesApi(config);
+    const api = new ProductsApi(config);
 
-    api.apiCategoriesGet().then(setCategories).catch(console.error);
+    api.apiProductsGet().then(setProducts).catch(console.error);
   }, []);
 
   return (
@@ -30,7 +29,7 @@ export default function DropDownCategories() {
         />
 
         <span className="absolute inset-0 flex items-center justify-center text-[#F5F3EE] mt-8">
-          Жанри
+          Ціна
         </span>
       </MenuButton>
 
@@ -38,11 +37,11 @@ export default function DropDownCategories() {
         anchor="bottom"
         className="z-10 relative w-[120px] bg-[var(--color-green)] text-[var(--color-white)] rounded -mt-2"
       >
-        {categories.length === 0 ? (
+        {products.length === 0 ? (
           <div>Loading...</div>
         ) : (
-          categories.map((category) => (
-            <MenuItem key={category.id}>
+          products.map((product) => (
+            <MenuItem key={product.id}>
               {({ active }) => (
                 <div className="flex flex-row items-center">
                   <Image
@@ -53,10 +52,10 @@ export default function DropDownCategories() {
                     height={16}
                   />
                   <Link
-                    href={`/categories/${category.id}`}
+                    href={`/products/${product.id}`}
                     className={`block px-2 py-1 ${active ? "bg-green-600" : ""}`}
                   >
-                    {category.categoryName}
+                    {product.price} 
                   </Link>
                 </div>
               )}

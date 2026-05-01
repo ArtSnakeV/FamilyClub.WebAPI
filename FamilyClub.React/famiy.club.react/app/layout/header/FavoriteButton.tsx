@@ -1,10 +1,8 @@
-import Link from "next/link";
 import Image from "next/image";
 
 
-export default function IcoFavorite() {
+export default function FavoriteButton() {
     return (
-        <>
             <div className="relative w-[34px] h-[29px] ">
                 <Image
                     src="/images/favorite_border_24px.png"
@@ -15,6 +13,5 @@ export default function IcoFavorite() {
                     height={29}
                 />
             </div>
-        </>
-    )
+    );
 }

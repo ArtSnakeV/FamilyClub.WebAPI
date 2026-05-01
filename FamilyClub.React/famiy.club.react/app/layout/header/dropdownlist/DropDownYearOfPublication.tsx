@@ -2,22 +2,18 @@
 
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import Image from "next/image";
-import { useEffect, useState } from "react";
-import { CategoriesApi } from "@/lib/api/generated/apis/CategoriesApi";
-import { Configuration, type CategoryDto } from "@/lib/api/generated";
 import Link from "next/link";
 
-export default function DropDownCategories() {
-  const [categories, setCategories] = useState<CategoryDto[]>([]);
 
-  useEffect(() => {
-    const config = new Configuration({
-      basePath: "https://localhost:7069",
-    });
-    const api = new CategoriesApi(config);
+const yearFilters = [
+  "2000–2002",
+  "2003–2005",
+  "2006–2010",
+  "2011–2020",
+  "2020+",
+];
 
-    api.apiCategoriesGet().then(setCategories).catch(console.error);
-  }, []);
+export default function DropDownYearOfPublication() {
 
   return (
     <Menu as="div">
@@ -29,8 +25,8 @@ export default function DropDownCategories() {
           className="object-contain"
         />
 
-        <span className="absolute inset-0 flex items-center justify-center text-[#F5F3EE] mt-8">
-          Жанри
+        <span className="absolute inset-0 flex items-center justify-center text-[var(--color-white)] mt-8">
+          Рік видання
         </span>
       </MenuButton>
 
@@ -38,11 +34,11 @@ export default function DropDownCategories() {
         anchor="bottom"
         className="z-10 relative w-[120px] bg-[var(--color-green)] text-[var(--color-white)] rounded -mt-2"
       >
-        {categories.length === 0 ? (
+        {yearFilters.length === 0 ? (
           <div>Loading...</div>
         ) : (
-          categories.map((category) => (
-            <MenuItem key={category.id}>
+          yearFilters.map((year) => (
+            <MenuItem key={year}>
               {({ active }) => (
                 <div className="flex flex-row items-center">
                   <Image
@@ -53,10 +49,10 @@ export default function DropDownCategories() {
                     height={16}
                   />
                   <Link
-                    href={`/categories/${category.id}`}
+                    href={`/products/${year}`}
                     className={`block px-2 py-1 ${active ? "bg-green-600" : ""}`}
                   >
-                    {category.categoryName}
+                    {year}
                   </Link>
                 </div>
               )}

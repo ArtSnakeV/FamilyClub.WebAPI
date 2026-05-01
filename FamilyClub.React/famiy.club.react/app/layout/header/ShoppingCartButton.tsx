@@ -1,8 +1,7 @@
-import Link from "next/link";
 import Image from "next/image";
 
 
-export default function IcoShopping() {
+export default function ShoppingCartButton() {
     return (
         <>
             <div className="relative w-[37px] h-[32px] ">
