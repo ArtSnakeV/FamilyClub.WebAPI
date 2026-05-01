@@ -1,61 +1,68 @@
 "use client";
 
-import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
-import Image from 'next/image'
-import { useEffect, useState } from 'react'
-import { Configuration, LanguageDto, LanguagesApi } from '@/lib/api/generated'
-import Link from "next/link"
+import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
+import Image from "next/image";
+import { useEffect, useState } from "react";
+import { Configuration, LanguageDto, LanguagesApi } from "@/lib/api/generated";
+import Link from "next/link";
 
 export default function DropDownLanguage() {
-    const [languages, setLanguages] = useState<LanguageDto[]>([])
+  const [languages, setLanguages] = useState<LanguageDto[]>([]);
 
-    useEffect(() => {
-        const config = new Configuration({
-            basePath: "https://localhost:7069"
-        })
-        const api = new LanguagesApi(config)
+  useEffect(() => {
+    const config = new Configuration({
+      basePath: "https://localhost:7069",
+    });
+    const api = new LanguagesApi(config);
 
-        api.apiLanguagesGet()
-            .then(setLanguages)
-            .catch(console.error)
-    }, [])
+    api.apiLanguagesGet().then(setLanguages).catch(console.error);
+  }, []);
 
-    return (
-        <Menu as="div" className="shadow-[0px 10px 10px 0px #2424244D]">
+  return (
+    <Menu as="div">
+      <MenuButton className="relative w-[120px] h-[120px]">
+        <Image
+          src="/images/Rectangle144.png"
+          alt="bg"
+          fill
+          className="object-contain"
+        />
 
-            <MenuButton className="relative w-[120px] h-[120px]">
-                <Image
-                    src="/images/Rectangle144.png"
-                    alt="bg"
-                    fill
-                    className="object-contain"
-                />
+        <span className="absolute inset-0 flex items-center justify-center text-[#F5F3EE] mt-8">
+          Мова
+        </span>
+      </MenuButton>
 
-                <span className="absolute inset-0 flex items-center justify-center text-[#F5F3EE] mt-8">
-                    Мова
-                </span>
-            </MenuButton>
-
-            <MenuItems anchor="bottom" className="relative w-[120px] bg-[#005B33]">
-
-                {languages.length === 0 ? (
-                    <div>Loading...</div>
-                ) : (
-                    languages.map((language) => (
-                        <MenuItem key={language.id}>
-                            {({ active }) => (
-                                <Link
-                                    href={`/language/${language.id}`}
-                                    className={`block px-2 py-1 ${active ? "bg-green-600" : ""}`}
-                                >
-                                    {language.languageName}
-                                </Link>
-                            )}
-                        </MenuItem>
-                    ))
-                )}
-
-            </MenuItems>
-        </Menu>
-    )
+      <MenuItems
+        anchor="bottom"
+        className="z-10 relative w-[120px] bg-[var(--color-green)] text-[var(--color-white)] rounded -mt-2"
+      >
+        {languages.length === 0 ? (
+          <div>Loading...</div>
+        ) : (
+          languages.map((language) => (
+            <MenuItem key={language.id}>
+              {({ active }) => (
+                <div className="flex flex-row items-center">
+                  <Image
+                    src="/images/header/icon.svg"
+                    alt="Icon"
+                    className="w-4 h-4 ml-2"
+                    width={16}
+                    height={16}
+                  />
+                  <Link
+                    href={`/language/${language.id}`}
+                    className={`block px-2 py-1 ${active ? "bg-green-600" : ""}`}
+                  >
+                    {language.languageName}
+                  </Link>
+                </div>
+              )}
+            </MenuItem>
+          ))
+        )}
+      </MenuItems>
+    </Menu>
+  );
 }

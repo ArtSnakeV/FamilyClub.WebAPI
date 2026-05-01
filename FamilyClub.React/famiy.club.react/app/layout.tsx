@@ -32,15 +32,12 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <div className="max-w-7xl mx-auto flex items-center ">
             <UpNavigation />
           </div>
-
-
-          {/* <Link href='/categories/all' className="text-primary-action hover:underline">Categories</Link> */}
         </header>
         <div className="relative z-10 max-w-7xl mx-auto flex gap-2 -mt-[60px] left-[22px]">
           <DropDownList />
         </div>
 
-        <main className="p-6 max-w-7xl mx-auto min-h-screen">
+        <main className="p-6 max-w-7xl mx-auto min-h-[calc(100vh-72px)]">
           {children}
         </main>
 
