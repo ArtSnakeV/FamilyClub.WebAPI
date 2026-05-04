@@ -1,69 +1,81 @@
-import cat from "@/public/images/body/cat.png";
-
 export default function AboutSection() {
     return (
-        <section className="px-8 py-16 space-y-16">
+        <section className="py-16">
+            <div className="mx-auto max-w-[1260px] px-4">
+                <div className="relative shadow-[0px_0px_0px_0px_rgba(0,0,0,0)]">
+                    <img
+                        alt=""
+                        className="absolute inset-0 h-full w-full object-cover opacity-20"
+                        src="/images/body/Rectangle 287.png"
+                    />
+                    <div className="relative px-6 py-10 md:px-10">
+                        <div className="grid gap-10 md:grid-cols-2">
+                            <div>
+                                <h3 className="font-mono text-[36px] font-semibold text-[#242424]">Великий вибір</h3>
+                                <p className="mt-4 text-[20px] leading-[1.6] text-justify">
+                                    У нас зібрані книги на будь-який смак — від легких романів до глибоких історій,
+                                    від популярних новинок до перевіреної класики.
+                                    <br />
+                                    <br />
+                                    Обирай жанр, формат і настрій — і знаходь саме ту книгу, яка тобі зараз потрібна.
+                                </p>
+                            </div>
+                            <div>
+                                <h3 className="font-mono text-[32px] font-semibold text-[#242424]">Акції</h3>
+                                <p className="mt-4 text-[20px] leading-[1.6] text-justify">
+                                    Читати більше — простіше, ніж здається.
+                                    <br />
+                                    <br />
+                                    Знижки та спеціальні пропозиції допоможуть відкривати нові книги частіше і з
+                                    задоволенням.
+                                </p>
+                            </div>
+                        </div>
 
-            {/* 1. Кіт + текст */}
-            <div className="grid grid-cols-2 gap-10 items-center">
-                <div className="p-2 bg-white rotate-[-2deg] inline-block">
-                    <img src={cat.src} alt="Cat" className="w-full h-auto rounded-xl" />
+                        <div className="mt-8 flex justify-center">
+                            <img
+                                alt="Твій дім книг"
+                                className="w-full max-w-[960px] rotate-[-1.5deg] rounded-[30px] shadow-[0px_0px_15px_0px_rgba(0,0,0,0.95)]"
+                                src="/images/body/Rectangle%20294.png"
+                            />
+                        </div>
+
+                        <div className="mt-10 text-[20px] leading-[1.6] text-justify">
+                            <p>
+                                Цей сайт — це місце, де книги знаходять своїх читачів.
+                                <br />
+                                <br />
+                                Ми створили простір, у якому поєднали різні формати читання, зручний пошук і теплу
+                                атмосферу бібліотеки, щоб процес вибору був не лише простим, а й приємним. Тут немає
+                                випадкових рішень — кожна деталь допомагає тобі швидше знайти саме ту історію, яка
+                                зачепить.
+                                <br />
+                                <br />
+                                Ти можеш спокійно досліджувати, відкривати нові жанри, повертатися до улюблених книг або
+                                зберігати ті, до яких хочеться повернутися пізніше. Це місце, де не потрібно поспішати —
+                                лише обирати у своєму ритмі.
+                                <br />
+                                <br />
+                                А якщо ти не знаєш, з чого почати — це теж нормально. Поруч завжди є підказка, яка
+                                допоможе знайти щось нове, несподіване або саме те, що зараз потрібно.
+                            </p>
+                        </div>
+                    </div>
                 </div>
-                {/*<div className="h-[250px] bg-[url('/images/main_page/cat.png')] bg-cover rounded-xl" />*/}
 
-                <div>
-                    <h3 className="text-xl font-semibold mb-2">
-                        Ink — це тихий помічник
-                    </h3>
-                    <p className="text-gray-600">
-                        Ми допомагаємо знайти саме ті книги, які тобі потрібні.
-                    </p>
+                <div className="mt-12 flex flex-wrap justify-center gap-10">
+                    <img
+                        alt=""
+                        className="w-[260px] rotate-[20deg] shadow-[0px_10px_10px_0px_rgba(0,0,0,0.4)] md:w-[320px]"
+                        src="/images/body/Rectangle%20295.png"
+                    />
+                    <img
+                        alt=""
+                        className="w-[260px] rotate-[-2deg] shadow-[0px_10px_10px_0px_rgba(0,0,0,0.4)] md:w-[320px]"
+                        src="/images/body/Rectangle%20296.png"
+                    />
                 </div>
             </div>
-
-            <div className="bg-white shadow rounded-2xl p-8 grid grid-cols-2 gap-10">
-                <div>
-                    <h4 className="font-semibold mb-2">Великий вибір</h4>
-                    <p className="text-sm text-gray-600">
-                        Ти знайдеш книги на будь-який смак.
-                    </p>
-                </div>
-
-                <div>
-                    <h4 className="font-semibold mb-2">Акції</h4>
-                    <p className="text-sm text-gray-600">
-                        Регулярні знижки та спеціальні пропозиції.
-                    </p>
-                </div>
-            </div>
-
-            <div className="bg-green-100 rounded-2xl p-6 flex items-center justify-between">
-                <h2 className="text-2xl font-bold">
-                    Твій дім книг 📚
-                </h2>
-
-                <div className="w-20 h-20 bg-green-300 rounded-xl" />
-            </div>
-
-            <div className="max-w-3xl text-gray-700">
-                <p>
-                    Тут ти знайдеш усе: від класики до сучасних бестселерів.
-                    Ми створили місце, де книги знаходять тебе.
-                </p>
-            </div>
-
-            <div className="flex gap-6">
-                <div className="w-40 h-40 bg-gray-300 rotate-[-5deg] rounded" />
-                <div className="w-40 h-40 bg-gray-300 rotate-[5deg] rounded" />
-            </div>
-
-            <div className="bg-green-700 text-white p-10 rounded-2xl grid grid-cols-4 text-center gap-6">
-                <div>📚<p>Велика бібліотека</p></div>
-                <div>🚚<p>Доставка</p></div>
-                <div>💸<p>Знижки</p></div>
-                <div>🎁<p>Подарунки</p></div>
-            </div>
-
         </section>
     );
 }

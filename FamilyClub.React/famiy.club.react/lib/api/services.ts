@@ -1,5 +1,5 @@
 // src/lib/api/services.ts
-import { Configuration, ProductsApi, AuthorsApi, AuthClubMemberApi, CategoriesApi } from "./generated";
+import { Configuration, ProductsApi, AuthorsApi, AuthClubMemberApi, CategoriesApi, ReviewsApi } from "./generated";
 
 // Configuration tells the client where your backend is
 const apiConfig = new Configuration({
@@ -11,3 +11,4 @@ export const productService = new ProductsApi(apiConfig);
 export const authorService = new AuthorsApi(apiConfig);
 export const authService = new AuthClubMemberApi(apiConfig);
 export const categoriesService = new CategoriesApi(apiConfig);
+export const reviewService = new ReviewsApi(apiConfig);

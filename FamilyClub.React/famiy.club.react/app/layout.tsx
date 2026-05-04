@@ -1,11 +1,9 @@
-import { categoriesService } from "@/lib/api/services";
 import type { Metadata } from "next";
 import "../styles/globals.css";
-import Link from "next/link";
-import UpNavigation from "./layout/header/UpNavigation";
-import Footer from "@/app/layout/footer/Footer";
 import { Source_Sans_3, Roboto_Mono } from 'next/font/google';
+import UpNavigation from "./layout/header/UpNavigation";
 import DropDownList from "./layout/header/dropdownlist/DropDownList";
+import Footer from "@/app/layout/footer/Footer";
 const sourceSans = Source_Sans_3({
   subsets: ['cyrillic', 'latin'],
   variable: '--font-sans', // Назва CSS змінної для використання шрифту в стилях
@@ -23,10 +21,8 @@ export const metadata: Metadata = {
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-
-
   return (
-    <html lang="en">
+    <html lang="uk" className={`${sourceSans.variable} ${robotoMono.variable}`}>
       <body className="antialiased bg-background text-foreground font-sans">
         <header className="bg-[var(--background-main)] relative z-30 h-[72px] shadow-[0px_0px_15px_0px_#24242499]">
           <div className="max-w-7xl mx-auto flex items-center ">
@@ -42,7 +38,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         </main>
 
         <Footer />
-
       </body>
     </html>
   );
