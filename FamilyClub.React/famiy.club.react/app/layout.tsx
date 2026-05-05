@@ -1,8 +1,8 @@
-import { categoriesService } from "@/lib/api/services";
 import type { Metadata } from "next";
 import "../styles/globals.css";
-import Link from "next/link";
+import { Source_Sans_3, Roboto_Mono } from 'next/font/google';
 import UpNavigation from "./layout/header/UpNavigation";
+import DropDownList from "./layout/header/dropdownlist/DropDownList";
 import Footer from "@/app/layout/footer/Footer";
 import { Source_Sans_3, Roboto_Mono } from 'next/font/google';
 import "flag-icons/css/flag-icons.min.css";
@@ -23,26 +23,23 @@ export const metadata: Metadata = {
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-
-
   return (
-    <html lang="en">
+    <html lang="uk" className={`${sourceSans.variable} ${robotoMono.variable}`}>
       <body className="antialiased bg-background text-foreground font-sans">
-        <header className="h-[75px] bg-[#F5F3EE] shadow-sm">
-          <div className="h-659px">
+        <header className="bg-[var(--background-main)] relative z-30 h-[72px] shadow-[0px_0px_15px_0px_#24242499]">
+          <div className="max-w-7xl mx-auto flex items-center ">
             <UpNavigation />
           </div>
-      
-
-          {/* <Link href='/categories/all' className="text-primary-action hover:underline">Categories</Link> */}
         </header>
+        <div className="relative z-10 max-w-7xl mx-auto flex gap-2 -mt-[60px] left-[22px]">
+          <DropDownList />
+        </div>
 
-        <main className="p-6 max-w-7xl mx-auto min-h-screen">
+        <main className="p-6 max-w-7xl mx-auto min-h-[calc(100vh-72px)]">
           {children}
         </main>
 
         <Footer />
-
       </body>
     </html>
   );

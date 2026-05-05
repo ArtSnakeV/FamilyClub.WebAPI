@@ -11,6 +11,8 @@
     "api-sync": "npx @openapitools/openapi-generator-cli generate -i swagger.json -g typescript-fetch -o generated --additional-properties=typescriptThreePlus=true"
   },
   "dependencies": {
+    "@headlessui/react": "^2.2.10",
+    "axios": "^1.15.2",
     "bootstrap": "^5.3.8",
     "cross-env": "^10.1.0",
     "flag-icons": "^7.5.0",
