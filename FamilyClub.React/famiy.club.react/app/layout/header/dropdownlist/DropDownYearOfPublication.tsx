@@ -17,7 +17,7 @@ export default function DropDownYearOfPublication() {
 
   return (
     <Menu as="div">
-      <MenuButton className="relative w-[120px] h-[120px]">
+      <MenuButton className="relative w-[120px] h-[120px] inline-block">
         <Image
           src="/images/Rectangle144.png"
           alt="bg"
