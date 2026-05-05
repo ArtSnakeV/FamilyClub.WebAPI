@@ -5,6 +5,7 @@ import Link from "next/link";
 import UpNavigation from "./layout/header/UpNavigation";
 import Footer from "@/app/layout/footer/Footer";
 import { Source_Sans_3, Roboto_Mono } from 'next/font/google';
+import "flag-icons/css/flag-icons.min.css";
 const sourceSans = Source_Sans_3({
   subsets: ['cyrillic', 'latin'],
   variable: '--font-sans', // Назва CSS змінної для використання шрифту в стилях

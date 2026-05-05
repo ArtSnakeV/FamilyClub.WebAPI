@@ -4,11 +4,41 @@ import React from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { authService } from "@/lib/api/services";
 
 
 export default function AuthorizationPage() {
   const router = useRouter();
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+
+  // Creating form
+  const [formData, setFormData] = useState({login: "", password: ""});
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  const handleLogin = async () => {
+    if(!formData.login || !formData.password) {
+      setError("Please fill in all fields");
+      return;
+    }
+    setLoading(true);
+    try{
+      const response = await authService.apiAuthClubMemberLoginPost({
+        loginClubMemberDto: {
+          username: formData.login,
+          password: formData.password
+        }
+      });
+
+      // If we succeed
+      console.log("Login successful:", response);
+      router.push("/"); // Redirect to dashboard or home page after login
+    } catch (err) {
+      setError("Invalid login or password");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const togglePasswordVisibility = () => {
     setIsPasswordVisible(!isPasswordVisible);
@@ -126,6 +156,8 @@ export default function AuthorizationPage() {
               {/* Input Field */}
               <input
                 type="text"
+                value={formData.login}
+                onChange={(e) => setFormData({ ...formData, login: e.target.value})} // entering our login into state
                 placeholder="Введіть логін"
                 className="outline-none transition-shadow focus:shadow-md"
                 style={{
@@ -135,8 +167,8 @@ export default function AuthorizationPage() {
                   padding: '10px 20px', // padding top/bottom 10, left/right 20
                   backgroundColor: '#F5F3EE',
                   boxShadow: '0px 0px 10px 0px #00000040',
-
-                  // Text inside input specs
+                  
+                  // Text inside input specs while no value entered
                   fontFamily: 'var(--font-sans)',
                   fontWeight: 400,
                   fontSize: '24px',
@@ -178,6 +210,8 @@ export default function AuthorizationPage() {
                 <input
                   type={isPasswordVisible ? "text" : "password"}
                   placeholder="Введіть пароль"
+                  value={formData.password}
+                  onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                   className="outline-none"
                   style={{
                     width: '100%',
@@ -195,7 +229,7 @@ export default function AuthorizationPage() {
                 {/* Eye Button Container */}
                 <button
                   type="button"
-                  onClick={togglePasswordVisibility}
+                  disabled={loading}
                   className="absolute flex items-center justify-center transition-opacity hover:opacity-70"
                   style={{
                     top: '50%',
@@ -218,6 +252,7 @@ export default function AuthorizationPage() {
                       opacity: 0.5 // Matching  previous #24242480 (80 = 50% opacity)
                     }}
                   />
+                  {loading ? "..." : ""}
                 </button>
               </div>
               <style jsx>{`
@@ -229,7 +264,8 @@ export default function AuthorizationPage() {
 
             </div>
             <button
-              type="submit"
+              type="submit"              
+              onClick={handleLogin}
               style={{
                 width: '505px',
                 height: '56px',

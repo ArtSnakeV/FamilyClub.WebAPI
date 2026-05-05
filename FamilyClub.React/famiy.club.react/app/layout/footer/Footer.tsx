@@ -53,12 +53,16 @@ const Footer = () => {
                                     href="https://apple.com"
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="w-[222px] h-[61.59px] bg-brand-black rounded-[20px] flex items-center px-[16px] gap-[14px] hover:opacity-90 transition-opacity"
+                                    className="relative w-[222px] h-[61.59px] flex items-center px-[16px] gap-[14px] group overflow-visible"
                                 >
-                                    <div className="w-[60px] h-[60px] flex items-center justify-center">
+                                    {/* Цей div — це твій фон, який буде збільшуватися окремо від тексту */}
+                                    <div className="absolute inset-0 bg-brand-black group-hover:bg-[var(--color-green)] group-hover:scale-105 rounded-[20px] transition-all duration-300 -z-10"></div>
+
+                                    {/* Контент тепер не залежить від масштабу фону */}
+                                    <div className="w-[60px] h-[60px] flex items-center justify-center shrink-0">
                                         <Image src="/images/Layout/Footer/AppleIcon.svg" width={28} height={34} alt="Apple" />
                                     </div>
-                                    <div className="flex flex-col justify-center h-[42px] text-brand-white text-[14px] tracking-[-0.011em]">
+                                    <div className="flex flex-col justify-center h-[42px] text-brand-white text-[14px] tracking-[-0.011em] whitespace-nowrap">
                                         <p className="font-normal">Завантажити з</p>
                                         <p className="font-semibold">App Store</p>
                                     </div>
@@ -69,12 +73,16 @@ const Footer = () => {
                                     href="https://google.com"
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="w-[222px] h-[61.59px] bg-brand-black rounded-[20px] flex items-center px-[16px] gap-[14px] hover:opacity-90 transition-opacity"
+                                    className="relative w-[222px] h-[61.59px] flex items-center px-[16px] gap-[14px] group overflow-visible"
                                 >
-                                    <div className="w-[60px] h-[60px] flex items-center justify-center">
+                                    {/* Цей div — це твій фон, який буде збільшуватися окремо від тексту */}
+                                    <div className="absolute inset-0 bg-brand-black group-hover:bg-[var(--color-green)] group-hover:scale-105 rounded-[20px] transition-all duration-300 -z-10"></div>
+
+                                    {/* Контент тепер не залежить від масштабу фону */}
+                                    <div className="w-[60px] h-[60px] flex items-center justify-center shrink-0">
                                         <Image src="/images/Layout/Footer/GooglePlayIcon.svg" width={32} height={36} alt="Google Play" />
                                     </div>
-                                    <div className="flex flex-col justify-center h-[42px] text-brand-white text-[14px] tracking-[-0.011em]">
+                                    <div className="flex flex-col justify-center h-[42px] text-brand-white text-[14px] tracking-[-0.011em] whitespace-nowrap">
                                         <p className="font-normal">Завантажити з</p>
                                         <p className="font-semibold">Google Play</p>
                                     </div>
@@ -148,17 +156,21 @@ const Footer = () => {
 
                                 {/* 4. Social Media Row (Рядок з іконками соцмереж) */}
                                 <div className="flex items-center gap-[25px] mt-[10px] w-full">
-                                    <Link href="#" className="hover:scale-110 transition-transform">
-                                        <Image src="/images/Layout/Footer/TelegramIcon.svg" width={41} height={40} alt="Telegram" />
+                                    <Link href="#" className="group hover:scale-110 transition-transform">
+                                        <Image src="/images/Layout/Footer/TelegramIcon.svg" width={41} height={40} alt="Telegram" className="block group-hover:hidden" />
+                                        <Image src="/images/Layout/Footer/TelegramIconHover.svg" width={41} height={40} alt="Telegram" className="hidden group-hover:block" />
                                     </Link>
-                                    <Link href="#" className="hover:scale-110 transition-transform">
-                                        <Image src="/images/Layout/Footer/FacebookIcon.svg" width={40} height={40} alt="Facebook" />
+                                    <Link href="#" className="group hover:scale-110 transition-transform">
+                                        <Image src="/images/Layout/Footer/FacebookIcon.svg" width={40} height={40} alt="Facebook" className="block group-hover:hidden" />
+                                        <Image src="/images/Layout/Footer/FacebookIconHover.svg" width={40} height={40} alt="Facebook" className="hidden group-hover:block" />
                                     </Link>
-                                    <Link href="#" className="hover:scale-110 transition-transform">
-                                        <Image src="/images/Layout/Footer/InstagrammIcon.svg" width={40} height={40} alt="Instagram" />
+                                    <Link href="#" className="group hover:scale-110 transition-transform">
+                                        <Image src="/images/Layout/Footer/InstagrammIcon.svg" width={40} height={40} alt="Instagram" className="block group-hover:hidden" />
+                                        <Image src="/images/Layout/Footer/InstagrammIconHover.svg" width={40} height={40} alt="Instagram" className="hidden group-hover:block" />
                                     </Link>
-                                    <Link href="#" className="hover:scale-110 transition-transform">
-                                        <Image src="/images/Layout/Footer/ViberIcon.svg" width={40} height={40} alt="Viber" />
+                                    <Link href="#" className="group hover:scale-110 transition-transform">
+                                        <Image src="/images/Layout/Footer/ViberIcon.svg" width={40} height={40} alt="Viber" className="block group-hover:hidden" />
+                                        <Image src="/images/Layout/Footer/ViberIconHover.svg" width={40} height={40} alt="Viber" className="hidden group-hover:block" />
                                     </Link>
                                 </div>
                             </div>
