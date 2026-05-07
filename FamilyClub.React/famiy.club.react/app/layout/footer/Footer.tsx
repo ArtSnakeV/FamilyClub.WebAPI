@@ -7,9 +7,10 @@ const Footer = () => {
     const currentYear = new Date().getFullYear();
 
     return (
+
+
         /* Root footer container (Кореневий контейнер футера) */
         <footer className="w-full min-h-[696px] flex flex-col justify-end overflow-visible">
-
             {/* 
                 1. MAIN INNER BLOCK (ГОЛОВНИЙ ВНУТРІШНІЙ БЛОК) 
                 - backgroundImage: sets the footer background (встановлює фон футера)
@@ -52,12 +53,16 @@ const Footer = () => {
                                     href="https://apple.com"
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="w-[222px] h-[61.59px] bg-brand-black rounded-[20px] flex items-center px-[16px] gap-[14px] hover:opacity-90 transition-opacity"
+                                    className="relative w-[222px] h-[61.59px] flex items-center px-[16px] gap-[14px] group overflow-visible"
                                 >
-                                    <div className="w-[60px] h-[60px] flex items-center justify-center">
+                                    {/* Цей div — це твій фон, який буде збільшуватися окремо від тексту */}
+                                    <div className="absolute inset-0 bg-brand-black group-hover:bg-[var(--color-green)] group-hover:scale-105 rounded-[20px] transition-all duration-300 -z-10"></div>
+
+                                    {/* Контент тепер не залежить від масштабу фону */}
+                                    <div className="w-[60px] h-[60px] flex items-center justify-center shrink-0">
                                         <Image src="/images/Layout/Footer/AppleIcon.svg" width={28} height={34} alt="Apple" />
                                     </div>
-                                    <div className="flex flex-col justify-center h-[42px] text-brand-white text-[14px] tracking-[-0.011em]">
+                                    <div className="flex flex-col justify-center h-[42px] text-brand-white text-[14px] tracking-[-0.011em] whitespace-nowrap">
                                         <p className="font-normal">Завантажити з</p>
                                         <p className="font-semibold">App Store</p>
                                     </div>
@@ -68,12 +73,16 @@ const Footer = () => {
                                     href="https://google.com"
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="w-[222px] h-[61.59px] bg-brand-black rounded-[20px] flex items-center px-[16px] gap-[14px] hover:opacity-90 transition-opacity"
+                                    className="relative w-[222px] h-[61.59px] flex items-center px-[16px] gap-[14px] group overflow-visible"
                                 >
-                                    <div className="w-[60px] h-[60px] flex items-center justify-center">
+                                    {/* Цей div — це твій фон, який буде збільшуватися окремо від тексту */}
+                                    <div className="absolute inset-0 bg-brand-black group-hover:bg-[var(--color-green)] group-hover:scale-105 rounded-[20px] transition-all duration-300 -z-10"></div>
+
+                                    {/* Контент тепер не залежить від масштабу фону */}
+                                    <div className="w-[60px] h-[60px] flex items-center justify-center shrink-0">
                                         <Image src="/images/Layout/Footer/GooglePlayIcon.svg" width={32} height={36} alt="Google Play" />
                                     </div>
-                                    <div className="flex flex-col justify-center h-[42px] text-brand-white text-[14px] tracking-[-0.011em]">
+                                    <div className="flex flex-col justify-center h-[42px] text-brand-white text-[14px] tracking-[-0.011em] whitespace-nowrap">
                                         <p className="font-normal">Завантажити з</p>
                                         <p className="font-semibold">Google Play</p>
                                     </div>
@@ -94,74 +103,78 @@ const Footer = () => {
                         </div>
 
                         {/* --- COLUMN 3: CONTACT INFO (КОЛОНКА 3: КОНТАКТНА ІНФОРМАЦІЯ) --- */}
-<div className="flex flex-col items-start w-full md:w-[295px] gap-[25px]">
-    <h2 className="footer-title">Контакти</h2>
+                        <div className="flex flex-col items-start w-full md:w-[295px] gap-[25px]">
+                            <h2 className="footer-title">Контакти</h2>
 
-    <div className="flex flex-col items-start gap-[15px]">
+                            <div className="flex flex-col items-start gap-[15px]">
 
-        {/* 1. Address Row (Рядок з адресою) */}
-        <div className="flex items-center gap-[15px]">
-            {/* Standardized container: 34px width (Стандартизований контейнер: ширина 34px) */}
-            <div className="w-[34px] h-[34px] flex items-center justify-center">
-                <Image
-                    src="/images/Layout/Footer/AddressIcon.svg"
-                    width={21.41} 
-                    height={27.36}
-                    alt="Address"
-                />
-            </div>
-            <p className="footer-text h-[27px] flex items-center">
-                «Libria», a/c 64, Львів 79000
-            </p>
-        </div>
+                                {/* 1. Address Row (Рядок з адресою) */}
+                                <div className="flex items-center gap-[15px]">
+                                    {/* Standardized container: 34px width (Стандартизований контейнер: ширина 34px) */}
+                                    <div className="w-[34px] h-[34px] flex items-center justify-center">
+                                        <Image
+                                            src="/images/Layout/Footer/AddressIcon.svg"
+                                            width={21.41}
+                                            height={27.36}
+                                            alt="Address"
+                                        />
+                                    </div>
+                                    <p className="footer-text h-[27px] flex items-center">
+                                        «Libria», a/c 64, Львів 79000
+                                    </p>
+                                </div>
 
-        {/* 2. Phone Row (Рядок з телефоном) */}
-        <div className="flex items-center gap-[15px]">
-            <div className="w-[34px] h-[34px] flex items-center justify-center">
-                <Image
-                    src="/images/Layout/Footer/PhoneIcon.svg"
-                    width={25.6}
-                    height={28.8}
-                    alt="Phone"
-                />
-            </div>
-            <a href="tel:08005553535" className="footer-text h-[27px] flex items-center hover:opacity-70 transition-opacity">
-                0 (800) 555 35 35
-            </a>
-        </div>
+                                {/* 2. Phone Row (Рядок з телефоном) */}
+                                <div className="flex items-center gap-[15px]">
+                                    <div className="w-[34px] h-[34px] flex items-center justify-center">
+                                        <Image
+                                            src="/images/Layout/Footer/PhoneIcon.svg"
+                                            width={25.6}
+                                            height={28.8}
+                                            alt="Phone"
+                                        />
+                                    </div>
+                                    <a href="tel:08005553535" className="footer-text h-[27px] flex items-center hover:opacity-70 transition-opacity">
+                                        0 (800) 555 35 35
+                                    </a>
+                                </div>
 
-        {/* 3. Email Row (Рядок з поштою) */}
-        <div className="flex items-center gap-[15px]">
-            <div className="w-[34px] h-[34px] flex items-center justify-center">
-                <Image
-                    src="/images/Layout/Footer/EmailIcon.svg"
-                    width={25.6}
-                    height={19.2}
-                    alt="Email"
-                />
-            </div>
-            <a href="mailto:help@libria.com" className="footer-text h-[27px] flex items-center hover:opacity-70 transition-opacity">
-                help@libria.com
-            </a>
-        </div>
+                                {/* 3. Email Row (Рядок з поштою) */}
+                                <div className="flex items-center gap-[15px]">
+                                    <div className="w-[34px] h-[34px] flex items-center justify-center">
+                                        <Image
+                                            src="/images/Layout/Footer/EmailIcon.svg"
+                                            width={25.6}
+                                            height={19.2}
+                                            alt="Email"
+                                        />
+                                    </div>
+                                    <a href="mailto:help@libria.com" className="footer-text h-[27px] flex items-center hover:opacity-70 transition-opacity">
+                                        help@libria.com
+                                    </a>
+                                </div>
 
-        {/* 4. Social Media Row (Рядок з іконками соцмереж) */}
-        <div className="flex items-center gap-[25px] mt-[10px] w-full">
-            <Link href="#" className="hover:scale-110 transition-transform">
-                <Image src="/images/Layout/Footer/TelegramIcon.svg" width={41} height={40} alt="Telegram" />
-            </Link>
-            <Link href="#" className="hover:scale-110 transition-transform">
-                <Image src="/images/Layout/Footer/FacebookIcon.svg" width={40} height={40} alt="Facebook" />
-            </Link>
-            <Link href="#" className="hover:scale-110 transition-transform">
-                <Image src="/images/Layout/Footer/InstagrammIcon.svg" width={40} height={40} alt="Instagram" />
-            </Link>
-            <Link href="#" className="hover:scale-110 transition-transform">
-                <Image src="/images/Layout/Footer/ViberIcon.svg" width={40} height={40} alt="Viber" />
-            </Link>
-        </div>
-    </div>
-</div>
+                                {/* 4. Social Media Row (Рядок з іконками соцмереж) */}
+                                <div className="flex items-center gap-[25px] mt-[10px] w-full">
+                                    <Link href="#" className="group hover:scale-110 transition-transform">
+                                        <Image src="/images/Layout/Footer/TelegramIcon.svg" width={41} height={40} alt="Telegram" className="block group-hover:hidden" />
+                                        <Image src="/images/Layout/Footer/TelegramIconHover.svg" width={41} height={40} alt="Telegram" className="hidden group-hover:block" />
+                                    </Link>
+                                    <Link href="#" className="group hover:scale-110 transition-transform">
+                                        <Image src="/images/Layout/Footer/FacebookIcon.svg" width={40} height={40} alt="Facebook" className="block group-hover:hidden" />
+                                        <Image src="/images/Layout/Footer/FacebookIconHover.svg" width={40} height={40} alt="Facebook" className="hidden group-hover:block" />
+                                    </Link>
+                                    <Link href="#" className="group hover:scale-110 transition-transform">
+                                        <Image src="/images/Layout/Footer/InstagrammIcon.svg" width={40} height={40} alt="Instagram" className="block group-hover:hidden" />
+                                        <Image src="/images/Layout/Footer/InstagrammIconHover.svg" width={40} height={40} alt="Instagram" className="hidden group-hover:block" />
+                                    </Link>
+                                    <Link href="#" className="group hover:scale-110 transition-transform">
+                                        <Image src="/images/Layout/Footer/ViberIcon.svg" width={40} height={40} alt="Viber" className="block group-hover:hidden" />
+                                        <Image src="/images/Layout/Footer/ViberIconHover.svg" width={40} height={40} alt="Viber" className="hidden group-hover:block" />
+                                    </Link>
+                                </div>
+                            </div>
+                        </div>
 
                     </div>
                 </div>
