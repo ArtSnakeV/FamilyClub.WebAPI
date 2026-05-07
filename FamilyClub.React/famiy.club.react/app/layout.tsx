@@ -25,15 +25,15 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     <html lang="uk" className={`${sourceSans.variable} ${robotoMono.variable}`}>
       <body className="antialiased bg-background text-foreground font-sans">
         <header className="bg-[var(--background-main)] relative z-30 h-[72px] shadow-[0px_0px_15px_0px_#24242499]">
-          <div className="max-w-7xl mx-auto flex items-center ">
+          <div className="max-w-[1220px] mx-auto flex items-center px-4 lg:px-0">
             <UpNavigation />
           </div>
         </header>
-        <div className="relative z-10 max-w-7xl mx-auto flex gap-2 -mt-[60px] left-[22px]">
+        <div className="relative z-10 max-w-[1220px] mx-auto flex gap-2 -mt-[60px] px-4 lg:px-0">
           <DropDownList />
         </div>
 
-        <main className="p-6 max-w-7xl mx-auto min-h-[calc(100vh-72px)]">
+        <main className="min-h-[calc(100vh-72px)]">
           {children}
         </main>
 

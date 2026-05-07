@@ -12,14 +12,18 @@ type BookSectionProps = {
     title: string;
     books: Book[];
     showMore?: boolean;
+    pillWidth?: number;
 };
 
-export default function BookSection({ title, books, showMore = false }: BookSectionProps) {
+export default function BookSection({ title, books, showMore = false, pillWidth }: BookSectionProps) {
     return (
         <section className="py-16">
-            <div className="mx-auto max-w-[1220px] px-4">
+            <div className="mx-auto max-w-[1220px] px-4 lg:px-0">
                 <div className="flex flex-wrap items-center justify-between gap-4">
-                    <div className="rounded-t-[10px] rounded-b-[30px] bg-[#f5f3ee] px-6 py-3 shadow-[0px_8px_8.5px_0px_rgba(0,0,0,0.5)]">
+                    <div
+                        className="flex h-[57px] items-center justify-center rounded-t-[10px] rounded-b-[30px] bg-[#f5f3ee] px-6 shadow-[0px_8px_8.5px_0px_rgba(0,0,0,0.5)]"
+                        style={pillWidth ? { width: `${pillWidth}px` } : undefined}
+                    >
                         <h2 className="font-mono text-[32px] font-bold text-[#242424] md:text-[40px]">
                             {title}
                         </h2>
@@ -31,7 +35,7 @@ export default function BookSection({ title, books, showMore = false }: BookSect
                     )}
                 </div>
 
-                <div className="mt-10 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+                <div className="mt-10 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:mt-[75px] lg:grid-cols-4 lg:gap-[60px]">
                     {books.map((book, index) => (
                         <BookCard key={`${book.title}-${index}`} {...book} />
                     ))}

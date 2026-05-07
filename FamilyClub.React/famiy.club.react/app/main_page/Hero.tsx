@@ -1,7 +1,75 @@
 export default function Hero() {
     return (
-        <section className="relative bg-[#f5f3ee] py-10">
-            <div className="relative mx-auto h-[420px] max-w-[1220px] md:h-[520px] lg:h-[659px]">
+        <section className="relative bg-[#f5f3ee]">
+            <div className="relative mx-auto hidden h-[659px] max-w-[1920px] lg:block">
+                <img
+                    alt=""
+                    className="absolute left-[-20px] top-[74px] h-[510px] w-[1960px] object-cover blur-[2.5px]"
+                    src="/images/main_page/hero/hero-background.png"
+                />
+                <div className="absolute left-[350px] top-0 h-[659px] w-[1220px] bg-[rgba(36,36,36,0.5)] blur-[50px]" />
+
+                <img
+                    alt=""
+                    className="absolute left-0 top-[458px] h-[476px] w-[383px]"
+                    src="/images/main_page/hero/hero-vines-left.png"
+                />
+                <img
+                    alt=""
+                    className="absolute left-[1532px] top-[451px] h-[452px] w-[387px]"
+                    src="/images/main_page/hero/hero-vines-right.png"
+                />
+
+                <div className="absolute left-[365px] top-[217px] h-[341px] w-[230px]">
+                    <img
+                        alt=""
+                        className="absolute inset-0 h-full w-full rotate-[-7.5deg] object-cover drop-shadow-[0px_0px_30px_rgba(245,243,238,0.9)]"
+                        src="/images/main_page/hero/hero-book-4.png"
+                    />
+                    <img
+                        alt=""
+                        className="absolute inset-0 h-full w-full rotate-[-7.5deg] object-cover"
+                        src="/images/main_page/hero/hero-book-3.png"
+                    />
+                    <img
+                        alt=""
+                        className="absolute inset-0 h-full w-full rotate-[-7.5deg] object-cover"
+                        src="/images/main_page/hero/hero-book-2.png"
+                    />
+                    <img
+                        alt=""
+                        className="absolute inset-0 h-full w-full rotate-[-7.5deg] object-cover"
+                        src="/images/main_page/hero/hero-book-1.png"
+                    />
+                </div>
+
+                <img
+                    alt="Нова твоя онлайн-бібліотека"
+                    className="absolute left-[734px] top-[184px] h-[118px] w-[835px]"
+                    src="/images/main_page/hero/hero-title.png"
+                />
+
+                <img
+                    alt=""
+                    className="absolute left-[606px] top-[217px] h-[64px] w-[114px] rotate-[3deg]"
+                    src="/images/main_page/hero/hero-arrow.png"
+                />
+
+                <img
+                    alt=""
+                    className="absolute left-[1062px] top-[405px] h-[174px] w-[609px] opacity-60"
+                    src="/images/main_page/hero/hero-cloud.png"
+                />
+
+                <p
+                    className="absolute left-[770px] top-[405px] w-[800px] text-right font-mono text-[24px] font-medium text-[#f5f3ee]"
+                    style={{ textShadow: "0px 0px 10px #242424, 0px 0px 28px #242424" }}
+                >
+                    Не знаєш, що ще почитати? Є в нас ідейка
+                </p>
+            </div>
+
+            <div className="relative mx-auto h-[520px] max-w-[1220px] px-4 py-10 lg:hidden">
                 <img
                     alt=""
                     className="absolute left-1/2 top-[40px] h-[510px] w-[min(1960px,100vw)] -translate-x-1/2 object-cover blur-[2.5px]"
@@ -9,18 +77,7 @@ export default function Hero() {
                 />
                 <div className="absolute inset-0 bg-[rgba(36,36,36,0.5)] blur-[50px]" />
 
-                <img
-                    alt=""
-                    className="absolute left-0 top-[240px] w-[240px] md:w-[320px]"
-                    src="/images/main_page/hero/hero-vines-left.png"
-                />
-                <img
-                    alt=""
-                    className="absolute right-0 top-[230px] w-[240px] md:w-[320px]"
-                    src="/images/main_page/hero/hero-vines-right.png"
-                />
-
-                <div className="absolute left-4 top-[170px] h-[341px] w-[230px] md:left-[24px] md:top-[170px]">
+                <div className="absolute left-4 top-[170px] h-[341px] w-[230px]">
                     <img
                         alt=""
                         className="absolute inset-0 h-full w-full rotate-[-7.5deg] object-cover drop-shadow-[0px_0px_30px_rgba(245,243,238,0.9)]"
