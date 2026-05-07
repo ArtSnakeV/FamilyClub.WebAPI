@@ -108,7 +108,7 @@ export default async function Home() {
         <main className="bg-[#f5f3ee] text-[#242424]">
             <Hero />
 
-            <BookSection title="Рекомендації для тебе" books={recommendationBooks} showMore />
+            <BookSection title="Рекомендації для тебе" books={recommendationBooks} showMore pillWidth={531} />
 
             <InkSection />
 
@@ -120,15 +120,15 @@ export default async function Home() {
 
             <FormatSection />
 
-            <BookSection title="Роман" books={recommendationBooks} />
-            <BookSection title="Триллери" books={recommendationBooks} />
-            <BookSection title="Наукові" books={recommendationBooks} />
-            <BookSection title="Фантастика" books={recommendationBooks} />
+            <BookSection title="Роман" books={recommendationBooks} pillWidth={206} />
+            <BookSection title="Триллери" books={recommendationBooks} pillWidth={253} />
+            <BookSection title="Наукові" books={recommendationBooks} pillWidth={211} />
+            <BookSection title="Фантастика" books={recommendationBooks} pillWidth={292} />
 
-            <BookSection title="Хіти продажу" books={recommendationBooks} />
-            <BookSection title="Новинки" books={recommendationBooks} />
-            <BookSection title="Книжкові комплекти" books={recommendationBooks} />
-            <BookSection title="Анонси" books={recommendationBooks} />
+            <BookSection title="Хіти продажу" books={recommendationBooks} pillWidth={355} />
+            <BookSection title="Новинки" books={recommendationBooks} pillWidth={237} />
+            <BookSection title="Книжкові комплекти" books={recommendationBooks} pillWidth={472} />
+            <BookSection title="Анонси" books={recommendationBooks} pillWidth={204} />
         </main>
     );
 }
