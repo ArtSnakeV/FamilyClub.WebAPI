@@ -23,6 +23,7 @@ import CoverTypeSelect from "./CoverTypeSelect";
 import BookSizeSelectForm from "./BookSizeSelectForm";
 import FormatBook from "./FormatBook";
 import Image from "next/image";
+import CategoryList from "./CategoryList";
 
 type ProductDto = {
   productName: string;
@@ -466,14 +467,6 @@ export default function AddProductPage() {
                     <FormatBook />
                   </div>
                 </div>
-
-                <div
-                  className="w-[355px] h-[482px] bg-cover bg-center "
-                  style={{
-                    backgroundImage:
-                      "url('/images/addProducts/Rectangle 305.svg')",
-                  }}
-                ></div>
               </div>
             </div>
 
@@ -499,6 +492,11 @@ export default function AddProductPage() {
                     </p>
                     <p className="h-[12px]">(можна обрати декілька)</p>
                   </div>
+                  <CategoryList
+                    categories={categories}
+                    selectedIds={form.ui.categoryIds}
+                    onToggle={toggleCategory}
+                  />
                 </div>
               </div>
             </div>
