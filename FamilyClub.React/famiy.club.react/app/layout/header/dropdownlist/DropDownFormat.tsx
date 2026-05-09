@@ -1,102 +1,68 @@
 "use client";
 
+import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
-import {
-  ProductsApi,
-  Configuration,
-  type ProductDto,
-} from "@/lib/api/generated";
+import { useEffect, useState } from "react";
+import { Configuration, ProductsApi, type ProductDto } from "@/lib/api/generated";
+import Link from "next/link";
 
-type Props = {
-  value: string | null;
-  onChange: (value: string) => void;
-};
-
-export default function DropDownFormat({ value, onChange }: Props) {
-  const [formats, setFormats] = useState<string[]>([]);
-  const [open, setOpen] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
+export default function DropDownCategories() {
+  const [products, setProducts] = useState<ProductDto[]>([]);
 
   useEffect(() => {
-    const api = new ProductsApi(
-      new Configuration({ basePath: "https://localhost:7069" }),
-    );
-
-    api.apiProductsGet().then((products: ProductDto[]) => {
-      const unique = Array.from(
-        new Set(products.map((p) => p.format).filter(Boolean)),
-      ) as string[];
-
-      setFormats(unique);
+    const config = new Configuration({
+      basePath: "https://localhost:7069",
     });
+    const api = new ProductsApi(config);
+
+    api.apiProductsGet().then(setProducts).catch(console.error);
   }, []);
-
-  useEffect(() => {
-    const handler = (e: MouseEvent) => {
-      if (ref.current && !ref.current.contains(e.target as Node)) {
-        setOpen(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handler);
-    return () => document.removeEventListener("mousedown", handler);
-  }, []);
-
-  const itemHeight = 34;
-  const labelHeight = 46;
 
   return (
-    <div ref={ref} className="relative w-[120px]">
-      <div
-        className="relative w-[120px] transition-all duration-300"
-        style={{
-          height: open ? 120 + formats.length * itemHeight : 120,
-        }}
-      >
+    <Menu as="div">
+      <MenuButton className="relative w-[120px] h-[120px]">
         <Image
           src="/images/header/Rectangle144.png"
           alt="bg"
           fill
-          className="object-fill"
+          className="object-contain"
         />
 
-        {open && (
-          <div
-            className="absolute left-0 w-full z-40"
-            style={{ bottom: labelHeight }}
-          >
-            {formats.map((format) => (
-              <div
-                key={format}
-                className="flex items-center gap-2 px-3 py-1 text-white hover:bg-white/10 cursor-pointer"
-                style={{ height: `${itemHeight}px` }}
-                onClick={() => {
-                  onChange(format);
-                  setOpen(false);
-                }}
-              >
-                <span className="w-3 h-3 rounded-full border border-white flex items-center justify-center">
-                  {value === format && (
-                    <span className="w-2 h-2 bg-white rounded-full" />
-                  )}
-                </span>
-                <span className="text-[var(--color-white)]">{format}</span>
-              </div>
-            ))}
-          </div>
-        )}
+        <span className="absolute inset-0 flex items-center justify-center text-[#F5F3EE] mt-8">
+          Формат
+        </span>
+      </MenuButton>
 
-        <div
-          className="absolute bottom-5 left-0 w-full z-30 flex items-center justify-center cursor-pointer"
-          style={{ height: `${labelHeight}px` }}
-          onClick={() => setOpen((prev) => !prev)}
-        >
-          <span className="text-[#F5F3EE] font-['Source_Sans_Pro'] font-normal text-[18px] leading-[100%]">
-            {value || "Формат"}
-          </span>
-        </div>
-      </div>
-    </div>
+      <MenuItems
+        anchor="bottom"
+        className="z-10 relative w-[120px] bg-[var(--color-green)] text-[var(--color-white)] rounded -mt-2"
+      >
+        {products.length === 0 ? (
+          <div>Loading...</div>
+        ) : (
+          products.map((product) => (
+            <MenuItem key={product.id}>
+              {({ active }) => (
+                <div className="flex flex-row items-center">
+                  <Image
+                    src="/images/header/icon.svg"
+                    alt="Icon"
+                    className="w-4 h-4 ml-2"
+                    width={16}
+                    height={16}
+                  />
+                  <Link
+                    href={`/products/${product.id}`}
+                    className={`block px-2 py-1 ${active ? "bg-green-600" : ""}`}
+                  >
+                    {product.format}
+                  </Link>
+                </div>
+              )}
+            </MenuItem>
+          ))
+        )}
+      </MenuItems>
+    </Menu>
   );
 }
