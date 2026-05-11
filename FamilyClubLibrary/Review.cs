@@ -12,7 +12,7 @@ namespace FamilyClubLibrary
         public int ProductId { get; set; } // Foreign key to Product
         public Product Product { get; set; } = default!; // Added naviagation
 
-        public int UserId { get; set; }
+        public required string UserId { get; set; }
         public ClubMember ClubMember { get; set; } = default!; // Added navigation
 
         [Range(0, 5)]
