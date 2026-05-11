@@ -23,8 +23,11 @@ import CoverTypeSelect from "./CoverTypeSelect";
 import BookSizeSelectForm from "./BookSizeSelectForm";
 import FormatBook from "./FormatBook";
 import Image from "next/image";
+import ellipse from "@/public/images/addProducts/Ellipse 36.svg";
+import plus from "@/public/images/addProducts/plus-solid-full 1.svg";
 import CategoryList from "./CategoryList";
 
+/* ---------------- TYPES ---------------- */
 type ProductDto = {
   productName: string;
   price?: number;
@@ -63,6 +66,11 @@ type FormState = {
 
 export default function AddProductPage() {
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
+  const [authors, setAuthors] = useState<AuthorDTO[]>([]);
+  const [publishers, setPublishers] = useState<PublisherDto[]>([]);
+  const [categories, setCategories] = useState<CategoryDto[]>([]);
+  const [languages, setLanguages] = useState<LanguageDto[]>([]);
 
   const [form, setForm] = useState<FormState>({
     dto: {
@@ -82,12 +90,6 @@ export default function AddProductPage() {
       bookSize: undefined,
     },
   });
-
-  const [loading, setLoading] = useState(false);
-  const [authors, setAuthors] = useState<AuthorDTO[]>([]);
-  const [publishers, setPublishers] = useState<PublisherDto[]>([]);
-  const [categories, setCategories] = useState<CategoryDto[]>([]);
-  const [languages, setLanguages] = useState<LanguageDto[]>([]);
 
   const api = new ProductsApi(
     new Configuration({ basePath: "https://localhost:7069" }),
@@ -127,6 +129,7 @@ export default function AddProductPage() {
     loadData();
   }, []);
 
+  /* ---------------- HELPERS ---------------- */
   const setDto = <K extends keyof ProductDto>(key: K, value: ProductDto[K]) => {
     setForm((prev) => ({
       ...prev,
@@ -156,11 +159,34 @@ export default function AddProductPage() {
     );
   };
 
+  /* ---------------- FILES ---------------- */
+
+  const [mainImage, setMainImage] = useState<File | null>(null);
+  const [mainPreview, setMainPreview] = useState<string | null>(null);
+
+  const [gallery, setGallery] = useState<(File | null)[]>([
+    null,
+    null,
+    null,
+    null,
+  ]);
+
+  const handleMainChange = (file: File | null) => {
+    if (!file) return;
+    setMainImage(file);
+    setMainPreview(URL.createObjectURL(file));
+  };
+
+  const handleGalleryChange = (index: number, file: File | null) => {
+    const updated = [...gallery];
+    updated[index] = file;
+    setGallery(updated);
+  };
+
+  /* ---------------- ISBN ---------------- */
+
   const handleIsbnLookup = async () => {
-    if (!form.dto.isbn || form.dto.isbn.length < 10) {
-      alert("Введіть коректний ISBN");
-      return;
-    }
+    if (!form.dto.isbn || form.dto.isbn.length < 10) return;
 
     setLoading(true);
 
@@ -172,41 +198,61 @@ export default function AddProductPage() {
       const data = await res.json();
       const book = data[`ISBN:${form.dto.isbn}`];
 
-      if (!book) {
-        alert("Книгу не знайдено");
-        return;
-      }
+      if (!book) return;
 
-      setForm((prev) => ({
-        ...prev,
+      setForm((p) => ({
+        ...p,
         dto: {
-          ...prev.dto,
-          productName: book.title ?? prev.dto.productName,
+          ...p.dto,
+          productName: book.title ?? p.dto.productName,
           description:
             typeof book.description === "string"
               ? book.description
-              : (book.description?.value ?? prev.dto.description),
-          pageCount: book.number_of_pages ?? prev.dto.pageCount,
-          publishingYear: book.publish_year
-            ? parseInt(book.publish_year, 10)
-            : prev.dto.publishingYear,
+              : (book.description?.value ?? p.dto.description),
+          pageCount: book.number_of_pages ?? p.dto.pageCount,
         },
       }));
-    } catch (err) {
-      console.error(err);
     } finally {
       setLoading(false);
     }
   };
 
+  /* ---------------- SUBMIT (FIXED) ---------------- */
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     setLoading(true);
 
     try {
+      const productImageFiles: File[] = [];
+
+      if (mainImage) productImageFiles.push(mainImage);
+      gallery.forEach((f) => f && productImageFiles.push(f));
+
       await api.apiProductsPost({
-        ...form.dto,
+        // DTO
+        productName: form.dto.productName,
+        description: form.dto.description,
+        price: form.dto.price,
+        discountPrice: form.dto.discountPrice,
+        pageCount: form.dto.pageCount,
+        publishingDate: form.dto.publishingYear
+          ? new Date(form.dto.publishingYear, 0, 1)
+          : undefined,
+        weightGrams: form.dto.weightGrams,
+        itemsInSet: form.dto.itemsInSet,
+        ageRestrictions: form.dto.ageRestrictions,
+
+        // FIX: mapping UI → API
+        originalLanguageId: form.ui.languageId,
+        format: form.ui.bookFormat,
+        publisherId: form.dto.publisherId,
+
+        // FIX ISBN naming
+        iSBN: form.dto.isbn,
+
+        // FILES
+        productImageFiles,
       });
 
       router.push("/products");
@@ -503,20 +549,108 @@ export default function AddProductPage() {
           </div>
 
           {/* --- Правий блок --- */}
-          <div className="w-[355px] flex flex-col gap-[48px]">
-            <div
-              className="w-full h-[482px] bg-cover bg-center"
-              style={{
-                backgroundImage: "url('/images/addProducts/Rectangle 305.svg')",
-              }}
-            />
 
+          <div className="w-[355px] flex flex-col gap-[48px]">
+            <div className="flex justify-center items-center">
+              <p className="font-['Roboto_Mono'] font-bold text-[48px] leading-[150%] tracking-[-0.011em] text-center">
+                Головне фото
+              </p>
+            </div>
             <div
-              className="w-full h-[400px] bg-cover bg-center"
+              className="h-[482px] bg-cover bg-center flex flex-col items-center justify-center"
               style={{
                 backgroundImage: "url('/images/addProducts/Rectangle 305.svg')",
               }}
-            />
+            >
+              <label className="flex gap-[30px] flex-col items-center justify-center cursor-pointer">
+                <input
+                  type="file"
+                  accept="image/*"
+                  hidden
+                  onChange={(e) =>
+                    handleMainChange(e.target.files ? e.target.files[0] : null)
+                  }
+                />
+
+                {mainPreview ? (
+                  <div className="w-full h-full relative overflow-hidden">
+                    <img
+                      src={mainPreview}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                ) : (
+                  <div className="w-full">
+                    <div className="relative w-[146px] h-[146px] flex items-center justify-center">
+                      <Image src={ellipse} alt="ellipse" />
+                      <Image
+                        src={plus}
+                        alt="plus"
+                        className="absolute w-[88px] h-[88px]"
+                      />
+                    </div>
+                    <div className="w-full mt-[20px]">
+                      <p className="mt-4 text-[18px] text-center">
+                        JPG, PNG, max 5MB, 345x500px
+                      </p>
+                    </div>
+                  </div>
+                )}
+              </label>
+            </div>
+
+            <div className="h-[540px] flex flex-col items-center">
+              <div className="w-full flex justify-center items-center mb-4">
+                <p className="font-['Roboto_Mono'] font-bold text-[24px] leading-[150%] tracking-[-0.011em] text-center">
+                  Додаткові фото
+                </p>
+              </div>
+
+              <div className="grid grid-cols-2 gap-[46px]">
+                {gallery.map((item, index) => (
+                  <label
+                    key={index}
+                    className="w-[157px] h-[213px]  border-[#242424] rounded-[9px] bg-cover bg-center bg-no-repeat flex items-center justify-center"
+                    style={{
+                      backgroundImage:
+                        "url('/images/addProducts/Rectangle 305.svg')",
+                    }}
+                  >
+                    <input
+                      type="file"
+                      accept="image/*"
+                      hidden
+                      onChange={(e) =>
+                        handleGalleryChange(
+                          index,
+                          e.target.files ? e.target.files[0] : null,
+                        )
+                      }
+                    />
+
+                    {item ? (
+                      <img
+                        src={URL.createObjectURL(item)}
+                        className="w-full h-full object-contain"
+                      />
+                    ) : (
+                      <div className="relative flex items-center justify-center">
+                        <Image
+                          src={ellipse}
+                          alt="ellipse"
+                          className="w-[64px] h-[64px]"
+                        />
+                        <Image
+                          src={plus}
+                          alt="plus"
+                          className="absolute w-[38px] h-[38px]"
+                        />
+                      </div>
+                    )}
+                  </label>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </form>

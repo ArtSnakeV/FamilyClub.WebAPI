@@ -23,16 +23,7 @@ export default function UpNavigation() {
           <div className="flex items-center bg-[#F5F3EE] relative left-[20px] rounded-[25px] px-4 h-[50px] w-[406px] shadow-[0px_0px_10px_0px_#24242466]">
             <SearchIco />
           </div>
-
           <div className="flex relative items-center gap-4 h-[50px] w-[384px] left-[6vw] ">
-            <div className="flex relative items-center h-[50px] w-[194px] ">
-              <Link href="/account">
-                <UserCabinetButton />
-              </Link>
-              <Link href="/authorization">
-                <AuthorizationButton />
-              </Link>
-            </div>
             <div className="flex items-center h-[50px] w-[170px] mt-[8px] gap-[10px]">
               <div className=" relative w-[50px] h-[50px] ">
                 <IcoPeople />
@@ -47,6 +38,14 @@ export default function UpNavigation() {
                   <ShoppingCartButton />
                 </Link>
               </div>
+            </div>
+            <div className="flex relative items-center h-[50px] w-[194px] ">
+              <Link href="/account">
+                <UserCabinetButton />
+              </Link>
+              <Link href="/authorization">
+                <AuthorizationButton />
+              </Link>
             </div>
           </div>
         </div>
