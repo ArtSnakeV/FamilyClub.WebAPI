@@ -4,7 +4,7 @@ import { Source_Sans_3, Roboto_Mono } from 'next/font/google';
 import UpNavigation from "./layout/header/UpNavigation";
 import DropDownList from "./layout/header/dropdownlist/DropDownList";
 import Footer from "@/app/layout/footer/Footer";
-import "flag-icons/css/flag-icons.min.css";
+// import "flag-icons/css/flag-icons.min.css";
 const sourceSans = Source_Sans_3({
   subsets: ['cyrillic', 'latin'],
   variable: '--font-sans', // Назва CSS змінної для використання шрифту в стилях

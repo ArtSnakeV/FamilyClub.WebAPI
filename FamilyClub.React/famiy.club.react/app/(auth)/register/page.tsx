@@ -686,6 +686,43 @@ export default function RegistrationPage() {
         {loading ? "Завантаження..." : "Зареєструватися"}
     </span>
 </button>
+
+                    {/* Login Link Block */}
+                    <div style={{
+                        width: '505px',
+                        height: '36px',
+                        marginTop: '30px', // Відступ від тексту реєстрації
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        opacity: 1,
+                        // Angle: 0 deg (не потребує додаткових стилів)
+                    }}>
+                        <p style={{
+                            fontFamily: 'Source Sans Pro, sans-serif',
+                            fontWeight: 400,
+                            fontStyle: 'normal',
+                            fontSize: '24px',
+                            lineHeight: '150%',
+                            letterSpacing: '-0.011em', // -1.1%
+                            textAlign: 'center',
+                            color: '#242424', // чорний
+                            margin: 0
+                        }}>
+                            Вже маєте акаунт?{' '}
+                            <Link
+                                href="/login"
+                                style={{
+                                    fontWeight: 600, // Робимо "Увійти" трохи жирнішим для акценту
+                                    textDecoration: 'underline',
+                                    cursor: 'pointer',
+                                    color: 'var(--color-green)' // Використовуємо зелений з кольорів бренду
+                                }}
+                            >
+                                Увійти
+                            </Link>
+                        </p>
+                    </div>
                 </div>
 
             </div>

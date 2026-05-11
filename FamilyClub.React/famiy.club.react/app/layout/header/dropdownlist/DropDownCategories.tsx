@@ -23,7 +23,7 @@ export default function DropDownCategories() {
     <Menu as="div">
       <MenuButton className="relative w-[120px] h-[120px]">
         <Image
-          src="/images/Rectangle144.png"
+          src="/images/header/Rectangle144.png"
           alt="bg"
           fill
           className="object-contain"
