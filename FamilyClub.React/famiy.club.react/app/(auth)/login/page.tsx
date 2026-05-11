@@ -12,17 +12,19 @@ export default function AuthorizationPage() {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   // Creating form
-  const [formData, setFormData] = useState({login: "", password: ""});
+  const [formData, setFormData] = useState({ login: "", password: "" });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  // For password `eye` images
+  const [isHovered, setIsHovered] = useState(false);
 
   const handleLogin = async () => {
-    if(!formData.login || !formData.password) {
+    if (!formData.login || !formData.password) {
       setError("Please fill in all fields");
       return;
     }
     setLoading(true);
-    try{
+    try {
       const response = await authService.apiAuthClubMemberLoginPost({
         loginClubMemberDto: {
           username: formData.login,
@@ -45,22 +47,40 @@ export default function AuthorizationPage() {
   };
   return (
 
-    <div className="fixed inset-0 z-[100] flex justify-end backdrop-blur-sm">
+    // <div className="fixed inset-0 z-[100] flex justify-end backdrop-blur-sm">
+    <div className="fixed inset-0 z-[100] flex justify-end">
+      {/* LEFT SIDE: Background Image */}
+      <div
+        className="absolute inset-0 z-[-1]" // flex-grow takes remaining space
+        style={{
+          backgroundImage: 'url("images/login register/background.png")', // Replace with your path
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat'
+        }}
+      />
 
       {/* Right Panel:
         - Width: Fits 50% of the screen, minimum 400px.
         - Background: Exact Figma linear gradient.
         - Shadow: Custom hex with 80 (50% opacity).
       */}
-      <div
+      {/* <div
         style={{
           width: '50%',
           minWidth: '600px', // Fallback for small screens
           background: 'linear-gradient(193.17deg, #C7A381 0%, #E0C3A9 54.33%, #B7895E 82.69%, #BF8D5D 100%)'
         }}
         className="relative h-full shadow-[0px_0px_30px_0px_#24242480] rounded-tl-[150px]"
+      > */}
+      <div
+        style={{
+          width: '50%',
+          minWidth: '600px',
+          background: 'linear-gradient(193.17deg, #C7A381 0%, #E0C3A9 54.33%, #B7895E 82.69%, #BF8D5D 100%)'
+        }}
+        className="relative h-screen shadow-[-20px_0_30px_rgba(0,0,0,0.3)] rounded-tl-[150px]"
       >
-
         {/* Back Button:
           - Top: 70px
           - Left: 65px (Calculated from Figma 668px - Panel Start 603px)
@@ -86,7 +106,6 @@ export default function AuthorizationPage() {
             left: '50%',
             transform: 'translateX(-50%)',
             width: '505px',
-            // We don't set a hard height here so it can grow with your form
           }}
           className="flex flex-col items-center"
         >
@@ -157,7 +176,7 @@ export default function AuthorizationPage() {
               <input
                 type="text"
                 value={formData.login}
-                onChange={(e) => setFormData({ ...formData, login: e.target.value})} // entering our login into state
+                onChange={(e) => setFormData({ ...formData, login: e.target.value })} // entering our login into state
                 placeholder="Введіть логін"
                 className="outline-none transition-shadow focus:shadow-md"
                 style={{
@@ -167,7 +186,7 @@ export default function AuthorizationPage() {
                   padding: '10px 20px', // padding top/bottom 10, left/right 20
                   backgroundColor: '#F5F3EE',
                   boxShadow: '0px 0px 10px 0px #00000040',
-                  
+
                   // Text inside input specs while no value entered
                   fontFamily: 'var(--font-sans)',
                   fontWeight: 400,
@@ -230,7 +249,10 @@ export default function AuthorizationPage() {
                 <button
                   type="button"
                   disabled={loading}
-                  className="absolute flex items-center justify-center transition-opacity hover:opacity-70"
+                  className="absolute flex items-center justify-center transition-opacity"
+                  onMouseEnter={() => setIsHovered(true)}
+                  onMouseLeave={() => setIsHovered(false)}
+                  onClick={togglePasswordVisibility}
                   style={{
                     top: '50%',
                     right: '15px',
@@ -243,13 +265,16 @@ export default function AuthorizationPage() {
                   }}
                 >
                   <img
-                    src={isPasswordVisible ? "/images/Layout/Footer/DisplayHiddenIcon.svg" : "/images/Layout/Footer/DisplayVisibleIcon.svg"}
+                    src={
+                      isPasswordVisible
+                        ? (isHovered ? "/images/login register/eye-closed-hover.svg" : "/images/login register/eye-closed-default.svg")
+                        : (isHovered ? "/images/login register/eye-open-hover.svg" : "/images/login register/eye-open-default.svg")
+                    }
                     alt="Toggle Password Visibility"
                     style={{
                       width: '27px',
                       height: '27px',
                       objectFit: 'contain',
-                      opacity: 0.5 // Matching  previous #24242480 (80 = 50% opacity)
                     }}
                   />
                   {loading ? "..." : ""}
@@ -264,7 +289,7 @@ export default function AuthorizationPage() {
 
             </div>
             <button
-              type="submit"              
+              type="submit"
               onClick={handleLogin}
               style={{
                 width: '505px',
@@ -418,12 +443,13 @@ export default function AuthorizationPage() {
             </button>
 
             {/* 5. Registration Link */}
-            <div
+            <span
               style={{
                 width: '346px',
                 height: '36px',
                 marginTop: '30px', // Matches the gap between other elements
-                display: 'flex',
+                // display: 'flex',
+                // gap: '8px', // Gap between text and link
                 alignItems: 'center',
                 justifyContent: 'center',
                 fontFamily: 'var(--font-sans)',
@@ -432,9 +458,12 @@ export default function AuthorizationPage() {
                 lineHeight: '150%',
                 letterSpacing: '-0.011em',
                 color: '#242424',
+                display: 'inline-flex',
+                whiteSpace: 'nowrap',
+                gap: '8px',
               }}
             >
-              Немає акаунту?&nbsp;
+              Немає акаунту? {' '}
               <Link
                 href="/register"
                 style={{
@@ -446,7 +475,7 @@ export default function AuthorizationPage() {
               >
                 Зареєструватися.
               </Link>
-            </div>
+            </span>
 
           </div>
 

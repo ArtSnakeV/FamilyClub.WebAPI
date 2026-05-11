@@ -154,21 +154,22 @@ const Footer = () => {
                                     </a>
                                 </div>
 
+
                                 {/* 4. Social Media Row (Рядок з іконками соцмереж) */}
                                 <div className="flex items-center gap-[25px] mt-[10px] w-full">
-                                    <Link href="#" className="group hover:scale-110 transition-transform">
-                                        <Image src="/images/Layout/Footer/TelegramIcon.svg" width={41} height={40} alt="Telegram" className="block group-hover:hidden" />
-                                        <Image src="/images/Layout/Footer/TelegramIconHover.svg" width={41} height={40} alt="Telegram" className="hidden group-hover:block" />
+                                    <Link href="#" className="group hover:scale-100 transition-transform">
+                                        <Image src="/images/Layout/Footer/TelegramIcon.svg" width={40} height={40} alt="Telegram" className="block group-hover:hidden" />
+                                        <Image src="/images/Layout/Footer/TelegramIconHover.svg" width={40} height={40} alt="Telegram" className="hidden group-hover:block" />
                                     </Link>
-                                    <Link href="#" className="group hover:scale-110 transition-transform">
+                                    <Link href="#" className="group hover:scale-100 transition-transform">
                                         <Image src="/images/Layout/Footer/FacebookIcon.svg" width={40} height={40} alt="Facebook" className="block group-hover:hidden" />
                                         <Image src="/images/Layout/Footer/FacebookIconHover.svg" width={40} height={40} alt="Facebook" className="hidden group-hover:block" />
                                     </Link>
-                                    <Link href="#" className="group hover:scale-110 transition-transform">
+                                    <Link href="#" className="group hover:scale-100 transition-transform">
                                         <Image src="/images/Layout/Footer/InstagrammIcon.svg" width={40} height={40} alt="Instagram" className="block group-hover:hidden" />
                                         <Image src="/images/Layout/Footer/InstagrammIconHover.svg" width={40} height={40} alt="Instagram" className="hidden group-hover:block" />
                                     </Link>
-                                    <Link href="#" className="group hover:scale-110 transition-transform">
+                                    <Link href="#" className="group hover:scale-100 transition-transform">
                                         <Image src="/images/Layout/Footer/ViberIcon.svg" width={40} height={40} alt="Viber" className="block group-hover:hidden" />
                                         <Image src="/images/Layout/Footer/ViberIconHover.svg" width={40} height={40} alt="Viber" className="hidden group-hover:block" />
                                     </Link>

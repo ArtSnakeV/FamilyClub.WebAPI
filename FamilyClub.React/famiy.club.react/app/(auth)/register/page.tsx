@@ -26,6 +26,8 @@ export default function RegistrationPage() {
         { code: "ie", dial: "+353" },
         { code: "gb", dial: "+44" },
     ];
+    // For password `eye` images
+    const [isHovered, setIsHovered] = useState(false);
 
     const selectCountry = (code: string, dial: string) => {
         setDetectedCountry(code);
@@ -95,8 +97,19 @@ export default function RegistrationPage() {
 
     return (
 
+        // <div className="fixed inset-0 z-[100] flex justify-end backdrop-blur-sm">
         <div className="fixed inset-0 z-[100] flex justify-end backdrop-blur-sm">
 
+            {/* LEFT SIDE: Background Image */}
+            <div
+                className="absolute inset-0 z-[-1]" // flex-grow takes remaining space
+                style={{
+                    backgroundImage: 'url("images/login register/background.png")', // Replace with your path
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                    backgroundRepeat: 'no-repeat'
+                }}
+            />
             {/* Right Panel:
         - Width: Fits 50% of the screen, minimum 400px.
         - Background: Exact Figma linear gradient.
@@ -148,7 +161,7 @@ export default function RegistrationPage() {
                         display: 'flex',
                         flexDirection: 'column',
                         gap: '15px',
-                        marginTop: '20px' // Adding spacing between blocks
+                        marginTop: '10px' // Adding spacing between blocks
                     }}>
                         <label style={{
                             width: '505px',
@@ -204,7 +217,7 @@ export default function RegistrationPage() {
                             flexDirection: 'column',
                             gap: '15px',
                             opacity: 1,
-                            marginTop: '20px' // Adding spacing between blocks
+                            marginTop: '10px' // Adding spacing between blocks
                         }}
                     >
                         {/* Label: Ваше прізвище * */}
@@ -277,7 +290,7 @@ export default function RegistrationPage() {
                             gap: '15px',
                             opacity: 1,
                             position: 'relative', // Для позиционирования выпадающего меню
-                            marginTop: '20px' // Adding spacing between blocks
+                            marginTop: '10px' // Adding spacing between blocks
                         }}
                     >
                         {/* Label */}
@@ -414,7 +427,7 @@ export default function RegistrationPage() {
                             flexDirection: 'column',
                             gap: '15px',
                             opacity: 1,
-                            marginTop: '20px' // Adding spacing between blocks
+                            marginTop: '10px' // Adding spacing between blocks
                         }}
                     >
                         {/* Label: Електронна пошта * */}
@@ -506,12 +519,19 @@ export default function RegistrationPage() {
                                 <button
                                     type="button"
                                     onClick={togglePasswordVisibility}
+                                    onMouseEnter={() => setIsHovered(true)}
+                                    onMouseLeave={() => setIsHovered(false)}
                                     className="absolute right-5 top-1/2 -translate-y-1/2 w-[30px] h-[30px] flex items-center justify-center"
                                 >
                                     <img
-                                        src={isPasswordVisible ? "/images/Layout/Footer/DisplayHiddenIcon.svg" : "/images/Layout/Footer/DisplayVisibleIcon.svg"}
-                                        alt="toggle"
-                                        style={{ width: '27.007px', height: '21px', opacity: 0.5 }}
+                                        src={
+                                            isPasswordVisible
+                                                ? (isHovered ? "/images/login register/eye-closed-hover.svg" : "/images/login register/eye-closed-default.svg")
+                                                : (isHovered ? "/images/login register/eye-open-hover.svg" : "/images/login register/eye-open-default.svg")
+                                        }
+                                        alt="toggle visibility"
+
+                                        style={{ width: '27.007px', height: '21px' }}
                                     />
                                 </button>
                             </div>
@@ -532,9 +552,13 @@ export default function RegistrationPage() {
                                     className="absolute right-5 top-1/2 -translate-y-1/2 w-[30px] h-[30px] flex items-center justify-center"
                                 >
                                     <img
-                                        src={isPasswordVisible ? "/images/Layout/Footer/DisplayHiddenIcon.svg" : "/images/Layout/Footer/DisplayVisibleIcon.svg"}
+                                        src={
+                                            isPasswordVisible
+                                                ? (isHovered ? "/images/login register/eye-closed-hover.svg" : "/images/login register/eye-closed-default.svg")
+                                                : (isHovered ? "/images/login register/eye-open-hover.svg" : "/images/login register/eye-open-default.svg")
+                                        }
                                         alt="toggle"
-                                        style={{ width: '27.007px', height: '21px', opacity: 0.5 }}
+                                        style={{ width: '27.007px', height: '21px'}}
                                     />
                                 </button>
                             </div>
@@ -548,7 +572,7 @@ export default function RegistrationPage() {
                         display: 'flex',
                         alignItems: 'center',
                         width: '505px',
-                        marginTop: '30px',
+                        marginTop: '10px',
                         gap: '15px'
                     }}>
                         {/* The Round Button Container */}
@@ -626,72 +650,72 @@ export default function RegistrationPage() {
                         `}</style>
                     </div>
                     {/* Legal Disclaimer Block */}
-<div style={{
-    width: '505px',
-    height: '54px',
-    marginTop: '20px', // Spacing from the element above
-    fontFamily: 'Source Sans Pro',
-    fontWeight: 400,
-    fontSize: '14px',
-    lineHeight: '130%', // Adjusted slightly from 100% for better readability in 3 lines
-    color: '#242424',
-    textAlign: 'left',
-    display: 'flex',
-    alignItems: 'center', // vertical-align: middle
-    opacity: 1
-}}>
-    Реєструючись, ви погоджуєтеся на зберігання і використання компанією “Libria” 
-    наданих вами особистих даних відповідно до чинного законодавства України 
-    про недоторканність особистої інформації.
-</div>
-{/* Registration Submit Button */}
-<button
-    type="submit"
-    onClick={handleRegister}
-    disabled={loading}
-    style={{
-        width: '505px',
-        height: '56px',
-        marginTop: '30px', // Spacing from the legal text
-        backgroundColor: '#005B33',
-        borderRadius: '50px',
-        padding: '10px 20px',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        gap: '10px',
-        boxShadow: '0px 0px 10px 0px #00000040',
-        border: 'none',
-        cursor: loading ? 'not-allowed' : 'pointer',
-        opacity: loading ? 0.7 : 1,
-        transition: 'all 0.2s ease',
-    }}
-    className="hover:brightness-110 active:scale-[0.98]"
->
-    {/* Text Inside Button */}
-    <span style={{
-        width: '465px',
-        height: '36px',
-        fontFamily: 'Source Sans Pro',
-        fontWeight: 400,
-        fontSize: '24px',
-        lineHeight: '150%',
-        letterSpacing: '-0.011em',
-        color: '#F5F3EE', // Figma background property for text is the fill color
-        textAlign: 'center',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center'
-    }}>
-        {loading ? "Завантаження..." : "Зареєструватися"}
-    </span>
-</button>
+                    <div style={{
+                        width: '505px',
+                        height: '54px',
+                        marginTop: '10px', // Spacing from the element above
+                        fontFamily: 'Source Sans Pro',
+                        fontWeight: 400,
+                        fontSize: '14px',
+                        lineHeight: '130%', // Adjusted slightly from 100% for better readability in 3 lines
+                        color: '#242424',
+                        textAlign: 'left',
+                        display: 'flex',
+                        alignItems: 'center', // vertical-align: middle
+                        opacity: 1
+                    }}>
+                        Реєструючись, ви погоджуєтеся на зберігання і використання компанією “Libria”
+                        наданих вами особистих даних відповідно до чинного законодавства України
+                        про недоторканність особистої інформації.
+                    </div>
+                    {/* Registration Submit Button */}
+                    <button
+                        type="submit"
+                        onClick={handleRegister}
+                        disabled={loading}
+                        style={{
+                            width: '505px',
+                            height: '56px',
+                            marginTop: '10px', // Spacing from the legal text
+                            backgroundColor: '#005B33',
+                            borderRadius: '50px',
+                            padding: '10px 20px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            gap: '10px',
+                            boxShadow: '0px 0px 10px 0px #00000040',
+                            border: 'none',
+                            cursor: loading ? 'not-allowed' : 'pointer',
+                            opacity: loading ? 0.7 : 1,
+                            transition: 'all 0.2s ease',
+                        }}
+                        className="hover:brightness-110 active:scale-[0.98]"
+                    >
+                        {/* Text Inside Button */}
+                        <span style={{
+                            width: '465px',
+                            height: '36px',
+                            fontFamily: 'Source Sans Pro',
+                            fontWeight: 400,
+                            fontSize: '24px',
+                            lineHeight: '150%',
+                            letterSpacing: '-0.011em',
+                            color: '#F5F3EE', // Figma background property for text is the fill color
+                            textAlign: 'center',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center'
+                        }}>
+                            {loading ? "Завантаження..." : "Зареєструватися"}
+                        </span>
+                    </button>
 
                     {/* Login Link Block */}
                     <div style={{
                         width: '505px',
                         height: '36px',
-                        marginTop: '30px', // Відступ від тексту реєстрації
+                        marginTop: '10px', // Відступ від тексту реєстрації
                         display: 'flex',
                         justifyContent: 'center',
                         alignItems: 'center',
@@ -713,8 +737,8 @@ export default function RegistrationPage() {
                             <Link
                                 href="/login"
                                 style={{
-                                    fontWeight: 600, // Робимо "Увійти" трохи жирнішим для акценту
-                                    textDecoration: 'underline',
+                                    // fontWeight: 600, // Робимо "Увійти" трохи жирнішим для акценту
+                                    // textDecoration: 'underline',
                                     cursor: 'pointer',
                                     color: 'var(--color-green)' // Використовуємо зелений з кольорів бренду
                                 }}
