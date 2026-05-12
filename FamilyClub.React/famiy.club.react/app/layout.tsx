@@ -25,7 +25,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html lang="uk" className={`${sourceSans.variable} ${robotoMono.variable}`}>
       <body className="antialiased bg-background text-foreground font-sans">
-        <header className="bg-[var(--background-main)] relative z-30 h-[72px] shadow-[0px_0px_15px_0px_#24242499]">
+        <header className="bg-[var(--background-main)] overflow-x-0 relative z-30 h-[72px] shadow-[0px_0px_15px_0px_#24242499]">
           <div className="max-w-[1220px] mx-auto flex items-center px-4 lg:px-0">
             <UpNavigation />
           </div>
