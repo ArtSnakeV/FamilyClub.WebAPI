@@ -7,6 +7,7 @@ import { useState, useMemo } from "react";
 import { authService } from "@/lib/api/services";
 import { AsYouType } from 'libphonenumber-js';
 import { getCountries, getCountryCallingCode } from 'libphonenumber-js';
+import { RegisterClubMemberDtoFromJSONTyped } from "@/lib/api/generated";
 
 export default function RegistrationPage() {
     const router = useRouter();
@@ -42,17 +43,16 @@ export default function RegistrationPage() {
         email: "",
         password: "",
         confirmPassword: "",
+        phoneNumber: "",
         agreeToTerms: false,
     });
+
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
 
     // For phone input formatting and country detection
     const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const input = e.target.value;
-        const parser = new AsYouType();
-        const formatted = parser.input(input);
-        const country = parser.getCountry();
 
         // Allowed characters for phone number
         const allowedChars = /^[0-9+\-().\s]*$/;
@@ -74,23 +74,42 @@ export default function RegistrationPage() {
             } else {
                 setHasMatch(false); // No match found
             }
+            formData.phoneNumber = input; // Store raw input for registration
         }
     };
     const handleRegister = async () => {
-        if (!formData.email || !formData.password || formData.password !== formData.confirmPassword) {
+        setError(""); // Reset error before validation
+        if (!formData.firstName ||
+            !formData.lastName ||
+            !formData.email ||
+            !formData.password ||
+            formData.password !== formData.confirmPassword ||
+            !formData.phoneNumber) {
             setError("Please check your input and ensure passwords match.");
             return;
         }
+        console.log("FirstName: ", formData.firstName);
         setLoading(true);
         try {
             // Logic for registration would go here
-            console.log("Registering:", formData);
+            const response = await authService.apiAuthClubMemberRegisterPost({
+                registerClubMemberDto: {
+                    email: formData.email,
+                    password: formData.password, 
+                    phoneNumber: phone,
+                    name: formData.firstName,
+                    surname: formData.lastName,
+                }
+            })
+            // If we succeed
+            console.log("Registering:", response);
             router.push("/login");
         } catch (err) {
             setError("Registration failed.");
         } finally {
             setLoading(false);
         }
+
     };
 
     const togglePasswordVisibility = () => setIsPasswordVisible(!isPasswordVisible);
@@ -174,12 +193,14 @@ export default function RegistrationPage() {
                             display: 'flex',
                             alignItems: 'center'
                         }}>
-                            Ваше ім'я
+                            Ваше ім'я *
                         </label>
                         <input
                             type="text"
-                            placeholder="Введіть логін"
+                            placeholder="Введіть ім'я"
                             className="custom-placeholder"
+                            value={formData.firstName}
+                            onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
                             style={{
                                 width: '505px',
                                 height: '56px',
@@ -199,13 +220,7 @@ export default function RegistrationPage() {
                                 color: 'var(--color-black)'
                             }}
                         />
-                        {/* Стили для placeholder */}
-                        <style jsx>{`
-                            .custom-placeholder::placeholder {
-                                color: var(--color-black);
-                                opacity: 0.5; /* Это соответствует твоему #24242480 */
-                            }
-                        `}</style>
+
                     </div>
 
                     {/* Block for Surname Input (Блок для вводу прізвища)*/}
@@ -242,7 +257,10 @@ export default function RegistrationPage() {
                         <input
                             type="text"
                             name="lastName"
+                            className="lastname-input" // Added class for custom placeholder styling
                             placeholder="Прізвище"
+                            value={formData.lastName}
+                            onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
                             style={{
                                 // Dimensions and opacity (Розміри та прозорість)
                                 width: '505px',
@@ -272,12 +290,6 @@ export default function RegistrationPage() {
                             }}
                         />
 
-                        <style jsx>{`
-                            .lastname-input::placeholder {
-                            color: var(--color-black);
-                            opacity: 0.5; /* Для достижения эффекта #24242480 */
-                            }
-                        `}</style>
                     </div>
 
                     {/* Block for Phone Number Input */}
@@ -414,9 +426,7 @@ export default function RegistrationPage() {
                             </>
                         )}
 
-                        <style jsx>{`
-                        .hover-item:hover { background-color: #E0C3A9; }
-                    `}</style>
+
                     </div>
                     {/* Block for Email Input */}
                     <div
@@ -476,13 +486,7 @@ export default function RegistrationPage() {
                             }}
                         />
 
-                        {/* Placeholder Styling */}
-                        <style jsx>{`
-                            .email-input::placeholder {
-                                color: var(--color-black);
-                                opacity: 0.5; /* Matches #24242480 (50% opacity) */
-                            }
-                        `}</style>
+
                     </div>
                     {/* PASSWORD SECTION START */}
                     <div className="flex flex-col mt-4">
@@ -492,7 +496,7 @@ export default function RegistrationPage() {
                             width: '505px', height: '30px', fontWeight: 600, fontSize: '24px',
                             lineHeight: '100%', color: '#242424', display: 'flex', alignItems: 'center'
                         }}>
-                            Password
+                            Пароль *
                         </label>
 
                         {/* Instruction Text */}
@@ -558,7 +562,7 @@ export default function RegistrationPage() {
                                                 : (isHovered ? "/images/login register/eye-open-hover.svg" : "/images/login register/eye-open-default.svg")
                                         }
                                         alt="toggle"
-                                        style={{ width: '27.007px', height: '21px'}}
+                                        style={{ width: '27.007px', height: '21px' }}
                                     />
                                 </button>
                             </div>
@@ -642,12 +646,6 @@ export default function RegistrationPage() {
                             Погоджуюсь з умовами використання
                         </span>
 
-                        <style jsx>{`
-                            @keyframes fadeIn {
-                                from { opacity: 0; transform: scale(0.5); }
-                                to { opacity: 1; transform: scale(1); }
-                            }
-                        `}</style>
                     </div>
                     {/* Legal Disclaimer Block */}
                     <div style={{
@@ -754,6 +752,19 @@ export default function RegistrationPage() {
     );
 }
 <style jsx>{`
+.custom-placeholder::placeholder,
+    .lastname-input::placeholder,
+    .email-input::placeholder {
+        color: var(--color-black);
+        opacity: 0.5;
+    }
+    .hover-item:hover { 
+        background-color: #E0C3A9; 
+    }
+    @keyframes tickPop {
+        from { opacity: 0; transform: rotate(45deg) scale(0.5); }
+        to { opacity: 1; transform: rotate(45deg) scale(1); }
+    }
     @keyframes tickIn {
         0% { 
             opacity: 0; 
@@ -763,5 +774,35 @@ export default function RegistrationPage() {
             opacity: 1; 
             transform: rotate(45deg) scale(1); 
         }
+    }
+
+    @keyframes tickIn {
+        0% { 
+            opacity: 0; 
+            transform: rotate(45deg) scale(0.5); 
+        }
+        100% { 
+            opacity: 1; 
+            transform: rotate(45deg) scale(1); 
+        }
+    }
+
+
+
+    /* Додамо стилі для самої галочки, якщо вона у вас є */
+    .success-tick {
+        display: inline-block;
+        width: 12px;
+        height: 24px;
+        border-right: 3px solid var(--color-green);
+        border-bottom: 3px solid var(--color-green);
+        transform: rotate(45deg);
+        animation: tickIn 0.5s ease-out forwards;
+    }
+
+    /* Стиль для посилання при наведенні */
+    a:hover {
+        text-decoration: underline;
+        opacity: 0.8;
     }
 `}</style>
