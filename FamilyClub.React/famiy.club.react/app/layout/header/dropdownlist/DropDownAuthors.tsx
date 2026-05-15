@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 
 export default function DropDownAuthors() {
   const [authors, setAuthors] = useState<AuthorDTO[]>([]);
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     const config = new Configuration({
@@ -17,6 +18,10 @@ export default function DropDownAuthors() {
 
     api.apiAuthorsGet().then(setAuthors).catch(console.error);
   }, []);
+
+  const filtered = authors.filter((a) =>
+    a.authorName?.toLowerCase().includes(search.toLowerCase()),
+  );
 
   return (
     <Menu as="div">
@@ -37,10 +42,41 @@ export default function DropDownAuthors() {
         anchor="bottom"
         className="z-10 relative w-[120px] bg-[var(--color-green)] text-[var(--color-white)] rounded -mt-2"
       >
-        {authors.length === 0 ? (
-          <div>Loading...</div>
+        {/* Пошук */}
+        <div className="relative px-2 pt-2 pb-1">
+          <Image
+            src="/images/header/Rectangle 58.svg"
+            alt="search bg"
+            width={110}
+            height={40}
+            className="w-full"
+          />
+          <div className="absolute inset-0 flex items-center px-4">
+            <input
+              type="text"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              onClick={(e) => e.stopPropagation()}
+              className="w-full bg-transparent outline-none text-gray-800 text-xs ml-1"
+              placeholder=""
+            />
+            <div className="absolute mr-2 w-[16px] h-[16px]">
+              <Image
+                src="/images/header/zoom_out_24px.svg"
+                alt="search icon"
+                width={14}
+                height={14}
+                className="shrink-0"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Список */}
+        {filtered.length === 0 ? (
+          <div className="px-2 py-1 text-sm">Не знайдено</div>
         ) : (
-          authors.map((author) => (
+          filtered.map((author) => (
             <MenuItem key={author.id}>
               {({ active }) => (
                 <div className="flex flex-row items-center">

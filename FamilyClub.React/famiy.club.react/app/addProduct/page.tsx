@@ -26,6 +26,7 @@ import Image from "next/image";
 import ellipse from "@/public/images/addProducts/Ellipse 36.svg";
 import plus from "@/public/images/addProducts/plus-solid-full 1.svg";
 import CategoryList from "./CategoryList";
+import ConditionOfTheGoods from "./ConditionOfTheGoods";
 
 /* ---------------- TYPES ---------------- */
 type ProductDto = {
@@ -54,6 +55,7 @@ type ProductUi = {
   coverType: "hard" | "soft";
   bookFormat?: "ebook" | "audio";
   availability: "available" | "unavailable" | "preorder";
+  conditionOfTheGoods?: string;
 
   leaveOldImages: boolean;
   quantityInStock?: number;
@@ -88,6 +90,7 @@ export default function AddProductPage() {
       leaveOldImages: false,
       quantityInStock: undefined,
       bookSize: undefined,
+      conditionOfTheGoods: undefined,
     },
   });
 
@@ -265,395 +268,475 @@ export default function AddProductPage() {
   };
 
   return (
-    <div
-      className="w-full flex flex-col justify-center bg-cover bg-center relative -top-[98px] pt-[72px] pb-[120px]"
-      style={{
-        backgroundImage: "url('/images/addProducts/Rectangle 312.svg')",
-      }}
-    >
-      <div className="flex flex-col items-center">
-        <h1 className="text-[var(--color-black)] w-[800px] font-['Roboto_Mono'] font-bold text-[64px] leading-[150%] tracking-[-0.011em] text-center">
-          Додати нову книгу
-        </h1>
-        <p className="text-[var(--color-black)] -mt-4 font-sans font-normal text-[32px] leading-[150%] tracking-[-0.011em] text-center align-middle">
-          Заповни інформацію
-        </p>
-      </div>
-      <form onSubmit={handleSubmit}>
-        <div className="w-full flex mt-[48px] gap-[4vw] justify-center">
-          {/* --- Лівий блок --- */}
-          <div className="w-[645px] flex flex-col ">
-            <div className="w-full h-[720px] flex">
-              <div
-                className="w-full h-full bg-cover bg-center"
-                style={{
-                  backgroundImage:
-                    "url('/images/addProducts/Rectangle 313.svg')",
-                }}
-              >
+    <div className="w-full min-h-screen flex flex-col">
+      <div
+        className="relative w-[1200px] pb-[60px] -mt-[68px] mx-auto bg-cover bg-center bg-no-repeat"
+        style={{
+          backgroundImage: "url('/images/addProducts/Rectangle 312.svg')",
+        }}
+      >
+        <div className="flex flex-col items-center mt-[80px]">
+          <h1 className="text-[var(--color-black)] w-[800px] font-['Roboto_Mono'] font-bold text-[64px] leading-[150%] tracking-[-0.011em] text-center">
+            Додати нову книгу
+          </h1>
+          <p className="text-[var(--color-black)] -mt-4 font-sans font-normal text-[32px] leading-[150%] tracking-[-0.011em] text-center align-middle">
+            Заповни інформацію
+          </p>
+        </div>
+        <form onSubmit={handleSubmit}>
+          <div className="w-full flex mt-[48px] gap-[4vw] justify-center">
+            {/* --- Лівий блок --- */}
+            <div className="w-[645px] flex flex-col ">
+              <div className="w-full h-[720px] flex">
                 <div
-                  className="-ml-[10px] mt-[48px] bg-cover bg-center w-[420px] h-[72px] flex items-center justify-center"
+                  className="w-full h-full bg-cover bg-center"
                   style={{
                     backgroundImage:
-                      "url('/images/addProducts/Rectangle 302.svg')",
+                      "url('/images/addProducts/Rectangle 313.svg')",
                   }}
                 >
-                  <p className="text-[var(--color-white)] font-['Roboto_Mono'] font-semibold text-[24px] leading-[150%] tracking-[-0.011em] pb-[10px]">
-                    Основна інформація
-                  </p>
-                </div>
-
-                <div className="w-[560px] mt-[6px] ml-[38px] flex flex-col gap-2">
-                  <div className="flex flex-col gap-1">
-                    <p className="text-[var(--color-black)] font-sans-pro font-normal text-[24px] leading-[150%] tracking-[-0.011em]">
-                      Назва книги *
-                    </p>
-                    <input
-                      name="productName"
-                      placeholder="Назва"
-                      value={form.dto.productName}
-                      onChange={(e) => setDto("productName", e.target.value)}
-                      className="input rounded-[9px] bg-[var(--color-white)] shadow-[0px_0px_10px_0px_#00000040] h-[44px]"
-                    />
-                  </div>
-
-                  <div className="flex flex-col gap-1">
-                    <AuthorSelectForm
-                      authors={authors}
-                      value={form.ui.authorId}
-                      onChange={(id) => setUi("authorId", id)}
-                    />
-                  </div>
-
-                  <div className="flex flex-col gap-1">
-                    <PublisherSelectForm
-                      publishers={publishers}
-                      value={form.dto.publisherId}
-                      onChange={(id) => setDto("publisherId", id)}
-                    />
-                  </div>
-
-                  <div className="flex flex-col gap-1">
-                    <p className="text-[var(--color-black)] font-sans-pro font-normal text-[24px] leading-[150%] tracking-[-0.011em]">
-                      Опис *
-                    </p>
-                    <textarea
-                      name="description"
-                      placeholder="Опис книги"
-                      onChange={(e) => setDto("description", e.target.value)}
-                      className="input-field h-[120px] resize-none input rounded-[9px] bg-[var(--color-white)] shadow-[0px_0px_10px_0px_#00000040]"
-                    />
-                  </div>
-
-                  <div className="flex flex-col gap-1 h-[88px] pb-[20px]">
-                    <ISBNForm
-                      value={form.dto.isbn ?? ""}
-                      loading={loading}
-                      onChange={(v) => setDto("isbn", v)}
-                      onLookup={handleIsbnLookup}
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-            {/* --- Характеристики --- */}
-            <div className="w-full h-[950px] flex mt-[48px]">
-              <div
-                className="w-full h-full bg-cover bg-center"
-                style={{
-                  backgroundImage:
-                    "url('/images/addProducts/Rectangle 314.svg')",
-                }}
-              >
-                <div
-                  className="-ml-[10px] mt-[48px] bg-cover bg-center w-[420px] h-[72px] flex items-center justify-center"
-                  style={{
-                    backgroundImage:
-                      "url('/images/addProducts/Rectangle 302.svg')",
-                  }}
-                >
-                  <p className="text-[var(--color-white)] font-['Roboto_Mono'] font-semibold text-[24px] leading-[150%] tracking-[-0.011em] pb-[10px]">
-                    Характеристики
-                  </p>
-                </div>
-
-                <div className="w-[560px]  mt-[6px] ml-[38px] flex flex-col gap-2">
-                  <div className="flex flex-row gap-4 justify-between p-2 h-[88px]">
-                    <div className="flex flex-col gap-1 w-[250px]">
-                      <LanguageSelectForm
-                        languages={languages}
-                        value={form.ui.languageId}
-                        onChange={(id) => setUi("languageId", id)}
-                      />
-                    </div>
-                    <div className="flex flex-col gap-1 w-[250px]">
-                      <p className="text-[var(--color-black)] font-sans-pro font-normal text-[24px] leading-[150%] tracking-[-0.011em]">
-                        Рік видання *
-                      </p>
-                      <input
-                        className="input-field rounded-[9px] bg-[var(--color-white)] shadow-[0px_0px_10px_0px_#00000040] h-[44px]"
-                        type="number"
-                        placeholder={String(new Date().getFullYear())}
-                        value={form.dto.publishingYear ?? ""}
-                        onChange={(e) =>
-                          setDto(
-                            "publishingYear",
-                            e.target.value === ""
-                              ? undefined
-                              : Number(e.target.value),
-                          )
-                        }
-                      />
-                    </div>
-                  </div>
-
-                  <div className="flex flex-row gap-4 justify-between p-2 h-[88px]">
-                    <div className="flex flex-col gap-1 w-[250px]">
-                      <AgeRestrictions
-                        value={form.dto.ageRestrictions}
-                        onChange={(v) => setDto("ageRestrictions", v)}
-                      />
-                    </div>
-                    <div className="flex flex-col gap-1 w-[250px]">
-                      <p className="text-[var(--color-black)] font-sans-pro font-normal text-[24px] leading-[150%] tracking-[-0.011em]">
-                        Кількість сторінок *
-                      </p>
-                      <input
-                        className="input-field rounded-[9px] bg-[var(--color-white)] shadow-[0px_0px_10px_0px_#00000040] h-[44px]"
-                        type="number"
-                        placeholder="567"
-                        value={form.dto.pageCount ?? ""}
-                        onChange={(e) =>
-                          setDto(
-                            "pageCount",
-                            e.target.value === ""
-                              ? undefined
-                              : Number(e.target.value),
-                          )
-                        }
-                      />
-                    </div>
-                  </div>
-
-                  <div className="flex flex-row gap-4 justify-between p-2 h-[88px]">
-                    <div className="flex flex-col gap-1 w-[250px]">
-                      <BookSizeSelectForm
-                        value={form.ui.bookSize}
-                        onChange={(v) => setUi("bookSize", v)}
-                      />
-                    </div>
-                    <div className="flex flex-col gap-1 w-[250px]">
-                      <p className="text-[var(--color-black)] font-sans-pro font-normal text-[24px] leading-[150%] tracking-[-0.011em]">
-                        Вага
-                      </p>
-                      <input
-                        className="input-field rounded-[9px] bg-[var(--color-white)] shadow-[0px_0px_10px_0px_#00000040] h-[44px]"
-                        type="number"
-                        placeholder="1180g"
-                        value={form.dto.weightGrams ?? ""}
-                        onChange={(e) =>
-                          setDto(
-                            "weightGrams",
-                            e.target.value === ""
-                              ? undefined
-                              : Number(e.target.value),
-                          )
-                        }
-                      />
-                    </div>
-                  </div>
-
-                  <div className="flex flex-col gap-1 p-2 h-[88px]">
-                    <CoverTypeSelect
-                      value={form.ui.coverType}
-                      onChange={(v) => setUi("coverType", v)}
-                    />
-                  </div>
-
-                  <div className="flex flex-row gap-1 h-[164px] justify-between p-2">
-                    <div className="flex flex-col gap-1 w-[250px]">
-                      <p className="text-[var(--color-black)] font-sans-pro font-normal text-[24px] leading-[150%] tracking-[-0.011em]">
-                        Кількість товару в наявності
-                      </p>
-                      <input
-                        className="input-field rounded-[9px] bg-[var(--color-white)] shadow-[0px_0px_10px_0px_#00000040] h-[44px]"
-                        type="number"
-                        value={form.ui.quantityInStock ?? ""}
-                        onChange={(e) =>
-                          setUi(
-                            "quantityInStock",
-                            e.target.value === ""
-                              ? undefined
-                              : Number(e.target.value),
-                          )
-                        }
-                      />
-                    </div>
-                    <div className="flex flex-col gap-1 w-[250px]">
-                      <p className="text-[var(--color-black)] font-sans-pro font-normal text-[24px] leading-[150%] tracking-[-0.011em]">
-                        Кількість товару в наборі
-                      </p>
-                      <input
-                        className="input-field rounded-[9px] bg-[var(--color-white)] shadow-[0px_0px_10px_0px_#00000040] h-[44px]"
-                        type="number"
-                        value={form.dto.itemsInSet ?? ""}
-                        onChange={(e) =>
-                          setDto(
-                            "itemsInSet",
-                            e.target.value === ""
-                              ? undefined
-                              : Number(e.target.value),
-                          )
-                        }
-                      />
-                    </div>
-                  </div>
-
-                  <div className="flex flex-col h-[200px] pb-[20px]">
-                    <FormatBook />
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* --- Жанри --- */}
-            <div className="w-[645px] h-[622px] flex mt-[48px]">
-              <div
-                className="w-full h-full bg-cover bg-center"
-                style={{
-                  backgroundImage:
-                    "url('/images/addProducts/Rectangle 314.png')",
-                }}
-              >
-                <div
-                  className="-ml-[10px] mt-[48px] bg-cover bg-center w-[312px] h-[77px] text-[var(--color-white)]"
-                  style={{
-                    backgroundImage:
-                      "url('/images/addProducts/Rectangle 304.png')",
-                  }}
-                >
-                  <div className="ml-[60px] w-[262px] gap-4 flex flex-col">
-                    <p className="h-[25px] font-['Roboto_Mono'] font-semibold text-[32px] leading-[150%] tracking-[-0.011em] ">
-                      Жанри
-                    </p>
-                    <p className="h-[12px]">(можна обрати декілька)</p>
-                  </div>
-                  <CategoryList
-                    categories={categories}
-                    selectedIds={form.ui.categoryIds}
-                    onToggle={toggleCategory}
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* --- Правий блок --- */}
-
-          <div className="w-[355px] flex flex-col gap-[48px]">
-            <div className="flex justify-center items-center">
-              <p className="font-['Roboto_Mono'] font-bold text-[48px] leading-[150%] tracking-[-0.011em] text-center">
-                Головне фото
-              </p>
-            </div>
-            <div
-              className="h-[482px] bg-cover bg-center flex flex-col items-center justify-center"
-              style={{
-                backgroundImage: "url('/images/addProducts/Rectangle 305.svg')",
-              }}
-            >
-              <label className="flex gap-[30px] flex-col items-center justify-center cursor-pointer">
-                <input
-                  type="file"
-                  accept="image/*"
-                  hidden
-                  onChange={(e) =>
-                    handleMainChange(e.target.files ? e.target.files[0] : null)
-                  }
-                />
-
-                {mainPreview ? (
-                  <div className="w-full h-full relative overflow-hidden">
-                    <img
-                      src={mainPreview}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                ) : (
-                  <div className="w-full">
-                    <div className="relative w-[146px] h-[146px] flex items-center justify-center">
-                      <Image src={ellipse} alt="ellipse" />
-                      <Image
-                        src={plus}
-                        alt="plus"
-                        className="absolute w-[88px] h-[88px]"
-                      />
-                    </div>
-                    <div className="w-full mt-[20px]">
-                      <p className="mt-4 text-[18px] text-center">
-                        JPG, PNG, max 5MB, 345x500px
-                      </p>
-                    </div>
-                  </div>
-                )}
-              </label>
-            </div>
-
-            <div className="h-[540px] flex flex-col items-center">
-              <div className="w-full flex justify-center items-center mb-4">
-                <p className="font-['Roboto_Mono'] font-bold text-[24px] leading-[150%] tracking-[-0.011em] text-center">
-                  Додаткові фото
-                </p>
-              </div>
-
-              <div className="grid grid-cols-2 gap-[46px]">
-                {gallery.map((item, index) => (
-                  <label
-                    key={index}
-                    className="w-[157px] h-[213px]  border-[#242424] rounded-[9px] bg-cover bg-center bg-no-repeat flex items-center justify-center"
+                  <div
+                    className="-ml-[10px] mt-[48px] bg-cover bg-center w-[420px] h-[72px] flex items-center justify-center"
                     style={{
                       backgroundImage:
-                        "url('/images/addProducts/Rectangle 305.svg')",
+                        "url('/images/addProducts/Rectangle 302.svg')",
                     }}
                   >
-                    <input
-                      type="file"
-                      accept="image/*"
-                      hidden
-                      onChange={(e) =>
-                        handleGalleryChange(
-                          index,
-                          e.target.files ? e.target.files[0] : null,
-                        )
-                      }
-                    />
+                    <p className="text-[var(--color-white)] font-['Roboto_Mono'] font-semibold text-[24px] leading-[150%] tracking-[-0.011em] pb-[10px]">
+                      Основна інформація
+                    </p>
+                  </div>
 
-                    {item ? (
-                      <img
-                        src={URL.createObjectURL(item)}
-                        className="w-full h-full object-contain"
+                  <div className="w-[560px] mt-[6px] ml-[38px] flex flex-col gap-2">
+                    <div className="flex flex-col gap-1">
+                      <p className="text-[var(--color-black)] font-sans-pro font-normal text-[24px] leading-[150%] tracking-[-0.011em]">
+                        Назва книги *
+                      </p>
+                      <input
+                        name="productName"
+                        placeholder="Назва"
+                        value={form.dto.productName}
+                        onChange={(e) => setDto("productName", e.target.value)}
+                        className="input rounded-[9px] bg-[var(--color-white)] shadow-[0px_0px_10px_0px_#00000040] h-[44px]"
                       />
-                    ) : (
-                      <div className="relative flex items-center justify-center">
-                        <Image
-                          src={ellipse}
-                          alt="ellipse"
-                          className="w-[64px] h-[64px]"
+                    </div>
+
+                    <div className="flex flex-col gap-1">
+                      <AuthorSelectForm
+                        authors={authors}
+                        value={form.ui.authorId}
+                        onChange={(id) => setUi("authorId", id)}
+                      />
+                    </div>
+
+                    <div className="flex flex-col gap-1">
+                      <PublisherSelectForm
+                        publishers={publishers}
+                        value={form.dto.publisherId}
+                        onChange={(id) => setDto("publisherId", id)}
+                      />
+                    </div>
+
+                    <div className="flex flex-col gap-1">
+                      <p className="text-[var(--color-black)] font-sans-pro font-normal text-[24px] leading-[150%] tracking-[-0.011em]">
+                        Опис *
+                      </p>
+                      <textarea
+                        name="description"
+                        placeholder="Опис книги"
+                        onChange={(e) => setDto("description", e.target.value)}
+                        className="input-field h-[120px] resize-none input rounded-[9px] bg-[var(--color-white)] shadow-[0px_0px_10px_0px_#00000040]"
+                      />
+                    </div>
+
+                    <div className="flex flex-col gap-1 h-[88px] pb-[20px]">
+                      <ISBNForm
+                        value={form.dto.isbn ?? ""}
+                        loading={loading}
+                        onChange={(v) => setDto("isbn", v)}
+                        onLookup={handleIsbnLookup}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {/* --- Характеристики --- */}
+              <div className="w-full h-[950px] flex mt-[48px]">
+                <div
+                  className="w-full h-full bg-cover bg-center"
+                  style={{
+                    backgroundImage:
+                      "url('/images/addProducts/Rectangle 314.svg')",
+                  }}
+                >
+                  <div
+                    className="-ml-[10px] mt-[48px] bg-cover bg-center w-[420px] h-[72px] flex items-center justify-center"
+                    style={{
+                      backgroundImage:
+                        "url('/images/addProducts/Rectangle 302.svg')",
+                    }}
+                  >
+                    <p className="text-[var(--color-white)] font-['Roboto_Mono'] font-semibold text-[24px] leading-[150%] tracking-[-0.011em] pb-[10px]">
+                      Характеристики
+                    </p>
+                  </div>
+
+                  <div className="w-[560px]  mt-[6px] ml-[38px] flex flex-col gap-2">
+                    <div className="flex flex-row gap-4 justify-between p-2 h-[88px]">
+                      <div className="flex flex-col gap-1 w-[250px]">
+                        <LanguageSelectForm
+                          languages={languages}
+                          value={form.ui.languageId}
+                          onChange={(id) => setUi("languageId", id)}
                         />
+                      </div>
+                      <div className="flex flex-col gap-1 w-[250px]">
+                        <p className="text-[var(--color-black)] font-sans-pro font-normal text-[24px] leading-[150%] tracking-[-0.011em]">
+                          Рік видання *
+                        </p>
+                        <input
+                          className="input-field rounded-[9px] bg-[var(--color-white)] shadow-[0px_0px_10px_0px_#00000040] h-[44px]"
+                          type="number"
+                          placeholder={String(new Date().getFullYear())}
+                          value={form.dto.publishingYear ?? ""}
+                          onChange={(e) =>
+                            setDto(
+                              "publishingYear",
+                              e.target.value === ""
+                                ? undefined
+                                : Number(e.target.value),
+                            )
+                          }
+                        />
+                      </div>
+                    </div>
+
+                    <div className="flex flex-row gap-4 justify-between p-2 h-[88px]">
+                      <div className="flex flex-col gap-1 w-[250px]">
+                        <AgeRestrictions
+                          value={form.dto.ageRestrictions}
+                          onChange={(v) => setDto("ageRestrictions", v)}
+                        />
+                      </div>
+                      <div className="flex flex-col gap-1 w-[250px]">
+                        <p className="text-[var(--color-black)] font-sans-pro font-normal text-[24px] leading-[150%] tracking-[-0.011em]">
+                          Кількість сторінок *
+                        </p>
+                        <input
+                          className="input-field rounded-[9px] bg-[var(--color-white)] shadow-[0px_0px_10px_0px_#00000040] h-[44px]"
+                          type="number"
+                          placeholder="567"
+                          value={form.dto.pageCount ?? ""}
+                          onChange={(e) =>
+                            setDto(
+                              "pageCount",
+                              e.target.value === ""
+                                ? undefined
+                                : Number(e.target.value),
+                            )
+                          }
+                        />
+                      </div>
+                    </div>
+
+                    <div className="flex flex-row gap-4 justify-between p-2 h-[88px]">
+                      <div className="flex flex-col gap-1 w-[250px]">
+                        <BookSizeSelectForm
+                          value={form.ui.bookSize}
+                          onChange={(v) => setUi("bookSize", v)}
+                        />
+                      </div>
+                      <div className="flex flex-col gap-1 w-[250px]">
+                        <p className="text-[var(--color-black)] font-sans-pro font-normal text-[24px] leading-[150%] tracking-[-0.011em]">
+                          Вага
+                        </p>
+                        <input
+                          className="input-field rounded-[9px] bg-[var(--color-white)] shadow-[0px_0px_10px_0px_#00000040] h-[44px]"
+                          type="number"
+                          placeholder="1180g"
+                          value={form.dto.weightGrams ?? ""}
+                          onChange={(e) =>
+                            setDto(
+                              "weightGrams",
+                              e.target.value === ""
+                                ? undefined
+                                : Number(e.target.value),
+                            )
+                          }
+                        />
+                      </div>
+                    </div>
+
+                    <div className="flex flex-col gap-1 p-2 h-[88px]">
+                      <CoverTypeSelect
+                        value={form.ui.coverType}
+                        onChange={(v) => setUi("coverType", v)}
+                      />
+                    </div>
+
+                    <div className="flex flex-row gap-1 h-[164px] justify-between p-2">
+                      <div className="flex flex-col gap-1 w-[250px]">
+                        <p className="text-[var(--color-black)] font-sans-pro font-normal text-[24px] leading-[150%] tracking-[-0.011em]">
+                          Кількість товару в наявності
+                        </p>
+                        <input
+                          className="input-field rounded-[9px] bg-[var(--color-white)] shadow-[0px_0px_10px_0px_#00000040] h-[44px]"
+                          type="number"
+                          value={form.ui.quantityInStock ?? ""}
+                          onChange={(e) =>
+                            setUi(
+                              "quantityInStock",
+                              e.target.value === ""
+                                ? undefined
+                                : Number(e.target.value),
+                            )
+                          }
+                        />
+                      </div>
+                      <div className="flex flex-col gap-1 w-[250px]">
+                        <p className="text-[var(--color-black)] font-sans-pro font-normal text-[24px] leading-[150%] tracking-[-0.011em]">
+                          Кількість товару в наборі
+                        </p>
+                        <input
+                          className="input-field rounded-[9px] bg-[var(--color-white)] shadow-[0px_0px_10px_0px_#00000040] h-[44px]"
+                          type="number"
+                          value={form.dto.itemsInSet ?? ""}
+                          onChange={(e) =>
+                            setDto(
+                              "itemsInSet",
+                              e.target.value === ""
+                                ? undefined
+                                : Number(e.target.value),
+                            )
+                          }
+                        />
+                      </div>
+                    </div>
+
+                    <div className="flex flex-col h-[200px] pb-[20px]">
+                      <FormatBook />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* --- Жанри --- */}
+              <div className="w-[645px] h-[622px] flex mt-[48px]">
+                <div
+                  className="w-full h-full bg-cover bg-center"
+                  style={{
+                    backgroundImage:
+                      "url('/images/addProducts/Rectangle 314.png')",
+                  }}
+                >
+                  <div
+                    className="-ml-[10px] mt-[48px] bg-cover bg-center w-[312px] h-[77px] text-[var(--color-white)]"
+                    style={{
+                      backgroundImage:
+                        "url('/images/addProducts/Rectangle 304.png')",
+                    }}
+                  >
+                    <div className="ml-[60px] w-[262px] gap-4 flex flex-col">
+                      <p className="h-[25px] font-['Roboto_Mono'] font-semibold text-[32px] leading-[150%] tracking-[-0.011em] ">
+                        Жанри
+                      </p>
+                      <p className="h-[12px]">(можна обрати декілька)</p>
+                    </div>
+                    <CategoryList
+                      categories={categories}
+                      selectedIds={form.ui.categoryIds}
+                      onToggle={toggleCategory}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* --- Правий блок --- */}
+
+            <div className="w-[355px] flex flex-col gap-[48px]">
+              <div className="flex justify-center items-center">
+                <p className="font-['Roboto_Mono'] font-bold text-[48px] leading-[150%] tracking-[-0.011em] text-center">
+                  Головне фото
+                </p>
+              </div>
+              <div
+                className="h-[482px] bg-cover bg-center flex flex-col items-center justify-center"
+                style={{
+                  backgroundImage:
+                    "url('/images/addProducts/Rectangle 305.svg')",
+                }}
+              >
+                <label className="flex gap-[30px] flex-col items-center justify-center cursor-pointer">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    hidden
+                    onChange={(e) =>
+                      handleMainChange(
+                        e.target.files ? e.target.files[0] : null,
+                      )
+                    }
+                  />
+
+                  {mainPreview ? (
+                    <div className="w-full h-full relative  overflow-hidden">
+                      <img
+                        src={mainPreview}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  ) : (
+                    <div className="w-full flex flex-col items-center justify-center">
+                      <div className="relative w-[146px] h-[146px] flex items-center justify-center">
+                        <Image src={ellipse} alt="ellipse" />
                         <Image
                           src={plus}
                           alt="plus"
-                          className="absolute w-[38px] h-[38px]"
+                          className="absolute w-[88px] h-[88px]"
                         />
                       </div>
-                    )}
-                  </label>
-                ))}
+                      <div className="w-full mt-[20px]">
+                        <p className="mt-4 text-[18px] text-center">
+                          JPG, PNG, max 5MB, 345x500px
+                        </p>
+                      </div>
+                    </div>
+                  )}
+                </label>
+              </div>
+
+              <div className="h-[540px] flex flex-col items-center">
+                <div className="w-full flex justify-center items-center mb-4">
+                  <p className="font-['Roboto_Mono'] font-bold text-[24px] leading-[150%] tracking-[-0.011em] text-center">
+                    Додаткові фото
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-2 gap-[46px]">
+                  {gallery.map((item, index) => (
+                    <label
+                      key={index}
+                      className="w-[157px] h-[213px]  border-[#242424] rounded-[9px] bg-cover bg-center bg-no-repeat flex items-center justify-center"
+                      style={{
+                        backgroundImage:
+                          "url('/images/addProducts/Rectangle 305.svg')",
+                      }}
+                    >
+                      <input
+                        type="file"
+                        accept="image/*"
+                        hidden
+                        onChange={(e) =>
+                          handleGalleryChange(
+                            index,
+                            e.target.files ? e.target.files[0] : null,
+                          )
+                        }
+                      />
+
+                      {item ? (
+                        <img
+                          src={URL.createObjectURL(item)}
+                          className="w-full h-full object-contain"
+                        />
+                      ) : (
+                        <div className="relative flex items-center justify-center">
+                          <Image
+                            src={ellipse}
+                            alt="ellipse"
+                            className="w-[64px] h-[64px]"
+                          />
+                          <Image
+                            src={plus}
+                            alt="plus"
+                            className="absolute w-[38px] h-[38px]"
+                          />
+                        </div>
+                      )}
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              <div className="w-full h-[594px] flex mt-[120px] text-[var(--color-white)] ">
+                <div
+                  className="w-full h-full bg-cover bg-center"
+                  style={{
+                    backgroundImage:
+                      "url('/images/addProducts/Rectangle 315.svg')",
+                  }}
+                >
+                  <div className="w-full h-full flex flex-col items-center  -ml-[6px] mt-[38px]">
+                    <div className="relative w-[308px] h-[116px] -ml-[40px]">
+                      <img
+                        src="/images/addProducts/Rectangle 304.svg"
+                        alt=""
+                        className="w-full h-full"
+                        style={{ objectFit: "fill" }}
+                      />
+                      <div className="absolute inset-0 -mt-[14px] flex items-center ml-[40px] justify-start">
+                        <p className="font-['Roboto_Mono'] font-semibold text-[28px] leading-[100%] tracking-[-0.011em]">
+                          Продаж та наявність
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex flex-col gap-1 w-[250px]">
+                      <p className="text-[var(--color-black)] font-sans-pro font-normal text-[24px] leading-[150%] tracking-[-0.011em]">
+                        Ціна *
+                      </p>
+                      <input
+                        className="input-field rounded-[9px] bg-[var(--color-white)] shadow-[0px_0px_10px_0px_#00000040] h-[44px]"
+                        type="number"
+                        placeholder="0"
+                        value={form.dto.price ?? ""}
+                        onChange={(e) =>
+                          setDto(
+                            "price",
+                            e.target.value === ""
+                              ? undefined
+                              : Number(e.target.value),
+                          )
+                        }
+                      />
+                    </div>
+
+                    <div className="flex flex-col gap-1 w-[250px] mt-8">
+                      <p className="text-[var(--color-black)] font-sans-pro font-normal text-[24px] leading-[150%] tracking-[-0.011em]">
+                        Знижка *
+                      </p>
+
+                      <input
+                        className="input-field rounded-[9px] bg-[var(--color-white)] shadow-[0px_0px_10px_0px_#00000040] h-[44px]"
+                        type="number"
+                        placeholder="0"
+                        value={form.dto.discountPrice ?? ""}
+                        onChange={(e) =>
+                          setDto(
+                            "discountPrice",
+                            e.target.value === ""
+                              ? undefined
+                              : Number(e.target.value),
+                          )
+                        }
+                      />
+                    </div>
+
+                    <div className="flex flex-col items-center w-[250px] mt-0">
+                      <ConditionOfTheGoods
+                        value={form.ui.conditionOfTheGoods}
+                        onChange={(value) =>
+                          setUi("conditionOfTheGoods", value)
+                        }
+                      />
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
   );
 }
