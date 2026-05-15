@@ -18,7 +18,7 @@ export default function UaCircle() {
       </div>
       <div className="flex items-center justify-center w-[50] h-[50] ">
         <Image
-          src="/images/Group19.png"
+          src="/images/header/Group19.png"
           alt="group19"
           width={36}
           height={36}
