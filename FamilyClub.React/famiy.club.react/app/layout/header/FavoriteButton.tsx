@@ -1,17 +1,30 @@
 import Image from "next/image";
 
-
 export default function FavoriteButton() {
-    return (
-            <div className="relative w-[34px] h-[29px] ">
-                <Image
-                    src="/images/favorite_border_24px.png"
-                    alt="favor"
-                    className="object-contain"
-                    priority
-                    width={34}
-                    height={29}
-                />
-            </div>
-    );
+  return (
+    <div className="group flex items-center justify-center">
+      <div
+        className="w-[50px]
+          h-[50px]
+          flex
+          items-center
+          justify-center
+          rounded-full
+          transition-all
+          duration-300
+          group-hover:bg-[var-(--color-white)]
+          group-hover:shadow-[0px_0px_15px_0px_#242424CC]
+        "
+      >
+        <Image
+          src="/images/header/favorite_border_24px.png"
+          alt="favor"
+          className="object-contain p-1"
+          priority
+          width={38}
+          height={38}
+        />
+      </div>
+    </div>
+  );
 }

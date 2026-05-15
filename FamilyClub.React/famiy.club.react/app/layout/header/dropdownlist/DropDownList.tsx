@@ -1,6 +1,8 @@
 "use client";
 
+import DropDownAgeRestictions from "./DropDownAgeRestrictions";
 import DropDownAuthors from "./DropDownAuthors";
+import DropDownCatalog from "./DropDownCatalog";
 import DropDownCategories from "./DropDownCategories";
 import DropDownFormat from "./DropDownFormat";
 import DropDownLanguage from "./DropDownLanguage";
@@ -10,13 +12,15 @@ import DropDownYearOfPublication from "./DropDownYearOfPublication";
 export default function DropDownList() {
 
   return (
-    <>
+    <div className="flex flex-row justify-between gap-3">
       <DropDownCategories />
       <DropDownAuthors />
       <DropDownLanguage />
       <DropDownFormat />
       <DropDownPrice />
       <DropDownYearOfPublication />
-    </>
+      <DropDownAgeRestictions />
+      <DropDownCatalog />
+    </div>
   );
 }
