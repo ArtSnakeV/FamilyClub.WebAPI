@@ -1,6 +1,8 @@
 ﻿using FamilyClub.BLL.DTOs.ClubMember;
 using FamilyClub.BLL.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace FamilyClub.WebAPI.Controllers;
 
@@ -54,4 +56,17 @@ public class AuthClubMemberController : ControllerBase
         await _authService.LogoutAsync(cancellationToken);
         return Ok(new { Message = "Logged out successfully." });
     }
+	[HttpGet("me")]
+	[Authorize]
+	public async Task<ActionResult<ClubMemberReadDto>> Me(CancellationToken cancellationToken)
+	{
+		var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+		if (string.IsNullOrEmpty(userId))
+			return Unauthorized();
+
+		var result = await _authService.GetCurrentUserAsync(userId, cancellationToken);
+
+		return Ok(result);
+	}
 }

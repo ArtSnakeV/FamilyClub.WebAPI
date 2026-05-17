@@ -105,6 +105,10 @@ builder.Services.AddScoped<IReviewService, ReviewService>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IProductService, ProductService>();
 
+//Notification
+builder.Services.AddScoped<INotificationRepository,  NotificationRepository>();
+builder.Services.AddScoped<INotificationService, NotificationService>();
+
 // Customize Identity cookie
 //builder.Services.ConfigureApplicationCookie(
 //    options => {

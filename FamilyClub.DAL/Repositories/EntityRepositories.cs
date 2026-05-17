@@ -61,3 +61,23 @@ public class OrderRepository : Repository<Order>, IOrderRepository
 			.FirstOrDefaultAsync(o => o.Id == id, cancellationToken);
 	}
 };
+public class NotificationRepository : Repository<Notification>, INotificationRepository
+{
+	private readonly FamilyClubContext _context;
+
+	public NotificationRepository(FamilyClubContext context) : base(context)
+	{
+		_context = context;
+	}
+
+	public Task<int> GetCountAsync(CancellationToken cancellationToken = default)
+	{
+		return _context.Notifications.CountAsync(cancellationToken);
+	}
+
+	public Task<int> GetUnreadCountAsync(string clubMemberId, CancellationToken cancellationToken = default)
+	{
+		return _context.Notifications
+			.CountAsync(n => n.ClubMemberId == clubMemberId && !n.IsRead, cancellationToken);
+	}
+}
