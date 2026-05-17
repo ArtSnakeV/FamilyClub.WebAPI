@@ -11,7 +11,7 @@ import UserMenuDrop from "./userMenu/UserMenuDrop";
 import UserAuthorizationButton from "./UserAuthorizationButton";
 import { useEffect, useState } from "react";
 import UserLoginButton from "./UserLoginButton";
-import { AuthClubMemberApi, Configuration } from "@/lib/api/generated";
+import { useRouter } from "next/navigation";
 
 type User = {
   id: string;
@@ -25,38 +25,94 @@ type User = {
 
 export default function UpNavigation() {
   const [member, setMember] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [notificationCount, setNotificationCount] = useState(0);
+  const router = useRouter();
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      const token = localStorage.getItem("token");
-      if (!token) return;
+  const fetchUser = async () => {
+    const token = localStorage.getItem("token");
 
-      const api = new AuthClubMemberApi(
-        new Configuration({
-          basePath: "https://localhost:7069",
-          accessToken: token,
-        }),
+    if (!token) {
+      setMember(null);
+      setLoading(false);
+      return;
+    }
+
+    try {
+      const res = await fetch("https://localhost:7069/api/AuthClubMember/me", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!res.ok) {
+        setMember(null);
+        return;
+      }
+
+      const data: User = await res.json();
+
+      console.log("CURRENT USER:", data);
+
+      setMember(data);
+    } catch (error) {
+      console.log(error);
+      setMember(null);
+    } finally {
+      setLoading(false);
+    }
+  };
+  const fetchNotifications = async () => {
+    const token = localStorage.getItem("token");
+    if (!token) return;
+
+    try {
+      const res = await fetch(
+        "https://localhost:7069/api/Notifications/count",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
       );
 
-      try {
-        const data = await api.apiAuthClubMemberLoginPost();
+      if (!res.ok) return;
 
-        setMember(data);
-      } catch (e) {
-        setMember(null);
-      }
-    };
-
+      const data = await res.json();
+      setNotificationCount(data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  useEffect(() => {
     fetchUser();
+    fetchNotifications();
 
-    const handler = () => fetchUser();
+    const handler = () => {
+      fetchUser();
+    };
 
     window.addEventListener("auth-change", handler);
 
-    return () => window.removeEventListener("auth-change", handler);
+    return () => {
+      window.removeEventListener("auth-change", handler);
+    };
   }, []);
 
-  const isAuthenticated = !!member;
+  const isAuthenticated = !!member?.id;
+  if (loading) {
+    return null;
+  }
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+
+    setMember(null);
+    setNotificationCount(0);
+
+    window.dispatchEvent(new Event("auth-change"));
+
+    router.push("/");
+  };
   return (
     <>
       <div className="max-w-7xl mx-auto flex items-center h-full px-0 relative flex-nowrap justify-between">
@@ -103,12 +159,12 @@ export default function UpNavigation() {
                     email: member?.email,
                     avatarUrl: undefined,
                   }}
-                  notificationCount={3}
-                  onCabinet={() => console.log("cabinet")}
-                  onNotifications={() => console.log("notifications")}
-                  onOrders={() => console.log("orders")}
-                  onLibrary={() => console.log("library")}
-                  onLogout={() => console.log("logout")}
+                  notificationCount={notificationCount}
+                  onCabinet={() => router.push("/cabinetManager")}
+                  onNotifications={() => router.push("/notifications")}
+                  onOrders={() => router.push("/orders")}
+                  onLibrary={() => router.push("/library")}
+                  onLogout={handleLogout}
                 />
               ) : (
                 <div className="flex w-[196px] items-center gap-3">

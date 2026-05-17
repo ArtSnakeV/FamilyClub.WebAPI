@@ -18,6 +18,7 @@ namespace FamilyClubLibrary
         public List<Order> Orders { get; set; } = new();
         public List<Review> Reviews { get; set; } = new();
 
+		public List<Notification> Notifications { get; set; } = new();
 
-    }
+	}
 }
