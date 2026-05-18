@@ -45,14 +45,37 @@ public class ClubMemberController : ControllerBase
         return Ok(clubMember);
     }
 
-    [HttpPost] //ЗРОБИТИ У ФРОНТІ ОБМЕЖЕННЯ НА РОЗМІР АВАТАРУ
+    //[HttpPost("json")]
+    //[Consumes("application/json")]
+    //public async Task<IActionResult> Create([FromBody] RegisterClubMemberDto dto, CancellationToken cancellationToken)
+    //{
+    //    var createdClubMember = await _clubMemberService.CreateAsync(dto, cancellationToken);
+    //    return CreatedAtAction(nameof(GetById), new { id = createdClubMember.Id }, createdClubMember);
+    //}
+
+    [HttpPost("form")]
+    [Consumes("multipart/form-data")]
     public async Task<IActionResult> Create([FromForm] RegisterClubMemberDto dto, IFormFile? avatar, CancellationToken cancellationToken)
     {
         var createdClubMember = await _clubMemberService.CreateAsync(dto, cancellationToken, avatar);
         return CreatedAtAction(nameof(GetById), new { id = createdClubMember.Id }, createdClubMember);
     }
 
-    [HttpPut("{id}")]
+    [HttpPut("{id}/json")]
+    [Consumes("application/json")]
+    public async Task<IActionResult> Update(string id, [FromBody] UpdateClubMemberDto dto, CancellationToken cancellationToken)
+    {
+        var updated = await _clubMemberService.UpdateAsync(id, dto, cancellationToken);
+        if (!updated)
+        {
+            return NotFound();
+        }
+
+        return NoContent();
+    }
+
+    [HttpPut("{id}/form")]
+    [Consumes("multipart/form-data")]
     public async Task<IActionResult> Update(string id, [FromForm] UpdateClubMemberDto dto, IFormFile? avatar, CancellationToken cancellationToken)
     {
         var updated = await _clubMemberService.UpdateAsync(id, dto, cancellationToken, avatar);
