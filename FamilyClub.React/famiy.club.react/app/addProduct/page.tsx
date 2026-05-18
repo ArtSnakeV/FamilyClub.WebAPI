@@ -28,6 +28,7 @@ import plus from "@/public/images/addProducts/plus-solid-full 1.svg";
 import CategoryList from "./CategoryList";
 import ConditionOfTheGoods from "./Availability";
 import ButtonSubmitAddProduct from "./ButtonSubmitAddProduct";
+import Availability from "./Availability";
 
 /* ---------------- TYPES ---------------- */
 type ProductDto = {
@@ -137,22 +138,12 @@ export default function AddProductPage() {
     }));
   };
 
-  const setUi = <K extends keyof ProductUi>(key: K, value: ProductUi[K]) => {
-    setForm((prev) => ({
-      ...prev,
-      ui: {
-        ...prev.ui,
-        [key]: value,
-      },
-    }));
-  };
-
   const toggleCategory = (id: number) => {
-    setUi(
+    setDto(
       "categoryIds",
-      form.ui.categoryIds.includes(id)
-        ? form.ui.categoryIds.filter((c) => c !== id)
-        : [...form.ui.categoryIds, id],
+      form.dto.categoryIds.includes(id)
+        ? form.dto.categoryIds.filter((c) => c !== id)
+        : [...form.dto.categoryIds, id],
     );
   };
 
@@ -241,7 +232,7 @@ export default function AddProductPage() {
         ageRestrictions: form.dto.ageRestrictions,
         format: form.dto.format,
         // FIX: mapping UI → API
-        originalLanguageId: form.ui.languageId,
+        originalLanguageId: form.dto.languageId,
 
         publisherId: form.dto.publisherId,
 
@@ -250,10 +241,6 @@ export default function AddProductPage() {
 
         // FILES
         productImageFiles,
-      });
-      console.log({
-        dto: form.dto,
-        ui: form.ui,
       });
       router.push("/products");
     } catch (err) {
@@ -321,8 +308,8 @@ export default function AddProductPage() {
                     <div className="flex flex-col gap-1">
                       <AuthorSelectForm
                         authors={authors}
-                        value={form.ui.authorId}
-                        onChange={(id) => setUi("authorId", id)}
+                        value={form.dto.authorId}
+                        onChange={(id) => setDto("authorId", id)}
                       />
                     </div>
 
@@ -383,8 +370,8 @@ export default function AddProductPage() {
                       <div className="flex flex-col gap-1 w-[250px]">
                         <LanguageSelectForm
                           languages={languages}
-                          value={form.ui.languageId}
-                          onChange={(id) => setUi("languageId", id)}
+                          value={form.dto.languageId}
+                          onChange={(id) => setDto("languageId", id)}
                         />
                       </div>
                       <div className="flex flex-col gap-1 w-[250px]">
@@ -439,8 +426,8 @@ export default function AddProductPage() {
                     <div className="flex flex-row gap-4 justify-between p-2 h-[88px]">
                       <div className="flex flex-col gap-1 w-[250px]">
                         <BookSizeSelectForm
-                          value={form.ui.bookSize}
-                          onChange={(v) => setUi("bookSize", v)}
+                          value={form.dto.bookSize}
+                          onChange={(v) => setDto("bookSize", v)}
                         />
                       </div>
                       <div className="flex flex-col gap-1 w-[250px]">
@@ -466,8 +453,8 @@ export default function AddProductPage() {
 
                     <div className="flex flex-col gap-1 p-2 h-[88px]">
                       <CoverTypeSelect
-                        value={form.ui.coverType}
-                        onChange={(v) => setUi("coverType", v)}
+                        value={form.dto.coverType}
+                        onChange={(v) => setDto("coverType", v)}
                       />
                     </div>
 
@@ -479,9 +466,9 @@ export default function AddProductPage() {
                         <input
                           className="input-field rounded-[9px] bg-[var(--color-white)] shadow-[0px_0px_10px_0px_#00000040] h-[44px]"
                           type="number"
-                          value={form.ui.quantityInStock ?? ""}
+                          value={form.dto.quantityInStock ?? ""}
                           onChange={(e) =>
-                            setUi(
+                            setDto(
                               "quantityInStock",
                               e.target.value === ""
                                 ? undefined
@@ -541,7 +528,7 @@ export default function AddProductPage() {
                     </div>
                     <CategoryList
                       categories={categories}
-                      selectedIds={form.ui.categoryIds}
+                      selectedIds={form.dto.categoryIds}
                       onToggle={toggleCategory}
                     />
                   </div>
@@ -720,10 +707,10 @@ export default function AddProductPage() {
                     </div>
 
                     <div className="flex flex-col items-center w-[250px] mt-0">
-                      <ConditionOfTheGoods
-                        value={form.ui.conditionOfTheGoods}
+                      <Availability
+                        value={form.dto.availability}
                         onChange={(value) =>
-                          setUi("conditionOfTheGoods", value)
+                          setDto("availability", value)
                         }
                       />
                     </div>
