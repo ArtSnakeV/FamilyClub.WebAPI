@@ -115,7 +115,7 @@ export default function UpNavigation() {
   };
   return (
     <>
-      <div className="max-w-7xl mx-auto flex items-center h-full px-0 relative flex-nowrap justify-between">
+      <div className="max-w-7xl mx-auto flex items-center h-full px-12 relative flex-nowrap justify-between">
         <Link href="/">
           <Logo />
         </Link>

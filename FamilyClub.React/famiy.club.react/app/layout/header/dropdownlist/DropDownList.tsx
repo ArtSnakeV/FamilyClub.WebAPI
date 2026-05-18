@@ -12,7 +12,7 @@ import DropDownYearOfPublication from "./DropDownYearOfPublication";
 export default function DropDownList() {
 
   return (
-    <div className="flex flex-row justify-between gap-3">
+    <div className="flex flex-row px-12 justify-between gap-3">
       <DropDownCategories />
       <DropDownAuthors />
       <DropDownLanguage />
