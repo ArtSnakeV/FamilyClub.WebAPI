@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FamilyClubLibrary.Enum;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -50,7 +51,7 @@ namespace FamilyClubLibrary
         // Series (many-to-many)
         public List<Series> Series { get; set; } = new();
 
-        public string? Format { get; set; }
+        public ProductFormat? ProductFormat { get; set; }
 
         // Original language (one-to-many)
         public int? OriginalLanguageId { get; set; }
@@ -61,14 +62,17 @@ namespace FamilyClubLibrary
         public int? PromotionId { get; set; }
         public Promotion? Promotion { get; set; }
 
-
-        public string? ProductCode { get; set; }
+		public CoverType? CoverType { get; set; }
+		public Availability? Availability { get; set; }
+		public BookSize? BookSize { get; set; }
+		public int? QuantityInStock { get; set; }
+		public string? ProductCode { get; set; }
 
         public int? WeightGrams { get; set; }
 
         public int? ItemsInSet { get; set; }
 
-        public string? AgeRestrictions { get; set; }
+        public AgeRestriction? AgeRestriction { get; set; }
 
         // Translators (many-to-many)
         public List<Translator> Translators { get; set; } = new();

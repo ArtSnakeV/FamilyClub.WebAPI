@@ -174,7 +174,7 @@ export default function RegistrationPage() {
                             display: 'flex',
                             alignItems: 'center'
                         }}>
-                            Ваше ім'я
+                            Ваше ім`я
                         </label>
                         <input
                             type="text"

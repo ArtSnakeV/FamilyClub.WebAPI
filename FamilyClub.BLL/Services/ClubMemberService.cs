@@ -60,7 +60,7 @@ public class ClubMemberService : IClubMemberService
             Surname = dto.Surname,
             PhoneNumber = dto.PhoneNumber,
             DateOfBirth = dto.DateOfBirth,
-        };
+		};
 
 
         var result = await _userManager.CreateAsync(clubMember, dto.Password);
@@ -104,8 +104,9 @@ public class ClubMemberService : IClubMemberService
         clubMember.Surname = dto.Surname;
         clubMember.PhoneNumber = dto.PhoneNumber;
         clubMember.DateOfBirth = dto.DateOfBirth;
+		clubMember.AvatarUrl = dto.AvatarUrl;
 
-        cancellationToken.ThrowIfCancellationRequested(); // Checking for cancellation before starting the update operation
+		cancellationToken.ThrowIfCancellationRequested(); // Checking for cancellation before starting the update operation
 
         var result = await _userManager.UpdateAsync(clubMember);
         if (!result.Succeeded) return false;
