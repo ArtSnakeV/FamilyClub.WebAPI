@@ -9,7 +9,7 @@ type Props = {
   onChange: (value?: string) => void;
 };
 
-export default function ConditionOfTheGoods({ value, onChange }: Props) {
+export default function Availability({ value, onChange }: Props) {
   return (
     <div className="w-[640px] m-2 p-2 flex flex-col gap-2 items-center">
       <ul className="flex flex-col items-center w-full gap-2">

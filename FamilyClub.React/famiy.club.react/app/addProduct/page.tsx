@@ -26,7 +26,8 @@ import Image from "next/image";
 import ellipse from "@/public/images/addProducts/Ellipse 36.svg";
 import plus from "@/public/images/addProducts/plus-solid-full 1.svg";
 import CategoryList from "./CategoryList";
-import ConditionOfTheGoods from "./ConditionOfTheGoods";
+import ConditionOfTheGoods from "./Availability";
+import ButtonSubmitAddProduct from "./ButtonSubmitAddProduct";
 
 /* ---------------- TYPES ---------------- */
 type ProductDto = {
@@ -46,14 +47,11 @@ type ProductDto = {
   weightGrams?: number;
   itemsInSet?: number;
   ageRestrictions?: string;
-};
-type ProductUi = {
   authorId?: number;
   categoryIds: number[];
   languageId?: number;
 
   coverType: "hard" | "soft";
-  bookFormat?: "ebook" | "audio";
   availability: "available" | "unavailable" | "preorder";
   conditionOfTheGoods?: string;
 
@@ -63,7 +61,6 @@ type ProductUi = {
 };
 type FormState = {
   dto: ProductDto;
-  ui: ProductUi;
 };
 
 export default function AddProductPage() {
@@ -79,13 +76,10 @@ export default function AddProductPage() {
       productName: "",
       itemsInSet: 1,
       ageRestrictions: "18+",
-    },
-    ui: {
       authorId: undefined,
       categoryIds: [],
       languageId: undefined,
       coverType: "soft",
-      bookFormat: undefined,
       availability: "available",
       leaveOldImages: false,
       quantityInStock: undefined,
@@ -245,10 +239,10 @@ export default function AddProductPage() {
         weightGrams: form.dto.weightGrams,
         itemsInSet: form.dto.itemsInSet,
         ageRestrictions: form.dto.ageRestrictions,
-
+        format: form.dto.format,
         // FIX: mapping UI → API
         originalLanguageId: form.ui.languageId,
-        format: form.ui.bookFormat,
+
         publisherId: form.dto.publisherId,
 
         // FIX ISBN naming
@@ -257,7 +251,10 @@ export default function AddProductPage() {
         // FILES
         productImageFiles,
       });
-
+      console.log({
+        dto: form.dto,
+        ui: form.ui,
+      });
       router.push("/products");
     } catch (err) {
       console.error(err);
@@ -275,7 +272,7 @@ export default function AddProductPage() {
           backgroundImage: "url('/images/addProducts/Rectangle 312.svg')",
         }}
       >
-        <div className="flex flex-col items-center mt-[80px]">
+        <div className="flex flex-col items-center mt-[100px]">
           <h1 className="text-[var(--color-black)] w-[800px] font-['Roboto_Mono'] font-bold text-[64px] leading-[150%] tracking-[-0.011em] text-center">
             Додати нову книгу
           </h1>
@@ -729,6 +726,9 @@ export default function AddProductPage() {
                           setUi("conditionOfTheGoods", value)
                         }
                       />
+                    </div>
+                    <div className="relative flex flex-col items-center mt-[140px]">
+                      <ButtonSubmitAddProduct />
                     </div>
                   </div>
                 </div>
