@@ -125,9 +125,9 @@ export default function UpNavigation() {
           </div>
           <div className="group flex items-center justify-center">
             <div
-              className="flex items-center bg-[var-(--color-white)] relative left-[20px] rounded-[25px] px-2 h-[50px] w-[306px] shadow-[0px_0px_10px_0px_#24242466] transition-all
+              className="flex items-center bg-[var(--color-white)] relative left-[20px] rounded-[25px] px-2 h-[50px] w-[306px] shadow-[0px_0px_10px_0px_#24242466] transition-all
           duration-300
-          group-hover:bg-[var-(--color-white)]
+          group-hover:bg-[var(--color-white)]
           group-hover:shadow-[0px_0px_15px_0px_#242424CC]"
             >
               <SearchIco />
