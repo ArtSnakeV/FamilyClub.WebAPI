@@ -15,7 +15,8 @@ public static class ClubMemberMapper
             Surname = clubMember.Surname,
             PhoneNumber = clubMember.PhoneNumber!,
             DateOfBirth = clubMember.DateOfBirth,
-			AvatarUrl = clubMember.AvatarUrl,
+            //AvatarUrl = clubMember.AvatarUrl,
+            AvatarData = clubMember.AvatarData,
             Roles = roles ?? new List<string>()
         };
     }

@@ -10,6 +10,5 @@ public class UpdateClubMemberDto
     public string? Name { get; set; }
     public string? Surname { get; set; }
     public DateOnly? DateOfBirth { get; set; }
-	public string? AvatarUrl { get; set; }
-
+    //public string? AvatarUrl { get; set; }
 }

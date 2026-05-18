@@ -56,7 +56,8 @@ namespace FamilyClub.DAL.EF.DB
                     Name = "System",
                     Surname = "Admin",
                     EmailConfirmed = true, // Important for Identity
-                    PhoneNumber = "0000000000"
+                    PhoneNumber = "0000000000",
+                    AvatarData = null
                 };
 
                 // Password must correspond to Our requirements

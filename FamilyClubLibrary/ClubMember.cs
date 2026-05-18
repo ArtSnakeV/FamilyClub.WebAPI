@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace FamilyClubLibrary
@@ -12,7 +13,7 @@ namespace FamilyClubLibrary
         public string? Surname { get; set; }
 
         public DateOnly? DateOfBirth { get; set; }
-		public string? AvatarUrl { get; set; }
+		//public string? AvatarUrl { get; set; }
 
 		// To see all orders/reviews for a specific User
 		public List<Order> Orders { get; set; } = new();
@@ -20,5 +21,6 @@ namespace FamilyClubLibrary
 
 		public List<Notification> Notifications { get; set; } = new();
 
-	}
+        public byte[]? AvatarData { get; set; }
+    }
 }

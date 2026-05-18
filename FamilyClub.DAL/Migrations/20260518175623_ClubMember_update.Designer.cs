@@ -3,6 +3,7 @@ using System;
 using FamilyClub.DAL.EF;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace FamilyClub.DAL.Migrations
 {
     [DbContext(typeof(FamilyClubContext))]
-    partial class FamilyClubContextModelSnapshot : ModelSnapshot
+    [Migration("20260518175623_ClubMember_update")]
+    partial class ClubMember_update
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -118,10 +121,6 @@ namespace FamilyClub.DAL.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("access_failed_count");
 
-                    b.Property<byte[]>("AvatarData")
-                        .HasColumnType("bytea")
-                        .HasColumnName("avatar_data");
-
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("text")
@@ -139,6 +138,15 @@ namespace FamilyClub.DAL.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("boolean")
                         .HasColumnName("email_confirmed");
+
+                    b.Property<byte[]>("ImageData")
+                        .HasColumnType("bytea")
+                        .HasColumnName("image_data");
+
+                    b.Property<string>("ImageName")
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)")
+                        .HasColumnName("image_name");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("boolean")

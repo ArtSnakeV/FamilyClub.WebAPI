@@ -45,17 +45,17 @@ public class ClubMemberController : ControllerBase
         return Ok(clubMember);
     }
 
-    [HttpPost]
-    public async Task<IActionResult> Create([FromBody] RegisterClubMemberDto dto, CancellationToken cancellationToken)
+    [HttpPost] //ЗРОБИТИ У ФРОНТІ ОБМЕЖЕННЯ НА РОЗМІР АВАТАРУ
+    public async Task<IActionResult> Create([FromForm] RegisterClubMemberDto dto, IFormFile? avatar, CancellationToken cancellationToken)
     {
-        var createdClubMember = await _clubMemberService.CreateAsync(dto, cancellationToken);
+        var createdClubMember = await _clubMemberService.CreateAsync(dto, cancellationToken, avatar);
         return CreatedAtAction(nameof(GetById), new { id = createdClubMember.Id }, createdClubMember);
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> Update(string id, [FromBody] UpdateClubMemberDto dto, CancellationToken cancellationToken)
+    public async Task<IActionResult> Update(string id, [FromForm] UpdateClubMemberDto dto, IFormFile? avatar, CancellationToken cancellationToken)
     {
-        var updated = await _clubMemberService.UpdateAsync(id, dto, cancellationToken);
+        var updated = await _clubMemberService.UpdateAsync(id, dto, cancellationToken, avatar);
         if (!updated)
         {
             return NotFound();

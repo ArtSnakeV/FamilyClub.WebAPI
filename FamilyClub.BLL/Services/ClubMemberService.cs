@@ -1,11 +1,13 @@
 ﻿using FamilyClub.BLL.DTOs.ClubMember;
+using FamilyClub.BLL.DTOs.Product;
 using FamilyClub.BLL.Interfaces;
+using FamilyClub.BLL.Mapping;
 using FamilyClub.DAL.Interfaces;
 using FamilyClubLibrary;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Xml.Linq;
-using FamilyClub.BLL.Mapping;
 
 namespace FamilyClub.BLL.Services;
 
@@ -50,8 +52,13 @@ public class ClubMemberService : IClubMemberService
         return ClubMemberMapper.MapToReadDto(clubMember, roles);
     }
 
-    public async Task<ClubMemberReadDto> CreateAsync(RegisterClubMemberDto dto, CancellationToken cancellationToken = default)
+    public async Task<ClubMemberReadDto> CreateAsync(RegisterClubMemberDto dto, CancellationToken cancellationToken = default, IFormFile? avatar = null)
     {
+        byte[] avatarData = null;
+        if (avatar != null)
+        {
+            avatarData = await UploadImageAsync(avatar);
+        }
         var clubMember = new ClubMember
         {
             UserName = dto.Email,
@@ -60,7 +67,8 @@ public class ClubMemberService : IClubMemberService
             Surname = dto.Surname,
             PhoneNumber = dto.PhoneNumber,
             DateOfBirth = dto.DateOfBirth,
-		};
+            AvatarData = avatarData
+        };
 
 
         var result = await _userManager.CreateAsync(clubMember, dto.Password);
@@ -93,8 +101,13 @@ public class ClubMemberService : IClubMemberService
         return ClubMemberMapper.MapToReadDto(clubMember, roles);
     }
 
-    public async Task<bool> UpdateAsync(string id, UpdateClubMemberDto dto, CancellationToken cancellationToken = default)
+    public async Task<bool> UpdateAsync(string id, UpdateClubMemberDto dto, CancellationToken cancellationToken = default, IFormFile? avatar = null)
     {
+        byte[] avatarData = null;
+        if (avatar != null)
+        {
+            avatarData = await UploadImageAsync(avatar);
+        }
         var clubMember = await _userManager.FindByIdAsync(id);
         if (clubMember is null)
         {
@@ -104,14 +117,25 @@ public class ClubMemberService : IClubMemberService
         clubMember.Surname = dto.Surname;
         clubMember.PhoneNumber = dto.PhoneNumber;
         clubMember.DateOfBirth = dto.DateOfBirth;
-		clubMember.AvatarUrl = dto.AvatarUrl;
+        //clubMember.AvatarUrl = dto.AvatarUrl;
+        clubMember.AvatarData = avatarData;
 
-		cancellationToken.ThrowIfCancellationRequested(); // Checking for cancellation before starting the update operation
+
+        cancellationToken.ThrowIfCancellationRequested(); // Checking for cancellation before starting the update operation
 
         var result = await _userManager.UpdateAsync(clubMember);
         if (!result.Succeeded) return false;
 
         return true;
+    }
+
+    private async Task<byte[]?> UploadImageAsync(IFormFile avatar)
+    {
+        using var memoryStream = new MemoryStream();
+        await avatar.CopyToAsync(memoryStream);
+        byte[] avatarData = memoryStream.ToArray();
+            
+        return avatarData;
     }
 
     public async Task<bool> DeleteAsync(string id, CancellationToken cancellationToken = default)
