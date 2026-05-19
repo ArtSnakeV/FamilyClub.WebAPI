@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import { Configuration, LanguageDto, LanguagesApi } from "@/lib/api/generated";
+import { Configuration, LanguageDto, LanguagesApi } from "@/src/lib/api/generated";
 import Link from "next/link";
 
 export default function DropDownLanguage() {

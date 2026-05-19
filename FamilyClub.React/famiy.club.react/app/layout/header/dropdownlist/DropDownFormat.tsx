@@ -1,34 +1,55 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
-import { Configuration, ProductsApi } from "@/lib/api/generated";
 import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
+import {
+  Configuration,
+  ProductsApi,
+  ProductFormat,
+  ProductDto,
+} from "@/src/lib/api/generated";
 
-export default function DropDownCategories() {
-  const [formats, setFormats] = useState<string[]>([]);
+const formatFilters = [
+  {
+    label: "Ebook",
+    value: ProductFormat.NUMBER_0,
+  },
+  {
+    label: "Audio книга",
+    value: ProductFormat.NUMBER_1,
+  },
+  {
+    label: "Паперова",
+    value: ProductFormat.NUMBER_2,
+  },
+];
+
+export default function DropDownFormat() {
   const [open, setOpen] = useState(false);
-  const [selectedFormat, setSelectedFormat] = useState<string | null>(null);
+  const [selectedFormat, setSelectedFormat] = useState<ProductFormat | null>(
+    null,
+  );
+
+  const [products, setProducts] = useState<ProductDto[]>([]);
+
   const containerRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
 
   useEffect(() => {
     const api = new ProductsApi(
-      new Configuration({ basePath: "https://localhost:7069" }),
+      new Configuration({
+        basePath: "https://localhost:7069",
+      }),
     );
 
     api
       .apiProductsGet()
-      .then((products) => {
-        const unique = Array.from(
-          new Set(
-            products
-              .map((p) => p.format)
-              .filter((f): f is string => f != null && f.length > 0),
-          ),
-        );
-        setFormats(unique);
+      .then((res) => {
+        setProducts(res);
       })
-      .catch(console.error);
+      .catch((err) => console.error("API ERROR:", err));
   }, []);
 
   useEffect(() => {
@@ -40,9 +61,14 @@ export default function DropDownCategories() {
         setOpen(false);
       }
     }
+
     document.addEventListener("click", handleClickOutside);
     return () => document.removeEventListener("click", handleClickOutside);
   }, []);
+
+  const filteredProducts = selectedFormat
+    ? products.filter((p) => p.productFormat === selectedFormat)
+    : products;
 
   return (
     <div ref={containerRef} className="relative w-[130px]">
@@ -75,57 +101,49 @@ export default function DropDownCategories() {
         {/* DROPDOWN */}
         {open && (
           <div className="absolute z-20 items-center top-[42px] w-full flex justify-center text-[var(--color-white)]">
-
-            <div className="relative items-center mt-[50px] -ml-[4px] w-[110px] flex flex-col gap-2">
-
-              {formats.length === 0 ? (
-                <div className="text-[13px]">Не знайдено</div>
-              ) : (
-                formats.map((f) => {
-                  const isSelected = selectedFormat === f;
-
-                  return (
-                    <div key={f} className="flex items-center gap-0">
-
-                      {/* RADIO BUTTON */}
-                      <div className="w-[30px] h-[30px] flex justify-center shrink-0">
-                        <button
-                          onClick={() => setSelectedFormat(f)}
-                          className="w-[22px] h-[22px] flex items-center justify-center"
-                        >
-                          <Image
-                            src={
-                              isSelected
-                                ? "/images/header/check2.svg"
-                                : "/images/header/icon.svg"
-                            }
-                            alt=""
-                            width={20}
-                            height={20}
-                            className={`
+            <div className="relative items-left mt-[50px] w-[110px] flex flex-col gap-2">
+              {formatFilters.map((f) => {
+                const isSelected = selectedFormat === f.value;
+                return (
+                  <div key={f.value} className="flex items-center gap-0">
+                    {/* RADIO BUTTON */}
+                    <div className="w-[30px] h-[30px] flex justify-center shrink-0">
+                      <button
+                        onClick={() => setSelectedFormat(f.value)}
+                        className="w-[22px] h-[22px] flex items-center justify-center"
+                      >
+                        <Image
+                          src={
+                            isSelected
+                              ? "/images/header/check2.svg"
+                              : "/images/header/icon.svg"
+                          }
+                          alt=""
+                          width={20}
+                          height={20}
+                          className={`
                               object-contain
                               transition-transform duration-200
                               ${isSelected ? "ml-[6px] scale-125" : "scale-90"}
                             `}
-                          />
-                        </button>
-                      </div>
-
-                      {/* LINK */}
-                      <Link
-                        href={`/formats/${f}`}
-                        onClick={() => {
-                          setSelectedFormat(f);
-                          setOpen(false);
-                        }}
-                        className="text-[13px] -mt-[4px]"
-                      >
-                        {f}
-                      </Link>
+                        />
+                      </button>
                     </div>
-                  );
-                })
-              )}
+
+                    {/* LINK */}
+                    <Link
+                      href={`/products?format=${f.value}`}
+                      onClick={() => {
+                        setSelectedFormat(f.value);
+                        setOpen(false);
+                      }}
+                      className="text-[13px] -mt-[4px]"
+                    >
+                      {f.label}
+                    </Link>
+                  </div>
+                );
+              })}
             </div>
           </div>
         )}

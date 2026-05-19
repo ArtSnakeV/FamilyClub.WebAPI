@@ -1,6 +1,6 @@
 "use client";
 
-import { AuthorDTO, AuthorsApi, Configuration } from "@/lib/api/generated";
+import { AuthorDTO, AuthorsApi, Configuration } from "@/src/lib/api/generated";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";

@@ -3,18 +3,19 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { AgeRestriction } from "@/src/lib/api/generated";
 
 const ageFilters = [
-  { label: "0+", from: 0, to: 5 },
-  { label: "6+", from: 6, to: 11 },
-  { label: "12+", from: 12, to: 15 },
-  { label: "16+", from: 16, to: 17 },
-  { label: "18+", from: 18, to: 100 },
+  { label: "0+", value: AgeRestriction.NUMBER_0 },
+  { label: "6+", value: AgeRestriction.NUMBER_1 },
+  { label: "12+", value: AgeRestriction.NUMBER_2 },
+  { label: "16+", value: AgeRestriction.NUMBER_3 },
+  { label: "18+", value: AgeRestriction.NUMBER_4 },
 ];
 
 export default function DropDownAgeRestrictions() {
   const [open, setOpen] = useState(false);
-  const [selectedAge, setSelectedAge] = useState<string | null>(null);
+  const [selectedAge, setSelectedAge] = useState<AgeRestriction | null>(null);
 
   const containerRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
@@ -31,24 +32,24 @@ export default function DropDownAgeRestrictions() {
 
     document.addEventListener("click", handleClickOutside);
 
-    return () =>
-      document.removeEventListener("click", handleClickOutside);
+    return () => document.removeEventListener("click", handleClickOutside);
   }, []);
 
   function selectAge(f: (typeof ageFilters)[number]) {
-    setSelectedAge(f.label);
+    setSelectedAge(f.value);
 
     setTimeout(() => {
       const params = new URLSearchParams();
 
-      params.set("ageFrom", String(f.from));
-      params.set("ageTo", String(f.to));
-
+      params.set("ageRestriction", String(f.value));
       router.push(`/products?${params.toString()}`);
 
       setOpen(false);
-    }, 300);
+    }, 600);
   }
+
+  const selectedLabel =
+    ageFilters.find((x) => x.value === selectedAge)?.label ?? "Вік";
 
   return (
     <div ref={containerRef} className="relative w-[130px]">
@@ -75,25 +76,18 @@ export default function DropDownAgeRestrictions() {
           }}
           className="absolute inset-0  flex justify-center items-end mb-[34px] z-10"
         >
-          <span className="text-[var(--color-white)]">
-            Вік
-          </span>
+          <span className="text-[var(--color-white)]">{selectedLabel}</span>
         </button>
 
         {/* DROPDOWN */}
         {open && (
           <div className="absolute z-20 top-[42px] w-full flex flex-col items-center text-[var(--color-white)]">
-
             <div className="relative mt-[50px] flex flex-col gap-2">
-
               {ageFilters.map((f) => {
-                const isSelected = selectedAge === f.label;
+                const isSelected = selectedAge === f.value;
 
                 return (
-                  <div
-                    key={f.label}
-                    className="flex items-center gap-1"
-                  >
+                  <div key={f.value} className="flex items-center gap-1">
                     {/* RADIO */}
                     <div className="w-[30px] h-[30px] flex justify-center shrink-0">
                       <button
@@ -112,11 +106,7 @@ export default function DropDownAgeRestrictions() {
                           className={`
                             object-contain
                             transition-transform duration-200
-                            ${
-                              isSelected
-                                ? "ml-[6px] scale-125"
-                                : "scale-90"
-                            }
+                            ${isSelected ? "ml-[6px] scale-125" : "scale-90"}
                           `}
                         />
                       </button>
