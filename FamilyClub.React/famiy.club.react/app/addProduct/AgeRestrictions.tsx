@@ -1,4 +1,4 @@
-import { AgeRestriction } from "@/src/lib/api/generated";
+import { AgeRestriction } from "@/lib/api/generated";
 
 const ageRestrictions = [
   { label: "0+", value: AgeRestriction.NUMBER_0 },

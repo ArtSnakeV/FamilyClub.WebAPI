@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { AuthorDTO } from "@/src/lib/api/generated";
+import type { AuthorDTO } from "@/lib/api/generated";
 
 type Props = {
   authors: AuthorDTO[];

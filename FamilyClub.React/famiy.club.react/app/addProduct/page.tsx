@@ -16,7 +16,7 @@ import {
   ProductFormat,
   CoverType,
   BookSize,
-} from "@/src/lib/api/generated";
+} from "@/lib/api/generated";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import AuthorSelectForm from "./AuthorSelectForm";

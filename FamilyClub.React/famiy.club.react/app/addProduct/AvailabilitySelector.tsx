@@ -1,4 +1,4 @@
-import { Availability } from "@/src/lib/api/generated";
+import { Availability } from "@/lib/api/generated";
 
 const conditionOfTheGoods = [
   { label: "В наявності", value: Availability.NUMBER_0 },

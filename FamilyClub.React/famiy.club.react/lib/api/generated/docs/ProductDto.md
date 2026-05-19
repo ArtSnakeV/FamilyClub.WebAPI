@@ -16,14 +16,23 @@ Name | Type
 `originalTitle` | string
 `pageCount` | number
 `publishingDate` | Date
-`format` | string
+`productFormat` | [ProductFormat](ProductFormat.md)
+`coverType` | [CoverType](CoverType.md)
+`availability` | [Availability](Availability.md)
+`bookSize` | [BookSize](BookSize.md)
+`quantityInStock` | number
 `originalLanguageId` | number
 `isbn` | string
 `promotionId` | number
 `productCode` | string
 `weightGrams` | number
 `itemsInSet` | number
-`ageRestrictions` | string
+`ageRestriction` | [AgeRestriction](AgeRestriction.md)
+`authorIds` | Array&lt;number&gt;
+`languageIds` | Array&lt;number&gt;
+`categoryIds` | Array&lt;number&gt;
+`seriesIds` | Array&lt;number&gt;
+`translatorIds` | Array&lt;number&gt;
 `leaveOldImages` | boolean
 
 ## Example
@@ -43,14 +52,23 @@ const example = {
   "originalTitle": null,
   "pageCount": null,
   "publishingDate": null,
-  "format": null,
+  "productFormat": null,
+  "coverType": null,
+  "availability": null,
+  "bookSize": null,
+  "quantityInStock": null,
   "originalLanguageId": null,
   "isbn": null,
   "promotionId": null,
   "productCode": null,
   "weightGrams": null,
   "itemsInSet": null,
-  "ageRestrictions": null,
+  "ageRestriction": null,
+  "authorIds": null,
+  "languageIds": null,
+  "categoryIds": null,
+  "seriesIds": null,
+  "translatorIds": null,
   "leaveOldImages": null,
 } satisfies ProductDto
 

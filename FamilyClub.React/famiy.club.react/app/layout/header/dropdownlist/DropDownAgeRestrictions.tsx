@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { AgeRestriction } from "@/src/lib/api/generated";
+import { AgeRestriction } from "@/lib/api/generated";
 
 const ageFilters = [
   { label: "0+", value: AgeRestriction.NUMBER_0 },

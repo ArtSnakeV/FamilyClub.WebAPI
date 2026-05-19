@@ -2,7 +2,7 @@
 
 import AudioFormat from "./AudioFormat";
 import EbookFormat from "./EbookFormat";
-import { ProductFormat } from "@/src/lib/api/generated";
+import { ProductFormat } from "@/lib/api/generated";
 import Image from "next/image";
 
 const formatBooksCheck = [

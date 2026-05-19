@@ -117,6 +117,41 @@ export class AuthClubMemberApi extends runtime.BaseAPI {
     }
 
     /**
+     * Creates request options for apiAuthClubMemberMeGet without sending the request
+     */
+    async apiAuthClubMemberMeGetRequestOpts(): Promise<runtime.RequestOpts> {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+
+        let urlPath = `/api/AuthClubMember/me`;
+
+        return {
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     */
+    async apiAuthClubMemberMeGetRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ClubMemberReadDto>> {
+        const requestOptions = await this.apiAuthClubMemberMeGetRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => ClubMemberReadDtoFromJSON(jsonValue));
+    }
+
+    /**
+     */
+    async apiAuthClubMemberMeGet(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ClubMemberReadDto> {
+        const response = await this.apiAuthClubMemberMeGetRaw(initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Creates request options for apiAuthClubMemberRegisterPost without sending the request
      */
     async apiAuthClubMemberRegisterPostRequestOpts(requestParameters: ApiAuthClubMemberRegisterPostRequest): Promise<runtime.RequestOpts> {

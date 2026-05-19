@@ -1,4 +1,4 @@
-import type { LanguageDto } from "@/src/lib/api/generated";
+import type { LanguageDto } from "@/lib/api/generated";
 
 type Props = {
   languages: LanguageDto[];

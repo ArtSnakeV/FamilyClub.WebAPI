@@ -9,7 +9,7 @@ Name | Type
 `id` | number
 `productId` | number
 `product` | [Product](Product.md)
-`userId` | number
+`userId` | string
 `clubMember` | [ClubMember](ClubMember.md)
 `rating` | number
 `comment` | string
