@@ -1,4 +1,3 @@
-.openapi-generator-ignore
 apis/AuthClubMemberApi.ts
 apis/AuthorsApi.ts
 apis/CategoriesApi.ts

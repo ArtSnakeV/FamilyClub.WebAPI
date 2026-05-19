@@ -1,7 +1,7 @@
 import { AgeRestriction } from "@/src/lib/api/generated";
 
-export const ageFilters = [
-  { label: "All", value: AgeRestriction.NUMBER_0 },
+const ageRestrictions = [
+  { label: "0+", value: AgeRestriction.NUMBER_0 },
   { label: "6+", value: AgeRestriction.NUMBER_1 },
   { label: "12+", value: AgeRestriction.NUMBER_2 },
   { label: "16+", value: AgeRestriction.NUMBER_3 },
@@ -21,7 +21,7 @@ export default function AgeRestrictions({ value, onChange }: Props) {
       </p>
       <select
         value={value ?? ""}
-        onChange={(e) => onChange(e.target.value || undefined)}
+        onChange={(e) => onChange(Number(e.target.value) as AgeRestriction)}
         className="input rounded-[9px] bg-[var(--color-white)] shadow-[0px_0px_10px_0px_#00000040] h-[44px]"
       >
         <option value="">Оберіть вікові обмеження</option>
