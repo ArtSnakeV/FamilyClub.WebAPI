@@ -11,7 +11,12 @@ import {
   CategoriesApi,
   LanguageDto,
   LanguagesApi,
-} from "@/lib/api/generated";
+  AgeRestriction,
+  Availability,
+  ProductFormat,
+  CoverType,
+  BookSize,
+} from "@/src/lib/api/generated";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import AuthorSelectForm from "./AuthorSelectForm";
@@ -26,7 +31,6 @@ import Image from "next/image";
 import ellipse from "@/public/images/addProducts/Ellipse 36.svg";
 import plus from "@/public/images/addProducts/plus-solid-full 1.svg";
 import CategoryList from "./CategoryList";
-import { Availability } from "@/src/lib/api/generated";
 import ButtonSubmitAddProduct from "./ButtonSubmitAddProduct";
 import AvailabilitySelector from "./AvailabilitySelector";
 
@@ -40,25 +44,22 @@ type ProductDto = {
   originalTitle?: string;
   pageCount?: number;
   publishingYear?: number;
-  format?: string;
   originalLanguageId?: number;
   isbn?: string;
   promotionId?: number;
   productCode?: string;
   weightGrams?: number;
   itemsInSet?: number;
-  ageRestrictions?: string;
-  authorId?: number;
+  ageRestrictions?: AgeRestriction;
   categoryIds: number[];
   languageId?: number;
-
-  coverType: "hard" | "soft";
+  productFormat?: ProductFormat;
+  coverType: CoverType;
   availability?: Availability;
-  conditionOfTheGoods?: string;
-
+  authorIds?: number[];
   leaveOldImages: boolean;
   quantityInStock?: number;
-  bookSize?: string;
+  bookSize?: BookSize;
 };
 type FormState = {
   dto: ProductDto;
@@ -75,17 +76,20 @@ export default function AddProductPage() {
   const [form, setForm] = useState<FormState>({
     dto: {
       productName: "",
+      description: "",
+      pageCount: undefined,
       itemsInSet: 1,
-      ageRestrictions: "18+",
-      authorId: undefined,
+      ageRestrictions: undefined,
       categoryIds: [],
       languageId: undefined,
-      coverType: "soft",
-      availability: Availability.NUMBER_0,
+      coverType: CoverType.NUMBER_0,
+      availability: undefined,
       leaveOldImages: false,
       quantityInStock: undefined,
       bookSize: undefined,
-      conditionOfTheGoods: undefined,
+      publisherId: undefined,
+      authorIds: [],
+      productFormat: ProductFormat.NUMBER_0,
     },
   });
 
@@ -229,11 +233,15 @@ export default function AddProductPage() {
           : undefined,
         weightGrams: form.dto.weightGrams,
         itemsInSet: form.dto.itemsInSet,
-        ageRestrictions: form.dto.ageRestrictions,
-        format: form.dto.format,
-        originalLanguageId: form.dto.languageId,
+        availability: form.dto.availability,
+        ageRestriction: form.dto.ageRestrictions,
+        productFormat: form.dto.productFormat,
+        languageIds: form.dto.languageId ? [form.dto.languageId] : undefined,
         publisherId: form.dto.publisherId,
-
+        coverType: form.dto.coverType,
+        authorIds: form.dto.authorIds,
+        bookSize: form.dto.bookSize,
+        quantityInStock: form.dto.quantityInStock,
         // FIX ISBN naming
         iSBN: form.dto.isbn,
 
@@ -299,15 +307,15 @@ export default function AddProductPage() {
                         placeholder="Назва"
                         value={form.dto.productName}
                         onChange={(e) => setDto("productName", e.target.value)}
-                        className="input rounded-[9px] bg-[var(--color-white)] shadow-[0px_0px_10px_0px_#00000040] h-[44px]"
+                        className={`input rounded-[9px] bg-[var(--color-white)] shadow-[0px_0px_10px_0px_#00000040] h-[44px] placeholder:text-gray-500 placeholder:px-3`}
                       />
                     </div>
 
                     <div className="flex flex-col gap-1">
                       <AuthorSelectForm
                         authors={authors}
-                        value={form.dto.authorId}
-                        onChange={(id) => setDto("authorId", id)}
+                        value={form.dto.authorIds}
+                        onChange={(ids) => setDto("authorIds", ids)}
                       />
                     </div>
 
@@ -327,7 +335,7 @@ export default function AddProductPage() {
                         name="description"
                         placeholder="Опис книги"
                         onChange={(e) => setDto("description", e.target.value)}
-                        className="input-field h-[120px] resize-none input rounded-[9px] bg-[var(--color-white)] shadow-[0px_0px_10px_0px_#00000040]"
+                        className="px-2 input-field h-[120px] resize-none input rounded-[9px] bg-[var(--color-white)] shadow-[0px_0px_10px_0px_#00000040]"
                       />
                     </div>
 
@@ -496,7 +504,10 @@ export default function AddProductPage() {
                     </div>
 
                     <div className="flex flex-col h-[200px] pb-[20px]">
-                      <FormatBook />
+                      <FormatBook
+                        value={form.dto.productFormat}
+                        onChange={(v) => setDto("productFormat", v)}
+                      />
                     </div>
                   </div>
                 </div>

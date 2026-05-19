@@ -11,8 +11,7 @@ export default function EbookFormat() {
         type="button"
         className="w-[16px] h-[20px] bg-cover bg-center"
         style={{
-          backgroundImage:
-            "url('/images/addProducts/file-solid-full 1.svg')",
+          backgroundImage: "url('/images/addProducts/file-solid-full 1.svg')",
         }}
       />
 
