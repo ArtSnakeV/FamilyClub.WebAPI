@@ -68,7 +68,7 @@ export default function DropDownPrice() {
         </button>
 
         {open && (
-          <div className="absolute z-20 top-[42px] w-full flex justify-center text-white">
+          <div className="absolute z-20 top-[42px] w-full flex justify-center text-[var(--color-white)]">
             {/* MAIN CONTAINER */}
             <div className="mt-[40px] w-[110px] flex flex-col items-center gap-3">
               {/* FROM */}

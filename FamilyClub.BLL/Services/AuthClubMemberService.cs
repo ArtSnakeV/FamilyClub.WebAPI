@@ -99,8 +99,8 @@ public class AuthClubMemberService : IAuthClubMemberService
 	public async Task<ClubMemberReadDto> GetCurrentUserAsync(string userId, CancellationToken cancellationToken = default)
 	{
 		var user = await _userManager.FindByIdAsync(userId);
-
-		if (user == null)
+		
+        if (user == null)
 			throw new Exception("User not found");
 
 		var roles = await _userManager.GetRolesAsync(user);
@@ -112,6 +112,7 @@ public class AuthClubMemberService : IAuthClubMemberService
 			Name = user.Name,
 			Surname = user.Surname,
 			PhoneNumber = user.PhoneNumber,
+			AvatarData = user.AvatarData,
 			DateOfBirth = user.DateOfBirth,
 			Roles = roles.ToList()
 		};

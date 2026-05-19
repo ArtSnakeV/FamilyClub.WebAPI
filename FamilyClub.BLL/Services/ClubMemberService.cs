@@ -103,11 +103,8 @@ public class ClubMemberService : IClubMemberService
 
     public async Task<bool> UpdateAsync(string id, UpdateClubMemberDto dto, CancellationToken cancellationToken = default, IFormFile? avatar = null)
     {
-        byte[] avatarData = null;
-        if (avatar != null)
-        {
-            avatarData = await UploadImageAsync(avatar);
-        }
+        //byte[] avatarData = null;
+       
         var clubMember = await _userManager.FindByIdAsync(id);
         if (clubMember is null)
         {
@@ -117,11 +114,12 @@ public class ClubMemberService : IClubMemberService
         clubMember.Surname = dto.Surname;
         clubMember.PhoneNumber = dto.PhoneNumber;
         clubMember.DateOfBirth = dto.DateOfBirth;
-        //clubMember.AvatarUrl = dto.AvatarUrl;
-        clubMember.AvatarData = avatarData;
+		if (avatar != null)
+		{
+			clubMember.AvatarData = await UploadImageAsync(avatar);
+		}
 
-
-        cancellationToken.ThrowIfCancellationRequested(); // Checking for cancellation before starting the update operation
+		cancellationToken.ThrowIfCancellationRequested(); // Checking for cancellation before starting the update operation
 
         var result = await _userManager.UpdateAsync(clubMember);
         if (!result.Succeeded) return false;

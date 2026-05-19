@@ -26,9 +26,9 @@ import Image from "next/image";
 import ellipse from "@/public/images/addProducts/Ellipse 36.svg";
 import plus from "@/public/images/addProducts/plus-solid-full 1.svg";
 import CategoryList from "./CategoryList";
-import ConditionOfTheGoods from "./Availability";
+import { Availability } from "@/src/lib/api/generated";
 import ButtonSubmitAddProduct from "./ButtonSubmitAddProduct";
-import Availability from "./Availability";
+import AvailabilitySelector from "./AvailabilitySelector";
 
 /* ---------------- TYPES ---------------- */
 type ProductDto = {
@@ -53,7 +53,7 @@ type ProductDto = {
   languageId?: number;
 
   coverType: "hard" | "soft";
-  availability: "available" | "unavailable" | "preorder";
+  availability?: Availability;
   conditionOfTheGoods?: string;
 
   leaveOldImages: boolean;
@@ -81,7 +81,7 @@ export default function AddProductPage() {
       categoryIds: [],
       languageId: undefined,
       coverType: "soft",
-      availability: "available",
+      availability: Availability.NUMBER_0,
       leaveOldImages: false,
       quantityInStock: undefined,
       bookSize: undefined,
@@ -231,9 +231,7 @@ export default function AddProductPage() {
         itemsInSet: form.dto.itemsInSet,
         ageRestrictions: form.dto.ageRestrictions,
         format: form.dto.format,
-        // FIX: mapping UI → API
         originalLanguageId: form.dto.languageId,
-
         publisherId: form.dto.publisherId,
 
         // FIX ISBN naming
@@ -707,11 +705,9 @@ export default function AddProductPage() {
                     </div>
 
                     <div className="flex flex-col items-center w-[250px] mt-0">
-                      <Availability
+                      <AvailabilitySelector
                         value={form.dto.availability}
-                        onChange={(value) =>
-                          setDto("availability", value)
-                        }
+                        onChange={(value) => setDto("availability", value)}
                       />
                     </div>
                     <div className="relative flex flex-col items-center mt-[140px]">

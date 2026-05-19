@@ -1,14 +1,16 @@
-const ageRestrictions = [
-  { label: "Без обмежень", value: "0" },
-  { label: "6+", value: "6" },
-  { label: "12+", value: "12" },
-  { label: "16+", value: "16" },
-  { label: "18+", value: "18" },
+import { AgeRestriction } from "@/src/lib/api/generated";
+
+export const ageFilters = [
+  { label: "All", value: AgeRestriction.NUMBER_0 },
+  { label: "6+", value: AgeRestriction.NUMBER_1 },
+  { label: "12+", value: AgeRestriction.NUMBER_2 },
+  { label: "16+", value: AgeRestriction.NUMBER_3 },
+  { label: "18+", value: AgeRestriction.NUMBER_4 },
 ];
 
 type Props = {
-  value?: string;
-  onChange: (value?: string) => void;
+  value?: AgeRestriction;
+  onChange: (value: AgeRestriction) => void;
 };
 
 export default function AgeRestrictions({ value, onChange }: Props) {

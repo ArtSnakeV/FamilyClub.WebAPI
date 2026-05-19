@@ -14,7 +14,7 @@ import { Fragment } from "react";
 type Member = {
   fullName?: string;
   email?: string;
-  avatarUrl?: string;
+  avatarData?: string | null;
 };
 
 type Props = {
@@ -39,6 +39,9 @@ export default function UserMenuDrop({
   const displayName =
     member?.fullName || member?.email?.split("@")[0] || "User";
 
+  const avatarSrc = member?.avatarData
+    ? `data:image/jpeg;base64,${member.avatarData}`
+    : null;
   return (
     <Menu as="div" className="relative inline-block">
       {({ open }) => (
@@ -60,10 +63,11 @@ export default function UserMenuDrop({
           border-0 outline-none focus:outline-none focus:ring-0 focus-visible:ring-0"
             >
               {/* Avatar */}
-              <div className="w-[40px] h-[40px] rounded-full overflow-hidden bg-[#3a3a3a] flex items-center justify-center">
-                {member?.avatarUrl ? (
+              <div className="w-[40px] h-[40px] rounded-full overflow-hidden flex items-center justify-center">
+                {avatarSrc ? (
                   <img
-                    src={member.avatarUrl}
+                    src={avatarSrc}
+                    alt="avatar"
                     className="w-full h-full object-cover"
                   />
                 ) : (
@@ -111,9 +115,9 @@ export default function UserMenuDrop({
                 <div className="flex flex-col justify-center ">
                   <div className="flex items-center gap-6 pt-4 pb-2 px-4">
                     <div className="w-[34px] h-[34px] rounded-full overflow-hidden flex items-center justify-center">
-                      {member?.avatarUrl ? (
+                      {avatarSrc ? (
                         <img
-                          src={member.avatarUrl}
+                          src={avatarSrc}
                           className="w-full h-full object-cover"
                         />
                       ) : (

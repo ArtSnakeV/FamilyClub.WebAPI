@@ -21,6 +21,7 @@ type User = {
   surname: string;
   dateOfBirth: string;
   roles: string[];
+  avatarData: string;
 };
 
 export default function UpNavigation() {
@@ -51,8 +52,6 @@ export default function UpNavigation() {
       }
 
       const data: User = await res.json();
-
-      console.log("CURRENT USER:", data);
 
       setMember(data);
     } catch (error) {
@@ -157,7 +156,7 @@ export default function UpNavigation() {
                   member={{
                     fullName: `${member?.name} ${member?.surname}`,
                     email: member?.email,
-                    avatarUrl: undefined,
+                    avatarData: member?.avatarData,
                   }}
                   notificationCount={notificationCount}
                   onCabinet={() => router.push("/cabinetManager")}

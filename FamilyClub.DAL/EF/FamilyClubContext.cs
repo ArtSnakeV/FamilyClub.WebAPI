@@ -35,9 +35,12 @@ public class FamilyClubContext : IdentityDbContext<ClubMember>
     {
         // Mandatory for Identity
         base.OnModelCreating(builder);
+		builder.Entity<ClubMember>()
+		.Property(m => m.AvatarData)
+		.HasColumnName("avatar_data");
 
-        // Many-to-Many: Product <-> Author
-        builder.Entity<Product>()
+		// Many-to-Many: Product <-> Author
+		builder.Entity<Product>()
             .HasMany(p => p.Authors)
             .WithMany(a => a.Products)
             .UsingEntity(j => j.ToTable("ProductAuthors"));
