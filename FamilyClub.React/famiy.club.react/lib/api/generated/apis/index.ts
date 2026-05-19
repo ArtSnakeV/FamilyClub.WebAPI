@@ -7,6 +7,7 @@ export * from './ClaimsClubMemberApi';
 export * from './ClubMemberApi';
 export * from './HomeApi';
 export * from './LanguagesApi';
+export * from './NotificationsApi';
 export * from './OrderItemsApi';
 export * from './OrdersApi';
 export * from './ProductsApi';

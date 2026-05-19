@@ -13,13 +13,13 @@
  */
 
 import { mapValues } from '../runtime';
-import type { Series } from './Series';
+import type { Availability } from './Availability';
 import {
-    SeriesFromJSON,
-    SeriesFromJSONTyped,
-    SeriesToJSON,
-    SeriesToJSONTyped,
-} from './Series';
+    AvailabilityFromJSON,
+    AvailabilityFromJSONTyped,
+    AvailabilityToJSON,
+    AvailabilityToJSONTyped,
+} from './Availability';
 import type { Category } from './Category';
 import {
     CategoryFromJSON,
@@ -27,20 +27,13 @@ import {
     CategoryToJSON,
     CategoryToJSONTyped,
 } from './Category';
-import type { Language } from './Language';
+import type { CoverType } from './CoverType';
 import {
-    LanguageFromJSON,
-    LanguageFromJSONTyped,
-    LanguageToJSON,
-    LanguageToJSONTyped,
-} from './Language';
-import type { Translator } from './Translator';
-import {
-    TranslatorFromJSON,
-    TranslatorFromJSONTyped,
-    TranslatorToJSON,
-    TranslatorToJSONTyped,
-} from './Translator';
+    CoverTypeFromJSON,
+    CoverTypeFromJSONTyped,
+    CoverTypeToJSON,
+    CoverTypeToJSONTyped,
+} from './CoverType';
 import type { ProductImage } from './ProductImage';
 import {
     ProductImageFromJSON,
@@ -48,13 +41,6 @@ import {
     ProductImageToJSON,
     ProductImageToJSONTyped,
 } from './ProductImage';
-import type { Author } from './Author';
-import {
-    AuthorFromJSON,
-    AuthorFromJSONTyped,
-    AuthorToJSON,
-    AuthorToJSONTyped,
-} from './Author';
 import type { Publisher } from './Publisher';
 import {
     PublisherFromJSON,
@@ -76,6 +62,55 @@ import {
     PromotionToJSON,
     PromotionToJSONTyped,
 } from './Promotion';
+import type { Series } from './Series';
+import {
+    SeriesFromJSON,
+    SeriesFromJSONTyped,
+    SeriesToJSON,
+    SeriesToJSONTyped,
+} from './Series';
+import type { Language } from './Language';
+import {
+    LanguageFromJSON,
+    LanguageFromJSONTyped,
+    LanguageToJSON,
+    LanguageToJSONTyped,
+} from './Language';
+import type { Translator } from './Translator';
+import {
+    TranslatorFromJSON,
+    TranslatorFromJSONTyped,
+    TranslatorToJSON,
+    TranslatorToJSONTyped,
+} from './Translator';
+import type { AgeRestriction } from './AgeRestriction';
+import {
+    AgeRestrictionFromJSON,
+    AgeRestrictionFromJSONTyped,
+    AgeRestrictionToJSON,
+    AgeRestrictionToJSONTyped,
+} from './AgeRestriction';
+import type { Author } from './Author';
+import {
+    AuthorFromJSON,
+    AuthorFromJSONTyped,
+    AuthorToJSON,
+    AuthorToJSONTyped,
+} from './Author';
+import type { BookSize } from './BookSize';
+import {
+    BookSizeFromJSON,
+    BookSizeFromJSONTyped,
+    BookSizeToJSON,
+    BookSizeToJSONTyped,
+} from './BookSize';
+import type { ProductFormat } from './ProductFormat';
+import {
+    ProductFormatFromJSON,
+    ProductFormatFromJSONTyped,
+    ProductFormatToJSON,
+    ProductFormatToJSONTyped,
+} from './ProductFormat';
 
 /**
  * 
@@ -187,10 +222,10 @@ export interface Product {
     series?: Array<Series> | null;
     /**
      * 
-     * @type {string}
+     * @type {ProductFormat}
      * @memberof Product
      */
-    format?: string | null;
+    productFormat?: ProductFormat;
     /**
      * 
      * @type {number}
@@ -223,6 +258,30 @@ export interface Product {
     promotion?: Promotion;
     /**
      * 
+     * @type {CoverType}
+     * @memberof Product
+     */
+    coverType?: CoverType;
+    /**
+     * 
+     * @type {Availability}
+     * @memberof Product
+     */
+    availability?: Availability;
+    /**
+     * 
+     * @type {BookSize}
+     * @memberof Product
+     */
+    bookSize?: BookSize;
+    /**
+     * 
+     * @type {number}
+     * @memberof Product
+     */
+    quantityInStock?: number | null;
+    /**
+     * 
      * @type {string}
      * @memberof Product
      */
@@ -241,10 +300,10 @@ export interface Product {
     itemsInSet?: number | null;
     /**
      * 
-     * @type {string}
+     * @type {AgeRestriction}
      * @memberof Product
      */
-    ageRestrictions?: string | null;
+    ageRestriction?: AgeRestriction;
     /**
      * 
      * @type {Array<Translator>}
@@ -252,6 +311,8 @@ export interface Product {
      */
     translators?: Array<Translator> | null;
 }
+
+
 
 /**
  * Check if a given object implements the Product interface.
@@ -289,16 +350,20 @@ export function ProductFromJSONTyped(json: any, ignoreDiscriminator: boolean): P
         'publishingDate': json['publishingDate'] == null ? undefined : (new Date(json['publishingDate'])),
         'categories': json['categories'] == null ? undefined : ((json['categories'] as Array<any>).map(CategoryFromJSON)),
         'series': json['series'] == null ? undefined : ((json['series'] as Array<any>).map(SeriesFromJSON)),
-        'format': json['format'] == null ? undefined : json['format'],
+        'productFormat': json['productFormat'] == null ? undefined : ProductFormatFromJSON(json['productFormat']),
         'originalLanguageId': json['originalLanguageId'] == null ? undefined : json['originalLanguageId'],
         'originalLanguage': json['originalLanguage'] == null ? undefined : LanguageFromJSON(json['originalLanguage']),
         'isbn': json['isbn'] == null ? undefined : json['isbn'],
         'promotionId': json['promotionId'] == null ? undefined : json['promotionId'],
         'promotion': json['promotion'] == null ? undefined : PromotionFromJSON(json['promotion']),
+        'coverType': json['coverType'] == null ? undefined : CoverTypeFromJSON(json['coverType']),
+        'availability': json['availability'] == null ? undefined : AvailabilityFromJSON(json['availability']),
+        'bookSize': json['bookSize'] == null ? undefined : BookSizeFromJSON(json['bookSize']),
+        'quantityInStock': json['quantityInStock'] == null ? undefined : json['quantityInStock'],
         'productCode': json['productCode'] == null ? undefined : json['productCode'],
         'weightGrams': json['weightGrams'] == null ? undefined : json['weightGrams'],
         'itemsInSet': json['itemsInSet'] == null ? undefined : json['itemsInSet'],
-        'ageRestrictions': json['ageRestrictions'] == null ? undefined : json['ageRestrictions'],
+        'ageRestriction': json['ageRestriction'] == null ? undefined : AgeRestrictionFromJSON(json['ageRestriction']),
         'translators': json['translators'] == null ? undefined : ((json['translators'] as Array<any>).map(TranslatorFromJSON)),
     };
 }
@@ -330,16 +395,20 @@ export function ProductToJSONTyped(value?: Omit<Product, 'rating'> | null, ignor
         'publishingDate': value['publishingDate'] == null ? value['publishingDate'] : value['publishingDate'].toISOString().substring(0,10),
         'categories': value['categories'] == null ? undefined : ((value['categories'] as Array<any>).map(CategoryToJSON)),
         'series': value['series'] == null ? undefined : ((value['series'] as Array<any>).map(SeriesToJSON)),
-        'format': value['format'],
+        'productFormat': ProductFormatToJSON(value['productFormat']),
         'originalLanguageId': value['originalLanguageId'],
         'originalLanguage': LanguageToJSON(value['originalLanguage']),
         'isbn': value['isbn'],
         'promotionId': value['promotionId'],
         'promotion': PromotionToJSON(value['promotion']),
+        'coverType': CoverTypeToJSON(value['coverType']),
+        'availability': AvailabilityToJSON(value['availability']),
+        'bookSize': BookSizeToJSON(value['bookSize']),
+        'quantityInStock': value['quantityInStock'],
         'productCode': value['productCode'],
         'weightGrams': value['weightGrams'],
         'itemsInSet': value['itemsInSet'],
-        'ageRestrictions': value['ageRestrictions'],
+        'ageRestriction': AgeRestrictionToJSON(value['ageRestriction']),
         'translators': value['translators'] == null ? undefined : ((value['translators'] as Array<any>).map(TranslatorToJSON)),
     };
 }

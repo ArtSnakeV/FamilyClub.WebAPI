@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "update-api": "npx openapi-generator-cli generate -i https://localhost:7069/swagger/v1/swagger.json -g typescript-fetch -o ./src/lib/api/generated",
+    "update-api": "npx openapi-generator-cli generate -i https://localhost:7069/swagger/v1/swagger.json -g typescript-fetch -o ./lib/api/generated",
     "api-sync": "npx @openapitools/openapi-generator-cli generate -i swagger.json -g typescript-fetch -o generated --additional-properties=typescriptThreePlus=true"
   },
   "dependencies": {

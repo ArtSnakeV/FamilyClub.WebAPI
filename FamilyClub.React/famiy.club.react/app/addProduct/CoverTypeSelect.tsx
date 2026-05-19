@@ -1,4 +1,4 @@
-import { CoverType } from "@/src/lib/api/generated";
+import { CoverType } from "@/lib/api/generated";
 
 const coverTypeOptions = [
   { label: "Тверда", value: CoverType.NUMBER_0 },

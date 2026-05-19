@@ -2,8 +2,8 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import { CategoriesApi } from "@/src/lib/api/generated/apis/CategoriesApi";
-import { Configuration, type CategoryDto } from "@/src/lib/api/generated";
+import { CategoriesApi } from "@/lib/api/generated/apis/CategoriesApi";
+import { Configuration, type CategoryDto } from "@/lib/api/generated";
 import Link from "next/link";
 
 export default function DropDownCategories() {

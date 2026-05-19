@@ -1,4 +1,4 @@
-import { BookSize } from "@/src/lib/api/generated";
+import { BookSize } from "@/lib/api/generated";
 
 const bookSizeOptions = [
   { label: "A4 (210 x 297 мм)", value: BookSize.NUMBER_0 },

@@ -1,4 +1,4 @@
-import type { PublisherDto } from "@/src/lib/api/generated";
+import type { PublisherDto } from "@/lib/api/generated";
 
 type Props = {
   publishers: PublisherDto[];

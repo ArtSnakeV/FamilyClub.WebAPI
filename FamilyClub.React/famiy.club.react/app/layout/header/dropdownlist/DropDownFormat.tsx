@@ -9,7 +9,7 @@ import {
   ProductsApi,
   ProductFormat,
   ProductDto,
-} from "@/src/lib/api/generated";
+} from "@/lib/api/generated";
 
 const formatFilters = [
   {
