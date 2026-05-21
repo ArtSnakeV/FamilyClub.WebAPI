@@ -6,6 +6,7 @@ export * from './Author';
 export * from './AuthorDTO';
 export * from './Availability';
 export * from './BookSize';
+export * from './BookSizeDto';
 export * from './Category';
 export * from './CategoryDto';
 export * from './ClaimsClubMemberDto';

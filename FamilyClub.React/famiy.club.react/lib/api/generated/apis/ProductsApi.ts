@@ -17,7 +17,6 @@ import * as runtime from '../runtime';
 import type {
   AgeRestriction,
   Availability,
-  BookSize,
   CoverType,
   ProductDto,
   ProductImage,
@@ -27,8 +26,6 @@ import {
     AgeRestrictionToJSON,
     AvailabilityFromJSON,
     AvailabilityToJSON,
-    BookSizeFromJSON,
-    BookSizeToJSON,
     CoverTypeFromJSON,
     CoverTypeToJSON,
     ProductDtoFromJSON,
@@ -59,7 +56,6 @@ export interface ApiProductsIdPutRequest {
     publishingDate?: Date;
     coverType?: CoverType;
     availability?: Availability;
-    bookSize?: BookSize;
     quantityInStock?: number;
     originalLanguageId?: number;
     iSBN?: string;
@@ -74,6 +70,7 @@ export interface ApiProductsIdPutRequest {
     seriesIds?: Array<number>;
     translatorIds?: Array<number>;
     formatIds?: Array<number>;
+    bookSizeIds?: Array<number>;
     leaveOldImages?: boolean;
     productImageFiles?: Array<Blob>;
 }
@@ -91,7 +88,6 @@ export interface ApiProductsPostRequest {
     publishingDate?: Date;
     coverType?: CoverType;
     availability?: Availability;
-    bookSize?: BookSize;
     quantityInStock?: number;
     originalLanguageId?: number;
     iSBN?: string;
@@ -106,6 +102,7 @@ export interface ApiProductsPostRequest {
     seriesIds?: Array<number>;
     translatorIds?: Array<number>;
     formatIds?: Array<number>;
+    bookSizeIds?: Array<number>;
     leaveOldImages?: boolean;
     productImageFiles?: Array<Blob>;
 }
@@ -316,10 +313,6 @@ export class ProductsApi extends runtime.BaseAPI {
             formParams.append('Availability', requestParameters['availability'] as any);
         }
 
-        if (requestParameters['bookSize'] != null) {
-            formParams.append('BookSize', requestParameters['bookSize'] as any);
-        }
-
         if (requestParameters['quantityInStock'] != null) {
             formParams.append('QuantityInStock', requestParameters['quantityInStock'] as any);
         }
@@ -385,6 +378,12 @@ export class ProductsApi extends runtime.BaseAPI {
         if (requestParameters['formatIds'] != null) {
             requestParameters['formatIds'].forEach((element) => {
                 formParams.append('FormatIds', element as any);
+            })
+        }
+
+        if (requestParameters['bookSizeIds'] != null) {
+            requestParameters['bookSizeIds'].forEach((element) => {
+                formParams.append('BookSizeIds', element as any);
             })
         }
 
@@ -500,10 +499,6 @@ export class ProductsApi extends runtime.BaseAPI {
             formParams.append('Availability', requestParameters['availability'] as any);
         }
 
-        if (requestParameters['bookSize'] != null) {
-            formParams.append('BookSize', requestParameters['bookSize'] as any);
-        }
-
         if (requestParameters['quantityInStock'] != null) {
             formParams.append('QuantityInStock', requestParameters['quantityInStock'] as any);
         }
@@ -569,6 +564,12 @@ export class ProductsApi extends runtime.BaseAPI {
         if (requestParameters['formatIds'] != null) {
             requestParameters['formatIds'].forEach((element) => {
                 formParams.append('FormatIds', element as any);
+            })
+        }
+
+        if (requestParameters['bookSizeIds'] != null) {
+            requestParameters['bookSizeIds'].forEach((element) => {
+                formParams.append('BookSizeIds', element as any);
             })
         }
 

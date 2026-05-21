@@ -1,5 +1,5 @@
 
-# BookSize
+# BookSizeDto
 
 
 ## Properties
@@ -9,20 +9,18 @@ Name | Type
 `id` | number
 `name` | string
 `code` | string
-`products` | [Array&lt;Product&gt;](Product.md)
 
 ## Example
 
 ```typescript
-import type { BookSize } from ''
+import type { BookSizeDto } from ''
 
 // TODO: Update the object below with actual values
 const example = {
   "id": null,
   "name": null,
   "code": null,
-  "products": null,
-} satisfies BookSize
+} satisfies BookSizeDto
 
 console.log(example)
 
@@ -31,7 +29,7 @@ const exampleJSON: string = JSON.stringify(example)
 console.log(exampleJSON)
 
 // Parse the JSON string back to an object
-const exampleParsed = JSON.parse(exampleJSON) as BookSize
+const exampleParsed = JSON.parse(exampleJSON) as BookSizeDto
 console.log(exampleParsed)
 ```
 

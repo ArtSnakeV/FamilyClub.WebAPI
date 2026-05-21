@@ -1,8 +1,22 @@
-export default function ButtonSubmitAddProduct() {
+type Props = {
+  onPublish?: () => void;
+  onSaveDraft?: () => void;
+  onCancel?: () => void;
+  loading?: boolean;
+};
+
+export default function ButtonSubmitAddProduct({
+  onPublish,
+  onSaveDraft,
+  onCancel,
+  loading,
+}: Props) {
   return (
     <div className="w-[355px] flex flex-col gap-4 text-[20px] font-medium">
       <button
         type="button"
+        disabled={loading}
+        onClick={onPublish}
         className="
           w-full h-[60px]
           rounded-[55px]
@@ -19,6 +33,8 @@ export default function ButtonSubmitAddProduct() {
 
       <button
         type="button"
+        disabled={loading}
+        onClick={onSaveDraft}
         className="
           w-full h-[60px]
           rounded-[55px]
@@ -35,6 +51,7 @@ export default function ButtonSubmitAddProduct() {
 
       <button
         type="button"
+        onClick={onCancel}
         className="
           w-full h-[60px]
           rounded-[55px]

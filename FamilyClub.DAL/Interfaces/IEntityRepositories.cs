@@ -30,4 +30,4 @@ public interface INotificationRepository : IRepository<Notification>
 	Task<int> GetUnreadCountAsync(string clubMemberId, CancellationToken cancellationToken = default);
 };
 public interface IFormatRepository : IRepository<Format>;
-public interface IBookSizeRepository : IRepository<BookSize>;
+public interface IBookSizeRepository : IRepository<BookSize>; 

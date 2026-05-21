@@ -228,6 +228,12 @@ export interface Product {
     formats?: Array<Format> | null;
     /**
      * 
+     * @type {Array<BookSize>}
+     * @memberof Product
+     */
+    bookSizes?: Array<BookSize> | null;
+    /**
+     * 
      * @type {number}
      * @memberof Product
      */
@@ -268,12 +274,6 @@ export interface Product {
      * @memberof Product
      */
     availability?: Availability;
-    /**
-     * 
-     * @type {BookSize}
-     * @memberof Product
-     */
-    bookSize?: BookSize;
     /**
      * 
      * @type {number}
@@ -351,6 +351,7 @@ export function ProductFromJSONTyped(json: any, ignoreDiscriminator: boolean): P
         'categories': json['categories'] == null ? undefined : ((json['categories'] as Array<any>).map(CategoryFromJSON)),
         'series': json['series'] == null ? undefined : ((json['series'] as Array<any>).map(SeriesFromJSON)),
         'formats': json['formats'] == null ? undefined : ((json['formats'] as Array<any>).map(FormatFromJSON)),
+        'bookSizes': json['bookSizes'] == null ? undefined : ((json['bookSizes'] as Array<any>).map(BookSizeFromJSON)),
         'originalLanguageId': json['originalLanguageId'] == null ? undefined : json['originalLanguageId'],
         'originalLanguage': json['originalLanguage'] == null ? undefined : LanguageFromJSON(json['originalLanguage']),
         'isbn': json['isbn'] == null ? undefined : json['isbn'],
@@ -358,7 +359,6 @@ export function ProductFromJSONTyped(json: any, ignoreDiscriminator: boolean): P
         'promotion': json['promotion'] == null ? undefined : PromotionFromJSON(json['promotion']),
         'coverType': json['coverType'] == null ? undefined : CoverTypeFromJSON(json['coverType']),
         'availability': json['availability'] == null ? undefined : AvailabilityFromJSON(json['availability']),
-        'bookSize': json['bookSize'] == null ? undefined : BookSizeFromJSON(json['bookSize']),
         'quantityInStock': json['quantityInStock'] == null ? undefined : json['quantityInStock'],
         'productCode': json['productCode'] == null ? undefined : json['productCode'],
         'weightGrams': json['weightGrams'] == null ? undefined : json['weightGrams'],
@@ -396,6 +396,7 @@ export function ProductToJSONTyped(value?: Omit<Product, 'rating'> | null, ignor
         'categories': value['categories'] == null ? undefined : ((value['categories'] as Array<any>).map(CategoryToJSON)),
         'series': value['series'] == null ? undefined : ((value['series'] as Array<any>).map(SeriesToJSON)),
         'formats': value['formats'] == null ? undefined : ((value['formats'] as Array<any>).map(FormatToJSON)),
+        'bookSizes': value['bookSizes'] == null ? undefined : ((value['bookSizes'] as Array<any>).map(BookSizeToJSON)),
         'originalLanguageId': value['originalLanguageId'],
         'originalLanguage': LanguageToJSON(value['originalLanguage']),
         'isbn': value['isbn'],
@@ -403,7 +404,6 @@ export function ProductToJSONTyped(value?: Omit<Product, 'rating'> | null, ignor
         'promotion': PromotionToJSON(value['promotion']),
         'coverType': CoverTypeToJSON(value['coverType']),
         'availability': AvailabilityToJSON(value['availability']),
-        'bookSize': BookSizeToJSON(value['bookSize']),
         'quantityInStock': value['quantityInStock'],
         'productCode': value['productCode'],
         'weightGrams': value['weightGrams'],

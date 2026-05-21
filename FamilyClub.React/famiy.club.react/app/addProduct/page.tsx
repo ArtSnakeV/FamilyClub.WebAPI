@@ -16,7 +16,8 @@ import {
   FormatDto,
   FormatsApi,
   CoverType,
-  BookSize,
+  BookSizeDto,
+  BookSizesApi,
 } from "@/lib/api/generated";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -60,7 +61,7 @@ type ProductDto = {
   formatIds?: number[];
   leaveOldImages: boolean;
   quantityInStock?: number;
-  bookSize?: BookSize;
+  bookSizeIds: number[];
 };
 type FormState = {
   dto: ProductDto;
@@ -74,6 +75,7 @@ export default function AddProductPage() {
   const [categories, setCategories] = useState<CategoryDto[]>([]);
   const [languages, setLanguages] = useState<LanguageDto[]>([]);
   const [formats, setFormats] = useState<FormatDto[]>([]);
+  const [bookSize, setBookSizes] = useState<BookSizeDto[]>([]);
 
   const [form, setForm] = useState<FormState>({
     dto: {
@@ -88,12 +90,13 @@ export default function AddProductPage() {
       availability: undefined,
       leaveOldImages: false,
       quantityInStock: undefined,
-      bookSize: undefined,
+      bookSizeIds: [],
       publisherId: undefined,
       authorIds: [],
       formatIds: [],
       price: undefined,
       discountPrice: undefined,
+      isbn: undefined,
     },
   });
 
@@ -119,14 +122,19 @@ export default function AddProductPage() {
   const formatsApi = new FormatsApi(
     new Configuration({ basePath: "https://localhost:7069" }),
   );
+  const bookSizesApi = new BookSizesApi(
+    new Configuration({ basePath: "https://localhost:7069" }),
+  );
+
   useEffect(() => {
     const loadData = async () => {
-      const [a, p, c, l, f] = await Promise.all([
+      const [a, p, c, l, f, b] = await Promise.all([
         authorsApi.apiAuthorsGet(),
         publishersApi.apiPublishersGet(),
         categoriesApi.apiCategoriesGet(),
         languagesApi.apiLanguagesGet(),
         formatsApi.apiFormatsGet(),
+        bookSizesApi.apiBookSizesGet(),
       ]);
 
       setAuthors(a);
@@ -134,6 +142,7 @@ export default function AddProductPage() {
       setCategories(c);
       setLanguages(l);
       setFormats(f);
+      setBookSizes(b);
     };
 
     loadData();
@@ -217,7 +226,7 @@ export default function AddProductPage() {
     }
   };
 
-  /* ---------------- SUBMIT (FIXED) ---------------- */
+  /* ---------------- SUBMIT---------------- */
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -228,7 +237,7 @@ export default function AddProductPage() {
 
       if (mainImage) productImageFiles.push(mainImage);
       gallery.forEach((f) => f && productImageFiles.push(f));
-
+console.log("DTO BEFORE SEND:", form.dto);
       await api.apiProductsPost({
         // DTO
         productName: form.dto.productName,
@@ -236,9 +245,9 @@ export default function AddProductPage() {
         price: form.dto.price,
         discountPrice: form.dto.discountPrice,
         pageCount: form.dto.pageCount,
-        publishingDate: form.dto.publishingYear
-          ? new Date(form.dto.publishingYear, 0, 1)
-          : undefined,
+       publishingDate: form.dto.publishingYear
+  ? new Date(`${form.dto.publishingYear}-01-01`)
+  : undefined,
         weightGrams: form.dto.weightGrams,
         itemsInSet: form.dto.itemsInSet,
         availability: form.dto.availability,
@@ -248,7 +257,7 @@ export default function AddProductPage() {
         publisherId: form.dto.publisherId,
         coverType: form.dto.coverType,
         authorIds: form.dto.authorIds,
-        bookSize: form.dto.bookSize,
+        bookSizeIds: form.dto.bookSizeIds,
         quantityInStock: form.dto.quantityInStock,
         // FIX ISBN naming
         iSBN: form.dto.isbn,
@@ -256,10 +265,18 @@ export default function AddProductPage() {
         // FILES
         productImageFiles,
       });
+      
       router.push("/products");
-    } catch (err) {
-      console.error(err);
-      alert("Помилка при створенні продукту");
+    } catch (err: any) {
+  console.error("FULL ERROR:", err);
+
+  if (err?.response) {
+    const text = await err.response.text?.();
+    console.error("SERVER RESPONSE:", text);
+  }
+
+  alert("Помилка при створенні продукту");
+
     } finally {
       setLoading(false);
     }
@@ -440,8 +457,11 @@ export default function AddProductPage() {
                     <div className="flex flex-row gap-4 justify-between p-2 h-[88px]">
                       <div className="flex flex-col gap-1 w-[250px]">
                         <BookSizeSelectForm
-                          value={form.dto.bookSize}
-                          onChange={(v) => setDto("bookSize", v)}
+                          value={form.dto.bookSizeIds?.[0]}
+                          formats={bookSize}
+                          onChange={(id) =>
+                            setDto("bookSizeIds", id ? [id] : [])
+                          }
                         />
                       </div>
                       <div className="flex flex-col gap-1 w-[250px]">
@@ -735,7 +755,14 @@ export default function AddProductPage() {
                       />
                     </div>
                     <div className="relative flex flex-col items-center mt-[140px]">
-                      <ButtonSubmitAddProduct />
+                      <ButtonSubmitAddProduct
+                        loading={loading}
+                        onPublish={() =>
+                          handleSubmit(new Event("submit") as any)
+                        }
+                        onSaveDraft={() => console.log("draft")}
+                        onCancel={() => router.push("/products")}
+                      />
                     </div>
                   </div>
                 </div>

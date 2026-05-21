@@ -41,13 +41,6 @@ import {
     ProductImageToJSON,
     ProductImageToJSONTyped,
 } from './ProductImage';
-import type { BookSize } from './BookSize';
-import {
-    BookSizeFromJSON,
-    BookSizeFromJSONTyped,
-    BookSizeToJSON,
-    BookSizeToJSONTyped,
-} from './BookSize';
 
 /**
  * 
@@ -127,12 +120,6 @@ export interface ProductDto {
      * @memberof ProductDto
      */
     availability?: Availability;
-    /**
-     * 
-     * @type {BookSize}
-     * @memberof ProductDto
-     */
-    bookSize?: BookSize;
     /**
      * 
      * @type {number}
@@ -219,6 +206,12 @@ export interface ProductDto {
     formatIds?: Array<number> | null;
     /**
      * 
+     * @type {Array<number>}
+     * @memberof ProductDto
+     */
+    bookSizeIds?: Array<number> | null;
+    /**
+     * 
      * @type {boolean}
      * @memberof ProductDto
      */
@@ -256,7 +249,6 @@ export function ProductDtoFromJSONTyped(json: any, ignoreDiscriminator: boolean)
         'publishingDate': json['publishingDate'] == null ? undefined : (new Date(json['publishingDate'])),
         'coverType': json['coverType'] == null ? undefined : CoverTypeFromJSON(json['coverType']),
         'availability': json['availability'] == null ? undefined : AvailabilityFromJSON(json['availability']),
-        'bookSize': json['bookSize'] == null ? undefined : BookSizeFromJSON(json['bookSize']),
         'quantityInStock': json['quantityInStock'] == null ? undefined : json['quantityInStock'],
         'originalLanguageId': json['originalLanguageId'] == null ? undefined : json['originalLanguageId'],
         'isbn': json['isbn'] == null ? undefined : json['isbn'],
@@ -271,6 +263,7 @@ export function ProductDtoFromJSONTyped(json: any, ignoreDiscriminator: boolean)
         'seriesIds': json['seriesIds'] == null ? undefined : json['seriesIds'],
         'translatorIds': json['translatorIds'] == null ? undefined : json['translatorIds'],
         'formatIds': json['formatIds'] == null ? undefined : json['formatIds'],
+        'bookSizeIds': json['bookSizeIds'] == null ? undefined : json['bookSizeIds'],
         'leaveOldImages': json['leaveOldImages'] == null ? undefined : json['leaveOldImages'],
     };
 }
@@ -298,7 +291,6 @@ export function ProductDtoToJSONTyped(value?: ProductDto | null, ignoreDiscrimin
         'publishingDate': value['publishingDate'] == null ? value['publishingDate'] : value['publishingDate'].toISOString().substring(0,10),
         'coverType': CoverTypeToJSON(value['coverType']),
         'availability': AvailabilityToJSON(value['availability']),
-        'bookSize': BookSizeToJSON(value['bookSize']),
         'quantityInStock': value['quantityInStock'],
         'originalLanguageId': value['originalLanguageId'],
         'isbn': value['isbn'],
@@ -313,6 +305,7 @@ export function ProductDtoToJSONTyped(value?: ProductDto | null, ignoreDiscrimin
         'seriesIds': value['seriesIds'],
         'translatorIds': value['translatorIds'],
         'formatIds': value['formatIds'],
+        'bookSizeIds': value['bookSizeIds'],
         'leaveOldImages': value['leaveOldImages'],
     };
 }

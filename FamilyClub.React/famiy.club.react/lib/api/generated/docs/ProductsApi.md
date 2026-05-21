@@ -201,7 +201,7 @@ No authorization required
 
 ## apiProductsIdPut
 
-> apiProductsIdPut(id, id2, productName, price, discountPrice, description, publisherId, productImages, originalTitle, pageCount, publishingDate, coverType, availability, bookSize, quantityInStock, originalLanguageId, iSBN, promotionId, productCode, weightGrams, itemsInSet, ageRestriction, authorIds, languageIds, categoryIds, seriesIds, translatorIds, formatIds, leaveOldImages, productImageFiles)
+> apiProductsIdPut(id, id2, productName, price, discountPrice, description, publisherId, productImages, originalTitle, pageCount, publishingDate, coverType, availability, quantityInStock, originalLanguageId, iSBN, promotionId, productCode, weightGrams, itemsInSet, ageRestriction, authorIds, languageIds, categoryIds, seriesIds, translatorIds, formatIds, bookSizeIds, leaveOldImages, productImageFiles)
 
 
 
@@ -245,8 +245,6 @@ async function example() {
     coverType: ...,
     // Availability (optional)
     availability: ...,
-    // BookSize (optional)
-    bookSize: ...,
     // number (optional)
     quantityInStock: 56,
     // number (optional)
@@ -275,6 +273,8 @@ async function example() {
     translatorIds: ...,
     // Array<number> (optional)
     formatIds: ...,
+    // Array<number> (optional)
+    bookSizeIds: ...,
     // boolean (optional)
     leaveOldImages: true,
     // Array<Blob> (optional)
@@ -311,7 +311,6 @@ example().catch(console.error);
 | **publishingDate** | `Date` |  | [Optional] [Defaults to `undefined`] |
 | **coverType** | `CoverType` |  | [Optional] [Defaults to `undefined`] [Enum: 0, 1] |
 | **availability** | `Availability` |  | [Optional] [Defaults to `undefined`] [Enum: 0, 1, 2] |
-| **bookSize** | `BookSize` |  | [Optional] [Defaults to `undefined`] [Enum: 0, 1, 2, 3] |
 | **quantityInStock** | `number` |  | [Optional] [Defaults to `undefined`] |
 | **originalLanguageId** | `number` |  | [Optional] [Defaults to `undefined`] |
 | **iSBN** | `string` |  | [Optional] [Defaults to `undefined`] |
@@ -326,6 +325,7 @@ example().catch(console.error);
 | **seriesIds** | `Array<number>` |  | [Optional] |
 | **translatorIds** | `Array<number>` |  | [Optional] |
 | **formatIds** | `Array<number>` |  | [Optional] |
+| **bookSizeIds** | `Array<number>` |  | [Optional] |
 | **leaveOldImages** | `boolean` |  | [Optional] [Defaults to `undefined`] |
 | **productImageFiles** | `Array<Blob>` |  | [Optional] |
 
@@ -353,7 +353,7 @@ No authorization required
 
 ## apiProductsPost
 
-> apiProductsPost(id, productName, price, discountPrice, description, publisherId, productImages, originalTitle, pageCount, publishingDate, coverType, availability, bookSize, quantityInStock, originalLanguageId, iSBN, promotionId, productCode, weightGrams, itemsInSet, ageRestriction, authorIds, languageIds, categoryIds, seriesIds, translatorIds, formatIds, leaveOldImages, productImageFiles)
+> apiProductsPost(id, productName, price, discountPrice, description, publisherId, productImages, originalTitle, pageCount, publishingDate, coverType, availability, quantityInStock, originalLanguageId, iSBN, promotionId, productCode, weightGrams, itemsInSet, ageRestriction, authorIds, languageIds, categoryIds, seriesIds, translatorIds, formatIds, bookSizeIds, leaveOldImages, productImageFiles)
 
 
 
@@ -395,8 +395,6 @@ async function example() {
     coverType: ...,
     // Availability (optional)
     availability: ...,
-    // BookSize (optional)
-    bookSize: ...,
     // number (optional)
     quantityInStock: 56,
     // number (optional)
@@ -425,6 +423,8 @@ async function example() {
     translatorIds: ...,
     // Array<number> (optional)
     formatIds: ...,
+    // Array<number> (optional)
+    bookSizeIds: ...,
     // boolean (optional)
     leaveOldImages: true,
     // Array<Blob> (optional)
@@ -460,7 +460,6 @@ example().catch(console.error);
 | **publishingDate** | `Date` |  | [Optional] [Defaults to `undefined`] |
 | **coverType** | `CoverType` |  | [Optional] [Defaults to `undefined`] [Enum: 0, 1] |
 | **availability** | `Availability` |  | [Optional] [Defaults to `undefined`] [Enum: 0, 1, 2] |
-| **bookSize** | `BookSize` |  | [Optional] [Defaults to `undefined`] [Enum: 0, 1, 2, 3] |
 | **quantityInStock** | `number` |  | [Optional] [Defaults to `undefined`] |
 | **originalLanguageId** | `number` |  | [Optional] [Defaults to `undefined`] |
 | **iSBN** | `string` |  | [Optional] [Defaults to `undefined`] |
@@ -475,6 +474,7 @@ example().catch(console.error);
 | **seriesIds** | `Array<number>` |  | [Optional] |
 | **translatorIds** | `Array<number>` |  | [Optional] |
 | **formatIds** | `Array<number>` |  | [Optional] |
+| **bookSizeIds** | `Array<number>` |  | [Optional] |
 | **leaveOldImages** | `boolean` |  | [Optional] [Defaults to `undefined`] |
 | **productImageFiles** | `Array<Blob>` |  | [Optional] |
 

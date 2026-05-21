@@ -160,7 +160,7 @@ public class ProductService : IProductService
 		existingProduct.PageCount = dto.PageCount;
 		existingProduct.PublishingDate = dto.PublishingDate;
 
-		// enums (ОНОВЛЕНО ПІД ТВОЮ МОДЕЛЬ)
+		// enums
 		//existingProduct.ProductFormat = dto.ProductFormat;
 		existingProduct.CoverType = dto.CoverType;
 		existingProduct.Availability = dto.Availability;
@@ -178,7 +178,7 @@ public class ProductService : IProductService
 
 		existingProduct.PromotionId = dto.PromotionId;
 
-		// many-to-many (простий варіант: reset)
+		// many-to-many 
 		existingProduct.Authors = dto.AuthorIds?
 			.Select(id => new Author { Id = id }).ToList() ?? new();
 
