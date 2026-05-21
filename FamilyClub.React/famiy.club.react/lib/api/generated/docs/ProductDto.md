@@ -18,7 +18,6 @@ Name | Type
 `publishingDate` | Date
 `coverType` | [CoverType](CoverType.md)
 `availability` | [Availability](Availability.md)
-`bookSize` | [BookSize](BookSize.md)
 `quantityInStock` | number
 `originalLanguageId` | number
 `isbn` | string
@@ -33,6 +32,7 @@ Name | Type
 `seriesIds` | Array&lt;number&gt;
 `translatorIds` | Array&lt;number&gt;
 `formatIds` | Array&lt;number&gt;
+`bookSizeIds` | Array&lt;number&gt;
 `leaveOldImages` | boolean
 
 ## Example
@@ -54,7 +54,6 @@ const example = {
   "publishingDate": null,
   "coverType": null,
   "availability": null,
-  "bookSize": null,
   "quantityInStock": null,
   "originalLanguageId": null,
   "isbn": null,
@@ -69,6 +68,7 @@ const example = {
   "seriesIds": null,
   "translatorIds": null,
   "formatIds": null,
+  "bookSizeIds": null,
   "leaveOldImages": null,
 } satisfies ProductDto
 

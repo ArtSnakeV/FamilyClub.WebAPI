@@ -113,6 +113,11 @@ builder.Services.AddScoped<INotificationService, NotificationService>();
 builder.Services.AddScoped<IFormatRepository, FormatRepository>();
 builder.Services.AddScoped<IFormatService, FormatService>();
 
+//BookSize
+builder.Services.AddScoped<IBookSizeRepository, BookSizeRepository>();
+builder.Services.AddScoped<IBookSizeService, BookSizeService>();
+
+
 // Customize Identity cookie
 //builder.Services.ConfigureApplicationCookie(
 //    options => {

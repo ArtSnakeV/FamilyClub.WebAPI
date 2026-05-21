@@ -47,7 +47,6 @@ public class ClubMemberService : IClubMemberService
         var clubMember = await _userManager.FindByIdAsync(id);
         if (clubMember == null) return null;
 
-        // Рекомендую добавить получение ролей и здесь:
         var roles = await _userManager.GetRolesAsync(clubMember);
         return ClubMemberMapper.MapToReadDto(clubMember, roles);
     }

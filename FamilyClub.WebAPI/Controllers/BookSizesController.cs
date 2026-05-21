@@ -1,5 +1,4 @@
 ﻿using FamilyClub.BLL.DTOs.BookSize;
-using FamilyClub.BLL.DTOs.Format;
 using FamilyClub.BLL.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -29,8 +28,7 @@ namespace FamilyClub.WebAPI.Controllers
 		[HttpGet("{id:int}")]
 		public async Task<ActionResult<BookSizeDto>> GetById(int id, CancellationToken cancellationToken)
 		{
-			var bookSizes = await _bookSizeService.GetAllAsync(cancellationToken);
-			var bookSize = bookSizes.FirstOrDefault(x => x.Id == id);
+			var bookSize = await _bookSizeService.GetByIdAsync(id, cancellationToken);
 
 			if (bookSize is null)
 				return NotFound();

@@ -1,5 +1,5 @@
 ﻿using FamilyClub.BLL.DTOs.BookSize;
-using FamilyClub.BLL.DTOs.Format;
+using FamilyClub.BLL.Interfaces;
 using FamilyClub.DAL.Interfaces;
 using FamilyClubLibrary;
 using System;
@@ -8,7 +8,7 @@ using System.Text;
 
 namespace FamilyClub.BLL.Services
 {
-	public class BookSizeService
+	public class BookSizeService: IBookSizeService
 	{
 
 		private readonly IBookSizeRepository _bookSizeRepository;
@@ -46,7 +46,7 @@ namespace FamilyClub.BLL.Services
 			return MapToReadDto(bookSize);
 		}
 
-		public async Task<bool> UpdateAsync(int id, BookSize dto, CancellationToken cancellationToken = default)
+		public async Task<bool> UpdateAsync(int id, BookSizeDto dto, CancellationToken cancellationToken = default)
 		{
 			var bookSize = await _bookSizeRepository.GetByIdAsync(id, cancellationToken);
 			if (bookSize is null)

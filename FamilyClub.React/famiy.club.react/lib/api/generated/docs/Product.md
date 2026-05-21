@@ -24,6 +24,7 @@ Name | Type
 `categories` | [Array&lt;Category&gt;](Category.md)
 `series` | [Array&lt;Series&gt;](Series.md)
 `formats` | [Array&lt;Format&gt;](Format.md)
+`bookSizes` | [Array&lt;BookSize&gt;](BookSize.md)
 `originalLanguageId` | number
 `originalLanguage` | [Language](Language.md)
 `isbn` | string
@@ -31,7 +32,6 @@ Name | Type
 `promotion` | [Promotion](Promotion.md)
 `coverType` | [CoverType](CoverType.md)
 `availability` | [Availability](Availability.md)
-`bookSize` | [BookSize](BookSize.md)
 `quantityInStock` | number
 `productCode` | string
 `weightGrams` | number
@@ -64,6 +64,7 @@ const example = {
   "categories": null,
   "series": null,
   "formats": null,
+  "bookSizes": null,
   "originalLanguageId": null,
   "originalLanguage": null,
   "isbn": null,
@@ -71,7 +72,6 @@ const example = {
   "promotion": null,
   "coverType": null,
   "availability": null,
-  "bookSize": null,
   "quantityInStock": null,
   "productCode": null,
   "weightGrams": null,

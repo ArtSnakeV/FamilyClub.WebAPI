@@ -12,29 +12,52 @@
  * Do not edit the class manually.
  */
 
+import { mapValues } from '../runtime';
+import type { Product } from './Product';
+import {
+    ProductFromJSON,
+    ProductFromJSONTyped,
+    ProductToJSON,
+    ProductToJSONTyped,
+} from './Product';
 
 /**
  * 
  * @export
+ * @interface BookSize
  */
-export const BookSize = {
-    NUMBER_0: 0,
-    NUMBER_1: 1,
-    NUMBER_2: 2,
-    NUMBER_3: 3
-} as const;
-export type BookSize = typeof BookSize[keyof typeof BookSize];
+export interface BookSize {
+    /**
+     * 
+     * @type {number}
+     * @memberof BookSize
+     */
+    id?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof BookSize
+     */
+    name?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof BookSize
+     */
+    code?: string | null;
+    /**
+     * 
+     * @type {Array<Product>}
+     * @memberof BookSize
+     */
+    products?: Array<Product> | null;
+}
 
-
-export function instanceOfBookSize(value: any): boolean {
-    for (const key in BookSize) {
-        if (Object.prototype.hasOwnProperty.call(BookSize, key)) {
-            if (BookSize[key as keyof typeof BookSize] === value) {
-                return true;
-            }
-        }
-    }
-    return false;
+/**
+ * Check if a given object implements the BookSize interface.
+ */
+export function instanceOfBookSize(value: object): value is BookSize {
+    return true;
 }
 
 export function BookSizeFromJSON(json: any): BookSize {
@@ -42,14 +65,33 @@ export function BookSizeFromJSON(json: any): BookSize {
 }
 
 export function BookSizeFromJSONTyped(json: any, ignoreDiscriminator: boolean): BookSize {
-    return json as BookSize;
+    if (json == null) {
+        return json;
+    }
+    return {
+        
+        'id': json['id'] == null ? undefined : json['id'],
+        'name': json['name'] == null ? undefined : json['name'],
+        'code': json['code'] == null ? undefined : json['code'],
+        'products': json['products'] == null ? undefined : ((json['products'] as Array<any>).map(ProductFromJSON)),
+    };
 }
 
-export function BookSizeToJSON(value?: BookSize | null): any {
-    return value as any;
+export function BookSizeToJSON(json: any): BookSize {
+    return BookSizeToJSONTyped(json, false);
 }
 
-export function BookSizeToJSONTyped(value: any, ignoreDiscriminator: boolean): BookSize {
-    return value as BookSize;
+export function BookSizeToJSONTyped(value?: BookSize | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
+    }
+
+    return {
+        
+        'id': value['id'],
+        'name': value['name'],
+        'code': value['code'],
+        'products': value['products'] == null ? undefined : ((value['products'] as Array<any>).map(ProductToJSON)),
+    };
 }
 
