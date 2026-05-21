@@ -16,7 +16,6 @@ Name | Type
 `originalTitle` | string
 `pageCount` | number
 `publishingDate` | Date
-`productFormat` | [ProductFormat](ProductFormat.md)
 `coverType` | [CoverType](CoverType.md)
 `availability` | [Availability](Availability.md)
 `bookSize` | [BookSize](BookSize.md)
@@ -33,6 +32,7 @@ Name | Type
 `categoryIds` | Array&lt;number&gt;
 `seriesIds` | Array&lt;number&gt;
 `translatorIds` | Array&lt;number&gt;
+`formatIds` | Array&lt;number&gt;
 `leaveOldImages` | boolean
 
 ## Example
@@ -52,7 +52,6 @@ const example = {
   "originalTitle": null,
   "pageCount": null,
   "publishingDate": null,
-  "productFormat": null,
   "coverType": null,
   "availability": null,
   "bookSize": null,
@@ -69,6 +68,7 @@ const example = {
   "categoryIds": null,
   "seriesIds": null,
   "translatorIds": null,
+  "formatIds": null,
   "leaveOldImages": null,
 } satisfies ProductDto
 

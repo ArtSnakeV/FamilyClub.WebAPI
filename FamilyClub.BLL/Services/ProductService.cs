@@ -101,10 +101,8 @@ public class ProductService : IProductService
 			PageCount = dto.PageCount,
 			PublishingDate = dto.PublishingDate,
 
-			ProductFormat = dto.ProductFormat,
 			CoverType = dto.CoverType,
 			Availability = dto.Availability,
-			BookSize = dto.BookSize,
 
 			QuantityInStock = dto.QuantityInStock,
 			ProductCode = dto.ProductCode,
@@ -131,7 +129,8 @@ public class ProductService : IProductService
 		product.Categories = dto.CategoryIds?.Select(id => new Category { Id = id }).ToList() ?? new();
 		product.Series = dto.SeriesIds?.Select(id => new Series { Id = id }).ToList() ?? new();
 		product.Translators = dto.TranslatorIds?.Select(id => new Translator { Id = id }).ToList() ?? new();
-
+		product.Formats = dto.FormatIds?.Select(id => new Format  { Id = id }).ToList() ?? new();
+		product.BookSizes = dto.BookSizeIds?.Select(id => new BookSize { Id = id }).ToList() ?? new();
 		await _productRepository.AddAsync(product, cancellationToken);
 		await _unitOfWork.SaveChangesAsync(cancellationToken);
 
@@ -162,10 +161,10 @@ public class ProductService : IProductService
 		existingProduct.PublishingDate = dto.PublishingDate;
 
 		// enums (ОНОВЛЕНО ПІД ТВОЮ МОДЕЛЬ)
-		existingProduct.ProductFormat = dto.ProductFormat;
+		//existingProduct.ProductFormat = dto.ProductFormat;
 		existingProduct.CoverType = dto.CoverType;
 		existingProduct.Availability = dto.Availability;
-		existingProduct.BookSize = dto.BookSize;
+		//existingProduct.BookSize = dto.BookSize;
 		existingProduct.AgeRestriction = dto.AgeRestriction;
 
 		// inventory / meta
@@ -194,8 +193,12 @@ public class ProductService : IProductService
 
 		existingProduct.Translators = dto.TranslatorIds?
 			.Select(id => new Translator { Id = id }).ToList() ?? new();
+		existingProduct.Formats = dto.FormatIds?
+			.Select(id => new Format { Id = id }).ToList() ?? new();
+		existingProduct.BookSizes = dto.BookSizeIds?
+			.Select(id => new BookSize { Id = id }).ToList() ?? new();
 
-		// IMAGES (НЕ ТРОГАЮ, як ти сказала)
+		// IMAGES 
 		if (!dto.LeaveOldImages)
 		{
 			existingProduct.ProductImages?.Clear();
@@ -359,10 +362,10 @@ public class ProductService : IProductService
 			PageCount = product.PageCount,
 			PublishingDate = product.PublishingDate,
 
-			ProductFormat = product.ProductFormat,
+			//ProductFormat = product.ProductFormat,
 			CoverType = product.CoverType,
 			Availability = product.Availability,
-			BookSize = product.BookSize,
+			//BookSize = product.BookSize,
 			AgeRestriction = product.AgeRestriction,
 
 			QuantityInStock = product.QuantityInStock,
@@ -387,7 +390,9 @@ public class ProductService : IProductService
 			LanguageIds = product.Languages?.Select(l => l.Id).ToList(),
 			CategoryIds = product.Categories?.Select(c => c.Id).ToList(),
 			SeriesIds = product.Series?.Select(s => s.Id).ToList(),
-			TranslatorIds = product.Translators?.Select(t => t.Id).ToList()
+			TranslatorIds = product.Translators?.Select(t => t.Id).ToList(),
+			FormatIds = product.Formats?.Select(f => f.Id).ToList(),
+			BookSizeIds = product.BookSizes?.Select(f => f.Id).ToList(),
 		};
 	}
 }

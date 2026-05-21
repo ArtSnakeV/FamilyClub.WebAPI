@@ -69,6 +69,13 @@ import {
     SeriesToJSON,
     SeriesToJSONTyped,
 } from './Series';
+import type { Format } from './Format';
+import {
+    FormatFromJSON,
+    FormatFromJSONTyped,
+    FormatToJSON,
+    FormatToJSONTyped,
+} from './Format';
 import type { Language } from './Language';
 import {
     LanguageFromJSON,
@@ -104,13 +111,6 @@ import {
     BookSizeToJSON,
     BookSizeToJSONTyped,
 } from './BookSize';
-import type { ProductFormat } from './ProductFormat';
-import {
-    ProductFormatFromJSON,
-    ProductFormatFromJSONTyped,
-    ProductFormatToJSON,
-    ProductFormatToJSONTyped,
-} from './ProductFormat';
 
 /**
  * 
@@ -222,10 +222,10 @@ export interface Product {
     series?: Array<Series> | null;
     /**
      * 
-     * @type {ProductFormat}
+     * @type {Array<Format>}
      * @memberof Product
      */
-    productFormat?: ProductFormat;
+    formats?: Array<Format> | null;
     /**
      * 
      * @type {number}
@@ -350,7 +350,7 @@ export function ProductFromJSONTyped(json: any, ignoreDiscriminator: boolean): P
         'publishingDate': json['publishingDate'] == null ? undefined : (new Date(json['publishingDate'])),
         'categories': json['categories'] == null ? undefined : ((json['categories'] as Array<any>).map(CategoryFromJSON)),
         'series': json['series'] == null ? undefined : ((json['series'] as Array<any>).map(SeriesFromJSON)),
-        'productFormat': json['productFormat'] == null ? undefined : ProductFormatFromJSON(json['productFormat']),
+        'formats': json['formats'] == null ? undefined : ((json['formats'] as Array<any>).map(FormatFromJSON)),
         'originalLanguageId': json['originalLanguageId'] == null ? undefined : json['originalLanguageId'],
         'originalLanguage': json['originalLanguage'] == null ? undefined : LanguageFromJSON(json['originalLanguage']),
         'isbn': json['isbn'] == null ? undefined : json['isbn'],
@@ -395,7 +395,7 @@ export function ProductToJSONTyped(value?: Omit<Product, 'rating'> | null, ignor
         'publishingDate': value['publishingDate'] == null ? value['publishingDate'] : value['publishingDate'].toISOString().substring(0,10),
         'categories': value['categories'] == null ? undefined : ((value['categories'] as Array<any>).map(CategoryToJSON)),
         'series': value['series'] == null ? undefined : ((value['series'] as Array<any>).map(SeriesToJSON)),
-        'productFormat': ProductFormatToJSON(value['productFormat']),
+        'formats': value['formats'] == null ? undefined : ((value['formats'] as Array<any>).map(FormatToJSON)),
         'originalLanguageId': value['originalLanguageId'],
         'originalLanguage': LanguageToJSON(value['originalLanguage']),
         'isbn': value['isbn'],

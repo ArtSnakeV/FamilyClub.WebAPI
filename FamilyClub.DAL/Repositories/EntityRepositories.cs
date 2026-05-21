@@ -81,3 +81,5 @@ public class NotificationRepository : Repository<Notification>, INotificationRep
 			.CountAsync(n => n.ClubMemberId == clubMemberId && !n.IsRead, cancellationToken);
 	}
 }
+public class FormatRepository(FamilyClubContext context) : Repository<Format>(context), IFormatRepository;
+public class BookSizeRepository(FamilyClubContext context) : Repository<BookSize>(context), IBookSizeRepository;

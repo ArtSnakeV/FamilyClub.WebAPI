@@ -3,6 +3,7 @@ using System;
 using FamilyClub.DAL.EF;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace FamilyClub.DAL.Migrations
 {
     [DbContext(typeof(FamilyClubContext))]
-    partial class FamilyClubContextModelSnapshot : ModelSnapshot
+    [Migration("20260521172112_AddProductFormats")]
+    partial class AddProductFormats
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -39,25 +42,6 @@ namespace FamilyClub.DAL.Migrations
                         .HasDatabaseName("ix_product_authors_products_id");
 
                     b.ToTable("ProductAuthors", (string)null);
-                });
-
-            modelBuilder.Entity("BookSizeProduct", b =>
-                {
-                    b.Property<int>("BookSizesId")
-                        .HasColumnType("integer")
-                        .HasColumnName("book_sizes_id");
-
-                    b.Property<int>("ProductsId")
-                        .HasColumnType("integer")
-                        .HasColumnName("products_id");
-
-                    b.HasKey("BookSizesId", "ProductsId")
-                        .HasName("pk_product_book_sizes");
-
-                    b.HasIndex("ProductsId")
-                        .HasDatabaseName("ix_product_book_sizes_products_id");
-
-                    b.ToTable("ProductBookSizes", (string)null);
                 });
 
             modelBuilder.Entity("CategoryProduct", b =>
@@ -105,31 +89,6 @@ namespace FamilyClub.DAL.Migrations
                         .HasName("pk_authors");
 
                     b.ToTable("authors", (string)null);
-                });
-
-            modelBuilder.Entity("FamilyClubLibrary.BookSize", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Code")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("code");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("name");
-
-                    b.HasKey("Id")
-                        .HasName("pk_book_sizes");
-
-                    b.ToTable("book_sizes", (string)null);
                 });
 
             modelBuilder.Entity("FamilyClubLibrary.Category", b =>
@@ -422,6 +381,10 @@ namespace FamilyClub.DAL.Migrations
                     b.Property<int?>("Availability")
                         .HasColumnType("integer")
                         .HasColumnName("availability");
+
+                    b.Property<int?>("BookSize")
+                        .HasColumnType("integer")
+                        .HasColumnName("book_size");
 
                     b.Property<int?>("CoverType")
                         .HasColumnType("integer")
@@ -929,23 +892,6 @@ namespace FamilyClub.DAL.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_product_authors_products_products_id");
-                });
-
-            modelBuilder.Entity("BookSizeProduct", b =>
-                {
-                    b.HasOne("FamilyClubLibrary.BookSize", null)
-                        .WithMany()
-                        .HasForeignKey("BookSizesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_product_book_sizes_book_sizes_book_sizes_id");
-
-                    b.HasOne("FamilyClubLibrary.Product", null)
-                        .WithMany()
-                        .HasForeignKey("ProductsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_product_book_sizes_products_products_id");
                 });
 
             modelBuilder.Entity("CategoryProduct", b =>

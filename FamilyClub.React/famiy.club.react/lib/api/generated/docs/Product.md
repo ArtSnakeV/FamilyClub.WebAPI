@@ -23,7 +23,7 @@ Name | Type
 `publishingDate` | Date
 `categories` | [Array&lt;Category&gt;](Category.md)
 `series` | [Array&lt;Series&gt;](Series.md)
-`productFormat` | [ProductFormat](ProductFormat.md)
+`formats` | [Array&lt;Format&gt;](Format.md)
 `originalLanguageId` | number
 `originalLanguage` | [Language](Language.md)
 `isbn` | string
@@ -63,7 +63,7 @@ const example = {
   "publishingDate": null,
   "categories": null,
   "series": null,
-  "productFormat": null,
+  "formats": null,
   "originalLanguageId": null,
   "originalLanguage": null,
   "isbn": null,
