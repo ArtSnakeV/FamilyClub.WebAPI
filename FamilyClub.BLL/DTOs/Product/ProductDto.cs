@@ -42,10 +42,11 @@ public class ProductDto
 	public DateOnly? PublishingDate { get; set; }
 
 	// ❗ FIXED: enum-и
-	public ProductFormat? ProductFormat { get; set; }
+	//public ProductFormat? ProductFormat { get; set; }
+
 	public CoverType? CoverType { get; set; }
 	public Availability? Availability { get; set; }
-	public BookSize? BookSize { get; set; }
+	//public BookSize? BookSize { get; set; }
 	public int? QuantityInStock { get; set; }
 	public int? OriginalLanguageId { get; set; }
 	public string? ISBN { get; set; }
@@ -64,6 +65,7 @@ public class ProductDto
 	public List<int>? CategoryIds { get; set; }
 	public List<int>? SeriesIds { get; set; }
 	public List<int>? TranslatorIds { get; set; }
-
+	public List<int>? FormatIds { get; set; } = new();
+	public List<int>? BookSizeIds { get; set; } = new();
 	public bool LeaveOldImages { get; set; }
 }

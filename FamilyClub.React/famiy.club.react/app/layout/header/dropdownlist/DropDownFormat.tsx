@@ -7,47 +7,40 @@ import { useRouter } from "next/navigation";
 import {
   Configuration,
   ProductsApi,
-  ProductFormat,
+  FormatsApi,
   ProductDto,
+  FormatDto,
 } from "@/lib/api/generated";
-
-const formatFilters = [
-  {
-    label: "Ebook",
-    value: ProductFormat.NUMBER_0,
-  },
-  {
-    label: "Audio книга",
-    value: ProductFormat.NUMBER_1,
-  },
-  {
-    label: "Паперова",
-    value: ProductFormat.NUMBER_2,
-  },
-];
 
 export default function DropDownFormat() {
   const [open, setOpen] = useState(false);
-  const [selectedFormat, setSelectedFormat] = useState<ProductFormat | null>(
+  const [selectedFormat, setSelectedFormat] = useState<FormatDto["id"] | null>(
     null,
   );
 
   const [products, setProducts] = useState<ProductDto[]>([]);
-
+  const [formats, setFormats] = useState<FormatDto[]>([]);
   const containerRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
 
   useEffect(() => {
-    const api = new ProductsApi(
-      new Configuration({
-        basePath: "https://localhost:7069",
-      }),
-    );
+    const config = new Configuration({
+      basePath: "https://localhost:7069",
+    });
 
-    api
+    const productsApi = new ProductsApi(config);
+    const formatsApi = new FormatsApi(config);
+
+    productsApi
       .apiProductsGet()
       .then((res) => {
         setProducts(res);
+      })
+      .catch((err) => console.error("API ERROR:", err));
+    formatsApi
+      .apiFormatsGet()
+      .then((res) => {
+        setFormats(res);
       })
       .catch((err) => console.error("API ERROR:", err));
   }, []);
@@ -66,10 +59,24 @@ export default function DropDownFormat() {
     return () => document.removeEventListener("click", handleClickOutside);
   }, []);
 
-  const filteredProducts = selectedFormat
-    ? products.filter((p) => p.productFormat === selectedFormat)
-    : products;
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(e.target as Node)
+      ) {
+        setOpen(false);
+      }
+    }
 
+    document.addEventListener("click", handleClickOutside);
+
+    return () => document.removeEventListener("click", handleClickOutside);
+  }, []);
+
+  const filteredProducts = selectedFormat
+    ? products.filter((p) => p.formatIds?.includes(selectedFormat))
+    : products;
   return (
     <div ref={containerRef} className="relative w-[130px]">
       <div
@@ -102,14 +109,14 @@ export default function DropDownFormat() {
         {open && (
           <div className="absolute z-20 items-center top-[42px] w-full flex justify-center text-[var(--color-white)]">
             <div className="relative items-left mt-[50px] w-[110px] flex flex-col gap-2">
-              {formatFilters.map((f) => {
-                const isSelected = selectedFormat === f.value;
+              {formats.map((f) => {
+                const isSelected = selectedFormat === f.id;
                 return (
-                  <div key={f.value} className="flex items-center gap-0">
+                  <div key={f.id} className="flex items-center gap-0">
                     {/* RADIO BUTTON */}
                     <div className="w-[30px] h-[30px] flex justify-center shrink-0">
                       <button
-                        onClick={() => setSelectedFormat(f.value)}
+                        onClick={() => setSelectedFormat(f.id)}
                         className="w-[22px] h-[22px] flex items-center justify-center"
                       >
                         <Image
@@ -132,14 +139,14 @@ export default function DropDownFormat() {
 
                     {/* LINK */}
                     <Link
-                      href={`/products?format=${f.value}`}
+                      href={`/products?format=${f.id}`}
                       onClick={() => {
-                        setSelectedFormat(f.value);
+                        setSelectedFormat(f.id);
                         setOpen(false);
                       }}
                       className="text-[13px] -mt-[4px]"
                     >
-                      {f.label}
+                      {f.name}
                     </Link>
                   </div>
                 );

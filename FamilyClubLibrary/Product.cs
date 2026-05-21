@@ -51,10 +51,12 @@ namespace FamilyClubLibrary
         // Series (many-to-many)
         public List<Series> Series { get; set; } = new();
 
-        public ProductFormat? ProductFormat { get; set; }
+		//public ProductFormat? ProductFormat { get; set; }
+		public List<Format> Formats { get; set; } = new();
+        public List<BookSize> BookSizes { get; set; } = new();
 
-        // Original language (one-to-many)
-        public int? OriginalLanguageId { get; set; }
+		// Original language (one-to-many)
+		public int? OriginalLanguageId { get; set; }
         public Language? OriginalLanguage { get; set; }
         public string? ISBN { get; set; }
 
@@ -64,7 +66,7 @@ namespace FamilyClubLibrary
 
 		public CoverType? CoverType { get; set; }
 		public Availability? Availability { get; set; }
-		public BookSize? BookSize { get; set; }
+		//public BookSize? BookSize { get; set; }
 		public int? QuantityInStock { get; set; }
 		public string? ProductCode { get; set; }
 

@@ -109,6 +109,10 @@ builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<INotificationRepository,  NotificationRepository>();
 builder.Services.AddScoped<INotificationService, NotificationService>();
 
+//Format
+builder.Services.AddScoped<IFormatRepository, FormatRepository>();
+builder.Services.AddScoped<IFormatService, FormatService>();
+
 // Customize Identity cookie
 //builder.Services.ConfigureApplicationCookie(
 //    options => {

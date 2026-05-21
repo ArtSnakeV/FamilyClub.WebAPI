@@ -3,6 +3,7 @@ apis/AuthorsApi.ts
 apis/CategoriesApi.ts
 apis/ClaimsClubMemberApi.ts
 apis/ClubMemberApi.ts
+apis/FormatsApi.ts
 apis/HomeApi.ts
 apis/LanguagesApi.ts
 apis/NotificationsApi.ts
@@ -34,6 +35,9 @@ docs/ClubMemberApi.md
 docs/ClubMemberReadDto.md
 docs/CoverType.md
 docs/CreateNotificationDTO.md
+docs/Format.md
+docs/FormatDto.md
+docs/FormatsApi.md
 docs/HomeApi.md
 docs/Language.md
 docs/LanguageDto.md
@@ -50,7 +54,6 @@ docs/OrderItemsApi.md
 docs/OrdersApi.md
 docs/Product.md
 docs/ProductDto.md
-docs/ProductFormat.md
 docs/ProductImage.md
 docs/ProductsApi.md
 docs/Promotion.md
@@ -86,6 +89,8 @@ models/ClubMember.ts
 models/ClubMemberReadDto.ts
 models/CoverType.ts
 models/CreateNotificationDTO.ts
+models/Format.ts
+models/FormatDto.ts
 models/Language.ts
 models/LanguageDto.ts
 models/LoginClubMemberDto.ts
@@ -97,7 +102,6 @@ models/OrderItem.ts
 models/OrderItemDTO.ts
 models/Product.ts
 models/ProductDto.ts
-models/ProductFormat.ts
 models/ProductImage.ts
 models/Promotion.ts
 models/PromotionDto.ts

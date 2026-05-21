@@ -7,7 +7,8 @@ namespace FamilyClub.DAL.EF;
 public class FamilyClubContext : IdentityDbContext<ClubMember>
 {
     public FamilyClubContext(DbContextOptions<FamilyClubContext> options) : base(options) { }
-
+	public DbSet<Format> ProductFormats { get; set; }
+	public DbSet<BookSize> BookSizes { get; set; }
 	public DbSet<Notification> Notifications { get; set; }
 	public DbSet<Author> Authors { get; set; }
 
@@ -45,9 +46,18 @@ public class FamilyClubContext : IdentityDbContext<ClubMember>
             .WithMany(a => a.Products)
             .UsingEntity(j => j.ToTable("ProductAuthors"));
 
+		builder.Entity<Product>()
+	        .HasMany(p => p.Formats)
+	        .WithMany(f => f.Products)
+	        .UsingEntity(j => j.ToTable("ProductFormats"));
 
-        // Many-to-Many: Product <-> Category
-        builder.Entity<Product>()
+		builder.Entity<Product>()
+			 .HasMany(b => b.BookSizes)
+			 .WithMany(f => f.Products)
+			 .UsingEntity(j => j.ToTable("ProductBookSizes"));
+
+		// Many-to-Many: Product <-> Category
+		builder.Entity<Product>()
             .HasMany(p => p.Categories)
             .WithMany(c => c.Products)
             .UsingEntity(j => j.ToTable("ProductCategories")); ;

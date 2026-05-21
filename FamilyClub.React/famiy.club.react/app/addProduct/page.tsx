@@ -13,7 +13,8 @@ import {
   LanguagesApi,
   AgeRestriction,
   Availability,
-  ProductFormat,
+  FormatDto,
+  FormatsApi,
   CoverType,
   BookSize,
 } from "@/lib/api/generated";
@@ -53,10 +54,10 @@ type ProductDto = {
   ageRestrictions?: AgeRestriction;
   categoryIds: number[];
   languageId?: number;
-  productFormat?: ProductFormat;
   coverType: CoverType;
   availability?: Availability;
   authorIds?: number[];
+  formatIds?: number[];
   leaveOldImages: boolean;
   quantityInStock?: number;
   bookSize?: BookSize;
@@ -72,6 +73,7 @@ export default function AddProductPage() {
   const [publishers, setPublishers] = useState<PublisherDto[]>([]);
   const [categories, setCategories] = useState<CategoryDto[]>([]);
   const [languages, setLanguages] = useState<LanguageDto[]>([]);
+  const [formats, setFormats] = useState<FormatDto[]>([]);
 
   const [form, setForm] = useState<FormState>({
     dto: {
@@ -89,7 +91,9 @@ export default function AddProductPage() {
       bookSize: undefined,
       publisherId: undefined,
       authorIds: [],
-      productFormat: ProductFormat.NUMBER_0,
+      formatIds: [],
+      price: undefined,
+      discountPrice: undefined,
     },
   });
 
@@ -112,20 +116,24 @@ export default function AddProductPage() {
   const languagesApi = new LanguagesApi(
     new Configuration({ basePath: "https://localhost:7069" }),
   );
-
+  const formatsApi = new FormatsApi(
+    new Configuration({ basePath: "https://localhost:7069" }),
+  );
   useEffect(() => {
     const loadData = async () => {
-      const [a, p, c, l] = await Promise.all([
+      const [a, p, c, l, f] = await Promise.all([
         authorsApi.apiAuthorsGet(),
         publishersApi.apiPublishersGet(),
         categoriesApi.apiCategoriesGet(),
         languagesApi.apiLanguagesGet(),
+        formatsApi.apiFormatsGet(),
       ]);
 
       setAuthors(a);
       setPublishers(p);
       setCategories(c);
       setLanguages(l);
+      setFormats(f);
     };
 
     loadData();
@@ -235,7 +243,7 @@ export default function AddProductPage() {
         itemsInSet: form.dto.itemsInSet,
         availability: form.dto.availability,
         ageRestriction: form.dto.ageRestrictions,
-        productFormat: form.dto.productFormat,
+        formatIds: form.dto.formatIds,
         languageIds: form.dto.languageId ? [form.dto.languageId] : undefined,
         publisherId: form.dto.publisherId,
         coverType: form.dto.coverType,
@@ -385,7 +393,7 @@ export default function AddProductPage() {
                           Рік видання *
                         </p>
                         <input
-                          className="input-field rounded-[9px] bg-[var(--color-white)] shadow-[0px_0px_10px_0px_#00000040] h-[44px]"
+                          className="input-field px-4 rounded-[9px] bg-[var(--color-white)] shadow-[0px_0px_10px_0px_#00000040] h-[44px]"
                           type="number"
                           placeholder={String(new Date().getFullYear())}
                           value={form.dto.publishingYear ?? ""}
@@ -413,7 +421,7 @@ export default function AddProductPage() {
                           Кількість сторінок *
                         </p>
                         <input
-                          className="input-field rounded-[9px] bg-[var(--color-white)] shadow-[0px_0px_10px_0px_#00000040] h-[44px]"
+                          className="input-field rounded-[9px] px-4 bg-[var(--color-white)] shadow-[0px_0px_10px_0px_#00000040] h-[44px]"
                           type="number"
                           placeholder="567"
                           value={form.dto.pageCount ?? ""}
@@ -441,7 +449,7 @@ export default function AddProductPage() {
                           Вага
                         </p>
                         <input
-                          className="input-field rounded-[9px] bg-[var(--color-white)] shadow-[0px_0px_10px_0px_#00000040] h-[44px]"
+                          className="input-field rounded-[9px] px-4 bg-[var(--color-white)] shadow-[0px_0px_10px_0px_#00000040] h-[44px]"
                           type="number"
                           placeholder="1180g"
                           value={form.dto.weightGrams ?? ""}
@@ -470,7 +478,7 @@ export default function AddProductPage() {
                           Кількість товару в наявності
                         </p>
                         <input
-                          className="input-field rounded-[9px] bg-[var(--color-white)] shadow-[0px_0px_10px_0px_#00000040] h-[44px]"
+                          className="input-field rounded-[9px] px-4 bg-[var(--color-white)] shadow-[0px_0px_10px_0px_#00000040] h-[44px]"
                           type="number"
                           value={form.dto.quantityInStock ?? ""}
                           onChange={(e) =>
@@ -488,7 +496,7 @@ export default function AddProductPage() {
                           Кількість товару в наборі
                         </p>
                         <input
-                          className="input-field rounded-[9px] bg-[var(--color-white)] shadow-[0px_0px_10px_0px_#00000040] h-[44px]"
+                          className="input-field rounded-[9px] px-4 bg-[var(--color-white)] shadow-[0px_0px_10px_0px_#00000040] h-[44px]"
                           type="number"
                           value={form.dto.itemsInSet ?? ""}
                           onChange={(e) =>
@@ -505,8 +513,9 @@ export default function AddProductPage() {
 
                     <div className="flex flex-col h-[200px] pb-[20px]">
                       <FormatBook
-                        value={form.dto.productFormat}
-                        onChange={(v) => setDto("productFormat", v)}
+                        value={form.dto.formatIds}
+                        formats={formats}
+                        onChange={(ids) => setDto("formatIds", ids)}
                       />
                     </div>
                   </div>
@@ -679,9 +688,11 @@ export default function AddProductPage() {
                         Ціна *
                       </p>
                       <input
-                        className="input-field rounded-[9px] bg-[var(--color-white)] shadow-[0px_0px_10px_0px_#00000040] h-[44px]"
+                        className="input-field w-full rounded-[9px] text-[var(--color-black)] px-4 bg-[var(--color-white)] shadow-[0px_0px_10px_0px_#00000040] h-[44px]"
+                        id="price"
+                        name="price"
                         type="number"
-                        placeholder="0"
+                        placeholder=""
                         value={form.dto.price ?? ""}
                         onChange={(e) =>
                           setDto(
@@ -700,7 +711,9 @@ export default function AddProductPage() {
                       </p>
 
                       <input
-                        className="input-field rounded-[9px] bg-[var(--color-white)] shadow-[0px_0px_10px_0px_#00000040] h-[44px]"
+                        className="input-field w-full rounded-[9px] text-[var(--color-black)] px-4 bg-[var(--color-white)] shadow-[0px_0px_10px_0px_#00000040] h-[44px]"
+                        id="discountPrice"
+                        name="discountPrice"
                         type="number"
                         placeholder="0"
                         value={form.dto.discountPrice ?? ""}
