@@ -15,8 +15,6 @@ export default function CategoryList({
     <div className="w-[640px] m-2 p-2">
       <ul className="grid grid-cols-[290px_290px] gap-x-0 mt-4  w-[100%] justify-items-center">
         {categories.map((category) => {
-          const isSelected = selectedIds.includes(category.id!);
-
           return (
             <li
               key={category.id}

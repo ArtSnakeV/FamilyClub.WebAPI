@@ -34,38 +34,40 @@ export default function DigitalFormatsBlock({
 
   return (
     <div className="flex flex-col gap-4 w-[565px]">
-      {/* <div className="w-[70px] h-[30px] flex flex-row items-center justify-center gap-2 pb-4">
-        <button
-          type="button"
-          onClick={() => selectFormat(Format.NUMBER_2)}
-          className="relative w-[30px] h-[30px] flex items-center justify-center"
-        >
-          <Image
-            src="/images/addProducts/icon.svg"
-            alt="circle"
-            width={30}
-            height={30}
-            className="object-contain"
-          />
-
-          {isSelected(Format.NUMBER_2) && (
+      {printFormat && (
+        <div className="absolute -mt-[212px] ml-[498px] w-[70px] h-[30px] flex flex-row items-center justify-center gap-2 pb-4">
+          <button
+            type="button"
+            onClick={() => toggleFormat(printFormat.id!)}
+            className="relative w-[30px] h-[30px] flex items-center justify-center"
+          >
             <Image
-              src="/images/addProducts/check_24px.svg"
-              alt="check"
+              src="/images/addProducts/icon.svg"
+              alt="circle"
               width={30}
               height={30}
-              className="absolute"
+              className="object-contain"
             />
-          )}
-        </button>
 
-        <div
-          className="w-[30px] h-[30px] bg-cover bg-center"
-          style={{
-            backgroundImage: "url('/images/addProducts/Group 140.svg')",
-          }}
-        />
-      </div> */}
+            {isSelected(printFormat.id!) && (
+              <Image
+                src="/images/addProducts/check_24px.svg"
+                alt="check"
+                width={30}
+                height={30}
+                className="absolute ml-2 -mt-2"
+              />
+            )}
+          </button>
+
+          <div
+            className="w-[30px] h-[30px] bg-cover bg-center"
+            style={{
+              backgroundImage: "url('/images/addProducts/Group 140.png')",
+            }}
+          />
+        </div>
+      )}
       {ebookFormat && (
         <div className="flex flex-col  h-[94px]">
           <label className="flex flex-row justify-between items-center">
