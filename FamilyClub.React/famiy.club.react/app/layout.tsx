@@ -30,7 +30,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             <UpNavigation />
           </div>
         </header>
-        <div className="relative z-10 max-w-[1220px] mx-auto flex gap-2 -mt-[60px] px-4 lg:px-0">
+        <div className="absolute flex flex-row ml-[68px] z-10 max-w-[1220px] mx-auto flex gap-2 -mt-[60px] px-4 lg:px-0">
           <DropDownList />
         </div>
 

@@ -20,6 +20,6 @@ public class RegisterClubMemberDto
 
     public string? Name { get; set; }
     public string? Surname { get; set; }
-    public DateOnly? DateOfBirth { get; set; }    
+    public DateOnly? DateOfBirth { get; set; }
 
 }

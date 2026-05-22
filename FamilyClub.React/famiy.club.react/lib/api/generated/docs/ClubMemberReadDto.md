@@ -9,6 +9,7 @@ Name | Type
 `id` | string
 `email` | string
 `phoneNumber` | string
+`avatarData` | string
 `name` | string
 `surname` | string
 `dateOfBirth` | Date
@@ -24,6 +25,7 @@ const example = {
   "id": null,
   "email": null,
   "phoneNumber": null,
+  "avatarData": null,
   "name": null,
   "surname": null,
   "dateOfBirth": null,

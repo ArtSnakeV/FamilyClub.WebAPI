@@ -26,6 +26,8 @@ Name | Type
 `dateOfBirth` | Date
 `orders` | [Array&lt;Order&gt;](Order.md)
 `reviews` | [Array&lt;Review&gt;](Review.md)
+`notifications` | [Array&lt;Notification&gt;](Notification.md)
+`avatarData` | string
 
 ## Example
 
@@ -54,6 +56,8 @@ const example = {
   "dateOfBirth": null,
   "orders": null,
   "reviews": null,
+  "notifications": null,
+  "avatarData": null,
 } satisfies ClubMember
 
 console.log(example)

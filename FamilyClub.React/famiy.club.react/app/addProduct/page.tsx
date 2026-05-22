@@ -11,6 +11,13 @@ import {
   CategoriesApi,
   LanguageDto,
   LanguagesApi,
+  AgeRestriction,
+  Availability,
+  FormatDto,
+  FormatsApi,
+  CoverType,
+  BookSizeDto,
+  BookSizesApi,
 } from "@/lib/api/generated";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -26,7 +33,8 @@ import Image from "next/image";
 import ellipse from "@/public/images/addProducts/Ellipse 36.svg";
 import plus from "@/public/images/addProducts/plus-solid-full 1.svg";
 import CategoryList from "./CategoryList";
-import ConditionOfTheGoods from "./ConditionOfTheGoods";
+import ButtonSubmitAddProduct from "./ButtonSubmitAddProduct";
+import AvailabilitySelector from "./AvailabilitySelector";
 
 /* ---------------- TYPES ---------------- */
 type ProductDto = {
@@ -38,32 +46,25 @@ type ProductDto = {
   originalTitle?: string;
   pageCount?: number;
   publishingYear?: number;
-  format?: string;
   originalLanguageId?: number;
   isbn?: string;
   promotionId?: number;
   productCode?: string;
   weightGrams?: number;
   itemsInSet?: number;
-  ageRestrictions?: string;
-};
-type ProductUi = {
-  authorId?: number;
+  ageRestrictions?: AgeRestriction;
   categoryIds: number[];
   languageId?: number;
-
-  coverType: "hard" | "soft";
-  bookFormat?: "ebook" | "audio";
-  availability: "available" | "unavailable" | "preorder";
-  conditionOfTheGoods?: string;
-
+  coverType: CoverType;
+  availability?: Availability;
+  authorIds?: number[];
+  formatIds?: number[];
   leaveOldImages: boolean;
   quantityInStock?: number;
-  bookSize?: string;
+  bookSizeIds: number[];
 };
 type FormState = {
   dto: ProductDto;
-  ui: ProductUi;
 };
 
 export default function AddProductPage() {
@@ -73,24 +74,30 @@ export default function AddProductPage() {
   const [publishers, setPublishers] = useState<PublisherDto[]>([]);
   const [categories, setCategories] = useState<CategoryDto[]>([]);
   const [languages, setLanguages] = useState<LanguageDto[]>([]);
+  const [formats, setFormats] = useState<FormatDto[]>([]);
+  const [bookSize, setBookSizes] = useState<BookSizeDto[]>([]);
 
   const [form, setForm] = useState<FormState>({
     dto: {
       productName: "",
+      description: "",
+      pageCount: undefined,
       itemsInSet: 1,
-      ageRestrictions: "18+",
-    },
-    ui: {
-      authorId: undefined,
+      ageRestrictions: undefined,
       categoryIds: [],
       languageId: undefined,
-      coverType: "soft",
-      bookFormat: undefined,
-      availability: "available",
+      coverType: CoverType.NUMBER_0,
+      availability: undefined,
       leaveOldImages: false,
       quantityInStock: undefined,
-      bookSize: undefined,
-      conditionOfTheGoods: undefined,
+      bookSizeIds: [],
+      publisherId: undefined,
+      authorIds: [],
+      formatIds: [],
+      price: undefined,
+      discountPrice: undefined,
+      isbn: undefined,
+      publishingYear: undefined,
     },
   });
 
@@ -113,20 +120,29 @@ export default function AddProductPage() {
   const languagesApi = new LanguagesApi(
     new Configuration({ basePath: "https://localhost:7069" }),
   );
+  const formatsApi = new FormatsApi(
+    new Configuration({ basePath: "https://localhost:7069" }),
+  );
+  const bookSizesApi = new BookSizesApi(
+    new Configuration({ basePath: "https://localhost:7069" }),
+  );
 
   useEffect(() => {
     const loadData = async () => {
-      const [a, p, c, l] = await Promise.all([
+      const [a, p, c, l, f, b] = await Promise.all([
         authorsApi.apiAuthorsGet(),
         publishersApi.apiPublishersGet(),
         categoriesApi.apiCategoriesGet(),
         languagesApi.apiLanguagesGet(),
+        formatsApi.apiFormatsGet(),
+        bookSizesApi.apiBookSizesGet(),
       ]);
-
       setAuthors(a);
       setPublishers(p);
       setCategories(c);
       setLanguages(l);
+      setFormats(f);
+      setBookSizes(b);
     };
 
     loadData();
@@ -143,22 +159,12 @@ export default function AddProductPage() {
     }));
   };
 
-  const setUi = <K extends keyof ProductUi>(key: K, value: ProductUi[K]) => {
-    setForm((prev) => ({
-      ...prev,
-      ui: {
-        ...prev.ui,
-        [key]: value,
-      },
-    }));
-  };
-
   const toggleCategory = (id: number) => {
-    setUi(
+    setDto(
       "categoryIds",
-      form.ui.categoryIds.includes(id)
-        ? form.ui.categoryIds.filter((c) => c !== id)
-        : [...form.ui.categoryIds, id],
+      form.dto.categoryIds.includes(id)
+        ? form.dto.categoryIds.filter((c) => c !== id)
+        : [...form.dto.categoryIds, id],
     );
   };
 
@@ -220,18 +226,18 @@ export default function AddProductPage() {
     }
   };
 
-  /* ---------------- SUBMIT (FIXED) ---------------- */
+  /* ---------------- SUBMIT---------------- */
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
     setLoading(true);
-
     try {
       const productImageFiles: File[] = [];
+      const publishingDate = form.dto.publishingYear
+        ? `${form.dto.publishingYear}-01-01`
+        : undefined;
 
       if (mainImage) productImageFiles.push(mainImage);
       gallery.forEach((f) => f && productImageFiles.push(f));
-
       await api.apiProductsPost({
         // DTO
         productName: form.dto.productName,
@@ -239,28 +245,35 @@ export default function AddProductPage() {
         price: form.dto.price,
         discountPrice: form.dto.discountPrice,
         pageCount: form.dto.pageCount,
-        publishingDate: form.dto.publishingYear
-          ? new Date(form.dto.publishingYear, 0, 1)
-          : undefined,
+        publishingDate: publishingDate as unknown as Date,
         weightGrams: form.dto.weightGrams,
         itemsInSet: form.dto.itemsInSet,
-        ageRestrictions: form.dto.ageRestrictions,
-
-        // FIX: mapping UI → API
-        originalLanguageId: form.ui.languageId,
-        format: form.ui.bookFormat,
+        availability: form.dto.availability,
+        ageRestriction: form.dto.ageRestrictions,
+        formatIds: form.dto.formatIds,
+        languageIds: form.dto.languageId ? [form.dto.languageId] : undefined,
         publisherId: form.dto.publisherId,
-
-        // FIX ISBN naming
+        categoryIds: form.dto.categoryIds,
+        coverType: form.dto.coverType,
+        authorIds: form.dto.authorIds,
+        bookSizeIds: form.dto.bookSizeIds,
+        quantityInStock: form.dto.quantityInStock,
         iSBN: form.dto.isbn,
-
-        // FILES
         productImageFiles,
       });
 
       router.push("/products");
-    } catch (err) {
-      console.error(err);
+    } catch (err: unknown) {
+      console.error("FULL ERROR:", err);
+
+      if (typeof err === "object" && err !== null && "response" in err) {
+        const response = (err as { response?: Response }).response;
+
+        const text = await response?.text?.();
+
+        console.error("SERVER RESPONSE:", text);
+      }
+
       alert("Помилка при створенні продукту");
     } finally {
       setLoading(false);
@@ -275,7 +288,7 @@ export default function AddProductPage() {
           backgroundImage: "url('/images/addProducts/Rectangle 312.svg')",
         }}
       >
-        <div className="flex flex-col items-center mt-[80px]">
+        <div className="flex flex-col items-center mt-[100px]">
           <h1 className="text-[var(--color-black)] w-[800px] font-['Roboto_Mono'] font-bold text-[64px] leading-[150%] tracking-[-0.011em] text-center">
             Додати нову книгу
           </h1>
@@ -283,7 +296,12 @@ export default function AddProductPage() {
             Заповни інформацію
           </p>
         </div>
-        <form onSubmit={handleSubmit}>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleSubmit();
+          }}
+        >
           <div className="w-full flex mt-[48px] gap-[4vw] justify-center">
             {/* --- Лівий блок --- */}
             <div className="w-[645px] flex flex-col ">
@@ -317,15 +335,15 @@ export default function AddProductPage() {
                         placeholder="Назва"
                         value={form.dto.productName}
                         onChange={(e) => setDto("productName", e.target.value)}
-                        className="input rounded-[9px] bg-[var(--color-white)] shadow-[0px_0px_10px_0px_#00000040] h-[44px]"
+                        className={`input rounded-[9px] px-3 bg-[var(--color-white)] shadow-[0px_0px_10px_0px_#00000040] h-[44px] placeholder:text-gray-500 placeholder:px-3`}
                       />
                     </div>
 
                     <div className="flex flex-col gap-1">
                       <AuthorSelectForm
                         authors={authors}
-                        value={form.ui.authorId}
-                        onChange={(id) => setUi("authorId", id)}
+                        value={form.dto.authorIds}
+                        onChange={(ids) => setDto("authorIds", ids)}
                       />
                     </div>
 
@@ -345,7 +363,7 @@ export default function AddProductPage() {
                         name="description"
                         placeholder="Опис книги"
                         onChange={(e) => setDto("description", e.target.value)}
-                        className="input-field h-[120px] resize-none input rounded-[9px] bg-[var(--color-white)] shadow-[0px_0px_10px_0px_#00000040]"
+                        className="px-2 input-field h-[120px] resize-none input rounded-[9px] bg-[var(--color-white)] shadow-[0px_0px_10px_0px_#00000040]"
                       />
                     </div>
 
@@ -386,8 +404,8 @@ export default function AddProductPage() {
                       <div className="flex flex-col gap-1 w-[250px]">
                         <LanguageSelectForm
                           languages={languages}
-                          value={form.ui.languageId}
-                          onChange={(id) => setUi("languageId", id)}
+                          value={form.dto.languageId}
+                          onChange={(id) => setDto("languageId", id)}
                         />
                       </div>
                       <div className="flex flex-col gap-1 w-[250px]">
@@ -395,7 +413,7 @@ export default function AddProductPage() {
                           Рік видання *
                         </p>
                         <input
-                          className="input-field rounded-[9px] bg-[var(--color-white)] shadow-[0px_0px_10px_0px_#00000040] h-[44px]"
+                          className="input-field px-4 rounded-[9px] bg-[var(--color-white)] shadow-[0px_0px_10px_0px_#00000040] h-[44px]"
                           type="number"
                           placeholder={String(new Date().getFullYear())}
                           value={form.dto.publishingYear ?? ""}
@@ -423,7 +441,7 @@ export default function AddProductPage() {
                           Кількість сторінок *
                         </p>
                         <input
-                          className="input-field rounded-[9px] bg-[var(--color-white)] shadow-[0px_0px_10px_0px_#00000040] h-[44px]"
+                          className="input-field rounded-[9px] px-4 bg-[var(--color-white)] shadow-[0px_0px_10px_0px_#00000040] h-[44px]"
                           type="number"
                           placeholder="567"
                           value={form.dto.pageCount ?? ""}
@@ -442,8 +460,11 @@ export default function AddProductPage() {
                     <div className="flex flex-row gap-4 justify-between p-2 h-[88px]">
                       <div className="flex flex-col gap-1 w-[250px]">
                         <BookSizeSelectForm
-                          value={form.ui.bookSize}
-                          onChange={(v) => setUi("bookSize", v)}
+                          value={form.dto.bookSizeIds?.[0]}
+                          formats={bookSize}
+                          onChange={(id) =>
+                            setDto("bookSizeIds", id ? [id] : [])
+                          }
                         />
                       </div>
                       <div className="flex flex-col gap-1 w-[250px]">
@@ -451,7 +472,7 @@ export default function AddProductPage() {
                           Вага
                         </p>
                         <input
-                          className="input-field rounded-[9px] bg-[var(--color-white)] shadow-[0px_0px_10px_0px_#00000040] h-[44px]"
+                          className="input-field rounded-[9px] px-4 bg-[var(--color-white)] shadow-[0px_0px_10px_0px_#00000040] h-[44px]"
                           type="number"
                           placeholder="1180g"
                           value={form.dto.weightGrams ?? ""}
@@ -469,8 +490,8 @@ export default function AddProductPage() {
 
                     <div className="flex flex-col gap-1 p-2 h-[88px]">
                       <CoverTypeSelect
-                        value={form.ui.coverType}
-                        onChange={(v) => setUi("coverType", v)}
+                        value={form.dto.coverType}
+                        onChange={(v) => setDto("coverType", v)}
                       />
                     </div>
 
@@ -480,11 +501,11 @@ export default function AddProductPage() {
                           Кількість товару в наявності
                         </p>
                         <input
-                          className="input-field rounded-[9px] bg-[var(--color-white)] shadow-[0px_0px_10px_0px_#00000040] h-[44px]"
+                          className="input-field rounded-[9px] px-4 bg-[var(--color-white)] shadow-[0px_0px_10px_0px_#00000040] h-[44px]"
                           type="number"
-                          value={form.ui.quantityInStock ?? ""}
+                          value={form.dto.quantityInStock ?? ""}
                           onChange={(e) =>
-                            setUi(
+                            setDto(
                               "quantityInStock",
                               e.target.value === ""
                                 ? undefined
@@ -498,7 +519,7 @@ export default function AddProductPage() {
                           Кількість товару в наборі
                         </p>
                         <input
-                          className="input-field rounded-[9px] bg-[var(--color-white)] shadow-[0px_0px_10px_0px_#00000040] h-[44px]"
+                          className="input-field rounded-[9px] px-4 bg-[var(--color-white)] shadow-[0px_0px_10px_0px_#00000040] h-[44px]"
                           type="number"
                           value={form.dto.itemsInSet ?? ""}
                           onChange={(e) =>
@@ -514,7 +535,11 @@ export default function AddProductPage() {
                     </div>
 
                     <div className="flex flex-col h-[200px] pb-[20px]">
-                      <FormatBook />
+                      <FormatBook
+                        value={form.dto.formatIds}
+                        formats={formats}
+                        onChange={(ids) => setDto("formatIds", ids)}
+                      />
                     </div>
                   </div>
                 </div>
@@ -544,7 +569,7 @@ export default function AddProductPage() {
                     </div>
                     <CategoryList
                       categories={categories}
-                      selectedIds={form.ui.categoryIds}
+                      selectedIds={form.dto.categoryIds}
                       onToggle={toggleCategory}
                     />
                   </div>
@@ -686,9 +711,11 @@ export default function AddProductPage() {
                         Ціна *
                       </p>
                       <input
-                        className="input-field rounded-[9px] bg-[var(--color-white)] shadow-[0px_0px_10px_0px_#00000040] h-[44px]"
+                        className="input-field w-full rounded-[9px] text-[var(--color-black)] px-4 bg-[var(--color-white)] shadow-[0px_0px_10px_0px_#00000040] h-[44px]"
+                        id="price"
+                        name="price"
                         type="number"
-                        placeholder="0"
+                        placeholder=""
                         value={form.dto.price ?? ""}
                         onChange={(e) =>
                           setDto(
@@ -707,7 +734,9 @@ export default function AddProductPage() {
                       </p>
 
                       <input
-                        className="input-field rounded-[9px] bg-[var(--color-white)] shadow-[0px_0px_10px_0px_#00000040] h-[44px]"
+                        className="input-field w-full rounded-[9px] text-[var(--color-black)] px-4 bg-[var(--color-white)] shadow-[0px_0px_10px_0px_#00000040] h-[44px]"
+                        id="discountPrice"
+                        name="discountPrice"
                         type="number"
                         placeholder="0"
                         value={form.dto.discountPrice ?? ""}
@@ -723,11 +752,17 @@ export default function AddProductPage() {
                     </div>
 
                     <div className="flex flex-col items-center w-[250px] mt-0">
-                      <ConditionOfTheGoods
-                        value={form.ui.conditionOfTheGoods}
-                        onChange={(value) =>
-                          setUi("conditionOfTheGoods", value)
-                        }
+                      <AvailabilitySelector
+                        value={form.dto.availability}
+                        onChange={(value) => setDto("availability", value)}
+                      />
+                    </div>
+                    <div className="relative flex flex-col items-center mt-[140px]">
+                      <ButtonSubmitAddProduct
+                        loading={loading}
+                        onPublish={handleSubmit}
+                        onSaveDraft={() => console.log("draft")}
+                        onCancel={() => router.push("/products")}
                       />
                     </div>
                   </div>

@@ -96,5 +96,25 @@ public class AuthClubMemberService : IAuthClubMemberService
         // While using JWT, logout is typically handled on the client side by simply deleting the token.
         return Task.CompletedTask;
     }
+	public async Task<ClubMemberReadDto> GetCurrentUserAsync(string userId, CancellationToken cancellationToken = default)
+	{
+		var user = await _userManager.FindByIdAsync(userId);
+		
+        if (user == null)
+			throw new Exception("User not found");
 
+		var roles = await _userManager.GetRolesAsync(user);
+
+		return new ClubMemberReadDto
+		{
+			Id = user.Id,
+			Email = user.Email,
+			Name = user.Name,
+			Surname = user.Surname,
+			PhoneNumber = user.PhoneNumber,
+			AvatarData = user.AvatarData,
+			DateOfBirth = user.DateOfBirth,
+			Roles = roles.ToList()
+		};
+	}
 }
