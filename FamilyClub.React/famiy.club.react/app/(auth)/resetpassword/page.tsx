@@ -7,7 +7,7 @@ import { useState } from "react";
 import { authService } from "@/lib/api/services";
 
 
-// export default function AuthorizationPage() {
+export default function AuthorizationPage() {
 //   const router = useRouter();
 
 //   // Creating form
@@ -458,4 +458,4 @@ import { authService } from "@/lib/api/services";
       
 //     </div>
 //   );
-// }
+}
