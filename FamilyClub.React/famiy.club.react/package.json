@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "update-api": "npx openapi-generator-cli generate -i https://localhost:7069/swagger/v1/swagger.json -g typescript-fetch -o ./lib/api/generated",
+    "update-api": "npx openapi-generator-cli generate -i https://localhost:7069/swagger/v1/swagger.json -g typescript-fetch -o ./src/lib/api/generated",
     "api-sync": "npx @openapitools/openapi-generator-cli generate -i swagger.json -g typescript-fetch -o generated --additional-properties=typescriptThreePlus=true"
   },
   "dependencies": {
@@ -16,7 +16,7 @@
     "bootstrap": "^5.3.8",
     "cross-env": "^10.1.0",
     "flag-icons": "^7.5.0",
-    "libphonenumber-js": "^1.13.2",
+    "libphonenumber-js": "^1.12.42",
     "next": "^16.2.4",
     "react": "19.2.4",
     "react-dom": "19.2.4"

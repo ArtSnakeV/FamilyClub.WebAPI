@@ -1,16 +1,14 @@
-import { AgeRestriction } from "@/lib/api/generated";
-
 const ageRestrictions = [
-  { label: "0+", value: AgeRestriction.NUMBER_0 },
-  { label: "6+", value: AgeRestriction.NUMBER_1 },
-  { label: "12+", value: AgeRestriction.NUMBER_2 },
-  { label: "16+", value: AgeRestriction.NUMBER_3 },
-  { label: "18+", value: AgeRestriction.NUMBER_4 },
+  { label: "Без обмежень", value: "0" },
+  { label: "6+", value: "6" },
+  { label: "12+", value: "12" },
+  { label: "16+", value: "16" },
+  { label: "18+", value: "18" },
 ];
 
 type Props = {
-  value?: AgeRestriction;
-  onChange: (value: AgeRestriction) => void;
+  value?: string;
+  onChange: (value?: string) => void;
 };
 
 export default function AgeRestrictions({ value, onChange }: Props) {
@@ -21,7 +19,7 @@ export default function AgeRestrictions({ value, onChange }: Props) {
       </p>
       <select
         value={value ?? ""}
-        onChange={(e) => onChange(Number(e.target.value) as AgeRestriction)}
+        onChange={(e) => onChange(e.target.value || undefined)}
         className="input rounded-[9px] bg-[var(--color-white)] shadow-[0px_0px_10px_0px_#00000040] h-[44px]"
       >
         <option value="">Оберіть вікові обмеження</option>

@@ -17,9 +17,7 @@ export default function PublisherSelectForm({ publishers, value, onChange }: Pro
         onChange={(e) =>
           onChange(e.target.value ? Number(e.target.value) : undefined)
         }
-         className={`input rounded-[9px] px-2 bg-[var(--color-white)] shadow-[0px_0px_10px_0px_#00000040] h-[44px]
-          ${!value ? "text-gray-500" : "text-[var(--color-black)]"}
-        `}
+        className="input rounded-[9px] bg-[var(--color-white)] shadow-[0px_0px_10px_0px_#00000040] h-[44px]"
       >
         <option value="">Оберіть видавництво</option>
         {publishers.map((p) => (

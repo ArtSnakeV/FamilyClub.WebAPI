@@ -6,7 +6,7 @@ export default function Logo() {
     <>
       <div className="absolute top-[0px]">
         <Image
-          src="/images/header/logo.png"
+          src="/images/logo.png"
           alt="Logo"
           width={189}
           height={83}

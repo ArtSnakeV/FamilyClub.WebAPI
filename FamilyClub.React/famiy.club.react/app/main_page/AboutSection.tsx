@@ -12,7 +12,7 @@ export default function AboutSection() {
                         <div className="grid gap-10 md:grid-cols-[460px_460px] md:gap-[170px]">
                             <div>
                                 <h3 className="font-mono text-[36px] font-semibold text-[#242424]">Великий вибір</h3>
-                                <p className="mt-4 text-[20px] leading-[1.6] text-left">
+                                <p className="mt-4 text-[20px] leading-[1.6] text-justify">
                                     У нас зібрані книги на будь-який смак — від легких романів до глибоких історій,
                                     від популярних новинок до перевіреної класики.
                                     <br />
@@ -22,7 +22,7 @@ export default function AboutSection() {
                             </div>
                             <div>
                                 <h3 className="font-mono text-[32px] font-semibold text-[#242424]">Акції</h3>
-                                <p className="mt-4 text-[20px] leading-[1.6] text-left">
+                                <p className="mt-4 text-[20px] leading-[1.6] text-justify">
                                     Читати більше — простіше, ніж здається.
                                     <br />
                                     <br />
@@ -40,7 +40,7 @@ export default function AboutSection() {
                             />
                         </div>
 
-                        <div className="mx-auto mt-10 max-w-[1090px] text-[20px] leading-[1.6] text-left">
+                        <div className="mx-auto mt-10 max-w-[1090px] text-[20px] leading-[1.6] text-justify">
                             <p>
                                 Цей сайт — це місце, де книги знаходять своїх читачів.
                                 <br />
