@@ -9,6 +9,7 @@ public class ClubMemberReadDto
     public string Email { get; set; } = string.Empty;
     public string PhoneNumber { get; set; } = string.Empty;
 
+    public byte[]? AvatarData { get; set; }
     public string? Name { get; set; }
     public string? Surname { get; set; }
     public DateOnly? DateOfBirth { get; set; }

@@ -22,3 +22,12 @@ public interface IOrderRepository : IRepository<Order>
 	Task<IEnumerable<Order>> GetAllWithItemsAsync(CancellationToken cancellationToken = default);
 	Task<Order?> GetByIdWithItemsAsync(int id, CancellationToken cancellationToken = default);
 };
+
+public interface INotificationRepository : IRepository<Notification> 
+{
+	Task<int> GetCountAsync(CancellationToken cancellationToken = default);
+
+	Task<int> GetUnreadCountAsync(string clubMemberId, CancellationToken cancellationToken = default);
+};
+public interface IFormatRepository : IRepository<Format>;
+public interface IBookSizeRepository : IRepository<BookSize>; 

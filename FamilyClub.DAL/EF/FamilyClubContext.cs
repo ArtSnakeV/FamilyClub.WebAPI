@@ -7,9 +7,10 @@ namespace FamilyClub.DAL.EF;
 public class FamilyClubContext : IdentityDbContext<ClubMember>
 {
     public FamilyClubContext(DbContextOptions<FamilyClubContext> options) : base(options) { }
-               
-
-    public DbSet<Author> Authors { get; set; }
+	public DbSet<Format> ProductFormats { get; set; }
+	public DbSet<BookSize> BookSizes { get; set; }
+	public DbSet<Notification> Notifications { get; set; }
+	public DbSet<Author> Authors { get; set; }
 
     public DbSet<Category> Categories { get; set; }
 
@@ -35,16 +36,28 @@ public class FamilyClubContext : IdentityDbContext<ClubMember>
     {
         // Mandatory for Identity
         base.OnModelCreating(builder);
+		builder.Entity<ClubMember>()
+		.Property(m => m.AvatarData)
+		.HasColumnName("avatar_data");
 
-        // Many-to-Many: Product <-> Author
-        builder.Entity<Product>()
+		// Many-to-Many: Product <-> Author
+		builder.Entity<Product>()
             .HasMany(p => p.Authors)
             .WithMany(a => a.Products)
             .UsingEntity(j => j.ToTable("ProductAuthors"));
 
+		builder.Entity<Product>()
+	        .HasMany(p => p.Formats)
+	        .WithMany(f => f.Products)
+	        .UsingEntity(j => j.ToTable("ProductFormats"));
 
-        // Many-to-Many: Product <-> Category
-        builder.Entity<Product>()
+		builder.Entity<Product>()
+			 .HasMany(b => b.BookSizes)
+			 .WithMany(f => f.Products)
+			 .UsingEntity(j => j.ToTable("ProductBookSizes"));
+
+		// Many-to-Many: Product <-> Category
+		builder.Entity<Product>()
             .HasMany(p => p.Categories)
             .WithMany(c => c.Products)
             .UsingEntity(j => j.ToTable("ProductCategories")); ;
@@ -90,34 +103,37 @@ public class FamilyClubContext : IdentityDbContext<ClubMember>
             .HasForeignKey(pi => pi.ProductId)
             .OnDelete(DeleteBehavior.Cascade);
 
-        // Can be added:
-        //// PRODUCT ↔ REVIEW (one-to-many)
-        //builder.Entity<Product>()
-        //    .HasMany(p => p.Reviews)
-        //    .WithOne(r => r.Product)
-        //    .HasForeignKey(r => r.ProductId);
+		builder.Entity<Notification>()
+		.ToTable("notification");
 
-        //// USER ↔ ORDER (one-to-many)
-        //builder.Entity<Order>()
-        //    .HasOne(o => o.ClubMember)
-        //    .WithMany()
-        //    .HasForeignKey(o => o.UserId);
+		// Can be added:
+		//// PRODUCT ↔ REVIEW (one-to-many)
+		//builder.Entity<Product>()
+		//    .HasMany(p => p.Reviews)
+		//    .WithOne(r => r.Product)
+		//    .HasForeignKey(r => r.ProductId);
 
-        //// USER ↔ REVIEW (one-to-many)
-        //builder.Entity<Review>()
-        //    .HasOne(r => r.ClubMember)
-        //    .WithMany()
-        //    .HasForeignKey(r => r.UserId);
+		//// USER ↔ ORDER (one-to-many)
+		//builder.Entity<Order>()
+		//    .HasOne(o => o.ClubMember)
+		//    .WithMany()
+		//    .HasForeignKey(o => o.UserId);
+
+		//// USER ↔ REVIEW (one-to-many)
+		//builder.Entity<Review>()
+		//    .HasOne(r => r.ClubMember)
+		//    .WithMany()
+		//    .HasForeignKey(r => r.UserId);
 
 
-        // For PROMOTIONS if we deside to change them to Many-to-Many
-        // For the moment one product can have only one assigned promotion to avoid problems with pricing due to unexpected price reduce with multiple promotions summarizing.
-        //// PROMOTION ↔ PRODUCT (many-to-many)
-        //builder.Entity<Product>()
-        //    .HasOne(p => p.Promotion)
-        //    .WithMany(pr => pr.Products)
-        //    .HasForeignKey(p => p.PromotionId)
-        //    .OnDelete(DeleteBehavior.SetNull);
-    }
+		// For PROMOTIONS if we deside to change them to Many-to-Many
+		// For the moment one product can have only one assigned promotion to avoid problems with pricing due to unexpected price reduce with multiple promotions summarizing.
+		//// PROMOTION ↔ PRODUCT (many-to-many)
+		//builder.Entity<Product>()
+		//    .HasOne(p => p.Promotion)
+		//    .WithMany(pr => pr.Products)
+		//    .HasForeignKey(p => p.PromotionId)
+		//    .OnDelete(DeleteBehavior.SetNull);
+	}
 
 }
