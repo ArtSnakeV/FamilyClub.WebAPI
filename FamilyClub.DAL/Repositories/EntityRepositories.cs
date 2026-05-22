@@ -20,17 +20,31 @@ public class ProductRepository : Repository<Product>, IProductRepository
 
     public async Task<IEnumerable<Product>> GetAllWithImagesAsync(CancellationToken cancellationToken = default)
     {
-        return await _context.Products
-            .Include(p => p.ProductImages)
-            .ToListAsync(cancellationToken);
-    }
+		return await _context.Products
+		.Include(p => p.ProductImages)
+		.Include(p => p.Authors)
+		.Include(p => p.Languages)
+		.Include(p => p.Categories)
+		.Include(p => p.Series)
+		.Include(p => p.Translators)
+		.Include(p => p.Formats)
+		.Include(p => p.BookSizes)
+		.ToListAsync(cancellationToken);
+	}
 
     public async Task<Product?> GetByIdWithImagesAsync(int id, CancellationToken cancellationToken = default)
     {
-        return await _context.Products
-            .Include(p => p.ProductImages)
-            .FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
-    }
+		return await _context.Products
+		.Include(p => p.ProductImages)
+		.Include(p => p.Authors)
+		.Include(p => p.Languages)
+		.Include(p => p.Categories)
+		.Include(p => p.Series)
+		.Include(p => p.Translators)
+		.Include(p => p.Formats)
+		.Include(p => p.BookSizes)
+		.FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
+	}
 }
 public class PromotionRepository(FamilyClubContext context) : Repository<Promotion>(context), IPromotionRepository;
 public class PublisherRepository(FamilyClubContext context) : Repository<Publisher>(context), IPublisherRepository;

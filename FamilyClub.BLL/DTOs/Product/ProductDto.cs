@@ -42,11 +42,8 @@ public class ProductDto
 	public DateOnly? PublishingDate { get; set; }
 
 	// ❗ FIXED: enum-и
-	//public ProductFormat? ProductFormat { get; set; }
-
 	public CoverType? CoverType { get; set; }
 	public Availability? Availability { get; set; }
-	//public BookSize? BookSize { get; set; }
 	public int? QuantityInStock { get; set; }
 	public int? OriginalLanguageId { get; set; }
 	public string? ISBN { get; set; }

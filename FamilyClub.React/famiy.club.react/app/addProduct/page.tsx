@@ -97,6 +97,7 @@ export default function AddProductPage() {
       price: undefined,
       discountPrice: undefined,
       isbn: undefined,
+      publishingYear: undefined,
     },
   });
 
@@ -136,7 +137,6 @@ export default function AddProductPage() {
         formatsApi.apiFormatsGet(),
         bookSizesApi.apiBookSizesGet(),
       ]);
-
       setAuthors(a);
       setPublishers(p);
       setCategories(c);
@@ -228,16 +228,16 @@ export default function AddProductPage() {
 
   /* ---------------- SUBMIT---------------- */
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
     setLoading(true);
-
     try {
       const productImageFiles: File[] = [];
+      const publishingDate = form.dto.publishingYear
+        ? `${form.dto.publishingYear}-01-01`
+        : undefined;
 
       if (mainImage) productImageFiles.push(mainImage);
       gallery.forEach((f) => f && productImageFiles.push(f));
-console.log("DTO BEFORE SEND:", form.dto);
       await api.apiProductsPost({
         // DTO
         productName: form.dto.productName,
@@ -245,9 +245,7 @@ console.log("DTO BEFORE SEND:", form.dto);
         price: form.dto.price,
         discountPrice: form.dto.discountPrice,
         pageCount: form.dto.pageCount,
-       publishingDate: form.dto.publishingYear
-  ? new Date(`${form.dto.publishingYear}-01-01`)
-  : undefined,
+        publishingDate: publishingDate as unknown as Date,
         weightGrams: form.dto.weightGrams,
         itemsInSet: form.dto.itemsInSet,
         availability: form.dto.availability,
@@ -255,28 +253,28 @@ console.log("DTO BEFORE SEND:", form.dto);
         formatIds: form.dto.formatIds,
         languageIds: form.dto.languageId ? [form.dto.languageId] : undefined,
         publisherId: form.dto.publisherId,
+        categoryIds: form.dto.categoryIds,
         coverType: form.dto.coverType,
         authorIds: form.dto.authorIds,
         bookSizeIds: form.dto.bookSizeIds,
         quantityInStock: form.dto.quantityInStock,
-        // FIX ISBN naming
         iSBN: form.dto.isbn,
-
-        // FILES
         productImageFiles,
       });
-      
+
       router.push("/products");
-    } catch (err: any) {
-  console.error("FULL ERROR:", err);
+    } catch (err: unknown) {
+      console.error("FULL ERROR:", err);
 
-  if (err?.response) {
-    const text = await err.response.text?.();
-    console.error("SERVER RESPONSE:", text);
-  }
+      if (typeof err === "object" && err !== null && "response" in err) {
+        const response = (err as { response?: Response }).response;
 
-  alert("Помилка при створенні продукту");
+        const text = await response?.text?.();
 
+        console.error("SERVER RESPONSE:", text);
+      }
+
+      alert("Помилка при створенні продукту");
     } finally {
       setLoading(false);
     }
@@ -298,7 +296,12 @@ console.log("DTO BEFORE SEND:", form.dto);
             Заповни інформацію
           </p>
         </div>
-        <form onSubmit={handleSubmit}>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleSubmit();
+          }}
+        >
           <div className="w-full flex mt-[48px] gap-[4vw] justify-center">
             {/* --- Лівий блок --- */}
             <div className="w-[645px] flex flex-col ">
@@ -332,7 +335,7 @@ console.log("DTO BEFORE SEND:", form.dto);
                         placeholder="Назва"
                         value={form.dto.productName}
                         onChange={(e) => setDto("productName", e.target.value)}
-                        className={`input rounded-[9px] bg-[var(--color-white)] shadow-[0px_0px_10px_0px_#00000040] h-[44px] placeholder:text-gray-500 placeholder:px-3`}
+                        className={`input rounded-[9px] px-3 bg-[var(--color-white)] shadow-[0px_0px_10px_0px_#00000040] h-[44px] placeholder:text-gray-500 placeholder:px-3`}
                       />
                     </div>
 
@@ -757,9 +760,7 @@ console.log("DTO BEFORE SEND:", form.dto);
                     <div className="relative flex flex-col items-center mt-[140px]">
                       <ButtonSubmitAddProduct
                         loading={loading}
-                        onPublish={() =>
-                          handleSubmit(new Event("submit") as any)
-                        }
+                        onPublish={handleSubmit}
                         onSaveDraft={() => console.log("draft")}
                         onCancel={() => router.push("/products")}
                       />

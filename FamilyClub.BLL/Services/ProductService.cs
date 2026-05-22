@@ -1,8 +1,10 @@
 using FamilyClub.BLL.DTOs.Product;
 using FamilyClub.BLL.Interfaces;
+using FamilyClub.DAL.EF;
 using FamilyClub.DAL.Interfaces;
 using FamilyClubLibrary;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 
 namespace FamilyClub.BLL.Services;
 
@@ -10,36 +12,27 @@ public class ProductService : IProductService
 {
     private readonly IProductRepository _productRepository;
     private readonly IUnitOfWork _unitOfWork;
-
-    public ProductService(IProductRepository productRepository, IUnitOfWork unitOfWork)
+	private readonly FamilyClubContext _context;
+	public ProductService(IProductRepository productRepository, IUnitOfWork unitOfWork, FamilyClubContext context)
     {
         _productRepository = productRepository;
         _unitOfWork = unitOfWork;
+		_context = context;
     }
 
     public async Task<IEnumerable<ProductDto>> GetAllAsync(CancellationToken cancellationToken = default)
     {
-        var products = await _productRepository.GetAllAsync(cancellationToken);
-        foreach (var product in products)
-        {
-            product.ProductImages = (await _productRepository
-                .GetProductImagesByProductIdAsync(product.Id, cancellationToken))
-                .ToList();
-        }
+        var products = await _productRepository.GetAllWithImagesAsync(cancellationToken);
         return products.Select(MapToDto);
     }
 
     public async Task<ProductDto?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
     {
-        var product = await _productRepository.GetByIdAsync(id, cancellationToken);
+        var product = await _productRepository.GetByIdWithImagesAsync(id, cancellationToken);
         if (product is null)
         {
             return null;
         }
-
-        product.ProductImages = (await _productRepository
-            .GetProductImagesByProductIdAsync(id, cancellationToken))
-            .ToList();
 
         return MapToDto(product);
     }
@@ -124,13 +117,34 @@ public class ProductService : IProductService
 		};
 
 		// many-to-many
-		product.Authors = dto.AuthorIds?.Select(id => new Author { Id = id }).ToList() ?? new();
-		product.Languages = dto.LanguageIds?.Select(id => new Language { Id = id }).ToList() ?? new();
-		product.Categories = dto.CategoryIds?.Select(id => new Category { Id = id }).ToList() ?? new();
-		product.Series = dto.SeriesIds?.Select(id => new Series { Id = id }).ToList() ?? new();
-		product.Translators = dto.TranslatorIds?.Select(id => new Translator { Id = id }).ToList() ?? new();
-		product.Formats = dto.FormatIds?.Select(id => new Format  { Id = id }).ToList() ?? new();
-		product.BookSizes = dto.BookSizeIds?.Select(id => new BookSize { Id = id }).ToList() ?? new();
+		product.Authors = dto.AuthorIds?.Count > 0
+	? await _context.Authors.Where(a => dto.AuthorIds.Contains(a.Id)).ToListAsync(cancellationToken)
+	: new();
+
+		product.Languages = dto.LanguageIds?.Count > 0
+			? await _context.Languages.Where(x => dto.LanguageIds.Contains(x.Id)).ToListAsync(cancellationToken)
+			: new();
+
+		product.Categories = dto.CategoryIds?.Count > 0
+			? await _context.Categories.Where(x => dto.CategoryIds.Contains(x.Id)).ToListAsync(cancellationToken)
+			: new();
+
+		product.Series = dto.SeriesIds?.Count > 0
+			? await _context.Series.Where(x => dto.SeriesIds.Contains(x.Id)).ToListAsync(cancellationToken)
+			: new();
+
+		product.Translators = dto.TranslatorIds?.Count > 0
+			? await _context.Translator.Where(x => dto.TranslatorIds.Contains(x.Id)).ToListAsync(cancellationToken)
+			: new();
+
+		product.Formats = dto.FormatIds?.Count > 0
+			? await _context.ProductFormats.Where(x => dto.FormatIds.Contains(x.Id)).ToListAsync(cancellationToken)
+			: new();
+
+		product.BookSizes = dto.BookSizeIds?.Count > 0
+			? await _context.BookSizes.Where(x => dto.BookSizeIds.Contains(x.Id)).ToListAsync(cancellationToken)
+			: new();
+
 		await _productRepository.AddAsync(product, cancellationToken);
 		await _unitOfWork.SaveChangesAsync(cancellationToken);
 
@@ -161,10 +175,8 @@ public class ProductService : IProductService
 		existingProduct.PublishingDate = dto.PublishingDate;
 
 		// enums
-		//existingProduct.ProductFormat = dto.ProductFormat;
 		existingProduct.CoverType = dto.CoverType;
 		existingProduct.Availability = dto.Availability;
-		//existingProduct.BookSize = dto.BookSize;
 		existingProduct.AgeRestriction = dto.AgeRestriction;
 
 		// inventory / meta
@@ -179,24 +191,13 @@ public class ProductService : IProductService
 		existingProduct.PromotionId = dto.PromotionId;
 
 		// many-to-many 
-		existingProduct.Authors = dto.AuthorIds?
-			.Select(id => new Author { Id = id }).ToList() ?? new();
-
-		existingProduct.Languages = dto.LanguageIds?
-			.Select(id => new Language { Id = id }).ToList() ?? new();
-
-		existingProduct.Categories = dto.CategoryIds?
-			.Select(id => new Category { Id = id }).ToList() ?? new();
-
-		existingProduct.Series = dto.SeriesIds?
-			.Select(id => new Series { Id = id }).ToList() ?? new();
-
-		existingProduct.Translators = dto.TranslatorIds?
-			.Select(id => new Translator { Id = id }).ToList() ?? new();
-		existingProduct.Formats = dto.FormatIds?
-			.Select(id => new Format { Id = id }).ToList() ?? new();
-		existingProduct.BookSizes = dto.BookSizeIds?
-			.Select(id => new BookSize { Id = id }).ToList() ?? new();
+		existingProduct.Authors = dto.AuthorIds?.Count > 0 ? await _context.Authors.Where(a => dto.AuthorIds.Contains(a.Id)).ToListAsync(cancellationToken) : new();
+		existingProduct.Languages = dto.LanguageIds?.Count > 0 ? await _context.Languages.Where(x => dto.LanguageIds.Contains(x.Id)).ToListAsync(cancellationToken) : new();
+		existingProduct.Categories = dto.CategoryIds?.Count > 0 ? await _context.Categories.Where(x => dto.CategoryIds.Contains(x.Id)).ToListAsync(cancellationToken) : new();
+		existingProduct.Series = dto.SeriesIds?.Count > 0 ? await _context.Series.Where(x => dto.SeriesIds.Contains(x.Id)).ToListAsync(cancellationToken) : new();
+		existingProduct.Translators = dto.TranslatorIds?.Count > 0 ? await _context.Translator.Where(x => dto.TranslatorIds.Contains(x.Id)).ToListAsync(cancellationToken) : new();
+		existingProduct.Formats = dto.FormatIds?.Count > 0 ? await _context.ProductFormats.Where(x => dto.FormatIds.Contains(x.Id)).ToListAsync(cancellationToken) : new();
+		existingProduct.BookSizes = dto.BookSizeIds?.Count > 0 ? await _context.BookSizes.Where(x => dto.BookSizeIds.Contains(x.Id)).ToListAsync(cancellationToken) : new();
 
 		// IMAGES 
 		if (!dto.LeaveOldImages)
@@ -362,10 +363,8 @@ public class ProductService : IProductService
 			PageCount = product.PageCount,
 			PublishingDate = product.PublishingDate,
 
-			//ProductFormat = product.ProductFormat,
 			CoverType = product.CoverType,
 			Availability = product.Availability,
-			//BookSize = product.BookSize,
 			AgeRestriction = product.AgeRestriction,
 
 			QuantityInStock = product.QuantityInStock,
