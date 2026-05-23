@@ -12,18 +12,17 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
-import type {
-  ClaimsClubMemberDto,
-  UpdateClaimClubMemberDto,
-} from '../models/index';
 import {
+    type ClaimsClubMemberDto,
     ClaimsClubMemberDtoFromJSON,
     ClaimsClubMemberDtoToJSON,
+} from '../models/ClaimsClubMemberDto';
+import {
+    type UpdateClaimClubMemberDto,
     UpdateClaimClubMemberDtoFromJSON,
     UpdateClaimClubMemberDtoToJSON,
-} from '../models/index';
+} from '../models/UpdateClaimClubMemberDto';
 
 export interface ApiClaimsClubMemberMemberIdAddPostRequest {
     memberId: string;
@@ -68,7 +67,7 @@ export class ClaimsClubMemberApi extends runtime.BaseAPI {
 
 
         let urlPath = `/api/ClaimsClubMember/{memberId}/add`;
-        urlPath = urlPath.replace(`{${"memberId"}}`, encodeURIComponent(String(requestParameters['memberId'])));
+        urlPath = urlPath.replace('{memberId}', encodeURIComponent(String(requestParameters['memberId'])));
 
         return {
             path: urlPath,
@@ -111,7 +110,7 @@ export class ClaimsClubMemberApi extends runtime.BaseAPI {
 
 
         let urlPath = `/api/ClaimsClubMember/{memberId}`;
-        urlPath = urlPath.replace(`{${"memberId"}}`, encodeURIComponent(String(requestParameters['memberId'])));
+        urlPath = urlPath.replace('{memberId}', encodeURIComponent(String(requestParameters['memberId'])));
 
         return {
             path: urlPath,
@@ -156,7 +155,7 @@ export class ClaimsClubMemberApi extends runtime.BaseAPI {
 
 
         let urlPath = `/api/ClaimsClubMember/{memberId}/remove`;
-        urlPath = urlPath.replace(`{${"memberId"}}`, encodeURIComponent(String(requestParameters['memberId'])));
+        urlPath = urlPath.replace('{memberId}', encodeURIComponent(String(requestParameters['memberId'])));
 
         return {
             path: urlPath,
@@ -201,7 +200,7 @@ export class ClaimsClubMemberApi extends runtime.BaseAPI {
 
 
         let urlPath = `/api/ClaimsClubMember/{memberId}/update`;
-        urlPath = urlPath.replace(`{${"memberId"}}`, encodeURIComponent(String(requestParameters['memberId'])));
+        urlPath = urlPath.replace('{memberId}', encodeURIComponent(String(requestParameters['memberId'])));
 
         return {
             path: urlPath,

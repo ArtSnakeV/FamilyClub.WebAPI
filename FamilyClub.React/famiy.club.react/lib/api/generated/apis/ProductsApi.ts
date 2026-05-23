@@ -12,18 +12,32 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
-import type {
-  ProductDto,
-  ProductImage,
-} from '../models/index';
 import {
+    type AgeRestriction,
+    AgeRestrictionFromJSON,
+    AgeRestrictionToJSON,
+} from '../models/AgeRestriction';
+import {
+    type Availability,
+    AvailabilityFromJSON,
+    AvailabilityToJSON,
+} from '../models/Availability';
+import {
+    type CoverType,
+    CoverTypeFromJSON,
+    CoverTypeToJSON,
+} from '../models/CoverType';
+import {
+    type ProductDto,
     ProductDtoFromJSON,
     ProductDtoToJSON,
+} from '../models/ProductDto';
+import {
+    type ProductImage,
     ProductImageFromJSON,
     ProductImageToJSON,
-} from '../models/index';
+} from '../models/ProductImage';
 
 export interface ApiProductsIdDeleteRequest {
     id: number;
@@ -45,14 +59,23 @@ export interface ApiProductsIdPutRequest {
     originalTitle?: string;
     pageCount?: number;
     publishingDate?: Date;
-    format?: string;
+    coverType?: CoverType;
+    availability?: Availability;
+    quantityInStock?: number;
     originalLanguageId?: number;
     iSBN?: string;
     promotionId?: number;
     productCode?: string;
     weightGrams?: number;
     itemsInSet?: number;
-    ageRestrictions?: string;
+    ageRestriction?: AgeRestriction;
+    authorIds?: Array<number>;
+    languageIds?: Array<number>;
+    categoryIds?: Array<number>;
+    seriesIds?: Array<number>;
+    translatorIds?: Array<number>;
+    formatIds?: Array<number>;
+    bookSizeIds?: Array<number>;
     leaveOldImages?: boolean;
     productImageFiles?: Array<Blob>;
 }
@@ -68,14 +91,23 @@ export interface ApiProductsPostRequest {
     originalTitle?: string;
     pageCount?: number;
     publishingDate?: Date;
-    format?: string;
+    coverType?: CoverType;
+    availability?: Availability;
+    quantityInStock?: number;
     originalLanguageId?: number;
     iSBN?: string;
     promotionId?: number;
     productCode?: string;
     weightGrams?: number;
     itemsInSet?: number;
-    ageRestrictions?: string;
+    ageRestriction?: AgeRestriction;
+    authorIds?: Array<number>;
+    languageIds?: Array<number>;
+    categoryIds?: Array<number>;
+    seriesIds?: Array<number>;
+    translatorIds?: Array<number>;
+    formatIds?: Array<number>;
+    bookSizeIds?: Array<number>;
     leaveOldImages?: boolean;
     productImageFiles?: Array<Blob>;
 }
@@ -137,7 +169,7 @@ export class ProductsApi extends runtime.BaseAPI {
 
 
         let urlPath = `/api/Products/{id}`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -179,7 +211,7 @@ export class ProductsApi extends runtime.BaseAPI {
 
 
         let urlPath = `/api/Products/{id}`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -278,8 +310,16 @@ export class ProductsApi extends runtime.BaseAPI {
             formParams.append('PublishingDate', requestParameters['publishingDate'] as any);
         }
 
-        if (requestParameters['format'] != null) {
-            formParams.append('Format', requestParameters['format'] as any);
+        if (requestParameters['coverType'] != null) {
+            formParams.append('CoverType', requestParameters['coverType'] as any);
+        }
+
+        if (requestParameters['availability'] != null) {
+            formParams.append('Availability', requestParameters['availability'] as any);
+        }
+
+        if (requestParameters['quantityInStock'] != null) {
+            formParams.append('QuantityInStock', requestParameters['quantityInStock'] as any);
         }
 
         if (requestParameters['originalLanguageId'] != null) {
@@ -306,8 +346,50 @@ export class ProductsApi extends runtime.BaseAPI {
             formParams.append('ItemsInSet', requestParameters['itemsInSet'] as any);
         }
 
-        if (requestParameters['ageRestrictions'] != null) {
-            formParams.append('AgeRestrictions', requestParameters['ageRestrictions'] as any);
+        if (requestParameters['ageRestriction'] != null) {
+            formParams.append('AgeRestriction', requestParameters['ageRestriction'] as any);
+        }
+
+        if (requestParameters['authorIds'] != null) {
+            requestParameters['authorIds'].forEach((element) => {
+                formParams.append('AuthorIds', element as any);
+            })
+        }
+
+        if (requestParameters['languageIds'] != null) {
+            requestParameters['languageIds'].forEach((element) => {
+                formParams.append('LanguageIds', element as any);
+            })
+        }
+
+        if (requestParameters['categoryIds'] != null) {
+            requestParameters['categoryIds'].forEach((element) => {
+                formParams.append('CategoryIds', element as any);
+            })
+        }
+
+        if (requestParameters['seriesIds'] != null) {
+            requestParameters['seriesIds'].forEach((element) => {
+                formParams.append('SeriesIds', element as any);
+            })
+        }
+
+        if (requestParameters['translatorIds'] != null) {
+            requestParameters['translatorIds'].forEach((element) => {
+                formParams.append('TranslatorIds', element as any);
+            })
+        }
+
+        if (requestParameters['formatIds'] != null) {
+            requestParameters['formatIds'].forEach((element) => {
+                formParams.append('FormatIds', element as any);
+            })
+        }
+
+        if (requestParameters['bookSizeIds'] != null) {
+            requestParameters['bookSizeIds'].forEach((element) => {
+                formParams.append('BookSizeIds', element as any);
+            })
         }
 
         if (requestParameters['leaveOldImages'] != null) {
@@ -322,7 +404,7 @@ export class ProductsApi extends runtime.BaseAPI {
 
 
         let urlPath = `/api/Products/{id}`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -414,8 +496,16 @@ export class ProductsApi extends runtime.BaseAPI {
             formParams.append('PublishingDate', requestParameters['publishingDate'] as any);
         }
 
-        if (requestParameters['format'] != null) {
-            formParams.append('Format', requestParameters['format'] as any);
+        if (requestParameters['coverType'] != null) {
+            formParams.append('CoverType', requestParameters['coverType'] as any);
+        }
+
+        if (requestParameters['availability'] != null) {
+            formParams.append('Availability', requestParameters['availability'] as any);
+        }
+
+        if (requestParameters['quantityInStock'] != null) {
+            formParams.append('QuantityInStock', requestParameters['quantityInStock'] as any);
         }
 
         if (requestParameters['originalLanguageId'] != null) {
@@ -442,8 +532,50 @@ export class ProductsApi extends runtime.BaseAPI {
             formParams.append('ItemsInSet', requestParameters['itemsInSet'] as any);
         }
 
-        if (requestParameters['ageRestrictions'] != null) {
-            formParams.append('AgeRestrictions', requestParameters['ageRestrictions'] as any);
+        if (requestParameters['ageRestriction'] != null) {
+            formParams.append('AgeRestriction', requestParameters['ageRestriction'] as any);
+        }
+
+        if (requestParameters['authorIds'] != null) {
+            requestParameters['authorIds'].forEach((element) => {
+                formParams.append('AuthorIds', element as any);
+            })
+        }
+
+        if (requestParameters['languageIds'] != null) {
+            requestParameters['languageIds'].forEach((element) => {
+                formParams.append('LanguageIds', element as any);
+            })
+        }
+
+        if (requestParameters['categoryIds'] != null) {
+            requestParameters['categoryIds'].forEach((element) => {
+                formParams.append('CategoryIds', element as any);
+            })
+        }
+
+        if (requestParameters['seriesIds'] != null) {
+            requestParameters['seriesIds'].forEach((element) => {
+                formParams.append('SeriesIds', element as any);
+            })
+        }
+
+        if (requestParameters['translatorIds'] != null) {
+            requestParameters['translatorIds'].forEach((element) => {
+                formParams.append('TranslatorIds', element as any);
+            })
+        }
+
+        if (requestParameters['formatIds'] != null) {
+            requestParameters['formatIds'].forEach((element) => {
+                formParams.append('FormatIds', element as any);
+            })
+        }
+
+        if (requestParameters['bookSizeIds'] != null) {
+            requestParameters['bookSizeIds'].forEach((element) => {
+                formParams.append('BookSizeIds', element as any);
+            })
         }
 
         if (requestParameters['leaveOldImages'] != null) {

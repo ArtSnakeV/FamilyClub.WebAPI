@@ -3,6 +3,7 @@ type Props = {
   loading: boolean;
   onChange: (v: string) => void;
   onLookup: () => void;
+  isbnLoading: boolean;//?
 };
 
 export default function ISBNForm({
@@ -19,6 +20,7 @@ export default function ISBNForm({
       </div>
       <div className="flex justify-between items-center w-full ">
         <input
+          maxLength={13}
           value={value}
           onChange={(e) => onChange(e.target.value)}
           placeholder="5649827409123"

@@ -13,6 +13,27 @@
  */
 
 import { mapValues } from '../runtime';
+import type { Availability } from './Availability';
+import {
+    AvailabilityFromJSON,
+    AvailabilityFromJSONTyped,
+    AvailabilityToJSON,
+    AvailabilityToJSONTyped,
+} from './Availability';
+import type { CoverType } from './CoverType';
+import {
+    CoverTypeFromJSON,
+    CoverTypeFromJSONTyped,
+    CoverTypeToJSON,
+    CoverTypeToJSONTyped,
+} from './CoverType';
+import type { AgeRestriction } from './AgeRestriction';
+import {
+    AgeRestrictionFromJSON,
+    AgeRestrictionFromJSONTyped,
+    AgeRestrictionToJSON,
+    AgeRestrictionToJSONTyped,
+} from './AgeRestriction';
 import type { ProductImage } from './ProductImage';
 import {
     ProductImageFromJSON,
@@ -89,10 +110,22 @@ export interface ProductDto {
     publishingDate?: Date | null;
     /**
      * 
-     * @type {string}
+     * @type {CoverType}
      * @memberof ProductDto
      */
-    format?: string | null;
+    coverType?: CoverType;
+    /**
+     * 
+     * @type {Availability}
+     * @memberof ProductDto
+     */
+    availability?: Availability;
+    /**
+     * 
+     * @type {number}
+     * @memberof ProductDto
+     */
+    quantityInStock?: number | null;
     /**
      * 
      * @type {number}
@@ -131,10 +164,52 @@ export interface ProductDto {
     itemsInSet?: number | null;
     /**
      * 
-     * @type {string}
+     * @type {AgeRestriction}
      * @memberof ProductDto
      */
-    ageRestrictions?: string | null;
+    ageRestriction?: AgeRestriction;
+    /**
+     * 
+     * @type {Array<number>}
+     * @memberof ProductDto
+     */
+    authorIds?: Array<number> | null;
+    /**
+     * 
+     * @type {Array<number>}
+     * @memberof ProductDto
+     */
+    languageIds?: Array<number> | null;
+    /**
+     * 
+     * @type {Array<number>}
+     * @memberof ProductDto
+     */
+    categoryIds?: Array<number> | null;
+    /**
+     * 
+     * @type {Array<number>}
+     * @memberof ProductDto
+     */
+    seriesIds?: Array<number> | null;
+    /**
+     * 
+     * @type {Array<number>}
+     * @memberof ProductDto
+     */
+    translatorIds?: Array<number> | null;
+    /**
+     * 
+     * @type {Array<number>}
+     * @memberof ProductDto
+     */
+    formatIds?: Array<number> | null;
+    /**
+     * 
+     * @type {Array<number>}
+     * @memberof ProductDto
+     */
+    bookSizeIds?: Array<number> | null;
     /**
      * 
      * @type {boolean}
@@ -142,6 +217,8 @@ export interface ProductDto {
      */
     leaveOldImages?: boolean;
 }
+
+
 
 /**
  * Check if a given object implements the ProductDto interface.
@@ -170,14 +247,23 @@ export function ProductDtoFromJSONTyped(json: any, ignoreDiscriminator: boolean)
         'originalTitle': json['originalTitle'] == null ? undefined : json['originalTitle'],
         'pageCount': json['pageCount'] == null ? undefined : json['pageCount'],
         'publishingDate': json['publishingDate'] == null ? undefined : (new Date(json['publishingDate'])),
-        'format': json['format'] == null ? undefined : json['format'],
+        'coverType': json['coverType'] == null ? undefined : CoverTypeFromJSON(json['coverType']),
+        'availability': json['availability'] == null ? undefined : AvailabilityFromJSON(json['availability']),
+        'quantityInStock': json['quantityInStock'] == null ? undefined : json['quantityInStock'],
         'originalLanguageId': json['originalLanguageId'] == null ? undefined : json['originalLanguageId'],
         'isbn': json['isbn'] == null ? undefined : json['isbn'],
         'promotionId': json['promotionId'] == null ? undefined : json['promotionId'],
         'productCode': json['productCode'] == null ? undefined : json['productCode'],
         'weightGrams': json['weightGrams'] == null ? undefined : json['weightGrams'],
         'itemsInSet': json['itemsInSet'] == null ? undefined : json['itemsInSet'],
-        'ageRestrictions': json['ageRestrictions'] == null ? undefined : json['ageRestrictions'],
+        'ageRestriction': json['ageRestriction'] == null ? undefined : AgeRestrictionFromJSON(json['ageRestriction']),
+        'authorIds': json['authorIds'] == null ? undefined : json['authorIds'],
+        'languageIds': json['languageIds'] == null ? undefined : json['languageIds'],
+        'categoryIds': json['categoryIds'] == null ? undefined : json['categoryIds'],
+        'seriesIds': json['seriesIds'] == null ? undefined : json['seriesIds'],
+        'translatorIds': json['translatorIds'] == null ? undefined : json['translatorIds'],
+        'formatIds': json['formatIds'] == null ? undefined : json['formatIds'],
+        'bookSizeIds': json['bookSizeIds'] == null ? undefined : json['bookSizeIds'],
         'leaveOldImages': json['leaveOldImages'] == null ? undefined : json['leaveOldImages'],
     };
 }
@@ -203,14 +289,23 @@ export function ProductDtoToJSONTyped(value?: ProductDto | null, ignoreDiscrimin
         'originalTitle': value['originalTitle'],
         'pageCount': value['pageCount'],
         'publishingDate': value['publishingDate'] == null ? value['publishingDate'] : value['publishingDate'].toISOString().substring(0,10),
-        'format': value['format'],
+        'coverType': CoverTypeToJSON(value['coverType']),
+        'availability': AvailabilityToJSON(value['availability']),
+        'quantityInStock': value['quantityInStock'],
         'originalLanguageId': value['originalLanguageId'],
         'isbn': value['isbn'],
         'promotionId': value['promotionId'],
         'productCode': value['productCode'],
         'weightGrams': value['weightGrams'],
         'itemsInSet': value['itemsInSet'],
-        'ageRestrictions': value['ageRestrictions'],
+        'ageRestriction': AgeRestrictionToJSON(value['ageRestriction']),
+        'authorIds': value['authorIds'],
+        'languageIds': value['languageIds'],
+        'categoryIds': value['categoryIds'],
+        'seriesIds': value['seriesIds'],
+        'translatorIds': value['translatorIds'],
+        'formatIds': value['formatIds'],
+        'bookSizeIds': value['bookSizeIds'],
         'leaveOldImages': value['leaveOldImages'],
     };
 }

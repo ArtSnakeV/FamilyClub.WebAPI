@@ -9,7 +9,7 @@ type Props = {
 export default function PublisherSelectForm({ publishers, value, onChange }: Props) {
   return (
     <>
-      <p className="text-[var(--color-black)] font-sans-pro font-normal text-[24px] leading-[150%] tracking-[-0.011em]">
+      <p className="pt-2 text-[var(--color-black)] font-sans-pro font-normal text-[24px] leading-[150%] tracking-[-0.011em]">
         Видавництво *
       </p>
       <select

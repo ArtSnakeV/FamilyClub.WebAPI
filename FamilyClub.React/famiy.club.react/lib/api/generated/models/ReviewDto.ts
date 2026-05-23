@@ -33,10 +33,10 @@ export interface ReviewDto {
     productId?: number;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof ReviewDto
      */
-    userId?: number;
+    userId?: string | null;
     /**
      * 
      * @type {number}

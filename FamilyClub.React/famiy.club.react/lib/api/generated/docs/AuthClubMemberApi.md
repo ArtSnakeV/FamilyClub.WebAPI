@@ -6,6 +6,7 @@ All URIs are relative to *http://localhost*
 |------------- | ------------- | -------------|
 | [**apiAuthClubMemberLoginPost**](AuthClubMemberApi.md#apiauthclubmemberloginpost) | **POST** /api/AuthClubMember/login |  |
 | [**apiAuthClubMemberLogoutPost**](AuthClubMemberApi.md#apiauthclubmemberlogoutpost) | **POST** /api/AuthClubMember/logout |  |
+| [**apiAuthClubMemberMeGet**](AuthClubMemberApi.md#apiauthclubmembermeget) | **GET** /api/AuthClubMember/me |  |
 | [**apiAuthClubMemberRegisterPost**](AuthClubMemberApi.md#apiauthclubmemberregisterpost) | **POST** /api/AuthClubMember/register |  |
 
 
@@ -122,6 +123,63 @@ No authorization required
 
 - **Content-Type**: Not defined
 - **Accept**: Not defined
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | OK |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## apiAuthClubMemberMeGet
+
+> ClubMemberReadDto apiAuthClubMemberMeGet()
+
+
+
+### Example
+
+```ts
+import {
+  Configuration,
+  AuthClubMemberApi,
+} from '';
+import type { ApiAuthClubMemberMeGetRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const api = new AuthClubMemberApi();
+
+  try {
+    const data = await api.apiAuthClubMemberMeGet();
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+[**ClubMemberReadDto**](ClubMemberReadDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `text/plain`, `application/json`, `text/json`
 
 
 ### HTTP response details

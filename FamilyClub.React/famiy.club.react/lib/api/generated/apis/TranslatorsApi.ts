@@ -12,15 +12,12 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
-import type {
-  TranslatorDto,
-} from '../models/index';
 import {
+    type TranslatorDto,
     TranslatorDtoFromJSON,
     TranslatorDtoToJSON,
-} from '../models/index';
+} from '../models/TranslatorDto';
 
 export interface ApiTranslatorsIdDeleteRequest {
     id: number;
@@ -96,7 +93,7 @@ export class TranslatorsApi extends runtime.BaseAPI {
 
 
         let urlPath = `/api/Translators/{id}`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -138,7 +135,7 @@ export class TranslatorsApi extends runtime.BaseAPI {
 
 
         let urlPath = `/api/Translators/{id}`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -183,7 +180,7 @@ export class TranslatorsApi extends runtime.BaseAPI {
 
 
         let urlPath = `/api/Translators/{id}`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,

@@ -12,24 +12,27 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
-import type {
-  AuthResponseClubMemberDTO,
-  ClubMemberReadDto,
-  LoginClubMemberDto,
-  RegisterClubMemberDto,
-} from '../models/index';
 import {
+    type AuthResponseClubMemberDTO,
     AuthResponseClubMemberDTOFromJSON,
     AuthResponseClubMemberDTOToJSON,
+} from '../models/AuthResponseClubMemberDTO';
+import {
+    type ClubMemberReadDto,
     ClubMemberReadDtoFromJSON,
     ClubMemberReadDtoToJSON,
+} from '../models/ClubMemberReadDto';
+import {
+    type LoginClubMemberDto,
     LoginClubMemberDtoFromJSON,
     LoginClubMemberDtoToJSON,
+} from '../models/LoginClubMemberDto';
+import {
+    type RegisterClubMemberDto,
     RegisterClubMemberDtoFromJSON,
     RegisterClubMemberDtoToJSON,
-} from '../models/index';
+} from '../models/RegisterClubMemberDto';
 
 export interface ApiAuthClubMemberLoginPostRequest {
     loginClubMemberDto?: LoginClubMemberDto;
@@ -114,6 +117,41 @@ export class AuthClubMemberApi extends runtime.BaseAPI {
      */
     async apiAuthClubMemberLogoutPost(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.apiAuthClubMemberLogoutPostRaw(initOverrides);
+    }
+
+    /**
+     * Creates request options for apiAuthClubMemberMeGet without sending the request
+     */
+    async apiAuthClubMemberMeGetRequestOpts(): Promise<runtime.RequestOpts> {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+
+        let urlPath = `/api/AuthClubMember/me`;
+
+        return {
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     */
+    async apiAuthClubMemberMeGetRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ClubMemberReadDto>> {
+        const requestOptions = await this.apiAuthClubMemberMeGetRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => ClubMemberReadDtoFromJSON(jsonValue));
+    }
+
+    /**
+     */
+    async apiAuthClubMemberMeGet(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ClubMemberReadDto> {
+        const response = await this.apiAuthClubMemberMeGetRaw(initOverrides);
+        return await response.value();
     }
 
     /**

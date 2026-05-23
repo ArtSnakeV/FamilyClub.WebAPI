@@ -23,16 +23,20 @@ Name | Type
 `publishingDate` | Date
 `categories` | [Array&lt;Category&gt;](Category.md)
 `series` | [Array&lt;Series&gt;](Series.md)
-`format` | string
+`formats` | [Array&lt;Format&gt;](Format.md)
+`bookSizes` | [Array&lt;BookSize&gt;](BookSize.md)
 `originalLanguageId` | number
 `originalLanguage` | [Language](Language.md)
 `isbn` | string
 `promotionId` | number
 `promotion` | [Promotion](Promotion.md)
+`coverType` | [CoverType](CoverType.md)
+`availability` | [Availability](Availability.md)
+`quantityInStock` | number
 `productCode` | string
 `weightGrams` | number
 `itemsInSet` | number
-`ageRestrictions` | string
+`ageRestriction` | [AgeRestriction](AgeRestriction.md)
 `translators` | [Array&lt;Translator&gt;](Translator.md)
 
 ## Example
@@ -59,16 +63,20 @@ const example = {
   "publishingDate": null,
   "categories": null,
   "series": null,
-  "format": null,
+  "formats": null,
+  "bookSizes": null,
   "originalLanguageId": null,
   "originalLanguage": null,
   "isbn": null,
   "promotionId": null,
   "promotion": null,
+  "coverType": null,
+  "availability": null,
+  "quantityInStock": null,
   "productCode": null,
   "weightGrams": null,
   "itemsInSet": null,
-  "ageRestrictions": null,
+  "ageRestriction": null,
   "translators": null,
 } satisfies Product
 

@@ -12,41 +12,53 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
-import type {
-  ClubMemberReadDto,
-  RegisterClubMemberDto,
-  UpdateClubMemberDto,
-} from '../models/index';
 import {
+    type ClubMemberReadDto,
     ClubMemberReadDtoFromJSON,
     ClubMemberReadDtoToJSON,
-    RegisterClubMemberDtoFromJSON,
-    RegisterClubMemberDtoToJSON,
+} from '../models/ClubMemberReadDto';
+import {
+    type UpdateClubMemberDto,
     UpdateClubMemberDtoFromJSON,
     UpdateClubMemberDtoToJSON,
-} from '../models/index';
+} from '../models/UpdateClubMemberDto';
 
 export interface ApiClubMemberByEmailEmailGetRequest {
     email: string;
+}
+
+export interface ApiClubMemberFormPostRequest {
+    email: string;
+    password: string;
+    phoneNumber: string;
+    selectedRoles?: Array<string>;
+    name?: string;
+    surname?: string;
+    dateOfBirth?: Date;
+    avatar?: Blob;
 }
 
 export interface ApiClubMemberIdDeleteRequest {
     id: string;
 }
 
+export interface ApiClubMemberIdFormPutRequest {
+    id: string;
+    phoneNumber?: string;
+    name?: string;
+    surname?: string;
+    dateOfBirth?: Date;
+    avatar?: Blob;
+}
+
 export interface ApiClubMemberIdGetRequest {
     id: string;
 }
 
-export interface ApiClubMemberIdPutRequest {
+export interface ApiClubMemberIdJsonPutRequest {
     id: string;
     updateClubMemberDto?: UpdateClubMemberDto;
-}
-
-export interface ApiClubMemberPostRequest {
-    registerClubMemberDto?: RegisterClubMemberDto;
 }
 
 /**
@@ -71,7 +83,7 @@ export class ClubMemberApi extends runtime.BaseAPI {
 
 
         let urlPath = `/api/ClubMember/by-email/{email}`;
-        urlPath = urlPath.replace(`{${"email"}}`, encodeURIComponent(String(requestParameters['email'])));
+        urlPath = urlPath.replace('{email}', encodeURIComponent(String(requestParameters['email'])));
 
         return {
             path: urlPath,
@@ -95,6 +107,112 @@ export class ClubMemberApi extends runtime.BaseAPI {
     async apiClubMemberByEmailEmailGet(requestParameters: ApiClubMemberByEmailEmailGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ClubMemberReadDto> {
         const response = await this.apiClubMemberByEmailEmailGetRaw(requestParameters, initOverrides);
         return await response.value();
+    }
+
+    /**
+     * Creates request options for apiClubMemberFormPost without sending the request
+     */
+    async apiClubMemberFormPostRequestOpts(requestParameters: ApiClubMemberFormPostRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['email'] == null) {
+            throw new runtime.RequiredError(
+                'email',
+                'Required parameter "email" was null or undefined when calling apiClubMemberFormPost().'
+            );
+        }
+
+        if (requestParameters['password'] == null) {
+            throw new runtime.RequiredError(
+                'password',
+                'Required parameter "password" was null or undefined when calling apiClubMemberFormPost().'
+            );
+        }
+
+        if (requestParameters['phoneNumber'] == null) {
+            throw new runtime.RequiredError(
+                'phoneNumber',
+                'Required parameter "phoneNumber" was null or undefined when calling apiClubMemberFormPost().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const consumes: runtime.Consume[] = [
+            { contentType: 'multipart/form-data' },
+        ];
+        // @ts-ignore: canConsumeForm may be unused
+        const canConsumeForm = runtime.canConsumeForm(consumes);
+
+        let formParams: { append(param: string, value: any): any };
+        let useForm = false;
+        // use FormData to transmit files using content-type "multipart/form-data"
+        useForm = canConsumeForm;
+        if (useForm) {
+            formParams = new FormData();
+        } else {
+            formParams = new URLSearchParams();
+        }
+
+        if (requestParameters['email'] != null) {
+            formParams.append('Email', requestParameters['email'] as any);
+        }
+
+        if (requestParameters['password'] != null) {
+            formParams.append('Password', requestParameters['password'] as any);
+        }
+
+        if (requestParameters['phoneNumber'] != null) {
+            formParams.append('PhoneNumber', requestParameters['phoneNumber'] as any);
+        }
+
+        if (requestParameters['selectedRoles'] != null) {
+            requestParameters['selectedRoles'].forEach((element) => {
+                formParams.append('SelectedRoles', element as any);
+            })
+        }
+
+        if (requestParameters['name'] != null) {
+            formParams.append('Name', requestParameters['name'] as any);
+        }
+
+        if (requestParameters['surname'] != null) {
+            formParams.append('Surname', requestParameters['surname'] as any);
+        }
+
+        if (requestParameters['dateOfBirth'] != null) {
+            formParams.append('DateOfBirth', requestParameters['dateOfBirth'] as any);
+        }
+
+        if (requestParameters['avatar'] != null) {
+            formParams.append('avatar', requestParameters['avatar'] as any);
+        }
+
+
+        let urlPath = `/api/ClubMember/form`;
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: formParams,
+        };
+    }
+
+    /**
+     */
+    async apiClubMemberFormPostRaw(requestParameters: ApiClubMemberFormPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.apiClubMemberFormPostRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     */
+    async apiClubMemberFormPost(requestParameters: ApiClubMemberFormPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.apiClubMemberFormPostRaw(requestParameters, initOverrides);
     }
 
     /**
@@ -149,7 +267,7 @@ export class ClubMemberApi extends runtime.BaseAPI {
 
 
         let urlPath = `/api/ClubMember/{id}`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -175,6 +293,85 @@ export class ClubMemberApi extends runtime.BaseAPI {
     }
 
     /**
+     * Creates request options for apiClubMemberIdFormPut without sending the request
+     */
+    async apiClubMemberIdFormPutRequestOpts(requestParameters: ApiClubMemberIdFormPutRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling apiClubMemberIdFormPut().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const consumes: runtime.Consume[] = [
+            { contentType: 'multipart/form-data' },
+        ];
+        // @ts-ignore: canConsumeForm may be unused
+        const canConsumeForm = runtime.canConsumeForm(consumes);
+
+        let formParams: { append(param: string, value: any): any };
+        let useForm = false;
+        // use FormData to transmit files using content-type "multipart/form-data"
+        useForm = canConsumeForm;
+        if (useForm) {
+            formParams = new FormData();
+        } else {
+            formParams = new URLSearchParams();
+        }
+
+        if (requestParameters['phoneNumber'] != null) {
+            formParams.append('PhoneNumber', requestParameters['phoneNumber'] as any);
+        }
+
+        if (requestParameters['name'] != null) {
+            formParams.append('Name', requestParameters['name'] as any);
+        }
+
+        if (requestParameters['surname'] != null) {
+            formParams.append('Surname', requestParameters['surname'] as any);
+        }
+
+        if (requestParameters['dateOfBirth'] != null) {
+            formParams.append('DateOfBirth', requestParameters['dateOfBirth'] as any);
+        }
+
+        if (requestParameters['avatar'] != null) {
+            formParams.append('avatar', requestParameters['avatar'] as any);
+        }
+
+
+        let urlPath = `/api/ClubMember/{id}/form`;
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
+
+        return {
+            path: urlPath,
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+            body: formParams,
+        };
+    }
+
+    /**
+     */
+    async apiClubMemberIdFormPutRaw(requestParameters: ApiClubMemberIdFormPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.apiClubMemberIdFormPutRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     */
+    async apiClubMemberIdFormPut(requestParameters: ApiClubMemberIdFormPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.apiClubMemberIdFormPutRaw(requestParameters, initOverrides);
+    }
+
+    /**
      * Creates request options for apiClubMemberIdGet without sending the request
      */
     async apiClubMemberIdGetRequestOpts(requestParameters: ApiClubMemberIdGetRequest): Promise<runtime.RequestOpts> {
@@ -191,7 +388,7 @@ export class ClubMemberApi extends runtime.BaseAPI {
 
 
         let urlPath = `/api/ClubMember/{id}`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -218,13 +415,13 @@ export class ClubMemberApi extends runtime.BaseAPI {
     }
 
     /**
-     * Creates request options for apiClubMemberIdPut without sending the request
+     * Creates request options for apiClubMemberIdJsonPut without sending the request
      */
-    async apiClubMemberIdPutRequestOpts(requestParameters: ApiClubMemberIdPutRequest): Promise<runtime.RequestOpts> {
+    async apiClubMemberIdJsonPutRequestOpts(requestParameters: ApiClubMemberIdJsonPutRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
-                'Required parameter "id" was null or undefined when calling apiClubMemberIdPut().'
+                'Required parameter "id" was null or undefined when calling apiClubMemberIdJsonPut().'
             );
         }
 
@@ -235,8 +432,8 @@ export class ClubMemberApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
 
-        let urlPath = `/api/ClubMember/{id}`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        let urlPath = `/api/ClubMember/{id}/json`;
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -249,8 +446,8 @@ export class ClubMemberApi extends runtime.BaseAPI {
 
     /**
      */
-    async apiClubMemberIdPutRaw(requestParameters: ApiClubMemberIdPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        const requestOptions = await this.apiClubMemberIdPutRequestOpts(requestParameters);
+    async apiClubMemberIdJsonPutRaw(requestParameters: ApiClubMemberIdJsonPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.apiClubMemberIdJsonPutRequestOpts(requestParameters);
         const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
@@ -258,45 +455,8 @@ export class ClubMemberApi extends runtime.BaseAPI {
 
     /**
      */
-    async apiClubMemberIdPut(requestParameters: ApiClubMemberIdPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
-        await this.apiClubMemberIdPutRaw(requestParameters, initOverrides);
-    }
-
-    /**
-     * Creates request options for apiClubMemberPost without sending the request
-     */
-    async apiClubMemberPostRequestOpts(requestParameters: ApiClubMemberPostRequest): Promise<runtime.RequestOpts> {
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        headerParameters['Content-Type'] = 'application/json';
-
-
-        let urlPath = `/api/ClubMember`;
-
-        return {
-            path: urlPath,
-            method: 'POST',
-            headers: headerParameters,
-            query: queryParameters,
-            body: RegisterClubMemberDtoToJSON(requestParameters['registerClubMemberDto']),
-        };
-    }
-
-    /**
-     */
-    async apiClubMemberPostRaw(requestParameters: ApiClubMemberPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        const requestOptions = await this.apiClubMemberPostRequestOpts(requestParameters);
-        const response = await this.request(requestOptions, initOverrides);
-
-        return new runtime.VoidApiResponse(response);
-    }
-
-    /**
-     */
-    async apiClubMemberPost(requestParameters: ApiClubMemberPostRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
-        await this.apiClubMemberPostRaw(requestParameters, initOverrides);
+    async apiClubMemberIdJsonPut(requestParameters: ApiClubMemberIdJsonPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.apiClubMemberIdJsonPutRaw(requestParameters, initOverrides);
     }
 
 }
