@@ -458,4 +458,7 @@ export default function AuthorizationPage() {
       
 //     </div>
 //   );
+return (
+    <div>Password reset page</div>
+);
 }
