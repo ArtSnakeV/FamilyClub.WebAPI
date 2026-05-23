@@ -67,7 +67,7 @@ export default function UpNavigation() {
 
     try {
       const res = await fetch(
-        "https://localhost:7069/api/Notifications/count",
+        "https://localhost:7069/api/Notifications/unread-count/${member.id}",
         {
           headers: {
             Authorization: `Bearer ${token}`,

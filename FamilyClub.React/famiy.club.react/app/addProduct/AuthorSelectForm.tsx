@@ -32,7 +32,7 @@ export default function AuthorSelectForm({
 
   return (
     <>
-      <p className="text-[var(--color-black)] font-sans-pro font-normal text-[24px] leading-[150%] tracking-[-0.011em]">
+      <p className="pt-2 text-[var(--color-black)] font-sans-pro font-normal text-[24px] leading-[150%] tracking-[-0.011em]">
         Автор(и) *
       </p>
       <div className="relative w-full">
@@ -47,7 +47,7 @@ export default function AuthorSelectForm({
         </button>
 
         {open && (
-          <div className="absolute z-10 w-full mt-1 max-h-[180px] overflow-y-auto rounded-[9px] bg-[var(--color-white)] shadow-[0px_0px_15px_0px_#00000040]">
+          <div className="absolute z-10 w-full mt-2 max-h-[180px] overflow-y-auto rounded-[9px] bg-[var(--color-white)] shadow-[0px_0px_15px_0px_#00000040]">
             {authors.map((a) => (
               <label
                 key={a.id}
