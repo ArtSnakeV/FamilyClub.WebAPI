@@ -1,7 +1,8 @@
 import { categoriesService } from "@/lib/api/services";
+import type { CategoryDto } from "@/lib/api/generated/models/CategoryDto";
 
 export default async function AllCategoriesPage() {
-  let categories = [];
+  let categories: CategoryDto[] = [];
 
   try {
     // Fetch the array of categories
