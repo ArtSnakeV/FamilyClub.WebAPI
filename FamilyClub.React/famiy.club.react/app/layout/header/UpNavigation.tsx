@@ -111,7 +111,6 @@ export default function UpNavigation() {
     window.dispatchEvent(new Event("auth-change"));
 
     router.push("/");
-    console.log("test");
   };
   return (
     <>
