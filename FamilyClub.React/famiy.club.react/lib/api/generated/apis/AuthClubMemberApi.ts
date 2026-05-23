@@ -12,24 +12,27 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
-import type {
-  AuthResponseClubMemberDTO,
-  ClubMemberReadDto,
-  LoginClubMemberDto,
-  RegisterClubMemberDto,
-} from '../models/index';
 import {
+    type AuthResponseClubMemberDTO,
     AuthResponseClubMemberDTOFromJSON,
     AuthResponseClubMemberDTOToJSON,
+} from '../models/AuthResponseClubMemberDTO';
+import {
+    type ClubMemberReadDto,
     ClubMemberReadDtoFromJSON,
     ClubMemberReadDtoToJSON,
+} from '../models/ClubMemberReadDto';
+import {
+    type LoginClubMemberDto,
     LoginClubMemberDtoFromJSON,
     LoginClubMemberDtoToJSON,
+} from '../models/LoginClubMemberDto';
+import {
+    type RegisterClubMemberDto,
     RegisterClubMemberDtoFromJSON,
     RegisterClubMemberDtoToJSON,
-} from '../models/index';
+} from '../models/RegisterClubMemberDto';
 
 export interface ApiAuthClubMemberLoginPostRequest {
     loginClubMemberDto?: LoginClubMemberDto;

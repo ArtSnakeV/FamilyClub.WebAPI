@@ -12,18 +12,17 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
-import type {
-  ClubMemberReadDto,
-  UpdateClubMemberDto,
-} from '../models/index';
 import {
+    type ClubMemberReadDto,
     ClubMemberReadDtoFromJSON,
     ClubMemberReadDtoToJSON,
+} from '../models/ClubMemberReadDto';
+import {
+    type UpdateClubMemberDto,
     UpdateClubMemberDtoFromJSON,
     UpdateClubMemberDtoToJSON,
-} from '../models/index';
+} from '../models/UpdateClubMemberDto';
 
 export interface ApiClubMemberByEmailEmailGetRequest {
     email: string;
@@ -84,7 +83,7 @@ export class ClubMemberApi extends runtime.BaseAPI {
 
 
         let urlPath = `/api/ClubMember/by-email/{email}`;
-        urlPath = urlPath.replace(`{${"email"}}`, encodeURIComponent(String(requestParameters['email'])));
+        urlPath = urlPath.replace('{email}', encodeURIComponent(String(requestParameters['email'])));
 
         return {
             path: urlPath,
@@ -268,7 +267,7 @@ export class ClubMemberApi extends runtime.BaseAPI {
 
 
         let urlPath = `/api/ClubMember/{id}`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -346,7 +345,7 @@ export class ClubMemberApi extends runtime.BaseAPI {
 
 
         let urlPath = `/api/ClubMember/{id}/form`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -389,7 +388,7 @@ export class ClubMemberApi extends runtime.BaseAPI {
 
 
         let urlPath = `/api/ClubMember/{id}`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -434,7 +433,7 @@ export class ClubMemberApi extends runtime.BaseAPI {
 
 
         let urlPath = `/api/ClubMember/{id}/json`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,

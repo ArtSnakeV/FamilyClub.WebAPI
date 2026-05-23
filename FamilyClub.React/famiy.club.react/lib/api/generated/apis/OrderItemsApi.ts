@@ -12,15 +12,12 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
-import type {
-  OrderItemDTO,
-} from '../models/index';
 import {
+    type OrderItemDTO,
     OrderItemDTOFromJSON,
     OrderItemDTOToJSON,
-} from '../models/index';
+} from '../models/OrderItemDTO';
 
 export interface ApiOrderItemsIdDeleteRequest {
     id: number;
@@ -96,7 +93,7 @@ export class OrderItemsApi extends runtime.BaseAPI {
 
 
         let urlPath = `/api/OrderItems/{id}`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -138,7 +135,7 @@ export class OrderItemsApi extends runtime.BaseAPI {
 
 
         let urlPath = `/api/OrderItems/{id}`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -183,7 +180,7 @@ export class OrderItemsApi extends runtime.BaseAPI {
 
 
         let urlPath = `/api/OrderItems/{id}`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,

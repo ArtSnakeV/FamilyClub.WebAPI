@@ -14,7 +14,7 @@ import { Fragment } from "react";
 type Member = {
   fullName?: string;
   email?: string;
-  avatarData?: string | null;
+  avatarUrl?: string;
 };
 
 type Props = {
@@ -29,7 +29,7 @@ type Props = {
 
 export default function UserMenuDrop({
   member,
-  notificationCount = 0,
+  // notificationCount = 0,
   onCabinet,
   onNotifications,
   onOrders,
@@ -39,9 +39,6 @@ export default function UserMenuDrop({
   const displayName =
     member?.fullName || member?.email?.split("@")[0] || "User";
 
-  const avatarSrc = member?.avatarData
-    ? `data:image/jpeg;base64,${member.avatarData}`
-    : null;
   return (
     <Menu as="div" className="relative inline-block">
       {({ open }) => (
@@ -63,11 +60,10 @@ export default function UserMenuDrop({
           border-0 outline-none focus:outline-none focus:ring-0 focus-visible:ring-0"
             >
               {/* Avatar */}
-              <div className="w-[40px] h-[40px] rounded-full overflow-hidden flex items-center justify-center">
-                {avatarSrc ? (
+              <div className="w-[40px] h-[40px] rounded-full overflow-hidden bg-[#3a3a3a] flex items-center justify-center">
+                {member?.avatarUrl ? (
                   <img
-                    src={avatarSrc}
-                    alt="avatar"
+                    src={member.avatarUrl}
                     className="w-full h-full object-cover"
                   />
                 ) : (
@@ -115,9 +111,9 @@ export default function UserMenuDrop({
                 <div className="flex flex-col justify-center ">
                   <div className="flex items-center gap-6 pt-4 pb-2 px-4">
                     <div className="w-[34px] h-[34px] rounded-full overflow-hidden flex items-center justify-center">
-                      {avatarSrc ? (
+                      {member?.avatarUrl ? (
                         <img
-                          src={avatarSrc}
+                          src={member.avatarUrl}
                           className="w-full h-full object-cover"
                         />
                       ) : (
@@ -163,34 +159,23 @@ export default function UserMenuDrop({
         ${active ? "bg-[#ece7df]" : ""}`}
                         >
                           <div className="h-[50px] flex flex-row place-content-around items-center">
-                            <div className="w-[26px] flex justify-center relative">
+                            <div className="w-[26px] flex justify-center">
                               <Image
                                 src="/images/header/add_24px.svg"
                                 alt="notifications"
                                 width={25}
                                 height={25}
                               />
-
-                              {notificationCount > 0 && (
-                                <span
-                                  className="
-        absolute -top-2 -right-2
-        bg-red-500 text-white text-[10px]
-        px-1.5 py-[1px]
-        rounded-full
-        min-w-[16px]
-        h-[16px]
-        flex items-center justify-center
-        z-[10]
-      "
-                                >
-                                  {notificationCount}
-                                </span>
-                              )}
                             </div>
 
                             <div className="w-[132px] ">
                               <span>Повідомлення</span>
+{/* 
+                              {notificationCount > 0 && (
+                                <span className="bg-red-500 text-white text-[10px] px-2 py-[2px] rounded-full">
+                                  {notificationCount}
+                                </span>
+                              )} */}
                             </div>
                           </div>
                         </button>
@@ -258,7 +243,7 @@ export default function UserMenuDrop({
                           className={`flex items-center gap-2 w-full px-4 py-2 text-[16px] text-red-600 transition
                     ${active ? "bg-[#ece7df]" : ""}`}
                         >
-                          <div className="h-[50px] flex flex-row place-content-around items-center">
+                               <div className="h-[50px] flex flex-row place-content-around items-center">
                             <div className="w-[26px] flex justify-center">
                               <Image
                                 src="/images/header/meeting_room_24px.svg"

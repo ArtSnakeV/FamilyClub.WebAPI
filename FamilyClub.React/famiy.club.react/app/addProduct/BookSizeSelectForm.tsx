@@ -1,4 +1,4 @@
-import { BookSizeDto } from "@/lib/api/generated";
+import { BookSizeDto } from "@/src/lib/api/generated";
 
 type Props = {
   formats: BookSizeDto[];

@@ -1,14 +1,11 @@
-import { CoverType } from "@/lib/api/generated";
-
-const coverTypeOptions = [
-  { label: "Тверда", value: CoverType.NUMBER_0 },
-  { label: "М'яка", value: CoverType.NUMBER_1},
-];
-
 type Props = {
-  value: CoverType;
-  onChange: (value: CoverType) => void;
+  value: "hard" | "soft";
+  onChange: (value: "hard" | "soft") => void;
 };
+const coverTypeOptions = [
+  { value: "hard" as const, label: "Тверда" },
+  { value: "soft" as const, label: "М'яка" },
+];
 
 export default function CoverTypeSelect({ value, onChange }: Props) {
   return (

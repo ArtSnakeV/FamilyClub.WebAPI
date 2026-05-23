@@ -12,15 +12,12 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
-import type {
-  SeriesDto,
-} from '../models/index';
 import {
+    type SeriesDto,
     SeriesDtoFromJSON,
     SeriesDtoToJSON,
-} from '../models/index';
+} from '../models/SeriesDto';
 
 export interface ApiSeriesIdDeleteRequest {
     id: number;
@@ -96,7 +93,7 @@ export class SeriesApi extends runtime.BaseAPI {
 
 
         let urlPath = `/api/Series/{id}`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -138,7 +135,7 @@ export class SeriesApi extends runtime.BaseAPI {
 
 
         let urlPath = `/api/Series/{id}`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -183,7 +180,7 @@ export class SeriesApi extends runtime.BaseAPI {
 
 
         let urlPath = `/api/Series/{id}`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,

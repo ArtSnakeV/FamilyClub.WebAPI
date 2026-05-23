@@ -12,15 +12,12 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
-import type {
-  PromotionDto,
-} from '../models/index';
 import {
+    type PromotionDto,
     PromotionDtoFromJSON,
     PromotionDtoToJSON,
-} from '../models/index';
+} from '../models/PromotionDto';
 
 export interface ApiPromotionsIdDeleteRequest {
     id: number;
@@ -96,7 +93,7 @@ export class PromotionsApi extends runtime.BaseAPI {
 
 
         let urlPath = `/api/Promotions/{id}`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -138,7 +135,7 @@ export class PromotionsApi extends runtime.BaseAPI {
 
 
         let urlPath = `/api/Promotions/{id}`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -183,7 +180,7 @@ export class PromotionsApi extends runtime.BaseAPI {
 
 
         let urlPath = `/api/Promotions/{id}`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
