@@ -1,8 +1,14 @@
 import { categoriesService } from "@/lib/api/services";
 
 export default async function AllCategoriesPage() {
-  // Fetch the array of categories
-  const categories = await categoriesService.apiCategoriesGet();
+  let categories = [];
+
+  try {
+    // Fetch the array of categories
+    categories = await categoriesService.apiCategoriesGet();
+  } catch (error) {
+    console.error("Failed to load categories:", error);
+  }
 
   return (
     // Using semantic colors from our theme and applying our custom fonts (Використовуємо семантичні кольори з нашої теми та застосовуємо наші кастомні шрифти)

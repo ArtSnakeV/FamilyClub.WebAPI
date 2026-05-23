@@ -2,8 +2,10 @@
 import { Configuration, ProductsApi, AuthorsApi, AuthClubMemberApi, CategoriesApi, ReviewsApi } from "./generated";
 
 // Configuration tells the client where your backend is
+const apiBasePath = process.env.NEXT_PUBLIC_API_URL || "https://localhost:7069";
+
 const apiConfig = new Configuration({
-  basePath: "https://localhost:7069", // Your ASP.NET URL
+  basePath: apiBasePath,
 });
 
 // Create instances for the controllers you want to use
