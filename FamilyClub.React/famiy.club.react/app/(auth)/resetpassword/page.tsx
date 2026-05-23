@@ -7,7 +7,7 @@ import { useState } from "react";
 import { authService } from "@/lib/api/services";
 
 
-export default function AuthorizationPage() {
+export default function ResetPassword() {
 //   const router = useRouter();
 
 //   // Creating form
