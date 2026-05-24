@@ -27,6 +27,9 @@
 //   );
 // }
 
+"use client";
+
+import { useEffect, useState } from "react";
 import Hero from "@/app/main_page/Hero";
 import BookSection from "@/app/main_page/BookSection";
 import InkSection from "@/app/main_page/InkSection";
@@ -69,19 +72,42 @@ const mapProductToBook = (product: ProductDto, rating: number) => ({
     rating,
 });
 
-export default async function Home() {
-    let products: ProductDto[] = [];
-    let reviews: ReviewDto[] = [];
-    try {
-        products = await productService.apiProductsGet({ cache: "no-store" });
-    } catch (error) {
-        console.error("Products fetch failed:", error);
-    }
-    try {
-        reviews = await reviewService.apiReviewsGet({ cache: "no-store" });
-    } catch (error) {
-        console.error("Reviews fetch failed:", error);
-    }
+export default function Home() {
+    const [products, setProducts] = useState<ProductDto[]>([]);
+    const [reviews, setReviews] = useState<ReviewDto[]>([]);
+
+    useEffect(() => {
+        let isMounted = true;
+
+        const loadProducts = async () => {
+            try {
+                const result = await productService.apiProductsGet();
+                if (isMounted) {
+                    setProducts(result);
+                }
+            } catch (error) {
+                console.error("Products fetch failed:", error);
+            }
+        };
+
+        const loadReviews = async () => {
+            try {
+                const result = await reviewService.apiReviewsGet();
+                if (isMounted) {
+                    setReviews(result);
+                }
+            } catch (error) {
+                console.error("Reviews fetch failed:", error);
+            }
+        };
+
+        loadProducts();
+        loadReviews();
+
+        return () => {
+            isMounted = false;
+        };
+    }, []);
 
     const ratingByProductId = new Map<number, { sum: number; count: number }>();
     for (const review of reviews) {

@@ -1,34 +1,38 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import { categoriesService } from "@/lib/api/services";
+import type { CategoryDto } from "@/lib/api/generated/models/CategoryDto";
 
 
-export async function generateStaticParams() {
-  try {
-    // Call your service to get all categories
-    const categories = await categoriesService.apiCategoriesGet();
+export default function CategoryPage({ params }: { params: { id: string } }) {
+  const [category, setCategory] = useState<CategoryDto | null>(null);
 
-    // Map them to the required format: [{ id: '1' }, { id: '2' }]
-    return categories.map((category: any) => ({
-      id: category.id.toString(), // Must be a string for the file system
-    }));
-  } catch (error) {
-    console.error("Failed to generate static params for Categories:", error);
-    // Return empty array so the build doesn't crash if the API is down
-    return [];
-  }
-}
+  useEffect(() => {
+    let isMounted = true;
+    const categoryId = Number(params.id);
 
-export default async function CategoryPage({ params }: { params: { id: string } }) {
-  // params.id comes from the URL
-  const categoryId = parseInt(params.id);
+    if (!Number.isFinite(categoryId)) {
+      return;
+    }
 
-  // 3. Call the specific "Get by ID" controller method
-  let category = null;
+    const loadCategory = async () => {
+      try {
+        const result = await categoriesService.apiCategoriesIdGet({ id: categoryId });
+        if (isMounted) {
+          setCategory(result);
+        }
+      } catch (error) {
+        console.error("Failed to load category:", error);
+      }
+    };
 
-  try {
-    category = await categoriesService.apiCategoriesIdGet({ id: categoryId });
-  } catch (error) {
-    console.error("Failed to load category:", error);
-  }
+    loadCategory();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [params.id]);
 
   return (
     <div>
