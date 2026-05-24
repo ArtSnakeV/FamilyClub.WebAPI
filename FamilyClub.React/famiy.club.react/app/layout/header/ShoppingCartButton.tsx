@@ -6,9 +6,9 @@ export default function ShoppingCartButton() {
         <>
             <div className="relative w-[37px] h-[32px] ">
                 <Image
-                    src="/images/shopping_basket_24px.png"
+                    src="/images/header/shopping_basket_24px.png"
                     alt=""
-                    className="object-contain"
+                    className="object-contain h-auto w-auto"
                     priority
                     width={37}
                     height={32}

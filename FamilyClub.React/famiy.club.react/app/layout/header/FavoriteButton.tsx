@@ -5,9 +5,9 @@ export default function FavoriteButton() {
     return (
             <div className="relative w-[34px] h-[29px] ">
                 <Image
-                    src="/images/favorite_border_24px.png"
+                    src="/images/header/favorite_border_24px.png"
                     alt="favor"
-                    className="object-contain"
+                    className="object-contain h-auto w-auto"
                     priority
                     width={34}
                     height={29}

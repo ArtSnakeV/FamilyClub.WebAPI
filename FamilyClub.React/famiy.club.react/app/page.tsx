@@ -65,6 +65,7 @@ const getImageSrc = (product: ProductDto) => {
 };
 
 const mapProductToBook = (product: ProductDto, rating: number) => ({
+    href: product.id ? `/products/${product.id}` : undefined,
     title: product.productName ?? "",
     author: null,
     price: formatPrice(product.discountPrice ?? product.price),
@@ -131,7 +132,7 @@ export default function Home() {
         .map((product) => mapProductToBook(product, getRatingForProduct(product.id)))
         .slice(0, 4);
     return (
-        <main className="bg-[#f5f3ee] text-[#242424]">
+        <main className="bg-[#f5f3ee] text-[#242424] overflow-x-hidden">
             <Hero />
 
             <BookSection title="Рекомендації для тебе" books={recommendationBooks} showMore pillWidth={531} />

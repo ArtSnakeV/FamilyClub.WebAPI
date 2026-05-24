@@ -42,6 +42,12 @@ export interface ClubMemberReadDto {
      * @type {string}
      * @memberof ClubMemberReadDto
      */
+    avatarData?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClubMemberReadDto
+     */
     name?: string | null;
     /**
      * 
@@ -83,6 +89,7 @@ export function ClubMemberReadDtoFromJSONTyped(json: any, ignoreDiscriminator: b
         'id': json['id'] == null ? undefined : json['id'],
         'email': json['email'] == null ? undefined : json['email'],
         'phoneNumber': json['phoneNumber'] == null ? undefined : json['phoneNumber'],
+        'avatarData': json['avatarData'] == null ? undefined : json['avatarData'],
         'name': json['name'] == null ? undefined : json['name'],
         'surname': json['surname'] == null ? undefined : json['surname'],
         'dateOfBirth': json['dateOfBirth'] == null ? undefined : (new Date(json['dateOfBirth'])),
@@ -104,6 +111,7 @@ export function ClubMemberReadDtoToJSONTyped(value?: ClubMemberReadDto | null, i
         'id': value['id'],
         'email': value['email'],
         'phoneNumber': value['phoneNumber'],
+        'avatarData': value['avatarData'],
         'name': value['name'],
         'surname': value['surname'],
         'dateOfBirth': value['dateOfBirth'] == null ? value['dateOfBirth'] : value['dateOfBirth'].toISOString().substring(0,10),

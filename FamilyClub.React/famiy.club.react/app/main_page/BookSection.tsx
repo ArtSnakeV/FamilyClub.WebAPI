@@ -6,6 +6,7 @@ type Book = {
     price: string;
     image?: string | null;
     rating?: number | null;
+    href?: string;
 };
 
 type BookSectionProps = {

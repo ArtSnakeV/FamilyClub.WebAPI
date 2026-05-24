@@ -201,7 +201,7 @@ No authorization required
 
 ## apiProductsIdPut
 
-> apiProductsIdPut(id, id2, productName, price, discountPrice, description, publisherId, productImages, originalTitle, pageCount, publishingDate, format, originalLanguageId, iSBN, promotionId, productCode, weightGrams, itemsInSet, ageRestrictions, leaveOldImages, productImageFiles)
+> apiProductsIdPut(id, id2, productName, price, discountPrice, description, publisherId, productImages, originalTitle, pageCount, publishingDate, coverType, availability, quantityInStock, originalLanguageId, iSBN, promotionId, productCode, weightGrams, itemsInSet, ageRestriction, authorIds, languageIds, categoryIds, seriesIds, translatorIds, formatIds, bookSizeIds, leaveOldImages, productImageFiles)
 
 
 
@@ -241,8 +241,12 @@ async function example() {
     pageCount: 56,
     // Date (optional)
     publishingDate: 2013-10-20,
-    // string (optional)
-    format: format_example,
+    // CoverType (optional)
+    coverType: ...,
+    // Availability (optional)
+    availability: ...,
+    // number (optional)
+    quantityInStock: 56,
     // number (optional)
     originalLanguageId: 56,
     // string (optional)
@@ -255,8 +259,22 @@ async function example() {
     weightGrams: 56,
     // number (optional)
     itemsInSet: 56,
-    // string (optional)
-    ageRestrictions: ageRestrictions_example,
+    // AgeRestriction (optional)
+    ageRestriction: ...,
+    // Array<number> (optional)
+    authorIds: ...,
+    // Array<number> (optional)
+    languageIds: ...,
+    // Array<number> (optional)
+    categoryIds: ...,
+    // Array<number> (optional)
+    seriesIds: ...,
+    // Array<number> (optional)
+    translatorIds: ...,
+    // Array<number> (optional)
+    formatIds: ...,
+    // Array<number> (optional)
+    bookSizeIds: ...,
     // boolean (optional)
     leaveOldImages: true,
     // Array<Blob> (optional)
@@ -291,14 +309,23 @@ example().catch(console.error);
 | **originalTitle** | `string` |  | [Optional] [Defaults to `undefined`] |
 | **pageCount** | `number` |  | [Optional] [Defaults to `undefined`] |
 | **publishingDate** | `Date` |  | [Optional] [Defaults to `undefined`] |
-| **format** | `string` |  | [Optional] [Defaults to `undefined`] |
+| **coverType** | `CoverType` |  | [Optional] [Defaults to `undefined`] [Enum: 0, 1] |
+| **availability** | `Availability` |  | [Optional] [Defaults to `undefined`] [Enum: 0, 1, 2] |
+| **quantityInStock** | `number` |  | [Optional] [Defaults to `undefined`] |
 | **originalLanguageId** | `number` |  | [Optional] [Defaults to `undefined`] |
 | **iSBN** | `string` |  | [Optional] [Defaults to `undefined`] |
 | **promotionId** | `number` |  | [Optional] [Defaults to `undefined`] |
 | **productCode** | `string` |  | [Optional] [Defaults to `undefined`] |
 | **weightGrams** | `number` |  | [Optional] [Defaults to `undefined`] |
 | **itemsInSet** | `number` |  | [Optional] [Defaults to `undefined`] |
-| **ageRestrictions** | `string` |  | [Optional] [Defaults to `undefined`] |
+| **ageRestriction** | `AgeRestriction` |  | [Optional] [Defaults to `undefined`] [Enum: 0, 1, 2, 3, 4] |
+| **authorIds** | `Array<number>` |  | [Optional] |
+| **languageIds** | `Array<number>` |  | [Optional] |
+| **categoryIds** | `Array<number>` |  | [Optional] |
+| **seriesIds** | `Array<number>` |  | [Optional] |
+| **translatorIds** | `Array<number>` |  | [Optional] |
+| **formatIds** | `Array<number>` |  | [Optional] |
+| **bookSizeIds** | `Array<number>` |  | [Optional] |
 | **leaveOldImages** | `boolean` |  | [Optional] [Defaults to `undefined`] |
 | **productImageFiles** | `Array<Blob>` |  | [Optional] |
 
@@ -326,7 +353,7 @@ No authorization required
 
 ## apiProductsPost
 
-> apiProductsPost(id, productName, price, discountPrice, description, publisherId, productImages, originalTitle, pageCount, publishingDate, format, originalLanguageId, iSBN, promotionId, productCode, weightGrams, itemsInSet, ageRestrictions, leaveOldImages, productImageFiles)
+> apiProductsPost(id, productName, price, discountPrice, description, publisherId, productImages, originalTitle, pageCount, publishingDate, coverType, availability, quantityInStock, originalLanguageId, iSBN, promotionId, productCode, weightGrams, itemsInSet, ageRestriction, authorIds, languageIds, categoryIds, seriesIds, translatorIds, formatIds, bookSizeIds, leaveOldImages, productImageFiles)
 
 
 
@@ -364,8 +391,12 @@ async function example() {
     pageCount: 56,
     // Date (optional)
     publishingDate: 2013-10-20,
-    // string (optional)
-    format: format_example,
+    // CoverType (optional)
+    coverType: ...,
+    // Availability (optional)
+    availability: ...,
+    // number (optional)
+    quantityInStock: 56,
     // number (optional)
     originalLanguageId: 56,
     // string (optional)
@@ -378,8 +409,22 @@ async function example() {
     weightGrams: 56,
     // number (optional)
     itemsInSet: 56,
-    // string (optional)
-    ageRestrictions: ageRestrictions_example,
+    // AgeRestriction (optional)
+    ageRestriction: ...,
+    // Array<number> (optional)
+    authorIds: ...,
+    // Array<number> (optional)
+    languageIds: ...,
+    // Array<number> (optional)
+    categoryIds: ...,
+    // Array<number> (optional)
+    seriesIds: ...,
+    // Array<number> (optional)
+    translatorIds: ...,
+    // Array<number> (optional)
+    formatIds: ...,
+    // Array<number> (optional)
+    bookSizeIds: ...,
     // boolean (optional)
     leaveOldImages: true,
     // Array<Blob> (optional)
@@ -413,14 +458,23 @@ example().catch(console.error);
 | **originalTitle** | `string` |  | [Optional] [Defaults to `undefined`] |
 | **pageCount** | `number` |  | [Optional] [Defaults to `undefined`] |
 | **publishingDate** | `Date` |  | [Optional] [Defaults to `undefined`] |
-| **format** | `string` |  | [Optional] [Defaults to `undefined`] |
+| **coverType** | `CoverType` |  | [Optional] [Defaults to `undefined`] [Enum: 0, 1] |
+| **availability** | `Availability` |  | [Optional] [Defaults to `undefined`] [Enum: 0, 1, 2] |
+| **quantityInStock** | `number` |  | [Optional] [Defaults to `undefined`] |
 | **originalLanguageId** | `number` |  | [Optional] [Defaults to `undefined`] |
 | **iSBN** | `string` |  | [Optional] [Defaults to `undefined`] |
 | **promotionId** | `number` |  | [Optional] [Defaults to `undefined`] |
 | **productCode** | `string` |  | [Optional] [Defaults to `undefined`] |
 | **weightGrams** | `number` |  | [Optional] [Defaults to `undefined`] |
 | **itemsInSet** | `number` |  | [Optional] [Defaults to `undefined`] |
-| **ageRestrictions** | `string` |  | [Optional] [Defaults to `undefined`] |
+| **ageRestriction** | `AgeRestriction` |  | [Optional] [Defaults to `undefined`] [Enum: 0, 1, 2, 3, 4] |
+| **authorIds** | `Array<number>` |  | [Optional] |
+| **languageIds** | `Array<number>` |  | [Optional] |
+| **categoryIds** | `Array<number>` |  | [Optional] |
+| **seriesIds** | `Array<number>` |  | [Optional] |
+| **translatorIds** | `Array<number>` |  | [Optional] |
+| **formatIds** | `Array<number>` |  | [Optional] |
+| **bookSizeIds** | `Array<number>` |  | [Optional] |
 | **leaveOldImages** | `boolean` |  | [Optional] [Defaults to `undefined`] |
 | **productImageFiles** | `Array<Blob>` |  | [Optional] |
 

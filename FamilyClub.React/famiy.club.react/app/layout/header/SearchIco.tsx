@@ -10,11 +10,11 @@ export default function SearchIco(){
               />
               <div className="relative cursor-pointer">
                 <Image
-                  src="/images/zoom_out_24px.png"
+                  src="/images/header/zoom_out_24px.png"
                   alt="search"
                   width={30}
                   height={30}
-                  className="object-contain"
+                  className="object-contain h-auto w-auto"
                   priority
                 />
               </div>

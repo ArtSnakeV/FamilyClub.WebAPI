@@ -6,9 +6,9 @@ export default function IcoPeople() {
         <>
             <div className="relative w-[37px] h-[23px] ">
                 <Image
-                    src="/images/people_24px.png"
+                    src="/images/header/people_24px.png"
                     alt="people"
-                    className="object-contain"
+                    className="object-contain h-auto w-auto"
                     priority
                     width={37}
                     height={23}
