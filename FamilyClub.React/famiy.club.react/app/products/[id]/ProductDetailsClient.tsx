@@ -3,8 +3,8 @@
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import BookCard from "@/app/main_page/BookCard";
-import { productService, reviewService } from "@/lib/api/services";
-import type { ProductDto, ReviewDto } from "@/lib/api/generated";
+import { languageService, productService, publisherService, reviewService } from "@/lib/api/services";
+import type { LanguageDto, ProductDto, PublisherDto, ReviewDto } from "@/lib/api/generated";
 
 type ReviewCardData = {
     id: number | string;
@@ -20,20 +20,7 @@ const fallbackDescription =
     "«роман на роботі», «вимушена співпраця», «від неприязні до кохання».";
 
 const fallbackAuthorBio =
-    "Ві Кіланд (Vi Keeland) - одна з найвідоміших авторок сучасної романтичної прози. " +
-    "Її книги підкорили читачів у всьому світі, перекладені понад двадцятьма мовами й " +
-    "регулярно потрапляють до списків бестселерів The New York Times, USA Today та The Wall Street Journal.";
-
-const fallbackProduct: ProductDto = {
-    productName: "Егоманіяк",
-    price: 400,
-    description: fallbackDescription,
-    pageCount: 368,
-    productCode: "4148813",
-    publishingDate: new Date("2026-01-01"),
-    weightGrams: 1180,
-    format: "paper",
-};
+    "Біографія автора недоступна. Додайте опис у профілі автора, щоб він з'явився на сторінці.";
 
 const formatPrice = (value?: number | null) => {
     if (value == null) return "";
@@ -47,7 +34,8 @@ const ratingToStars = (rating: number) => {
     return Array.from({ length: 5 }, (_, index) => (index < rounded ? "★" : "☆")).join("");
 };
 
-const getImageSrc = (product: ProductDto) => {
+const getImageSrc = (product?: ProductDto | null) => {
+    if (!product) return null;
     const image = product.productImages?.[0];
     if (!image?.imageData) return null;
     if (image.imageData.startsWith("data:")) {
@@ -66,7 +54,8 @@ const getImageSrc = (product: ProductDto) => {
     return `data:${mimeType};base64,${image.imageData}`;
 };
 
-const getGalleryImages = (product: ProductDto) => {
+const getGalleryImages = (product?: ProductDto | null) => {
+    if (!product) return [];
     const images = (product.productImages ?? [])
         .map((image) => {
             if (!image.imageData) return null;
@@ -87,7 +76,7 @@ const getGalleryImages = (product: ProductDto) => {
 };
 
 const formatBookType = (format?: string | null) => {
-    if (!format) return "Паперова";
+    if (!format) return "";
     const normalized = format.toLowerCase();
     if (normalized.includes("audio")) return "Аудіо";
     if (normalized.includes("ebook") || normalized.includes("e-book")) return "Електронна";
@@ -96,14 +85,14 @@ const formatBookType = (format?: string | null) => {
 };
 
 const formatYear = (value?: Date | string | null) => {
-    if (!value) return "2026";
+    if (!value) return "—";
     const date = value instanceof Date ? value : new Date(value);
-    if (Number.isNaN(date.getTime())) return "2026";
+    if (Number.isNaN(date.getTime())) return "—";
     return `${date.getFullYear()}`;
 };
 
 const formatWeight = (value?: number | null) => {
-    if (!value) return "1.18 кг";
+    if (!value) return "—";
     const kilograms = value / 1000;
     return `${kilograms.toFixed(2)} кг`;
 };
@@ -247,6 +236,9 @@ export default function ProductDetailsClient({ id }: { id: string }) {
     const [product, setProduct] = useState<ProductDto | null>(null);
     const [products, setProducts] = useState<ProductDto[]>([]);
     const [reviews, setReviews] = useState<ReviewDto[]>([]);
+    const [languages, setLanguages] = useState<LanguageDto[]>([]);
+    const [publishers, setPublishers] = useState<PublisherDto[]>([]);
+    const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
     useEffect(() => {
         const productId = Number(id);
@@ -255,16 +247,26 @@ export default function ProductDetailsClient({ id }: { id: string }) {
 
         const loadData = async () => {
             try {
-                const [productResult, productsResult, reviewsResult] = await Promise.all([
+                const [
+                    productResult,
+                    productsResult,
+                    reviewsResult,
+                    languagesResult,
+                    publishersResult,
+                ] = await Promise.all([
                     productService.apiProductsIdGet({ id: productId }),
                     productService.apiProductsGet(),
                     reviewService.apiReviewsGet(),
+                    languageService.apiLanguagesGet(),
+                    publisherService.apiPublishersGet(),
                 ]);
 
                 if (!isMounted) return;
                 setProduct(productResult);
                 setProducts(productsResult ?? []);
                 setReviews(reviewsResult ?? []);
+                setLanguages(languagesResult ?? []);
+                setPublishers(publishersResult ?? []);
             } catch (error) {
                 console.error("Failed to load product details:", error);
             }
@@ -277,9 +279,13 @@ export default function ProductDetailsClient({ id }: { id: string }) {
         };
     }, [id]);
 
-    const currentProduct = product ?? fallbackProduct;
+    const isLoading = !product;
+    const currentProduct = product ?? undefined;
     const galleryImages = getGalleryImages(currentProduct);
-    const coverImage = galleryImages[0] ?? getImageSrc(currentProduct);
+    const primaryImage = galleryImages[0] ?? getImageSrc(currentProduct);
+    const displayImage = selectedImage && galleryImages.includes(selectedImage)
+        ? selectedImage
+        : primaryImage;
     const thumbnails = Array.from({ length: 4 }, (_, index) => galleryImages[index] ?? null);
 
     const ratingByProductId = useMemo(() => {
@@ -303,7 +309,7 @@ export default function ProductDetailsClient({ id }: { id: string }) {
         return entry.sum / entry.count;
     };
 
-    const productId = currentProduct.id ?? Number(id);
+    const productId = currentProduct?.id ?? Number(id);
     const productReviews = reviews.filter((review) => review.productId === productId && review.approved !== false);
     const rating = getRatingForProduct(productId);
     const ratingCount = productReviews.length;
@@ -319,7 +325,7 @@ export default function ProductDetailsClient({ id }: { id: string }) {
         : fallbackReviews;
 
     const similarBooks = products
-        .filter((item) => item.id !== currentProduct.id)
+        .filter((item) => item.id !== currentProduct?.id)
         .slice(0, 4)
         .map((item) => ({
             href: item.id ? `/products/${item.id}` : undefined,
@@ -331,7 +337,19 @@ export default function ProductDetailsClient({ id }: { id: string }) {
         }));
     const displaySimilarBooks = similarBooks.length ? similarBooks : fallbackSimilarBooks;
 
-    const authorName = "Ві Кіланд";
+    const authorNameFromData = (product as { authors?: Array<{ authorName?: string | null }> } | null)
+        ?.authors?.[0]?.authorName;
+    const authorName = isLoading ? "Завантаження..." : (authorNameFromData ?? "Невідомо");
+    const languageName = currentProduct?.originalLanguageId
+        ? languages.find((language) => language.id === currentProduct.originalLanguageId)?.languageName
+        : null;
+    const publisherName = currentProduct?.publisherId
+        ? publishers.find((publisher) => publisher.id === currentProduct.publisherId)?.publisherName
+        : null;
+    const productTitle = currentProduct?.productName ?? (isLoading ? "Завантаження..." : "Без назви");
+    const descriptionText = currentProduct?.description ?? (isLoading ? "Завантаження..." : "Опис відсутній");
+    const priceValue = currentProduct?.discountPrice ?? currentProduct?.price;
+    const priceText = priceValue != null ? formatPrice(priceValue) : "—";
 
     return (
         <div className="bg-[#f5f3ee] text-[#242424]">
@@ -349,23 +367,33 @@ export default function ProductDetailsClient({ id }: { id: string }) {
                     <div className="mt-6 grid gap-10 lg:grid-cols-[500px_1fr_330px]">
                         <div className="flex flex-col gap-6 lg:flex-row">
                             <div className="flex flex-row gap-4 lg:flex-col">
-                                {thumbnails.map((image, index) => (
-                                    <div
-                                        key={`thumb-${index}`}
-                                        className="flex h-[120px] w-[88px] items-center justify-center rounded-[12px] bg-[#f5f3ee] shadow-[0px_6px_10px_0px_rgba(36,36,36,0.2)]"
-                                    >
-                                        {image ? (
-                                            <img alt="" className="h-[110px] w-[78px] object-contain" src={image} />
-                                        ) : (
-                                            <div className="h-[110px] w-[78px] rounded-[10px] bg-[rgba(36,36,36,0.1)]" />
-                                        )}
-                                    </div>
-                                ))}
+                                {thumbnails.map((image, index) => {
+                                    const isActive = image != null && image === displayImage;
+                                    return (
+                                        <button
+                                            key={`thumb-${index}`}
+                                            type="button"
+                                            className={`flex h-[120px] w-[88px] items-center justify-center rounded-[12px] bg-[#f5f3ee] shadow-[0px_6px_10px_0px_rgba(36,36,36,0.2)] ${
+                                                isActive ? "ring-2 ring-[#7e4d1e]" : ""
+                                            }`}
+                                            onClick={() => image && setSelectedImage(image)}
+                                            aria-label={image ? `Переглянути фото ${index + 1}` : "Фото недоступне"}
+                                            aria-pressed={isActive}
+                                            disabled={!image}
+                                        >
+                                            {image ? (
+                                                <img alt="" className="h-[110px] w-[78px] object-contain" src={image} />
+                                            ) : (
+                                                <div className="h-[110px] w-[78px] rounded-[10px] bg-[rgba(36,36,36,0.1)]" />
+                                            )}
+                                        </button>
+                                    );
+                                })}
                             </div>
 
                             <div className="flex h-[535px] w-full items-center justify-center rounded-[16px] bg-[#f5f3ee] shadow-[0px_10px_15px_0px_rgba(36,36,36,0.25)]">
-                                {coverImage ? (
-                                    <img alt={currentProduct.productName ?? "Книга"} className="h-[500px] w-[380px] object-contain" src={coverImage} />
+                                {displayImage ? (
+                                    <img alt={productTitle} className="h-[500px] w-[380px] object-contain" src={displayImage} />
                                 ) : (
                                     <div className="h-[500px] w-[380px] rounded-[12px] bg-[rgba(36,36,36,0.1)]" />
                                 )}
@@ -384,7 +412,7 @@ export default function ProductDetailsClient({ id }: { id: string }) {
                             </div>
 
                             <div>
-                                <h1 className="font-mono text-[32px] font-semibold">{currentProduct.productName ?? ""}</h1>
+                                <h1 className="font-mono text-[32px] font-semibold">{productTitle}</h1>
                                 <div className="mt-3 flex items-center gap-2 text-[16px]">
                                     <span className="text-[#242424]/70">Автор:</span>
                                     <span className="text-[#242424]">{authorName}</span>
@@ -392,13 +420,14 @@ export default function ProductDetailsClient({ id }: { id: string }) {
                             </div>
 
                             <div className="space-y-4">
-                                <div className="text-[18px]">{currentProduct.pageCount ?? 368} стор.</div>
+                                <div className="text-[18px]">{currentProduct?.pageCount ?? "—"} стор.</div>
                                 <div className="border-t border-[#242424]/20 pt-3 text-[16px]">Роман</div>
                             </div>
 
-                            <div className="grid gap-3">
+                            {/* <div className="grid gap-3">
                                 {formatOptions.map((option) => {
-                                    const isActive = option.label.toLowerCase() === formatBookType(currentProduct.format).toLowerCase();
+                                    const isActive = option.label.toLowerCase()
+                                        === formatBookType(currentProduct?.format).toLowerCase();
                                     return (
                                         <div
                                             key={option.id}
@@ -414,13 +443,13 @@ export default function ProductDetailsClient({ id }: { id: string }) {
                                         </div>
                                     );
                                 })}
-                            </div>
+                            </div> */}
                         </div>
 
                         <div className="h-fit rounded-[20px] bg-[#f5f3ee] shadow-[0px_10px_20px_0px_rgba(36,36,36,0.2)]">
                             <div className="border-b border-[#242424]/10 px-5 py-5">
                                 <p className="text-[14px] text-[#242424]/70">Ціна в Libria:</p>
-                                <p className="mt-2 font-mono text-[36px] font-semibold">{formatPrice(currentProduct.discountPrice ?? currentProduct.price)}</p>
+                                <p className="mt-2 font-mono text-[36px] font-semibold">{priceText}</p>
                             </div>
 
                             <div className="space-y-5 px-5 py-5">
@@ -436,17 +465,6 @@ export default function ProductDetailsClient({ id }: { id: string }) {
                                         <img alt="" className="h-[24px] w-[24px]" src="/images/main_page/icons/rec-icon-favorite.png" />
                                     </button>
                                 </div>
-
-                                <div className="space-y-4">
-                                    <p className="text-[16px]">2935 додали до списку бажань</p>
-                                    <div className="h-px w-full bg-[#242424]/20" />
-                                    <div>
-                                        <p className="text-[16px] font-semibold">Оплата</p>
-                                        <p className="mt-2 text-[14px] text-[#242424]/70">
-                                            Онлайн-оплата платіжною картою або при отриманні
-                                        </p>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -454,7 +472,7 @@ export default function ProductDetailsClient({ id }: { id: string }) {
                     <div className="mt-10 rounded-[20px] bg-[#f5f3ee] px-5 py-6 shadow-[0px_10px_15px_0px_rgba(36,36,36,0.2)]">
                         <h2 className="font-mono text-[22px] font-semibold">Опис</h2>
                         <p className="mt-4 text-[14px] leading-relaxed text-[#242424]/80">
-                            {currentProduct.description ?? fallbackDescription}
+                            {descriptionText}
                         </p>
                     </div>
 
@@ -464,23 +482,23 @@ export default function ProductDetailsClient({ id }: { id: string }) {
                             <div className="mt-6 grid gap-3 text-[14px]">
                                 <div className="grid grid-cols-[120px_1fr] gap-2">
                                     <span>Код товару:</span>
-                                    <span>{currentProduct.productCode ?? "4148813"}</span>
+                                    <span>{currentProduct?.productCode ?? "—"}</span>
                                 </div>
                                 <div className="grid grid-cols-[120px_1fr] gap-2">
                                     <span>Назва книги:</span>
-                                    <span>{currentProduct.productName ?? "Егоманіяк"}</span>
+                                    <span>{productTitle}</span>
                                 </div>
                                 <div className="grid grid-cols-[120px_1fr] gap-2">
                                     <span>Сторінок:</span>
-                                    <span>{currentProduct.pageCount ?? 368}</span>
+                                    <span>{currentProduct?.pageCount ?? "—"}</span>
                                 </div>
                                 <div className="grid grid-cols-[120px_1fr] gap-2">
                                     <span>Вага:</span>
-                                    <span>{formatWeight(currentProduct.weightGrams)}</span>
+                                    <span>{formatWeight(currentProduct?.weightGrams)}</span>
                                 </div>
                                 <div className="grid grid-cols-[120px_1fr] gap-2">
                                     <span>Рік видання:</span>
-                                    <span>{formatYear(currentProduct.publishingDate)}</span>
+                                    <span>{formatYear(currentProduct?.publishingDate)}</span>
                                 </div>
                                 <div className="grid grid-cols-[120px_1fr] gap-2">
                                     <span>Жанри:</span>
@@ -492,11 +510,11 @@ export default function ProductDetailsClient({ id }: { id: string }) {
                                 </div>
                                 <div className="grid grid-cols-[120px_1fr] gap-2">
                                     <span>Мова:</span>
-                                    <span>українська</span>
+                                    <span>{languageName ?? (isLoading ? "Завантаження..." : "Невідомо")}</span>
                                 </div>
                                 <div className="grid grid-cols-[120px_1fr] gap-2">
                                     <span>Видавництво:</span>
-                                    <span>КСД</span>
+                                    <span>{publisherName ?? (isLoading ? "Завантаження..." : "Невідомо")}</span>
                                 </div>
                                 <div className="grid grid-cols-[120px_1fr] gap-2">
                                     <span>Обкладинка:</span>

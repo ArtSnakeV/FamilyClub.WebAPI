@@ -1,5 +1,14 @@
 // src/lib/api/services.ts
-import { Configuration, ProductsApi, AuthorsApi, AuthClubMemberApi, CategoriesApi, ReviewsApi } from "./generated";
+import {
+  Configuration,
+  ProductsApi,
+  AuthorsApi,
+  AuthClubMemberApi,
+  CategoriesApi,
+  ReviewsApi,
+  LanguagesApi,
+  PublishersApi,
+} from "./generated";
 
 // Configuration tells the client where your backend is
 const apiBasePath = process.env.NEXT_PUBLIC_API_URL || "https://localhost:7069";
@@ -14,3 +23,5 @@ export const authorService = new AuthorsApi(apiConfig);
 export const authService = new AuthClubMemberApi(apiConfig);
 export const categoriesService = new CategoriesApi(apiConfig);
 export const reviewService = new ReviewsApi(apiConfig);
+export const languageService = new LanguagesApi(apiConfig);
+export const publisherService = new PublishersApi(apiConfig);

@@ -9,6 +9,7 @@ export default function IcoPeople() {
                     src="/images/header/people_24px.png"
                     alt="people"
                     className="object-contain h-auto w-auto"
+                    style={{ width: "auto", height: "auto" }}
                     priority
                     width={37}
                     height={23}

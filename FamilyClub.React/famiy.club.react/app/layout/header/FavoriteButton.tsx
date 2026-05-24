@@ -8,6 +8,7 @@ export default function FavoriteButton() {
                     src="/images/header/favorite_border_24px.png"
                     alt="favor"
                     className="object-contain h-auto w-auto"
+                    style={{ width: "auto", height: "auto" }}
                     priority
                     width={34}
                     height={29}

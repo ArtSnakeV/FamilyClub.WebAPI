@@ -35,6 +35,7 @@ export async function generateStaticParams(): Promise<ProductParams[]> {
     return Array.from(params).map((id) => ({ id }));
 }
 
-export default function ProductDetailsPage({ params }: { params: ProductParams }) {
-    return <ProductDetailsClient id={params.id} />;
+export default async function ProductDetailsPage({ params }: { params: Promise<ProductParams> }) {
+    const resolvedParams = await params;
+    return <ProductDetailsClient id={resolvedParams.id} />;
 }
