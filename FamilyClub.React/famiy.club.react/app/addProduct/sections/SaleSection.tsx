@@ -8,15 +8,25 @@ type Props = {
   setField: <K extends keyof ProductDto>(key: K, value: ProductDto[K]) => void;
   loading: boolean;
   onPublish: () => void;
+  onSaveDraft: () => void;
   onCancel: () => void;
 };
 
-export function SaleSection({ form, setField, loading, onPublish, onCancel }: Props) {
+export function SaleSection({
+  form,
+  setField,
+  loading,
+  onPublish,
+  onSaveDraft,
+  onCancel,
+}: Props) {
   return (
     <div className="w-full h-[594px] flex mt-[120px] text-[var(--color-white)]">
       <div
         className="w-full h-full bg-cover bg-center"
-        style={{ backgroundImage: "url('/images/addProducts/Rectangle 315.svg')" }}
+        style={{
+          backgroundImage: "url('/images/addProducts/Rectangle 315.svg')",
+        }}
       >
         <div className="w-full h-full flex flex-col items-center -ml-[6px] mt-[38px]">
           <div className="relative w-[308px] h-[116px] -ml-[40px]">
@@ -59,7 +69,7 @@ export function SaleSection({ form, setField, loading, onPublish, onCancel }: Pr
             <ButtonSubmitAddProduct
               loading={loading}
               onPublish={onPublish}
-              onSaveDraft={() => console.log("draft")}
+              onSaveDraft={onSaveDraft}
               onCancel={onCancel}
             />
           </div>

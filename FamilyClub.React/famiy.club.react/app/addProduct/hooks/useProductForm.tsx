@@ -24,11 +24,26 @@ const initialDto: ProductDto = {
   publishingYear: undefined,
 };
 
-export function useProductForm() {
-  const [form, setForm] = useState<ProductDto>(initialDto);
+const DRAFT_KEY = "productDraft";
 
+export function useProductForm() {
+  //const [form, setForm] = useState<ProductDto>(initialDto);
+  const [form, setForm] = useState<ProductDto>(() => {
+    // відновлюємо чернетку при ініціалізації
+    const saved = localStorage.getItem(DRAFT_KEY);
+    return saved ? JSON.parse(saved) : initialDto;
+  });
   const setField = <K extends keyof ProductDto>(key: K, value: ProductDto[K]) =>
     setForm((prev) => ({ ...prev, [key]: value }));
+
+  const saveDraft = () => {
+    localStorage.setItem(DRAFT_KEY, JSON.stringify(form));
+    alert("Чернетку збережено");
+  };
+
+  const clearDraft = () => {
+    localStorage.removeItem(DRAFT_KEY);
+  };
 
   const toggleCategory = (id: number) =>
     setField(
@@ -38,5 +53,5 @@ export function useProductForm() {
         : [...form.categoryIds, id],
     );
 
-  return { form, setField, toggleCategory };
+  return { form, setField, toggleCategory, saveDraft, clearDraft };
 }

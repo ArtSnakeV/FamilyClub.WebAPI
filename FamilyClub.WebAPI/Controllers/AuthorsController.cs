@@ -41,6 +41,7 @@ namespace FamilyClub.WebAPI.Controllers
 
 		// POST api/<AuthorsController>
 		[HttpPost]
+		[ProducesResponseType(typeof(AuthorDTO), StatusCodes.Status201Created)]
 		public async Task<IActionResult> Create([FromBody] AuthorDTO dto, CancellationToken cancellationToken)
 		{
 			var createdAuthor = await _authorService.CreateAsync(dto, cancellationToken);
@@ -73,5 +74,34 @@ namespace FamilyClub.WebAPI.Controllers
 			return NoContent();
 		}
 
+		// POST api/Authors/{id}/photo
+		[HttpPost("{id:int}/photo")]
+		public async Task<IActionResult> UploadPhoto(int id, IFormFile photo, CancellationToken cancellationToken)
+		{
+			if (photo == null || photo.Length == 0)
+				return BadRequest("Файл не завантажено");
+
+			var author = await _authorService.GetByIdAsync(id, cancellationToken);
+			if (author is null)
+				return NotFound();
+
+			var uploadsFolder = Path.Combine("wwwroot", "images", "authors");
+			Directory.CreateDirectory(uploadsFolder);
+
+			var fileName = $"{id}_{Guid.NewGuid()}{Path.GetExtension(photo.FileName)}";
+			var filePath = Path.Combine(uploadsFolder, fileName);
+
+			using (var stream = new FileStream(filePath, FileMode.Create))
+			{
+				await photo.CopyToAsync(stream, cancellationToken);
+			}
+
+			var photoUrl = $"/images/authors/{fileName}";
+
+			author.PhotoUrl = photoUrl;
+			await _authorService.UpdateAsync(id, author, cancellationToken);
+
+			return Ok(new { photoUrl });
+		}
 	}
 }
