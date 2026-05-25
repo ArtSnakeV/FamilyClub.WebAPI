@@ -1,8 +1,32 @@
-import { categoriesService } from "@/lib/api/services";
+"use client";
 
-export default async function AllCategoriesPage() {
-  // Fetch the array of categories
-  const categories = await categoriesService.apiCategoriesGet();
+import { useEffect, useState } from "react";
+import { categoriesService } from "@/lib/api/services";
+import type { CategoryDto } from "@/lib/api/generated/models/CategoryDto";
+
+export default function AllCategoriesPage() {
+  const [categories, setCategories] = useState<CategoryDto[]>([]);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    const loadCategories = async () => {
+      try {
+        const result = await categoriesService.apiCategoriesGet();
+        if (isMounted) {
+          setCategories(result);
+        }
+      } catch (error) {
+        console.error("Failed to load categories:", error);
+      }
+    };
+
+    loadCategories();
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   return (
     // Using semantic colors from our theme and applying our custom fonts (Використовуємо семантичні кольори з нашої теми та застосовуємо наші кастомні шрифти)

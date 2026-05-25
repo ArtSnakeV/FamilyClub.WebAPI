@@ -10,7 +10,7 @@ export default function Logo() {
           alt="Logo"
           width={189}
           height={83}
-          className="object-contain"
+          className="object-contain h-auto w-auto"
           priority
         />
       </div>

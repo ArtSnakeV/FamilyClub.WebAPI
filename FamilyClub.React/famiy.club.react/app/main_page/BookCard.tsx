@@ -1,18 +1,21 @@
+import Link from "next/link";
+
 type BookCardProps = {
     title: string;
     author?: string | null;
     price: string;
     image?: string | null;
     rating?: number | null;
+    href?: string;
 };
 
 const clampRating = (value: number) => Math.max(0, Math.min(5, value));
 
-export default function BookCard({ title, author, price, image, rating }: BookCardProps) {
+export default function BookCard({ title, author, price, image, rating, href }: BookCardProps) {
     const roundedRating = clampRating(Math.round(rating ?? 0));
     const starString = Array.from({ length: 5 }, (_, index) => (index < roundedRating ? "★" : "☆")).join("");
 
-    return (
+    const card = (
         <div className="relative h-[400px] w-[260px]">
             <div
                 className="absolute inset-0 rounded-bl-[30px] rounded-br-[30px] shadow-[0px_10px_10px_0px_rgba(36,36,36,0.3)]"
@@ -57,7 +60,7 @@ export default function BookCard({ title, author, price, image, rating }: BookCa
                     src={image}
                 />
             ) : (
-                <div className="absolute left-1/2 top-[20px] h-[250px] w-[184px] -translate-x-1/2 rounded-[12px] bg-[rgba(36,36,36,0.1)]" />
+                <div className="absolute left-1/2 top-[20px] h-[250px] w-[184px] -translate-x-1/2" />
             )}
 
             <div className="absolute bottom-[20px] left-[20px] right-[20px]">
@@ -98,4 +101,14 @@ export default function BookCard({ title, author, price, image, rating }: BookCa
             </div>
         </div>
     );
+
+    if (href) {
+        return (
+            <Link aria-label={title} className="block" href={href}>
+                {card}
+            </Link>
+        );
+    }
+
+    return card;
 }
