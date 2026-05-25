@@ -30,6 +30,29 @@ export default function UpNavigation() {
   const [notificationCount, setNotificationCount] = useState(0);
   const router = useRouter();
 
+  const fetchNotifications = async (memberId: string) => {
+    const token = localStorage.getItem("token");
+    if (!token) return;
+
+    try {
+      const res = await fetch(
+        `https://localhost:7069/api/Notifications/unread-count/${memberId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+
+      if (!res.ok) return;
+
+      const data = await res.json();
+      setNotificationCount(data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   const fetchUser = async () => {
     const token = localStorage.getItem("token");
 
@@ -52,8 +75,8 @@ export default function UpNavigation() {
       }
 
       const data: User = await res.json();
-
       setMember(data);
+      await fetchNotifications(data.id);
     } catch (error) {
       console.log(error);
       setMember(null);
@@ -61,31 +84,9 @@ export default function UpNavigation() {
       setLoading(false);
     }
   };
-  const fetchNotifications = async () => {
-    const token = localStorage.getItem("token");
-    if (!token) return;
 
-    try {
-      const res = await fetch(
-        "https://localhost:7069/api/Notifications/unread-count/${member.id}",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        },
-      );
-
-      if (!res.ok) return;
-
-      const data = await res.json();
-      setNotificationCount(data);
-    } catch (e) {
-      console.log(e);
-    }
-  };
   useEffect(() => {
     fetchUser();
-    fetchNotifications();
 
     const handler = () => {
       fetchUser();
@@ -99,17 +100,16 @@ export default function UpNavigation() {
   }, []);
 
   const isAuthenticated = !!member?.id;
+
   if (loading) {
     return null;
   }
+
   const handleLogout = () => {
     localStorage.removeItem("token");
-
     setMember(null);
     setNotificationCount(0);
-
     window.dispatchEvent(new Event("auth-change"));
-
     router.push("/");
   };
   return (

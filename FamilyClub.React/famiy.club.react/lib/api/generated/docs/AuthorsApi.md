@@ -7,6 +7,7 @@ All URIs are relative to *http://localhost*
 | [**apiAuthorsGet**](AuthorsApi.md#apiauthorsget) | **GET** /api/Authors |  |
 | [**apiAuthorsIdDelete**](AuthorsApi.md#apiauthorsiddelete) | **DELETE** /api/Authors/{id} |  |
 | [**apiAuthorsIdGet**](AuthorsApi.md#apiauthorsidget) | **GET** /api/Authors/{id} |  |
+| [**apiAuthorsIdPhotoPost**](AuthorsApi.md#apiauthorsidphotopost) | **POST** /api/Authors/{id}/photo |  |
 | [**apiAuthorsIdPut**](AuthorsApi.md#apiauthorsidput) | **PUT** /api/Authors/{id} |  |
 | [**apiAuthorsPost**](AuthorsApi.md#apiauthorspost) | **POST** /api/Authors |  |
 
@@ -199,6 +200,74 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
+## apiAuthorsIdPhotoPost
+
+> apiAuthorsIdPhotoPost(id, photo)
+
+
+
+### Example
+
+```ts
+import {
+  Configuration,
+  AuthorsApi,
+} from '';
+import type { ApiAuthorsIdPhotoPostRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const api = new AuthorsApi();
+
+  const body = {
+    // number
+    id: 56,
+    // Blob (optional)
+    photo: BINARY_DATA_HERE,
+  } satisfies ApiAuthorsIdPhotoPostRequest;
+
+  try {
+    const data = await api.apiAuthorsIdPhotoPost(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **id** | `number` |  | [Defaults to `undefined`] |
+| **photo** | `Blob` |  | [Optional] [Defaults to `undefined`] |
+
+### Return type
+
+`void` (Empty response body)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: `multipart/form-data`
+- **Accept**: Not defined
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | OK |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
 ## apiAuthorsIdPut
 
 > apiAuthorsIdPut(id, authorDTO)
@@ -269,7 +338,7 @@ No authorization required
 
 ## apiAuthorsPost
 
-> apiAuthorsPost(authorDTO)
+> AuthorDTO apiAuthorsPost(authorDTO)
 
 
 
@@ -312,7 +381,7 @@ example().catch(console.error);
 
 ### Return type
 
-`void` (Empty response body)
+[**AuthorDTO**](AuthorDTO.md)
 
 ### Authorization
 
@@ -321,13 +390,13 @@ No authorization required
 ### HTTP request headers
 
 - **Content-Type**: `application/json`, `text/json`, `application/*+json`
-- **Accept**: Not defined
+- **Accept**: `text/plain`, `application/json`, `text/json`
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **200** | OK |  -  |
+| **201** | Created |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 

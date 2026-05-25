@@ -792,10 +792,10 @@ import { useISBNLookup } from "./hooks/useISBNLookup";
 
 export default function AddProductPage() {
   const router = useRouter();
-  const { form, setField, toggleCategory } = useProductForm();
+  const { form, setField, toggleCategory, saveDraft, clearDraft } = useProductForm();
   const data = useProductData();
   const images = useImageUpload();
-  const { handleSubmit, loading } = useSubmitProduct({ form, images, router });
+  const { handleSubmit, loading } = useSubmitProduct({ form, images, router, clearDraft });
   const { isbnLoading, handleIsbnLookup } = useISBNLookup({
     form,
     setField,
@@ -856,6 +856,7 @@ export default function AddProductPage() {
                 setField={setField}
                 loading={loading}
                 onPublish={handleSubmit}
+                onSaveDraft={saveDraft}
                 onCancel={() => router.push("/products")}
               />
             </div>

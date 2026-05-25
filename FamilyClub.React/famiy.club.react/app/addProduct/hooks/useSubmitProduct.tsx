@@ -7,9 +7,10 @@ type Props = {
   form: ProductDto;
   images: ImageUploadState;
   router: AppRouterInstance;
+  clearDraft: () => void;
 };
 
-export function useSubmitProduct({ form, images, router }: Props) {
+export function useSubmitProduct({ form, images, router, clearDraft }: Props) {
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async () => {
@@ -46,6 +47,7 @@ export function useSubmitProduct({ form, images, router }: Props) {
         productImageFiles,
       });
 
+      clearDraft();
       router.push("/products");
     } catch (err: unknown) {
       console.error("FULL ERROR:", err);
