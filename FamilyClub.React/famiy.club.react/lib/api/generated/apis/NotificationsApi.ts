@@ -12,17 +12,18 @@
  * Do not edit the class manually.
  */
 
+
 import * as runtime from '../runtime';
+import type {
+  CreateNotificationDTO,
+  NotificationDTO,
+} from '../models/index';
 import {
-    type CreateNotificationDTO,
     CreateNotificationDTOFromJSON,
     CreateNotificationDTOToJSON,
-} from '../models/CreateNotificationDTO';
-import {
-    type NotificationDTO,
     NotificationDTOFromJSON,
     NotificationDTOToJSON,
-} from '../models/NotificationDTO';
+} from '../models/index';
 
 export interface ApiNotificationsIdDeleteRequest {
     id: number;
@@ -141,7 +142,7 @@ export class NotificationsApi extends runtime.BaseAPI {
 
 
         let urlPath = `/api/Notifications/{id}`;
-        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -183,7 +184,7 @@ export class NotificationsApi extends runtime.BaseAPI {
 
 
         let urlPath = `/api/Notifications/{id}`;
-        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -228,7 +229,7 @@ export class NotificationsApi extends runtime.BaseAPI {
 
 
         let urlPath = `/api/Notifications/{id}`;
-        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -308,7 +309,7 @@ export class NotificationsApi extends runtime.BaseAPI {
 
 
         let urlPath = `/api/Notifications/unread-count/{clubMemberId}`;
-        urlPath = urlPath.replace('{clubMemberId}', encodeURIComponent(String(requestParameters['clubMemberId'])));
+        urlPath = urlPath.replace(`{${"clubMemberId"}}`, encodeURIComponent(String(requestParameters['clubMemberId'])));
 
         return {
             path: urlPath,

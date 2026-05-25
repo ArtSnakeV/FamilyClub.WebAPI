@@ -12,12 +12,15 @@
  * Do not edit the class manually.
  */
 
+
 import * as runtime from '../runtime';
+import type {
+  BookSizeDto,
+} from '../models/index';
 import {
-    type BookSizeDto,
     BookSizeDtoFromJSON,
     BookSizeDtoToJSON,
-} from '../models/BookSizeDto';
+} from '../models/index';
 
 export interface ApiBookSizesIdDeleteRequest {
     id: number;
@@ -93,7 +96,7 @@ export class BookSizesApi extends runtime.BaseAPI {
 
 
         let urlPath = `/api/BookSizes/{id}`;
-        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -135,7 +138,7 @@ export class BookSizesApi extends runtime.BaseAPI {
 
 
         let urlPath = `/api/BookSizes/{id}`;
-        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -180,7 +183,7 @@ export class BookSizesApi extends runtime.BaseAPI {
 
 
         let urlPath = `/api/BookSizes/{id}`;
-        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,

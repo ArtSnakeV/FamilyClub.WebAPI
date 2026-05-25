@@ -12,32 +12,27 @@
  * Do not edit the class manually.
  */
 
+
 import * as runtime from '../runtime';
+import type {
+  AgeRestriction,
+  Availability,
+  CoverType,
+  ProductDto,
+  ProductImage,
+} from '../models/index';
 import {
-    type AgeRestriction,
     AgeRestrictionFromJSON,
     AgeRestrictionToJSON,
-} from '../models/AgeRestriction';
-import {
-    type Availability,
     AvailabilityFromJSON,
     AvailabilityToJSON,
-} from '../models/Availability';
-import {
-    type CoverType,
     CoverTypeFromJSON,
     CoverTypeToJSON,
-} from '../models/CoverType';
-import {
-    type ProductDto,
     ProductDtoFromJSON,
     ProductDtoToJSON,
-} from '../models/ProductDto';
-import {
-    type ProductImage,
     ProductImageFromJSON,
     ProductImageToJSON,
-} from '../models/ProductImage';
+} from '../models/index';
 
 export interface ApiProductsIdDeleteRequest {
     id: number;
@@ -169,7 +164,7 @@ export class ProductsApi extends runtime.BaseAPI {
 
 
         let urlPath = `/api/Products/{id}`;
-        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -211,7 +206,7 @@ export class ProductsApi extends runtime.BaseAPI {
 
 
         let urlPath = `/api/Products/{id}`;
-        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -404,7 +399,7 @@ export class ProductsApi extends runtime.BaseAPI {
 
 
         let urlPath = `/api/Products/{id}`;
-        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
