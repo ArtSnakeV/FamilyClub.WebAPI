@@ -60,7 +60,7 @@ export default function BookCard({ title, author, price, image, rating, href }: 
                     src={image}
                 />
             ) : (
-                <div className="absolute left-1/2 top-[20px] h-[250px] w-[184px] -translate-x-1/2 rounded-[12px] bg-[rgba(36,36,36,0.1)]" />
+                <div className="absolute left-1/2 top-[20px] h-[250px] w-[184px] -translate-x-1/2" />
             )}
 
             <div className="absolute bottom-[20px] left-[20px] right-[20px]">
