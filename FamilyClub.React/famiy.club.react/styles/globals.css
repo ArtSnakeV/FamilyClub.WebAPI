@@ -91,6 +91,11 @@ body {
   font-family: var(--font-sans);
 }
 
+html,
+body {
+  overflow-x: hidden;
+}
+
 
 /* Footer classes (Класи футера) */
 .footer-title {

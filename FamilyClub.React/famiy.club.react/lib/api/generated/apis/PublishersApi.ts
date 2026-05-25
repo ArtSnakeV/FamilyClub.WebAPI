@@ -12,12 +12,15 @@
  * Do not edit the class manually.
  */
 
+
 import * as runtime from '../runtime';
+import type {
+  PublisherDto,
+} from '../models/index';
 import {
-    type PublisherDto,
     PublisherDtoFromJSON,
     PublisherDtoToJSON,
-} from '../models/PublisherDto';
+} from '../models/index';
 
 export interface ApiPublishersIdDeleteRequest {
     id: number;
@@ -93,7 +96,7 @@ export class PublishersApi extends runtime.BaseAPI {
 
 
         let urlPath = `/api/Publishers/{id}`;
-        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -135,7 +138,7 @@ export class PublishersApi extends runtime.BaseAPI {
 
 
         let urlPath = `/api/Publishers/{id}`;
-        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -180,7 +183,7 @@ export class PublishersApi extends runtime.BaseAPI {
 
 
         let urlPath = `/api/Publishers/{id}`;
-        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,

@@ -65,7 +65,7 @@ export default function ReviewsSection() {
 
     return (
         <section className="py-16">
-            <div className="relative mx-auto hidden h-[450px] w-[1920px] max-w-full lg:block">
+            <div className="relative mx-auto hidden h-[450px] w-[1920px] max-w-full min-[1600px]:block">
                 <div className="absolute inset-0 border-[20px] border-[#f5f3ee] shadow-[0px_0px_40px_0px_rgba(0,0,0,0.7)]">
                     <img
                         alt=""
@@ -83,7 +83,7 @@ export default function ReviewsSection() {
                 ))}
             </div>
 
-            <div className="relative mx-auto max-w-[1920px] px-4 lg:hidden">
+            <div className="relative mx-auto max-w-[1920px] px-4 min-[1600px]:hidden">
                 <div className="relative border-[20px] border-[#f5f3ee] shadow-[0px_0px_40px_0px_rgba(0,0,0,0.7)]">
                     <img
                         alt=""

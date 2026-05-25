@@ -12,6 +12,7 @@
  * Do not edit the class manually.
  */
 
+
 import * as runtime from '../runtime';
 
 export interface ApiRolesClubMemberIdDeleteRequest {
@@ -91,7 +92,7 @@ export class RolesClubMemberApi extends runtime.BaseAPI {
 
 
         let urlPath = `/api/RolesClubMember/{id}`;
-        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -133,7 +134,7 @@ export class RolesClubMemberApi extends runtime.BaseAPI {
 
 
         let urlPath = `/api/RolesClubMember/{id}`;
-        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -177,7 +178,7 @@ export class RolesClubMemberApi extends runtime.BaseAPI {
 
 
         let urlPath = `/api/RolesClubMember/{id}`;
-        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -257,7 +258,7 @@ export class RolesClubMemberApi extends runtime.BaseAPI {
 
 
         let urlPath = `/api/RolesClubMember/{roleName}/users`;
-        urlPath = urlPath.replace('{roleName}', encodeURIComponent(String(requestParameters['roleName'])));
+        urlPath = urlPath.replace(`{${"roleName"}}`, encodeURIComponent(String(requestParameters['roleName'])));
 
         return {
             path: urlPath,

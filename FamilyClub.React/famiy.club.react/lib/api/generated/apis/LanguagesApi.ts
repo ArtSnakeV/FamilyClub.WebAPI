@@ -12,12 +12,15 @@
  * Do not edit the class manually.
  */
 
+
 import * as runtime from '../runtime';
+import type {
+  LanguageDto,
+} from '../models/index';
 import {
-    type LanguageDto,
     LanguageDtoFromJSON,
     LanguageDtoToJSON,
-} from '../models/LanguageDto';
+} from '../models/index';
 
 export interface ApiLanguagesIdDeleteRequest {
     id: number;
@@ -93,7 +96,7 @@ export class LanguagesApi extends runtime.BaseAPI {
 
 
         let urlPath = `/api/Languages/{id}`;
-        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -135,7 +138,7 @@ export class LanguagesApi extends runtime.BaseAPI {
 
 
         let urlPath = `/api/Languages/{id}`;
-        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -180,7 +183,7 @@ export class LanguagesApi extends runtime.BaseAPI {
 
 
         let urlPath = `/api/Languages/{id}`;
-        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,

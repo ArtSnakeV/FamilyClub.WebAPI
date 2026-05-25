@@ -12,12 +12,15 @@
  * Do not edit the class manually.
  */
 
+
 import * as runtime from '../runtime';
+import type {
+  CategoryDto,
+} from '../models/index';
 import {
-    type CategoryDto,
     CategoryDtoFromJSON,
     CategoryDtoToJSON,
-} from '../models/CategoryDto';
+} from '../models/index';
 
 export interface ApiCategoriesIdDeleteRequest {
     id: number;
@@ -93,7 +96,7 @@ export class CategoriesApi extends runtime.BaseAPI {
 
 
         let urlPath = `/api/Categories/{id}`;
-        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -135,7 +138,7 @@ export class CategoriesApi extends runtime.BaseAPI {
 
 
         let urlPath = `/api/Categories/{id}`;
-        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
@@ -180,7 +183,7 @@ export class CategoriesApi extends runtime.BaseAPI {
 
 
         let urlPath = `/api/Categories/{id}`;
-        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,
