@@ -1,7 +1,7 @@
 export default function Hero() {
     return (
         <section className="relative bg-[#f5f3ee]">
-            <div className="relative mx-auto hidden h-[659px] max-w-[1920px] lg:block">
+            <div className="relative mx-auto hidden h-[659px] max-w-[1920px] min-[1600px]:block">
                 <img
                     alt=""
                     className="absolute left-[-20px] top-[74px] h-[510px] w-[1960px] object-cover blur-[2.5px]"
@@ -69,7 +69,7 @@ export default function Hero() {
                 </p>
             </div>
 
-            <div className="relative mx-auto h-[520px] max-w-[1220px] px-4 py-10 lg:hidden">
+            <div className="relative mx-auto h-[520px] max-w-[1220px] px-4 py-10 min-[1600px]:hidden">
                 <img
                     alt=""
                     className="absolute left-1/2 top-[40px] h-[510px] w-[min(1960px,100vw)] -translate-x-1/2 object-cover blur-[2.5px]"

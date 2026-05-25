@@ -50,7 +50,7 @@ function AdvantageCard({ title, description, icon, className }: AdvantageCardPro
 export default function AdvantagesSection() {
     return (
         <section className="relative z-0 -mt-[250px] pb-16 lg:-mt-[310px]">
-            <div className="relative mx-auto hidden h-[1165px] w-full max-w-[1220px] lg:block">
+            <div className="relative mx-auto hidden h-[1165px] w-full max-w-[1220px] min-[1600px]:block">
                 <div className="absolute left-0 top-0 h-[840px] w-full rounded-[10px] bg-[linear-gradient(189deg,#b7895e_6.8%,rgba(224,195,169,0)_52.5%,#b7895e_94.6%),linear-gradient(90deg,#c7a381_0%,#c7a381_100%)] shadow-[0px_0px_10px_0px_rgba(0,0,0,0.5)]" />
 
                 <div className="absolute left-[63px] top-[28px] h-[594px] w-[1046px]">
@@ -81,7 +81,7 @@ export default function AdvantagesSection() {
                 </div>
             </div>
 
-            <div className="mx-auto max-w-[1220px] px-4 lg:hidden">
+            <div className="mx-auto max-w-[1220px] px-4 min-[1600px]:hidden">
                 <div className="relative rounded-[10px] bg-[linear-gradient(189deg,#b7895e_6.8%,rgba(224,195,169,0)_52.5%,#b7895e_94.6%),linear-gradient(90deg,#c7a381_0%,#c7a381_100%)] px-6 pb-20 pt-[360px] text-center shadow-[0px_0px_10px_0px_rgba(0,0,0,0.5)]">
                     <div className="absolute left-1/2 top-[30px] h-[300px] w-[320px] -translate-x-1/2">
                         <img

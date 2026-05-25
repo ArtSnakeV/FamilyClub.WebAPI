@@ -135,7 +135,7 @@ export default function Home() {
         <main className="bg-[#f5f3ee] text-[#242424] overflow-x-hidden">
             <Hero />
 
-            <BookSection title="Рекомендації для тебе" books={recommendationBooks} showMore pillWidth={531} />
+            <BookSection title="Рекомендації для тебе" books={recommendationBooks} showMore pillWidth={631} />
 
             <InkSection />
 
