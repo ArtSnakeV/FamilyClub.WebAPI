@@ -23,7 +23,8 @@ export function BasicInfoSection({
     <div className="w-full flex">
       <SectionCard
         title="Основна інформація"
-        backgroundImage="/images/addProducts/Rectangle 313.svg"
+        backgroundImage="/images/addProducts/Rectangle 314.svg"
+        className="bg-contain h-full"
       >
         <div className="flex w-[560px] flex-col gap-1">
           <p className="text-[var(--color-black)] font-sans-pro font-normal text-[24px] leading-[150%] tracking-[-0.011em]">
