@@ -5,12 +5,15 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
+const ITEMS_PER_PAGE = 3;
+
 export default function DropDownAuthors() {
   const [authors, setAuthors] = useState<AuthorDTO[]>([]);
   const [search, setSearch] = useState("");
   const [open, setOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
+  const visibleAuthors = authors.slice(0, ITEMS_PER_PAGE);
   useEffect(() => {
     const config = new Configuration({
       basePath: "https://localhost:7069",
@@ -123,7 +126,8 @@ export default function DropDownAuthors() {
               {displayedAuthors.length === 0 ? (
                 <div className="text-[13px]">Не знайдено</div>
               ) : (
-                displayedAuthors.map((a) => (
+                visibleAuthors.map((a) => (
+                  // displayedAuthors.map((a) => (
                   <Link
                     key={a.id}
                     href={`/authors/${a.id}`}
