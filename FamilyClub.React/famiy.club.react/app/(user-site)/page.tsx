@@ -27,13 +27,13 @@
 //   );
 // }
 
-import Hero from "@/app/main_page/Hero";
-import BookSection from "@/app/main_page/BookSection";
-import InkSection from "@/app/main_page/InkSection";
-import AboutSection from "@/app/main_page/AboutSection";
-import AdvantagesSection from "@/app/main_page/AdvantagesSection";
-import ReviewsSection from "@/app/main_page/ReviewsSection";
-import FormatSection from "@/app/main_page/FormatSection";
+import Hero from "@/app/(user-site)/main_page/Hero";
+import BookSection from "@/app/(user-site)/main_page/BookSection";
+import InkSection from "@/app/(user-site)/main_page/InkSection";
+import AboutSection from "@/app/(user-site)/main_page/AboutSection";
+import AdvantagesSection from "@/app/(user-site)/main_page/AdvantagesSection";
+import ReviewsSection from "@/app/(user-site)/main_page/ReviewsSection";
+import FormatSection from "@/app/(user-site)/main_page/FormatSection";
 import { productService, reviewService } from "@/lib/api/services";
 import type { ProductDto, ReviewDto } from "@/lib/api/generated";
 

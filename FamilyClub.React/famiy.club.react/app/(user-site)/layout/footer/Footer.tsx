@@ -55,7 +55,7 @@ const Footer = () => {
                                     rel="noopener noreferrer"
                                     className="relative w-[222px] h-[61.59px] flex items-center px-[16px] gap-[14px] group overflow-visible"
                                 >
-                                    {/* Цей div — це твій фон, який буде збільшуватися окремо від тексту */}
+                                    {/* Цей div — це фон, який буде збільшуватися окремо від тексту */}
                                     <div className="absolute inset-0 bg-brand-black group-hover:bg-[var(--color-green)] group-hover:scale-105 rounded-[20px] transition-all duration-300 -z-10"></div>
 
                                     {/* Контент тепер не залежить від масштабу фону */}
@@ -75,7 +75,7 @@ const Footer = () => {
                                     rel="noopener noreferrer"
                                     className="relative w-[222px] h-[61.59px] flex items-center px-[16px] gap-[14px] group overflow-visible"
                                 >
-                                    {/* Цей div — це твій фон, який буде збільшуватися окремо від тексту */}
+                                    {/* Цей div — це фон, який буде збільшуватися окремо від тексту */}
                                     <div className="absolute inset-0 bg-brand-black group-hover:bg-[var(--color-green)] group-hover:scale-105 rounded-[20px] transition-all duration-300 -z-10"></div>
 
                                     {/* Контент тепер не залежить від масштабу фону */}
