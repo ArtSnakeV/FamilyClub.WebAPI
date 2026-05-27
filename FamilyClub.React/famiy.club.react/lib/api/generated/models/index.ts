@@ -1,16 +1,26 @@
 /* tslint:disable */
 /* eslint-disable */
+export * from './AgeRestriction';
 export * from './AuthResponseClubMemberDTO';
 export * from './Author';
 export * from './AuthorDTO';
+export * from './Availability';
+export * from './BookSize';
+export * from './BookSizeDto';
 export * from './Category';
 export * from './CategoryDto';
 export * from './ClaimsClubMemberDto';
 export * from './ClubMember';
 export * from './ClubMemberReadDto';
+export * from './CoverType';
+export * from './CreateNotificationDTO';
+export * from './Format';
+export * from './FormatDto';
 export * from './Language';
 export * from './LanguageDto';
 export * from './LoginClubMemberDto';
+export * from './Notification';
+export * from './NotificationDTO';
 export * from './Order';
 export * from './OrderDTO';
 export * from './OrderItem';

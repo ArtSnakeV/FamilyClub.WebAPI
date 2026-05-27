@@ -8,7 +8,7 @@ Name | Type
 ------------ | -------------
 `id` | number
 `productId` | number
-`userId` | number
+`userId` | string
 `rating` | number
 `comment` | string
 `createdAt` | Date

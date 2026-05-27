@@ -23,14 +23,14 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="uk" className={`${sourceSans.variable} ${robotoMono.variable}`}>
-      <body className="antialiased bg-background text-foreground font-sans">
+    <html lang="uk" className={`${sourceSans.variable} ${robotoMono.variable}`} suppressHydrationWarning>
+      <body className="antialiased bg-background text-foreground font-sans overflow-x-hidden">
         <header className="bg-[var(--background-main)] overflow-x-0 relative z-30 h-[72px] shadow-[0px_0px_15px_0px_#24242499]">
           <div className="max-w-[1220px] mx-auto flex items-center px-4 lg:px-0">
             <UpNavigation />
           </div>
         </header>
-        <div className="relative z-10 max-w-[1220px] mx-auto flex gap-2 -mt-[60px] px-4 lg:px-0">
+        <div className="absolute flex flex-row ml-[68px] z-10 max-w-[1220px] mx-auto flex gap-2 -mt-[60px] px-4 lg:px-0">
           <DropDownList />
         </div>
 

@@ -27,6 +27,13 @@ import {
     ReviewToJSON,
     ReviewToJSONTyped,
 } from './Review';
+import type { Notification } from './Notification';
+import {
+    NotificationFromJSON,
+    NotificationFromJSONTyped,
+    NotificationToJSON,
+    NotificationToJSONTyped,
+} from './Notification';
 
 /**
  * 
@@ -154,6 +161,18 @@ export interface ClubMember {
      * @memberof ClubMember
      */
     reviews?: Array<Review> | null;
+    /**
+     * 
+     * @type {Array<Notification>}
+     * @memberof ClubMember
+     */
+    notifications?: Array<Notification> | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClubMember
+     */
+    avatarData?: string | null;
 }
 
 /**
@@ -193,6 +212,8 @@ export function ClubMemberFromJSONTyped(json: any, ignoreDiscriminator: boolean)
         'dateOfBirth': json['dateOfBirth'] == null ? undefined : (new Date(json['dateOfBirth'])),
         'orders': json['orders'] == null ? undefined : ((json['orders'] as Array<any>).map(OrderFromJSON)),
         'reviews': json['reviews'] == null ? undefined : ((json['reviews'] as Array<any>).map(ReviewFromJSON)),
+        'notifications': json['notifications'] == null ? undefined : ((json['notifications'] as Array<any>).map(NotificationFromJSON)),
+        'avatarData': json['avatarData'] == null ? undefined : json['avatarData'],
     };
 }
 
@@ -227,6 +248,8 @@ export function ClubMemberToJSONTyped(value?: ClubMember | null, ignoreDiscrimin
         'dateOfBirth': value['dateOfBirth'] == null ? value['dateOfBirth'] : value['dateOfBirth'].toISOString().substring(0,10),
         'orders': value['orders'] == null ? undefined : ((value['orders'] as Array<any>).map(OrderToJSON)),
         'reviews': value['reviews'] == null ? undefined : ((value['reviews'] as Array<any>).map(ReviewToJSON)),
+        'notifications': value['notifications'] == null ? undefined : ((value['notifications'] as Array<any>).map(NotificationToJSON)),
+        'avatarData': value['avatarData'],
     };
 }
 

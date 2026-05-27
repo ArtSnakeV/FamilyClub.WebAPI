@@ -1,23 +1,373 @@
+// "use client";
+
+// import {
+//   AuthorDTO,
+//   AuthorsApi,
+//   Configuration,
+//   ProductDto,
+//   ProductsApi,
+// } from "@/lib/api/generated";
+
+// import Image from "next/image";
+// import Link from "next/link";
+// import { useEffect, useState, useRef } from "react";
+
+// export default function SearchIco() {
+//   const [products, setProducts] = useState<ProductDto[]>([]);
+//   const [authors, setAuthors] = useState<AuthorDTO[]>([]);
+//   const [search, setSearch] = useState("");
+//   const [open, setOpen] = useState(false);
+
+//   const containerRef = useRef<HTMLDivElement>(null);
+
+//   useEffect(() => {
+//     const config = new Configuration({ basePath: "https://localhost:7069" });
+
+//     new ProductsApi(config)
+//       .apiProductsGet()
+//       .then(setProducts)
+//       .catch(console.error);
+//     new AuthorsApi(config)
+//       .apiAuthorsGet()
+//       .then(setAuthors)
+//       .catch(console.error);
+//   }, []);
+
+//   useEffect(() => {
+//     function handleClickOutside(e: MouseEvent) {
+//       if (
+//         containerRef.current &&
+//         !containerRef.current.contains(e.target as Node)
+//       ) {
+//         setOpen(false);
+//         setSearch("");
+//       }
+//     }
+
+//     document.addEventListener("click", handleClickOutside);
+
+//     return () => document.removeEventListener("click", handleClickOutside);
+//   }, []);
+//   // Хелпер: отримати авторів продукту
+//   function getProductAuthors(product: ProductDto): AuthorDTO[] {
+//     if (!product.authorIds?.length) return [];
+//     return authors.filter((a) => product.authorIds!.includes(a.id!));
+//   }
+
+//   // Хелпер: повне імʼя автора
+//   function authorFullName(a: AuthorDTO): string {
+//     return [a.authorName].filter(Boolean).join(" ");
+//   }
+//   // const filteredProducts =
+//   //   search.trim() === ""
+//   //     ? []
+//   //     : products.filter((p) =>
+//   //         p.productName?.toLowerCase().includes(search.toLowerCase()),
+//   //       );
+//   const filteredProducts =
+//     search.trim() === ""
+//       ? []
+//       : products.filter((p) => {
+//           const q = search.toLowerCase();
+
+//           const byName = p.productName?.toLowerCase().includes(q);
+
+//           const byAuthor = getProductAuthors(p).some((a) => {
+//             const full = authorFullName(a).toLowerCase();
+//             return full.includes(q);
+//           });
+
+//           return byName || byAuthor;
+//         });
+ 
+//   return (
+//     <div ref={containerRef} className="relative flex items-center">
+//       {/* INPUT */}
+//       <input
+//         type="text"
+//         value={search}
+//         onChange={(e) => {
+//           setSearch(e.target.value);
+//           setOpen(true);
+//         }}
+//         onClick={(e) => e.stopPropagation()}
+//         placeholder=""
+//         className="
+//           w-[268px]
+//           px-4
+//           h-[36px]
+//           bg-[var-(--color-white)]
+//           rounded-full
+//           text-[15px]
+//           text-[#272727]
+//           outline-none
+//         "
+//       />
+
+//       {/* ICON */}
+//       <button
+//         onClick={(e) => {
+//           e.stopPropagation();
+//           setOpen((v) => !v);
+//         }}
+//         className="
+//           relative
+//           right-[1vw]
+//           w-[30px]
+//           h-[30px]
+//           flex
+//           items-center
+//           justify-center
+//         "
+//       >
+//         <Image
+//           src="/images/header/zoom_out_24px.png"
+//           alt="search"
+//           width={28}
+//           height={28}
+//           className="object-contain"
+//           priority
+//         />
+//       </button>
+
+//       {/* RESULTS */}
+//       {open && filteredProducts.length > 0 && (
+//         <div
+//           className="
+//             absolute
+//             top-[45px]
+//             left-0
+//             w-[220px]
+//             max-h-[260px]
+//             overflow-y-auto
+//             rounded-[20px]
+//             bg-[#F5F3EE]
+//             shadow-[0px_0px_15px_0px_#24242433]
+//             p-2
+//             z-50
+//           "
+//         >
+//           {filteredProducts.map((p) => (
+//             <Link
+//               key={p.id}
+//               href={`/products/${p.id}`}
+//               onClick={() => {
+//                 setOpen(false);
+//                 setSearch("");
+//               }}
+//               className="
+//                 flex
+//                 items-center
+//                 px-3
+//                 py-2
+//                 rounded-[14px]
+//                 text-[13px]
+//                 text-[#272727]
+//                 hover:bg-white
+//                 transition-all
+//               "
+//             >
+//               {p.productName}
+//             </Link>
+//           ))}
+//         </div>
+//       )}
+
+//       {/* EMPTY */}
+//       {open && search.trim() !== "" && filteredProducts.length === 0 && (
+//         <div
+//           className="
+//               absolute
+//               top-[45px]
+//               left-0
+//               w-[220px]
+//               rounded-[20px]
+//               bg-[var-(--color-white)]
+//               shadow-[0px_0px_15px_0px_#24242433]
+//               p-4
+//               text-[13px]
+//               text-[#272727]
+//               z-50
+//             "
+//         >
+//           Не знайдено
+//         </div>
+//       )}
+//     </div>
+//   );
+// }
+"use client";
+
+import {
+  AuthorDTO,
+  AuthorsApi,
+  Configuration,
+  ProductDto,
+  ProductsApi,
+} from "@/lib/api/generated";
+
 import Image from "next/image";
+import Link from "next/link";
+import { useEffect, useState, useRef } from "react";
 
+export default function SearchIco() {
+  const [products, setProducts] = useState<ProductDto[]>([]);
+  const [authors, setAuthors] = useState<AuthorDTO[]>([]);
+  const [search, setSearch] = useState("");
+  const [open, setOpen] = useState(false);
 
-export default function SearchIco(){
-    return(
-        <>
-         <input
-                type="text"
-                className="bg-transparent outline-none w-full text-sm"
-              />
-              <div className="relative cursor-pointer">
-                <Image
-                  src="/images/zoom_out_24px.png"
-                  alt="search"
-                  width={30}
-                  height={30}
-                  className="object-contain"
-                  priority
-                />
-              </div>
-        </>
-    )
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const config = new Configuration({ basePath: "https://localhost:7069" });
+
+    new ProductsApi(config).apiProductsGet().then(setProducts).catch(console.error);
+    new AuthorsApi(config).apiAuthorsGet().then(setAuthors).catch(console.error);
+  }, []);
+
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
+        setOpen(false);
+        setSearch("");
+      }
+    }
+    document.addEventListener("click", handleClickOutside);
+    return () => document.removeEventListener("click", handleClickOutside);
+  }, []);
+
+  function getProductAuthors(product: ProductDto): AuthorDTO[] {
+    if (!product.authorIds?.length) return [];
+    return authors.filter((a) => product.authorIds!.includes(a.id!));
+  }
+
+  function authorFullName(a: AuthorDTO): string {
+    return a.authorName ?? "";
+  }
+
+  const q = search.toLowerCase();
+
+  const filteredAuthors =
+    search.trim() === ""
+      ? []
+      : authors.filter((a) => a.authorName?.toLowerCase().includes(q));
+
+  const filteredProducts =
+    search.trim() === ""
+      ? []
+      : products.filter((p) => p.productName?.toLowerCase().includes(q));
+
+  const hasResults = filteredAuthors.length > 0 || filteredProducts.length > 0;
+
+  return (
+    <div ref={containerRef} className="relative flex items-center">
+      {/* INPUT */}
+      <input
+        type="text"
+        value={search}
+        onChange={(e) => {
+          setSearch(e.target.value);
+          setOpen(true);
+        }}
+        onClick={(e) => e.stopPropagation()}
+        placeholder=""
+        className="
+          w-[268px]
+          px-4
+          h-[36px]
+          bg-[var(--color-white)]
+          rounded-full
+          text-[15px]
+          text-[#272727]
+          outline-none
+        "
+      />
+
+      {/* ICON */}
+      <button
+        onClick={(e) => {
+          e.stopPropagation();
+          setOpen((v) => !v);
+        }}
+        className="
+          relative
+          right-[1vw]
+          w-[30px]
+          h-[30px]
+          flex
+          items-center
+          justify-center
+        "
+      >
+        <Image
+          src="/images/header/zoom_out_24px.png"
+          alt="search"
+          width={28}
+          height={28}
+          className="object-contain"
+          priority
+        />
+      </button>
+
+      {/* RESULTS */}
+      {open && hasResults && (
+        <div className="absolute top-[45px] left-0 w-[220px] max-h-[260px] overflow-y-auto rounded-[20px] bg-[#F5F3EE] shadow-[0px_0px_15px_0px_#24242433] p-2 z-50">
+
+          {/* АВТОРИ */}
+          {filteredAuthors.length > 0 && (
+            <>
+              <p className="text-[11px] text-[#272727]/40 px-3 pt-1 pb-1">Автори</p>
+              {filteredAuthors.map((a) => (
+                <Link
+                  key={a.id}
+                  href={`/authors/${a.id}`}
+                  onClick={() => { setOpen(false); setSearch(""); }}
+                  className="flex items-center px-3 py-2 rounded-[14px] text-[13px] text-[#272727] hover:bg-white transition-all"
+                >
+                  {a.authorName}
+                </Link>
+              ))}
+            </>
+          )}
+
+          {/* РОЗДІЛЮВАЧ */}
+          {filteredAuthors.length > 0 && filteredProducts.length > 0 && (
+            <div className="border-t border-[#272727]/10 my-1" />
+          )}
+
+          {/* КНИГИ */}
+          {filteredProducts.length > 0 && (
+            <>
+              <p className="text-[11px] text-[#272727]/40 px-3 pt-1 pb-1">Книги</p>
+              {filteredProducts.map((p) => {
+                const productAuthors = getProductAuthors(p);
+                return (
+                  <Link
+                    key={p.id}
+                    href={`/products/${p.id}`}
+                    onClick={() => { setOpen(false); setSearch(""); }}
+                    className="flex flex-col px-3 py-2 rounded-[14px] hover:bg-white transition-all"
+                  >
+                    <span className="text-[13px] text-[#272727]">{p.productName}</span>
+                    {productAuthors.length > 0 && (
+                      <span className="text-[11px] text-[#272727]/50">
+                        {productAuthors.map(authorFullName).join(", ")}
+                      </span>
+                    )}
+                  </Link>
+                );
+              })}
+            </>
+          )}
+        </div>
+      )}
+
+      {/* EMPTY */}
+      {open && search.trim() !== "" && !hasResults && (
+        <div className="absolute top-[45px] left-0 w-[220px] rounded-[20px] bg-[#F5F3EE] shadow-[0px_0px_15px_0px_#24242433] p-4 text-[13px] text-[#272727] z-50">
+          Не знайдено
+        </div>
+      )}
+    </div>
+  );
 }

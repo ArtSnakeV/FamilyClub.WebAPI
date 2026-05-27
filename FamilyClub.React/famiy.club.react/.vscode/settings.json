@@ -1,0 +1,11 @@
+{
+    "chat.mcp.serverSampling": {
+        "famiy.club.react/.vscode/mcp.json: figma": {
+            "allowedModels": [
+                "copilot/auto",
+                "copilotcli/gpt-5.2-codex",
+                "copilot/gpt-5.2-codex"
+            ]
+        }
+    }
+}

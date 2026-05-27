@@ -30,6 +30,11 @@ export interface ApiAuthorsIdGetRequest {
     id: number;
 }
 
+export interface ApiAuthorsIdPhotoPostRequest {
+    id: number;
+    photo?: Blob;
+}
+
 export interface ApiAuthorsIdPutRequest {
     id: number;
     authorDTO?: AuthorDTO;
@@ -165,6 +170,69 @@ export class AuthorsApi extends runtime.BaseAPI {
     }
 
     /**
+     * Creates request options for apiAuthorsIdPhotoPost without sending the request
+     */
+    async apiAuthorsIdPhotoPostRequestOpts(requestParameters: ApiAuthorsIdPhotoPostRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling apiAuthorsIdPhotoPost().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const consumes: runtime.Consume[] = [
+            { contentType: 'multipart/form-data' },
+        ];
+        // @ts-ignore: canConsumeForm may be unused
+        const canConsumeForm = runtime.canConsumeForm(consumes);
+
+        let formParams: { append(param: string, value: any): any };
+        let useForm = false;
+        // use FormData to transmit files using content-type "multipart/form-data"
+        useForm = canConsumeForm;
+        if (useForm) {
+            formParams = new FormData();
+        } else {
+            formParams = new URLSearchParams();
+        }
+
+        if (requestParameters['photo'] != null) {
+            formParams.append('photo', requestParameters['photo'] as any);
+        }
+
+
+        let urlPath = `/api/Authors/{id}/photo`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: formParams,
+        };
+    }
+
+    /**
+     */
+    async apiAuthorsIdPhotoPostRaw(requestParameters: ApiAuthorsIdPhotoPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.apiAuthorsIdPhotoPostRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     */
+    async apiAuthorsIdPhotoPost(requestParameters: ApiAuthorsIdPhotoPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.apiAuthorsIdPhotoPostRaw(requestParameters, initOverrides);
+    }
+
+    /**
      * Creates request options for apiAuthorsIdPut without sending the request
      */
     async apiAuthorsIdPutRequestOpts(requestParameters: ApiAuthorsIdPutRequest): Promise<runtime.RequestOpts> {
@@ -233,17 +301,18 @@ export class AuthorsApi extends runtime.BaseAPI {
 
     /**
      */
-    async apiAuthorsPostRaw(requestParameters: ApiAuthorsPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async apiAuthorsPostRaw(requestParameters: ApiAuthorsPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AuthorDTO>> {
         const requestOptions = await this.apiAuthorsPostRequestOpts(requestParameters);
         const response = await this.request(requestOptions, initOverrides);
 
-        return new runtime.VoidApiResponse(response);
+        return new runtime.JSONApiResponse(response, (jsonValue) => AuthorDTOFromJSON(jsonValue));
     }
 
     /**
      */
-    async apiAuthorsPost(requestParameters: ApiAuthorsPostRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
-        await this.apiAuthorsPostRaw(requestParameters, initOverrides);
+    async apiAuthorsPost(requestParameters: ApiAuthorsPostRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AuthorDTO> {
+        const response = await this.apiAuthorsPostRaw(requestParameters, initOverrides);
+        return await response.value();
     }
 
 }
