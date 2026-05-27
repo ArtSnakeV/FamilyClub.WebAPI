@@ -1,5 +1,5 @@
-import { ImageUploadState } from "@/app/addProduct/types";
-import { ImageUploadSlot } from "@/app/addProduct/ui/ImageUploadSlot";
+import { ImageUploadState } from "@/app/(user-site)/addProduct/types";
+import { ImageUploadSlot } from "@/app/(user-site)/addProduct/ui/ImageUploadSlot";
 
 type Props = {
   images: ImageUploadState;
