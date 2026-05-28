@@ -21,15 +21,15 @@ export function SaleSection({
   onCancel,
 }: Props) {
   return (
-    <div className="w-full h-[594px] flex mt-[120px] text-[var(--color-white)]">
+    <div className="w-full h-[480px] flex relative -mt-[30px] text-[var(--color-white)]">
       <div
         className="w-full h-full bg-cover bg-center"
         style={{
           backgroundImage: "url('/images/addProducts/Rectangle 315.svg')",
         }}
       >
-        <div className="w-full h-full flex flex-col items-center -ml-[6px] mt-[38px]">
-          <div className="relative w-[308px] h-[116px] -ml-[40px]">
+        <div className="w-full h-full flex flex-col items-center -ml-[2px] mt-[38px]">
+          <div className="relative w-[260px] h-[116px] -ml-[40px]">
             <img
               src="/images/addProducts/Rectangle 304.svg"
               alt=""
@@ -37,7 +37,7 @@ export function SaleSection({
               style={{ objectFit: "fill" }}
             />
             <div className="absolute inset-0 -mt-[14px] flex items-center ml-[40px] justify-start">
-              <p className="font-['Roboto_Mono'] font-semibold text-[28px] leading-[100%] tracking-[-0.011em]">
+              <p className="font-['Roboto_Mono'] font-semibold text-[20px] leading-[100%] tracking-[-0.011em]">
                 Продаж та наявність
               </p>
             </div>
@@ -47,7 +47,7 @@ export function SaleSection({
             label="Ціна *"
             value={form.price}
             onChange={(v) => setField("price", v)}
-            className="w-[250px] text-[var(--color-black)]"
+            className="w-[200px] text-[var(--color-black)]"
           />
 
           <NumberInput
@@ -55,17 +55,17 @@ export function SaleSection({
             placeholder="0"
             value={form.discountPrice}
             onChange={(v) => setField("discountPrice", v)}
-            className="w-[250px] mt-8"
+            className="w-[200px] mt-4"
           />
 
-          <div className="flex flex-col items-center w-[250px] mt-0">
+          <div className="flex flex-col items-center w-[200px] mt-0">
             <AvailabilitySelector
               value={form.availability}
               onChange={(value) => setField("availability", value)}
             />
           </div>
 
-          <div className="relative flex flex-col items-center mt-[140px]">
+          <div className="relative flex flex-col items-center mt-[120px]">
             <ButtonSubmitAddProduct
               loading={loading}
               onPublish={onPublish}

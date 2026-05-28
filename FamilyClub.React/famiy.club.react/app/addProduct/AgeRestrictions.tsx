@@ -15,14 +15,14 @@ type Props = {
 
 export default function AgeRestrictions({ value, onChange }: Props) {
   return (
-    <div className="flex flex-col gap-1 w-full">
-      <p className="text-[var(--color-black)] font-sans-pro font-normal text-[24px] leading-[150%] tracking-[-0.011em]">
+    <div className="flex flex-col gap-0 w-full">
+      <p className="text-[var(--color-black)] font-sans-pro font-normal text-[18px] leading-[150%] tracking-[-0.011em]">
         Вікові обмеження *
       </p>
       <select
         value={value ?? ""}
         onChange={(e) => onChange(Number(e.target.value) as AgeRestriction)}
-        className="input rounded-[9px] bg-[var(--color-white)] shadow-[0px_0px_10px_0px_#00000040] h-[44px]"
+        className="input text-[14px] rounded-[9px] bg-[var(--color-white)] shadow-[0px_0px_10px_0px_#00000040] h-[40px]"
       >
         <option value="">Оберіть вікові обмеження</option>
 

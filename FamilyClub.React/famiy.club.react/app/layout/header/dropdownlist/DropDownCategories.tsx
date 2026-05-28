@@ -39,12 +39,12 @@ export default function DropDownCategories() {
   }, []);
 
   return (
-    <div ref={containerRef} className="relative w-[130px] z-10">
+    <div ref={containerRef} className="flex relative w-[100px] z-10">
       <div
         className={`
-        relative w-[130px] h-[360px]
+        relative w-[100px] h-[360px]
         transition-transform duration-300
-        ${open ? "translate-y-0" : "-translate-y-[236px]"}
+        ${open ? "translate-y-0" : "-translate-y-[218px]"}
       `}
       >
         <Image
@@ -59,33 +59,33 @@ export default function DropDownCategories() {
             e.stopPropagation();
             setOpen((v) => !v);
           }}
-          className="absolute inset-0 flex justify-center items-end mb-[34px] z-10 focus:outline-none"
+          className="absolute inset-0 flex justify-center items-end mb-[70px] z-10 focus:outline-none"
         >
           <span className="text-[var(--color-white)]">Жанри</span>
         </button>
 
         {open && (
-          <div className="absolute pointer-events-auto z-20 top-[42px] w-full flex flex-col items-center text-[var(--color-white)]">
+          <div className="absolute pointer-events-auto z-20 top-[38px] w-full flex flex-col items-center text-[var(--color-white)]">
             {/* RIGHT PANEL */}
             <div
               className="
         relative mt-[72px] ml-[146px]
-        w-[256px]
-        h-[180px]
+        w-[210px]
+        h-[150px]
         rounded-[12px]
         bg-[var(--color-green)]
-        p-3 z-50
+        p-2 z-50
         pointer-events-auto
       "
             >
               {/* GRID 2 COLUMNS */}
-              <div className="grid grid-cols-2 gap-x-4 gap-y-2 w-full">
+              <div className="grid grid-cols-2 gap-x-2 gap-y-1 w-full">
                 {/* ALL ITEM */}
-                <div className="flex items-center gap-2">
-                  <div className="w-[30px] h-[30px] flex justify-center shrink-0">
+                <div className="flex items-center gap-1">
+                  <div className="w-[18px] h-[18px] flex justify-center shrink-0">
                     <button
                       onClick={() => setSelectedCategoryId(null)}
-                      className="w-[22px] h-[22px] flex items-center justify-center"
+                      className="w-[18px] h-[18px] flex items-center justify-center"
                     >
                       <Image
                         src={
@@ -94,8 +94,8 @@ export default function DropDownCategories() {
                             : "/images/header/icon.svg"
                         }
                         alt=""
-                        width={20}
-                        height={20}
+                        width={16}
+                        height={16}
                         className={`
                   object-contain
                   transition-transform duration-200
@@ -111,7 +111,7 @@ export default function DropDownCategories() {
                       setSelectedCategoryId(null);
                       setOpen(false);
                     }}
-                    className="text-[13px]"
+                    className="text-[11px] mt-2"
                   >
                     Всі жанри
                   </Link>
@@ -120,15 +120,13 @@ export default function DropDownCategories() {
                 {/* CATEGORIES */}
                 {visibleCategories.map((c) => {
                   const isSelected = selectedCategoryId === c.id;
-                  // {categories.map((c) => {
-                  //   const isSelected = selectedCategoryId === c.id;
 
                   return (
-                    <div key={c.id} className="flex items-center gap-2">
-                      <div className="w-[30px] h-[30px] flex justify-center shrink-0">
+                    <div key={c.id} className="flex items-center gap-0">
+                      <div className="w-[18px] h-[18px] flex  justify-center shrink-0">
                         <button
                           onClick={() => setSelectedCategoryId(c.id!)}
-                          className="w-[22px] h-[22px] flex items-center justify-center"
+                          className="w-[18px] h-[18px] flex items-center justify-center"
                         >
                           <Image
                             src={
@@ -137,8 +135,8 @@ export default function DropDownCategories() {
                                 : "/images/header/icon.svg"
                             }
                             alt=""
-                            width={20}
-                            height={20}
+                            width={16}
+                            height={16}
                             className={`
                       object-contain
                       transition-transform duration-200
@@ -154,7 +152,7 @@ export default function DropDownCategories() {
                           setSelectedCategoryId(c.id!);
                           setOpen(false);
                         }}
-                        className="text-[13px]"
+                        className="text-[11px] p-1"
                       >
                         {c.categoryName}
                       </Link>

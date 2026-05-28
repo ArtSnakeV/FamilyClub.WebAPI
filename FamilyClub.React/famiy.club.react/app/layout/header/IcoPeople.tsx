@@ -5,8 +5,8 @@ export default function IcoPeople() {
     <div className="group flex items-center justify-center">
       <div
         className="
-          w-[50px]
-          h-[50px]
+          w-[40px]
+          h-[40px]
           flex
           items-center
           justify-center
@@ -20,8 +20,8 @@ export default function IcoPeople() {
         <Image
           src="/images/header/people_24px.png"
           alt="people"
-          width={40}
-          height={40}
+          width={32}
+          height={32}
         />
       </div>
     </div>

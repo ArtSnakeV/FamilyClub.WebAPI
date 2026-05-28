@@ -8,9 +8,9 @@ export default function Logo() {
         <Image
           src="/images/header/logo.png"
           alt="Logo"
-          width={189}
-          height={83}
-          className="object-contain h-auto w-auto"
+          width={160}
+          height={123}
+          className="object-contain"
           priority
         />
       </div>

@@ -13,7 +13,7 @@ type Props = {
 
 export default function AvailabilitySelector({ value, onChange }: Props) {
   return (
-    <div className="w-[640px] m-2 p-2 flex flex-col gap-2 items-center">
+    <div className="w-[540px] m-2 p-2 flex flex-col gap-2 items-center">
       <ul className="flex flex-col items-center w-full gap-2">
         {conditionOfTheGoods.map((condition) => {
           const isSelected = value === condition.value;
@@ -24,7 +24,7 @@ export default function AvailabilitySelector({ value, onChange }: Props) {
               onClick={() => onChange(condition.value)}
               className={`inline-block w-fit
             px-6 py-4 rounded-full cursor-pointer
-            font-['Source_Sans_Pro'] font-normal text-[24px] leading-[100%]
+            font-['Source_Sans_Pro'] font-normal text-[18px] leading-[100%]
             transition-all duration-200 border
 
             ${

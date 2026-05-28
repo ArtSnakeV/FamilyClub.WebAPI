@@ -4,8 +4,8 @@ export default function ShoppingCartButton() {
   return (
     <div className="group flex items-center justify-center">
       <div
-        className="w-[50px]
-          h-[50px]
+        className="w-[38px]
+          h-[38px]
           flex
           items-center
           justify-center
@@ -21,8 +21,8 @@ export default function ShoppingCartButton() {
           alt=""
           className="object-contain"
           priority
-          width={37}
-          height={32}
+          width={30}
+          height={26}
         />
       </div>
     </div>

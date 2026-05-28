@@ -43,6 +43,7 @@ export function useProductForm() {
 
   const clearDraft = () => {
     localStorage.removeItem(DRAFT_KEY);
+    setForm(initialDto);
   };
 
   const toggleCategory = (id: number) =>

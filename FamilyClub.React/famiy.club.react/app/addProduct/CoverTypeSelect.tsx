@@ -13,11 +13,11 @@ type Props = {
 export default function CoverTypeSelect({ value, onChange }: Props) {
   return (
     <div>
-      <p className="text-[var(--color-black)] font-sans-pro font-normal text-[24px]">
+      <p className="text-[var(--color-black)] font-sans-pro font-normal text-[18px]">
         Тип обкладинки
       </p>
 
-      <div className="flex flex-row justify-around gap-2 mt-2">
+      <div className="flex flex-row justify-around gap-2">
         {coverTypeOptions.map((cover) => (
           <label key={cover.value} className="flex items-center gap-2 cursor-pointer">
             <input

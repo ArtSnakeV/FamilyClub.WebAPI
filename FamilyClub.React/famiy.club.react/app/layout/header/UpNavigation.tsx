@@ -114,17 +114,17 @@ export default function UpNavigation() {
   };
   return (
     <>
-      <div className="max-w-7xl mx-auto flex items-center h-full px-12 relative flex-nowrap justify-between">
+      <div className="max-w-[1100px] mx-auto flex items-center h-full ml-[92px] relative flex-nowrap justify-between">
         <Link href="/">
           <Logo />
         </Link>
-        <div className="flex items-center w-[1000px] ml-60 gap-4 mt-[11px]">
-          <div className="w-[110px] gap-5 h-[50px] flex items-center justify-center">
+        <div className="flex items-center w-[800px] relative ml-[180px] gap-1 mt-[2px]">
+          <div className="w-[80px] gap-5 h-[50px] flex items-center justify-center">
             <UaCircle />
           </div>
           <div className="group flex items-center justify-center">
             <div
-              className="flex items-center bg-[var(--color-white)] relative left-[20px] rounded-[25px] px-2 h-[50px] w-[306px] shadow-[0px_0px_10px_0px_#24242466] transition-all
+              className="flex items-center bg-[var(--color-white)] relative left-[8px] rounded-[25px] px-2 h-[36px] w-[290px] shadow-[0px_0px_10px_0px_#24242466] transition-all
           duration-300
           group-hover:bg-[var(--color-white)]
           group-hover:shadow-[0px_0px_15px_0px_#242424CC]"
@@ -132,25 +132,25 @@ export default function UpNavigation() {
               <SearchIco />
             </div>
           </div>
-          <div className="flex relative items-center gap-4 h-[50px] w-[384px] left-[4vw] ">
-            <div className="flex items-center h-[50px] w-[170px] mt-[4px] gap-[10px]">
-              <div className=" relative w-[50px] h-[50px] ">
+          <div className="flex relative items-center gap-4 h-[50px] w-[384px] left-[2vw] ">
+            <div className="flex items-center h-[50px] w-[170px] mt-[4px] gap-[8px]">
+              <div className=" relative w-[40px] h-[40px] ">
                 <Link href="/community">
                   <IcoPeople />
                 </Link>
               </div>
-              <div className=" relative w-[50px] h-[50px] ">
+              <div className=" relative w-[40px] h-[40px] ">
                 <Link href="/favorites">
                   <FavoriteButton />
                 </Link>
               </div>
-              <div className=" relative w-[50px] h-[50px] ">
+              <div className=" relative w-[40px] h-[40px] ">
                 <Link href="/cart">
                   <ShoppingCartButton />
                 </Link>
               </div>
             </div>
-            <div className="flex relative items-center h-[50px] w-[194px] ml-[1vw]">
+            <div className="flex relative mt-1 -ml-5 items-center h-[40px] w-[144px]">
               {isAuthenticated ? (
                 <UserMenuDrop
                   member={{
@@ -166,7 +166,7 @@ export default function UpNavigation() {
                   onLogout={handleLogout}
                 />
               ) : (
-                <div className="flex w-[196px] items-center gap-3">
+                <div className="flex w-[196px] items-center gap-1">
                   <Link href="/login">
                     <UserLoginButton />
                   </Link>

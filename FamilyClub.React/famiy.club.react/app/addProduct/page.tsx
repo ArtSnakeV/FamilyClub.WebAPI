@@ -789,31 +789,53 @@ import { GenresSection } from "./sections/GenresSection";
 import { ImageUploadSection } from "./sections/ImageUploadSection";
 import { SaleSection } from "./sections/SaleSection";
 import { useISBNLookup } from "./hooks/useISBNLookup";
+import { useEffect } from "react";
 
 export default function AddProductPage() {
   const router = useRouter();
-  const { form, setField, toggleCategory, saveDraft, clearDraft } = useProductForm();
+  const { form, setField, toggleCategory, saveDraft, clearDraft } =
+    useProductForm();
   const data = useProductData();
   const images = useImageUpload();
-  const { handleSubmit, loading } = useSubmitProduct({ form, images, router, clearDraft });
+  const { handleSubmit, loading } = useSubmitProduct({
+    form,
+    images,
+    router,
+    clearDraft,
+  });
   const { isbnLoading, handleIsbnLookup } = useISBNLookup({
     form,
     setField,
   });
+  useEffect(() => {
+    document.body.style.backgroundImage =
+      "url('/images/addProducts/Rectangle 326.png')";
+    document.body.style.backgroundSize = "cover";
+    document.body.style.backgroundAttachment = "fixed";
+    document.body.style.backgroundPosition = "center";
+    document.body.style.backgroundRepeat = "no-repeat";
 
+    return () => {
+      document.body.style.backgroundImage = "";
+      document.body.style.backgroundSize = "";
+      document.body.style.backgroundAttachment = "";
+      document.body.style.backgroundPosition = "";
+      document.body.style.backgroundRepeat = "";
+    };
+  }, []);
   return (
     <div className="w-full min-h-screen flex flex-col">
       <div
-        className="relative w-[1200px] pb-[60px] -mt-[68px] mx-auto bg-cover bg-center bg-no-repeat"
+        className="relative w-[900px] pb-[60px] ml-[16.8vw] -mt-[68px] mx-auto bg-cover bg-center bg-no-repeat"
         style={{
           backgroundImage: "url('/images/addProducts/Rectangle 312.svg')",
         }}
       >
         <div className="flex flex-col items-center mt-[100px]">
-          <h1 className="text-[var(--color-black)] w-[800px] font-['Roboto_Mono'] font-bold text-[64px] leading-[150%] tracking-[-0.011em] text-center">
+          <h1 className="text-[var(--color-black)] w-[600px] font-['Roboto_Mono'] font-bold text-[44px] leading-[150%] tracking-[-0.011em] text-center">
             Додати нову книгу
           </h1>
-          <p className="text-[var(--color-black)] -mt-4 font-sans font-normal text-[32px] leading-[150%] tracking-[-0.011em] text-center">
+          <p className="text-[var(--color-black)] -mt-2 font-sans font-normal text-[22px] leading-[150%] tracking-[-0.011em] text-center">
             Заповни інформацію
           </p>
         </div>
@@ -824,8 +846,8 @@ export default function AddProductPage() {
             handleSubmit();
           }}
         >
-          <div className="w-full flex mt-[48px] gap-[4vw] justify-center">
-            <div className="w-[645px] flex flex-col">
+          <div className="w-full flex mt-[30px] gap-[4vw] relative z-10 justify-center">
+            <div className="w-[450px] flex flex-col">
               <BasicInfoSection
                 form={form}
                 setField={setField}
@@ -849,7 +871,7 @@ export default function AddProductPage() {
               />
             </div>
 
-            <div className="w-[355px] flex flex-col gap-[48px]">
+            <div className="w-[300px] flex flex-col mt-1 relative left-3 gap-[40px]">
               <ImageUploadSection images={images} />
               <SaleSection
                 form={form}
@@ -857,7 +879,10 @@ export default function AddProductPage() {
                 loading={loading}
                 onPublish={handleSubmit}
                 onSaveDraft={saveDraft}
-                onCancel={() => router.push("/products")}
+                onCancel={() => {
+                  clearDraft();
+                  router.push("/products");
+                }}
               />
             </div>
           </div>
