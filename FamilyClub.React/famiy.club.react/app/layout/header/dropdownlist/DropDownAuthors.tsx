@@ -59,12 +59,12 @@ export default function DropDownAuthors() {
     return lastName ? `${initial} ${lastName}` : initial;
   }
   return (
-    <div ref={containerRef} className="relative w-[130px]">
+    <div ref={containerRef} className="relative w-[110px]">
       <div
         className={`
-          relative w-[130px] h-[360px]
+          relative w-[110px] h-[360px]
           transition-transform duration-300
-          ${!open ? "-translate-y-[236px]" : "translate-y-0"}
+          ${open ? "translate-y-0" : "-translate-y-[232px]"}
         `}
       >
         <Image
@@ -80,14 +80,14 @@ export default function DropDownAuthors() {
             setOpen((v) => !v);
             setSearch("");
           }}
-          className="absolute inset-0 flex justify-center items-end mb-[34px] z-10 focus:outline-none"
+          className="absolute inset-0 flex justify-center items-end mb-[56px] z-10 focus:outline-none"
         >
           <span className="text-[#F5F3EE]">Автори</span>
         </button>
 
         {open && (
           <div className="absolute z-20 top-[42px] w-full flex flex-col items-center gap-2 text-[var(--color-white)]">
-            <div className="relative top-[40px] w-[110px] h-[40px]">
+            <div className="relative top-[40px] w-[90px] h-[30px]">
               <Image
                 src="/images/header/Rectangle 58.svg"
                 alt="search bg"
@@ -109,9 +109,10 @@ export default function DropDownAuthors() {
                       text-[#272727]
                       text-xs
                       pr-5
+                      -mt-1
                     "
                 />
-                <div className="absolute right-6 top-1/2 -translate-y-1/2">
+                <div className="absolute right-4 mt-2 -translate-y-1/2">
                   <Image
                     src="/images/header/zoom_out_24px.svg"
                     alt="search"
@@ -138,7 +139,7 @@ export default function DropDownAuthors() {
     justify-center
     text-center
     text-[13px]
-    w-[110px]
+    w-[80px]
     h-[30px]
     rounded-[15px]
     border-[2px]

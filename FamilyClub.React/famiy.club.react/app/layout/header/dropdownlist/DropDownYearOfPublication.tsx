@@ -63,12 +63,12 @@ export default function DropDownYearOfPublication() {
           return searchYear >= y.from && searchYear <= y.to;
         });
   return (
-    <div ref={containerRef} className="relative w-[130px]">
+    <div ref={containerRef} className="relative w-[120px]">
       <div
         className={`
-          relative w-[130px] h-[360px]
+          relative w-[120px] h-[360px]
           transition-transform duration-300
-          ${open ? "translate-y-0" : "-translate-y-[236px]"}
+          ${open ? "translate-y-0" : "-translate-y-[242px]"}
         `}
       >
         {/* BACKGROUND */}
@@ -85,7 +85,7 @@ export default function DropDownYearOfPublication() {
             e.stopPropagation();
             setOpen((v) => !v);
           }}
-          className="absolute inset-0 flex justify-center items-end mb-[34px] z-10"
+          className="absolute inset-0 flex justify-center items-end mb-[46px] z-10"
         >
           <span className="text-white">Рік видання</span>
         </button>
@@ -94,7 +94,7 @@ export default function DropDownYearOfPublication() {
         {open && (
           <div className="absolute ml-2 z-20 top-[42px] w-full flex flex-col items-start text-[var(--color-white)]">
             {/* SEARCH */}
-            <div className="relative mt-[40px] ml-0.5 w-[110px] h-[40px]">
+            <div className="relative mt-[40px] ml-2 w-[90px] h-[40px]">
               <Image
                 src="/images/header/Rectangle 58.svg"
                 alt="search bg"
@@ -140,10 +140,10 @@ export default function DropDownYearOfPublication() {
                   return (
                     <div key={y.label} className="flex items-center gap-1">
                       {/* RADIO */}
-                      <div className="w-[30px] h-[30px] flex justify-center shrink-0">
+                      <div className="w-[28px] h-[28px] flex justify-center shrink-0">
                         <button
                           onClick={() => selectYear(y)}
-                          className="w-[22px] h-[22px] flex items-center justify-center"
+                          className="w-[20px] h-[20px] flex items-center justify-center"
                         >
                           <Image
                             src={
@@ -152,8 +152,8 @@ export default function DropDownYearOfPublication() {
                                 : "/images/header/icon.svg"
                             }
                             alt=""
-                            width={20}
-                            height={20}
+                            width={18}
+                            height={18}
                             className={`
                               object-contain
                               transition-transform duration-200
@@ -166,7 +166,7 @@ export default function DropDownYearOfPublication() {
                       {/* TEXT */}
                       <button
                         onClick={() => selectYear(y)}
-                        className="text-[13px] text-left"
+                        className="text-[11px] text-left -mt-2"
                       >
                         {y.label}
                       </button>

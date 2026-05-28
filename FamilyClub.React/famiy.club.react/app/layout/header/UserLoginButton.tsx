@@ -4,7 +4,7 @@ export default function UserLoginButton(){
 
    return (
     <div className="group flex items-center justify-center">
-      <div className="w-[50px] h-[50px] flex row w-full
+      <div className="w-[34px] h-[34px] flex row w-full
           items-center
           justify-center
           rounded-full
@@ -17,8 +17,8 @@ export default function UserLoginButton(){
           alt="person"
           className="object-contain"
           priority
-          width={50}
-          height={50}
+          width={34}
+          height={34}
         />
       </div>
     </div>

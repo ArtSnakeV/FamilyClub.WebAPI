@@ -10,7 +10,7 @@ const Footer = () => {
 
 
         /* Root footer container (Кореневий контейнер футера) */
-        <footer className="w-full min-h-[696px] flex flex-col justify-end overflow-visible">
+        <footer className="w-full flex flex-col justify-end overflow-visible">
             {/* 
                 1. MAIN INNER BLOCK (ГОЛОВНИЙ ВНУТРІШНІЙ БЛОК) 
                 - backgroundImage: sets the footer background (встановлює фон футера)

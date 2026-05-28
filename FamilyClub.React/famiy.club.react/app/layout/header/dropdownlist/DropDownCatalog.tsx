@@ -8,10 +8,10 @@ export default function DropDownCatalog() {
   const router = useRouter();
   const [open, setOpen] = useState(false);
   return (
-    <div className="relative w-[160px] z-10">
+    <div className="relative w-[150px] z-10">
       <div
         className={`
-    relative w-[160px] h-[360px]
+    relative w-[150px] h-[340px]
     -top-[200px] -ml-[10px]
     transition-transform duration-300 ease-out
     ${open ? "translate-y-[6px]" : "translate-y-0"}

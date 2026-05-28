@@ -3,12 +3,12 @@ import Image from "next/image";
 
 export default function UaCircle() {
   return (
-    <div className="flex items-center justify-center gap-3">
+    <div className="flex items-center justify-center gap-1">
       <div className="group flex items-center justify-center">
         <div
           className="
-          w-[50px]
-          h-[50px]
+          w-[40px]
+          h-[40px]
           flex
           items-center
           justify-center
@@ -20,7 +20,7 @@ export default function UaCircle() {
         "
         >
           <Image
-            src="/images/Group11.png"
+            src="/images/header/Group11.png"
             alt="group11"
             width={36}
             height={36}
@@ -32,8 +32,8 @@ export default function UaCircle() {
       <div className="group flex items-center justify-center">
         <div
           className="
-          w-[50px]
-          h-[50px]
+          w-[40px]
+          h-[40px]
           flex
           items-center
           justify-center

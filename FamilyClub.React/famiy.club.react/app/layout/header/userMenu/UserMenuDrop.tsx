@@ -43,27 +43,24 @@ export default function UserMenuDrop({
     ? `data:image/jpeg;base64,${member.avatarData}`
     : null;
   return (
-    <Menu as="div" className="relative inline-block">
+    <Menu as="div" className="relative inline-block ">
       {({ open }) => (
         <>
           <div
-            className={`
-          bg-[#F5F3EE]
-          shadow-[0px_0px_15px_0px_#242424CC]
-          transition-all
-          ${open ? "rounded-t-[26px]" : "rounded-[26px]"}
-        `}
+            className={`transition-all ${open ? "bg-[#F5F3EE] shadow-[0px_0px_15px_0px_#242424CC] rounded-t-[26px]" : "rounded-[26px]"}`}
           >
             {/* TRIGGER */}
             <MenuButton
-              className="relative z-30 flex items-center gap-2 px-3 py-2 min-w-[194px] h-[50px]
-          bg-[#F5F3EE]
-          rounded-[26px]
-          shadow-[0px_0px_15px_0px_#242424CC]
-          border-0 outline-none focus:outline-none focus:ring-0 focus-visible:ring-0"
+              className="relative z-30 flex items-center gap-2 px-3 py-1 min-w-[144px] h-[40px]
+  bg-transparent
+  rounded-[26px]
+  shadow-none hover:shadow-[0px_0px_15px_0px_#242424CC]
+  hover:bg-[#F5F3EE]
+  transition-all duration-200
+  border-0 outline-none focus:outline-none focus:ring-0 focus-visible:ring-0"
             >
               {/* Avatar */}
-              <div className="w-[40px] h-[40px] rounded-full overflow-hidden flex items-center justify-center">
+              <div className="w-[30px] h-[30px] rounded-full overflow-hidden flex items-center justify-center">
                 {avatarSrc ? (
                   <img
                     src={avatarSrc}
@@ -71,20 +68,20 @@ export default function UserMenuDrop({
                     className="w-full h-full object-cover"
                   />
                 ) : (
-                  <i className="ti ti-user-circle text-white text-[22px]" />
+                  <i className="ti ti-user-circle text-white text-[14px]" />
                 )}
               </div>
 
               {/* Name */}
-              <span className="flex-1 text-[16px] font-semibold text-[#242424]">
+              <span className="flex-1 text-[14px] font-semibold text-[#242424]">
                 {displayName}
               </span>
 
               {/* Arrow */}
-              <div className="w-[26px] h-[26px] mt-[18px]">
+              <div className="w-[20px] h-[20px] mt-[14px]">
                 <img
                   src="/images/header/Vector.svg"
-                  className={`w-[16px] h-[10px] transition-transform duration-200 ${
+                  className={`w-[14px] h-[8px] transition-transform duration-200 ${
                     open ? "rotate-180" : "rotate-0"
                   }`}
                   alt="arrow"
@@ -113,8 +110,8 @@ export default function UserMenuDrop({
               >
                 {/* HEADER */}
                 <div className="flex flex-col justify-center ">
-                  <div className="flex items-center gap-6 pt-4 pb-2 px-4">
-                    <div className="w-[34px] h-[34px] rounded-full overflow-hidden flex items-center justify-center">
+                  <div className="flex items-center gap-6 pt-4 pb-2 px-3">
+                    <div className="w-[30px] h-[30px] rounded-full overflow-hidden flex items-center justify-center">
                       {avatarSrc ? (
                         <img
                           src={avatarSrc}
@@ -133,20 +130,20 @@ export default function UserMenuDrop({
                       {({ active }) => (
                         <button
                           onClick={onCabinet}
-                          className={`flex items-center w-full px-4 py-1 text-[16px] transition
+                          className={`flex items-center w-full px-2 py-1 text-[14px] transition
         ${active ? "bg-[#ece7df]" : ""}`}
                         >
-                          <div className="h-[50px] flex flex-row place-content-around items-center">
-                            <div className="w-[26px] flex justify-center">
+                          <div className="h-[40px] flex flex-row place-content-around items-center">
+                            <div className="w-[22px] flex justify-center">
                               <Image
                                 src="/images/header/work_24px.svg"
                                 alt="cabinet"
-                                width={25}
-                                height={25}
+                                width={20}
+                                height={20}
                               />
                             </div>
 
-                            <div className="w-[132px]">
+                            <div className="w-[112px]">
                               <span>Кабінет менеджера</span>
                             </div>
                           </div>
@@ -159,16 +156,16 @@ export default function UserMenuDrop({
                       {({ active }) => (
                         <button
                           onClick={onNotifications}
-                          className={`flex items-center w-full px-4 py-1 text-[16px] transition
+                          className={`flex items-center w-full px-2 py-1 text-[14px] transition
         ${active ? "bg-[#ece7df]" : ""}`}
                         >
-                          <div className="h-[50px] flex flex-row place-content-around items-center">
-                            <div className="w-[26px] flex justify-center relative">
+                          <div className="h-[40px] flex flex-row place-content-around items-center">
+                            <div className="w-[22px] flex justify-center relative">
                               <Image
                                 src="/images/header/add_24px.svg"
                                 alt="notifications"
-                                width={25}
-                                height={25}
+                                width={20}
+                                height={18}
                               />
 
                               {notificationCount > 0 && (
@@ -179,7 +176,7 @@ export default function UserMenuDrop({
         px-1.5 py-[1px]
         rounded-full
         min-w-[16px]
-        h-[16px]
+        h-[14px]
         flex items-center justify-center
         z-[10]
       "
@@ -189,7 +186,7 @@ export default function UserMenuDrop({
                               )}
                             </div>
 
-                            <div className="w-[132px] ">
+                            <div className="w-[112px]">
                               <span>Повідомлення</span>
                             </div>
                           </div>
@@ -202,20 +199,20 @@ export default function UserMenuDrop({
                       {({ active }) => (
                         <button
                           onClick={onOrders}
-                          className={`flex items-center w-full px-4 py-1 text-[16px] transition
+                          className={`flex items-center w-full px-2 py-1 text-[14px] transition
         ${active ? "bg-[#ece7df]" : ""}`}
                         >
-                          <div className="h-[50px] flex flex-row place-content-around items-center">
-                            <div className="w-[26px] flex justify-center">
+                          <div className="h-[40px] flex flex-row place-content-around items-center">
+                            <div className="w-[22px] flex justify-center">
                               <Image
                                 src="/images/header/assignment_24px.svg"
                                 alt="orders"
-                                width={25}
-                                height={25}
+                                width={20}
+                                height={20}
                               />
                             </div>
 
-                            <div className="w-[132px]">
+                            <div className="w-[112px]">
                               <span>Замовлення</span>
                             </div>
                           </div>
@@ -228,20 +225,20 @@ export default function UserMenuDrop({
                       {({ active }) => (
                         <button
                           onClick={onLibrary}
-                          className={`flex items-center w-full px-4 py-1 text-[16px] transition
+                          className={`flex items-center w-full px-2 py-1 text-[14px] transition
         ${active ? "bg-[#ece7df]" : ""}`}
                         >
-                          <div className="h-[50px] flex flex-row place-content-around items-center">
-                            <div className="w-[26px] flex justify-center">
+                          <div className="h-[40px] flex flex-row place-content-around items-center">
+                            <div className="w-[22px] flex justify-center">
                               <Image
                                 src="/images/header/view_column_24px.svg"
                                 alt="library"
-                                width={25}
-                                height={25}
+                                width={20}
+                                height={20}
                               />
                             </div>
 
-                            <div className="w-[132px]">
+                            <div className="w-[112px]">
                               <span>Бібліотека</span>
                             </div>
                           </div>
@@ -255,20 +252,20 @@ export default function UserMenuDrop({
                       {({ active }) => (
                         <button
                           onClick={onLogout}
-                          className={`flex items-center gap-2 w-full px-4 py-2 text-[16px] text-red-600 transition
+                          className={`flex items-center gap-2 w-full px-2 py-2 text-[14px] text-red-600 transition
                     ${active ? "bg-[#ece7df]" : ""}`}
                         >
-                          <div className="h-[50px] flex flex-row place-content-around items-center">
-                            <div className="w-[26px] flex justify-center">
+                          <div className="h-[40px] flex flex-row place-content-around items-center">
+                            <div className="w-[22px] flex justify-center">
                               <Image
                                 src="/images/header/meeting_room_24px.svg"
                                 alt="library"
-                                width={25}
-                                height={25}
+                                width={20}
+                                height={20}
                               />
                             </div>
 
-                            <div className="w-[132px]">
+                            <div className="w-[112px]">
                               <span>Вийти з акаунту</span>
                             </div>
                           </div>
