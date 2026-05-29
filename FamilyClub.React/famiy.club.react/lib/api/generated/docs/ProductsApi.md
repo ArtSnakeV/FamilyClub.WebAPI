@@ -201,7 +201,7 @@ No authorization required
 
 ## apiProductsIdPut
 
-> apiProductsIdPut(id, id2, productName, price, discountPrice, description, publisherId, productImages, originalTitle, pageCount, publishingDate, coverType, availability, quantityInStock, originalLanguageId, iSBN, promotionId, productCode, weightGrams, itemsInSet, ageRestriction, authorIds, languageIds, categoryIds, seriesIds, translatorIds, formatIds, bookSizeIds, leaveOldImages, productImageFiles)
+> apiProductsIdPut(id, id2, productName, price, discountPrice, description, publisherId, productImages, originalTitle, pageCount, publishingDate, coverType, availability, quantityInStock, originalLanguageId, iSBN, promotionId, productCode, weightGrams, itemsInSet, authorIds, languageIds, categoryIds, seriesIds, translatorIds, formatIds, bookSizeIds, ageRestrictionIds, leaveOldImages, productImageFiles)
 
 
 
@@ -259,8 +259,6 @@ async function example() {
     weightGrams: 56,
     // number (optional)
     itemsInSet: 56,
-    // AgeRestriction (optional)
-    ageRestriction: ...,
     // Array<number> (optional)
     authorIds: ...,
     // Array<number> (optional)
@@ -275,6 +273,8 @@ async function example() {
     formatIds: ...,
     // Array<number> (optional)
     bookSizeIds: ...,
+    // Array<number> (optional)
+    ageRestrictionIds: ...,
     // boolean (optional)
     leaveOldImages: true,
     // Array<Blob> (optional)
@@ -318,7 +318,6 @@ example().catch(console.error);
 | **productCode** | `string` |  | [Optional] [Defaults to `undefined`] |
 | **weightGrams** | `number` |  | [Optional] [Defaults to `undefined`] |
 | **itemsInSet** | `number` |  | [Optional] [Defaults to `undefined`] |
-| **ageRestriction** | `AgeRestriction` |  | [Optional] [Defaults to `undefined`] [Enum: 0, 1, 2, 3, 4] |
 | **authorIds** | `Array<number>` |  | [Optional] |
 | **languageIds** | `Array<number>` |  | [Optional] |
 | **categoryIds** | `Array<number>` |  | [Optional] |
@@ -326,6 +325,7 @@ example().catch(console.error);
 | **translatorIds** | `Array<number>` |  | [Optional] |
 | **formatIds** | `Array<number>` |  | [Optional] |
 | **bookSizeIds** | `Array<number>` |  | [Optional] |
+| **ageRestrictionIds** | `Array<number>` |  | [Optional] |
 | **leaveOldImages** | `boolean` |  | [Optional] [Defaults to `undefined`] |
 | **productImageFiles** | `Array<Blob>` |  | [Optional] |
 
@@ -353,7 +353,7 @@ No authorization required
 
 ## apiProductsPost
 
-> apiProductsPost(id, productName, price, discountPrice, description, publisherId, productImages, originalTitle, pageCount, publishingDate, coverType, availability, quantityInStock, originalLanguageId, iSBN, promotionId, productCode, weightGrams, itemsInSet, ageRestriction, authorIds, languageIds, categoryIds, seriesIds, translatorIds, formatIds, bookSizeIds, leaveOldImages, productImageFiles)
+> apiProductsPost(id, productName, price, discountPrice, description, publisherId, productImages, originalTitle, pageCount, publishingDate, coverType, availability, quantityInStock, originalLanguageId, iSBN, promotionId, productCode, weightGrams, itemsInSet, authorIds, languageIds, categoryIds, seriesIds, translatorIds, formatIds, bookSizeIds, ageRestrictionIds, leaveOldImages, productImageFiles)
 
 
 
@@ -409,8 +409,6 @@ async function example() {
     weightGrams: 56,
     // number (optional)
     itemsInSet: 56,
-    // AgeRestriction (optional)
-    ageRestriction: ...,
     // Array<number> (optional)
     authorIds: ...,
     // Array<number> (optional)
@@ -425,6 +423,8 @@ async function example() {
     formatIds: ...,
     // Array<number> (optional)
     bookSizeIds: ...,
+    // Array<number> (optional)
+    ageRestrictionIds: ...,
     // boolean (optional)
     leaveOldImages: true,
     // Array<Blob> (optional)
@@ -467,7 +467,6 @@ example().catch(console.error);
 | **productCode** | `string` |  | [Optional] [Defaults to `undefined`] |
 | **weightGrams** | `number` |  | [Optional] [Defaults to `undefined`] |
 | **itemsInSet** | `number` |  | [Optional] [Defaults to `undefined`] |
-| **ageRestriction** | `AgeRestriction` |  | [Optional] [Defaults to `undefined`] [Enum: 0, 1, 2, 3, 4] |
 | **authorIds** | `Array<number>` |  | [Optional] |
 | **languageIds** | `Array<number>` |  | [Optional] |
 | **categoryIds** | `Array<number>` |  | [Optional] |
@@ -475,6 +474,7 @@ example().catch(console.error);
 | **translatorIds** | `Array<number>` |  | [Optional] |
 | **formatIds** | `Array<number>` |  | [Optional] |
 | **bookSizeIds** | `Array<number>` |  | [Optional] |
+| **ageRestrictionIds** | `Array<number>` |  | [Optional] |
 | **leaveOldImages** | `boolean` |  | [Optional] [Defaults to `undefined`] |
 | **productImageFiles** | `Array<Blob>` |  | [Optional] |
 

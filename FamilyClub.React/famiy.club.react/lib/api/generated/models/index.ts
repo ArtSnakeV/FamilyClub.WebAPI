@@ -1,6 +1,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export * from './AgeRestriction';
+export * from './AgeRestrictionDto';
 export * from './AuthResponseClubMemberDTO';
 export * from './Author';
 export * from './AuthorDTO';

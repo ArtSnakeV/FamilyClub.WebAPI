@@ -6,6 +6,7 @@ import {
   LanguageDto,
   FormatDto,
   BookSizeDto,
+  AgeRestrictionDto,
 } from "@/lib/api/generated";
 import {
   authorsApi,
@@ -14,6 +15,7 @@ import {
   languagesApi,
   formatsApi,
   bookSizesApi,
+  ageRestrictionApi,
 } from "@/app/addProduct/api/productApiClient";
 
 type ProductData = {
@@ -23,6 +25,7 @@ type ProductData = {
   languages: LanguageDto[];
   formats: FormatDto[];
   bookSizes: BookSizeDto[];
+  ageRestrictions: AgeRestrictionDto[];
 };
 
 export function useProductData() {
@@ -33,6 +36,7 @@ export function useProductData() {
     languages: [],
     formats: [],
     bookSizes: [],
+    ageRestrictions: [],
   });
 
   useEffect(() => {
@@ -43,8 +47,9 @@ export function useProductData() {
       languagesApi.apiLanguagesGet(),
       formatsApi.apiFormatsGet(),
       bookSizesApi.apiBookSizesGet(),
-    ]).then(([authors, publishers, categories, languages, formats, bookSizes]) =>
-      setData({ authors, publishers, categories, languages, formats, bookSizes })
+      ageRestrictionApi.apiAgeRestrictionsGet(),
+    ]).then(([authors, publishers, categories, languages, formats, bookSizes, ageRestrictions,]) =>
+      setData({ authors, publishers, categories, languages, formats, bookSizes, ageRestrictions, })
     );
   }, []);
 

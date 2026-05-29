@@ -117,6 +117,9 @@ builder.Services.AddScoped<IFormatService, FormatService>();
 builder.Services.AddScoped<IBookSizeRepository, BookSizeRepository>();
 builder.Services.AddScoped<IBookSizeService, BookSizeService>();
 
+//AgeRestiction
+builder.Services.AddScoped<IAgeRestrictionRepository, AgeRestrictionRepository>();
+builder.Services.AddScoped<IAgeRestrictionService, AgeRestrictionService>();
 
 // Customize Identity cookie
 //builder.Services.ConfigureApplicationCookie(

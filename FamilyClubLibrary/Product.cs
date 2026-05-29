@@ -52,6 +52,7 @@ namespace FamilyClubLibrary
         public List<Series> Series { get; set; } = new();
 
 		public List<Format> Formats { get; set; } = new();
+        public List<AgeRestriction> AgeRestrictions { get; set; } = new();
         public List<BookSize> BookSizes { get; set; } = new();
 
 		// Original language (one-to-many)
@@ -72,7 +73,6 @@ namespace FamilyClubLibrary
 
         public int? ItemsInSet { get; set; }
 
-        public AgeRestriction? AgeRestriction { get; set; }
 
         // Translators (many-to-many)
         public List<Translator> Translators { get; set; } = new();

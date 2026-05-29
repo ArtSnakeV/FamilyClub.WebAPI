@@ -15,15 +15,12 @@
 
 import * as runtime from '../runtime';
 import type {
-  AgeRestriction,
   Availability,
   CoverType,
   ProductDto,
   ProductImage,
 } from '../models/index';
 import {
-    AgeRestrictionFromJSON,
-    AgeRestrictionToJSON,
     AvailabilityFromJSON,
     AvailabilityToJSON,
     CoverTypeFromJSON,
@@ -63,7 +60,6 @@ export interface ApiProductsIdPutRequest {
     productCode?: string;
     weightGrams?: number;
     itemsInSet?: number;
-    ageRestriction?: AgeRestriction;
     authorIds?: Array<number>;
     languageIds?: Array<number>;
     categoryIds?: Array<number>;
@@ -71,6 +67,7 @@ export interface ApiProductsIdPutRequest {
     translatorIds?: Array<number>;
     formatIds?: Array<number>;
     bookSizeIds?: Array<number>;
+    ageRestrictionIds?: Array<number>;
     leaveOldImages?: boolean;
     productImageFiles?: Array<Blob>;
 }
@@ -95,7 +92,6 @@ export interface ApiProductsPostRequest {
     productCode?: string;
     weightGrams?: number;
     itemsInSet?: number;
-    ageRestriction?: AgeRestriction;
     authorIds?: Array<number>;
     languageIds?: Array<number>;
     categoryIds?: Array<number>;
@@ -103,6 +99,7 @@ export interface ApiProductsPostRequest {
     translatorIds?: Array<number>;
     formatIds?: Array<number>;
     bookSizeIds?: Array<number>;
+    ageRestrictionIds?: Array<number>;
     leaveOldImages?: boolean;
     productImageFiles?: Array<Blob>;
 }
@@ -341,10 +338,6 @@ export class ProductsApi extends runtime.BaseAPI {
             formParams.append('ItemsInSet', requestParameters['itemsInSet'] as any);
         }
 
-        if (requestParameters['ageRestriction'] != null) {
-            formParams.append('AgeRestriction', requestParameters['ageRestriction'] as any);
-        }
-
         if (requestParameters['authorIds'] != null) {
             requestParameters['authorIds'].forEach((element) => {
                 formParams.append('AuthorIds', element as any);
@@ -384,6 +377,12 @@ export class ProductsApi extends runtime.BaseAPI {
         if (requestParameters['bookSizeIds'] != null) {
             requestParameters['bookSizeIds'].forEach((element) => {
                 formParams.append('BookSizeIds', element as any);
+            })
+        }
+
+        if (requestParameters['ageRestrictionIds'] != null) {
+            requestParameters['ageRestrictionIds'].forEach((element) => {
+                formParams.append('AgeRestrictionIds', element as any);
             })
         }
 
@@ -527,10 +526,6 @@ export class ProductsApi extends runtime.BaseAPI {
             formParams.append('ItemsInSet', requestParameters['itemsInSet'] as any);
         }
 
-        if (requestParameters['ageRestriction'] != null) {
-            formParams.append('AgeRestriction', requestParameters['ageRestriction'] as any);
-        }
-
         if (requestParameters['authorIds'] != null) {
             requestParameters['authorIds'].forEach((element) => {
                 formParams.append('AuthorIds', element as any);
@@ -570,6 +565,12 @@ export class ProductsApi extends runtime.BaseAPI {
         if (requestParameters['bookSizeIds'] != null) {
             requestParameters['bookSizeIds'].forEach((element) => {
                 formParams.append('BookSizeIds', element as any);
+            })
+        }
+
+        if (requestParameters['ageRestrictionIds'] != null) {
+            requestParameters['ageRestrictionIds'].forEach((element) => {
+                formParams.append('AgeRestrictionIds', element as any);
             })
         }
 

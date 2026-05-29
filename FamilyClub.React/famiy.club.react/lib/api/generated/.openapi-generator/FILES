@@ -1,3 +1,4 @@
+apis/AgeRestrictionsApi.ts
 apis/AuthClubMemberApi.ts
 apis/AuthorsApi.ts
 apis/BookSizesApi.ts
@@ -19,6 +20,8 @@ apis/SeriesApi.ts
 apis/TranslatorsApi.ts
 apis/index.ts
 docs/AgeRestriction.md
+docs/AgeRestrictionDto.md
+docs/AgeRestrictionsApi.md
 docs/AuthClubMemberApi.md
 docs/AuthResponseClubMemberDTO.md
 docs/Author.md
@@ -80,6 +83,7 @@ docs/UpdateClaimClubMemberDto.md
 docs/UpdateClubMemberDto.md
 index.ts
 models/AgeRestriction.ts
+models/AgeRestrictionDto.ts
 models/AuthResponseClubMemberDTO.ts
 models/Author.ts
 models/AuthorDTO.ts

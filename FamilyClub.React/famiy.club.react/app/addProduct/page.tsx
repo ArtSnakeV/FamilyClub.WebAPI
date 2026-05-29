@@ -863,6 +863,7 @@ export default function AddProductPage() {
                 languages={data.languages}
                 formats={data.formats}
                 bookSizes={data.bookSizes}
+                ageRestrictions={data.ageRestrictions}
               />
               <GenresSection
                 categories={data.categories}
