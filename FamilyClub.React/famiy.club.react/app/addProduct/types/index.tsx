@@ -21,12 +21,21 @@ export type ProductDto = {
   leaveOldImages: boolean;
   quantityInStock?: number;
   bookSizeIds: number[];
+  productImages?: {
+    imageData: string;
+  }[];
 };
 
 export type ImageUploadState = {
   mainImage: File | null;
   mainPreview: string | null;
   gallery: (File | null)[];
+
+  galleryPreviews: (string | null)[];
+
+  setMainPreview: React.Dispatch<React.SetStateAction<string | null>>;
+  setGalleryPreviews: React.Dispatch<React.SetStateAction<(string | null)[]>>;
+
   handleMainChange: (file: File | null) => void;
   handleGalleryChange: (index: number, file: File | null) => void;
 };
