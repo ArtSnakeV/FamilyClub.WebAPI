@@ -4,8 +4,18 @@ import { ImageUploadState } from "@/app/addProduct/types";
 export function useImageUpload(): ImageUploadState {
   const [mainImage, setMainImage] = useState<File | null>(null);
   const [mainPreview, setMainPreview] = useState<string | null>(null);
-  const [gallery, setGallery] = useState<(File | null)[]>([null, null, null, null]);
-
+  const [gallery, setGallery] = useState<(File | null)[]>([
+    null,
+    null,
+    null,
+    null,
+  ]);
+  const [galleryPreviews, setGalleryPreviews] = useState<(string | null)[]>([
+    null,
+    null,
+    null,
+    null,
+  ]);
   const handleMainChange = (file: File | null) => {
     if (!file) return;
     setMainImage(file);
@@ -18,5 +28,15 @@ export function useImageUpload(): ImageUploadState {
     setGallery(updated);
   };
 
-  return { mainImage, mainPreview, gallery, handleMainChange, handleGalleryChange };
+  return {
+    mainImage,
+    mainPreview,
+    gallery,
+    galleryPreviews,
+
+    setMainPreview,
+    setGalleryPreviews,
+    handleMainChange,
+    handleGalleryChange,
+  };
 }
