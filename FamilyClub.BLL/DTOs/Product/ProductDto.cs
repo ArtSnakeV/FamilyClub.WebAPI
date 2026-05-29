@@ -54,8 +54,6 @@ public class ProductDto
 	public int? WeightGrams { get; set; }
 	public int? ItemsInSet { get; set; }
 
-	public AgeRestriction? AgeRestriction { get; set; }
-
 	// many-to-many (для фронта — тільки Id)
 	public List<int>? AuthorIds { get; set; }
 	public List<int>? LanguageIds { get; set; }
@@ -64,5 +62,6 @@ public class ProductDto
 	public List<int>? TranslatorIds { get; set; }
 	public List<int>? FormatIds { get; set; } = new();
 	public List<int>? BookSizeIds { get; set; } = new();
+	public List<int>? AgeRestrictionIds { get; set; } = new();
 	public bool LeaveOldImages { get; set; }
 }

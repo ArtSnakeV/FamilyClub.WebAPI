@@ -29,6 +29,7 @@ public class ProductRepository : Repository<Product>, IProductRepository
 		.Include(p => p.Translators)
 		.Include(p => p.Formats)
 		.Include(p => p.BookSizes)
+		.Include(p => p.AgeRestrictions)
 		.ToListAsync(cancellationToken);
 	}
 
@@ -43,6 +44,7 @@ public class ProductRepository : Repository<Product>, IProductRepository
 		.Include(p => p.Translators)
 		.Include(p => p.Formats)
 		.Include(p => p.BookSizes)
+		.Include(p => p.AgeRestrictions)
 		.FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
 	}
 }
@@ -96,4 +98,5 @@ public class NotificationRepository : Repository<Notification>, INotificationRep
 	}
 }
 public class FormatRepository(FamilyClubContext context) : Repository<Format>(context), IFormatRepository;
+public class AgeRestrictionRepository(FamilyClubContext context) : Repository<AgeRestriction>(context), IAgeRestrictionRepository;
 public class BookSizeRepository(FamilyClubContext context) : Repository<BookSize>(context), IBookSizeRepository;

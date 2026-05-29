@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+export * from './AgeRestrictionsApi';
 export * from './AuthClubMemberApi';
 export * from './AuthorsApi';
 export * from './BookSizesApi';

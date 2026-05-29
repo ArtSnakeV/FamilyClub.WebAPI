@@ -228,6 +228,12 @@ export interface Product {
     formats?: Array<Format> | null;
     /**
      * 
+     * @type {Array<AgeRestriction>}
+     * @memberof Product
+     */
+    ageRestrictions?: Array<AgeRestriction> | null;
+    /**
+     * 
      * @type {Array<BookSize>}
      * @memberof Product
      */
@@ -300,12 +306,6 @@ export interface Product {
     itemsInSet?: number | null;
     /**
      * 
-     * @type {AgeRestriction}
-     * @memberof Product
-     */
-    ageRestriction?: AgeRestriction;
-    /**
-     * 
      * @type {Array<Translator>}
      * @memberof Product
      */
@@ -351,6 +351,7 @@ export function ProductFromJSONTyped(json: any, ignoreDiscriminator: boolean): P
         'categories': json['categories'] == null ? undefined : ((json['categories'] as Array<any>).map(CategoryFromJSON)),
         'series': json['series'] == null ? undefined : ((json['series'] as Array<any>).map(SeriesFromJSON)),
         'formats': json['formats'] == null ? undefined : ((json['formats'] as Array<any>).map(FormatFromJSON)),
+        'ageRestrictions': json['ageRestrictions'] == null ? undefined : ((json['ageRestrictions'] as Array<any>).map(AgeRestrictionFromJSON)),
         'bookSizes': json['bookSizes'] == null ? undefined : ((json['bookSizes'] as Array<any>).map(BookSizeFromJSON)),
         'originalLanguageId': json['originalLanguageId'] == null ? undefined : json['originalLanguageId'],
         'originalLanguage': json['originalLanguage'] == null ? undefined : LanguageFromJSON(json['originalLanguage']),
@@ -363,7 +364,6 @@ export function ProductFromJSONTyped(json: any, ignoreDiscriminator: boolean): P
         'productCode': json['productCode'] == null ? undefined : json['productCode'],
         'weightGrams': json['weightGrams'] == null ? undefined : json['weightGrams'],
         'itemsInSet': json['itemsInSet'] == null ? undefined : json['itemsInSet'],
-        'ageRestriction': json['ageRestriction'] == null ? undefined : AgeRestrictionFromJSON(json['ageRestriction']),
         'translators': json['translators'] == null ? undefined : ((json['translators'] as Array<any>).map(TranslatorFromJSON)),
     };
 }
@@ -396,6 +396,7 @@ export function ProductToJSONTyped(value?: Omit<Product, 'rating'> | null, ignor
         'categories': value['categories'] == null ? undefined : ((value['categories'] as Array<any>).map(CategoryToJSON)),
         'series': value['series'] == null ? undefined : ((value['series'] as Array<any>).map(SeriesToJSON)),
         'formats': value['formats'] == null ? undefined : ((value['formats'] as Array<any>).map(FormatToJSON)),
+        'ageRestrictions': value['ageRestrictions'] == null ? undefined : ((value['ageRestrictions'] as Array<any>).map(AgeRestrictionToJSON)),
         'bookSizes': value['bookSizes'] == null ? undefined : ((value['bookSizes'] as Array<any>).map(BookSizeToJSON)),
         'originalLanguageId': value['originalLanguageId'],
         'originalLanguage': LanguageToJSON(value['originalLanguage']),
@@ -408,7 +409,6 @@ export function ProductToJSONTyped(value?: Omit<Product, 'rating'> | null, ignor
         'productCode': value['productCode'],
         'weightGrams': value['weightGrams'],
         'itemsInSet': value['itemsInSet'],
-        'ageRestriction': AgeRestrictionToJSON(value['ageRestriction']),
         'translators': value['translators'] == null ? undefined : ((value['translators'] as Array<any>).map(TranslatorToJSON)),
     };
 }

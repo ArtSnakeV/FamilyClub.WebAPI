@@ -1,24 +1,28 @@
 "use client";
 
+import {
+  AgeRestrictionDto,
+  Configuration,
+  AgeRestrictionsApi,
+} from "@/lib/api/generated";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { AgeRestriction } from "@/lib/api/generated";
-
-const ageFilters = [
-  { label: "0+", value: AgeRestriction.NUMBER_0 },
-  { label: "6+", value: AgeRestriction.NUMBER_1 },
-  { label: "12+", value: AgeRestriction.NUMBER_2 },
-  { label: "16+", value: AgeRestriction.NUMBER_3 },
-  { label: "18+", value: AgeRestriction.NUMBER_4 },
-];
 
 export default function DropDownAgeRestrictions() {
   const [open, setOpen] = useState(false);
-  const [selectedAge, setSelectedAge] = useState<AgeRestriction | null>(null);
-
+  const [ageFilters, setAgeFilters] = useState<AgeRestrictionDto[]>([]);
+  const [selectedAge, setSelectedAge] = useState<number | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
+
+  useEffect(() => {
+    const config = new Configuration({
+      basePath: "https://localhost:7069",
+    });
+    const api = new AgeRestrictionsApi(config);
+    api.apiAgeRestrictionsGet().then(setAgeFilters).catch(console.error);
+  }, []);
 
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
@@ -29,27 +33,23 @@ export default function DropDownAgeRestrictions() {
         setOpen(false);
       }
     }
-
     document.addEventListener("click", handleClickOutside);
-
     return () => document.removeEventListener("click", handleClickOutside);
   }, []);
 
-  function selectAge(f: (typeof ageFilters)[number]) {
-    setSelectedAge(f.value);
+  function selectAge(f: AgeRestrictionDto) {
+    setSelectedAge(f.id ?? null);
 
     setTimeout(() => {
       const params = new URLSearchParams();
-
-      params.set("ageRestriction", String(f.value));
+      params.set("ageRestrictionId", String(f.id));
       router.push(`/products?${params.toString()}`);
-
       setOpen(false);
     }, 600);
   }
 
   const selectedLabel =
-    ageFilters.find((x) => x.value === selectedAge)?.label ?? "Вік";
+    ageFilters.find((x) => x.id === selectedAge)?.name ?? "Вік";
 
   return (
     <div ref={containerRef} className="relative w-[110px]">
@@ -84,10 +84,10 @@ export default function DropDownAgeRestrictions() {
           <div className="absolute z-20 top-[30px] w-full flex flex-col items-center text-[var(--color-white)]">
             <div className="relative mt-[50px] flex flex-col gap-2">
               {ageFilters.map((f) => {
-                const isSelected = selectedAge === f.value;
+                const isSelected = selectedAge === f.id;
 
                 return (
-                  <div key={f.value} className="flex items-center gap-1">
+                  <div key={f.id} className="flex items-center gap-1">
                     {/* RADIO */}
                     <div className="w-[28px] h-[28px] flex justify-center shrink-0">
                       <button
@@ -117,7 +117,7 @@ export default function DropDownAgeRestrictions() {
                       onClick={() => selectAge(f)}
                       className="text-[13px] text-left -mt-2"
                     >
-                      {f.label}
+                      {f.name}
                     </button>
                   </div>
                 );

@@ -12,30 +12,52 @@
  * Do not edit the class manually.
  */
 
+import { mapValues } from '../runtime';
+import type { Product } from './Product';
+import {
+    ProductFromJSON,
+    ProductFromJSONTyped,
+    ProductToJSON,
+    ProductToJSONTyped,
+} from './Product';
 
 /**
  * 
  * @export
+ * @interface AgeRestriction
  */
-export const AgeRestriction = {
-    NUMBER_0: 0,
-    NUMBER_1: 1,
-    NUMBER_2: 2,
-    NUMBER_3: 3,
-    NUMBER_4: 4
-} as const;
-export type AgeRestriction = typeof AgeRestriction[keyof typeof AgeRestriction];
+export interface AgeRestriction {
+    /**
+     * 
+     * @type {number}
+     * @memberof AgeRestriction
+     */
+    id?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof AgeRestriction
+     */
+    name?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof AgeRestriction
+     */
+    code?: string | null;
+    /**
+     * 
+     * @type {Array<Product>}
+     * @memberof AgeRestriction
+     */
+    products?: Array<Product> | null;
+}
 
-
-export function instanceOfAgeRestriction(value: any): boolean {
-    for (const key in AgeRestriction) {
-        if (Object.prototype.hasOwnProperty.call(AgeRestriction, key)) {
-            if (AgeRestriction[key as keyof typeof AgeRestriction] === value) {
-                return true;
-            }
-        }
-    }
-    return false;
+/**
+ * Check if a given object implements the AgeRestriction interface.
+ */
+export function instanceOfAgeRestriction(value: object): value is AgeRestriction {
+    return true;
 }
 
 export function AgeRestrictionFromJSON(json: any): AgeRestriction {
@@ -43,14 +65,33 @@ export function AgeRestrictionFromJSON(json: any): AgeRestriction {
 }
 
 export function AgeRestrictionFromJSONTyped(json: any, ignoreDiscriminator: boolean): AgeRestriction {
-    return json as AgeRestriction;
+    if (json == null) {
+        return json;
+    }
+    return {
+        
+        'id': json['id'] == null ? undefined : json['id'],
+        'name': json['name'] == null ? undefined : json['name'],
+        'code': json['code'] == null ? undefined : json['code'],
+        'products': json['products'] == null ? undefined : ((json['products'] as Array<any>).map(ProductFromJSON)),
+    };
 }
 
-export function AgeRestrictionToJSON(value?: AgeRestriction | null): any {
-    return value as any;
+export function AgeRestrictionToJSON(json: any): AgeRestriction {
+    return AgeRestrictionToJSONTyped(json, false);
 }
 
-export function AgeRestrictionToJSONTyped(value: any, ignoreDiscriminator: boolean): AgeRestriction {
-    return value as AgeRestriction;
+export function AgeRestrictionToJSONTyped(value?: AgeRestriction | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
+    }
+
+    return {
+        
+        'id': value['id'],
+        'name': value['name'],
+        'code': value['code'],
+        'products': value['products'] == null ? undefined : ((value['products'] as Array<any>).map(ProductToJSON)),
+    };
 }
 

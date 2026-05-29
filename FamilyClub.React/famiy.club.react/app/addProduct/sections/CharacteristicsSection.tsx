@@ -1,4 +1,9 @@
-import { LanguageDto, FormatDto, BookSizeDto } from "@/lib/api/generated";
+import {
+  LanguageDto,
+  FormatDto,
+  BookSizeDto,
+  AgeRestrictionDto,
+} from "@/lib/api/generated";
 import { ProductDto } from "@/app/addProduct/types";
 import { SectionCard } from "@/app/addProduct/ui/SectionCard";
 import { NumberInput } from "@/app/addProduct/ui/NumberInput";
@@ -14,6 +19,7 @@ type Props = {
   languages: LanguageDto[];
   formats: FormatDto[];
   bookSizes: BookSizeDto[];
+  ageRestrictions: AgeRestrictionDto[];
 };
 
 export function CharacteristicsSection({
@@ -22,6 +28,7 @@ export function CharacteristicsSection({
   languages,
   formats,
   bookSizes,
+  ageRestrictions,
 }: Props) {
   return (
     <div className="w-[500px] h-[950px] flex -mt-[10px] flex-col">
@@ -53,8 +60,9 @@ export function CharacteristicsSection({
         <div className="flex flex-row relative top-[44px] gap-2 justify-around h-[80px]">
           <div className="flex flex-col w-[180px]">
             <AgeRestrictions
-              value={form.ageRestrictions}
-              onChange={(v) => setField("ageRestrictions", v)}
+              value={form.ageRestrictionIds?.[0]}
+              ageRestrictions={ageRestrictions}
+              onChange={(id) => setField("ageRestrictionIds", id ? [id] : [])}
             />
           </div>
           <div className="flex flex-col w-[180px]">
