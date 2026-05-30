@@ -41,17 +41,22 @@ export default async function AdminLayout({ children }: { children: React.ReactN
           <div
             className="absolute"
             style={{
-              width: "295px",
-              height: "769px",
+              width: "315px",
+              minHeight: "950px",
+              height: "max-content",
               top: "101.76px",
               left: "49.71px",
               // background: "#F5F3EE",
               border: "15px solid transparent",
               opacity: 1,
               backgroundImage: "url('/images/admin_manager_layout/sidebar_bg.png')",
-              backgroundSize: "cover",
+              // backgroundSize: "cover",
+              backgroundSize: "100% 100%",
               backgroundPosition: "center",
               backgroundRepeat: "no-repeat",
+              display: "flex",
+    flexDirection: "row",
+    gap: "10px", //
             }}
           >
             {/* Content of sidebar */}
@@ -127,7 +132,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
               {/*List of items in sidebar*/}
               <div className="absolute w-[260px] h-[625px] top-[104.76px]  left-[23.71px] gap-[25px] flex flex-col opacity-100">
                 {/* Desktop */}
-                <Link href="#" className="flex items-center bg-[var(--background-main)] w-[260px] h-[40px] px-1 rounded-md">
+                <Link href="#" className="flex items-center  w-[260px] h-[40px] px-1 rounded-md">
                   {/* Left Part: Image Container */}
                   <div className="relative w-[32px] h-[32px] flex-shrink-0">
                     <Image
@@ -143,7 +148,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
                   </span>
                 </Link>
                 {/* Managers */}
-                <Link href="#" className="flex items-center bg-[var(--background-main)] w-[260px] h-[40px] px-1 rounded-md">
+                <Link href="#" className="flex items-center w-[260px] h-[40px] px-1 rounded-md">
                   {/* Left Part: Image Container */}
                   <div className="relative w-[32px] h-[32px] flex-shrink-0">
                     <Image
@@ -159,7 +164,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
                   </span>
                 </Link>
                 {/* Users */}
-                <Link href="#" className="flex items-center bg-[var(--background-main)] w-[260px] h-[40px] px-1 rounded-md">
+                <Link href="#" className="flex items-center w-[260px] h-[40px] px-1 rounded-md">
                   {/* Left Part: Image Container */}
                   <div className="relative w-[32px] h-[32px] flex-shrink-0">
                     <Image
@@ -175,7 +180,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
                   </span>
                 </Link>
                 {/* Roles and access */}
-                <Link href="#" className="flex items-center bg-[var(--background-main)] w-[260px] h-[40px] px-1 rounded-md">
+                <Link href="#" className="flex items-center w-[260px] h-[40px] px-1 rounded-md">
                   {/* Left Part: Image Container */}
                   <div className="relative w-[32px] h-[32px] flex-shrink-0">
                     <Image
@@ -191,7 +196,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
                   </span>
                 </Link>
                 {/* Analitics */}
-                <Link href="#" className="flex items-center bg-[var(--background-main)] w-[260px] h-[40px] px-1 rounded-md">
+                <Link href="#" className="flex items-center w-[260px] h-[40px] px-1 rounded-md">
                   {/* Left Part: Image Container */}
                   <div className="relative w-[32px] h-[32px] flex-shrink-0">
                     <Image
@@ -207,7 +212,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
                   </span>
                 </Link>
                 {/* System and safety */}
-                <Link href="#" className="flex items-center bg-[var(--background-main)] w-[260px] h-[40px] px-1 rounded-md">
+                <Link href="#" className="flex items-center w-[260px] h-[40px] px-1 rounded-md">
                   {/* Left Part: Image Container */}
                   <div className="relative w-[32px] h-[32px] flex-shrink-0">
                     <Image
@@ -223,7 +228,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
                   </span>
                 </Link>
                 {/* Platform complaints */}
-                <Link href="#" className="flex items-center bg-[var(--background-main)] w-[260px] h-[40px] px-1 rounded-md">
+                <Link href="#" className="flex items-center w-[260px] h-[40px] px-1 rounded-md">
                   {/* Left Part: Image Container */}
                   <div className="relative w-[32px] h-[32px] flex-shrink-0">
                     <Image
@@ -239,7 +244,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
                   </span>
                 </Link>
                 {/* {Platform settings */}
-                <Link href="#" className="flex items-center bg-[var(--background-main)] w-[260px] h-[40px] px-1 rounded-md">
+                <Link href="#" className="flex items-center w-[260px] h-[40px] px-1 rounded-md">
                   {/* Left Part: Image Container */}
                   <div className="relative w-[32px] h-[32px] flex-shrink-0">
                     <Image
@@ -255,7 +260,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
                   </span>
                 </Link>
                 {/* Log */}
-                <Link href="#" className="flex items-center bg-[var(--background-main)] w-[260px] h-[40px] px-1 rounded-md">
+                <Link href="#" className="flex items-center w-[260px] h-[40px] px-1 rounded-md">
                   {/* Left Part: Image Container */}
                   <div className="relative w-[32px] h-[32px] flex-shrink-0">
                     <Image
@@ -271,7 +276,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
                   </span>
                 </Link>
                 {/* My settings */}
-                <Link href="#" className="flex items-center bg-[var(--background-main)] w-[260px] h-[40px] px-1 rounded-md">
+                <Link href="#" className="flex items-center w-[260px] h-[40px] px-1 rounded-md">
                   {/* Left Part: Image Container */}
                   <div className="relative w-[32px] h-[32px] flex-shrink-0">
                     <Image
@@ -286,6 +291,71 @@ export default async function AdminLayout({ children }: { children: React.ReactN
                     Мої налаштування
                   </span>
                 </Link>
+                {/* Books */}
+                <Link href="#" className="flex items-center w-[260px] h-[40px] px-1 rounded-md">
+                  {/* Left Part: Image Container */}
+                  <div className="relative w-[32px] h-[32px] flex-shrink-0">
+                    <Image
+                      src="/images/admin_manager_layout/books.svg"
+                      alt="Books icon"
+                      fill
+                      className="object-contain"
+                    />
+                  </div>
+                  {/* Right Part: Text */}
+                  <span className="ml-[24px] w-[200px] h-[26px] font-semibold text-[16px] leading-[150%] tracking-[-1.1%] text-var(--font-sans) flex items-center">
+                    Книги
+                  </span>
+                </Link>
+                {/* Orders */}
+                <Link href="#" className="flex items-center w-[260px] h-[40px] px-1 rounded-md">
+                  {/* Left Part: Image Container */}
+                  <div className="relative w-[32px] h-[32px] flex-shrink-0">
+                    <Image
+                      src="/images/admin_manager_layout/orders.svg"
+                      alt="Orders icon"
+                      fill
+                      className="object-contain"
+                    />
+                  </div>
+                  {/* Right Part: Text */}
+                  <span className="ml-[24px] w-[200px] h-[26px] font-semibold text-[16px] leading-[150%] tracking-[-1.1%] text-var(--font-sans) flex items-center">
+                    Замовлення
+                  </span>
+                </Link>
+                {/* Rewiews */}
+                <Link href="#" className="flex items-center w-[260px] h-[40px] px-1 rounded-md">
+                  {/* Left Part: Image Container */}
+                  <div className="relative w-[32px] h-[32px] flex-shrink-0">
+                    <Image
+                      src="/images/admin_manager_layout/reviews.svg"
+                      alt="Rewiews icon"
+                      fill
+                      className="object-contain"
+                    />
+                  </div>
+                  {/* Right Part: Text */}
+                  <span className="ml-[24px] w-[200px] h-[26px] font-semibold text-[16px] leading-[150%] tracking-[-1.1%] text-var(--font-sans) flex items-center">
+                    Відгуки
+                  </span>
+                </Link>
+                {/* Newspaper */}
+                <Link href="#" className="flex items-center w-[260px] h-[40px] px-1 rounded-md">
+                  {/* Left Part: Image Container */}
+                  <div className="relative w-[32px] h-[32px] flex-shrink-0">
+                    <Image
+                      src="/images/admin_manager_layout/books.svg"
+                      alt="Newspaper icon"
+                      fill
+                      className="object-contain"
+                    />
+                  </div>
+                  {/* Right Part: Text */}
+                  <span className="ml-[24px] w-[200px] h-[26px] font-semibold text-[16px] leading-[150%] tracking-[-1.1%] text-var(--font-sans) flex items-center">
+                    Газета
+                  </span>
+                </Link>
+
               </div>
             </div>
           </div>
