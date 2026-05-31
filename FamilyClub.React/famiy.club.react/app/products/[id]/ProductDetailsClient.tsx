@@ -8,6 +8,7 @@ import {
   authorService,
   bookSizeService,
   categoriesService,
+  clubMemberService,
   formatService,
   languageService,
   productService,
@@ -18,6 +19,7 @@ import type {
   AuthorDTO,
   BookSizeDto,
   CategoryDto,
+  ClubMemberReadDto,
   FormatDto,
   LanguageDto,
   ProductDto,
@@ -30,6 +32,8 @@ type ReviewCardData = {
   author: string;
   text: string;
   timeLabel: string;
+  avatar?: string | null;
+  bookImage?: string | null;
 };
 
 const formatPrice = (value?: number | null) => {
@@ -70,6 +74,14 @@ const getImageSrc = (product?: ProductDto | null) => {
           : "image/jpeg";
 
   return `data:${mimeType};base64,${image.imageData}`;
+};
+
+const getAvatarSrc = (avatarData?: string | null) => {
+  if (!avatarData) return null;
+  if (avatarData.startsWith("data:")) {
+    return avatarData;
+  }
+  return `data:image/jpeg;base64,${avatarData}`;
 };
 
 const getGalleryImages = (product?: ProductDto | null) => {
@@ -118,11 +130,19 @@ const desktopReviewLayout = [
   { left: 1497, top: 210, height: 183 },
 ];
 
-function ReviewCard({ author, text, timeLabel }: ReviewCardData) {
+function ReviewCard({ author, text, timeLabel, avatar, bookImage }: ReviewCardData) {
   return (
     <div className="flex h-full flex-col gap-3 rounded-[21px] bg-[#f5f3ee] p-4 shadow-[0px_0px_15px_0px_rgba(0,0,0,0.6)]">
       <div className="flex gap-4">
-        <div className="h-[80px] w-[80px]" />
+        {avatar ? (
+          <img
+            alt=""
+            className="h-[80px] w-[80px] rounded-full object-cover"
+            src={avatar}
+          />
+        ) : (
+          <div className="h-[80px] w-[80px]" />
+        )}
         <div className="flex-1">
           {author ? (
             <p className="font-mono text-[24px] font-medium text-[#242424]">
@@ -135,7 +155,15 @@ function ReviewCard({ author, text, timeLabel }: ReviewCardData) {
             </p>
           ) : null}
         </div>
-        <div className="h-[108px] w-[77px]" />
+        {bookImage ? (
+          <img
+            alt=""
+            className="h-[108px] w-[77px] rounded-[9px] object-cover"
+            src={bookImage}
+          />
+        ) : (
+          <div className="h-[108px] w-[77px]" />
+        )}
       </div>
       {timeLabel ? (
         <div className="flex items-center justify-between">
@@ -170,7 +198,10 @@ function MiniBookCard({
       ) : (
         <div className="h-[160px] w-[120px]" />
       )}
-      <p className="text-center font-mono text-[14px] text-[#242424]">
+      <p
+        className="max-h-[34px] min-h-[34px] overflow-hidden text-center font-mono text-[14px] leading-[1.2] text-[#242424]"
+        title={title}
+      >
         {title}
       </p>
       <span className="text-[16px] text-[#242424]">{price}</span>
@@ -199,6 +230,7 @@ export default function ProductDetailsClient({ id }: { id: string }) {
   const [categories, setCategories] = useState<CategoryDto[]>([]);
   const [formats, setFormats] = useState<FormatDto[]>([]);
   const [bookSizes, setBookSizes] = useState<BookSizeDto[]>([]);
+  const [clubMembers, setClubMembers] = useState<ClubMemberReadDto[]>([]);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   useEffect(() => {
@@ -218,6 +250,7 @@ export default function ProductDetailsClient({ id }: { id: string }) {
           categoriesResult,
           formatsResult,
           bookSizesResult,
+          membersResult,
         ] = await Promise.all([
           productService.apiProductsIdGet({ id: productId }),
           productService.apiProductsGet(),
@@ -228,6 +261,7 @@ export default function ProductDetailsClient({ id }: { id: string }) {
           categoriesService.apiCategoriesGet(),
           formatService.apiFormatsGet(),
           bookSizeService.apiBookSizesGet(),
+          clubMemberService.apiClubMemberGet(),
         ]);
 
         if (!isMounted) return;
@@ -240,6 +274,7 @@ export default function ProductDetailsClient({ id }: { id: string }) {
         setCategories(categoriesResult ?? []);
         setFormats(formatsResult ?? []);
         setBookSizes(bookSizesResult ?? []);
+        setClubMembers(membersResult ?? []);
       } catch (error) {
         console.error("Failed to load product details:", error);
       }
@@ -305,6 +340,25 @@ export default function ProductDetailsClient({ id }: { id: string }) {
   const weightText = formatWeight(currentProduct?.weightGrams);
   const yearText = formatYear(currentProduct?.publishingDate);
 
+  const getFormatTags = (formatIds?: Array<number> | null) => {
+    const tags = new Set<"paper" | "ebook" | "audio">();
+    for (const formatId of formatIds ?? []) {
+      const format = formats.find((item) => item.id === formatId);
+      const label = `${format?.name ?? ""} ${format?.code ?? ""}`.toLowerCase();
+      if (!label) continue;
+      if (label.includes("audio") || label.includes("аудіо")) {
+        tags.add("audio");
+      }
+      if (label.includes("ebook") || label.includes("e-book") || label.includes("електрон")) {
+        tags.add("ebook");
+      }
+      if (label.includes("paper") || label.includes("print") || label.includes("папер")) {
+        tags.add("paper");
+      }
+    }
+    return Array.from(tags);
+  };
+
   const ratingByProductId = useMemo(() => {
     const map = new Map<number, { sum: number; count: number }>();
     for (const review of reviews) {
@@ -319,11 +373,26 @@ export default function ProductDetailsClient({ id }: { id: string }) {
     return map;
   }, [reviews]);
 
+  const memberById = useMemo(() => {
+    const map = new Map<string, ClubMemberReadDto>();
+    for (const member of clubMembers) {
+      if (!member.id) continue;
+      map.set(member.id, member);
+    }
+    return map;
+  }, [clubMembers]);
+
   const getRatingForProduct = (productId?: number) => {
     if (!productId) return 0;
     const entry = ratingByProductId.get(productId);
     if (!entry || entry.count === 0) return 0;
     return entry.sum / entry.count;
+  };
+
+  const getReviewCountForProduct = (productId?: number) => {
+    if (!productId) return 0;
+    const entry = ratingByProductId.get(productId);
+    return entry?.count ?? 0;
   };
 
   const productId = currentProduct?.id ?? Number(id);
@@ -335,13 +404,26 @@ export default function ProductDetailsClient({ id }: { id: string }) {
 
   const reviewCards: ReviewCardData[] = productReviews
     .filter((review) => Boolean(review.comment))
-    .map((review, index) => ({
-      id:
-        review.id ?? review.createdAt?.toISOString() ?? review.comment ?? index,
-      author: review.userId ?? "",
-      text: review.comment ?? "",
-      timeLabel: formatReviewDate(review.createdAt),
-    }));
+    .map((review, index) => {
+      const member = review.userId ? memberById.get(review.userId) : undefined;
+      const nameParts = [member?.name, member?.surname].filter(
+        (part): part is string => Boolean(part),
+      );
+      const authorLabel =
+        nameParts.join(" ") || member?.email || review.userId || "";
+      return {
+        id:
+          review.id ??
+          review.createdAt?.toISOString() ??
+          review.comment ??
+          index,
+        author: authorLabel,
+        text: review.comment ?? "",
+        timeLabel: formatReviewDate(review.createdAt),
+        avatar: getAvatarSrc(member?.avatarData),
+        bookImage: primaryImage,
+      };
+    });
 
   const authorIdSet = new Set(currentProduct?.authorIds ?? []);
   const categoryIdSet = new Set(currentProduct?.categoryIds ?? []);
@@ -355,18 +437,32 @@ export default function ProductDetailsClient({ id }: { id: string }) {
   const booksByAuthorCards = booksByAuthor.slice(0, 4).map((item) => ({
     href: item.id ? `/products/${item.id}` : undefined,
     title: item.productName ?? "",
-    author: null,
+    author: (item.authorIds ?? [])
+      .map((authorId) => authors.find((author) => author.id === authorId)?.authorName)
+      .filter((name): name is string => Boolean(name))
+      .join(", ") || null,
     price: formatPrice(item.discountPrice ?? item.price),
     image: getImageSrc(item),
-    rating: getRatingForProduct(item.id),
+    rating:
+      getReviewCountForProduct(item.id) > 0
+        ? getRatingForProduct(item.id)
+        : null,
+    formatTags: getFormatTags(item.formatIds),
   }));
   const similarBookCards = similarByCategory.slice(0, 4).map((item) => ({
     href: item.id ? `/products/${item.id}` : undefined,
     title: item.productName ?? "",
-    author: null,
+    author: (item.authorIds ?? [])
+      .map((authorId) => authors.find((author) => author.id === authorId)?.authorName)
+      .filter((name): name is string => Boolean(name))
+      .join(", ") || null,
     price: formatPrice(item.discountPrice ?? item.price),
     image: getImageSrc(item),
-    rating: getRatingForProduct(item.id),
+    rating:
+      getReviewCountForProduct(item.id) > 0
+        ? getRatingForProduct(item.id)
+        : null,
+    formatTags: getFormatTags(item.formatIds),
   }));
 
   const productTitle = currentProduct?.productName ?? "";
@@ -659,7 +755,7 @@ export default function ProductDetailsClient({ id }: { id: string }) {
               </div>
             </div>
 
-            {reviewCards.length > 0 ? (
+            {/* {reviewCards.length > 0 ? (
               <>
                 <div className="relative mx-auto mt-8 hidden h-[450px] w-[1920px] max-w-full lg:block">
                   <div className="absolute inset-0 border-[20px] border-[#f5f3ee] shadow-[0px_0px_40px_0px_rgba(0,0,0,0.7)]">
@@ -711,7 +807,7 @@ export default function ProductDetailsClient({ id }: { id: string }) {
                   </div>
                 </div>
               </>
-            ) : null}
+            ) : null} */}
           </section>
 
           {similarBookCards.length > 0 ? (

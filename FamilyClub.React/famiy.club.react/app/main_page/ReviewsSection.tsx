@@ -1,56 +1,76 @@
 import type { CSSProperties } from "react";
 
-const reviews = [
-    {
-        text: "Яскрава, жива історія про свободу та кохання у Нью-Йорку 40-х. Неймовірна атмосфера!",
-    },
-    {
-        text: "Я не просто прочитала цю книгу, я прожила її разом із Лу та Віллом. Це історія не про банальне кохання, а про складний вибір, про те, як одна людина може змінити весь твій світ, навіть якщо ваші шляхи перетнулися за трагічних обставин.",
-    },
-    {
-        text: "Ця книга — справжній струс для мозку. Навіть через десятки років після написання вона вражає тим, наскільки точно автор передав механізми маніпуляції та контролю.",
-    },
-    {
-        text: "Сюжет жорстокий і безжальний, але за горами металу та крові ховається неймовірна психологічна глибина та трагедія.",
-    },
-];
-
-type ReviewCardProps = {
+type ReviewCardData = {
+    id: number | string;
+    author: string;
     text: string;
+    timeLabel: string;
+    avatar?: string | null;
+    bookImage?: string | null;
+    rating?: number | null;
+};
+
+type ReviewCardProps = ReviewCardData & {
     className?: string;
     style?: CSSProperties;
 };
 
-function ReviewCard({ text, className, style }: ReviewCardProps) {
+const formatRating = (value?: number | null) => {
+    if (value == null) return "";
+    return Number.isInteger(value) ? `${value}` : value.toFixed(1);
+};
+
+function ReviewCard({ author, text, timeLabel, avatar, bookImage, rating, className, style }: ReviewCardProps) {
     return (
         <div
             className={`flex h-full flex-col gap-3 rounded-[21px] bg-[#f5f3ee] p-4 shadow-[0px_0px_15px_0px_rgba(0,0,0,0.6)] ${className ?? ""}`}
             style={style}
         >
             <div className="flex gap-4">
-                <img alt="" className="h-[80px] w-[80px]" src="/images/main_page/reviews/reviews-avatar.png" />
+                {avatar ? (
+                    <img alt="" className="h-[80px] w-[80px] rounded-full object-cover" src={avatar} />
+                ) : (
+                    <div className="h-[80px] w-[80px]" />
+                )}
                 <div className="flex-1">
-                    <p className="font-mono text-[24px] font-medium text-[#242424]">Олена В.</p>
+                    {author ? (
+                        <p className="font-mono text-[24px] font-medium text-[#242424]">{author}</p>
+                    ) : null}
                     <p className="mt-2 max-h-[120px] overflow-hidden text-[14px] text-[#242424]">{text}</p>
                 </div>
-                <img
-                    alt=""
-                    className="h-[108px] w-[77px] rounded-[9px] object-cover"
-                    src="/images/main_page/reviews/reviews-book.png"
-                />
+                {bookImage ? (
+                    <img
+                        alt=""
+                        className="h-[108px] w-[77px] rounded-[9px] object-cover"
+                        src={bookImage}
+                    />
+                ) : (
+                    <div className="h-[108px] w-[77px]" />
+                )}
             </div>
             <div className="flex items-center justify-between">
-                <span className="text-[14px] font-medium text-[#242424]">15 хв тому</span>
-                <div className="flex items-center gap-2">
-                    <span className="text-[16px] text-[#242424]">798</span>
-                    <img alt="" className="h-[30px] w-[30px]" src="/images/main_page/icons/reviews-heart.png" />
-                </div>
+                {timeLabel ? (
+                    <span className="text-[14px] font-medium text-[#242424]">{timeLabel}</span>
+                ) : (
+                    <span />
+                )}
+                {rating != null ? (
+                    <div className="flex items-center gap-2">
+                        <span className="text-[16px] text-[#242424]">{formatRating(rating)}</span>
+                        <img alt="" className="h-[30px] w-[30px]" src="/images/main_page/icons/reviews-heart.png" />
+                    </div>
+                ) : null}
             </div>
         </div>
     );
 }
 
-export default function ReviewsSection() {
+type ReviewsSectionProps = {
+    reviews: ReviewCardData[];
+};
+
+export default function ReviewsSection({ reviews }: ReviewsSectionProps) {
+    if (!reviews.length) return null;
     const expandedReviews = [...reviews, ...reviews];
     const desktopLayout = [
         { left: -84, top: 22, height: 217 },
@@ -75,10 +95,10 @@ export default function ReviewsSection() {
                 </div>
                 {desktopLayout.map((layout, index) => (
                     <ReviewCard
-                        key={`${expandedReviews[index]?.text}-${index}`}
+                        key={`${expandedReviews[index]?.id}-${index}`}
                         className="absolute w-[507px]"
                         style={{ left: layout.left, top: layout.top, height: layout.height }}
-                        text={expandedReviews[index]?.text ?? ""}
+                        {...expandedReviews[index]}
                     />
                 ))}
             </div>
@@ -92,7 +112,7 @@ export default function ReviewsSection() {
                     />
                     <div className="relative grid gap-6 px-6 py-8 md:grid-cols-2">
                         {expandedReviews.map((review, index) => (
-                            <ReviewCard key={`${review.text}-${index}`} text={review.text} />
+                            <ReviewCard key={`${review.id}-${index}`} {...review} />
                         ))}
                     </div>
                 </div>

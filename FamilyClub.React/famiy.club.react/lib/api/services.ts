@@ -6,6 +6,7 @@ import {
   AuthClubMemberApi,
   BookSizesApi,
   CategoriesApi,
+  ClubMemberApi,
   FormatsApi,
   ReviewsApi,
   LanguagesApi,
@@ -24,6 +25,7 @@ export const productService = new ProductsApi(apiConfig);
 export const authorService = new AuthorsApi(apiConfig);
 export const authService = new AuthClubMemberApi(apiConfig);
 export const categoriesService = new CategoriesApi(apiConfig);
+export const clubMemberService = new ClubMemberApi(apiConfig);
 export const formatService = new FormatsApi(apiConfig);
 export const bookSizeService = new BookSizesApi(apiConfig);
 export const reviewService = new ReviewsApi(apiConfig);
