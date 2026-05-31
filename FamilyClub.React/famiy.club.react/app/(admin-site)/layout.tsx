@@ -3,8 +3,7 @@ import type { Metadata } from "next";
 import "../../styles/globals.css";
 import { Source_Sans_3, Roboto_Mono } from 'next/font/google';
 import UpNavigation from "../(user-site)/layout/header/UpNavigation";
-import Image from 'next/image';
-import Link from 'next/link';
+import AdminLayoutSidebarItems from './layout/layoutNav';
 const sourceSans = Source_Sans_3({
   subsets: ['cyrillic', 'latin'],
   variable: '--font-sans', // Назва CSS змінної для використання шрифту в стилях
@@ -42,21 +41,19 @@ export default async function AdminLayout({ children }: { children: React.ReactN
             className="absolute"
             style={{
               width: "315px",
-              minHeight: "950px",
+              minHeight: "880px",
               height: "max-content",
-              top: "101.76px",
+              top: "71.76px",
               left: "49.71px",
-              // background: "#F5F3EE",
               border: "15px solid transparent",
               opacity: 1,
               backgroundImage: "url('/images/admin_manager_layout/sidebar_bg.png')",
-              // backgroundSize: "cover",
               backgroundSize: "100% 100%",
               backgroundPosition: "center",
               backgroundRepeat: "no-repeat",
               display: "flex",
-    flexDirection: "row",
-    gap: "10px", //
+            flexDirection: "row",
+            gap: "5px", //
             }}
           >
             {/* Content of sidebar */}
@@ -67,7 +64,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
                 style={{
                   width: "294px",
                   height: "60px",
-                  top: "140.76px",
+                  top: "120.76px",
                   left: "69.71px",
                   paddingLeft: "25px",
                   paddingRight: "25px",
@@ -130,233 +127,8 @@ export default async function AdminLayout({ children }: { children: React.ReactN
               </div>
 
               {/*List of items in sidebar*/}
-              <div className="absolute w-[260px] h-[625px] top-[104.76px]  left-[23.71px] gap-[25px] flex flex-col opacity-100">
-                {/* Desktop */}
-                <Link href="#" className="flex items-center  w-[260px] h-[40px] px-1 rounded-md">
-                  {/* Left Part: Image Container */}
-                  <div className="relative w-[32px] h-[32px] flex-shrink-0">
-                    <Image
-                      src="/images/admin_manager_layout/desktop.svg"
-                      alt="Desktop icon"
-                      fill
-                      className="object-contain"
-                    />
-                  </div>
-                  {/* Right Part: Text */}
-                  <span className="ml-[24px] w-[200px] h-[26px] font-sans font-semibold text-[16px] leading-[150%] tracking-[-1.1%] text-var(--font-sans) flex items-center">
-                    Робочий стіл
-                  </span>
-                </Link>
-                {/* Managers */}
-                <Link href="#" className="flex items-center w-[260px] h-[40px] px-1 rounded-md">
-                  {/* Left Part: Image Container */}
-                  <div className="relative w-[32px] h-[32px] flex-shrink-0">
-                    <Image
-                      src="/images/admin_manager_layout/managers.svg"
-                      alt="Managers icon"
-                      fill
-                      className="object-contain"
-                    />
-                  </div>
-                  {/* Right Part: Text */}
-                  <span className="ml-[24px] w-[200px] h-[26px] font-sans font-semibold text-[16px] leading-[150%] tracking-[-1.1%] text-var(--font-sans) flex items-center">
-                    Менеджери
-                  </span>
-                </Link>
-                {/* Users */}
-                <Link href="#" className="flex items-center w-[260px] h-[40px] px-1 rounded-md">
-                  {/* Left Part: Image Container */}
-                  <div className="relative w-[32px] h-[32px] flex-shrink-0">
-                    <Image
-                      src="/images/admin_manager_layout/users.svg"
-                      alt="Users icon"
-                      fill
-                      className="object-contain"
-                    />
-                  </div>
-                  {/* Right Part: Text */}
-                  <span className="ml-[24px] w-[200px] h-[26px] font-sans font-semibold text-[16px] leading-[150%] tracking-[-1.1%] text-var(--font-sans) flex items-center">
-                    Користувачі
-                  </span>
-                </Link>
-                {/* Roles and access */}
-                <Link href="#" className="flex items-center w-[260px] h-[40px] px-1 rounded-md">
-                  {/* Left Part: Image Container */}
-                  <div className="relative w-[32px] h-[32px] flex-shrink-0">
-                    <Image
-                      src="/images/admin_manager_layout/roles.svg"
-                      alt="Roles icon"
-                      fill
-                      className="object-contain"
-                    />
-                  </div>
-                  {/* Right Part: Text */}
-                  <span className="ml-[24px] w-[200px] h-[26px] font-sans font-semibold text-[16px] leading-[150%] tracking-[-1.1%] text-var(--font-sans) flex items-center">
-                    Ролі та доступи
-                  </span>
-                </Link>
-                {/* Analitics */}
-                <Link href="#" className="flex items-center w-[260px] h-[40px] px-1 rounded-md">
-                  {/* Left Part: Image Container */}
-                  <div className="relative w-[32px] h-[32px] flex-shrink-0">
-                    <Image
-                      src="/images/admin_manager_layout/analitics.svg"
-                      alt="Analitics icon"
-                      fill
-                      className="object-contain"
-                    />
-                  </div>
-                  {/* Right Part: Text */}
-                  <span className="ml-[24px] w-[200px] h-[26px] font-sans font-semibold text-[16px] leading-[150%] tracking-[-1.1%] text-var(--font-sans) flex items-center">
-                    Аналітика
-                  </span>
-                </Link>
-                {/* System and safety */}
-                <Link href="#" className="flex items-center w-[260px] h-[40px] px-1 rounded-md">
-                  {/* Left Part: Image Container */}
-                  <div className="relative w-[32px] h-[32px] flex-shrink-0">
-                    <Image
-                      src="/images/admin_manager_layout/system_and_safety.svg"
-                      alt="System_and_safety icon"
-                      fill
-                      className="object-contain"
-                    />
-                  </div>
-                  {/* Right Part: Text */}
-                  <span className="ml-[24px] w-[200px] h-[26px] font-sans font-semibold text-[16px] leading-[150%] tracking-[-1.1%] text-var(--font-sans) flex items-center">
-                    Система і безпека
-                  </span>
-                </Link>
-                {/* Platform complaints */}
-                <Link href="#" className="flex items-center w-[260px] h-[40px] px-1 rounded-md">
-                  {/* Left Part: Image Container */}
-                  <div className="relative w-[32px] h-[32px] flex-shrink-0">
-                    <Image
-                      src="/images/admin_manager_layout/platform_complaints.svg"
-                      alt="Users icon"
-                      fill
-                      className="object-contain"
-                    />
-                  </div>
-                  {/* Right Part: Text */}
-                  <span className="ml-[24px] w-[200px] h-[26px] font-sans font-semibold text-[16px] leading-[150%] tracking-[-1.1%] text-var(--font-sans) flex items-center">
-                    Скарги платформи
-                  </span>
-                </Link>
-                {/* {Platform settings */}
-                <Link href="#" className="flex items-center w-[260px] h-[40px] px-1 rounded-md">
-                  {/* Left Part: Image Container */}
-                  <div className="relative w-[32px] h-[32px] flex-shrink-0">
-                    <Image
-                      src="/images/admin_manager_layout/platform_settings.svg"
-                      alt="Platform settings icon"
-                      fill
-                      className="object-contain"
-                    />
-                  </div>
-                  {/* Right Part: Text */}
-                  <span className="ml-[24px] w-[200px] h-[26px] font-sans font-semibold text-[16px] leading-[150%] tracking-[-1.1%] text-var(--font-sans) flex items-center">
-                    Налаштування платформи
-                  </span>
-                </Link>
-                {/* Log */}
-                <Link href="#" className="flex items-center w-[260px] h-[40px] px-1 rounded-md">
-                  {/* Left Part: Image Container */}
-                  <div className="relative w-[32px] h-[32px] flex-shrink-0">
-                    <Image
-                      src="/images/admin_manager_layout/actions_log.svg"
-                      alt="Actions_log icon"
-                      fill
-                      className="object-contain"
-                    />
-                  </div>
-                  {/* Right Part: Text */}
-                  <span className="ml-[24px] w-[200px] h-[26px] font-sans font-semibold text-[16px] leading-[150%] tracking-[-1.1%] text-var(--font-sans) flex items-center">
-                    Журнал дій
-                  </span>
-                </Link>
-                {/* My settings */}
-                <Link href="#" className="flex items-center w-[260px] h-[40px] px-1 rounded-md">
-                  {/* Left Part: Image Container */}
-                  <div className="relative w-[32px] h-[32px] flex-shrink-0">
-                    <Image
-                      src="/images/admin_manager_layout/my_settings.svg"
-                      alt="My_settings icon"
-                      fill
-                      className="object-contain"
-                    />
-                  </div>
-                  {/* Right Part: Text */}
-                  <span className="ml-[24px] w-[200px] h-[26px] font-semibold text-[16px] leading-[150%] tracking-[-1.1%] text-var(--font-sans) flex items-center">
-                    Мої налаштування
-                  </span>
-                </Link>
-                {/* Books */}
-                <Link href="#" className="flex items-center w-[260px] h-[40px] px-1 rounded-md">
-                  {/* Left Part: Image Container */}
-                  <div className="relative w-[32px] h-[32px] flex-shrink-0">
-                    <Image
-                      src="/images/admin_manager_layout/books.svg"
-                      alt="Books icon"
-                      fill
-                      className="object-contain"
-                    />
-                  </div>
-                  {/* Right Part: Text */}
-                  <span className="ml-[24px] w-[200px] h-[26px] font-semibold text-[16px] leading-[150%] tracking-[-1.1%] text-var(--font-sans) flex items-center">
-                    Книги
-                  </span>
-                </Link>
-                {/* Orders */}
-                <Link href="#" className="flex items-center w-[260px] h-[40px] px-1 rounded-md">
-                  {/* Left Part: Image Container */}
-                  <div className="relative w-[32px] h-[32px] flex-shrink-0">
-                    <Image
-                      src="/images/admin_manager_layout/orders.svg"
-                      alt="Orders icon"
-                      fill
-                      className="object-contain"
-                    />
-                  </div>
-                  {/* Right Part: Text */}
-                  <span className="ml-[24px] w-[200px] h-[26px] font-semibold text-[16px] leading-[150%] tracking-[-1.1%] text-var(--font-sans) flex items-center">
-                    Замовлення
-                  </span>
-                </Link>
-                {/* Rewiews */}
-                <Link href="#" className="flex items-center w-[260px] h-[40px] px-1 rounded-md">
-                  {/* Left Part: Image Container */}
-                  <div className="relative w-[32px] h-[32px] flex-shrink-0">
-                    <Image
-                      src="/images/admin_manager_layout/reviews.svg"
-                      alt="Rewiews icon"
-                      fill
-                      className="object-contain"
-                    />
-                  </div>
-                  {/* Right Part: Text */}
-                  <span className="ml-[24px] w-[200px] h-[26px] font-semibold text-[16px] leading-[150%] tracking-[-1.1%] text-var(--font-sans) flex items-center">
-                    Відгуки
-                  </span>
-                </Link>
-                {/* Newspaper */}
-                <Link href="#" className="flex items-center w-[260px] h-[40px] px-1 rounded-md">
-                  {/* Left Part: Image Container */}
-                  <div className="relative w-[32px] h-[32px] flex-shrink-0">
-                    <Image
-                      src="/images/admin_manager_layout/books.svg"
-                      alt="Newspaper icon"
-                      fill
-                      className="object-contain"
-                    />
-                  </div>
-                  {/* Right Part: Text */}
-                  <span className="ml-[24px] w-[200px] h-[26px] font-semibold text-[16px] leading-[150%] tracking-[-1.1%] text-var(--font-sans) flex items-center">
-                    Газета
-                  </span>
-                </Link>
-
-              </div>
+              <AdminLayoutSidebarItems/>
+              
             </div>
           </div>
         </aside>
