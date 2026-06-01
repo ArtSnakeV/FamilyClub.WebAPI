@@ -2,14 +2,14 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
-import { useProductData } from "@/app/addProduct/hooks/useProductData";
-import { useImageUpload } from "@/app/addProduct/hooks/useImageUpload";
-import { BasicInfoSection } from "@/app/addProduct/sections/BasicInfoSection";
-import { CharacteristicsSection } from "@/app/addProduct/sections/CharacteristicsSection";
-import { GenresSection } from "@/app/addProduct/sections/GenresSection";
-import { ImageUploadSection } from "@/app/addProduct/sections/ImageUploadSection";
-import { SaleSection } from "@/app/addProduct/sections/SaleSection";
-import { useISBNLookup } from "@/app/addProduct/hooks/useISBNLookup";
+import { useProductData } from "@/app/(user-site)/addProduct/hooks/useProductData";
+import { useImageUpload } from "@/app/(user-site)/addProduct/hooks/useImageUpload";
+import { BasicInfoSection } from "@/app/(user-site)/addProduct/sections/BasicInfoSection";
+import { CharacteristicsSection } from "@/app/(user-site)/addProduct/sections/CharacteristicsSection";
+import { GenresSection } from "@/app/(user-site)/addProduct/sections/GenresSection";
+import { ImageUploadSection } from "@/app/(user-site)/addProduct/sections/ImageUploadSection";
+import { SaleSection } from "@/app/(user-site)/addProduct/sections/SaleSection";
+import { useISBNLookup } from "@/app/(user-site)/addProduct/hooks/useISBNLookup";
 import useEditForm from "./hooks/useEditForm";
 import useSubmitEdit from "./hooks/useSubmitEdit";
 

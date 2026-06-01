@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { CoverType } from "@/lib/api/generated";
-import { ProductDto } from "@/app/addProduct/types";
+import { ProductDto } from "@/app/(user-site)/addProduct/types";
 
 const initialDto: ProductDto = {
   productName: "",

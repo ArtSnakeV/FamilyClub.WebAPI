@@ -4,6 +4,7 @@ import "../../styles/globals.css";
 import { Source_Sans_3, Roboto_Mono } from 'next/font/google';
 import UpNavigation from "../(user-site)/layout/header/UpNavigation";
 import AdminLayoutSidebarItems from './layout/layoutNav';
+import "../../styles/globals.css";
 const sourceSans = Source_Sans_3({
   subsets: ['cyrillic', 'latin'],
   variable: '--font-sans', // Назва CSS змінної для використання шрифту в стилях

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ImageUploadState } from "@/app/addProduct/types";
+import { ImageUploadState } from "@/app/(user-site)/addProduct/types";
 
 export function useImageUpload(): ImageUploadState {
   const [mainImage, setMainImage] = useState<File | null>(null);

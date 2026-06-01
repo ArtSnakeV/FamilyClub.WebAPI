@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import BookCard from "@/app/main_page/BookCard";
+import BookCard from "@/app/(user-site)/main_page/BookCard";
 import {
   authorService,
   bookSizeService,
@@ -26,7 +26,7 @@ import type {
   PublisherDto,
   ReviewDto,
 } from "@/lib/api/generated";
-import { productsApi } from "@/app/addProduct/api/productApiClient";
+import { productsApi } from "@/app/(user-site)/addProduct/api/productApiClient";
 type ReviewCardData = {
   id: number | string;
   author: string;

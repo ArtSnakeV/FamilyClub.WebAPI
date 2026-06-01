@@ -1,9 +1,9 @@
 import { AuthorDTO, PublisherDto } from "@/lib/api/generated";
-import { ProductDto } from "@/app/addProduct/types";
-import { SectionCard } from "@/app/addProduct/ui/SectionCard";
-import AuthorSelectForm from "@/app/addProduct/AuthorSelectForm";
-import PublisherSelectForm from "@/app/addProduct/PublisherSelectForm";
-import ISBNForm from "@/app/addProduct/ISBNForm";
+import { ProductDto } from "@/app/(user-site)/addProduct/types";
+import { SectionCard } from "@/app/(user-site)/addProduct/ui/SectionCard";
+import AuthorSelectForm from "@/app/(user-site)/addProduct/AuthorSelectForm";
+import PublisherSelectForm from "@/app/(user-site)/addProduct/PublisherSelectForm";
+import ISBNForm from "@/app/(user-site)/addProduct/ISBNForm";
 
 type Props = {
   form: ProductDto;

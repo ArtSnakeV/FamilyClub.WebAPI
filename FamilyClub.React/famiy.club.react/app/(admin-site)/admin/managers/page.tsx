@@ -9,6 +9,7 @@ export default async function Managers() {
                 style={{
                     width: '1492.88px',
                     height: '1062.04px',
+                    padding: '20px',
                     backgroundImage: "url('/images/entities/main_field_background.svg')",
                 }}
             >
