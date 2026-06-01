@@ -1,15 +1,23 @@
 import Link from 'next/link';
 import BooksNav from './booksNav';
+import Image from "next/image";
+import { ProductsApi } from '@/lib/api/generated'; // To get info about our Books
 
 export default async function AllBooks() {
+    // Let's get data about our products
+    const api = new ProductsApi();
+    const products = await api.apiProductsGet();
+    const productNames = products.map(p => p.productName);
+
+
     return (
         <>
-        
+
             {/* Top part (Header)*/}
             {/* Links for entities pages */}
             {/* Ссилки на сторінки сутностей */}
-            <BooksNav/>
-                
+            <BooksNav />
+
 
             {/* Main content part*/}
             <div
@@ -24,6 +32,9 @@ export default async function AllBooks() {
                 <div className="absolute inset-[25px] overflow-auto">
 
                     {/* Content goes here */}
+
+                    {/* Search part */}
+                    {/* search_icon.svg */}
                     <div
                         className="w-full flex items-center gap-[10px] p-[10px]"
                         style={{
@@ -35,21 +46,53 @@ export default async function AllBooks() {
                             - `min-w-[100px]`: Prevents the input from shrinking smaller than 100px on tiny screens.
                             - `h-[49px]`: Sets the master height for the row elements.
                         */}
-                        <input
-                            type="text"
-                            placeholder="Введіть будь ласка назву нової книги"
-                            className="flex-1 min-w-[100px] h-[49px] border border-gray-300 rounded-[9px] px-4 outline-none focus:border-[#005B33] transition-colors"
-                            style={{
-                                // Opacity 0.5 can be applied directly to the text/placeholder via Tailwind if needed
-                            }}
-                        />
-
+                        <div className="relative w-full max-w-[684px]">
+                            <input
+                                type="text"
+                                placeholder="Введіть будь ласка назву книги для пошуку"
+                                className="
+                                    w-full
+                                    h-[49px]
+                                    border border-gray-300
+                                    rounded-[9px]
+                                    pl-4
+                                    pr-12
+                                    outline-none
+                                    focus:border-[#005B33]
+                                    transition-colors
+                                "
+                            />
+                            <button
+                                type="button"
+                                // onClick={() => {
+                                //     console.log("Search clicked");
+                                // }}
+                                className="
+                                    absolute
+                                    right-4
+                                    top-1/2
+                                    -translate-y-1/2
+                                    flex
+                                    items-center
+                                    justify-center
+                                    cursor-pointer
+                                "
+                                aria-label="Search"
+                            >
+                                <Image
+                                    src="/images/common_icons/search_icon.svg"
+                                    alt=""
+                                    width={20}
+                                    height={20}
+                                />
+                            </button>
+                        </div>
                         {/* Action Button:
                             - `h-[49px]`: Matches the input height exactly.
                             - `w-[164px]`: Keeps your fixed Figma width for the button action.
                             - `flex-shrink-0`: Prevents the button from squeezing or changing shape when the page gets small.
                         */}
-                        <button
+                        {/* <button
                             type="submit"
                             className="flex-shrink-0 w-[164px] h-[49px] flex items-center justify-center bg-[#005B33] text-white font-medium hover:bg-[#004426] transition-all duration-200"
                             style={{
@@ -59,8 +102,31 @@ export default async function AllBooks() {
                             }}
                         >
                             <span>Додати</span>
-                        </button>
+                        </button> */}
                     </div>
+                    
+
+                    <h1>Books:</h1>
+                    {/* List of Books */}
+                    <div className="grid gap-4">
+                        {products.map((product) => (
+                            <div 
+                                key={product.id} 
+                                className="p-4 border border-brand-black/10 rounded shadow-sm bg-white"
+                            >
+                                <h2 className="text-lg font-semibold text-primary-action">
+                                    {product.productName || "Unnamed Category"}
+                                </h2>
+                                <p className="text-brand-black opacity-70 font-mono text-sm">
+                                    ID: {product.id}
+                                </p>
+                            </div>
+                        ))}
+                    </div>
+                    
+
+
+
 
                     {/* Table Section */}
                     <div className="mt-8 px-[20px] w-full text-left">
