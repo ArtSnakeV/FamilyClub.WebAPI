@@ -13,8 +13,12 @@ export function SectionCard({
 }: Props) {
   return (
     <div
-      className={`w-full min-h-full bg-cover bg-center pb-[48px] ${className ?? ""}`}
-      style={{ backgroundImage: `url('${backgroundImage}')` }}
+      className={`w-full min-h-full ${className ?? ""}`}
+      style={{
+        backgroundImage: `url('${backgroundImage}')`,
+        backgroundSize: "96% 90%",
+        backgroundRepeat: "no-repeat",
+      }}
     >
       <div
         className="-ml-[10px] mt-[48px] bg-cover bg-center w-[420px] h-[72px] flex items-center justify-center"
