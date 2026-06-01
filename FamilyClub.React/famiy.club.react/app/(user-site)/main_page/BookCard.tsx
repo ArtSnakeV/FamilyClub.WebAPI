@@ -7,13 +7,30 @@ type BookCardProps = {
     image?: string | null;
     rating?: number | null;
     href?: string;
+    formatTags?: Array<"paper" | "ebook" | "audio">;
 };
 
 const clampRating = (value: number) => Math.max(0, Math.min(5, value));
 
-export default function BookCard({ title, author, price, image, rating, href }: BookCardProps) {
+const formatIconMap = {
+    paper: {
+        bg: "/images/main_page/icons/rec-icon-paper-bg.png",
+        icon: "/images/main_page/icons/rec-icon-paper.png",
+    },
+    ebook: {
+        bg: "/images/main_page/icons/rec-icon-ebook-bg.png",
+        icon: "/images/main_page/icons/rec-icon-ebook.png",
+    },
+    audio: {
+        bg: "/images/main_page/icons/rec-icon-audio-bg.png",
+        icon: "/images/main_page/icons/rec-icon-audio.png",
+    },
+};
+
+export default function BookCard({ title, author, price, image, rating, href, formatTags }: BookCardProps) {
     const roundedRating = clampRating(Math.round(rating ?? 0));
-    const starString = Array.from({ length: 5 }, (_, index) => (index < roundedRating ? "★" : "☆")).join("");
+    const ratingStars = Array.from({ length: 5 }, (_, index) => (index < roundedRating ? "★" : "☆"));
+    const activeFormatTags = formatTags?.length ? formatTags : [];
 
     const card = (
         <div className="relative h-[400px] w-[260px]">
@@ -25,62 +42,41 @@ export default function BookCard({ title, author, price, image, rating, href }: 
                 }}
             />
 
-            <div className="absolute left-0 top-[20px] flex flex-col gap-2">
-                {[
-                    {
-                        bg: "/images/main_page/icons/rec-icon-paper-bg.png",
-                        icon: "/images/main_page/icons/rec-icon-paper.png",
-                    },
-                    {
-                        bg: "/images/main_page/icons/rec-icon-ebook-bg.png",
-                        icon: "/images/main_page/icons/rec-icon-ebook.png",
-                    },
-                    {
-                        bg: "/images/main_page/icons/rec-icon-audio-bg.png",
-                        icon: "/images/main_page/icons/rec-icon-audio.png",
-                    },
-                ].map((item) => (
-                    <div key={item.icon} className="relative h-[30px] w-[30px]">
-                        <img alt="" className="absolute inset-0" src={item.bg} />
-                        <img alt="" className="absolute inset-[5px]" src={item.icon} />
-                    </div>
-                ))}
-            </div>
+            {activeFormatTags.length > 0 ? (
+                <div className="absolute left-0 top-[20px] flex flex-col gap-2">
+                    {activeFormatTags.map((tag) => {
+                        const item = formatIconMap[tag];
+                        return (
+                            <div key={tag} className="relative h-[30px] w-[30px]">
+                                <img alt="" className="absolute inset-0" src={item.bg} />
+                                <img alt="" className="absolute inset-[5px]" src={item.icon} />
+                            </div>
+                        );
+                    })}
+                </div>
+            ) : null}
 
             <img
                 alt=""
-                className="absolute right-[18px] top-[20px] h-[34px] w-[34px]"
-                src="/images/main_page/icons/rec-icon-favorite.png"
+                className="absolute right-[18px] top-[20px] z-10 h-[34px] w-[34px]"
+                src="/images/header/favorite_border_24px.png"
             />
 
             {image ? (
                 <img
                     alt={title}
-                    className="absolute left-1/2 top-[20px] h-[250px] w-[184px] -translate-x-1/2 object-contain"
+                    className="absolute left-1/2 top-[20px] h-[190px] w-[140px] -translate-x-1/2 object-contain"
                     src={image}
                 />
             ) : (
-                <div className="absolute left-1/2 top-[20px] h-[250px] w-[184px] -translate-x-1/2" />
+                <div className="absolute left-1/2 top-[20px] h-[190px] w-[140px] -translate-x-1/2" />
             )}
 
             <div className="absolute bottom-[20px] left-[20px] right-[20px]">
-                {/* User edits (placeholder stars) commented out as requested. */}
-                {/*
-                <div className="mb-3 flex gap-1">
-                    {ratingStars.map((_, index) => (
-                        "☆"
-                        // "★"
-                        // <img
-                        //     alt=""
-                        //     className="h-[21px] w-[21px]"
-                        //     key={index}
-                        //     src="/images/main_page/icons/rec-icon-star.png"
-                        // />
-                    ))}
-                </div>
-                */}
                 <div className="mb-3 flex gap-1 text-[21px] tracking-[2px]" aria-label={`Рейтинг ${roundedRating}/5`}>
-                    {starString}
+                    {ratingStars.map((star, index) => (
+                        <span key={`${title}-star-${index}`}>{star}</span>
+                    ))}
                 </div>
 
                 <div className="mb-3">

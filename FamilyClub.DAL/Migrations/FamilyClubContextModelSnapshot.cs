@@ -22,6 +22,25 @@ namespace FamilyClub.DAL.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("AgeRestrictionProduct", b =>
+                {
+                    b.Property<int>("AgeRestrictionsId")
+                        .HasColumnType("integer")
+                        .HasColumnName("age_restrictions_id");
+
+                    b.Property<int>("ProductsId")
+                        .HasColumnType("integer")
+                        .HasColumnName("products_id");
+
+                    b.HasKey("AgeRestrictionsId", "ProductsId")
+                        .HasName("pk_products_age_restrictions");
+
+                    b.HasIndex("ProductsId")
+                        .HasDatabaseName("ix_products_age_restrictions_products_id");
+
+                    b.ToTable("ProductsAgeRestrictions", (string)null);
+                });
+
             modelBuilder.Entity("AuthorProduct", b =>
                 {
                     b.Property<int>("AuthorsId")
@@ -77,6 +96,31 @@ namespace FamilyClub.DAL.Migrations
                         .HasDatabaseName("ix_product_categories_products_id");
 
                     b.ToTable("ProductCategories", (string)null);
+                });
+
+            modelBuilder.Entity("FamilyClubLibrary.AgeRestriction", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("code");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("name");
+
+                    b.HasKey("Id")
+                        .HasName("pk_age_restrictions");
+
+                    b.ToTable("age_restrictions", (string)null);
                 });
 
             modelBuilder.Entity("FamilyClubLibrary.Author", b =>
@@ -414,10 +458,6 @@ namespace FamilyClub.DAL.Migrations
                         .HasColumnName("id");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int?>("AgeRestriction")
-                        .HasColumnType("integer")
-                        .HasColumnName("age_restriction");
 
                     b.Property<int?>("Availability")
                         .HasColumnType("integer")
@@ -912,6 +952,23 @@ namespace FamilyClub.DAL.Migrations
                         .HasDatabaseName("ix_product_translators_translators_id");
 
                     b.ToTable("ProductTranslators", (string)null);
+                });
+
+            modelBuilder.Entity("AgeRestrictionProduct", b =>
+                {
+                    b.HasOne("FamilyClubLibrary.AgeRestriction", null)
+                        .WithMany()
+                        .HasForeignKey("AgeRestrictionsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_products_age_restrictions_age_restrictions_age_restrictions_id");
+
+                    b.HasOne("FamilyClubLibrary.Product", null)
+                        .WithMany()
+                        .HasForeignKey("ProductsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_products_age_restrictions_products_products_id");
                 });
 
             modelBuilder.Entity("AuthorProduct", b =>

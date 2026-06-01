@@ -32,14 +32,14 @@ export default function AuthorSelectForm({
 
   return (
     <>
-      <p className="pt-2 text-[var(--color-black)] font-sans-pro font-normal text-[24px] leading-[150%] tracking-[-0.011em]">
+      <p className="pt-3 text-[var(--color-black)] font-sans-pro font-normal text-[18px] leading-[150%] tracking-[-0.011em]">
         Автор(и) *
       </p>
       <div className="relative w-full">
         <button
           type="button"
           onClick={() => setOpen((o) => !o)}
-          className={`w-full text-left rounded-[9px] bg-[var(--color-white)] shadow-[0px_0px_10px_0px_#00000040] h-[44px] px-3 truncate
+          className={`w-full text-left rounded-[9px] bg-[var(--color-white)] shadow-[0px_0px_10px_0px_#00000040] h-[40px] px-3 truncate
     ${value.length > 0 ? "text-[var(--color-black)]" : "text-gray-500"}
   `}
         >

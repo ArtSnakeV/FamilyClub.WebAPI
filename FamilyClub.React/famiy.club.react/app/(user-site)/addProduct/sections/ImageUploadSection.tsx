@@ -9,7 +9,7 @@ export function ImageUploadSection({ images }: Props) {
   return (
     <>
       <div className="flex justify-center items-center">
-        <p className="font-['Roboto_Mono'] font-bold text-[48px] leading-[150%] tracking-[-0.011em] text-center">
+        <p className="font-['Roboto_Mono'] font-bold text-[34px] leading-[150%] tracking-[-0.011em] text-center">
           Головне фото
         </p>
       </div>
@@ -17,25 +17,28 @@ export function ImageUploadSection({ images }: Props) {
       <ImageUploadSlot
         preview={images.mainPreview}
         onChange={images.handleMainChange}
-        height="h-[482px]"
-        ellipseSize="w-[146px] h-[146px]"
-        iconSize="w-[88px] h-[88px]"
+        height="h-[346px]"
+        width="w-[260px]"
+        ellipseSize="w-[106px] h-[106px]"
+        iconSize="w-[56px] h-[56px]"
+        titleMt="-mt-[20px]"
+        titleMl="ml-[20px]"
       />
 
-      <div className="h-[540px] flex flex-col items-center">
-        <p className="font-['Roboto_Mono'] font-bold text-[24px] leading-[150%] tracking-[-0.011em] text-center mb-4">
+      <div className="h-[540px] flex relative -mt-4 flex-col items-center">
+        <p className="font-['Roboto_Mono'] font-bold text-[18px] leading-[150%] tracking-[-0.011em] text-center mb-4">
           Додаткові фото
         </p>
-        <div className="grid grid-cols-2 gap-[46px]">
+        <div className="grid grid-cols-2 gap-[34px]">
           {images.gallery.map((item, index) => (
             <ImageUploadSlot
               key={index}
               preview={item ? URL.createObjectURL(item) : null}
               onChange={(file) => images.handleGalleryChange(index, file)}
-              height="h-[213px]"
-              width="w-[158px]"
-               ellipseSize="w-[64px] h-[64px]"
-              iconSize="w-[38px] h-[38px]"
+              height="h-[169px]"
+              width="w-[110px]"
+              ellipseSize="w-[46px] h-[46px]"
+              iconSize="w-[32px] h-[32px]"
             />
           ))}
         </div>

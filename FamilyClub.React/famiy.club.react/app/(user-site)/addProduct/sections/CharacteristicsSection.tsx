@@ -1,4 +1,9 @@
-import { LanguageDto, FormatDto, BookSizeDto } from "@/lib/api/generated";
+import {
+  LanguageDto,
+  FormatDto,
+  BookSizeDto,
+  AgeRestrictionDto,
+} from "@/lib/api/generated";
 import { ProductDto } from "@/app/addProduct/types";
 import { SectionCard } from "@/app/addProduct/ui/SectionCard";
 import { NumberInput } from "@/app/addProduct/ui/NumberInput";
@@ -14,6 +19,7 @@ type Props = {
   languages: LanguageDto[];
   formats: FormatDto[];
   bookSizes: BookSizeDto[];
+  ageRestrictions: AgeRestrictionDto[];
 };
 
 export function CharacteristicsSection({
@@ -22,70 +28,75 @@ export function CharacteristicsSection({
   languages,
   formats,
   bookSizes,
+  ageRestrictions,
 }: Props) {
   return (
-    <div className="w-full h-[950px] flex mt-[48px]">
+    <div className="w-[500px] h-[950px] flex -mt-[10px] flex-col">
       <SectionCard
         title="Характеристики"
+        titleMt="top-[48px]"
+        titlePos="relative"
         backgroundImage="/images/addProducts/Rectangle 314.svg"
       >
-        <div className="flex w-full flex-row gap-4 items-center justify-between h-[88px]">
-          <div className="flex flex-col w-[250px]">
+        <div className="flex w-full relative top-[44px] flex-row gap-2 items-center justify-around h-[80px]">
+          <div className="flex flex-col w-[180px]">
             <LanguageSelectForm
               languages={languages}
               value={form.languageId}
               onChange={(id) => setField("languageId", id)}
             />
           </div>
-          <div className="flex flex-col w-[250px]">
+          <div className="flex flex-col w-[180px]">
             <NumberInput
               label="Рік видання *"
               placeholder={String(new Date().getFullYear())}
               value={form.publishingYear}
               onChange={(v) => setField("publishingYear", v)}
+              className="text-[18px]"
             />
           </div>
         </div>
 
-        <div className="flex flex-row gap-4 justify-between p-2 h-[88px]">
-          <div className="flex flex-col w-[250px]">
+        <div className="flex flex-row relative top-[44px] gap-2 justify-around h-[80px]">
+          <div className="flex flex-col w-[180px]">
             <AgeRestrictions
-              value={form.ageRestrictions}
-              onChange={(v) => setField("ageRestrictions", v)}
+              value={form.ageRestrictionIds?.[0]}
+              ageRestrictions={ageRestrictions}
+              onChange={(id) => setField("ageRestrictionIds", id ? [id] : [])}
             />
           </div>
-          <div className="flex flex-col w-[250px]">
+          <div className="flex flex-col w-[180px]">
             <NumberInput
               label="Кількість сторінок *"
               placeholder="567"
               value={form.pageCount}
               onChange={(v) => setField("pageCount", v)}
-              className="w-[250px]"
+              className="w-[180px] text-[18px]"
             />
           </div>
         </div>
 
-        <div className="flex flex-row gap-4 justify-between p-2 h-[88px]">
-          <div className="flex flex-col w-[250px]">
+        <div className="flex flex-row relative top-[36px] gap-2 justify-around h-[80px]">
+          <div className="flex flex-col w-[180px]">
             <BookSizeSelectForm
               value={form.bookSizeIds?.[0]}
               formats={bookSizes}
               onChange={(id) => setField("bookSizeIds", id ? [id] : [])}
             />
           </div>
-          <div className="flex flex-col w-[250px]">
+          <div className="flex flex-col w-[180px]">
             <NumberInput
               label="Вага"
               placeholder="1180g"
               value={form.weightGrams}
               onChange={(v) => setField("weightGrams", v)}
-              className="w-[250px]"
+              className="w-[180px] text-[18px]"
             />
           </div>
         </div>
 
-        <div className="flex flex-col gap-1 p-2 h-[88px]">
-          <div className="flex flex-col w-[450px]">
+        <div className="flex flex-col relative top-[28px] ml-4 gap-1 h-[80px]">
+          <div className="flex flex-col w-[250px]">
             <CoverTypeSelect
               value={form.coverType}
               onChange={(v) => setField("coverType", v)}
@@ -93,26 +104,26 @@ export function CharacteristicsSection({
           </div>
         </div>
 
-        <div className="flex flex-row gap-1 h-[164px] justify-between p-2">
-          <div className="flex flex-col w-[250px]">
+        <div className="flex flex-row relative top-[22px] gap-2 h-[164px] justify-around">
+          <div className="flex flex-col w-[180px]">
             <NumberInput
-              label="Кількість товару в наявності"
+              label="Кількість в наявності"
               value={form.quantityInStock}
               onChange={(v) => setField("quantityInStock", v)}
-              className="w-[250px]"
+              className="w-[180px] text-[16px] "
             />
           </div>
-          <div className="flex flex-col w-[250px]">
+          <div className="flex flex-col w-[180px]">
             <NumberInput
               label="Кількість товару в наборі"
               value={form.itemsInSet}
               onChange={(v) => setField("itemsInSet", v)}
-              className="w-[250px]"
+              className="w-[180px] text-[16px]"
             />
           </div>
         </div>
 
-        <div className="flex flex-col h-[200px] pb-[20px]">
+        <div className="flex flex-col relative ml-[16px] -top-[60px] h-[180px] pb-[10px]">
           <FormatBook
             value={form.formatIds}
             formats={formats}

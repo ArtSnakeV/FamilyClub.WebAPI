@@ -7,6 +7,7 @@ type Book = {
     image?: string | null;
     rating?: number | null;
     href?: string;
+    formatTags?: Array<"paper" | "ebook" | "audio">;
 };
 
 type BookSectionProps = {
@@ -17,6 +18,7 @@ type BookSectionProps = {
 };
 
 export default function BookSection({ title, books, showMore = false, pillWidth }: BookSectionProps) {
+    const titleNoWrapClass = title === "Книжкові комплекти" ? "whitespace-nowrap" : "";
     return (
         <section className="py-16">
             <div className="mx-auto max-w-[1220px] px-4 lg:px-0">
@@ -25,7 +27,9 @@ export default function BookSection({ title, books, showMore = false, pillWidth 
                         className="flex h-[57px] items-center justify-center rounded-t-[10px] rounded-b-[30px] bg-[#f5f3ee] px-6 shadow-[0px_8px_8.5px_0px_rgba(0,0,0,0.5)]"
                         style={pillWidth ? { width: `${pillWidth}px` } : undefined}
                     >
-                        <h2 className="font-mono text-[32px] font-bold text-[#242424] md:text-[40px]">
+                        <h2
+                            className={`font-mono text-[32px] font-bold text-[#242424] md:text-[40px] ${titleNoWrapClass}`}
+                        >
                             {title}
                         </h2>
                     </div>

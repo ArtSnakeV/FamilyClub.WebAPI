@@ -292,8 +292,8 @@ export default function SearchIco() {
         className="
           relative
           right-[1vw]
-          w-[30px]
-          h-[30px]
+          w-[22px]
+          h-[22px]
           flex
           items-center
           justify-center
@@ -302,8 +302,8 @@ export default function SearchIco() {
         <Image
           src="/images/header/zoom_out_24px.png"
           alt="search"
-          width={28}
-          height={28}
+          width={22}
+          height={22}
           className="object-contain"
           priority
         />

@@ -33,19 +33,19 @@ export default function DigitalFormatsBlock({
   };
 
   return (
-    <div className="flex flex-col gap-4 w-[565px]">
+    <div className="flex flex-col gap-4 w-[400px]">
       {printFormat && (
-        <div className="absolute -mt-[212px] ml-[498px] w-[70px] h-[30px] flex flex-row items-center justify-center gap-2 pb-4">
+        <div className="absolute -mt-[130px] ml-[332px] w-[70px] h-[30px] flex flex-row items-center justify-center gap-2 pb-4">
           <button
             type="button"
             onClick={() => toggleFormat(printFormat.id!)}
-            className="relative w-[30px] h-[30px] flex items-center justify-center"
+            className="relative w-[26px] h-[26px] flex items-center justify-center"
           >
             <Image
               src="/images/addProducts/icon.svg"
               alt="circle"
-              width={30}
-              height={30}
+              width={26}
+              height={26}
               className="object-contain"
             />
 
@@ -53,8 +53,8 @@ export default function DigitalFormatsBlock({
               <Image
                 src="/images/addProducts/check_24px.svg"
                 alt="check"
-                width={30}
-                height={30}
+                width={26}
+                height={26}
                 className="absolute ml-2 -mt-2"
               />
             )}
@@ -69,35 +69,35 @@ export default function DigitalFormatsBlock({
         </div>
       )}
       {ebookFormat && (
-        <div className="flex flex-col  h-[94px]">
+        <div className="flex flex-col  h-[84px]">
           <label className="flex flex-row justify-between items-center">
-            <span className="text-[24px]">{ebookFormat.name}</span>
+            <span className="text-[18px]">{ebookFormat.name}</span>
             <div className="w-[70px] h-[30px] flex flex-row items-center justify-center gap-2 pb-4">
               <button
                 type="button"
                 onClick={() => toggleFormat(ebookFormat.id!)}
-                className="relative w-[30px] h-[30px] flex items-center justify-center"
+                className="relative w-[26px] h-[26px] flex items-center justify-center"
               >
                 <Image
                   src="/images/addProducts/icon.svg"
                   alt="circle"
-                  width={30}
-                  height={30}
+                  width={26}
+                  height={26}
                   className="object-contain"
                 />
                 {isSelected(ebookFormat.id!) && (
                   <Image
                     src="/images/addProducts/check_24px.svg"
                     alt="check"
-                    width={30}
-                    height={30}
+                    width={26}
+                    height={26}
                     className="absolute ml-2 -mt-2"
                   />
                 )}
               </button>
 
               <div
-                className="w-[30px] h-[30px] bg-cover bg-center"
+                className="w-[26px] h-[26px] bg-cover bg-center"
                 style={{
                   backgroundImage: "url('/images/addProducts/Group 139.svg')",
                 }}
@@ -110,26 +110,26 @@ export default function DigitalFormatsBlock({
       {audioFormat && (
         <div className="flex flex-col  h-[94px]">
           <label className="flex flex-row justify-between items-center">
-            <span className="text-[24px]">{audioFormat?.name}</span>
+            <span className="text-[18px]">{audioFormat?.name}</span>
             <div className="w-[70px] h-[30px] flex flex-row items-center justify-center gap-2 pb-4">
               <button
                 type="button"
                 onClick={() => toggleFormat(audioFormat.id!)}
-                className="relative w-[30px] h-[30px] flex items-center justify-center"
+                className="relative w-[26px] h-[26px] flex items-center justify-center"
               >
                 <Image
                   src="/images/addProducts/icon.svg"
                   alt="circle"
-                  width={30}
-                  height={30}
+                  width={26}
+                  height={26}
                   className="object-contain"
                 />
                 {isSelected(audioFormat.id!) && (
                   <Image
                     src="/images/addProducts/check_24px.svg"
                     alt="check"
-                    width={30}
-                    height={30}
+                    width={26}
+                    height={26}
                     className="absolute ml-2 -mt-2"
                   />
                 )}

@@ -24,6 +24,7 @@ Name | Type
 `categories` | [Array&lt;Category&gt;](Category.md)
 `series` | [Array&lt;Series&gt;](Series.md)
 `formats` | [Array&lt;Format&gt;](Format.md)
+`ageRestrictions` | [Array&lt;AgeRestriction&gt;](AgeRestriction.md)
 `bookSizes` | [Array&lt;BookSize&gt;](BookSize.md)
 `originalLanguageId` | number
 `originalLanguage` | [Language](Language.md)
@@ -36,7 +37,6 @@ Name | Type
 `productCode` | string
 `weightGrams` | number
 `itemsInSet` | number
-`ageRestriction` | [AgeRestriction](AgeRestriction.md)
 `translators` | [Array&lt;Translator&gt;](Translator.md)
 
 ## Example
@@ -64,6 +64,7 @@ const example = {
   "categories": null,
   "series": null,
   "formats": null,
+  "ageRestrictions": null,
   "bookSizes": null,
   "originalLanguageId": null,
   "originalLanguage": null,
@@ -76,7 +77,6 @@ const example = {
   "productCode": null,
   "weightGrams": null,
   "itemsInSet": null,
-  "ageRestriction": null,
   "translators": null,
 } satisfies Product
 

@@ -8,6 +8,7 @@ public class FamilyClubContext : IdentityDbContext<ClubMember>
 {
     public FamilyClubContext(DbContextOptions<FamilyClubContext> options) : base(options) { }
 	public DbSet<Format> ProductFormats { get; set; }
+    public DbSet<AgeRestriction> AgeRestrictions { get; set; }
 	public DbSet<BookSize> BookSizes { get; set; }
 	public DbSet<Notification> Notifications { get; set; }
 	public DbSet<Author> Authors { get; set; }
@@ -50,6 +51,11 @@ public class FamilyClubContext : IdentityDbContext<ClubMember>
 	        .HasMany(p => p.Formats)
 	        .WithMany(f => f.Products)
 	        .UsingEntity(j => j.ToTable("ProductFormats"));
+
+        builder.Entity<Product>()
+            .HasMany(a => a.AgeRestrictions)
+            .WithMany(p => p.Products)
+            .UsingEntity(u => u.ToTable("ProductsAgeRestrictions"));
 
 		builder.Entity<Product>()
 			 .HasMany(b => b.BookSizes)

@@ -12,8 +12,8 @@ export default function BookSizeSelectForm({
   formats,
 }: Props) {
   return (
-    <div className="flex flex-col gap-1 w-full">
-      <p className="text-[var(--color-black)] font-sans-pro font-normal text-[24px] leading-[150%] tracking-[-0.011em]">
+    <div className="flex flex-col gap-0 w-full">
+      <p className="text-[var(--color-black)] font-sans-pro font-normal text-[18px] leading-[150%] tracking-[-0.011em]">
         Друкований формат
       </p>
       <select
@@ -21,7 +21,7 @@ export default function BookSizeSelectForm({
         onChange={(e) =>
           onChange(e.target.value ? Number(e.target.value) : undefined)
         }
-        className={`input rounded-[9px] bg-[var(--color-white)] shadow-[0px_0px_10px_0px_#00000040] h-[44px]`}
+        className={`input rounded-[9px] text-[12.5px] bg-[var(--color-white)] shadow-[0px_0px_10px_0px_#00000040] h-[40px]`}
       >
         <option value="" className="text-gray-400">
           Оберіть друкований формат

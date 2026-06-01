@@ -27,13 +27,6 @@ import {
     CoverTypeToJSON,
     CoverTypeToJSONTyped,
 } from './CoverType';
-import type { AgeRestriction } from './AgeRestriction';
-import {
-    AgeRestrictionFromJSON,
-    AgeRestrictionFromJSONTyped,
-    AgeRestrictionToJSON,
-    AgeRestrictionToJSONTyped,
-} from './AgeRestriction';
 import type { ProductImage } from './ProductImage';
 import {
     ProductImageFromJSON,
@@ -164,12 +157,6 @@ export interface ProductDto {
     itemsInSet?: number | null;
     /**
      * 
-     * @type {AgeRestriction}
-     * @memberof ProductDto
-     */
-    ageRestriction?: AgeRestriction;
-    /**
-     * 
      * @type {Array<number>}
      * @memberof ProductDto
      */
@@ -210,6 +197,12 @@ export interface ProductDto {
      * @memberof ProductDto
      */
     bookSizeIds?: Array<number> | null;
+    /**
+     * 
+     * @type {Array<number>}
+     * @memberof ProductDto
+     */
+    ageRestrictionIds?: Array<number> | null;
     /**
      * 
      * @type {boolean}
@@ -256,7 +249,6 @@ export function ProductDtoFromJSONTyped(json: any, ignoreDiscriminator: boolean)
         'productCode': json['productCode'] == null ? undefined : json['productCode'],
         'weightGrams': json['weightGrams'] == null ? undefined : json['weightGrams'],
         'itemsInSet': json['itemsInSet'] == null ? undefined : json['itemsInSet'],
-        'ageRestriction': json['ageRestriction'] == null ? undefined : AgeRestrictionFromJSON(json['ageRestriction']),
         'authorIds': json['authorIds'] == null ? undefined : json['authorIds'],
         'languageIds': json['languageIds'] == null ? undefined : json['languageIds'],
         'categoryIds': json['categoryIds'] == null ? undefined : json['categoryIds'],
@@ -264,6 +256,7 @@ export function ProductDtoFromJSONTyped(json: any, ignoreDiscriminator: boolean)
         'translatorIds': json['translatorIds'] == null ? undefined : json['translatorIds'],
         'formatIds': json['formatIds'] == null ? undefined : json['formatIds'],
         'bookSizeIds': json['bookSizeIds'] == null ? undefined : json['bookSizeIds'],
+        'ageRestrictionIds': json['ageRestrictionIds'] == null ? undefined : json['ageRestrictionIds'],
         'leaveOldImages': json['leaveOldImages'] == null ? undefined : json['leaveOldImages'],
     };
 }
@@ -298,7 +291,6 @@ export function ProductDtoToJSONTyped(value?: ProductDto | null, ignoreDiscrimin
         'productCode': value['productCode'],
         'weightGrams': value['weightGrams'],
         'itemsInSet': value['itemsInSet'],
-        'ageRestriction': AgeRestrictionToJSON(value['ageRestriction']),
         'authorIds': value['authorIds'],
         'languageIds': value['languageIds'],
         'categoryIds': value['categoryIds'],
@@ -306,6 +298,7 @@ export function ProductDtoToJSONTyped(value?: ProductDto | null, ignoreDiscrimin
         'translatorIds': value['translatorIds'],
         'formatIds': value['formatIds'],
         'bookSizeIds': value['bookSizeIds'],
+        'ageRestrictionIds': value['ageRestrictionIds'],
         'leaveOldImages': value['leaveOldImages'],
     };
 }

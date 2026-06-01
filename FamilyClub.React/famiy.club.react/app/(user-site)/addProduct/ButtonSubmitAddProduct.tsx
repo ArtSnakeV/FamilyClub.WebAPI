@@ -12,7 +12,7 @@ export default function ButtonSubmitAddProduct({
   loading,
 }: Props) {
   return (
-    <div className="w-[355px] flex flex-col gap-4 text-[20px] font-medium">
+    <div className="w-[250px] flex flex-col gap-4 text-[18px] font-medium">
       <button
         type="button"
         disabled={loading}

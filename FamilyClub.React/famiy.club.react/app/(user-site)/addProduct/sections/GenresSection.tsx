@@ -9,20 +9,20 @@ type Props = {
 
 export function GenresSection({ categories, selectedIds, onToggle }: Props) {
   return (
-    <div className="w-[645px] h-[622px] flex mt-[48px]">
+    <div className="w-[480px] h-[480px] relative flex flex-col ml-3 -top-[184px]">
       <div
         className="w-full h-full bg-cover bg-center"
         style={{ backgroundImage: "url('/images/addProducts/Rectangle 314.png')" }}
       >
         <div
-          className="-ml-[10px] mt-[48px] bg-cover bg-center w-[312px] h-[77px] text-[var(--color-white)]"
+          className="-ml-[10px] mt-[48px] bg-cover bg-center w-[224px] h-[62px] text-[var(--color-white)]"
           style={{ backgroundImage: "url('/images/addProducts/Rectangle 304.png')" }}
         >
           <div className="ml-[60px] w-[262px] gap-4 flex flex-col">
-            <p className="h-[25px] font-['Roboto_Mono'] font-semibold text-[32px] leading-[150%] tracking-[-0.011em]">
+            <p className="h-[25px] font-['Roboto_Mono'] relative -ml-4 font-semibold text-[22px] leading-[150%] tracking-[-0.011em]">
               Жанри
             </p>
-            <p className="h-[12px]">(можна обрати декілька)</p>
+            <p className="h-[12px] text-[12px] relative -ml-4 -mt-3">(можна обрати декілька)</p>
           </div>
           <CategoryList
             categories={categories}

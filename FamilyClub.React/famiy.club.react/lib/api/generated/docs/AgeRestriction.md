@@ -6,6 +6,10 @@
 
 Name | Type
 ------------ | -------------
+`id` | number
+`name` | string
+`code` | string
+`products` | [Array&lt;Product&gt;](Product.md)
 
 ## Example
 
@@ -14,6 +18,10 @@ import type { AgeRestriction } from ''
 
 // TODO: Update the object below with actual values
 const example = {
+  "id": null,
+  "name": null,
+  "code": null,
+  "products": null,
 } satisfies AgeRestriction
 
 console.log(example)

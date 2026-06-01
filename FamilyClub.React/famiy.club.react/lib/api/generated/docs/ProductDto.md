@@ -25,7 +25,6 @@ Name | Type
 `productCode` | string
 `weightGrams` | number
 `itemsInSet` | number
-`ageRestriction` | [AgeRestriction](AgeRestriction.md)
 `authorIds` | Array&lt;number&gt;
 `languageIds` | Array&lt;number&gt;
 `categoryIds` | Array&lt;number&gt;
@@ -33,6 +32,7 @@ Name | Type
 `translatorIds` | Array&lt;number&gt;
 `formatIds` | Array&lt;number&gt;
 `bookSizeIds` | Array&lt;number&gt;
+`ageRestrictionIds` | Array&lt;number&gt;
 `leaveOldImages` | boolean
 
 ## Example
@@ -61,7 +61,6 @@ const example = {
   "productCode": null,
   "weightGrams": null,
   "itemsInSet": null,
-  "ageRestriction": null,
   "authorIds": null,
   "languageIds": null,
   "categoryIds": null,
@@ -69,6 +68,7 @@ const example = {
   "translatorIds": null,
   "formatIds": null,
   "bookSizeIds": null,
+  "ageRestrictionIds": null,
   "leaveOldImages": null,
 } satisfies ProductDto
 

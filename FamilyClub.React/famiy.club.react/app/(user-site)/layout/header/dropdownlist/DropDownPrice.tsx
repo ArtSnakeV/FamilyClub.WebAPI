@@ -41,12 +41,12 @@ export default function DropDownPrice() {
   }
 
   return (
-    <div ref={containerRef} className="relative w-[130px]">
+    <div ref={containerRef} className="relative w-[110px]">
       <div
         className={`
-          relative w-[130px] h-[360px]
+          relative w-[110px] h-[360px]
           transition-transform duration-300
-          ${open ? "translate-y-0" : "-translate-y-[236px]"}
+          ${open ? "translate-y-0" : "-translate-y-[232px]"}
         `}
       >
         <Image
@@ -62,7 +62,7 @@ export default function DropDownPrice() {
             e.stopPropagation();
             setOpen((v) => !v);
           }}
-          className="absolute inset-0 flex justify-center items-end mb-[34px] z-10"
+          className="absolute inset-0 flex justify-center items-end mb-[56px] z-10"
         >
           <span className="text-[#F5F3EE]">Ціна</span>
         </button>
@@ -70,7 +70,7 @@ export default function DropDownPrice() {
         {open && (
           <div className="absolute z-20 top-[42px] w-full flex justify-center text-[var(--color-white)]">
             {/* MAIN CONTAINER */}
-            <div className="mt-[40px] w-[110px] flex flex-col items-center gap-3">
+            <div className="mt-[40px] w-[100px] flex flex-col items-center gap-3">
               {/* FROM */}
               <div className="relative w-full h-[40px] flex justify-center">
                 <Image

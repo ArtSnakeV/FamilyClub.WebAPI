@@ -7,7 +7,6 @@ const initialDto: ProductDto = {
   description: "",
   pageCount: undefined,
   itemsInSet: 1,
-  ageRestrictions: undefined,
   categoryIds: [],
   languageId: undefined,
   coverType: CoverType.NUMBER_0,
@@ -18,6 +17,7 @@ const initialDto: ProductDto = {
   publisherId: undefined,
   authorIds: [],
   formatIds: [],
+  ageRestrictionIds: [],
   price: undefined,
   discountPrice: undefined,
   isbn: undefined,
@@ -43,6 +43,7 @@ export function useProductForm() {
 
   const clearDraft = () => {
     localStorage.removeItem(DRAFT_KEY);
+    setForm(initialDto);
   };
 
   const toggleCategory = (id: number) =>

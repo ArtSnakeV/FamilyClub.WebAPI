@@ -102,7 +102,6 @@ public class ProductService : IProductService
 			WeightGrams = dto.WeightGrams,
 			ItemsInSet = dto.ItemsInSet,
 
-			AgeRestriction = dto.AgeRestriction,
 
 			OriginalLanguageId = dto.OriginalLanguageId,
 			ISBN = dto.ISBN,
@@ -145,6 +144,11 @@ public class ProductService : IProductService
 			? await _context.BookSizes.Where(x => dto.BookSizeIds.Contains(x.Id)).ToListAsync(cancellationToken)
 			: new();
 
+
+		product.AgeRestrictions = dto.AgeRestrictionIds?.Count > 0
+			? await _context.AgeRestrictions.Where(x => dto.AgeRestrictionIds.Contains(x.Id)).ToListAsync(cancellationToken)
+			: new();
+
 		await _productRepository.AddAsync(product, cancellationToken);
 		await _unitOfWork.SaveChangesAsync(cancellationToken);
 
@@ -177,7 +181,6 @@ public class ProductService : IProductService
 		// enums
 		existingProduct.CoverType = dto.CoverType;
 		existingProduct.Availability = dto.Availability;
-		existingProduct.AgeRestriction = dto.AgeRestriction;
 
 		// inventory / meta
 		existingProduct.QuantityInStock = dto.QuantityInStock;
@@ -198,6 +201,7 @@ public class ProductService : IProductService
 		existingProduct.Translators = dto.TranslatorIds?.Count > 0 ? await _context.Translator.Where(x => dto.TranslatorIds.Contains(x.Id)).ToListAsync(cancellationToken) : new();
 		existingProduct.Formats = dto.FormatIds?.Count > 0 ? await _context.ProductFormats.Where(x => dto.FormatIds.Contains(x.Id)).ToListAsync(cancellationToken) : new();
 		existingProduct.BookSizes = dto.BookSizeIds?.Count > 0 ? await _context.BookSizes.Where(x => dto.BookSizeIds.Contains(x.Id)).ToListAsync(cancellationToken) : new();
+		existingProduct.AgeRestrictions = dto.AgeRestrictionIds?.Count > 0 ? await _context.AgeRestrictions.Where(x => dto.AgeRestrictionIds.Contains(x.Id)).ToListAsync(cancellationToken) : new();
 
 		// IMAGES 
 		if (!dto.LeaveOldImages)
@@ -365,7 +369,6 @@ public class ProductService : IProductService
 
 			CoverType = product.CoverType,
 			Availability = product.Availability,
-			AgeRestriction = product.AgeRestriction,
 
 			QuantityInStock = product.QuantityInStock,
 			ProductCode = product.ProductCode,
@@ -392,6 +395,7 @@ public class ProductService : IProductService
 			TranslatorIds = product.Translators?.Select(t => t.Id).ToList(),
 			FormatIds = product.Formats?.Select(f => f.Id).ToList(),
 			BookSizeIds = product.BookSizes?.Select(f => f.Id).ToList(),
+			AgeRestrictionIds = product.AgeRestrictions?.Select(a => a.Id).ToList(),
 		};
 	}
 }

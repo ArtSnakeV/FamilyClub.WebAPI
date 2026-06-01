@@ -4,8 +4,8 @@ export default function FavoriteButton() {
   return (
     <div className="group flex items-center justify-center">
       <div
-        className="w-[50px]
-          h-[50px]
+        className="w-[40px]
+          h-[40px]
           flex
           items-center
           justify-center
@@ -21,8 +21,8 @@ export default function FavoriteButton() {
           alt="favor"
           className="object-contain p-1"
           priority
-          width={38}
-          height={38}
+          width={36}
+          height={36}
         />
       </div>
     </div>
