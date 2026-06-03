@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react"; // Додали useEffect для безпечної роботи з localStorage на стороні клієнта
 import { CoverType } from "@/lib/api/generated";
 import { ProductDto } from "@/app/(user-site)/addProduct/types";
 
+// Початковий стан форми (дефолтні значення)
 const initialDto: ProductDto = {
   productName: "",
   description: "",
@@ -27,25 +28,42 @@ const initialDto: ProductDto = {
 const DRAFT_KEY = "productDraft";
 
 export function useProductForm() {
-  //const [form, setForm] = useState<ProductDto>(initialDto);
-  const [form, setForm] = useState<ProductDto>(() => {
-    // відновлюємо чернетку при ініціалізації
+  // 1. Ініціалізуємо стейт чистим дефолтним об'єктом.
+  // Під час збірки проєкту (SSR) Next.js візьме саме ці значення, не чіпаючи localStorage.
+  const [form, setForm] = useState<ProductDto>(initialDto);
+
+  // 2. Цей хук спрацює ТІЛЬКИ в браузері користувача після того, як сторінка успішно завантажиться.
+  // Оскільки порожній масив залежностей [] означає виконання один раз при монтуванні,
+  // ми безпечно дістаємо дані з localStorage, коли об'єкт window вже точно існує.
+  useEffect(() => {
     const saved = localStorage.getItem(DRAFT_KEY);
-    return saved ? JSON.parse(saved) : initialDto;
-  });
+    if (saved) {
+      try {
+        // Якщо чернетка є, оновлюємо наш стейт збереженими даними
+        setForm(JSON.parse(saved));
+      } catch (e) {
+        console.error("Помилка парсингу чернетки:", e);
+      }
+    }
+  }, []);
+
+  // Функція для оновлення конкретного поля у формі
   const setField = <K extends keyof ProductDto>(key: K, value: ProductDto[K]) =>
     setForm((prev) => ({ ...prev, [key]: value }));
 
+  // Збереження чернетки (викликається користувачем через клік, тому тут localStorage безпечний)
   const saveDraft = () => {
     localStorage.setItem(DRAFT_KEY, JSON.stringify(form));
     alert("Чернетку збережено");
   };
 
+  // Очищення чернетки та скидання форми до початкового стану
   const clearDraft = () => {
     localStorage.removeItem(DRAFT_KEY);
     setForm(initialDto);
   };
 
+  // Додавання/видалення категорій (чекбокси)
   const toggleCategory = (id: number) =>
     setField(
       "categoryIds",
