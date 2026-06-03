@@ -25,24 +25,44 @@ const initialDto: ProductDto = {
 };
 
 const DRAFT_KEY = "productDraft";
-
+const storage = {
+  get: (key: string): string | null => {
+    if (typeof window === "undefined") return null;
+    return localStorage.getItem(key);
+  },
+  set: (key: string, value: string): void => {
+    if (typeof window === "undefined") return;
+    localStorage.setItem(key, value);
+  },
+  remove: (key: string): void => {
+    if (typeof window === "undefined") return;
+    localStorage.removeItem(key);
+  },
+};
+const getInitialForm = (): ProductDto => {
+  const saved = storage.get(DRAFT_KEY);
+  if (saved) {
+    try {
+      return JSON.parse(saved);
+    } catch {
+      return initialDto;
+    }
+  }
+  return initialDto;
+};
 export function useProductForm() {
-  //const [form, setForm] = useState<ProductDto>(initialDto);
-  const [form, setForm] = useState<ProductDto>(() => {
-    // відновлюємо чернетку при ініціалізації
-    const saved = localStorage.getItem(DRAFT_KEY);
-    return saved ? JSON.parse(saved) : initialDto;
-  });
+  const [form, setForm] = useState<ProductDto>(getInitialForm);
+
   const setField = <K extends keyof ProductDto>(key: K, value: ProductDto[K]) =>
     setForm((prev) => ({ ...prev, [key]: value }));
 
   const saveDraft = () => {
-    localStorage.setItem(DRAFT_KEY, JSON.stringify(form));
+    storage.set(DRAFT_KEY, JSON.stringify(form));
     alert("Чернетку збережено");
   };
 
   const clearDraft = () => {
-    localStorage.removeItem(DRAFT_KEY);
+    storage.remove(DRAFT_KEY);
     setForm(initialDto);
   };
 
