@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { CategoryDto } from "@/app/addCategory/types";
-import { categoriesApi } from "@/app/addCategory/api/categoryApiClient";
-//import { publisherApi } from "@/app/addPublisher/api/publisherApiClient";
+import { categoriesService } from "@/lib/api/services";
 
 type Props = {
   id: number;
@@ -17,7 +16,7 @@ export default function useSubmitEditCategory({ id, form, router }: Props) {
     setLoading(true);
 
     try {
-      await categoriesApi.apiCategoriesIdPut({
+      await categoriesService.apiCategoriesIdPut({
         id,
         categoryDto: {
           categoryName: form.categoryName,
@@ -37,7 +36,7 @@ export default function useSubmitEditCategory({ id, form, router }: Props) {
     if (!confirmDelete) return;
 
     try {
-      await categoriesApi.apiCategoriesIdDelete({
+      await categoriesService.apiCategoriesIdDelete({
         id: Number(id),
       });
       router.push("/categories");

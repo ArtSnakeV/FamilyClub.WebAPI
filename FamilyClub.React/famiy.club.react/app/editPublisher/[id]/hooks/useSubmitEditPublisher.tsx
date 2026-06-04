@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { PublisherDto } from "@/app/addPublisher/types";
-import { publisherApi } from "@/app/addPublisher/api/publisherApiClient";
+import { publisherService } from "@/lib/api/services";
 
 type Props = {
   id: number;
@@ -16,7 +16,7 @@ export default function useSubmitEditPublisher({ id, form, router }: Props) {
     setLoading(true);
 
     try {
-      await publisherApi.apiPublishersIdPut({
+      await publisherService.apiPublishersIdPut({
         id,
         publisherDto: {
           publisherName: form.publisherName,
@@ -36,7 +36,7 @@ export default function useSubmitEditPublisher({ id, form, router }: Props) {
     if (!confirmDelete) return;
 
     try {
-      await publisherApi.apiPublishersIdDelete({
+      await publisherService.apiPublishersIdDelete({
         id: Number(id),
       });
       router.push("/publishers");

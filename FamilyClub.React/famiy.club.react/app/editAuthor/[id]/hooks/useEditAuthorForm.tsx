@@ -1,4 +1,4 @@
-import { authorsApi, BASE_URL  } from "@/app/addAuthor/api/authorsApiClient";
+import { authorService, apiBasePath   } from "@/lib/api/services";
 import { AuthorDto } from "@/app/addAuthor/types";
 import { useEffect, useState } from "react";
 
@@ -14,7 +14,7 @@ export default function useEditAuthorForm(id: number) {
   const [initialPhotoUrl, setInitialPhotoUrl] = useState<string | null>(null);
 
   useEffect(() => {
-    authorsApi
+    authorService
       .apiAuthorsIdGet({ id })
       .then((author) => {
         setForm({
@@ -23,7 +23,7 @@ export default function useEditAuthorForm(id: number) {
           photoUrl: author.photoUrl ?? "",
         });
         setInitialPhotoUrl(
-          author.photoUrl ? `${BASE_URL}${author.photoUrl}` : null
+          author.photoUrl ? `${apiBasePath}${author.photoUrl}` : null
         );
       })
       .finally(() => setLoading(false));

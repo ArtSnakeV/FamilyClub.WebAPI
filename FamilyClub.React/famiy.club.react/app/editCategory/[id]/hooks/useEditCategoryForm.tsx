@@ -1,4 +1,4 @@
-import { categoriesApi } from "@/app/addCategory/api/categoryApiClient";
+import { categoriesService } from "@/lib/api/services";
 import { CategoryDto } from "@/app/addCategory/types";
 import { useEffect, useState } from "react";
 
@@ -11,7 +11,7 @@ export default function useEditCategoryForm(id: number) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    categoriesApi
+    categoriesService
       .apiCategoriesIdGet({ id })
       .then((category) => {
         setForm({

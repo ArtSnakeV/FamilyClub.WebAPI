@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { PublisherDto } from "@/app/addPublisher/types";
-import { publisherApi } from "@/app/addPublisher/api/publisherApiClient";
+import { publisherService } from "@/lib/api/services";
 
 const emptyForm: PublisherDto = {
   publisherName: "",
@@ -11,7 +11,7 @@ export default function useEditPublisherForm(id: number) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    publisherApi
+    publisherService
       .apiPublishersIdGet({ id })
       .then((publisher) => {
         setForm({

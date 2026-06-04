@@ -1,7 +1,6 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-//import { BasicInfoSectionEditPublisher } from "./section/BasicInfoSectionEditPublisher";
 import ButtonReturn from "./ButtonReturn";
 import useEditCategoryForm from "./hooks/useEditCategoryForm";
 import useSubmitEditCategory from "./hooks/useSubmitEditCategory";

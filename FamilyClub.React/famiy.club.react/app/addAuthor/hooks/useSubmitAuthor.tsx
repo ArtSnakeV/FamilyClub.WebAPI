@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
-import { authorsApi, BASE_URL  } from "@/app/addAuthor/api/authorsApiClient";
+import { authorService } from "@/lib/api/services";
 import { AuthorDto } from "@/app/addAuthor/types";
 
 type Props = {
@@ -22,7 +22,7 @@ export function useSubmitAuthor({ form, router, mainImage }: Props) {
     const { signal } = abortRef.current;
 
     try {
-      const createdAuthor = await authorsApi.apiAuthorsPost({
+      const createdAuthor = await authorService.apiAuthorsPost({
         authorDTO: {
           authorName: form.authorName,
           biography: form.biography,
@@ -36,7 +36,7 @@ export function useSubmitAuthor({ form, router, mainImage }: Props) {
         formData.append("photo", mainImage);
 
         const response = await fetch(
-          `${BASE_URL }/api/Authors/${authorId}/photo`,
+          `${process.env.NEXT_PUBLIC_API_URL}/api/Authors/${authorId}/photo`,
           { method: "POST", body: formData, signal },
         );
 
