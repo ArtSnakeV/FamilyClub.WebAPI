@@ -1,6 +1,3 @@
-//import { PublisherDto } from "@/app/addPublisher/types";
-//import { SectionCard } from "@/app/addPublisher/ui/SectionCard";
-
 import { CategoryDto } from "@/app/addCategory/types";
 import { SectionCard } from "@/app/addCategory/ui/SectionCard";
 

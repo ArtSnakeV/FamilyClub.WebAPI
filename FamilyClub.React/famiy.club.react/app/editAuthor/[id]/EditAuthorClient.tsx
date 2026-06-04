@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import useEditAuthorForm from "./hooks/useEditAuthorForm";
 import useSubmitEditAuthor from "./hooks/useSubmitEditAuthor";
 import { useAuthorImageUpload } from "@/app/addAuthor/hooks/useAuthorImageUpload";
-import { authorsApi } from "@/app/addAuthor/api/authorsApiClient";
+import { authorService } from "@/lib/api/services";
 import { BasicInfoSectionEditAuthor } from "./section/BasicInfoSectionEditAuthor";
 import ButtonReturn from "./ButtonReturn";
 
@@ -31,7 +31,7 @@ export default function EditAuthorClient({ id }: { id: string }) {
   const handleDelete = async () => {
     if (!confirm("Ви точно бажаєте видалити цього автора?")) return;
     try {
-      await authorsApi.apiAuthorsIdDelete({ id: Number(id) });
+      await authorService.apiAuthorsIdDelete({ id: Number(id) });
       router.push("/authors");
     } catch (e) {
       console.error(e);

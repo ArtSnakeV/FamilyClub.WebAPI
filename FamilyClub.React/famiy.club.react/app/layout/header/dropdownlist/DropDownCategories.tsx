@@ -2,8 +2,8 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import { CategoriesApi } from "@/lib/api/generated/apis/CategoriesApi";
-import { Configuration, type CategoryDto } from "@/lib/api/generated";
+import { type CategoryDto } from "@/lib/api/generated";
+import { categoriesService } from "@/lib/api/services";
 import Link from "next/link";
 
 const ITEMS_PER_PAGE = 5;
@@ -17,12 +17,7 @@ export default function DropDownCategories() {
   );
   const visibleCategories = categories.slice(0, ITEMS_PER_PAGE);
   useEffect(() => {
-    const config = new Configuration({
-      basePath: "https://localhost:7069",
-    });
-    const api = new CategoriesApi(config);
-
-    api.apiCategoriesGet().then(setCategories).catch(console.error);
+    categoriesService.apiCategoriesGet().then(setCategories).catch(console.error);
   }, []);
 
   useEffect(() => {

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { AuthorDto } from "@/app/addAuthor/types";
-import { authorsApi, BASE_URL } from "@/app/addAuthor/api/authorsApiClient";
+import { authorService, apiBasePath } from "@/lib/api/services";
 
 type Props = {
   id: number;
@@ -16,7 +16,7 @@ export default function useSubmitEditAuthor({ id, form, mainImage, router }: Pro
   const handleSubmit = async () => {
     setLoading(true);
     try {
-      await authorsApi.apiAuthorsIdPut({
+      await authorService.apiAuthorsIdPut({
         id,
         authorDTO: {
           authorName: form.authorName,
@@ -29,7 +29,7 @@ export default function useSubmitEditAuthor({ id, form, mainImage, router }: Pro
         const formData = new FormData();
         formData.append("photo", mainImage);
 
-        const response = await fetch(`${BASE_URL}/api/Authors/${id}/photo`, {
+        const response = await fetch(`${apiBasePath}/api/Authors/${id}/photo`, {
           method: "POST",
           body: formData,
         });
