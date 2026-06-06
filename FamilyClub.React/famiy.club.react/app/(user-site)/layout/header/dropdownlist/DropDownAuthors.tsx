@@ -1,11 +1,11 @@
 "use client";
 
-import { AuthorDTO, AuthorsApi, Configuration } from "@/lib/api/generated";
+import { AuthorDTO } from "@/lib/api/generated";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import { authorService } from "@/lib/api/services";
 
-const ITEMS_PER_PAGE = 3;
 
 export default function DropDownAuthors() {
   const [authors, setAuthors] = useState<AuthorDTO[]>([]);
@@ -13,14 +13,8 @@ export default function DropDownAuthors() {
   const [open, setOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const visibleAuthors = authors.slice(0, ITEMS_PER_PAGE);
   useEffect(() => {
-    const config = new Configuration({
-      basePath: "https://localhost:7069",
-    });
-    const api = new AuthorsApi(config);
-
-    api.apiAuthorsGet().then(setAuthors).catch(console.error);
+    authorService.apiAuthorsGet().then(setAuthors).catch(console.error);
   }, []);
 
   useEffect(() => {
@@ -39,11 +33,12 @@ export default function DropDownAuthors() {
 
   const displayedAuthors =
     search.trim() === ""
-      ? authors.slice(0, 4)
-      : authors.filter((a) =>
-          a.authorName?.toLowerCase().includes(search.toLowerCase()),
-        );
-
+      ? authors.slice(0, 3)
+      : authors
+          .filter((a) =>
+            a.authorName?.toLowerCase().includes(search.toLowerCase()),
+          )
+          .slice(0, 3);
   function formatAuthorName(fullName?: string) {
     if (!fullName) return "";
 
@@ -127,8 +122,7 @@ export default function DropDownAuthors() {
               {displayedAuthors.length === 0 ? (
                 <div className="text-[13px]">Не знайдено</div>
               ) : (
-                visibleAuthors.map((a) => (
-                  // displayedAuthors.map((a) => (
+                displayedAuthors.map((a) => (
                   <Link
                     key={a.id}
                     href={`/authors/${a.id}`}

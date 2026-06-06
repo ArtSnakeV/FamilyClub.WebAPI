@@ -2,7 +2,8 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import { Configuration, LanguageDto, LanguagesApi } from "@/lib/api/generated";
+import { LanguageDto } from "@/lib/api/generated";
+import {languageService} from "@/lib/api/services";
 import Link from "next/link";
 
 export default function DropDownLanguage() {
@@ -11,12 +12,7 @@ export default function DropDownLanguage() {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const config = new Configuration({
-      basePath: "https://localhost:7069",
-    });
-    const api = new LanguagesApi(config);
-
-    api.apiLanguagesGet().then(setLanguages).catch(console.error);
+    languageService.apiLanguagesGet().then(setLanguages).catch(console.error);
   }, []);
 
   useEffect(() => {

@@ -12,20 +12,22 @@ import UserAuthorizationButton from "./UserAuthorizationButton";
 import { useEffect, useState } from "react";
 import UserLoginButton from "./UserLoginButton";
 import { useRouter } from "next/navigation";
+import { authService, notificationsService } from "@/lib/api/services";
+import { ClubMemberReadDto } from "@/lib/api/generated";
 
-type User = {
-  id: string;
-  email: string;
-  phoneNumber: string;
-  name: string;
-  surname: string;
-  dateOfBirth: string;
-  roles: string[];
-  avatarData: string;
-};
+// type User = {
+//   id: string;
+//   email: string;
+//   phoneNumber: string;
+//   name: string;
+//   surname: string;
+//   dateOfBirth: string;
+//   roles: string[];
+//   avatarData: string;
+// };
 
 export default function UpNavigation() {
-  const [member, setMember] = useState<User | null>(null);
+  const [member, setMember] = useState<ClubMemberReadDto | null>(null);
   const [loading, setLoading] = useState(true);
   const [notificationCount, setNotificationCount] = useState(0);
   const router = useRouter();
@@ -35,19 +37,12 @@ export default function UpNavigation() {
     if (!token) return;
 
     try {
-      const res = await fetch(
-        `https://localhost:7069/api/Notifications/unread-count/${memberId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        },
-      );
-
-      if (!res.ok) return;
-
-      const data = await res.json();
-      setNotificationCount(data);
+      const count =
+        await notificationsService.apiNotificationsUnreadCountClubMemberIdGet(
+          { clubMemberId: memberId },
+          { headers: { Authorization: `Bearer ${token}` } },
+        );
+      setNotificationCount(count);
     } catch (e) {
       console.log(e);
     }
@@ -55,7 +50,6 @@ export default function UpNavigation() {
 
   const fetchUser = async () => {
     const token = localStorage.getItem("token");
-
     if (!token) {
       setMember(null);
       setLoading(false);
@@ -63,20 +57,11 @@ export default function UpNavigation() {
     }
 
     try {
-      const res = await fetch("https://localhost:7069/api/AuthClubMember/me", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+      const data = await authService.apiAuthClubMemberMeGet({
+        headers: { Authorization: `Bearer ${token}` },
       });
-
-      if (!res.ok) {
-        setMember(null);
-        return;
-      }
-
-      const data: User = await res.json();
       setMember(data);
-      await fetchNotifications(data.id);
+      await fetchNotifications(data.id!);
     } catch (error) {
       console.log(error);
       setMember(null);
@@ -84,7 +69,6 @@ export default function UpNavigation() {
       setLoading(false);
     }
   };
-
   useEffect(() => {
     fetchUser();
 
@@ -155,8 +139,8 @@ export default function UpNavigation() {
                 <UserMenuDrop
                   member={{
                     fullName: `${member?.name} ${member?.surname}`,
-                    email: member?.email,
-                    avatarData: member?.avatarData,
+                    email: member?.email ?? undefined,
+                    avatarData: member?.avatarData ?? undefined,
                   }}
                   notificationCount={notificationCount}
                   onCabinet={() => router.push("/cabinetManager")}

@@ -31,7 +31,7 @@ export default function useEditForm(id: number) {
 
   useEffect(() => {
     if (!id) return;
-    productsApi
+    productService
       .apiProductsIdGet({ id })
       .then((product) => {
         const year = product.publishingDate
@@ -44,7 +44,8 @@ export default function useEditForm(id: number) {
           pageCount: product.pageCount ?? undefined,
           itemsInSet: product.itemsInSet ?? 1,
           categoryIds: product.categoryIds ?? [],
-          languageId: product.originalLanguageId ?? undefined,
+          languageId: product.languageIds?.[0] ?? undefined,
+          //languageId: product.originalLanguageId ?? undefined,
           coverType: product.coverType ?? CoverType.NUMBER_0,
           availability: product.availability ?? undefined,
           leaveOldImages: true,

@@ -41,13 +41,13 @@ export function useProductData() {
 
   useEffect(() => {
     Promise.all([
-      authorsApi.apiAuthorsGet(),
-      publishersApi.apiPublishersGet(),
-      categoriesApi.apiCategoriesGet(),
-      languagesApi.apiLanguagesGet(),
-      formatsApi.apiFormatsGet(),
-      bookSizesApi.apiBookSizesGet(),
-      ageRestrictionApi.apiAgeRestrictionsGet(),
+      authorService.apiAuthorsGet(),
+      publisherService.apiPublishersGet(),
+      categoriesService.apiCategoriesGet(),
+      languageService.apiLanguagesGet(),
+      formatService.apiFormatsGet(),
+      bookSizeService.apiBookSizesGet(),
+      ageRestrictionService.apiAgeRestrictionsGet(),
     ]).then(([authors, publishers, categories, languages, formats, bookSizes, ageRestrictions,]) =>
       setData({ authors, publishers, categories, languages, formats, bookSizes, ageRestrictions, })
     );

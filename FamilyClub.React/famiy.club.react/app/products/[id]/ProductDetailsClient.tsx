@@ -625,14 +625,14 @@ export default function ProductDetailsClient({ id }: { id: string }) {
                 <div className="space-y-5 px-5 py-5">
                   <div className="flex items-center gap-4">
                     <button
-                      className="h-[40px] flex-1 rounded-[12px] bg-[#7e4d1e] text-[16px] text-[#f5f3ee] shadow-[0px_4px_8px_0px_rgba(36,36,36,0.3)]"
+                      className="h-[40px] cursor-pointer flex-1 rounded-[12px] bg-[#7e4d1e] text-[16px] text-[#f5f3ee] shadow-[0px_4px_8px_0px_rgba(36,36,36,0.3)]"
                       type="button"
                       onClick={() => router.push(`/editProduct/${id}`)}
                     >
                       Редагувати
                     </button>
                     <button
-                      className="h-[40px] flex-1 rounded-[12px] bg-[#f5f3ee] text-[16px] text-[#242424] shadow-[0px_4px_8px_0px_rgba(36,36,36,0.3)]"
+                      className="h-[40px] cursor-pointer flex-1 rounded-[12px] bg-[#f5f3ee] text-[16px] text-[#242424] shadow-[0px_4px_8px_0px_rgba(36,36,36,0.3)]"
                       type="button"
                       onClick={handleDelete}
                     >

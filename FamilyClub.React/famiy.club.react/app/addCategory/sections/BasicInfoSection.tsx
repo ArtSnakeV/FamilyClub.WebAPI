@@ -12,14 +12,14 @@ type Props = {
 
 export function BasicInfoSection({ form, setField, loading }: Props) {
   return (
-    <div className="w-full flex">
+    <div className="w-full flex pb-4">
       <SectionCard
         title="Основна інформація"
-        backgroundImage="/images/addProducts/Rectangle 314.svg"
-        className="bg-contain h-full"
+        backgroundImage="/images/addProducts/Rectangle 313.svg"
+        className="w-[600px] h-[580px]"
       >
-        <div className="flex w-[560px] flex-col gap-1">
-          <p className="text-[var(--color-black)] font-sans-pro font-normal text-[24px] leading-[150%] tracking-[-0.011em]">
+        <div className="flex w-[390px] relative top-[46px] flex-col gap-1">
+          <p className="text-[var(--color-black)] font-sans-pro font-normal text-[18px] leading-[150%] tracking-[-0.011em]">
             Назва категорії *
           </p>
           <input
@@ -29,13 +29,29 @@ export function BasicInfoSection({ form, setField, loading }: Props) {
             className="input rounded-[9px] px-3 bg-[var(--color-white)] shadow-[0px_0px_10px_0px_#00000040] h-[44px]"
           />
 
-          <div className="pt-4">
+          <div className="p-4 top-[24px] relative w-full flex flex-col gap-5 ">
             <button
               type="submit"
               disabled={loading}
-              className="w-full h-[60px] rounded-[55px] bg-[var(--color-green)] text-[var(--color-white)] text-[20px] font-medium transition-all duration-200 hover:opacity-90 hover:shadow-[0px_0px_20px_0px_#00000080] active:scale-[0.98] disabled:opacity-50"
+              className="w-full h-[40px] rounded-[55px] bg-[var(--color-green)] text-[var(--color-white)] text-[20px] font-medium transition-all duration-200 hover:opacity-90 hover:shadow-[0px_0px_20px_0px_#00000080] active:scale-[0.98] disabled:opacity-50"
             >
               {loading ? "Збереження..." : "Додати категорію"}
+            </button>
+            <button
+              type="submit"
+              disabled={loading}
+              className="
+                w-full
+                 h-[40px] 
+                 rounded-[55px] 
+                 bg-transparent 
+                 text-[var(--color-green)] 
+                 border-2 border-[#005B3380]
+                 text-[#005B33]
+                 text-[20px] 
+                 font-medium transition-all duration-200 hover:opacity-90 hover:shadow-[0px_0px_20px_0px_#00000080] active:scale-[0.98] disabled:opacity-50"
+            >
+              {loading ? "Видалення..." : "Видалити"}
             </button>
           </div>
         </div>

@@ -24,7 +24,7 @@ export function useSubmitProduct({ form, images, router, clearDraft }: Props) {
       if (images.mainImage) productImageFiles.push(images.mainImage);
       images.gallery.forEach((f) => f && productImageFiles.push(f));
 
-      await productsApi.apiProductsPost({
+      await productService.apiProductsPost({
         productName: form.productName,
         description: form.description,
         price: form.price,

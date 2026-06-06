@@ -4,13 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import {
-  Configuration,
-  ProductsApi,
-  FormatsApi,
-  ProductDto,
-  FormatDto,
-} from "@/lib/api/generated";
+import { ProductDto, FormatDto } from "@/lib/api/generated";
+import { productService, formatService } from "@/lib/api/services";
 
 export default function DropDownFormat() {
   const [open, setOpen] = useState(false);
@@ -24,25 +19,8 @@ export default function DropDownFormat() {
   const router = useRouter();
 
   useEffect(() => {
-    const config = new Configuration({
-      basePath: "https://localhost:7069",
-    });
-
-    const productsApi = new ProductsApi(config);
-    const formatsApi = new FormatsApi(config);
-
-    productsApi
-      .apiProductsGet()
-      .then((res) => {
-        setProducts(res);
-      })
-      .catch((err) => console.error("API ERROR:", err));
-    formatsApi
-      .apiFormatsGet()
-      .then((res) => {
-        setFormats(res);
-      })
-      .catch((err) => console.error("API ERROR:", err));
+    formatService.apiFormatsGet().then(setFormats).catch(console.error);
+    productService.apiProductsGet().then(setProducts).catch(console.error);
   }, []);
 
   useEffect(() => {
@@ -54,23 +32,7 @@ export default function DropDownFormat() {
         setOpen(false);
       }
     }
-
     document.addEventListener("click", handleClickOutside);
-    return () => document.removeEventListener("click", handleClickOutside);
-  }, []);
-
-  useEffect(() => {
-    function handleClickOutside(e: MouseEvent) {
-      if (
-        containerRef.current &&
-        !containerRef.current.contains(e.target as Node)
-      ) {
-        setOpen(false);
-      }
-    }
-
-    document.addEventListener("click", handleClickOutside);
-
     return () => document.removeEventListener("click", handleClickOutside);
   }, []);
 

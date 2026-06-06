@@ -12,6 +12,7 @@ import { SaleSection } from "@/app/(user-site)/addProduct/sections/SaleSection";
 import { useISBNLookup } from "@/app/(user-site)/addProduct/hooks/useISBNLookup";
 import useEditForm from "./hooks/useEditForm";
 import useSubmitEdit from "./hooks/useSubmitEdit";
+import ButtonReturn from "./ButtonReturn";
 
 export default function EditProductClient({ id }: { id: string }) {
   const router = useRouter();
@@ -57,19 +58,19 @@ export default function EditProductClient({ id }: { id: string }) {
     };
   }, []);
 
- useEffect(() => {
-  if (!form.productImages?.length) return;
+  useEffect(() => {
+    if (!form.productImages?.length) return;
 
-  const imgs = form.productImages;
+    const imgs = form.productImages;
 
-  images.setMainPreview(toImageSrc(imgs[0]));
+    images.setMainPreview(toImageSrc(imgs[0]));
 
-  images.setGalleryPreviews([
-    imgs[1] ? toImageSrc(imgs[1]) : null,
-    imgs[2] ? toImageSrc(imgs[2]) : null,
-    imgs[3] ? toImageSrc(imgs[3]) : null,
-  ]);
-}, [form.productImages]);
+    images.setGalleryPreviews([
+      imgs[1] ? toImageSrc(imgs[1]) : null,
+      imgs[2] ? toImageSrc(imgs[2]) : null,
+      imgs[3] ? toImageSrc(imgs[3]) : null,
+    ]);
+  }, [form.productImages]);
 
   if (formLoading) {
     return (
@@ -87,6 +88,9 @@ export default function EditProductClient({ id }: { id: string }) {
           backgroundImage: "url('/images/addProducts/Rectangle 312.svg')",
         }}
       >
+        <div className="flex z-40 relative top-[146px] ml-[64px]">
+          <ButtonReturn />
+        </div>
         <div className="flex flex-col items-center mt-[100px]">
           <h1 className="text-[var(--color-black)] w-[600px] font-['Roboto_Mono'] font-bold text-[44px] leading-[150%] tracking-[-0.011em] text-center">
             Редагувати книгу
