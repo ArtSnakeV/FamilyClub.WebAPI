@@ -1,10 +1,13 @@
 "use client";
 
-import { AgeRestrictionDto } from "@/lib/api/generated";
+import {
+  AgeRestrictionDto,
+  Configuration,
+  AgeRestrictionsApi,
+} from "@/lib/api/generated";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { ageRestrictionService } from "@/lib/api/services";
 
 export default function DropDownAgeRestrictions() {
   const [open, setOpen] = useState(false);
@@ -14,10 +17,11 @@ export default function DropDownAgeRestrictions() {
   const router = useRouter();
 
   useEffect(() => {
-    ageRestrictionService
-      .apiAgeRestrictionsGet()
-      .then(setAgeFilters)
-      .catch(console.error);
+    const config = new Configuration({
+      basePath: "https://localhost:7069",
+    });
+    const api = new AgeRestrictionsApi(config);
+    api.apiAgeRestrictionsGet().then(setAgeFilters).catch(console.error);
   }, []);
 
   useEffect(() => {

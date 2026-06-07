@@ -8,6 +8,7 @@ export default function BooksNav() {
     // Calculate separate active states for each link
     const isBooksActive = pathname === '/admin/books';
     const isLanguagesActive = pathname === '/admin/books/languages';
+    const isPublisherActive = pathname === '/admin/books/publishers';
 
     {/*
     This page works on creating a 'navigation bar' related to book entities and allows you to highlight the current entity, depending on the url address
@@ -56,7 +57,8 @@ export default function BooksNav() {
             >
                 Книги
             </Link>
-
+            
+            
             {/* Languages */}
             {/* Мови */}
             <Link
@@ -73,6 +75,24 @@ export default function BooksNav() {
                 `}
             >
                 Мови
+            </Link>
+
+            {/* Publishers */}
+            {/* Видавництва */}
+            <Link
+                href="/admin/books/publishers"
+                className={`
+                    font-['Source_Sans_Pro'] font-normal text-[20px] leading-[125%] tracking-[-0.011em] align-middle no-underline                    
+                    px-5 py-2.5 rounded-[9px]                    
+                    hover:text-[var(--foreground-on-dark)] hover:bg-[var(--color-brand-green)]                    
+                    transition-colors duration-200 ease-in-out
+                    ${isPublisherActive
+                        ? 'text-[var(--foreground-on-dark)] bg-[var(--color-brand-green)]'
+                        : 'text-[var(--foreground-primary)] bg-transparent'
+                    }
+                `}
+            >
+                Видавництва
             </Link>
         </div>
 

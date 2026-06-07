@@ -2,7 +2,8 @@ import Link from 'next/link';
 import BooksNav from './booksNav';
 import Image from "next/image";
 import { ProductsApi, Configuration } from '@/lib/api/generated'; // To get info about our Books
-
+import AddEditButton from '@/app/(admin-site)/common_elements/add_edit_button';
+import DeleteButton from '@/app/(admin-site)/common_elements/delete_button';
 
 if (process.env.NODE_ENV === 'development') {
     process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
@@ -116,9 +117,9 @@ export default async function AllBooks() {
                         </div>
 
 
-                        <h1>Books:</h1>
+                        {/* <h1>Books:</h1> */}
                         {/* List of Books */}
-                        <div className="grid gap-4">
+                        {/* <div className="grid gap-4">
                             {products.map((product) => (
                                 <div 
                                     key={product.id} 
@@ -132,8 +133,48 @@ export default async function AllBooks() {
                                     </p>
                                 </div>
                             ))}
+                        </div> */}
+
+
+
+
+                        {/* Table Section */}
+                        <div className="mt-8 px-[20px] w-full text-left">
+                        {/* Table Header */}
+                        <div className="flex border-none pb-4 font-bold text-lg">
+                            <div className="flex-1 padding-10">Товари</div>
+                            <div className="w-[338px] text-center">Дії</div>
+                            {/* Width matches two buttons (164px * 2) + gap (10px) */}
                         </div>
 
+                        {/* Список усіх наявних продуктів */}
+                        <div className="grid gap-4">
+                            {products.map((product) => (<div
+                                key={product.id}
+                                className="max-w-[1464px] w-full h-[50px] bg-[#F5F3EE] rounded-[9px] shadow-[0_0_10px_0_rgba(0,0,0,0.25)] px-[24px] flex items-center justify-between"
+                            >
+                                {/* Left side: language name */}
+                                <p className="font-sanspro font-semibold text-[20px] leading-[150%] tracking-[-0.011em] align-middle">
+                                    {product.productName || "Unknown name"}
+                                </p>
+                                {/* Right side: buttons */}
+                                <div className="flex items-center gap-[20px]">
+                                    <AddEditButton>Редагувати</AddEditButton>
+                                                            {/* {product.id !== undefined && (
+                                                                <DeleteLanguageAction 
+                                                                    languageId={language.id} 
+                                                                    languageName={language.languageName || "Невідома мова"} 
+                                                                />
+                                                            )} */}
+                                    <DeleteButton>Видалити</DeleteButton>
+                                </div>
+                            </div>
+                            ))}
+                        </div>
+
+
+
+                    </div>
 
 
 

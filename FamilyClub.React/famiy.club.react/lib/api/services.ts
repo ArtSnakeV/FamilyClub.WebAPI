@@ -11,14 +11,12 @@ import {
   ReviewsApi,
   LanguagesApi,
   PublishersApi,
-  AgeRestrictionsApi,
-  NotificationsApi,
 } from "./generated";
 
 // Configuration tells the client where your backend is
-export const apiBasePath = process.env.NEXT_PUBLIC_API_URL || "https://localhost:7069";
+const apiBasePath = process.env.NEXT_PUBLIC_API_URL || "https://localhost:7069";
 
-export const apiConfig = new Configuration({
+const apiConfig = new Configuration({
   basePath: apiBasePath,
 });
 
@@ -33,5 +31,3 @@ export const bookSizeService = new BookSizesApi(apiConfig);
 export const reviewService = new ReviewsApi(apiConfig);
 export const languageService = new LanguagesApi(apiConfig);
 export const publisherService = new PublishersApi(apiConfig);
-export const ageRestrictionService = new AgeRestrictionsApi(apiConfig);
-export const notificationsService = new NotificationsApi(apiConfig);

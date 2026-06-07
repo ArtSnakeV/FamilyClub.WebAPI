@@ -24,7 +24,7 @@ export default function useSubmitEdit({ id, form, images, router }: Props) {
       if (images.mainImage) productImageFiles.push(images.mainImage);
       images.gallery.forEach((f) => f && productImageFiles.push(f));
 
-      await productService.apiProductsIdPut({
+      await productsApi.apiProductsIdPut({
         id,
         productName: form.productName,
         description: form.description,
