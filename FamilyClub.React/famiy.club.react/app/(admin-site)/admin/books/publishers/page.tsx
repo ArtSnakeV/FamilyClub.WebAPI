@@ -26,9 +26,13 @@ export default async function PublishersPage() {
                     }}
                 >
 
-                    {/* <p className="w-[373px] h-[30px] mb-[10px] opacity-100 font-sans font-semibold text-[20px] leading-[150%] tracking-[-0.011em] align-middle text-[var(--foreground-primary)]">
-                        Додати видавництво:
-                    </p> */}
+                    {/* Додавання нового видавництва */}
+                    <form className="max-w-[1464px] w-full h-[75px] bg-[#F5F3EE] rounded-[9px] shadow-[0_0_10px_0_rgba(0,0,0,0.25)] px-[24px] flex items-center justify-between">
+                        <p className="w-[373px] opacity-100 font-sans font-semibold text-[20px] leading-[150%] tracking-[-0.011em] text-[var(--foreground-primary)]">
+                            Додати видавництво:
+                        </p>
+                        <AddEditButton type="submit">Додати</AddEditButton>
+                    </form>
 
                     <p className="font-[Source_Sans_Pro] font-semibold text-[36px] leading-[150%] tracking-[-0.011em] align-middle">
                         Видавництва:

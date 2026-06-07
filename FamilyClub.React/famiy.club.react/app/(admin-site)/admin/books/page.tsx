@@ -138,47 +138,55 @@ export default async function AllBooks() {
 
 
 
+                        {/* Додавання нової книги */}
+                        <form className="max-w-[1464px] w-full h-[75px] bg-[#F5F3EE] rounded-[9px] shadow-[0_0_10px_0_rgba(0,0,0,0.25)] px-[24px] flex items-center justify-between">
+                            <p className="w-[373px] opacity-100 font-sans font-semibold text-[20px] leading-[150%] tracking-[-0.011em] text-[var(--foreground-primary)]">
+                                Додати книгу:
+                            </p>
+                            <AddEditButton type="submit">Додати</AddEditButton>
+                        </form>
+
                         {/* Table Section */}
                         <div className="mt-8 px-[20px] w-full text-left">
-                        {/* Table Header */}
-                        <div className="flex border-none pb-4 font-bold text-lg">
-                            <div className="flex-1 padding-10">Товари</div>
-                            <div className="w-[338px] text-center">Дії</div>
-                            {/* Width matches two buttons (164px * 2) + gap (10px) */}
-                        </div>
-
-                        {/* Список усіх наявних продуктів */}
-                        <div className="grid gap-4">
-                            {products.map((product) => (<div
-                                key={product.id}
-                                className="max-w-[1464px] w-full h-[50px] bg-[#F5F3EE] rounded-[9px] shadow-[0_0_10px_0_rgba(0,0,0,0.25)] px-[24px] flex items-center justify-between"
-                            >
-                                {/* Left side: language name */}
-                                <p className="font-sanspro font-semibold text-[20px] leading-[150%] tracking-[-0.011em] align-middle">
-                                    {product.productName || "Unknown name"}
-                                </p>
-                                {/* Right side: buttons */}
-                                <div className="flex items-center gap-[20px]">
-                                    <AddEditButton>Редагувати</AddEditButton>
-                                                            {/* {product.id !== undefined && (
+                            {/* Table Header */}
+                            <div className="flex border-none pb-4 font-bold text-lg">
+                                <div className="flex-1 padding-10">Товари</div>
+                                <div className="w-[338px] text-center">Дії</div>
+                                {/* Width matches two buttons (164px * 2) + gap (10px) */}
+                            </div>
+                            
+                            {/* Список усіх наявних продуктів */}
+                            <div className="grid gap-4">
+                                {products.map((product) => (<div
+                                    key={product.id}
+                                    className="max-w-[1464px] w-full h-[50px] bg-[#F5F3EE] rounded-[9px] shadow-[0_0_10px_0_rgba(0,0,0,0.25)] px-[24px] flex items-center justify-between"
+                                >
+                                    {/* Left side: language name */}
+                                    <p className="font-sanspro font-semibold text-[20px] leading-[150%] tracking-[-0.011em] align-middle">
+                                        {product.productName || "Unknown name"}
+                                    </p>
+                                    {/* Right side: buttons */}
+                                    <div className="flex items-center gap-[20px]">
+                                        <AddEditButton>Редагувати</AddEditButton>
+                                        {/* {product.id !== undefined && (
                                                                 <DeleteLanguageAction 
                                                                     languageId={language.id} 
                                                                     languageName={language.languageName || "Невідома мова"} 
                                                                 />
                                                             )} */}
-                                    <DeleteButton>Видалити</DeleteButton>
+                                        <DeleteButton>Видалити</DeleteButton>
+                                    </div>
                                 </div>
+                                ))}
                             </div>
-                            ))}
+
+
+
                         </div>
 
 
 
-                    </div>
 
-
-
-                        
                     </div>
                 </div>
 

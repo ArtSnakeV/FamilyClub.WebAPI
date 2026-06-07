@@ -9,6 +9,8 @@ export default function BooksNav() {
     const isBooksActive = pathname === '/admin/books';
     const isLanguagesActive = pathname === '/admin/books/languages';
     const isPublisherActive = pathname === '/admin/books/publishers';
+    const isCategoryActive = pathname === '/admin/books/categories';
+    const isAuthorActive =pathname === '/admin/books/authors';
 
     {/*
     This page works on creating a 'navigation bar' related to book entities and allows you to highlight the current entity, depending on the url address
@@ -93,6 +95,42 @@ export default function BooksNav() {
                 `}
             >
                 Видавництва
+            </Link>
+
+            {/* Categories */}
+            {/* Категорії */}
+            <Link
+                href="/admin/books/categories"
+                className={`
+                    font-['Source_Sans_Pro'] font-normal text-[20px] leading-[125%] tracking-[-0.011em] align-middle no-underline                    
+                    px-5 py-2.5 rounded-[9px]                    
+                    hover:text-[var(--foreground-on-dark)] hover:bg-[var(--color-brand-green)]                    
+                    transition-colors duration-200 ease-in-out
+                    ${isCategoryActive
+                        ? 'text-[var(--foreground-on-dark)] bg-[var(--color-brand-green)]'
+                        : 'text-[var(--foreground-primary)] bg-transparent'
+                    }
+                `}
+            >
+                Категорії
+            </Link>
+
+            {/* Authors */}
+            {/* Автори */}
+            <Link
+                href="/admin/books/authors"
+                className={`
+                    font-['Source_Sans_Pro'] font-normal text-[20px] leading-[125%] tracking-[-0.011em] align-middle no-underline                    
+                    px-5 py-2.5 rounded-[9px]                    
+                    hover:text-[var(--foreground-on-dark)] hover:bg-[var(--color-brand-green)]                    
+                    transition-colors duration-200 ease-in-out
+                    ${isAuthorActive
+                        ? 'text-[var(--foreground-on-dark)] bg-[var(--color-brand-green)]'
+                        : 'text-[var(--foreground-primary)] bg-transparent'
+                    }
+                `}
+            >
+                Автори
             </Link>
         </div>
 
