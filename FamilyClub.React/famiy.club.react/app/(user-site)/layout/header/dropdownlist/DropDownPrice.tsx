@@ -32,8 +32,8 @@ export default function DropDownPrice() {
   function applyFilters() {
     const params = new URLSearchParams();
 
-    if (from) params.set("from", from);
-    if (to) params.set("to", to);
+    if (from) params.set("minPrice", from);
+    if (to) params.set("maxPrice", to);
     if (promotionOnly) params.set("promo", "true");
 
     router.push(`/products?${params.toString()}`);
@@ -81,7 +81,7 @@ export default function DropDownPrice() {
                 />
                 <input
                   type="number"
-                  placeholder="Від"
+                  aria-label="Ціна від"
                   value={from}
                   onChange={(e) => setFrom(e.target.value)}
                   className="absolute inset-0 w-full h-full bg-transparent px-4 text-[#272727] text-[12px]"
@@ -98,7 +98,7 @@ export default function DropDownPrice() {
                 />
                 <input
                   type="number"
-                  placeholder="До"
+                  aria-label="Ціна до"
                   value={to}
                   onChange={(e) => setTo(e.target.value)}
                   className="absolute inset-0 w-full h-full bg-transparent px-4 text-[#272727] text-[12px]"

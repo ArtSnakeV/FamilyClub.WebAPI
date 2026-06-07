@@ -107,7 +107,7 @@ export default function DropDownYearOfPublication() {
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 onClick={(e) => e.stopPropagation()}
-                placeholder="Пошук..."
+                aria-label="Пошук року видання"
                 className="
                   absolute inset-0
                   w-full h-full
