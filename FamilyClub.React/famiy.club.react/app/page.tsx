@@ -37,6 +37,7 @@ import AboutSection from "@/app/main_page/AboutSection";
 import AdvantagesSection from "@/app/main_page/AdvantagesSection";
 import ReviewsSection from "@/app/main_page/ReviewsSection";
 import FormatSection from "@/app/main_page/FormatSection";
+import PromoBanner from "@/app/main_page/PromoBanner";
 import {
     authorService,
     categoriesService,
@@ -378,6 +379,12 @@ export default function Home() {
             {fantasyBooks.length > 0 ? (
                 <BookSection title="Фантастика" books={fantasyBooks} pillWidth={292} />
             ) : null}
+
+            <PromoBanner
+                title="Нові книги"
+                subtitle="Є ще що почитати"
+                href="/categories"
+            />
 
             {hitsBooks.length > 0 ? (
                 <BookSection title="Хіти продажу" books={hitsBooks} pillWidth={355} />
