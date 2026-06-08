@@ -215,21 +215,27 @@ export default function CatalogClient({ initialProducts }: CatalogClientProps) {
   return (
     <div className="w-full min-h-screen bg-[var(--background-main)]">
       {/* Header Section */}
-      <div className="w-full bg-gradient-to-b from-[#f5f3ee] to-[#ffffff] pt-[100px] pb-[80px] border-b-2 border-[#e0e0e0]">
-        <div className="max-w-[1220px] mx-auto px-[16px] lg:px-0">
-          {/* Header Info */}
-          <div className="mb-[60px]">
-            <h1 className="text-[var(--color-black)] font-['Roboto_Mono'] font-bold text-[32px] md:text-[44px] leading-[120%] tracking-[-0.011em] mb-[20px]">
-              Обери, що тебе цікавить
-            </h1>
-            <p className="text-[var(--color-black)] font-sans text-[14px] md:text-[16px] leading-[150%] max-w-[590px]">
-              Скористайся закладками у хедері — натисни на потрібний параметр, щоб швидко знайти книгу за жанром, автором, мовою або настроєм.
-            </p>
-          </div>
+      <div className="w-full pt-[200px] pb-[80px] relative">
+        <div className="max-w-[1220px] mx-auto px-[16px] lg:px-0 relative">
+          <img 
+            src="/images/catalog/arrow.svg" 
+            alt="Вказівник" 
+            className="absolute left-[80px] -top-[120px] w-[120px] h-[72px] -rotate-90 pointer-events-none hidden md:block"
+          />
+          <div className="flex flex-col md:flex-row justify-between items-end gap-6 md:gap-0">
+            {/* Header Info */}
+            <div className="max-w-[590px] font-mono font-semibold text-[16px] tracking-[-0.176px] leading-[1.5]">
+              <p className="text-[rgba(36,36,36,0.8)] whitespace-pre-wrap">
+                <span className="text-[#242424]">Обери, що тебе цікавить</span>
+                <br />
+                Скористайся закладками у хедері — натисни на потрібний параметр, щоб швидко знайти книгу за жанром, автором, мовою або настроєм.
+              </p>
+            </div>
 
-          {/* Results Count */}
-          <div className="text-[var(--color-black)] font-sans text-[24px] md:text-[32px] font-semibold">
-            Знайдено {totalProducts.toLocaleString("uk-UA")} збігів
+            {/* Results Count */}
+            <div className="text-[#242424] font-mono font-semibold text-[24px] md:text-[32px] text-right tracking-[-0.352px] leading-[1.5]">
+              Знайдено {totalProducts.toLocaleString("uk-UA")} збігів
+            </div>
           </div>
 
           {/* Active Filters */}
@@ -273,11 +279,50 @@ export default function CatalogClient({ initialProducts }: CatalogClientProps) {
       </div>
 
       {/* Products Grid */}
-      <div className="max-w-[1220px] mx-auto px-[16px] lg:px-0 py-[60px]">
-        {paginatedProducts.length > 0 ? (
-          <>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-[30px] mb-[60px]">
-              {paginatedProducts.map((product) => (
+      <div className="relative w-full overflow-hidden">
+        {/* Background Shelf Layer (Fixed or repeating structure) */}
+        <div className="absolute inset-0 pointer-events-none z-0 flex flex-col">
+          {/* We will render repeating shelves. Each shelf is ~605px high to match the grid row height. */}
+          {Array.from({ length: Math.max(1, Math.ceil(paginatedProducts.length / 4)) }).map((_, rowIndex) => (
+            <div key={`shelf-${rowIndex}`} className="relative w-full h-[460px] flex-shrink-0">
+              {/* Shelf Texture 1 */}
+              <div 
+                className="absolute inset-0"
+                style={{ 
+                  backgroundImage: "linear-gradient(180.074deg, rgba(36, 36, 36, 0.2) 0.24409%, rgba(36, 36, 36, 0) 17.892%), linear-gradient(180.074deg, rgba(36, 36, 36, 0.5) 9.5072%, rgba(36, 36, 36, 0) 49.996%), linear-gradient(90deg, rgb(245, 243, 238) 0%, rgb(245, 243, 238) 100%)" 
+                }} 
+              />
+              <div className="absolute left-0 right-0 bottom-0 h-[105px] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] bg-[#7e4d1e]">
+                <img src="/images/catalog/shelf_tex1.png" className="absolute inset-0 w-full h-full object-cover mix-blend-multiply opacity-50" alt="" />
+                <div className="absolute inset-0 bg-[rgba(0,0,0,0.27)]" />
+              </div>
+              <div className="absolute left-0 right-0 bottom-0 h-[70px] bg-[#7e4d1e]">
+                <img src="/images/catalog/shelf_tex2.png" className="absolute inset-0 w-full h-full object-cover mix-blend-multiply" alt="" />
+                <img src="/images/catalog/shelf_tex3.png" className="absolute inset-0 w-full h-full object-cover" alt="" />
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Decorations layer (only on first few rows) */}
+        <div className="absolute inset-0 pointer-events-none z-10 hidden xl:block mx-auto max-w-[1920px]">
+           {/* Top shelf decorations */}
+           <img src="/images/catalog/lilies.png" className="absolute left-0 top-[260px] w-[304px] h-[137px]" alt="" />
+           <img src="/images/catalog/pillows.png" className="absolute right-[0px] top-[200px] w-[314px] h-[251px]" alt="" />
+           
+           {/* Second shelf decorations */}
+           <img src="/images/catalog/train.png" className="absolute left-0 top-[610px] w-[306px] h-[210px]" alt="" />
+           <img src="/images/catalog/plaid.png" className="absolute right-[0px] top-[660px] w-[295px] h-[286px]" alt="" />
+           
+           {/* Third shelf decorations */}
+           <img src="/images/catalog/hunger_games.png" className="absolute left-0 top-[1130px] w-[336px] h-[128px]" alt="" />
+        </div>
+
+        <div className="max-w-[1220px] mx-auto px-[16px] lg:px-0 pt-[40px] pb-[100px] relative z-20">
+          {paginatedProducts.length > 0 ? (
+            <>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-[60px] mb-[60px]">
+                {paginatedProducts.map((product) => (
                 <Link
                   key={product.id}
                   href={`/products/${product.id}`}
@@ -300,19 +345,11 @@ export default function CatalogClient({ initialProducts }: CatalogClientProps) {
                 <button
                   onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
                   disabled={currentPage === 1}
-                  className="flex items-center justify-center w-[40px] h-[40px] rounded-full disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                  className="flex items-center justify-center w-[40px] h-[40px] disabled:opacity-50 disabled:cursor-not-allowed transition-all"
                   aria-label="Попередня сторінка"
                 >
-                  <svg
-                    className="w-[20px] h-[20px]"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-                      clipRule="evenodd"
-                    />
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fillRule="evenodd" clipRule="evenodd" d="M12.7071 4.29289C13.0976 4.68342 13.0976 5.31658 12.7071 5.70711L7.41421 11L12.7071 16.2929C13.0976 16.6834 13.0976 17.3166 12.7071 17.7071C12.3166 18.0976 11.6834 18.0976 11.2929 17.7071L5.29289 11.7071C4.90237 11.3166 4.90237 10.6834 5.29289 10.2929L11.2929 4.29289C11.6834 3.90237 12.3166 3.90237 12.7071 4.29289Z" fill="#242424"/>
                   </svg>
                 </button>
 
@@ -327,10 +364,10 @@ export default function CatalogClient({ initialProducts }: CatalogClientProps) {
                       <button
                         key={pageNum}
                         onClick={() => handlePageChange(pageNum as number)}
-                        className={`flex items-center justify-center w-[40px] h-[40px] rounded-full transition-all font-medium text-[14px] ${
+                        className={`flex items-center justify-center w-[40px] h-[40px] rounded-full transition-all font-mono font-semibold text-[18px] ${
                           currentPage === pageNum
-                            ? "bg-[var(--color-black)] text-white"
-                            : "bg-white text-[var(--color-black)] border border-[#e0e0e0] hover:bg-gray-50"
+                            ? "bg-[#242424] text-white"
+                            : "bg-transparent text-[#242424] border border-[#e0e0e0] hover:bg-[#242424] hover:text-white"
                         }`}
                       >
                         {pageNum}
@@ -343,26 +380,18 @@ export default function CatalogClient({ initialProducts }: CatalogClientProps) {
                 <button
                   onClick={() => handlePageChange(Math.min(totalPages, currentPage + 1))}
                   disabled={currentPage === totalPages}
-                  className="flex items-center justify-center w-[40px] h-[40px] rounded-full disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                  className="flex items-center justify-center w-[40px] h-[40px] disabled:opacity-50 disabled:cursor-not-allowed transition-all"
                   aria-label="Наступна сторінка"
                 >
-                  <svg
-                    className="w-[20px] h-[20px]"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                      clipRule="evenodd"
-                    />
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fillRule="evenodd" clipRule="evenodd" d="M7.29289 4.29289C6.90237 4.68342 6.90237 5.31658 7.29289 5.70711L12.5858 11L7.29289 16.2929C6.90237 16.6834 6.90237 17.3166 7.29289 17.7071C7.68342 18.0976 8.31658 18.0976 8.70711 17.7071L14.7071 11.7071C15.0976 11.3166 15.0976 10.6834 14.7071 10.2929L8.70711 4.29289C8.31658 3.90237 7.68342 3.90237 7.29289 4.29289Z" fill="#242424"/>
                   </svg>
                 </button>
               </div>
             )}
           </>
         ) : (
-          <div className="text-center py-[100px]">
+            <div className="text-center py-[100px] relative z-20">
             <h2 className="text-[24px] font-bold text-[var(--color-black)] mb-[16px]">
               Товарів не знайдено
             </h2>
@@ -372,6 +401,7 @@ export default function CatalogClient({ initialProducts }: CatalogClientProps) {
           </div>
         )}
       </div>
+    </div>
     </div>
   );
 }
