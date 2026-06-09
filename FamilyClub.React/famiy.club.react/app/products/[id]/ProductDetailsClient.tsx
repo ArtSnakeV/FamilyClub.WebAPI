@@ -26,7 +26,7 @@ import type {
   PublisherDto,
   ReviewDto,
 } from "@/lib/api/generated";
-import { productsApi } from "@/app/addProduct/api/productApiClient";
+
 type ReviewCardData = {
   id: number | string;
   author: string;
@@ -489,7 +489,7 @@ export default function ProductDetailsClient({ id }: { id: string }) {
     if (!confirmDelete) return;
 
     try {
-      await productsApi.apiProductsIdDelete({
+      await productService.apiProductsIdDelete({
         id: Number(id),
       });
       router.push("/products");
