@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ProductDto } from "@/app/(user-site)/addProduct/types";
+import { ProductDto } from "@/app/(user-site)/products/addProduct/types";
 
 type Params = {
   form: ProductDto;

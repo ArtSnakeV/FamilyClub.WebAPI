@@ -1,5 +1,5 @@
 import { CategoryDto } from "@/lib/api/generated";
-import CategoryList from "@/app/(user-site)/addProduct/CategoryList";
+import CategoryList from "@/app/(user-site)/products/addProduct/CategoryList";
 
 type Props = {
   categories: CategoryDto[];

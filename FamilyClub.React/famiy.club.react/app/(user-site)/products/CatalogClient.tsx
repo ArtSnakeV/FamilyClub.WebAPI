@@ -3,7 +3,7 @@
 import { useState, useMemo, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
-import BookCard from "@/app/main_page/BookCard";
+import BookCard from "@/app/(user-site)/main_page/BookCard";
 import { ProductDto } from "@/lib/api/generated";
 
 interface CatalogClientProps {

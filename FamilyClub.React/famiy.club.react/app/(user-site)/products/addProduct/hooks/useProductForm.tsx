@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"; // Додали useEffect для безпечної роботи з localStorage на стороні клієнта
 import { CoverType } from "@/lib/api/generated";
-import { ProductDto } from "@/app/(user-site)/addProduct/types";
+import { ProductDto } from "@/app/(user-site)/products/addProduct/types";
 
 // Початковий стан форми (дефолтні значення)
 const initialDto: ProductDto = {

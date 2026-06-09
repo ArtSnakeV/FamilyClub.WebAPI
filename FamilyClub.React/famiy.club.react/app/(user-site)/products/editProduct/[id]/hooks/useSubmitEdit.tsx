@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
-import { productsApi } from "@/app/(user-site)/addProduct/api/productApiClient";
-import { ProductDto, ImageUploadState } from "@/app/(user-site)/addProduct/types";
+import { productsApi } from "@/app/(user-site)/products/addProduct/api/productApiClient";
+import { ProductDto, ImageUploadState } from "@/app/(user-site)/products/addProduct/types";
 
 type Props = {
   id: number;

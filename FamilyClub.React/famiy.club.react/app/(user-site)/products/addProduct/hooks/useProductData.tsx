@@ -16,7 +16,7 @@ import {
   formatsApi,
   bookSizesApi,
   ageRestrictionApi,
-} from "@/app/(user-site)/addProduct/api/productApiClient";
+} from "@/app/(user-site)/products/addProduct/api/productApiClient";
 
 type ProductData = {
   authors: AuthorDTO[];

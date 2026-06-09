@@ -1,7 +1,7 @@
-import { ProductDto } from "@/app/(user-site)/addProduct/types";
-import { NumberInput } from "@/app/(user-site)/addProduct/ui/NumberInput";
-import AvailabilitySelector from "@/app/(user-site)/addProduct/AvailabilitySelector";
-import ButtonSubmitAddProduct from "@/app/(user-site)/addProduct/ButtonSubmitAddProduct";
+import { ProductDto } from "@/app/(user-site)/products/addProduct/types";
+import { NumberInput } from "@/app/(user-site)/products/addProduct/ui/NumberInput";
+import AvailabilitySelector from "@/app/(user-site)/products/addProduct/AvailabilitySelector";
+import ButtonSubmitAddProduct from "@/app/(user-site)/products/addProduct/ButtonSubmitAddProduct";
 
 type Props = {
   form: ProductDto;

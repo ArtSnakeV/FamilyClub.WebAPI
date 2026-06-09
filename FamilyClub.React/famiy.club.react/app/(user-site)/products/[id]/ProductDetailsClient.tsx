@@ -26,7 +26,7 @@ import type {
   PublisherDto,
   ReviewDto,
 } from "@/lib/api/generated";
-import { productsApi } from "@/app/(user-site)/addProduct/api/productApiClient";
+import { productsApi } from "@/app/(user-site)/products/addProduct/api/productApiClient";
 type ReviewCardData = {
   id: number | string;
   author: string;

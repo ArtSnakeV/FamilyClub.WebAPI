@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { CoverType } from "@/lib/api/generated";
-import { ProductDto } from "@/app/(user-site)/addProduct/types";
-import { productsApi } from "@/app/(user-site)/addProduct/api/productApiClient";
+import { ProductDto } from "@/app/(user-site)/products/addProduct/types";
+import { productsApi } from "@/app/(user-site)/products/addProduct/api/productApiClient";
 
 const emptyDto: ProductDto = {
   productName: "",

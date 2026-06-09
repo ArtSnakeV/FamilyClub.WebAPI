@@ -4,14 +4,14 @@ import {
   BookSizeDto,
   AgeRestrictionDto,
 } from "@/lib/api/generated";
-import { ProductDto } from "@/app/(user-site)/addProduct/types";
-import { SectionCard } from "@/app/(user-site)/addProduct/ui/SectionCard";
-import { NumberInput } from "@/app/(user-site)/addProduct/ui/NumberInput";
-import LanguageSelectForm from "@/app/(user-site)/addProduct/LanguageSeletForm";
-import AgeRestrictions from "@/app/(user-site)/addProduct/AgeRestrictions";
-import BookSizeSelectForm from "@/app/(user-site)/addProduct/BookSizeSelectForm";
-import CoverTypeSelect from "@/app/(user-site)/addProduct/CoverTypeSelect";
-import FormatBook from "@/app/(user-site)/addProduct/FormatBook";
+import { ProductDto } from "@/app/(user-site)/products/addProduct/types";
+import { SectionCard } from "@/app/(user-site)/products/addProduct/ui/SectionCard";
+import { NumberInput } from "@/app/(user-site)/products/addProduct/ui/NumberInput";
+import LanguageSelectForm from "@/app/(user-site)/products/addProduct/LanguageSeletForm";
+import AgeRestrictions from "@/app/(user-site)/products/addProduct/AgeRestrictions";
+import BookSizeSelectForm from "@/app/(user-site)/products/addProduct/BookSizeSelectForm";
+import CoverTypeSelect from "@/app/(user-site)/products/addProduct/CoverTypeSelect";
+import FormatBook from "@/app/(user-site)/products/addProduct/FormatBook";
 
 type Props = {
   form: ProductDto;
