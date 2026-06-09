@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { ProductDto, FormatDto } from "@/lib/api/generated";
+import { ProductDto, FormatDto, Configuration, ProductsApi, FormatsApi } from "@/lib/api/generated";
 import { productService, formatService } from "@/lib/api/services";
 
 export default function DropDownFormat() {

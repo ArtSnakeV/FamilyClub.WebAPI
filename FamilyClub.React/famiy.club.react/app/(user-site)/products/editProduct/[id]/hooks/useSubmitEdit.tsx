@@ -4,13 +4,13 @@ import { productsApi } from "@/app/(user-site)/addProduct/api/productApiClient";
 import { ProductDto, ImageUploadState } from "@/app/(user-site)/addProduct/types";
 
 type Props = {
+  id: number;
   form: ProductDto;
   images: ImageUploadState;
   router: AppRouterInstance;
-  clearDraft: () => void;
 };
 
-export function useSubmitProduct({ form, images, router, clearDraft }: Props) {
+export default function useSubmitEdit({ id, form, images, router }: Props) {
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async () => {
@@ -24,7 +24,8 @@ export function useSubmitProduct({ form, images, router, clearDraft }: Props) {
       if (images.mainImage) productImageFiles.push(images.mainImage);
       images.gallery.forEach((f) => f && productImageFiles.push(f));
 
-      await productsApi.apiProductsPost({
+      await productsApi.apiProductsIdPut({
+        id,
         productName: form.productName,
         description: form.description,
         price: form.price,
@@ -44,11 +45,11 @@ export function useSubmitProduct({ form, images, router, clearDraft }: Props) {
         ageRestrictionIds: form.ageRestrictionIds,
         quantityInStock: form.quantityInStock,
         iSBN: form.isbn,
-        productImageFiles,
+        leaveOldImages: productImageFiles.length === 0,
+        productImageFiles: productImageFiles.length > 0 ? productImageFiles : undefined,
       });
 
-      clearDraft();
-      router.push("/products");
+      router.push(`/products/${id}`);
     } catch (err: unknown) {
       console.error("FULL ERROR:", err);
       if (typeof err === "object" && err !== null && "response" in err) {
@@ -56,7 +57,7 @@ export function useSubmitProduct({ form, images, router, clearDraft }: Props) {
         const text = await response?.text?.();
         console.error("SERVER RESPONSE:", text);
       }
-      alert("Помилка при створенні продукту");
+      alert("Помилка при оновленні продукту");
     } finally {
       setLoading(false);
     }

@@ -68,7 +68,7 @@ export default async function PublishersPage() {
         console.error("API ERROR FULL:", error);
         return (
             <div>
-                Failed to load products.
+                Failed to load categories.
             </div>
         );
     }

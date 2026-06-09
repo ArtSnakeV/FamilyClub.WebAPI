@@ -5,6 +5,7 @@ import { ProductsApi, Configuration } from '@/lib/api/generated'; // To get info
 import AddEditButton from '@/app/(admin-site)/common_elements/add_edit_button';
 import DeleteButton from '@/app/(admin-site)/common_elements/delete_button';
 
+
 if (process.env.NODE_ENV === 'development') {
     process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 }
@@ -139,11 +140,14 @@ export default async function AllBooks() {
 
 
                         {/* Додавання нової книги */}
-                        <form className="max-w-[1464px] w-full h-[75px] bg-[#F5F3EE] rounded-[9px] shadow-[0_0_10px_0_rgba(0,0,0,0.25)] px-[24px] flex items-center justify-between">
+                        <form                   
+                            className="max-w-[1464px] w-full h-[75px] bg-[#F5F3EE] rounded-[9px] shadow-[0_0_10px_0_rgba(0,0,0,0.25)] px-[24px] flex items-center justify-between">
                             <p className="w-[373px] opacity-100 font-sans font-semibold text-[20px] leading-[150%] tracking-[-0.011em] text-[var(--foreground-primary)]">
                                 Додати книгу:
                             </p>
-                            <AddEditButton type="submit">Додати</AddEditButton>
+                            <Link href = "../addProduct">
+                                <AddEditButton type="submit">Додати</AddEditButton>
+                            </Link>
                         </form>
 
                         {/* Table Section */}
