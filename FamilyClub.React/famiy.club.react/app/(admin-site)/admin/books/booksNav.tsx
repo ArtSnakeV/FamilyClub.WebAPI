@@ -12,6 +12,7 @@ export default function BooksNav() {
     const isCategoryActive = pathname === '/admin/books/categories';
     const isAuthorActive = pathname === '/admin/books/authors';
     const isTranslatorActive = pathname === '/admin/books/translators';
+    const isAuthorsActive = pathname === "/admin/books/authors";
 
     {/*
     This page works on creating a 'navigation bar' related to book entities and allows you to highlight the current entity, depending on the url address
