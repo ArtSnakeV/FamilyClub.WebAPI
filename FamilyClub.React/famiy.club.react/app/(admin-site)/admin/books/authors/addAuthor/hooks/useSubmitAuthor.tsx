@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
-import { authorsApi, BASE_URL  } from "@/app/addAuthor/api/authorsApiClient";
-import { AuthorDto } from "@/app/addAuthor/types";
+import { authorsApi, BASE_URL  } from "@/app/(admin-site)/admin/books/authors/addAuthor/api/authorsApiClient";
+import { AuthorDto } from "@/app/(admin-site)/admin/books/authors/addAuthor/types";
 
 type Props = {
   form: AuthorDto;
