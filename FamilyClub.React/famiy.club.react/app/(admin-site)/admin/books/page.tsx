@@ -3,7 +3,7 @@ import BooksNav from './booksNav';
 import Image from "next/image";
 import { ProductsApi, Configuration } from '@/lib/api/generated'; // To get info about our Books
 import AddEditButton from '@/app/(admin-site)/common_elements/add_edit_button';
-import DeleteButton from '@/app/(admin-site)/common_elements/delete_button';
+import ItemActions from "@/app/(admin-site)/common_elements/item_actions";
 
 
 if (process.env.NODE_ENV === 'development') {
@@ -140,12 +140,12 @@ export default async function AllBooks() {
 
 
                         {/* Додавання нової книги */}
-                        <form                   
+                        <form
                             className="max-w-[1464px] w-full h-[75px] bg-[#F5F3EE] rounded-[9px] shadow-[0_0_10px_0_rgba(0,0,0,0.25)] px-[24px] flex items-center justify-between">
                             <p className="w-[373px] opacity-100 font-sans font-semibold text-[20px] leading-[150%] tracking-[-0.011em] text-[var(--foreground-primary)]">
                                 Додати книгу:
                             </p>
-                            <Link href = "../addProduct">
+                            <Link href="../../products/addProduct">
                                 <AddEditButton type="submit">Додати</AddEditButton>
                             </Link>
                         </form>
@@ -158,7 +158,7 @@ export default async function AllBooks() {
                                 <div className="w-[338px] text-center">Дії</div>
                                 {/* Width matches two buttons (164px * 2) + gap (10px) */}
                             </div>
-                            
+
                             {/* Список усіх наявних продуктів */}
                             <div className="grid gap-4">
                                 {products.map((product) => (<div
@@ -171,24 +171,14 @@ export default async function AllBooks() {
                                     </p>
                                     {/* Right side: buttons */}
                                     <div className="flex items-center gap-[20px]">
-                                        <AddEditButton>Редагувати</AddEditButton>
-                                        {/* {product.id !== undefined && (
-                                                                <DeleteLanguageAction 
-                                                                    languageId={language.id} 
-                                                                    languageName={language.languageName || "Невідома мова"} 
-                                                                />
-                                                            )} */}
-                                        <DeleteButton>Видалити</DeleteButton>
+                                        <ItemActions id={product.id} type="product" />
                                     </div>
                                 </div>
                                 ))}
                             </div>
 
 
-
                         </div>
-
-
 
 
                     </div>

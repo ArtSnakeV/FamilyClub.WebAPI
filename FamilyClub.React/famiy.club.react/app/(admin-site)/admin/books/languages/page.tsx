@@ -3,7 +3,8 @@ import AddEditButton from '@/app/(admin-site)/common_elements/add_edit_button';
 import DeleteButton from '@/app/(admin-site)/common_elements/delete_button';
 import { LanguagesApi, Configuration } from '@/lib/api/generated';
 import AddLanguageForm from './addLanguageForm'; // Import the new form wrapper
-import DeleteLanguageAction from './deleteLanguageAction';
+// import DeleteLanguageAction from './deleteLanguageAction';
+import ItemActions from "@/app/(admin-site)/common_elements/item_actions"; // Reusable actions component for edit/delete
 
 export default async function LanguagesPage() {
     // Let's get data about our languages
@@ -56,13 +57,14 @@ export default async function LanguagesPage() {
 
                                 {/* Right side: buttons */}
                                 <div className="flex items-center gap-[20px]">
-                                    <AddEditButton>Редагувати</AddEditButton>
+                                    <ItemActions id={language.id} type="language" />
+                                    {/* <AddEditButton>Редагувати</AddEditButton>
                                     {language.id !== undefined && (
                                         <DeleteLanguageAction
                                             languageId={language.id}
                                             languageName={language.languageName || "Невідома мова"}
                                         />
-                                    )}
+                                    )} */}
                                 </div>
                             </div>
                         ))}

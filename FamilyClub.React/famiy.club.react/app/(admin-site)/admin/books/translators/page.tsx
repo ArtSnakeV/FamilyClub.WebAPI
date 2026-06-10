@@ -1,7 +1,9 @@
 import BooksNav from '../booksNav';
 import AddEditButton from '@/app/(admin-site)/common_elements/add_edit_button';
 import DeleteButton from '@/app/(admin-site)/common_elements/delete_button';
+import ItemActions from '@/app/(admin-site)/common_elements/item_actions';
 import { TranslatorsApi, Configuration } from '@/lib/api/generated';
+import Link from 'next/link';
 
 export default async function PublishersPage() {
     // Let's get data about our languages
@@ -26,12 +28,15 @@ export default async function PublishersPage() {
                     }}
                 >
 
-                    {/* Додавання нового видавництва */}
+                    {/* Додавання нового перекладача */}
                     <form className="max-w-[1464px] w-full h-[75px] bg-[#F5F3EE] rounded-[9px] shadow-[0_0_10px_0_rgba(0,0,0,0.25)] px-[24px] flex items-center justify-between">
                         <p className="w-[373px] opacity-100 font-sans font-semibold text-[20px] leading-[150%] tracking-[-0.011em] text-[var(--foreground-primary)]">
                             Додати перекладача:
                         </p>
-                        <AddEditButton type="submit">Додати</AddEditButton>
+                        {/* <AddEditButton type="submit">Додати</AddEditButton> */}
+                        <Link href="../../translators/addTranslator">
+                            <AddEditButton type="submit">Додати</AddEditButton>
+                        </Link>
                     </form>
 
                     <p className="font-[Source_Sans_Pro] font-semibold text-[36px] leading-[150%] tracking-[-0.011em] align-middle">
@@ -47,13 +52,12 @@ export default async function PublishersPage() {
                             >
                                 {/* Left side: translator name */}
                                 <p className="font-sanspro font-semibold text-[20px] leading-[150%] tracking-[-0.011em] align-middle">
-                                    {translator.translatorName || "Unnamed Language"}
+                                    {translator.translatorName || "Unnamed Translator"}
                                 </p>
 
                                 {/* Right side: buttons */}
                                 <div className="flex items-center gap-[20px]">
-                                    <AddEditButton>Редагувати</AddEditButton>
-                                    <DeleteButton>Видалити</DeleteButton>
+                                    <ItemActions id={translator.id} type="translator" />
                                 </div>
                             </div>
                         ))}
