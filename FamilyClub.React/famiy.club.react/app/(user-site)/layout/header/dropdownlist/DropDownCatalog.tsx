@@ -31,7 +31,7 @@ export default function DropDownCatalog() {
             setOpen(true);
 
             setTimeout(() => {
-              router.push("/products");
+              window.location.href = "/products";
             }, 200);
           }}
           className="

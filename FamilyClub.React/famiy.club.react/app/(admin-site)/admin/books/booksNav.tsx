@@ -4,11 +4,17 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 export default function BooksNav() {
-  const pathname = usePathname();
-  // Calculate separate active states for each link
-  const isBooksActive = pathname === "/admin/books";
-  const isLanguagesActive = pathname === "/admin/books/languages";
   const isAuthorsActive = pathname === "/admin/books/authors";
+
+    const pathname = usePathname();
+    // Calculate separate active states for each link
+    const isBooksActive = pathname === '/admin/books';
+    const isLanguagesActive = pathname === '/admin/books/languages';
+    const isPublisherActive = pathname === '/admin/books/publishers';
+    const isCategoryActive = pathname === '/admin/books/categories';
+    const isAuthorActive = pathname === '/admin/books/authors';
+    const isTranslatorActive = pathname === '/admin/books/translators';
+
 
   {
     /*
@@ -56,15 +62,17 @@ export default function BooksNav() {
                         : "text-[var(--foreground-primary)] bg-transparent"
                     }
                 `}
-      >
-        Книги
-      </Link>
+            >
+                Книги
+            </Link>
+            
+            
+            {/* Languages */}
+            {/* Мови */}
+            <Link
+                href="/admin/books/languages"
+                className={`
 
-      {/* Languages */}
-      {/* Мови */}
-      <Link
-        href="/admin/books/languages"
-        className={`
                     font-['Source_Sans_Pro'] font-normal text-[20px] leading-[125%] tracking-[-0.011em] align-middle no-underline                    
                     px-5 py-2.5 rounded-[9px]                    
                     hover:text-[var(--foreground-on-dark)] hover:bg-[var(--color-brand-green)]                    
@@ -75,9 +83,6 @@ export default function BooksNav() {
                         : "text-[var(--foreground-primary)] bg-transparent"
                     }
                 `}
-      >
-        Мови
-      </Link>
 
       {/* Authors */}
       {/* Автори */}
