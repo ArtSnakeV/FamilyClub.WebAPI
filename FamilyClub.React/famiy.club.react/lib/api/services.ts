@@ -11,8 +11,7 @@ import {
   ReviewsApi,
   LanguagesApi,
   PublishersApi,
-  AgeRestrictionsApi,
-  NotificationsApi,
+  TranslatorsApi,
 } from "./generated";
 
 // Configuration tells the client where your backend is
@@ -33,5 +32,4 @@ export const bookSizeService = new BookSizesApi(apiConfig);
 export const reviewService = new ReviewsApi(apiConfig);
 export const languageService = new LanguagesApi(apiConfig);
 export const publisherService = new PublishersApi(apiConfig);
-export const ageRestrictionService = new AgeRestrictionsApi(apiConfig);
-export const notificationsService = new NotificationsApi(apiConfig);
+export const translatorService = new TranslatorsApi(apiConfig);
