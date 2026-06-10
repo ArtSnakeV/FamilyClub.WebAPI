@@ -1,17 +1,17 @@
 const formats = [
     {
         title: "Класичне читання — сторінки, які хочеться перегортати",
-        background: "/images/main_page/format/format-bg-book.png",
+        background: "/images/main_page/format/format-bg-book.svg",
         image: "/images/main_page/format/format-book.png",
     },
     {
         title: "Читай будь-де — усі книги в одному пристрої",
-        background: "/images/main_page/format/format-bg-tablet.png",
+        background: "/images/main_page/format/format-bg-tablet.svg",
         image: "/images/main_page/format/format-tablet.png",
     },
     {
         title: "Слухай історії в дорозі, під час прогулянок або відпочинку",
-        background: "/images/main_page/format/format-bg-headphones.png",
+        background: "/images/main_page/format/format-bg-headphones.svg",
         image: "/images/main_page/format/format-headphones.png",
     },
 ];

@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function Hero() {
     return (
         <section className="relative bg-[#f5f3ee]">
@@ -67,6 +69,14 @@ export default function Hero() {
                 >
                     Не знаєш, що ще почитати? Є в нас ідейка
                 </p>
+
+                <Link
+                    href="/categories"
+                    className="absolute left-[1062px] top-[500px] flex h-[60px] items-center gap-3 rounded-full bg-[#005B33] px-8 text-[20px] font-semibold text-[#f5f3ee] shadow-[0px_4px_12px_rgba(0,0,0,0.4)] transition-transform hover:scale-105"
+                >
+                    Підібрати книгу
+                    <span className="text-[24px]">→</span>
+                </Link>
             </div>
 
             <div className="relative mx-auto h-[520px] max-w-[1220px] px-4 py-10 min-[1600px]:hidden">
@@ -124,6 +134,14 @@ export default function Hero() {
                 >
                     Не знаєш, що ще почитати? Є в нас ідейка
                 </p>
+
+                <Link
+                    href="/categories"
+                    className="absolute bottom-[120px] right-[40px] flex h-[50px] items-center gap-2 rounded-full bg-[#005B33] px-6 text-[16px] font-semibold text-[#f5f3ee] shadow-[0px_4px_12px_rgba(0,0,0,0.4)] transition-transform hover:scale-105 md:bottom-[140px] md:right-[60px] md:h-[60px] md:px-8 md:text-[20px]"
+                >
+                    Підібрати книгу
+                    <span className="text-[20px] md:text-[24px]">→</span>
+                </Link>
             </div>
         </section>
     );
