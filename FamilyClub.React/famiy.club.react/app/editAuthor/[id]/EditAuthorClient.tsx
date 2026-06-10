@@ -36,6 +36,7 @@ export default function EditAuthorClient({ id }: { id: string }) {
     } catch (e) {
       console.error(e);
       alert("Помилка при видаленні");
+      
     }
   };
 
