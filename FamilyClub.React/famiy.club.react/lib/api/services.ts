@@ -14,9 +14,9 @@ import {
 } from "./generated";
 
 // Configuration tells the client where your backend is
-const apiBasePath = process.env.NEXT_PUBLIC_API_URL || "https://localhost:7069";
+export const apiBasePath = process.env.NEXT_PUBLIC_API_URL || "https://localhost:7069";
 
-const apiConfig = new Configuration({
+export const apiConfig = new Configuration({
   basePath: apiBasePath,
 });
 
