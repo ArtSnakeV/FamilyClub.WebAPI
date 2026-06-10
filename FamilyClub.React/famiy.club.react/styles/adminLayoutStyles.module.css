@@ -1,5 +1,5 @@
 /* Base link setups */
-.customTabLink {
+/* .customTabLink {
   position: relative;
   width: 315px;
   height: 48px;
@@ -11,22 +11,22 @@
 
   display: flex;
   align-items: center;
-}
+} */
 
 /* Hover & Active */
-.customTabLink:hover,
+/* .customTabLink:hover,
 .customTabLink.active {
   --current-text: var(--foreground-on-dark);
   --current-bg: var(--color-brand-green);
   --icon-filter: invert(100%) brightness(100%);
-}
+} */
 
 /* Background shape (pseudo-element) */
-.customTabLink::before {
+/* .customTabLink::before {
   content: "";
   position: absolute;
   inset: 0;
-  left: -35px; /* ← shift background 5px left */
+  left: -35px; 
   width: calc(100% + 5px);
 
   background: var(--current-bg);
@@ -42,10 +42,10 @@
 
   transition: background 0.2s ease-in-out;
   z-index: 0;
-}
+} */
 
 /* Content container */
-.shapeContainer {
+/* .shapeContainer {
   position: relative;
   z-index: 1;
 
@@ -56,22 +56,93 @@
   padding-right: 36px;
   width: 100%;
   height: 100%;
-}
+} */
 
 /* Icon */
-.icon {
+/* .icon {
   filter: var(--icon-filter);
   transition: filter 0.2s ease-in-out;
-}
+} */
 
 /* Text */
-.linkText {
+/* .linkText {
   margin-left: 24px;
   width: 180px;
   color: var(--current-text);
   font-family: sans-serif;
   font-weight: 600;
   font-size: 16px;
+  line-height: 150%;
+  transition: color 0.2s ease-in-out;
+} */
+
+
+/* Base link setups */
+.customTabLink {
+  position: relative;
+  width: 250px;
+  height: 36px;
+  text-decoration: none;
+  --current-text: var(--foreground-primary);
+  --current-bg: transparent;
+  --icon-filter: none;
+  display: flex;
+  align-items: center;
+}
+
+.customTabLink:hover,
+.customTabLink.active {
+  --current-text: var(--foreground-on-dark);
+  --current-bg: var(--color-brand-green);
+  --icon-filter: invert(100%) brightness(100%);
+}
+
+.customTabLink::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  left: -32px;
+  width: calc(100% + 32px); /* компенсуємо від'ємний left */
+
+  background: var(--current-bg);
+  border-radius: 9px 0 0 9px;
+
+  /* висота 36px — підрізаємо правий кут */
+  clip-path: polygon(
+    0% 0%,
+    100% 0%,
+    calc(100% - 18px) 18px,
+    100% 36px,
+    0% 36px
+  );
+
+  transition: background 0.2s ease-in-out;
+  z-index: 0;
+}
+
+.shapeContainer {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;      /* вертикальне центрування */
+  padding-left: 18px;
+  padding-right: 18px;
+  width: 100%;
+  height: 100%;             /* займає всі 36px батька */
+}
+
+.icon {
+  filter: var(--icon-filter);
+  transition: filter 0.2s ease-in-out;
+}
+
+.linkText {
+  margin-left: 24px;
+  width: 180px;
+  color: var(--current-text);
+  font-family: sans-serif;
+  font-weight: 600;
+  font-size: 14px;
   line-height: 150%;
   transition: color 0.2s ease-in-out;
 }
