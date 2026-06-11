@@ -30,13 +30,14 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import Hero from "@/app/(user-site)/main_page/Hero";
-import BookSection from "@/app/(user-site)/main_page/BookSection";
-import InkSection from "@/app/(user-site)/main_page/InkSection";
-import AboutSection from "@/app/(user-site)/main_page/AboutSection";
-import AdvantagesSection from "@/app/(user-site)/main_page/AdvantagesSection";
-import ReviewsSection from "@/app/(user-site)/main_page/ReviewsSection";
-import FormatSection from "@/app/(user-site)/main_page/FormatSection";
+import Hero from "@/app/main_page/Hero";
+import BookSection from "@/app/main_page/BookSection";
+import InkSection from "@/app/main_page/InkSection";
+import AboutSection from "@/app/main_page/AboutSection";
+import AdvantagesSection from "@/app/main_page/AdvantagesSection";
+import ReviewsSection from "@/app/main_page/ReviewsSection";
+import FormatSection from "@/app/main_page/FormatSection";
+import PromoBanner from "@/app/main_page/PromoBanner";
 import {
     authorService,
     categoriesService,
@@ -378,6 +379,12 @@ export default function Home() {
             {fantasyBooks.length > 0 ? (
                 <BookSection title="Фантастика" books={fantasyBooks} pillWidth={292} />
             ) : null}
+
+            <PromoBanner
+                title="Нові книги"
+                subtitle="Є ще що почитати"
+                href="/categories"
+            />
 
             {hitsBooks.length > 0 ? (
                 <BookSection title="Хіти продажу" books={hitsBooks} pillWidth={355} />

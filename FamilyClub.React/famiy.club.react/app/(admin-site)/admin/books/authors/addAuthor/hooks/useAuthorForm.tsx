@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { AuthorDto } from "@/app/addAuthor/types";
+import { AuthorDto } from "@/app/(admin-site)/admin/books/authors/addAuthor/types";
 
 const initialForm: AuthorDto = {
   authorName: "",

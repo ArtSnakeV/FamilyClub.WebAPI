@@ -14,16 +14,16 @@ const clampRating = (value: number) => Math.max(0, Math.min(5, value));
 
 const formatIconMap = {
     paper: {
-        bg: "/images/main_page/icons/rec-icon-paper-bg.png",
-        icon: "/images/main_page/icons/rec-icon-paper.png",
+        bg: "/images/main_page/icons/rec-icon-paper-bg.svg",
+        icon: "/images/main_page/icons/rec-icon-paper.svg",
     },
     ebook: {
-        bg: "/images/main_page/icons/rec-icon-ebook-bg.png",
-        icon: "/images/main_page/icons/rec-icon-ebook.png",
+        bg: "/images/main_page/icons/rec-icon-ebook-bg.svg",
+        icon: "/images/main_page/icons/rec-icon-ebook.svg",
     },
     audio: {
-        bg: "/images/main_page/icons/rec-icon-audio-bg.png",
-        icon: "/images/main_page/icons/rec-icon-audio.png",
+        bg: "/images/main_page/icons/rec-icon-audio-bg.svg",
+        icon: "/images/main_page/icons/rec-icon-audio.svg",
     },
 };
 
@@ -92,7 +92,7 @@ export default function BookCard({ title, author, price, image, rating, href, fo
 
                 <div className="flex items-center justify-between">
                     <span className="text-[24px] text-[#242424]">{price}</span>
-                    <img alt="" className="h-[30px] w-[30px]" src="/images/main_page/icons/rec-icon-basket.png" />
+                    <img alt="" className="h-[30px] w-[30px]" src="/images/main_page/icons/rec-icon-basket.svg" />
                 </div>
             </div>
         </div>

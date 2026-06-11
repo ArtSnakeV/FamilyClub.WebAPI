@@ -57,7 +57,7 @@ function ReviewCard({ author, text, timeLabel, avatar, bookImage, rating, classN
                 {rating != null ? (
                     <div className="flex items-center gap-2">
                         <span className="text-[16px] text-[#242424]">{formatRating(rating)}</span>
-                        <img alt="" className="h-[30px] w-[30px]" src="/images/main_page/icons/reviews-heart.png" />
+                        <img alt="" className="h-[30px] w-[30px]" src="/images/main_page/icons/reviews-heart.svg" />
                     </div>
                 ) : null}
             </div>
