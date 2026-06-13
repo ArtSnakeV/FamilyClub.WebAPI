@@ -120,6 +120,28 @@
   z-index: 0;
 }
 
+.customTabLink.active::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 18px;
+  height: 36px;
+  background: var(--current-bg);
+  transform: skewX(-20deg);
+
+   clip-path: polygon(
+    0% 0%,
+    100% 0%,
+    calc(100% - 18px) 18px,
+    100% 36px,
+    0% 36px
+  );
+
+  transition: background 0.2s ease-in-out;
+  z-index: 0;
+}
+
 .shapeContainer {
   position: relative;
   z-index: 1;
