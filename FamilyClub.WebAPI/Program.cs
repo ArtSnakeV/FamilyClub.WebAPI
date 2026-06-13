@@ -19,7 +19,10 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowReact",
         policy =>
         {
-            policy.WithOrigins("http://localhost:3000") // React URL
+            // Беремо дозволені URL з конфігурації. Якщо там порожньо — дозволяємо localhost за замовчуванням
+            var allowedOrigins = builder.Configuration.GetSection("AllowedOrigins").Get<string[]>()
+                                 ?? new[] { "http://localhost:3000" };
+            policy.WithOrigins(allowedOrigins)
                   .AllowAnyHeader()
                   .AllowAnyMethod();
         });
