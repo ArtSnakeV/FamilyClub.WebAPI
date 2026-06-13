@@ -1,5 +1,5 @@
-import { PublisherDto } from "@/app/addPublisher/types";
-import { SectionCard } from "@/app/addPublisher/ui/SectionCard";
+import { PublisherDto } from "@/app/(user-site)/publishers/addPublisher/types";
+import { SectionCard } from "@/app/(user-site)/publishers/addPublisher/ui/SectionCard";
 
 type Props = {
   form: PublisherDto;

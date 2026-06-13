@@ -12,10 +12,12 @@ import {
   LanguagesApi,
   PublishersApi,
   TranslatorsApi,
+  CartsApi,
 } from "./generated";
 
 // Configuration tells the client where your backend is
-export const apiBasePath = process.env.NEXT_PUBLIC_API_URL || "https://localhost:7069";
+const defaultBasePath = typeof window !== "undefined" ? "" : "https://localhost:7069";
+export const apiBasePath = process.env.NEXT_PUBLIC_API_URL || defaultBasePath;
 
 export const apiConfig = new Configuration({
   basePath: apiBasePath,
@@ -33,3 +35,4 @@ export const reviewService = new ReviewsApi(apiConfig);
 export const languageService = new LanguagesApi(apiConfig);
 export const publisherService = new PublishersApi(apiConfig);
 export const translatorService = new TranslatorsApi(apiConfig);
+export const cartService = new CartsApi(apiConfig);

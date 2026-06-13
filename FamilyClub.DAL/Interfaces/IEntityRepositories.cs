@@ -32,3 +32,13 @@ public interface INotificationRepository : IRepository<Notification>
 public interface IFormatRepository : IRepository<Format>;
 public interface IBookSizeRepository : IRepository<BookSize>;
 public interface IAgeRestrictionRepository : IRepository<AgeRestriction>;
+
+public interface ICartRepository : IRepository<Cart>
+{
+    Task<Cart?> GetByMemberIdAsync(string clubMemberId, CancellationToken cancellationToken = default);
+}
+
+public interface ICartItemRepository : IRepository<CartItem>
+{
+    Task<IEnumerable<CartItem>> GetByCartIdAsync(int cartId, CancellationToken cancellationToken = default);
+}

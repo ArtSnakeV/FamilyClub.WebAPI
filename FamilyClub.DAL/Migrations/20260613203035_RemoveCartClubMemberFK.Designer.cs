@@ -3,6 +3,7 @@ using System;
 using FamilyClub.DAL.EF;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace FamilyClub.DAL.Migrations
 {
     [DbContext(typeof(FamilyClubContext))]
-    partial class FamilyClubContextModelSnapshot : ModelSnapshot
+    [Migration("20260613203035_RemoveCartClubMemberFK")]
+    partial class RemoveCartClubMemberFK
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -213,10 +216,6 @@ namespace FamilyClub.DAL.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("cart_id");
 
-                    b.Property<string>("Format")
-                        .HasColumnType("text")
-                        .HasColumnName("format");
-
                     b.Property<int>("ProductId")
                         .HasColumnType("integer")
                         .HasColumnName("product_id");
@@ -231,9 +230,9 @@ namespace FamilyClub.DAL.Migrations
                     b.HasIndex("ProductId")
                         .HasDatabaseName("ix_cart_items_product_id");
 
-                    b.HasIndex("CartId", "ProductId", "Format")
+                    b.HasIndex("CartId", "ProductId")
                         .IsUnique()
-                        .HasDatabaseName("ix_cart_items_cart_id_product_id_format");
+                        .HasDatabaseName("ix_cart_items_cart_id_product_id");
 
                     b.ToTable("cart_items", (string)null);
                 });

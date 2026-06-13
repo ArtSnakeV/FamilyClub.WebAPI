@@ -1,5 +1,5 @@
 import { categoriesService } from "@/lib/api/services";
-import { CategoryDto } from "@/app/addCategory/types";
+import { CategoryDto } from "@/app/(user-site)/categories/addCategory/types";
 import { useEffect, useState } from "react";
 
 const emptyForm: CategoryDto = {

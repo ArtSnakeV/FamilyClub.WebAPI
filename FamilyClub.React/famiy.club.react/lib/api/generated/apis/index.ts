@@ -4,6 +4,7 @@ export * from './AgeRestrictionsApi';
 export * from './AuthClubMemberApi';
 export * from './AuthorsApi';
 export * from './BookSizesApi';
+export * from './CartsApi';
 export * from './CategoriesApi';
 export * from './ClaimsClubMemberApi';
 export * from './ClubMemberApi';
