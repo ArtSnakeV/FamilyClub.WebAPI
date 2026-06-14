@@ -1,16 +1,14 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useAuthorForm } from "./hooks/useAuthorForm";
-import { useAuthorImageUpload } from "./hooks/useAuthorImageUpload";
-import { useSubmitAuthor } from "./hooks/useSubmitAuthor";
 import { BasicInfoSection } from "./sections/BasicInfoSection";
+import { useCategoriesForm } from "./hooks/useCategoriesForm";
+import { useSubmitCategories } from "./hooks/useSubmitCategories";
 
-export default function AddAuthorPage() {
+export default function AddCategoriesPage() {
   const router = useRouter();
-  const { form, setField } = useAuthorForm();
-  const images = useAuthorImageUpload();
-  const { handleSubmit, loading } = useSubmitAuthor({ form, router,mainImage: images.mainImage });
+  const { form, setField } = useCategoriesForm();
+  const { handleSubmit, loading } = useSubmitCategories({ form, router });
 
   return (
     <div className="w-full min-h-screen flex flex-col">
@@ -23,8 +21,8 @@ export default function AddAuthorPage() {
         }}
       >
         <div className="flex flex-col items-center mt-[120px]">
-          <h1 className="text-[var(--color-black)] w-[800px] font-['Roboto_Mono'] font-bold text-[34px] leading-[150%] tracking-[-0.011em] text-center">
-            Додати автора
+          <h1 className="text-[var(--color-black)] w-[800px] font-['Roboto_Mono'] font-bold text-[64px] leading-[150%] tracking-[-0.011em] text-center">
+            Додати категорію
           </h1>
         </div>
 
@@ -40,8 +38,6 @@ export default function AddAuthorPage() {
                 form={form}
                 setField={setField}
                 loading={loading}
-                mainPreview={images.mainPreview}
-                onMainChange={images.handleMainChange}
               />
             </div>
           </div>
