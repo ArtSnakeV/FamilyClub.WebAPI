@@ -1,4 +1,4 @@
-import { AuthorDto } from "@/app/addAuthor/types";
+import { AuthorDto } from "@/app/(admin-site)/admin/books/authors/addAuthor/types";
 import Image from "next/image";
 import ellipse from "@/public/images/addProducts/Ellipse 36.svg";
 import plus from "@/public/images/addProducts/plus-solid-full 1.svg";
