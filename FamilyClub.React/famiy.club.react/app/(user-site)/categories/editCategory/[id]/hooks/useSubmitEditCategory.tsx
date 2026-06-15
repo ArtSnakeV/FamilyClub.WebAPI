@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
-import { CategoryDto } from "@/app/addCategory/types";
+import { CategoryDto } from "@/app/(user-site)/categories/addCategory/types";
 import { categoriesService } from "@/lib/api/services";
 
 type Props = {
