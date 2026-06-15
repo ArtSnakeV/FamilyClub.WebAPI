@@ -121,6 +121,11 @@ builder.Services.AddScoped<IBookSizeService, BookSizeService>();
 builder.Services.AddScoped<IAgeRestrictionRepository, AgeRestrictionRepository>();
 builder.Services.AddScoped<IAgeRestrictionService, AgeRestrictionService>();
 
+//Cart
+builder.Services.AddScoped<ICartRepository, CartRepository>();
+builder.Services.AddScoped<ICartItemRepository, CartItemRepository>();
+builder.Services.AddScoped<ICartService, CartService>();
+
 // Customize Identity cookie
 //builder.Services.ConfigureApplicationCookie(
 //    options => {

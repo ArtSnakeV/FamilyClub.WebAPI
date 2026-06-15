@@ -1,9 +1,10 @@
 "use client";
 
+import BookCard from "@/app/(user-site)/main_page/BookCard";
+
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import BookCard from "@/app/main_page/BookCard";
 import {
   authorService,
   bookSizeService,
@@ -15,7 +16,7 @@ import {
   publisherService,
   reviewService,
 } from "@/lib/api/services";
-import type {
+import {
   AuthorDTO,
   BookSizeDto,
   CategoryDto,
@@ -26,6 +27,7 @@ import type {
   PublisherDto,
   ReviewDto,
 } from "@/lib/api/generated";
+import { useCart } from "@/lib/hooks/useCart";
 
 type ReviewCardData = {
   id: number | string;
@@ -221,6 +223,7 @@ function MiniBookCard({
 
 export default function ProductDetailsClient({ id }: { id: string }) {
   const router = useRouter();
+  const { addToCart } = useCart();
   const [product, setProduct] = useState<ProductDto | null>(null);
   const [products, setProducts] = useState<ProductDto[]>([]);
   const [reviews, setReviews] = useState<ReviewDto[]>([]);
@@ -603,8 +606,14 @@ export default function ProductDetailsClient({ id }: { id: string }) {
               <div className="space-y-5 px-5 py-5">
                 <div className="flex items-center gap-4">
                   <button
-                    className="h-[40px] flex-1 rounded-[12px] bg-[#7e4d1e] text-[16px] text-[#f5f3ee] shadow-[0px_4px_8px_0px_rgba(36,36,36,0.3)]"
+                    className="h-[40px] flex-1 rounded-[12px] bg-[#7e4d1e] text-[16px] text-[#f5f3ee] shadow-[0px_4px_8px_0px_rgba(36,36,36,0.3)] transition-transform hover:scale-[1.02] active:scale-[0.98]"
                     type="button"
+                    onClick={() => {
+                      if (currentProduct?.id) {
+                        addToCart(currentProduct.id);
+                        alert("Товар додано в кошик");
+                      }
+                    }}
                   >
                     Додати в кошик
                   </button>

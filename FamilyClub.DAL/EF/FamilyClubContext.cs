@@ -1,4 +1,4 @@
-﻿using FamilyClubLibrary;
+using FamilyClubLibrary;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 using Microsoft.EntityFrameworkCore;
@@ -32,6 +32,10 @@ public class FamilyClubContext : IdentityDbContext<ClubMember>
     public DbSet<Series> Series { get; set; }
 
     public DbSet<Translator> Translator { get; set; }
+
+    public DbSet<Cart> Cart { get; set; }
+
+    public DbSet<CartItem> CartItems { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -111,6 +115,16 @@ public class FamilyClubContext : IdentityDbContext<ClubMember>
 
 		builder.Entity<Notification>()
 		.ToTable("notification");
+
+		// Cart: one cart per ClubMember (or SessionId/GuestId)
+		builder.Entity<Cart>()
+			.HasIndex(c => c.ClubMemberId)
+			.IsUnique();
+
+		// CartItem: ensure a product format isn't duplicated in a cart
+		builder.Entity<CartItem>()
+			.HasIndex(ci => new { ci.CartId, ci.ProductId, ci.Format })
+			.IsUnique();
 
 		// Can be added:
 		//// PRODUCT ↔ REVIEW (one-to-many)

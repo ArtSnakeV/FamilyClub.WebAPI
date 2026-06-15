@@ -23,7 +23,7 @@ export default function AddAuthorPage() {
         }}
       >
         <div className="flex flex-col items-center mt-[120px]">
-          <h1 className="text-[var(--color-black)] w-[800px] font-['Roboto_Mono'] font-bold text-[64px] leading-[150%] tracking-[-0.011em] text-center">
+          <h1 className="text-[var(--color-black)] w-[800px] font-['Roboto_Mono'] font-bold text-[34px] leading-[150%] tracking-[-0.011em] text-center">
             Додати автора
           </h1>
         </div>

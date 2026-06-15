@@ -1,5 +1,5 @@
-import { CategoryDto } from "@/app/addCategory/types";
-import { SectionCard } from "@/app/addCategory/ui/SectionCard";
+import { CategoryDto } from "@/app/(user-site)/categories/addCategory/types";
+import { SectionCard } from "@/app/(user-site)/categories/addCategory/ui/SectionCard";
 
 type Props = {
   form: CategoryDto;

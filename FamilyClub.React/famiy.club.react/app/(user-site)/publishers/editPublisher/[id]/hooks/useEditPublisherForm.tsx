@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { PublisherDto } from "@/app/addPublisher/types";
+import { PublisherDto } from "@/app/(user-site)/publishers/addPublisher/types";
 import { publisherService } from "@/lib/api/services";
 
 const emptyForm: PublisherDto = {

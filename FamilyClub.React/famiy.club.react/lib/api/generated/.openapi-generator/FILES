@@ -2,6 +2,7 @@ apis/AgeRestrictionsApi.ts
 apis/AuthClubMemberApi.ts
 apis/AuthorsApi.ts
 apis/BookSizesApi.ts
+apis/CartsApi.ts
 apis/CategoriesApi.ts
 apis/ClaimsClubMemberApi.ts
 apis/ClubMemberApi.ts
@@ -31,6 +32,9 @@ docs/Availability.md
 docs/BookSize.md
 docs/BookSizeDto.md
 docs/BookSizesApi.md
+docs/CartDTO.md
+docs/CartItemDTO.md
+docs/CartsApi.md
 docs/CategoriesApi.md
 docs/Category.md
 docs/CategoryDto.md
@@ -90,6 +94,8 @@ models/AuthorDTO.ts
 models/Availability.ts
 models/BookSize.ts
 models/BookSizeDto.ts
+models/CartDTO.ts
+models/CartItemDTO.ts
 models/Category.ts
 models/CategoryDto.ts
 models/ClaimsClubMemberDto.ts
