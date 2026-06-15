@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
-import { PublisherDto } from "@/app/addPublisher/types";
+import { PublisherDto } from "@/app/(user-site)/publishers/addPublisher/types";
 import { publisherService } from "@/lib/api/services";
 
 type Props = {
