@@ -1,7 +1,9 @@
 import BooksNav from '../booksNav';
 import AddEditButton from '@/app/(admin-site)/common_elements/add_edit_button';
 import DeleteButton from '@/app/(admin-site)/common_elements/delete_button';
+import Link from 'next/link';
 import { CategoriesApi, Configuration } from '@/lib/api/generated';
+import ItemActions from "@/app/(admin-site)/common_elements/item_actions";
 
 export default async function PublishersPage() {
     // Let's get data about our languages
@@ -31,7 +33,9 @@ export default async function PublishersPage() {
                         <p className="w-[373px] opacity-100 font-sans font-semibold text-[20px] leading-[150%] tracking-[-0.011em] text-[var(--foreground-primary)]">
                             Додати категорію:
                         </p>
-                        <AddEditButton type="submit">Додати</AddEditButton>
+                        <Link href="/admin/books/categories/addCategory" className="w-[100px] h-[50px]">
+                                <AddEditButton>Додати</AddEditButton>
+                        </Link>
                     </form>
 
                     <p className="font-[Source_Sans_Pro] font-semibold text-[36px] leading-[150%] tracking-[-0.011em] align-middle">
@@ -52,8 +56,7 @@ export default async function PublishersPage() {
 
                                 {/* Right side: buttons */}
                                 <div className="flex items-center gap-[20px]">
-                                    <AddEditButton>Редагувати</AddEditButton>
-                                    <DeleteButton>Видалити</DeleteButton>
+                                    <ItemActions id={category.id} type="category" />
                                 </div>
                             </div>
                         ))}

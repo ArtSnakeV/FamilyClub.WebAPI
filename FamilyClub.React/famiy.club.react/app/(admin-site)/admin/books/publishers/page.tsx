@@ -2,6 +2,7 @@ import BooksNav from '../booksNav';
 import AddEditButton from '@/app/(admin-site)/common_elements/add_edit_button';
 import DeleteButton from '@/app/(admin-site)/common_elements/delete_button';
 import { PublishersApi, Configuration } from '@/lib/api/generated';
+import ItemActions from "@/app/(admin-site)/common_elements/item_actions";
 
 export default async function PublishersPage() {
     // Let's get data about our languages
@@ -52,8 +53,7 @@ export default async function PublishersPage() {
 
                                 {/* Right side: buttons */}
                                 <div className="flex items-center gap-[20px]">
-                                    <AddEditButton>Редагувати</AddEditButton>
-                                    <DeleteButton>Видалити</DeleteButton>
+                                    <ItemActions id={publisher.id} type="publisher" />
                                 </div>
                             </div>
                         ))}
