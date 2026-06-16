@@ -134,7 +134,7 @@ export default function UserSideBArProfile({
         style={{
           top: "60px",
           width: "248px",
-          height: "190px",
+          height: "220px",
           backgroundImage: "url('/images/userProfile/Rectangle 313.png')",
           backgroundSize: "100% 100%",
           backgroundPosition: "center",
@@ -162,7 +162,7 @@ export default function UserSideBArProfile({
         >
           <Menu as="div" className="relative w-full">
             {({ open: menuOpen }) => (
-              <div className="w-full bg-[#F5F3EE] shadow-[0px_4px_15px_0px_#242424CC] rounded-2xl overflow-hidden transition-all duration-300 ease-in-out">
+              <div className="w-full bg-[#F5F3EE]  rounded-2xl overflow-hidden transition-all duration-300 ease-in-out">
                 <MenuButton
                   style={{ paddingLeft: "88px" }}
                   className="w-full flex items-center justify-between px-4 py-3 text-[16px] font-semibold text-black outline-none"
@@ -228,7 +228,7 @@ export default function UserSideBArProfile({
       <div
         ref={containerRef}
         className="relative flex items-center"
-        style={{ top: "10px", left: "22px" }}
+        style={{ top: "0px", left: "38px" }}
       >
         <div className="flex items-center bg-[var(--color-white)] rounded-[25px] px-2 h-[30px] w-[160px] shadow-[0px_0px_10px_0px_#24242466] hover:shadow-[0px_0px_15px_0px_#242424CC] transition-all duration-300">
           {/* INPUT */}
