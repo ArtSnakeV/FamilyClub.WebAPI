@@ -9,8 +9,11 @@ import {
   BookSizesApi,
   AgeRestrictionsApi,
 } from "@/lib/api/generated";
+import { apiBasePath } from "@/lib/api/services";
 
-const config = new Configuration({ basePath: "https://localhost:7069" });
+
+// const config = new Configuration({ basePath: "https://localhost:7069" });
+const config = new Configuration({ basePath: apiBasePath });
 
 export const authorsApi = new AuthorsApi(config);
 export const publishersApi = new PublishersApi(config);

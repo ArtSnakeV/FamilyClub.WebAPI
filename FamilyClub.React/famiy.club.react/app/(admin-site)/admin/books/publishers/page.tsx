@@ -2,11 +2,12 @@ import BooksNav from '../booksNav';
 import AddEditButton from '@/app/(admin-site)/common_elements/add_edit_button';
 import DeleteButton from '@/app/(admin-site)/common_elements/delete_button';
 import { PublishersApi, Configuration } from '@/lib/api/generated';
+import { apiBasePath } from '@/lib/api/services';
 
 export default async function PublishersPage() {
     // Let's get data about our languages
     const config = new Configuration({
-        basePath: "https://localhost:7069"
+        basePath: apiBasePath
     });
     const api = new PublishersApi(config);
     try {

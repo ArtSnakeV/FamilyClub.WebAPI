@@ -5,11 +5,12 @@ import { LanguagesApi, Configuration } from '@/lib/api/generated';
 import AddLanguageForm from './addLanguageForm'; // Import the new form wrapper
 // import DeleteLanguageAction from './deleteLanguageAction';
 import ItemActions from "@/app/(admin-site)/common_elements/item_actions"; // Reusable actions component for edit/delete
+import { apiBasePath } from '@/lib/api/services';
 
 export default async function LanguagesPage() {
     // Let's get data about our languages
     const config = new Configuration({
-        basePath: "https://localhost:7069"
+        basePath: apiBasePath
     });
     const api = new LanguagesApi(config);
     try {

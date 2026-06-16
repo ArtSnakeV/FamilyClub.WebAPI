@@ -3,6 +3,7 @@
 import { revalidatePath } from 'next/cache';
 import { LanguagesApi, Configuration } from '@/lib/api/generated';
 import { LanguageDto } from '@/lib/api/generated';
+import { apiBasePath } from '@/lib/api/services';
 
 export async function addLanguageAction(formData: FormData) {
     const languageName = formData.get('languageName') as string;
@@ -12,7 +13,7 @@ export async function addLanguageAction(formData: FormData) {
     }
 
     const config = new Configuration({
-        basePath: "https://localhost:7069"
+        basePath: apiBasePath
     });
     const api = new LanguagesApi(config);
 

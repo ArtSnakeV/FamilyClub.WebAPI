@@ -4,11 +4,12 @@ import DeleteButton from '@/app/(admin-site)/common_elements/delete_button';
 import ItemActions from '@/app/(admin-site)/common_elements/item_actions';
 import { TranslatorsApi, Configuration } from '@/lib/api/generated';
 import Link from 'next/link';
+import { apiBasePath } from '@/lib/api/services';
 
 export default async function PublishersPage() {
     // Let's get data about our languages
     const config = new Configuration({
-        basePath: "https://localhost:7069"
+        basePath: apiBasePath
     });
     const api = new TranslatorsApi(config);
     try {
