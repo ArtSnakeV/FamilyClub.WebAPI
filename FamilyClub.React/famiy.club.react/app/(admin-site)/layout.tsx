@@ -311,7 +311,7 @@ export default async function AdminLayout({
             boxShadow: "0px 0px 10px 0px rgba(0, 0, 0, 0.50)",
           }}
         >
-          <div className="w-full flex-1 p-6">{children}</div>
+          <div className="w-full flex-1">{children}</div>
         </main>
       </body>
     </html>
