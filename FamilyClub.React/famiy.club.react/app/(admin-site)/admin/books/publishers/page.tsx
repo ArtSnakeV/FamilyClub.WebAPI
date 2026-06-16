@@ -23,24 +23,29 @@ export default async function PublishersPage() {
                         width: '1492.88px',
                         height: '1062.04px',
                         padding: '35px',
-                        backgroundImage: "url('/images/entities/main_field_background.svg')",
+                        // backgroundImage: "url('/images/entities/main_field_background.svg')",
                     }}
                 >
+                    <img
+                        src="/images/authorPageAdmin/Rectangle 708.png"
+                        alt=""
+                        className="absolute top-0 left-0 w-full h-full object-fill z-[0]"
+                    />
 
                     {/* Додавання нового видавництва */}
-                    <form className="max-w-[1464px] w-full h-[75px] bg-[#F5F3EE] rounded-[9px] shadow-[0_0_10px_0_rgba(0,0,0,0.25)] px-[24px] flex items-center justify-between">
+                    <form className="z-10 max-w-[1464px] w-full h-[75px] bg-[#F5F3EE] rounded-[9px] shadow-[0_0_10px_0_rgba(0,0,0,0.25)] px-[24px] flex items-center justify-between">
                         <p className="w-[373px] opacity-100 font-sans font-semibold text-[20px] leading-[150%] tracking-[-0.011em] text-[var(--foreground-primary)]">
                             Додати видавництво:
                         </p>
                         <AddEditButton type="submit">Додати</AddEditButton>
                     </form>
 
-                    <p className="font-[Source_Sans_Pro] font-semibold text-[36px] leading-[150%] tracking-[-0.011em] align-middle">
+                    <p className="z-10 font-[Source_Sans_Pro] font-semibold text-[36px] leading-[150%] tracking-[-0.011em] align-middle">
                         Видавництва:
                     </p>
 
                     {/* Список усіх наявних видавництв */}
-                    <div className="grid gap-4">
+                    <div className="z-10 grid gap-4">
                         {publishers.map((publisher) => (
                             <div
                                 key={publisher.id}
