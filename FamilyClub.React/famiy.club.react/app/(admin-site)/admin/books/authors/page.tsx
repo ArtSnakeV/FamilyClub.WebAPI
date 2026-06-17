@@ -74,11 +74,11 @@ console.log("apiBasePath:", apiBasePath);
           </div>
 
           <div
-            className="relative self-center mt-[80px] ml-4"
+            className="relative self-center mt-[80px] ml-4 w-[90%] max-w-[1500px]"
             style={{
               width: "1500px",
               marginLeft: "30px",
-              minHeight: "800px",
+              minHeight: "900px",
             }}
           >
             <img
