@@ -78,7 +78,7 @@ console.log("apiBasePath:", apiBasePath);
             style={{
               width: "1500px",
               marginLeft: "30px",
-              minHeight: "900px",
+              minHeight: "800px",
             }}
           >
             <img
