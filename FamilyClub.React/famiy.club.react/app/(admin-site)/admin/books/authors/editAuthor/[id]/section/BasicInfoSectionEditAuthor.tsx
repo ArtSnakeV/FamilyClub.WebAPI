@@ -27,6 +27,7 @@ export function BasicInfoSectionEditAuthor({
         title="Основна інформація"
         backgroundImage="/images/addProducts/Rectangle 313.svg"
         className="w-[600px] h-[580px]"
+        backgroundSize="100% 100%"
       >
         <div className="flex w-[390px] relative top-[46px] flex-col gap-1">
           <p className="text-[var(--color-black)] font-sans-pro font-normal text-[18px] leading-[150%] tracking-[-0.011em]">

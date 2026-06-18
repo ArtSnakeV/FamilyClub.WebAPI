@@ -1,6 +1,7 @@
 type Props = {
   title: string;
   backgroundImage: string;
+  backgroundSize: string;
   children: React.ReactNode;
   className?: string;
 };
@@ -10,11 +11,12 @@ export function SectionCard({
   backgroundImage,
   children,
   className,
+  backgroundSize,
 }: Props) {
   return (
     <div
       className={`w-full min-h-full bg-cover bg-center pb-[48px] ${className ?? ""}`}
-      style={{ backgroundImage: `url('${backgroundImage}')` }}
+      style={{ backgroundImage: `url('${backgroundImage}')`, backgroundSize: `${backgroundSize ?? ""}` }}
     >
       <div
         className="-ml-[10px] mt-[48px] bg-cover bg-center w-[420px] h-[72px] flex items-center justify-center"

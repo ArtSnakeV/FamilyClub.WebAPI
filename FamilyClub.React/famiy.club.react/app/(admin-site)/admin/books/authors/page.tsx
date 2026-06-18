@@ -49,20 +49,20 @@ export default function ManagerAuthorPage() {
       return (b.authorName ?? "").localeCompare(a.authorName ?? "");
     return 0;
   });
-
+console.log("apiBasePath:", apiBasePath);
   return (
     <div
-      className="w-full min-h-screen overflow-hidden relative"
+      className="w-full min-h-screen overflow-hidden relative m-0 p-0"
       style={{
-        backgroundImage: "url('/images/addProducts/Rectangle 326.png')",
-        backgroundSize: "cover",
+        backgroundImage: "url('/images/authorPageAdmin/Rectangle 326.svg')",
+        backgroundSize: "100% 100%",
       }}
     >
       <div className="w-full min-h-screen relative">
         <img
           src="/images/authorPageAdmin/Rectangle 675.svg"
           className="absolute w-full"
-          style={{ height: "auto", top: "30px" }}
+          style={{ height: "auto", top: "30px", left:"-2px" }}
           alt=""
         />
         <div className="flex flex-col">
@@ -74,9 +74,9 @@ export default function ManagerAuthorPage() {
           </div>
 
           <div
-            className="relative self-center mt-[80px] ml-4"
+            className="relative self-center mt-[80px] ml-4 w-[90%] max-w-[1500px]"
             style={{
-              width: "1050px",
+              width: "1500px",
               marginLeft: "30px",
               minHeight: "800px",
             }}
@@ -130,7 +130,7 @@ export default function ManagerAuthorPage() {
               </button>
 
               {/* Сортування — справа */}
-              <div className="flex flex-row items-center gap-2 absolute right-[30px]">
+              <div className="flex flex-row items-center gap-2 absolute right-[70px]">
                 <p className="text-[14px] text-[var(--color-black)]">
                   Сортування:
                 </p>
@@ -147,7 +147,7 @@ export default function ManagerAuthorPage() {
               </div>
             </div>
             <div className="mt-4 relative top-[40px] ">
-              <h1 className="text-[28px] relative w-[100px] ml-[40px] font-bold text-[var(--color-black)]">
+              <h1 className="text-[28px] relative w-[100px] ml-[70px] font-bold text-[var(--color-black)]">
                 Автори:
               </h1>
             </div>
