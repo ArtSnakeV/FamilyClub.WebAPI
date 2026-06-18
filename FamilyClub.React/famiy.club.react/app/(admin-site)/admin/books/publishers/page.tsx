@@ -23,14 +23,11 @@ export default async function PublishersPage() {
                         width: '1492.88px',
                         height: '1062.04px',
                         padding: '35px',
-                        // backgroundImage: "url('/images/entities/main_field_background.svg')",
+                        margin: '5px',
+                        backgroundImage: "url('/images/entities/main_field_background.svg')",
                     }}
                 >
-                    <img
-                        src="/images/authorPageAdmin/Rectangle 708.png"
-                        alt=""
-                        className="absolute top-0 left-0 w-full h-full object-fill z-[0]"
-                    />
+                    
 
                     {/* Додавання нового видавництва */}
                     <form className="z-10 max-w-[1464px] w-full h-[75px] bg-[#F5F3EE] rounded-[9px] shadow-[0_0_10px_0_rgba(0,0,0,0.25)] px-[24px] flex items-center justify-between">
