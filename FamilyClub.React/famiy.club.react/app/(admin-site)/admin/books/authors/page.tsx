@@ -49,7 +49,7 @@ export default function ManagerAuthorPage() {
       return (b.authorName ?? "").localeCompare(a.authorName ?? "");
     return 0;
   });
-console.log("apiBasePath:", apiBasePath);
+
   return (
     <div
       className="w-full min-h-screen overflow-hidden relative m-0 p-0"

@@ -4,333 +4,257 @@ import Image from "next/image";
 import Link from "next/link";
 import ellipse from "@/public/images/userProfile/Ellipse 36.png";
 import plus from "@/public/images/userProfile/plus-solid-full 1.png";
-import { usePathname } from "next/navigation";
-import {
-  Menu,
-  MenuButton,
-  MenuItems,
-  MenuItem,
-  Transition,
-} from "@headlessui/react";
+import { useRouter } from "next/navigation";
+import { Menu, MenuButton, MenuItems, MenuItem, Transition } from "@headlessui/react";
 import { Fragment, useEffect, useRef, useState } from "react";
-import {
-  AuthorDTO,
-  AuthorsApi,
-  Configuration,
-  ProductDto,
-  ProductsApi,
-} from "@/lib/api/generated";
-import { authorService, productService } from "@/lib/api/services";
+import { AuthorDTO, CategoryDto, FormatDto, ProductDto } from "@/lib/api/generated";
+import { authorService, formatService, productService } from "@/lib/api/services";
+import SearchBar from "./SearchBar";
+import FilterDropdown from "./FilterDropdown";
+import ebookIcon from "@/public/images/userProfile/mobile-button-solid-full 1.png";
+import audioIcon from "@/public/images/userProfile/volume-solid-full 1.png";
 
 type Props = {
-  subscriptions?: () => void;
+  // subscriptions?: () => void;
+  // onLibrary?: () => void;
+  // community?: () => void;
+  // categories: CategoryDto[];
+  // selectedIds: number[];
+  // onToggle: (id: number) => void;
+  // onYearSearch?: (year: string, results: ProductDto[]) => void;
+  // ebookSelected?: boolean;
+  // audioSelected?: boolean;
+  // onFilterReset?: () => void;
   onLibrary?: () => void;
+  subscriptions?: () => void;
   community?: () => void;
+  categories: CategoryDto[];
+  selectedIds: number[];
+  ebookSelected?: boolean;
+  audioSelected?: boolean;
 };
 
+
 export default function UserSideBArProfile({
-  subscriptions,
-  onLibrary,
-  community,
+  subscriptions, community, categories, selectedIds, ebookSelected, audioSelected,
 }: Props) {
-  const pathname = usePathname();
+  const router = useRouter();
   const [selected, setSelected] = useState("Бібліотека");
   const [products, setProducts] = useState<ProductDto[]>([]);
   const [authors, setAuthors] = useState<AuthorDTO[]>([]);
+  const [formats, setFormats] = useState<FormatDto[]>([]);
+  const [selectedFormat, setSelectedFormat] = useState<number | null>(null);
   const [search, setSearch] = useState("");
   const [open, setOpen] = useState(false);
+  const [clickBtn, setClickBtn] = useState(false);
+  const [favoriteBooks, setFavoriteBooks] = useState<any[]>([{ id: 1, title: "Book 1" },
+  { id: 2, title: "Book 2", formats: "ebook, audio" },
+  { id: 3, title: "Book 3", formats: "audio" },
+  { id: 4, title: "Book 4", formats: "ebook" },
+  { id: 5, title: "Book 5", formats: "audio" },
+  { id: 6, title: "Book 6", formats: "ebook" },
+  { id: 7, title: "Book 7", formats: "ebook, audio" },
+  { id: 8, title: "Book 8", formats: "audio" },]);
 
+  const visibleBooks = favoriteBooks.slice(0, 8);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // useEffect(() => {
-  //   console.log("API BASE:", productService);
+  const colors = [
+    "#325747",
+    "#51381E",
+    "#2A2A2A",
+    "#034359",
+    "#521A1B",
+    "#555555",
+    "#245841",
+    "#592A2B",
+  ];
 
-  //   productService
-  //     .apiProductsGet()
-  //     .then((res) => {
-  //       console.log("PRODUCTS RAW:", res);
-  //       setProducts(res);
-  //     })
-  //     .catch(console.error);
+  const lines = clickBtn
+    ? ["Group 515.png", "Group 516.png", "Group 513.png"]
+    : ["Group 513.png", "Group 516.png", "Group 515.png"];
 
-  //   authorService
-  //     .apiAuthorsGet()
-  //     .then((res) => {
-  //       console.log("AUTHORS RAW:", res);
-  //       setAuthors(res);
-  //     })
-  //     .catch(console.error);
-  // }, []);
   useEffect(() => {
-    const config = new Configuration({ basePath: "https://localhost:7069" });
-
-    new ProductsApi(config)
-      .apiProductsGet()
-      .then(setProducts)
-      .catch(console.error);
-    new AuthorsApi(config)
-      .apiAuthorsGet()
-      .then(setAuthors)
-      .catch(console.error);
+    productService.apiProductsGet().then(setProducts).catch(console.error);
+    authorService.apiAuthorsGet().then(setAuthors).catch(console.error);
+    formatService.apiFormatsGet().then(setFormats).catch(console.error);
   }, []);
+  const filteredProducts = selectedFormat
+    ? products.filter((p) => p.formatIds?.includes(selectedFormat))
+    : products;
 
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
-      if (
-        containerRef.current &&
-        !containerRef.current.contains(e.target as Node)
-      ) {
+      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
         setOpen(false);
         setSearch("");
+        setClickBtn(false);
+        // router.replace("/userProfile");
       }
     }
     document.addEventListener("click", handleClickOutside);
     return () => document.removeEventListener("click", handleClickOutside);
   }, []);
 
-  function getProductAuthors(product: ProductDto): AuthorDTO[] {
-    if (!product.authorIds?.length) return [];
-    return authors.filter((a) => product.authorIds!.includes(a.id!));
-  }
-
-  function authorFullName(a: AuthorDTO): string {
-    return a.authorName ?? "";
-  }
-
-  const q = search.toLowerCase();
-
-  const filteredAuthors =
-    search.trim() === ""
-      ? []
-      : authors.filter((a) => a.authorName?.toLowerCase().includes(q));
-
-  const filteredProducts =
-    search.trim() === ""
-      ? []
-      : products.filter((p) => p.productName?.toLowerCase().includes(q));
-
-  const hasResults = filteredAuthors.length > 0 || filteredProducts.length > 0;
-
   const handleSelect = (value: string, action?: () => void) => {
     setSelected(value);
     action?.();
   };
+  const hasFormat = (book: ProductDto, type: string) => {
+    const formatList = formats.filter(f =>
+      book.formatIds?.includes(f.id!)
+    );
 
+    return formatList.some(f =>
+      f.name?.toLowerCase().includes(type)
+    );
+  };
   return (
-    <div
-      className="w-[268px] left-0 absolute"
-      style={{
-        top: "40px",
-        width: "268px",
-        height: "100%",
-        backgroundImage: "url('/images/userProfile/Rectangle 360.png')",
-        backgroundSize: "100% 100%",
-        backgroundPosition: "center",
-      }}
-    >
-      {/* ── Верхній блок з фоном (Додати газету + Меню) ── */}
+    <div className="relative" style={{ left: 0, top: "-30px" }}>
       <div
-        className="w-[248px] left-0 relative"
+        className="w-[268px] left-0 -top-[20px] flex flex-col"
         style={{
-          top: "60px",
-          width: "248px",
-          height: "220px",
-          backgroundImage: "url('/images/userProfile/Rectangle 313.png')",
-          backgroundSize: "100% 100%",
-          backgroundPosition: "center",
+          width: "370px", height: "900px", position: "sticky",
+          backgroundImage: "url('/images/userProfile/Rectangle 360.png')",
+          backgroundSize: "100% 100%", backgroundPosition: "center",
         }}
       >
-        {/* Блок "Додати газету" */}
-        <div className="relative flex flex-col top-[20px] items-center justify-center">
-          <p className="font-source-sans font-semibold text-[16px] leading-[150%] tracking-[-0.011em] text-center align-middle">
-            Додати газету
-          </p>
-          <div className="relative flex z-50 items-center justify-center mt-2">
-            <Image src={ellipse} alt="ellipse" className="w-[36px] h-[36px]" />
-            <Image
-              src={plus}
-              alt="plus"
-              className="absolute w-[26px] h-[26px] top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
-            />
+        {/* Верхній блок */}
+        <div
+          className="w-[248px] left-0 relative"
+          style={{
+            top: "90px", width: "340px", height: "250px",
+            backgroundImage: "url('/images/userProfile/Rectangle 313.png')",
+            backgroundSize: "100% 100%", backgroundPosition: "center",
+          }}
+        >
+          <div className="relative flex flex-col top-[30px] items-center justify-center">
+            <p className="font-source-sans font-semibold text-[16px] leading-[150%] tracking-[-0.011em] text-center">
+              Додати газету
+            </p>
+            <div className="relative flex z-50 items-center justify-center mt-2">
+              <Image src={ellipse} alt="ellipse" className="w-[50px] h-[50px]" />
+              <Image src={plus} alt="plus" className="absolute w-[36px] h-[36px] top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
+            </div>
+          </div>
+
+          <div className="w-[260px] relative top-[30px] z-30" style={{ width: "100%", left: "-8px" }}>
+            <Menu as="div" className="relative w-[99%]">
+              {({ open: menuOpen }) => (
+                <div className="w-full bg-[#F5F3EE] rounded-2xl overflow-hidden transition-all duration-300 ease-in-out">
+                  <MenuButton style={{ paddingLeft: "128px" }} className="w-[90%] flex items-center justify-between px-4 py-3 text-[22px] font-semibold text-black outline-none">
+                    <span>{selected}</span>
+                    <img src="/images/header/Vector.svg" alt="arrow" className={`w-[14px] h-[8px] transition-transform duration-200 ${menuOpen ? "rotate-180" : ""}`} />
+                  </MenuButton>
+                  <Transition as={Fragment} enter="transition ease-out duration-150" enterFrom="opacity-0 -translate-y-1" enterTo="opacity-100 translate-y-0" leave="transition ease-in duration-100" leaveFrom="opacity-100 translate-y-0" leaveTo="opacity-0 -translate-y-1">
+                    <MenuItems className="outline-none pb-4">
+                      {[
+                        { label: "Підписки", action: subscriptions },
+                        { label: "Групи спільнот", action: community },
+                      ].map(({ label, action }) => (
+                        <MenuItem key={label}>
+                          {({ active }) => (
+                            <button
+                              onClick={() => handleSelect(label, action)}
+                              className={`w-full px-4 py-4 text-center text-[16px] font-semibold ${active ? "bg-[#ECE7DF]" : ""} ${selected === label ? "font-bold text-[#A87E52]" : ""}`}
+                            >
+                              {label}
+                            </button>
+                          )}
+                        </MenuItem>
+                      ))}
+                    </MenuItems>
+                  </Transition>
+                </div>
+              )}
+            </Menu>
           </div>
         </div>
 
-        {/* Блок Випадаючого Меню */}
-        <div
-          className="w-[260px] relative top-[30px] z-30"
-          style={{ width: "100%", left: "-8px" }}
-        >
-          <Menu as="div" className="relative w-full">
-            {({ open: menuOpen }) => (
-              <div className="w-full bg-[#F5F3EE]  rounded-2xl overflow-hidden transition-all duration-300 ease-in-out">
-                <MenuButton
-                  style={{ paddingLeft: "88px" }}
-                  className="w-full flex items-center justify-between px-4 py-3 text-[16px] font-semibold text-black outline-none"
-                >
-                  <span>{selected}</span>
-                  <img
-                    src="/images/header/Vector.svg"
-                    alt="arrow"
-                    className={`w-[14px] h-[8px] transition-transform duration-200 ${
-                      menuOpen ? "rotate-180" : ""
-                    }`}
-                  />
-                </MenuButton>
-
-                <Transition
-                  as={Fragment}
-                  enter="transition ease-out duration-150"
-                  enterFrom="opacity-0 -translate-y-1"
-                  enterTo="opacity-100 translate-y-0"
-                  leave="transition ease-in duration-100"
-                  leaveFrom="opacity-100 translate-y-0"
-                  leaveTo="opacity-0 -translate-y-1"
-                >
-                  <MenuItems className="outline-none pb-4">
-                    <MenuItem>
-                      {({ active }) => (
-                        <button
-                          onClick={() =>
-                            handleSelect("Підписки", subscriptions)
-                          }
-                          className={`w-full px-4 py-4 text-left text-[16px] font-semibold ${
-                            active ? "bg-[#ECE7DF]" : ""
-                          } ${selected === "Підписки" ? "font-bold text-[#A87E52]" : ""}`}
-                          style={{ textAlign: "center" }}
-                        >
-                          Підписки
-                        </button>
-                      )}
-                    </MenuItem>
-                    <MenuItem>
-                      {({ active }) => (
-                        <button
-                          onClick={() =>
-                            handleSelect("Групи спільнот", community)
-                          }
-                          className={`w-full px-4 py-2.5 text-left text-[16px] font-semibold ${
-                            active ? "bg-[#ECE7DF]" : ""
-                          } ${selected === "Групи спільнот" ? "font-bold text-[#A87E52]" : ""}`}
-                          style={{ textAlign: "center" }}
-                        >
-                          Групи спільнот
-                        </button>
-                      )}
-                    </MenuItem>
-                  </MenuItems>
-                </Transition>
-              </div>
-            )}
-          </Menu>
-        </div>
-      </div>
-
-      <div
-        ref={containerRef}
-        className="relative flex items-center"
-        style={{ top: "0px", left: "38px" }}
-      >
-        <div className="flex items-center bg-[var(--color-white)] rounded-[25px] px-2 h-[30px] w-[160px] shadow-[0px_0px_10px_0px_#24242466] hover:shadow-[0px_0px_15px_0px_#242424CC] transition-all duration-300">
-          {/* INPUT */}
-          <input
-            type="text"
-            value={search}
-            onChange={(e) => {
-              setSearch(e.target.value);
-              setOpen(true);
-            }}
-            onClick={(e) => e.stopPropagation()}
-            placeholder="Пошук за назвою"
-            className="w-full h-full bg-transparent text-[12px] text-[#272727] outline-none px-2"
+        {/* Пошук + Фільтр */}
+        <div ref={containerRef} className="relative flex items-center" style={{ top: "10px", left: "38px" }}>
+          <SearchBar
+            search={search}
+            open={open}
+            authors={authors}
+            products={products}
+            onChange={(val) => { setSearch(val); setOpen(true); }}
+            onToggleOpen={() => setOpen((v) => !v)}
+            onClose={() => { setOpen(false); setSearch(""); }}
           />
 
-          {/* ICON */}
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              setOpen((v) => !v);
-            }}
-            className="w-[22px] h-[22px] flex items-center justify-center flex-shrink-0"
-          >
-            <Image
-              src="/images/header/zoom_out_24px.png"
-              alt="search"
-              width={22}
-              height={22}
-              className="object-contain"
-              priority
-            />
-          </button>
+          <div className="relative w-[100px] z-10 overflow-visible">
+            <div
+              onClick={() => setClickBtn((v) => !v)}
+              className="w-[60px] h-[60px] flex flex-col relative cursor-pointer transition-all duration-300 z-60 relative"
+              style={{
+                backgroundImage: "url('/images/userProfile/Rectangle 393.png')",
+                backgroundSize: "100% 100%", backgroundPosition: "center",
+              }}
+            >
+              <div className="flex flex-col items-center gap-1 mt-4.5">
+                {lines.map((img, index) => (
+                  <div key={index} className="transition-all duration-300 ease-in-out"
+                    style={{ width: "23px", height: "5px", backgroundImage: `url('/images/userProfile/${img}')`, backgroundSize: "100% 100%", backgroundPosition: "center" }}
+                  />
+                ))}
+              </div>
+            </div>
+
+            {clickBtn && (
+              <FilterDropdown
+                categories={categories}
+                ebookSelected={ebookSelected}
+                audioSelected={audioSelected}
+                onClose={() => setClickBtn(false)}
+              />
+            )}
+          </div>
         </div>
 
-        {/* RESULTS */}
-        {open && hasResults && (
-          <div className="absolute top-[38px] left-0 w-[220px] max-h-[260px] overflow-y-auto rounded-[20px] bg-[#F5F3EE] shadow-[0px_0px_15px_0px_#24242433] p-2 z-50">
-            {filteredAuthors.length > 0 && (
-              <>
-                <p className="text-[11px] text-[#272727]/40 px-3 pt-1 pb-1">
-                  Автори
-                </p>
-                {filteredAuthors.map((a) => (
-                  <Link
-                    key={a.id}
-                    href={`/authors/${a.id}`}
-                    onClick={() => {
-                      setOpen(false);
-                      setSearch("");
-                    }}
-                    className="flex items-center px-3 py-2 rounded-[14px] text-[13px] text-[#272727] hover:bg-white transition-all"
-                  >
-                    {a.authorName}
-                  </Link>
-                ))}
-              </>
-            )}
+        <div
+          className="relative w-[280px] h-[400px] ml-[38px] mt-[40px]"
+          style={{
+            backgroundImage: "url('/images/userProfile/Rectangle 404.png')",
+            backgroundSize: "100% 100%",
+            backgroundPosition: "center",
+          }}
+        >
+          {favoriteBooks.length === 0 ? (
+            <div className="flex items-center justify-center h-full">
+              <img
+                className="w-[166px] h-[170px] object-contain"
+                src="/images/userProfile/imgIko.png"
+                alt=""
+              />
+            </div>
+          ) : (
+            <div className="absolute bottom-[10px] left-[0px] w-[256px] flex flex-col top-[10px] gap-2">
+              {visibleBooks.map((book, index) => (
+                <div
+                  key={book.id}
+                  className="h-[40px] px-4 flex items-center justify-between rounded-tr-[5px] rounded-br-[5px]
+shadow-[2px_2px_5px_0px_rgba(0,0,0,0.5)]
+transition-transform duration-300 ease-in-out
+hover:translate-x-[8px]  hover:scale-x-[1.05] transform-gpu"
+                  style={{ backgroundColor: colors[index % colors.length] }}
+                >
+                  <p className="text-[var(--color-white)] text-[15px] truncate">{book.title}</p>
+                  <div className="flex gap-2">
+                    {hasFormat(book, "audio") && (
+                      <Image src={audioIcon} alt="audio" width={24} height={28} />
+                    )}
+                    {hasFormat(book, "ebook") && (
+                      <Image src={ebookIcon} alt="ebook" width={24} height={28} />
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
 
-            {filteredAuthors.length > 0 && filteredProducts.length > 0 && (
-              <div className="border-t border-[#272727]/10 my-1" />
-            )}
-
-            {filteredProducts.length > 0 && (
-              <>
-                <p className="text-[11px] text-[#272727]/40 px-3 pt-1 pb-1">
-                  Книги
-                </p>
-                {filteredProducts.map((p) => {
-                  const productAuthors = getProductAuthors(p);
-                  return (
-                    <Link
-                      key={p.id}
-                      href={`/products/${p.id}`}
-                      onClick={() => {
-                        setOpen(false);
-                        setSearch("");
-                      }}
-                      className="flex flex-col px-3 py-2 rounded-[14px] hover:bg-white transition-all"
-                    >
-                      <span className="text-[13px] text-[#272727]">
-                        {p.productName}
-                      </span>
-                      {productAuthors.length > 0 && (
-                        <span className="text-[11px] text-[#272727]/50">
-                          {productAuthors.map(authorFullName).join(", ")}
-                        </span>
-                      )}
-                    </Link>
-                  );
-                })}
-              </>
-            )}
-          </div>
-        )}
-
-        {/* EMPTY */}
-        {open && search.trim() !== "" && !hasResults && (
-          <div className="absolute top-[38px] left-0 w-[220px] rounded-[20px] bg-[#F5F3EE] shadow-[0px_0px_15px_0px_#24242433] p-4 text-[13px] text-[#272727] z-50">
-            Не знайдено
-          </div>
-        )}
+        </div>
       </div>
-    </div>
+    </div >
   );
 }
