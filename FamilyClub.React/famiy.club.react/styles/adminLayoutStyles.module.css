@@ -80,7 +80,10 @@
 /* Base link setups */
 .customTabLink {
   position: relative;
-  width: 250px;
+  /* Від'ємний margin = padding-left aside (34px), розширює ribbon до лівого краю.
+     width компенсує margin щоб ribbon доходив до правого краю контенту */
+  margin-left: -34px;
+  width: calc(100% + 34px);
   height: 36px;
   text-decoration: none;
   --current-text: var(--foreground-primary);
@@ -101,42 +104,18 @@
   content: "";
   position: absolute;
   inset: 0;
-  left: -32px;
-  width: calc(100% + 32px); /* компенсуємо від'ємний left */
 
   background: var(--current-bg);
-  border-radius: 9px 0 0 9px;
 
-  /* висота 36px — підрізаємо правий кут */
-  clip-path: polygon(
-    0% 0%,
-    100% 0%,
-    calc(100% - 18px) 18px,
-    100% 36px,
-    0% 36px
-  );
-
-  transition: background 0.2s ease-in-out;
-  z-index: 0;
-}
-
-.customTabLink.active::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 18px;
-  height: 36px;
-  background: var(--current-bg);
-  transform: skewX(-20deg);
-
-   clip-path: polygon(
-    0% 0%,
-    100% 0%,
-    calc(100% - 18px) 18px,
-    100% 36px,
-    0% 36px
-  );
+  /*
+   * path() з арками для закруглених лівих кутів (r=9px) + ribbon V-виріз праворуч.
+   * Ширина = aside(389) − padding-right(24) = 365px;
+   * висота = 36px; виріз = 18px; 347 = 365 − 18.
+   *
+   * Arc (top-left):    M 9 0  → A → 0 9   (CCW, sweep=0)
+   * Arc (bottom-left): 0 27   → A → 9 36  (CW,  sweep=1)
+   */
+  clip-path: path('M 9 0 A 9 9 0 0 0 0 9 L 0 27 A 9 9 0 0 0 9 36 L 365 36 L 347 18 L 365 0 Z');
 
   transition: background 0.2s ease-in-out;
   z-index: 0;

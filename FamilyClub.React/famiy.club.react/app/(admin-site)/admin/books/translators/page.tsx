@@ -34,7 +34,7 @@ export default async function PublishersPage() {
                             Додати перекладача:
                         </p>
                         {/* <AddEditButton type="submit">Додати</AddEditButton> */}
-                        <Link href="../../translators/addTranslator">
+                        <Link href="/admin/books/translators/addTranslator">
                             <AddEditButton type="submit">Додати</AddEditButton>
                         </Link>
                     </form>

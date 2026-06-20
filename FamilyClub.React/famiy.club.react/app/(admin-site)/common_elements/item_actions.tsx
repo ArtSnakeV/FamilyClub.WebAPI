@@ -22,8 +22,8 @@ export default function ItemActions({ id, type }: ItemActionsProps) {
     language: `/languages/edit/${id}`,
     author: `/authors/edit/${id}`,
     translator: `/translators/edit/${id}`,
-    category: `/books/categories/edit/${id}`,
-    publisher: `/books/publishers/edit/${id}`,
+    category: `/admin/books/categories/editCategory/${id}`,
+    publisher: `/admin/books/publishers/editPublisher/${id}`,
   };
 
   // 2. Карта назв для повідомлень

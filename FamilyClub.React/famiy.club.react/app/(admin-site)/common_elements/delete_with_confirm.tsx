@@ -59,7 +59,7 @@ export default function DeleteWithConfirm<T extends string | number>({
           type="button"
           disabled={isDeleting}
           onClick={handleDeleteClick}
-          className="w-[110px] h-[33px] bg-[var(--color-black)] text-white rounded-[9px] px-[15px] flex items-center justify-center font-medium text-sm transition-all duration-200 hover:bg-[var(--color-black)] hover:scale-x-[1.05] hover:scale-y-[1.1] disabled:opacity-50"
+          className="w-[110px] h-[30px] bg-[var(--color-black)] text-white rounded-[9px] px-[15px] flex items-center justify-center font-medium text-sm transition-all duration-200 hover:opacity-90 hover:shadow-[0px_0px_20px_0px_#00000080]  disabled:opacity-50"
         >
           <span>{isDeleting ? "..." : "Видалити"}</span>
         </button>
@@ -68,7 +68,7 @@ export default function DeleteWithConfirm<T extends string | number>({
           type="button"
           disabled={isDeleting}
           onClick={() => setIsConfirming(false)}
-          className="w-[90px] h-[33px] bg-[var(--color-brown)] text-white rounded-[9px] px-[15px] flex items-center justify-center font-medium text-sm transition-all duration-200 hover:bg-[var(--color-brown)] hover:scale-x-[1.05] hover:scale-y-[1.1]"
+          className="w-[90px] h-[30px] bg-[var(--color-brown)] text-white rounded-[9px] px-[15px] flex items-center justify-center font-medium text-sm transition-all duration-200 hover:opacity-90 hover:shadow-[0px_0px_20px_0px_#00000080] disabled:opacity-50"
         >
           <span>Ні</span>
         </button>

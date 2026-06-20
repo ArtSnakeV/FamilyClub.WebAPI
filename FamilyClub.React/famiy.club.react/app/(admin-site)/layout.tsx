@@ -190,7 +190,7 @@ export default async function AdminLayout({
             boxShadow: "0px 0px 15px 0px #24242499",
           }}
         >
-          <div className="max-w-[1220px] mx-auto flex items-center ml-8 lg:px-0">
+          <div className="max-w-[1220px] mx-auto flex items-center lg:px-0">
             <UpNavigation />
           </div>
         </header>
@@ -209,13 +209,16 @@ export default async function AdminLayout({
 
         {/* SIDEBAR — fixed */}
         <aside
-          className="fixed z-20 flex flex-col overflow-y-auto"
+          className="fixed z-20 flex flex-col"
           style={{
             top: "62px",
             left: "20px",
             bottom: 0,
             width: "389px",
             backgroundColor: "#C7A381",
+            /* overflowX: clip дозволяє y-scroll без неявного кліпінгу x */
+            overflowY: "auto",
+            overflowX: "clip",
           }}
         >
           <div className="relative box-border" style={{ padding: "24px 24px 24px 34px" }}>
@@ -279,7 +282,7 @@ export default async function AdminLayout({
                 </div>
               </div>
 
-              <div className="flex-1 overflow-y-auto">
+              <div className="flex-1">
                 <AdminLayoutSidebarItems />
               </div>
               {/* Portal root for sidebar selection (non-scrolling) */}
@@ -297,7 +300,7 @@ export default async function AdminLayout({
             boxShadow: "0px 0px 10px 0px rgba(0, 0, 0, 0.50)",
           }}
         >
-          <div className="w-full flex-1">{children}</div>
+          <div className="w-full flex-1 p-6">{children}</div>
         </main>
       </body>
     </html>
