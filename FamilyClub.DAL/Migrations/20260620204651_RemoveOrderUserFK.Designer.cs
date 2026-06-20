@@ -3,6 +3,7 @@ using System;
 using FamilyClub.DAL.EF;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace FamilyClub.DAL.Migrations
 {
     [DbContext(typeof(FamilyClubContext))]
-    partial class FamilyClubContextModelSnapshot : ModelSnapshot
+    [Migration("20260620204651_RemoveOrderUserFK")]
+    partial class RemoveOrderUserFK
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -465,9 +468,6 @@ namespace FamilyClub.DAL.Migrations
                     b.HasKey("Id")
                         .HasName("pk_orders");
 
-                    b.HasIndex("UserId")
-                        .HasDatabaseName("ix_orders_user_id");
-
                     b.ToTable("orders", (string)null);
                 });
 
@@ -479,10 +479,6 @@ namespace FamilyClub.DAL.Migrations
                         .HasColumnName("id");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Format")
-                        .HasColumnType("text")
-                        .HasColumnName("format");
 
                     b.Property<int>("OrderId")
                         .HasColumnType("integer")
@@ -506,9 +502,9 @@ namespace FamilyClub.DAL.Migrations
                     b.HasIndex("ProductId")
                         .HasDatabaseName("ix_order_items_product_id");
 
-                    b.HasIndex("OrderId", "ProductId", "Format")
+                    b.HasIndex("OrderId", "ProductId")
                         .IsUnique()
-                        .HasDatabaseName("ix_order_items_order_id_product_id_format");
+                        .HasDatabaseName("ix_order_items_order_id_product_id");
 
                     b.ToTable("order_items", (string)null);
                 });
@@ -1118,18 +1114,6 @@ namespace FamilyClub.DAL.Migrations
                     b.Navigation("ClubMember");
                 });
 
-            modelBuilder.Entity("FamilyClubLibrary.Order", b =>
-                {
-                    b.HasOne("FamilyClubLibrary.ClubMember", "ClubMember")
-                        .WithMany("Orders")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_orders_asp_net_users_user_id");
-
-                    b.Navigation("ClubMember");
-                });
-
             modelBuilder.Entity("FamilyClubLibrary.OrderItem", b =>
                 {
                     b.HasOne("FamilyClubLibrary.Order", "Order")
@@ -1340,8 +1324,6 @@ namespace FamilyClub.DAL.Migrations
             modelBuilder.Entity("FamilyClubLibrary.ClubMember", b =>
                 {
                     b.Navigation("Notifications");
-
-                    b.Navigation("Orders");
 
                     b.Navigation("Reviews");
                 });

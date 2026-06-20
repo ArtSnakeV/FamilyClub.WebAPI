@@ -36,6 +36,9 @@ export default function AuthorizationPage() {
       //--r--//
       if (response.token) {
         localStorage.setItem("token", response.token);
+        if (response.clubMember?.id) {
+            localStorage.setItem("userId", response.clubMember.id);
+        }
         window.dispatchEvent(new Event("auth-change"));
       }
       //----///

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -13,5 +13,6 @@ namespace FamilyClub.BLL.DTOs.OrderItem
 		public decimal UnitPrice { get; set; }
         public int ProductId { get; set; }//FK
 		public int OrderId { get; set; }   //FK
+		public string? Format { get; set; }
 	}
 }

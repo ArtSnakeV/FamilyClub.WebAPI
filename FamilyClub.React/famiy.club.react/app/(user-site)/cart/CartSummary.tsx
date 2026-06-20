@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import styles from "./cart.module.css";
 
 export interface CartSummaryProps {
@@ -14,6 +15,7 @@ function formatPrice(value: number): string {
 }
 
 export default function CartSummary({ subtotal, discount, deliveryCost }: CartSummaryProps) {
+  const router = useRouter();
   const [agreed, setAgreed] = useState(false);
   const [promoCode, setPromoCode] = useState("");
 
@@ -80,6 +82,7 @@ export default function CartSummary({ subtotal, discount, deliveryCost }: CartSu
         disabled={!agreed || subtotal === 0}
         type="button"
         id="checkout-btn"
+        onClick={() => router.push("/checkout")}
       >
         До оформлення замовлення
       </button>

@@ -49,6 +49,12 @@ export interface OrderItemDTO {
      * @memberof OrderItemDTO
      */
     orderId?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrderItemDTO
+     */
+    format?: string | null;
 }
 
 /**
@@ -73,6 +79,7 @@ export function OrderItemDTOFromJSONTyped(json: any, ignoreDiscriminator: boolea
         'unitPrice': json['unitPrice'] == null ? undefined : json['unitPrice'],
         'productId': json['productId'] == null ? undefined : json['productId'],
         'orderId': json['orderId'] == null ? undefined : json['orderId'],
+        'format': json['format'] == null ? undefined : json['format'],
     };
 }
 
@@ -92,6 +99,6 @@ export function OrderItemDTOToJSONTyped(value?: OrderItemDTO | null, ignoreDiscr
         'unitPrice': value['unitPrice'],
         'productId': value['productId'],
         'orderId': value['orderId'],
+        'format': value['format'],
     };
 }
-

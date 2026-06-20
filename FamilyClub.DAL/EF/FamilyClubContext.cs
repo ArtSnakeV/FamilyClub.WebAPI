@@ -104,7 +104,7 @@ public class FamilyClubContext : IdentityDbContext<ClubMember>
         // OrderItem Composite Key (Optional but recommended)
         // To ensure a product isn't duplicated in an order:
         builder.Entity<OrderItem>()
-            .HasIndex(oi => new { oi.OrderId, oi.ProductId })
+            .HasIndex(oi => new { oi.OrderId, oi.ProductId, oi.Format })
             .IsUnique();
 
         builder.Entity<ProductImage>()
@@ -133,11 +133,12 @@ public class FamilyClubContext : IdentityDbContext<ClubMember>
 		//    .WithOne(r => r.Product)
 		//    .HasForeignKey(r => r.ProductId);
 
-		//// USER ↔ ORDER (one-to-many)
-		//builder.Entity<Order>()
-		//    .HasOne(o => o.ClubMember)
-		//    .WithMany()
-		//    .HasForeignKey(o => o.UserId);
+		// USER ↔ ORDER (one-to-many)
+		builder.Entity<Order>()
+		    .HasOne(o => o.ClubMember)
+		    .WithMany(m => m.Orders)
+		    .HasForeignKey(o => o.UserId)
+		    .OnDelete(DeleteBehavior.Cascade);
 
 		//// USER ↔ REVIEW (one-to-many)
 		//builder.Entity<Review>()

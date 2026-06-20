@@ -13,6 +13,7 @@ import {
   PublishersApi,
   TranslatorsApi,
   CartsApi,
+  OrdersApi,
 } from "./generated";
 
 // Configuration tells the client where your backend is
@@ -38,3 +39,4 @@ export const languageService = new LanguagesApi(apiConfig);
 export const publisherService = new PublishersApi(apiConfig);
 export const translatorService = new TranslatorsApi(apiConfig);
 export const cartService = new CartsApi(apiConfig);
+export const orderService = new OrdersApi(apiConfig);

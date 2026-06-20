@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -8,7 +8,7 @@ namespace FamilyClubLibrary
     {
         public int Id { get; set; }
 
-        public int UserId { get; set; }
+        public string UserId { get; set; } = default!;
         public ClubMember ClubMember { get; set; } = default!; // For navigation
 
         public DateTime OrderDate { get; set; } = DateTime.UtcNow; // Default Now 
