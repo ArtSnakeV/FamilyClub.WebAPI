@@ -27,7 +27,7 @@ export function useSubmitPublisher({ form, router }: Props) {
         },
       });
 
-      router.push("/publishers");
+      router.push("/admin/books/publishers");
     } catch (err) {
       if ((err as { name?: string }).name === "AbortError") return;
       console.error(err);

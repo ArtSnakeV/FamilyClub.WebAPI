@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { BasicInfoSection } from "./sections/BasicInfoSection";
 import { useSubmitTranslator } from "./hooks/useSubmitTranslator";
 import { useTranslatorForm } from "./hooks/useTranslatorForm";
+import ButtonReturn from "../editTranslator/[id]/ButtonReturn";
 
 export default function AddPublisherPage() {
   const router = useRouter();
@@ -20,6 +21,9 @@ export default function AddPublisherPage() {
           backgroundPosition: "top",
         }}
       >
+        <div className="flex z-20 relative top-[130px] ml-[64px]">
+          <ButtonReturn />
+        </div>
         <div className="flex flex-col items-center mt-[120px]">
           <h1 className="text-[var(--color-black)] w-[800px] font-['Roboto_Mono'] font-bold text-[64px] leading-[150%] tracking-[-0.011em] text-center">
             Додати Перекладача

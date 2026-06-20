@@ -27,7 +27,7 @@ export function useSubmitLanguage({ form, router }: Props) {
         },
       });
 
-      router.push("/languages");
+      router.push("/admin/books/languages");
     } catch (err) {
       if ((err as { name?: string }).name === "AbortError") return;
       console.error(err);
