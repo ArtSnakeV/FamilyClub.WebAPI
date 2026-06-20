@@ -1,14 +1,14 @@
 import { useRef, useState } from "react";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
-import { TranslatorDto } from "../types";
-import { translatorApi } from "../api/translatorApiClient";
+import { LanguageDto } from "../types";
+import { languageApi } from "../api/languageApiClient";
 
 type Props = {
-  form: TranslatorDto;
+  form: LanguageDto;
   router: AppRouterInstance;
 };
 
-export function useSubmitTranslator({ form, router }: Props) {
+export function useSubmitLanguage({ form, router }: Props) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const abortRef = useRef<AbortController | null>(null);
@@ -21,17 +21,17 @@ export function useSubmitTranslator({ form, router }: Props) {
     const { signal } = abortRef.current;
 
     try {
-      const createdTranslator= await translatorApi.apiTranslatorsPost({
-        translatorDto: {
-          translatorName: form.translatorName,
+      const createdLanguage = await languageApi.apiLanguagesPost({
+        languageDto: {
+          languageName: form.languageName,
         },
       });
 
-      router.push("/admin/books/translators");
+      router.push("/languages");
     } catch (err) {
       if ((err as { name?: string }).name === "AbortError") return;
       console.error(err);
-      setError("Помилка при створенні перекладача");
+      setError("Помилка при створенні мови");
     } finally {
       setLoading(false);
     }

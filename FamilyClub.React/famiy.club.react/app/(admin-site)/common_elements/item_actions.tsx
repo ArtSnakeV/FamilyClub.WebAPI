@@ -19,9 +19,9 @@ export default function ItemActions({ id, type }: ItemActionsProps) {
   // 1. Карта шляхів для редагування
   const editPaths: Record<EntityType, string> = {
     product: `/products/editProduct/${id}`,
-    language: `/languages/edit/${id}`,
-    author: `/authors/edit/${id}`,
-    translator: `/translators/edit/${id}`,
+    language: `/admin/books/languages/editLanguage/${id}`,
+    author: `/admin/books/authors/editAuthor/${id}`,
+    translator: `/admin/books/translators/editTranslator/${id}`,
     category: `/admin/books/categories/editCategory/${id}`,
     publisher: `/admin/books/publishers/editPublisher/${id}`,
   };

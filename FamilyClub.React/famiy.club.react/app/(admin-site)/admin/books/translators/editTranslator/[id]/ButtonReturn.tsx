@@ -8,7 +8,7 @@ export default function ButtonReturn() {
     <div className="flex flex-col">
       <button
         type="button"
-         onClick={() => {router.push("/admin/books/publishers");}}
+         onClick={() => {router.push("/admin/books/translators");}}
         className="relative w-[36px] h-[36px] flex items-center justify-center cursor-pointer"
       >
         <Image

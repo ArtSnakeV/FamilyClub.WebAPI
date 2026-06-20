@@ -33,7 +33,6 @@ export default async function PublishersPage() {
                         <p className="w-[373px] opacity-100 font-sans font-semibold text-[20px] leading-[150%] tracking-[-0.011em] text-[var(--foreground-primary)]">
                             Додати перекладача:
                         </p>
-                        {/* <AddEditButton type="submit">Додати</AddEditButton> */}
                         <Link href="/admin/books/translators/addTranslator">
                             <AddEditButton type="submit">Додати</AddEditButton>
                         </Link>

@@ -23,7 +23,7 @@ export default function useSubmitEditPublisher({ id, form, router }: Props) {
         },
       });
 
-      router.push("/publishers");
+      router.push("/admin/books/publishers");
     } catch (e) {
       console.error(e);
       alert("Помилка при редагуванні видавництва");
@@ -39,10 +39,10 @@ export default function useSubmitEditPublisher({ id, form, router }: Props) {
       await publisherService.apiPublishersIdDelete({
         id: Number(id),
       });
-      router.push("/publishers");
+      router.push("/admin/books/publishers");
     } catch (e) {
       console.error(e);
-      alert("Помилка при видаленні");
+      alert("Помилка при видаленні видавництва");
     }
   };
   return { handleSubmit, loading, handleDelete };

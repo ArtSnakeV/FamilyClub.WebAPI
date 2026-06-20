@@ -3,6 +3,7 @@ import AddEditButton from '@/app/(admin-site)/common_elements/add_edit_button';
 import DeleteButton from '@/app/(admin-site)/common_elements/delete_button';
 import { PublishersApi, Configuration } from '@/lib/api/generated';
 import ItemActions from "@/app/(admin-site)/common_elements/item_actions";
+import Link from 'next/link';
 
 export default async function PublishersPage() {
     // Let's get data about our languages
@@ -34,7 +35,10 @@ export default async function PublishersPage() {
                         <p className="w-[373px] opacity-100 font-sans font-semibold text-[20px] leading-[150%] tracking-[-0.011em] text-[var(--foreground-primary)]">
                             Додати видавництво:
                         </p>
-                        <AddEditButton type="submit">Додати</AddEditButton>
+                        <Link href="/admin/books/publishers/addPublisher">
+                            <AddEditButton type="submit">Додати</AddEditButton>
+                        </Link>
+                        
                     </form>
 
                     <p className="z-10 font-[Source_Sans_Pro] font-semibold text-[36px] leading-[150%] tracking-[-0.011em] align-middle">

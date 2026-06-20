@@ -23,7 +23,7 @@ export default function useSubmitEditCategory({ id, form, router }: Props) {
         },
       });
 
-      router.push("/categories");
+      router.push("/admin/books/categories");
     } catch (e) {
       console.error(e);
       alert("Помилка при редагуванні категорії");
@@ -39,10 +39,10 @@ export default function useSubmitEditCategory({ id, form, router }: Props) {
       await categoriesService.apiCategoriesIdDelete({
         id: Number(id),
       });
-      router.push("/categories");
+      router.push("/admin/books/categories");
     } catch (e) {
       console.error(e);
-      alert("Помилка при видаленні");
+      alert("Помилка при видаленні категорії");
     }
   };
   return { handleSubmit, loading, handleDelete };
