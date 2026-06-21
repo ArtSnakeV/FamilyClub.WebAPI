@@ -12,9 +12,10 @@ type EntityType = "product" | "language" | "author" | "translator" | "category" 
 interface ItemActionsProps {
   id: number | undefined;
   type: EntityType;
+  onDeleteSuccess?: (id: number) => void;
 }
 
-export default function ItemActions({ id, type }: ItemActionsProps) {
+export default function ItemActions({ id, type, onDeleteSuccess }: ItemActionsProps) {
   
   // 1. Карта шляхів для редагування
   const editPaths: Record<EntityType, string> = {
@@ -62,8 +63,14 @@ export default function ItemActions({ id, type }: ItemActionsProps) {
       default:
         console.error("Невідомий тип сутності для видалення");
     }
+    
+    // Повідомляємо батьківський компонент про успішне видалення
+    if (onDeleteSuccess) {
+      onDeleteSuccess(currentId);
+    }
   };
 
+  
   return (
     <div className="flex items-center gap-[20px]">
       <Link href={editPaths[type]}>
