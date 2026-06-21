@@ -1,17 +1,17 @@
-import { CategoryDto } from "@/app/(user-site)/categories/addCategory/types";
-import { SectionCard } from "@/app/(user-site)/categories/addCategory/ui/SectionCard";
+import { PublisherDto } from "@/app/(admin-site)/admin/books/publishers/addPublisher/types";
+import { SectionCard } from "@/app/(admin-site)/admin/books/publishers/addPublisher/ui/SectionCard";
 
 type Props = {
-  form: CategoryDto;
-  setField: <K extends keyof CategoryDto>(
+  form: PublisherDto;
+  setField: <K extends keyof PublisherDto>(
     key: K,
-    value: CategoryDto[K],
+    value: PublisherDto[K],
   ) => void;
   loading: boolean;
   handleDelete: () => void;
 };
 
-export function BasicInfoSectionEditCategory({ form, setField, loading, handleDelete }: Props) {
+export function BasicInfoSectionEditPublisher({ form, setField, loading, handleDelete }: Props) {
   return (
     <div className="w-full flex pb-4">
       <SectionCard
@@ -21,13 +21,13 @@ export function BasicInfoSectionEditCategory({ form, setField, loading, handleDe
       >
         <div className="flex w-[390px] relative top-[46px] flex-col gap-1">
           <p className="text-[var(--color-black)] font-sans-pro font-normal text-[18px] leading-[150%] tracking-[-0.011em]">
-            Назва категорії *
+            Назва видавництва *
           </p>
           <input
-            placeholder="Назва категорії"
-            value={form.categoryName}
-            onChange={(e) => setField("categoryName", e.target.value)}
-            className="relative z-10 input rounded-[9px] px-3 bg-[var(--color-white)] shadow-[0px_0px_10px_0px_#00000040] h-[44px]"
+            placeholder="Назва видавництва"
+            value={form.publisherName}
+            onChange={(e) => setField("publisherName", e.target.value)}
+            className="input rounded-[9px] px-3 bg-[var(--color-white)] shadow-[0px_0px_10px_0px_#00000040] h-[44px]"
           />
 
          <div className="p-4 top-[24px] relative w-full flex flex-col gap-5 ">

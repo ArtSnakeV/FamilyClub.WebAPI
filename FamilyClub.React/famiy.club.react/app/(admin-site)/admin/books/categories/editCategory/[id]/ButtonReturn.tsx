@@ -8,17 +8,17 @@ export default function ButtonReturn() {
     <div className="flex flex-col">
       <button
         type="button"
-         onClick={() => {router.push("/");}}
+         onClick={() => {router.push("/admin/books/categories");}}
         className="relative w-[36px] h-[36px] flex items-center justify-center cursor-pointer"
       >
         <Image
-          src="/images/addProducts/Ellipse 9.svg"
+          src="/images/addProducts/Ellipse 9.png"
           alt="circle"
           width={36}
           height={36}
           className="object-contain"
         />
-        <Image src="/images/addProducts/keyboard_backspace_24px.svg"
+        <Image src="/images/addProducts/keyboard_backspace_24px.png"
           alt="back"
           width={26}
           height={26}

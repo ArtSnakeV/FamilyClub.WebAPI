@@ -27,7 +27,7 @@ export function useSubmitCategories({ form, router }: Props) {
         },
       });
 
-      router.push("/categories");
+      router.push("/admin/books/categories");
     } catch (err) {
       if ((err as { name?: string }).name === "AbortError") return;
       console.error(err);

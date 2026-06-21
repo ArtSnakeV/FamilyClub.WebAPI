@@ -29,7 +29,7 @@
 
 //     return (
 //         // <div className="absolute w-[260px] h-[625px] top-[104.76px]  left-[23.71px] gap-[21px] flex flex-col opacity-100">
-//         <div className="absolute w-[260px] h-[625px] top-[104.76px] left-[23.71px] flex flex-col overflow-visible">
+//         <div className="relative w-full flex flex-col gap-2 overflow-hidden">
 
 //             {/* Desktop */}
 //             <div className="pb-[5px] last:pb-0">
@@ -422,17 +422,17 @@ export default function AdminLayoutSidebarItems() {
 
     return (
         // <div className="absolute w-[260px] h-[625px] top-[104.76px]  left-[23.71px] gap-[21px] flex flex-col opacity-100">
-        <div className="absolute gap-0 w-[230px] h-[525px] top-[44px] left-[28px] flex flex-col overflow-visible">
+        <div className="relative w-full flex flex-col gap-[5px] overflow-visible">
 
             {/* Desktop */}
-            <div className="pb-[5px] last:pb-0">
+            <div className="pb-[0px] last:pb-0">
                 <Link
                 href="/admin/desktop"
                 className={`${styles.customTabLink} ${isDesktopActive ? styles.active : ''}`}
                 >
                 <div className={styles.shapeContainer}>
                     {/* Left Part: Image Container */}
-                    <div className="relative w-[20px] h-[20px] flex-shrink-0">
+                    <div className="relative w-[32px] h-[32px] flex-shrink-0">
                     <Image
                         src="/images/admin_manager_layout/desktop.svg"
                         alt="Desktop icon"
@@ -449,7 +449,7 @@ export default function AdminLayoutSidebarItems() {
             </div>
 
             {/* Managers */}
-            <div className="pb-[5px] last:pb-0">
+            <div className="pb-[0px] last:pb-0">
             <Link
                 href="/admin/managers"
                 className={`${styles.customTabLink} ${isManagersActive ? styles.active : ''}`}
@@ -457,7 +457,7 @@ export default function AdminLayoutSidebarItems() {
                 <div className={styles.shapeContainer}>
                 
                 {/* Left Part: Image Container */}
-                <div className="relative w-[20px] h-[20px] flex-shrink-0">
+                <div className="relative w-[32px] h-[32px] flex-shrink-0">
                     <Image
                     src="/images/admin_manager_layout/managers.svg"
                     alt="Managers icon"
@@ -476,7 +476,7 @@ export default function AdminLayoutSidebarItems() {
             </div>
 
             {/* Users */}
-            <div className="pb-[5px] last:pb-0">
+            <div className="pb-[0px] last:pb-0">
             <Link
                 href="/admin/users"
                 className={`${styles.customTabLink} ${isUsersActive ? styles.active : ''}`}
@@ -484,7 +484,7 @@ export default function AdminLayoutSidebarItems() {
                 <div className={styles.shapeContainer}>
 
                 {/* Left Part: Image Container */}
-                <div className="relative w-[20px] h-[20px] flex-shrink-0">
+                <div className="relative w-[32px] h-[32px] flex-shrink-0">
                     <Image
                     src="/images/admin_manager_layout/users.svg"
                     alt="Users icon"
@@ -503,14 +503,14 @@ export default function AdminLayoutSidebarItems() {
             </div>
 
             {/* Roles and access */}
-            <div className="pb-[5px] last:pb-0">
+            <div className="pb-[0px] last:pb-0">
                 <Link
                     href="/admin/roles"
                     className={`${styles.customTabLink} ${isRolesActive ? styles.active : ''}`}
                 >
                     <div className={styles.shapeContainer}>
                         {/* Left Part: Image Container */}
-                        <div className="relative w-[20px] h-[20px] flex-shrink-0">
+                        <div className="relative w-[32px] h-[32px] flex-shrink-0">
                             <Image
                                 src="/images/admin_manager_layout/roles.svg"
                                 alt="Roles icon"
@@ -528,14 +528,14 @@ export default function AdminLayoutSidebarItems() {
             </div>
 
             {/* Analytics */}
-            <div className="pb-[5px] last:pb-0">
+            <div className="pb-[0px] last:pb-0">
                 <Link
                     href="/admin/analytics"
                     className={`${styles.customTabLink} ${isAnalyticsActive ? styles.active : ''}`}
                 >
                     <div className={styles.shapeContainer}>
                         {/* Left Part: Image Container */}
-                        <div className="relative w-[20px] h-[20px] flex-shrink-0">
+                        <div className="relative w-[32px] h-[32px] flex-shrink-0">
                             <Image
                                 src="/images/admin_manager_layout/analitics.svg"
                                 alt="Analytics icon"
@@ -553,14 +553,14 @@ export default function AdminLayoutSidebarItems() {
             </div>
 
             {/* System and safety */}
-            <div className="pb-[5px] last:pb-0">
+            <div className="pb-[0px] last:pb-0">
                 <Link
                     href="/admin/system"
                     className={`${styles.customTabLink} ${isSystemActive ? styles.active : ''}`}
                 >
                     <div className={styles.shapeContainer}>
                         {/* Left Part: Image Container */}
-                        <div className="relative w-[20px] h-[20px] flex-shrink-0">
+                        <div className="relative w-[32px] h-[32px] flex-shrink-0">
                             <Image
                                 src="/images/admin_manager_layout/system_and_safety.svg"
                                 alt="System and safety icon"
@@ -578,14 +578,14 @@ export default function AdminLayoutSidebarItems() {
             </div>
 
             {/* Platform complaints */}
-            <div className="pb-[5px] last:pb-0">
+            <div className="pb-[0px] last:pb-0">
                 <Link
                     href="/admin/complaints"
                     className={`${styles.customTabLink} ${isComplaintsActive ? styles.active : ''}`}
                 >
                     <div className={styles.shapeContainer}>
                         {/* Left Part: Image Container */}
-                        <div className="relative w-[20px] h-[20px] flex-shrink-0">
+                        <div className="relative w-[32px] h-[32px] flex-shrink-0">
                             <Image
                                 src="/images/admin_manager_layout/platform_complaints.svg"
                                 alt="Platform complaints icon"
@@ -603,14 +603,14 @@ export default function AdminLayoutSidebarItems() {
             </div>
 
             {/* Platform settings */}
-            <div className="pb-[5px] last:pb-0">
+            <div className="pb-[0px] last:pb-0">
                 <Link
                     href="/admin/platform-settings"
                     className={`${styles.customTabLink} ${isSettingsActive ? styles.active : ''}`}
                 >
                     <div className={styles.shapeContainer}>
                         {/* Left Part: Image Container */}
-                        <div className="relative w-[20px] h-[20px] flex-shrink-0">
+                        <div className="relative w-[32px] h-[32px] flex-shrink-0">
                             <Image
                                 src="/images/admin_manager_layout/platform_settings.svg"
                                 alt="Platform settings icon"
@@ -628,14 +628,14 @@ export default function AdminLayoutSidebarItems() {
             </div>
 
             {/* Log */}
-            <div className="pb-[5px] last:pb-0">
+            <div className="pb-[0px] last:pb-0">
                 <Link
                     href="/admin/logs"
                     className={`${styles.customTabLink} ${isLogsActive ? styles.active : ''}`}
                 >
                     <div className={styles.shapeContainer}>
                         {/* Left Part: Image Container */}
-                        <div className="relative w-[20px] h-[20px] flex-shrink-0">
+                        <div className="relative w-[32px] h-[32px] flex-shrink-0">
                             <Image
                                 src="/images/admin_manager_layout/actions_log.svg"
                                 alt="Actions log icon"
@@ -653,14 +653,14 @@ export default function AdminLayoutSidebarItems() {
             </div>
 
             {/* My settings */}
-            <div className="pb-[5px] last:pb-0">
+            <div className="pb-[0px] last:pb-0">
                 <Link
                     href="/admin/my-settings"
                     className={`${styles.customTabLink} ${isMySettingsActive ? styles.active : ''}`}
                 >
                     <div className={styles.shapeContainer}>
                         {/* Left Part: Image Container */}
-                        <div className="relative w-[20px] h-[20px] flex-shrink-0">
+                        <div className="relative w-[32px] h-[32px] flex-shrink-0">
                             <Image
                                 src="/images/admin_manager_layout/my_settings.svg"
                                 alt="My settings icon"
@@ -678,14 +678,14 @@ export default function AdminLayoutSidebarItems() {
             </div>
 
             {/* Books */}
-            <div className="pb-[5px] last:pb-0">
+            <div className="pb-[0px] last:pb-0">
                 <Link
                     href="/admin/books"
                     className={`${styles.customTabLink} ${isBooksActive ? styles.active : ''}`}
                 >
                     <div className={styles.shapeContainer}>
                         {/* Left Part: Image Container */}
-                        <div className="relative w-[20px] h-[20px] flex-shrink-0">
+                        <div className="relative w-[32px] h-[32px] flex-shrink-0">
                             <Image
                                 src="/images/admin_manager_layout/books.svg"
                                 alt="Books icon"
@@ -703,14 +703,14 @@ export default function AdminLayoutSidebarItems() {
             </div>
 
             {/* Orders */}
-            <div className="pb-[5px] last:pb-0">
+            <div className="pb-[0px] last:pb-0">
                 <Link
                     href="/admin/orders"
                     className={`${styles.customTabLink} ${isOrdersActive ? styles.active : ''}`}
                 >
                     <div className={styles.shapeContainer}>
                         {/* Left Part: Image Container */}
-                        <div className="relative w-[20px] h-[20px] flex-shrink-0">
+                        <div className="relative w-[32px] h-[32px] flex-shrink-0">
                             <Image
                                 src="/images/admin_manager_layout/orders.svg"
                                 alt="Orders icon"
@@ -728,14 +728,14 @@ export default function AdminLayoutSidebarItems() {
             </div>
 
             {/* Reviews */}
-            <div className="pb-[5px] last:pb-0">
+            <div className="pb-[0px] last:pb-0">
                 <Link
                     href="/admin/reviews"
                     className={`${styles.customTabLink} ${isReviewsActive ? styles.active : ''}`}
                 >
                     <div className={styles.shapeContainer}>
                         {/* Left Part: Image Container */}
-                        <div className="relative w-[20px] h-[20px] flex-shrink-0">
+                        <div className="relative w-[32px] h-[32px] flex-shrink-0">
                             <Image
                                 src="/images/admin_manager_layout/reviews.svg"
                                 alt="Reviews icon"
@@ -753,14 +753,14 @@ export default function AdminLayoutSidebarItems() {
             </div>
 
             {/* Newspaper */}
-            <div className="pb-[5px] last:pb-0">
+            <div className="pb-[0px] last:pb-0">
                 <Link
                     href="/admin/newspaper"
                     className={`${styles.customTabLink} ${isNewspaperActive ? styles.active : ''}`}
                 >
                     <div className={styles.shapeContainer}>
                         {/* Left Part: Image Container */}
-                        <div className="relative w-[20px] h-[20px] flex-shrink-0">
+                        <div className="relative w-[32px] h-[32px] flex-shrink-0">
                             <Image
                                 src="/images/admin_manager_layout/books.svg"
                                 alt="Newspaper icon"

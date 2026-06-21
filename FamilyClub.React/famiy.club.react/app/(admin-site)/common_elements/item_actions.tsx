@@ -5,23 +5,26 @@ import AddEditButton from "./add_edit_button";
 import DeleteWithConfirm from "./delete_with_confirm"; 
 
 // Імпортуємо саме з services.ts
-import { productService, languageService, authorService, translatorService } from "@/lib/api/services"; 
+import { productService, languageService, authorService, translatorService, categoriesService, publisherService } from "@/lib/api/services"; 
 
-type EntityType = "product" | "language" | "author" | "translator";
+type EntityType = "product" | "language" | "author" | "translator" | "category" | "publisher";
 
 interface ItemActionsProps {
   id: number | undefined;
   type: EntityType;
+  onDeleteSuccess?: (id: number) => void;
 }
 
-export default function ItemActions({ id, type }: ItemActionsProps) {
+export default function ItemActions({ id, type, onDeleteSuccess }: ItemActionsProps) {
   
   // 1. Карта шляхів для редагування
   const editPaths: Record<EntityType, string> = {
     product: `/products/editProduct/${id}`,
-    language: `/languages/edit/${id}`,
-    author: `/authors/edit/${id}`,
-    translator: `/translators/edit/${id}`,
+    language: `/admin/books/languages/editLanguage/${id}`,
+    author: `/admin/books/authors/editAuthor/${id}`,
+    translator: `/admin/books/translators/editTranslator/${id}`,
+    category: `/admin/books/categories/editCategory/${id}`,
+    publisher: `/admin/books/publishers/editPublisher/${id}`,
   };
 
   // 2. Карта назв для повідомлень
@@ -30,6 +33,8 @@ export default function ItemActions({ id, type }: ItemActionsProps) {
     language: "мову",
     author: "автора",
     translator: "перекладача",
+    category: "категорію",
+    publisher: "видавництво",
   };
 
   // 3. Функція видалення, яка викликає відповідний готовий сервіс
@@ -49,11 +54,23 @@ export default function ItemActions({ id, type }: ItemActionsProps) {
       case "translator":
         await translatorService.apiTranslatorsIdDelete({ id: currentId });
         break;
+      case "category":
+        await categoriesService.apiCategoriesIdDelete({ id: currentId });
+        break;
+      case "publisher":
+        await publisherService.apiPublishersIdDelete({ id: currentId });
+        break;
       default:
         console.error("Невідомий тип сутності для видалення");
     }
+    
+    // Повідомляємо батьківський компонент про успішне видалення
+    if (onDeleteSuccess) {
+      onDeleteSuccess(currentId);
+    }
   };
 
+  
   return (
     <div className="flex items-center gap-[20px]">
       <Link href={editPaths[type]}>
