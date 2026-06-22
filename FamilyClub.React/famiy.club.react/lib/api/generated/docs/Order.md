@@ -7,7 +7,7 @@
 Name | Type
 ------------ | -------------
 `id` | number
-`userId` | number
+`userId` | string
 `clubMember` | [ClubMember](ClubMember.md)
 `orderDate` | Date
 `status` | string

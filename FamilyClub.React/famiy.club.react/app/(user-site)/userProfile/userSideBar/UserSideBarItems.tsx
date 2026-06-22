@@ -15,6 +15,7 @@ import SearchBar from "./SearchBar";
 import FilterDropdown from "./FilterDropdown";
 import ebookIcon from "@/public/images/userProfile/mobile-button-solid-full 1.png";
 import audioIcon from "@/public/images/userProfile/volume-solid-full 1.png";
+import { useFavorites } from "../hooks/useFavorites";
 
 type Props = {
   // subscriptions?: () => void;
@@ -34,18 +35,19 @@ type Props = {
   selectedIds: number[];
   ebookSelected?: boolean;
   audioSelected?: boolean;
+  userId?: string;
 };
 
 
 export default function UserSideBArProfile({
-  subscriptions, community, categories, selectedIds, ebookSelected, audioSelected,
+  subscriptions, community, categories, selectedIds, ebookSelected, audioSelected, userId,
 }: Props) {
   const router = useRouter();
   const [mounted, setMounted] = useState(false);
   useEffect(() => {
     setMounted(true);
   }, []);
-
+  const { favorites, loading } = useFavorites(userId);
   const [selected, setSelected] = useState("Бібліотека");
   const [products, setProducts] = useState<ProductDto[]>([]);
   const [authors, setAuthors] = useState<AuthorDTO[]>([]);
@@ -54,16 +56,8 @@ export default function UserSideBArProfile({
   const [search, setSearch] = useState("");
   const [open, setOpen] = useState(false);
   const [clickBtn, setClickBtn] = useState(false);
-  const [favoriteBooks, setFavoriteBooks] = useState<any[]>([{ id: 1, title: "Book 1" },
-  { id: 2, title: "Book 2", formats: "ebook, audio" },
-  { id: 3, title: "Book 3", formats: "audio" },
-  { id: 4, title: "Book 4", formats: "ebook" },
-  { id: 5, title: "Book 5", formats: "audio" },
-  { id: 6, title: "Book 6", formats: "ebook" },
-  { id: 7, title: "Book 7", formats: "ebook, audio" },
-  { id: 8, title: "Book 8", formats: "audio" },]);
 
-  const visibleBooks = favoriteBooks.slice(0, 8);
+  const visibleBooks = favorites.slice(0, 8);
   const containerRef = useRef<HTMLDivElement>(null);
 
   const colors = [
@@ -232,7 +226,7 @@ export default function UserSideBArProfile({
           backgroundPosition: "center",
         }}
       >
-        {favoriteBooks.length === 0 ? (
+        {favorites.length === 0 ? (
           <div className="flex items-center justify-center h-full">
             <img
               className="w-[166px] h-[170px] object-contain"
@@ -251,7 +245,7 @@ transition-transform duration-300 ease-in-out
 hover:translate-x-[8px]  hover:scale-x-[1.05] transform-gpu"
                 style={{ backgroundColor: colors[index % colors.length] }}
               >
-                <p className="text-[var(--color-white)] text-[15px] truncate">{book.title}</p>
+                <p className="text-[var(--color-white)] text-[15px] truncate">{book.productName}</p>
                 <div className="flex gap-2">
                   {hasFormat(book, "audio") && (
                     <Image src={audioIcon} alt="audio" width={24} height={28} />

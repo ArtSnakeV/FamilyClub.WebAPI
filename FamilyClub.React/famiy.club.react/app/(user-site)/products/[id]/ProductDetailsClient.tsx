@@ -10,6 +10,7 @@ import {
   bookSizeService,
   categoriesService,
   clubMemberService,
+  favoriteService,
   formatService,
   languageService,
   productService,
@@ -28,6 +29,7 @@ import {
   ReviewDto,
 } from "@/lib/api/generated";
 import { useCart } from "@/lib/hooks/useCart";
+import { log } from "console";
 
 type ReviewCardData = {
   id: number | string;
@@ -235,7 +237,34 @@ export default function ProductDetailsClient({ id }: { id: string }) {
   const [bookSizes, setBookSizes] = useState<BookSizeDto[]>([]);
   const [clubMembers, setClubMembers] = useState<ClubMemberReadDto[]>([]);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
-
+  const [isFavorite, setIsFavorite] = useState(false);
+ const toggleFavorite = async () => {
+  const token = localStorage.getItem("token");
+  if (!token) {
+    alert("Потрібно увійти в акаунт");
+    return;
+  }
+  const pid = Number(id);
+  try {
+    if (isFavorite) {
+      await favoriteService.apiFavoritesProductIdDelete(
+        { productId: pid },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      console.log("видалено з улюблених");
+      setIsFavorite(false);
+    } else {
+      await favoriteService.apiFavoritesProductIdPost(
+        { productId: pid },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      console.log("додано в улюблені");
+      setIsFavorite(true);
+    }
+  } catch (e) {
+    console.error(e);
+  }
+};
   useEffect(() => {
     const productId = Number(id);
     if (!Number.isFinite(productId)) return;
@@ -278,17 +307,76 @@ export default function ProductDetailsClient({ id }: { id: string }) {
         setFormats(formatsResult ?? []);
         setBookSizes(bookSizesResult ?? []);
         setClubMembers(membersResult ?? []);
+
+        const token = localStorage.getItem("token");
+        if (token) {
+          const fav = await favoriteService.apiFavoritesProductIdIsFavoriteGet(
+            { productId },
+            { headers: { Authorization: `Bearer ${token}` } }
+          );
+          if (isMounted) setIsFavorite(fav);
+        }
       } catch (error) {
         console.error("Failed to load product details:", error);
       }
     };
 
     loadData();
-
-    return () => {
-      isMounted = false;
-    };
+    return () => { isMounted = false; };
   }, [id]);
+  // useEffect(() => {
+  //   const productId = Number(id);
+  //   if (!Number.isFinite(productId)) return;
+  //   let isMounted = true;
+
+  //   const loadData = async () => {
+  //     try {
+  //       const [
+  //         productResult,
+  //         productsResult,
+  //         reviewsResult,
+  //         languagesResult,
+  //         publishersResult,
+  //         authorsResult,
+  //         categoriesResult,
+  //         formatsResult,
+  //         bookSizesResult,
+  //         membersResult,
+  //       ] = await Promise.all([
+  //         productService.apiProductsIdGet({ id: productId }),
+  //         productService.apiProductsGet(),
+  //         reviewService.apiReviewsGet(),
+  //         languageService.apiLanguagesGet(),
+  //         publisherService.apiPublishersGet(),
+  //         authorService.apiAuthorsGet(),
+  //         categoriesService.apiCategoriesGet(),
+  //         formatService.apiFormatsGet(),
+  //         bookSizeService.apiBookSizesGet(),
+  //         clubMemberService.apiClubMemberGet(),
+  //       ]);
+
+  //       if (!isMounted) return;
+  //       setProduct(productResult);
+  //       setProducts(productsResult ?? []);
+  //       setReviews(reviewsResult ?? []);
+  //       setLanguages(languagesResult ?? []);
+  //       setPublishers(publishersResult ?? []);
+  //       setAuthors(authorsResult ?? []);
+  //       setCategories(categoriesResult ?? []);
+  //       setFormats(formatsResult ?? []);
+  //       setBookSizes(bookSizesResult ?? []);
+  //       setClubMembers(membersResult ?? []);
+  //     } catch (error) {
+  //       console.error("Failed to load product details:", error);
+  //     }
+  //   };
+
+  //   loadData();
+
+  //   return () => {
+  //     isMounted = false;
+  //   };
+  // }, [id]);
 
   const currentProduct = product ?? undefined;
   const galleryImages = getGalleryImages(currentProduct);
@@ -309,13 +397,13 @@ export default function ProductDetailsClient({ id }: { id: string }) {
 
   const languageName = currentProduct?.originalLanguageId
     ? (languages.find(
-        (language) => language.id === currentProduct.originalLanguageId,
-      )?.languageName ?? "")
+      (language) => language.id === currentProduct.originalLanguageId,
+    )?.languageName ?? "")
     : "";
   const publisherName = currentProduct?.publisherId
     ? (publishers.find(
-        (publisher) => publisher.id === currentProduct.publisherId,
-      )?.publisherName ?? "")
+      (publisher) => publisher.id === currentProduct.publisherId,
+    )?.publisherName ?? "")
     : "";
 
   const categoryNames = (currentProduct?.categoryIds ?? [])
@@ -501,6 +589,7 @@ export default function ProductDetailsClient({ id }: { id: string }) {
       alert("Помилка при видаленні");
     }
   };
+
   return (
     <div className="bg-[#f5f3ee] text-[#242424]">
       <div className="mx-auto max-w-[1260px] px-4 pb-24 pt-24 lg:px-0">
@@ -523,9 +612,8 @@ export default function ProductDetailsClient({ id }: { id: string }) {
                     <button
                       key={`thumb-${index}`}
                       type="button"
-                      className={`flex h-[120px] w-[88px] items-center justify-center rounded-[12px] bg-[#f5f3ee] shadow-[0px_6px_10px_0px_rgba(36,36,36,0.2)] ${
-                        isActive ? "ring-2 ring-[#7e4d1e]" : ""
-                      }`}
+                      className={`flex h-[120px] w-[88px] items-center justify-center rounded-[12px] bg-[#f5f3ee] shadow-[0px_6px_10px_0px_rgba(36,36,36,0.2)] ${isActive ? "ring-2 ring-[#7e4d1e]" : ""
+                        }`}
                       onClick={() => setSelectedImage(image)}
                       aria-label={`Переглянути фото ${index + 1}`}
                       aria-pressed={isActive}
@@ -618,14 +706,15 @@ export default function ProductDetailsClient({ id }: { id: string }) {
                     Додати в кошик
                   </button>
                   <button
-                    className="flex h-[40px] w-[40px] items-center justify-center rounded-[12px] bg-[#f5f3ee] shadow-[0px_4px_8px_0px_rgba(36,36,36,0.3)]"
+                    className="flex h-[40px] w-[40px] cursor-pointer items-center justify-center rounded-[12px] bg-[#f5f3ee] shadow-[0px_4px_8px_0px_rgba(36,36,36,0.3)]"
                     type="button"
                     aria-label="Додати в улюблені"
+                    onClick={toggleFavorite}
                   >
                     <img
                       alt=""
                       className="h-[24px] w-[24px]"
-                      src="/images/main_page/icons/rec-icon-favorite.png"
+                      src="/images/main_page/icons/rec-icon-favorite.svg"
                     />
                   </button>
                 </div>
