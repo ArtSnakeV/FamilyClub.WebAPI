@@ -76,6 +76,7 @@ namespace FamilyClubLibrary
 
         // Translators (many-to-many)
         public List<Translator> Translators { get; set; } = new();
+        public List<ClubMember> FavoritedBy { get; set; } = new();
 
     }
 }

@@ -42,10 +42,10 @@ export interface Order {
     id?: number;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof Order
      */
-    userId?: number;
+    userId?: string | null;
     /**
      * 
      * @type {ClubMember}

@@ -97,6 +97,7 @@ function UserProfileContent() {
           selectedIds={selectedIds}
           ebookSelected={ebookSelected}
           audioSelected={audioSelected}
+          userId={user?.id}
         />
 
       </div>

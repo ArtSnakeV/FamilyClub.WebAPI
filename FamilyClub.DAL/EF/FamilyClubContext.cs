@@ -45,8 +45,12 @@ public class FamilyClubContext : IdentityDbContext<ClubMember>
 		.Property(m => m.AvatarData)
 		.HasColumnName("avatar_data");
 
-		// Many-to-Many: Product <-> Author
-		builder.Entity<Product>()
+        builder.Entity<ClubMember>()
+        .HasMany(m => m.FavoriteProducts)
+        .WithMany(p => p.FavoritedBy)
+        .UsingEntity(j => j.ToTable("MemberFavoriteProducts"));
+        // Many-to-Many: Product <-> Author
+        builder.Entity<Product>()
             .HasMany(p => p.Authors)
             .WithMany(a => a.Products)
             .UsingEntity(j => j.ToTable("ProductAuthors"));

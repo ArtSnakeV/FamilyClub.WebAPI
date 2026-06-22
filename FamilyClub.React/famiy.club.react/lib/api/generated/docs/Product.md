@@ -38,6 +38,7 @@ Name | Type
 `weightGrams` | number
 `itemsInSet` | number
 `translators` | [Array&lt;Translator&gt;](Translator.md)
+`favoritedBy` | [Array&lt;ClubMember&gt;](ClubMember.md)
 
 ## Example
 
@@ -78,6 +79,7 @@ const example = {
   "weightGrams": null,
   "itemsInSet": null,
   "translators": null,
+  "favoritedBy": null,
 } satisfies Product
 
 console.log(example)

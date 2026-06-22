@@ -48,6 +48,12 @@ export interface CartItemDTO {
      * @type {string}
      * @memberof CartItemDTO
      */
+    format?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CartItemDTO
+     */
     productName?: string | null;
     /**
      * 
@@ -55,12 +61,6 @@ export interface CartItemDTO {
      * @memberof CartItemDTO
      */
     productPrice?: number | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CartItemDTO
-     */
-    format?: string | null;
 }
 
 /**
@@ -84,9 +84,9 @@ export function CartItemDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean
         'cartId': json['cartId'] == null ? undefined : json['cartId'],
         'productId': json['productId'] == null ? undefined : json['productId'],
         'quantity': json['quantity'] == null ? undefined : json['quantity'],
+        'format': json['format'] == null ? undefined : json['format'],
         'productName': json['productName'] == null ? undefined : json['productName'],
         'productPrice': json['productPrice'] == null ? undefined : json['productPrice'],
-        'format': json['format'] == null ? undefined : json['format'],
     };
 }
 
@@ -105,9 +105,9 @@ export function CartItemDTOToJSONTyped(value?: CartItemDTO | null, ignoreDiscrim
         'cartId': value['cartId'],
         'productId': value['productId'],
         'quantity': value['quantity'],
+        'format': value['format'],
         'productName': value['productName'],
         'productPrice': value['productPrice'],
-        'format': value['format'],
     };
 }
 
