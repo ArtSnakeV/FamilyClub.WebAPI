@@ -76,6 +76,12 @@ export interface OrderItem {
      * @memberof OrderItem
      */
     product?: Product;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrderItem
+     */
+    format?: string | null;
 }
 
 /**
@@ -102,6 +108,7 @@ export function OrderItemFromJSONTyped(json: any, ignoreDiscriminator: boolean):
         'order': json['order'] == null ? undefined : OrderFromJSON(json['order']),
         'productId': json['productId'] == null ? undefined : json['productId'],
         'product': json['product'] == null ? undefined : ProductFromJSON(json['product']),
+        'format': json['format'] == null ? undefined : json['format'],
     };
 }
 
@@ -123,6 +130,7 @@ export function OrderItemToJSONTyped(value?: OrderItem | null, ignoreDiscriminat
         'order': OrderToJSON(value['order']),
         'productId': value['productId'],
         'product': ProductToJSON(value['product']),
+        'format': value['format'],
     };
 }
 

@@ -104,6 +104,13 @@ import {
     AuthorToJSON,
     AuthorToJSONTyped,
 } from './Author';
+import type { ClubMember } from './ClubMember';
+import {
+    ClubMemberFromJSON,
+    ClubMemberFromJSONTyped,
+    ClubMemberToJSON,
+    ClubMemberToJSONTyped,
+} from './ClubMember';
 import type { BookSize } from './BookSize';
 import {
     BookSizeFromJSON,
@@ -310,6 +317,12 @@ export interface Product {
      * @memberof Product
      */
     translators?: Array<Translator> | null;
+    /**
+     * 
+     * @type {Array<ClubMember>}
+     * @memberof Product
+     */
+    favoritedBy?: Array<ClubMember> | null;
 }
 
 
@@ -365,6 +378,7 @@ export function ProductFromJSONTyped(json: any, ignoreDiscriminator: boolean): P
         'weightGrams': json['weightGrams'] == null ? undefined : json['weightGrams'],
         'itemsInSet': json['itemsInSet'] == null ? undefined : json['itemsInSet'],
         'translators': json['translators'] == null ? undefined : ((json['translators'] as Array<any>).map(TranslatorFromJSON)),
+        'favoritedBy': json['favoritedBy'] == null ? undefined : ((json['favoritedBy'] as Array<any>).map(ClubMemberFromJSON)),
     };
 }
 
@@ -410,6 +424,7 @@ export function ProductToJSONTyped(value?: Omit<Product, 'rating'> | null, ignor
         'weightGrams': value['weightGrams'],
         'itemsInSet': value['itemsInSet'],
         'translators': value['translators'] == null ? undefined : ((value['translators'] as Array<any>).map(TranslatorToJSON)),
+        'favoritedBy': value['favoritedBy'] == null ? undefined : ((value['favoritedBy'] as Array<any>).map(ClubMemberToJSON)),
     };
 }
 

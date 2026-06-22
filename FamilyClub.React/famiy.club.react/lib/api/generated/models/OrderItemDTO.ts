@@ -102,3 +102,4 @@ export function OrderItemDTOToJSONTyped(value?: OrderItemDTO | null, ignoreDiscr
         'format': value['format'],
     };
 }
+

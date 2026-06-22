@@ -6,6 +6,7 @@ apis/CartsApi.ts
 apis/CategoriesApi.ts
 apis/ClaimsClubMemberApi.ts
 apis/ClubMemberApi.ts
+apis/FavoritesApi.ts
 apis/FormatsApi.ts
 apis/HomeApi.ts
 apis/LanguagesApi.ts
@@ -45,6 +46,7 @@ docs/ClubMemberApi.md
 docs/ClubMemberReadDto.md
 docs/CoverType.md
 docs/CreateNotificationDTO.md
+docs/FavoritesApi.md
 docs/Format.md
 docs/FormatDto.md
 docs/FormatsApi.md

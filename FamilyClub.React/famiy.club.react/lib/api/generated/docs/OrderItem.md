@@ -13,6 +13,7 @@ Name | Type
 `order` | [Order](Order.md)
 `productId` | number
 `product` | [Product](Product.md)
+`format` | string
 
 ## Example
 
@@ -28,6 +29,7 @@ const example = {
   "order": null,
   "productId": null,
   "product": null,
+  "format": null,
 } satisfies OrderItem
 
 console.log(example)

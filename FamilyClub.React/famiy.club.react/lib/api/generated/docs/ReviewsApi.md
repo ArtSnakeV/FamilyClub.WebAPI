@@ -4,12 +4,78 @@ All URIs are relative to *http://localhost*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
+| [**apiReviewsByUserUserIdGet**](ReviewsApi.md#apireviewsbyuseruseridget) | **GET** /api/Reviews/by-user/{userId} |  |
 | [**apiReviewsGet**](ReviewsApi.md#apireviewsget) | **GET** /api/Reviews |  |
 | [**apiReviewsIdDelete**](ReviewsApi.md#apireviewsiddelete) | **DELETE** /api/Reviews/{id} |  |
 | [**apiReviewsIdGet**](ReviewsApi.md#apireviewsidget) | **GET** /api/Reviews/{id} |  |
 | [**apiReviewsIdPut**](ReviewsApi.md#apireviewsidput) | **PUT** /api/Reviews/{id} |  |
 | [**apiReviewsPost**](ReviewsApi.md#apireviewspost) | **POST** /api/Reviews |  |
 
+
+
+## apiReviewsByUserUserIdGet
+
+> Array&lt;ReviewDto&gt; apiReviewsByUserUserIdGet(userId)
+
+
+
+### Example
+
+```ts
+import {
+  Configuration,
+  ReviewsApi,
+} from '';
+import type { ApiReviewsByUserUserIdGetRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const api = new ReviewsApi();
+
+  const body = {
+    // string
+    userId: userId_example,
+  } satisfies ApiReviewsByUserUserIdGetRequest;
+
+  try {
+    const data = await api.apiReviewsByUserUserIdGet(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **userId** | `string` |  | [Defaults to `undefined`] |
+
+### Return type
+
+[**Array&lt;ReviewDto&gt;**](ReviewDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `text/plain`, `application/json`, `text/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | OK |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
 ## apiReviewsGet
