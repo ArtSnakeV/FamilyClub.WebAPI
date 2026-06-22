@@ -56,7 +56,7 @@ export default function CategoriesPage() {
             if (sortOrder === "desc") {
                 return (b.categoryName ?? "").localeCompare(a.categoryName ?? "");
             }
-            
+
             const idA = Number(a.id ?? 0);
             const idB = Number(b.id ?? 0);
 
@@ -80,89 +80,97 @@ export default function CategoriesPage() {
     }
 
     return (
-        <div>
+        <div className="relative min-h-screen w-full flex flex-col">
+            {/* Фонове зображення для всієї сторінки */}
+            <img 
+                src="/images/entities/main_background.png" // Шлях до загального фону
+                alt="Main Background" 
+                className="absolute inset-0 w-full h-full object-cover pointer-events-none z-0"
+            />
+            {/* Навігація зверху */}
             <BooksNav />
-            {/* Main content part*/}
-            <div
-                className="absolute bg-cover bg-center bg-no-repeat overflow-hidden"
-                style={{
-                    width: '1492.88px',
-                    height: '1062.04px',
-                    padding: '35px',
-                    backgroundImage: "url('/images/entities/main_field_background.svg')",
-                }}
-            >
-                <EntitiesSearchSorting
-                    searchPlaceholder="Пошук категорії..."
-                    searchValue={search}
-                    onSearchChange={handleSearchChange} // Замінили на функцію з обнуленням сторінки
-                    addButtonText="Додати категорію"
-                    addButtonHref="/admin/books/categories/addCategory"
-                    sortValue={sortOrder}
-                    onSortChange={setSortOrder}
-                    sortOptions={CATEGORY_SORT_OPTIONS}
+
+            {/* Обгортка для контенту та фону: 
+        */}
+            <div className="relative flex-1 flex flex-col w-full max-w-[1492px] mx-auto my-4 px-4 sm:px-8 ">
+                <img
+                    src="/images/entities/main_field_background.png"
+                    alt="Background Frame"
+                    className="absolute inset-0 w-full h-full object-fill pointer-events-none z-0 rounded-xl shadow-sm"
                 />
+                {/* Контент */}
+                <div className="relative z-10 flex flex-col justify-between flex-1 min-h-[75vh] p-8 md:p-12">
 
-                <p className="font-[Source_Sans_Pro] font-semibold text-[36px] leading-[150%] tracking-[-0.011em] align-middle mt-4">
-                    Категорії:
-                </p>
+                    {/* Верхня частина контенту */}
+                    <div className="pt-6">
+                        <EntitiesSearchSorting
+                            searchPlaceholder="Пошук категорії..."
+                            searchValue={search}
+                            onSearchChange={handleSearchChange}
+                            addButtonText="Додати категорію"
+                            addButtonHref="/admin/books/categories/addCategory"
+                            sortValue={sortOrder}
+                            onSortChange={setSortOrder}
+                            sortOptions={CATEGORY_SORT_OPTIONS}
+                        />
 
-                {/* Список категорій із підтримкою пагінації */}
-                <div className="grid gap-4 mt-4">
-                    {isLoading ? (
-                        <div className="text-[20px] opacity-60">Завантаження...</div>
-                    ) : currentPaginatedItems.length > 0 ? (
-                        currentPaginatedItems.map((category) => (
-                            <div
-                                key={category.id}
-                                className="max-w-[1464px] w-full h-[50px] bg-[#F5F3EE] rounded-[9px] shadow-[0_0_10px_0_rgba(0,0,0,0.25)] px-[24px] flex items-center justify-between"
-                            >
-                                {/* Left side: Category name */}
-                                <p className="font-sanspro font-semibold text-[20px] leading-[150%] tracking-[-0.011em] align-middle">
-                                    {category.categoryName || "Unnamed Category"}
-                                </p>
+                        <p className="font-[Source_Sans_Pro] font-semibold text-[32px] md:text-[36px] leading-[150%] tracking-[-0.011em] mt-6 mb-4">
+                            Категорії:
+                        </p>
 
-                                {/* Right side: Actions */}
-                                <div className="flex items-center gap-[20px]">
-                                    <ItemActions
-                                        id={category.id}
-                                        type="category"
-                                        onDeleteSuccess={(deletedId) => {
-                                            setCategories((prev) => {
-                                                const updated = prev.filter((c) => c.id !== deletedId);
+                        {/* Список категорій */}
+                        <div className="grid gap-4 w-full">
+                            {isLoading ? (
+                                <div className="text-[20px] opacity-60">Завантаження...</div>
+                            ) : currentPaginatedItems.length > 0 ? (
+                                currentPaginatedItems.map((category) => (
+                                    <div
+                                        key={category.id}
+                                        className="w-full min-h-[50px] py-3 bg-[#F5F3EE] rounded-[9px] shadow-[0_0_10px_0_rgba(0,0,0,0.1)] px-[24px] flex items-center justify-between"
+                                    >
+                                        <p className="font-sanspro font-semibold text-[18px] md:text-[20px]">
+                                            {category.categoryName || "Unnamed Category"}
+                                        </p>
 
-                                                // Рахуємо елементи, що залишаться після видалення для поточного пошуку
-                                                const totalFilteredAfterDelete = updated.filter(c =>
-                                                    (c.categoryName ?? "").toLowerCase().includes(search.toLowerCase())
-                                                ).length;
+                                        <div className="flex items-center gap-[20px]">
+                                            <ItemActions
+                                                id={category.id}
+                                                type="category"
+                                                onDeleteSuccess={(deletedId) => {
+                                                    setCategories((prev) => {
+                                                        const updated = prev.filter((c) => c.id !== deletedId);
+                                                        const totalFilteredAfterDelete = updated.filter(c =>
+                                                            (c.categoryName ?? "").toLowerCase().includes(search.toLowerCase())
+                                                        ).length;
+                                                        const maxPages = Math.ceil(totalFilteredAfterDelete / ITEMS_PER_PAGE);
 
-                                                // Обчислюємо нову максимальну кількість сторінок
-                                                const maxPages = Math.ceil(totalFilteredAfterDelete / ITEMS_PER_PAGE);
+                                                        if (currentPage > maxPages && maxPages >= 1) {
+                                                            setCurrentPage(maxPages);
+                                                        }
+                                                        return updated;
+                                                    });
+                                                }}
+                                            />
+                                        </div>
+                                    </div>
+                                ))
+                            ) : (
+                                <div className="text-[20px] opacity-60">Категорій не знайдено</div>
+                            )}
+                        </div>
+                    </div>
 
-                                                // Автоматичний відкат на попередню сторінку, якщо поточна спорожніла
-                                                if (currentPage > maxPages && maxPages >= 1) {
-                                                    setCurrentPage(maxPages);
-                                                }
+                    {/* Пагінація знизу */}
+                    <div className="mt-8 flex justify-center">
+                        <Pagination
+                            totalItems={filteredAndSorted.length}
+                            itemsPerPage={ITEMS_PER_PAGE}
+                            currentPage={currentPage}
+                            onPageChange={setCurrentPage}
+                        />
+                    </div>
 
-                                                return updated;
-                                            });
-                                        }}
-                                    />
-                                </div>
-                            </div>
-                        ))
-                    ) : (
-                        <div className="text-[20px] opacity-60">Категорій не знайдено</div>
-                    )}
                 </div>
-
-                {/* Рендеримо компоненту пагінації */}
-                <Pagination 
-                    totalItems={filteredAndSorted.length} // Загальна кількість знайдених категорій
-                    itemsPerPage={ITEMS_PER_PAGE}
-                    currentPage={currentPage}
-                    onPageChange={setCurrentPage}
-                />
             </div>
         </div>
     );
