@@ -22,6 +22,10 @@ import {
     ReviewDtoToJSON,
 } from '../models/index';
 
+export interface ApiReviewsByUserUserIdGetRequest {
+    userId: string;
+}
+
 export interface ApiReviewsIdDeleteRequest {
     id: number;
 }
@@ -43,6 +47,49 @@ export interface ApiReviewsPostRequest {
  * 
  */
 export class ReviewsApi extends runtime.BaseAPI {
+
+    /**
+     * Creates request options for apiReviewsByUserUserIdGet without sending the request
+     */
+    async apiReviewsByUserUserIdGetRequestOpts(requestParameters: ApiReviewsByUserUserIdGetRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['userId'] == null) {
+            throw new runtime.RequiredError(
+                'userId',
+                'Required parameter "userId" was null or undefined when calling apiReviewsByUserUserIdGet().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+
+        let urlPath = `/api/Reviews/by-user/{userId}`;
+        urlPath = urlPath.replace(`{${"userId"}}`, encodeURIComponent(String(requestParameters['userId'])));
+
+        return {
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     */
+    async apiReviewsByUserUserIdGetRaw(requestParameters: ApiReviewsByUserUserIdGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<ReviewDto>>> {
+        const requestOptions = await this.apiReviewsByUserUserIdGetRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(ReviewDtoFromJSON));
+    }
+
+    /**
+     */
+    async apiReviewsByUserUserIdGet(requestParameters: ApiReviewsByUserUserIdGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<ReviewDto>> {
+        const response = await this.apiReviewsByUserUserIdGetRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
 
     /**
      * Creates request options for apiReviewsGet without sending the request

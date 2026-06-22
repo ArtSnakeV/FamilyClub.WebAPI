@@ -20,6 +20,13 @@ import {
     OrderToJSON,
     OrderToJSONTyped,
 } from './Order';
+import type { Product } from './Product';
+import {
+    ProductFromJSON,
+    ProductFromJSONTyped,
+    ProductToJSON,
+    ProductToJSONTyped,
+} from './Product';
 import type { Review } from './Review';
 import {
     ReviewFromJSON,
@@ -173,6 +180,12 @@ export interface ClubMember {
      * @memberof ClubMember
      */
     avatarData?: string | null;
+    /**
+     * 
+     * @type {Array<Product>}
+     * @memberof ClubMember
+     */
+    favoriteProducts?: Array<Product> | null;
 }
 
 /**
@@ -214,6 +227,7 @@ export function ClubMemberFromJSONTyped(json: any, ignoreDiscriminator: boolean)
         'reviews': json['reviews'] == null ? undefined : ((json['reviews'] as Array<any>).map(ReviewFromJSON)),
         'notifications': json['notifications'] == null ? undefined : ((json['notifications'] as Array<any>).map(NotificationFromJSON)),
         'avatarData': json['avatarData'] == null ? undefined : json['avatarData'],
+        'favoriteProducts': json['favoriteProducts'] == null ? undefined : ((json['favoriteProducts'] as Array<any>).map(ProductFromJSON)),
     };
 }
 
@@ -250,6 +264,7 @@ export function ClubMemberToJSONTyped(value?: ClubMember | null, ignoreDiscrimin
         'reviews': value['reviews'] == null ? undefined : ((value['reviews'] as Array<any>).map(ReviewToJSON)),
         'notifications': value['notifications'] == null ? undefined : ((value['notifications'] as Array<any>).map(NotificationToJSON)),
         'avatarData': value['avatarData'],
+        'favoriteProducts': value['favoriteProducts'] == null ? undefined : ((value['favoriteProducts'] as Array<any>).map(ProductToJSON)),
     };
 }
 

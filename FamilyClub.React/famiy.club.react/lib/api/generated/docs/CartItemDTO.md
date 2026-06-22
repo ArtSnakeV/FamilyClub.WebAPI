@@ -10,6 +10,7 @@ Name | Type
 `cartId` | number
 `productId` | number
 `quantity` | number
+`format` | string
 `productName` | string
 `productPrice` | number
 
@@ -24,6 +25,7 @@ const example = {
   "cartId": null,
   "productId": null,
   "quantity": null,
+  "format": null,
   "productName": null,
   "productPrice": null,
 } satisfies CartItemDTO

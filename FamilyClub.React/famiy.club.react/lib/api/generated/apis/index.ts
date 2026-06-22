@@ -8,6 +8,7 @@ export * from './CartsApi';
 export * from './CategoriesApi';
 export * from './ClaimsClubMemberApi';
 export * from './ClubMemberApi';
+export * from './FavoritesApi';
 export * from './FormatsApi';
 export * from './HomeApi';
 export * from './LanguagesApi';

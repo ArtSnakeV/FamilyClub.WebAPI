@@ -79,7 +79,11 @@ public class ReviewService : IReviewService
 
         return true;
     }
-
+    public async Task<IEnumerable<ReviewDto>> GetByUserIdAsync(string userId, CancellationToken cancellationToken = default)
+    {
+        var reviews = await _reviewRepository.GetByUserIdAsync(userId, cancellationToken);
+        return reviews.Select(MapToDto);
+    }
     private static ReviewDto MapToDto(Review review)
     {
         return new ReviewDto

@@ -14,6 +14,7 @@ import {
   TranslatorsApi,
   CartsApi,
   OrdersApi,
+  FavoritesApi,
 } from "./generated";
 
 // Configuration tells the client where your backend is
@@ -40,3 +41,4 @@ export const publisherService = new PublishersApi(apiConfig);
 export const translatorService = new TranslatorsApi(apiConfig);
 export const cartService = new CartsApi(apiConfig);
 export const orderService = new OrdersApi(apiConfig);
+export const favoriteService = new FavoritesApi(apiConfig);

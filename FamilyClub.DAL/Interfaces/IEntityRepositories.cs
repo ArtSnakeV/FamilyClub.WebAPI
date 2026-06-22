@@ -13,7 +13,11 @@ public interface IProductRepository : IRepository<Product>
 }
 public interface IPromotionRepository : IRepository<Promotion>;
 public interface IPublisherRepository : IRepository<Publisher>;
-public interface IReviewRepository : IRepository<Review>;
+//public interface IReviewRepository : IRepository<Review>;
+public interface IReviewRepository : IRepository<Review>
+{
+    Task<IEnumerable<Review>> GetByUserIdAsync(string userId, CancellationToken cancellationToken = default);
+}
 public interface ISeriesRepository : IRepository<Series>;
 public interface ITranslatorRepository : IRepository<Translator>;
 public interface IClubMemberRepository : IRepository<ClubMember>;

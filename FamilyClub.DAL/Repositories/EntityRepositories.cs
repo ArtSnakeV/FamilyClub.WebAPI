@@ -50,7 +50,23 @@ public class ProductRepository : Repository<Product>, IProductRepository
 }
 public class PromotionRepository(FamilyClubContext context) : Repository<Promotion>(context), IPromotionRepository;
 public class PublisherRepository(FamilyClubContext context) : Repository<Publisher>(context), IPublisherRepository;
-public class ReviewRepository(FamilyClubContext context) : Repository<Review>(context), IReviewRepository;
+//public class ReviewRepository(FamilyClubContext context) : Repository<Review>(context), IReviewRepository;
+public class ReviewRepository : Repository<Review>, IReviewRepository
+{
+    private readonly FamilyClubContext _context;
+
+    public ReviewRepository(FamilyClubContext context) : base(context)
+    {
+        _context = context;
+    }
+
+    public async Task<IEnumerable<Review>> GetByUserIdAsync(string userId, CancellationToken cancellationToken = default)
+    {
+        return await _context.Reviews
+            .Where(r => r.UserId == userId)
+            .ToListAsync(cancellationToken);
+    }
+}
 public class SeriesRepository(FamilyClubContext context) : Repository<Series>(context), ISeriesRepository;
 public class TranslatorRepository(FamilyClubContext context) : Repository<Translator>(context), ITranslatorRepository;
 public class ClubMemberRepository(FamilyClubContext context) : Repository<ClubMember>(context), IClubMemberRepository;

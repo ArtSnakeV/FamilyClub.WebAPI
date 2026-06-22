@@ -22,5 +22,6 @@ namespace FamilyClubLibrary
 		public List<Notification> Notifications { get; set; } = new();
 
         public byte[]? AvatarData { get; set; }
+        public List<Product> FavoriteProducts { get; set; } = new();
     }
 }
