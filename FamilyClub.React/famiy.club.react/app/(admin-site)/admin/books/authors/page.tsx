@@ -54,30 +54,37 @@ export default function ManagerAuthorPage() {
     <div
       className="w-full min-h-screen overflow-hidden relative m-0 p-0"
       style={{
-        backgroundImage: "url('/images/authorPageAdmin/Rectangle 326.svg')",
+        backgroundImage: "url('/images/authorPageAdmin/Rectangle 326.png')",
         backgroundSize: "100% 100%",
       }}
     >
-      <div className="w-full min-h-screen relative">
+      <div className="w-[100vw] min-h-screen relative">
+        {/* <img
+  src="/images/authorPageAdmin/Rectangle 675.png"
+  className="fixed"
+  style={{ width: "100vw", height: "auto", top: "0px", left: "0px", zIndex: 0 }}
+  alt=""
+/> */}
         <img
-          src="/images/authorPageAdmin/Rectangle 675.svg"
-          className="absolute w-full"
-          style={{ height: "auto", top: "30px", left:"-2px" }}
+          src="/images/authorPageAdmin/Rectangle 675.png"
+          className="absolute"
+          style={{ width: "100vw", height: "auto", top: "36px", left: "-20px"  }}
           alt=""
         />
-        <div className="flex flex-col">
+
+        <div className="flex w-full flex-col">
           <div
             className="relative z-20"
-            style={{ top: "50px", left: "0", right: "0", height: "60px" }}
+            style={{ top: "50px", left: "-190px", right: "0", height: "60px" }}
           >
             <BooksNav />
           </div>
 
           <div
-            className="relative self-center mt-[80px] ml-4 w-[90%] max-w-[1500px]"
+            className="relative self-center mt-[80px] ml-0 w-[90%] max-w-[1500px]"
             style={{
-              width: "1500px",
-              marginLeft: "30px",
+              width: "1480px",
+              marginLeft: "-420px",
               minHeight: "800px",
             }}
           >
@@ -214,7 +221,7 @@ export default function ManagerAuthorPage() {
                           <button
                             type="button"
                             className="transition-all duration-200 hover:opacity-90 hover:shadow-[0px_0px_20px_0px_#00000080] active:scale-[0.98] w-[100px] cursor-pointer h-[30px] rounded-[9px] bg-[var(--color-green)] text-[var(--color-white)] flex items-center justify-center gap-2 text-[10px]"
-                           onClick={() => router.push(`/admin/books/authors/editAuthor/${author.id}`)}
+                            onClick={() => router.push(`/admin/books/authors/editAuthor/${author.id}`)}
                           >
                             <img
                               src="/images/authorPageAdmin/pen-to-square-solid-full 1.svg"
