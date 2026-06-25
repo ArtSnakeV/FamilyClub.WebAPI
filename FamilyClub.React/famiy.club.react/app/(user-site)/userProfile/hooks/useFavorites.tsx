@@ -6,11 +6,12 @@ import { favoriteService } from "@/lib/api/services";
 export type FavoriteBook = {
     id: number;
     productName: string | null;
+    formatIds: number[];
 };
 
 export function useFavorites(userId: string | undefined) {
     const [favorites, setFavorites] = useState<FavoriteBook[]>([]);
-    const [loading, setLoading] = useState(false);
+    const [loadingFavorites, setLoadingFavorites] = useState(false);
 
     useEffect(() => {
         if (!userId) return;
@@ -18,7 +19,7 @@ export function useFavorites(userId: string | undefined) {
         const token = localStorage.getItem("token");
         if (!token) return;
 
-        setLoading(true);
+        setLoadingFavorites(true);
 
         favoriteService
             .apiFavoritesGet({
@@ -29,12 +30,13 @@ export function useFavorites(userId: string | undefined) {
                     data.map((p) => ({
                         id: p.id ?? 0,
                         productName: p.productName ?? null,
+                        formatIds: p.formatIds ?? [], 
                     }))
                 )
             )
             .catch(console.error)
-            .finally(() => setLoading(false));
+            .finally(() => setLoadingFavorites(false));
     }, [userId]);
 
-    return { favorites, loading };
+    return { favorites, loadingFavorites };
 }

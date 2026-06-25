@@ -34,7 +34,7 @@ export default function DropDownCatalog() {
               window.location.href = "/products";
             }, 200);
           }}
-          className="
+          className="pointer-events-auto
             absolute inset-0
             flex justify-center items-end
             mb-[34px]

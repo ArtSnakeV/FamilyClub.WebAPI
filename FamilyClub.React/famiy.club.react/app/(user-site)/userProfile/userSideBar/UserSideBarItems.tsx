@@ -6,7 +6,6 @@ import Image from "next/image";
 import Link from "next/link";
 import ellipse from "@/public/images/userProfile/Ellipse 36.png";
 import plus from "@/public/images/userProfile/plus-solid-full 1.png";
-import { useRouter } from "next/navigation";
 import { Menu, MenuButton, MenuItems, MenuItem, Transition } from "@headlessui/react";
 import { Fragment, useEffect, useRef, useState } from "react";
 import { AuthorDTO, CategoryDto, FormatDto, ProductDto } from "@/lib/api/generated";
@@ -15,19 +14,10 @@ import SearchBar from "./SearchBar";
 import FilterDropdown from "./FilterDropdown";
 import ebookIcon from "@/public/images/userProfile/mobile-button-solid-full 1.png";
 import audioIcon from "@/public/images/userProfile/volume-solid-full 1.png";
+import printIcon from "@/public/images/userProfile/Паперова.svg";
 import { useFavorites } from "../hooks/useFavorites";
 
 type Props = {
-  // subscriptions?: () => void;
-  // onLibrary?: () => void;
-  // community?: () => void;
-  // categories: CategoryDto[];
-  // selectedIds: number[];
-  // onToggle: (id: number) => void;
-  // onYearSearch?: (year: string, results: ProductDto[]) => void;
-  // ebookSelected?: boolean;
-  // audioSelected?: boolean;
-  // onFilterReset?: () => void;
   onLibrary?: () => void;
   subscriptions?: () => void;
   community?: () => void;
@@ -42,12 +32,11 @@ type Props = {
 export default function UserSideBArProfile({
   subscriptions, community, categories, selectedIds, ebookSelected, audioSelected, userId,
 }: Props) {
-  const router = useRouter();
   const [mounted, setMounted] = useState(false);
   useEffect(() => {
     setMounted(true);
   }, []);
-  const { favorites, loading } = useFavorites(userId);
+  const { favorites, loadingFavorites } = useFavorites(userId);
   const [selected, setSelected] = useState("Бібліотека");
   const [products, setProducts] = useState<ProductDto[]>([]);
   const [authors, setAuthors] = useState<AuthorDTO[]>([]);
@@ -59,6 +48,13 @@ export default function UserSideBArProfile({
 
   const visibleBooks = favorites.slice(0, 8);
   const containerRef = useRef<HTMLDivElement>(null);
+  const hasEbook = (book: ProductDto) =>
+    book.formatIds?.includes(1) ?? false;
+
+  const hasAudio = (book: ProductDto) =>
+    book.formatIds?.includes(2) ?? false;
+  const hasPrented = (book: ProductDto) =>
+    book.formatIds?.includes(3) ?? false;
 
   const colors = [
     "#325747",
@@ -101,15 +97,7 @@ export default function UserSideBArProfile({
     setSelected(value);
     action?.();
   };
-  const hasFormat = (book: ProductDto, type: string) => {
-    const formatList = formats.filter(f =>
-      book.formatIds?.includes(f.id!)
-    );
 
-    return formatList.some(f =>
-      f.name?.toLowerCase().includes(type)
-    );
-  };
   // return (
   const sidebar = (
     <div
@@ -189,7 +177,7 @@ export default function UserSideBArProfile({
           onClose={() => { setOpen(false); setSearch(""); }}
         />
 
-        <div className="relative w-[100px] z-10 overflow-visible">
+        <div className="relative w-[100px] z-20 overflow-visible">
           <div
             onClick={() => setClickBtn((v) => !v)}
             className="w-[60px] h-[60px] flex flex-col relative cursor-pointer transition-all duration-300 z-60 relative"
@@ -239,21 +227,27 @@ export default function UserSideBArProfile({
             {visibleBooks.map((book, index) => (
               <div
                 key={book.id}
+
                 className="h-[40px] px-4 flex items-center justify-between rounded-tr-[5px] rounded-br-[5px]
 shadow-[2px_2px_5px_0px_rgba(0,0,0,0.5)]
 transition-transform duration-300 ease-in-out
 hover:translate-x-[8px]  hover:scale-x-[1.05] transform-gpu"
                 style={{ backgroundColor: colors[index % colors.length] }}
               >
-                <p className="text-[var(--color-white)] text-[15px] truncate">{book.productName}</p>
+                <p className="text-[var(--color-white)] text-[15px] w-[200px] truncate">{book.productName}</p>
                 <div className="flex gap-2">
-                  {hasFormat(book, "audio") && (
+                  {hasAudio(book) && (
                     <Image src={audioIcon} alt="audio" width={24} height={28} />
                   )}
-                  {hasFormat(book, "ebook") && (
+
+                  {hasEbook(book) && (
                     <Image src={ebookIcon} alt="ebook" width={24} height={28} />
                   )}
+                  {hasEbook(book) && (
+                    <Image src={printIcon} alt="printbook" width={24} height={28} />
+                  )}
                 </div>
+
               </div>
             ))}
           </div>

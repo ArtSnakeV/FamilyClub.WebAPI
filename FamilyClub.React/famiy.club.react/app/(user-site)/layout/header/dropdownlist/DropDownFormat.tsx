@@ -90,7 +90,7 @@ export default function DropDownFormat() {
             e.stopPropagation();
             setOpen((v) => !v);
           }}
-          className="absolute inset-0 flex justify-center items-end mb-[56px] z-10"
+          className="absolute pointer-events-auto inset-0 flex justify-center items-end mb-[56px] z-10"
         >
           <span className="text-[var(--color-white)]">Формати</span>
         </button>

@@ -4,6 +4,7 @@ import { Source_Sans_3, Roboto_Mono } from 'next/font/google';
 import UpNavigation from "./layout/header/UpNavigation";
 import DropDownList from "./layout/header/dropdownlist/DropDownList";
 import Footer from "@/app/(user-site)/layout/footer/Footer";
+
 // import "flag-icons/css/flag-icons.min.css";
 const sourceSans = Source_Sans_3({
   subsets: ['cyrillic', 'latin'],
@@ -30,7 +31,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             <UpNavigation />
           </div>
         </header>
-        <div className="fixed flex flex-row ml-[27%] items-center justify-between z-10 max-w-[900px] mx-auto flex gap-2 mt-[20px] px-4 lg:px-0">
+        <div className="fixed pointer-events-none z-20 flex flex-row ml-[27%] items-center justify-between max-w-[900px] mx-auto flex gap-2 mt-[20px] px-4 lg:px-0">
           <DropDownList />
         </div>
 
