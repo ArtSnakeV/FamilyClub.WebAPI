@@ -144,7 +144,7 @@ export default function UserMenuDrop({
                             </div>
 
                             <div className="w-[112px]">
-                              <span>Кабінет менеджера</span>
+                              <span>Кабінет користувача</span>
                             </div>
                           </div>
                         </button>

@@ -80,7 +80,7 @@ export default function DropDownAuthors() {
             setOpen((v) => !v);
             setSearch("");
           }}
-          className="absolute inset-0 flex justify-center items-end mb-[56px] z-10 focus:outline-none"
+          className="absolute pointer-events-auto inset-0 flex justify-center items-end mb-[56px] z-10 focus:outline-none"
         >
           <span className="text-[#F5F3EE]">Автори</span>
         </button>

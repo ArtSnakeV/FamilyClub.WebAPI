@@ -62,7 +62,7 @@ export default function DropDownPrice() {
             e.stopPropagation();
             setOpen((v) => !v);
           }}
-          className="absolute inset-0 flex justify-center items-end mb-[56px] z-10"
+          className="absolute pointer-events-auto inset-0 flex justify-center items-end mb-[56px] z-10"
         >
           <span className="text-[#F5F3EE]">Ціна</span>
         </button>

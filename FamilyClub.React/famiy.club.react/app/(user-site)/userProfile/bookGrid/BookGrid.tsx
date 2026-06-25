@@ -7,16 +7,19 @@ type Props = {
 };
 
 export default function BookGrid({ books }: Props) {
+
+
+  
   if (books.length === 0) {
     return (
       <div
         className="flex h-[680px] relative flex-col items-center justify-center"
         style={{
-        backgroundImage: "url('/images/userProfile/Frame 627.png')",
-        backgroundRepeat: "no-repeat",
-        backgroundSize: "100% 700px",
-        backgroundPosition: "top center",
-      }}
+          backgroundImage: "url('/images/userProfile/Frame 627.png')",
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "100% 700px",
+          backgroundPosition: "top center",
+        }}
       >
         <img
           src="/images/userProfile/imgIko.png"
@@ -30,12 +33,16 @@ export default function BookGrid({ books }: Props) {
 
   return (
     <div
-      className="grid min-h-screen grid-cols-3 gap-x-10 gap-y-20 px-10 py-10"
+      className="grid min-h-screen px-10 py-10"
       style={{
         backgroundImage: "url('/images/userProfile/Frame 627.png')",
         backgroundRepeat: "repeat-y",
-        backgroundSize: "100% 340px",
+        backgroundSize: "100% 400px",
         backgroundPosition: "top center",
+        gridTemplateColumns: "repeat(3, 190px)",
+        justifyContent: "center",
+        columnGap: "180px",
+        rowGap: "48px",
       }}
     >
       {books.map((book) => (
@@ -46,7 +53,7 @@ export default function BookGrid({ books }: Props) {
             aria-label="У вподобані"
           >
             <img
-              src="/images/userProfile/heart-icon.png"
+              src="/images/userProfile/icon-heart.svg"
               alt=""
               className="w-[20px] h-[20px]"
             />
