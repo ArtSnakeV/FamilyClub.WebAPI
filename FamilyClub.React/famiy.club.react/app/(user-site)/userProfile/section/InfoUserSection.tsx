@@ -2,6 +2,7 @@
 
 import { CurrentUser } from "../hooks/useCurrentUser";
 import { useFavorites } from "../hooks/useFavorites";
+import { useMyBooks } from "../hooks/useMyBooks";
 import { useUserReviews } from "../hooks/useUserReviews";
 import SocialLinks from "./SocialLinks";
 
@@ -14,6 +15,7 @@ type Props = {
 export default function InfoUserSection({ member, userId }: Props) {
     const { reviews, loading } = useUserReviews(member?.id);
     const { favorites, loadingFavorites } = useFavorites(userId);
+    const { myBooks, loadingMyBooks } = useMyBooks(userId);
     const displayName =
         [member?.name, member?.surname].filter(Boolean).join(" ") ||
         member?.email?.split("@")[0] ||
@@ -39,9 +41,9 @@ export default function InfoUserSection({ member, userId }: Props) {
                 <div className="flex flex-row p-1 gap-2 text-[22px] items-center weight-700 h-[26px] font-semibold text-[var(--color-white)]">
                     <p>{member?.email}</p>
                     <div className="w-2 h-2 rounded-full bg-[white]"></div>
-                    {!loadingFavorites && (
+                    {!loadingMyBooks && (
                         <p className="text-[var(--color-white)]">
-                            Книги: {favorites.length}
+                            Книги: {myBooks.length}
                         </p>
                     )}
                     <div className="w-2 h-2 rounded-full bg-[white]"></div>
@@ -56,7 +58,7 @@ export default function InfoUserSection({ member, userId }: Props) {
                     <p>Докладніше про цей канал придумать, как визуально оформить все фильтры в одном стиле закладок, чтобы это выглядело не как форма, а как часть дизайнапридумать, как визуально оформить все фильтры в одном стиле закладок, чтобы это выглядело не как форма, а как часть дизайна</p>
                 </div>
                 <div className="flex flex-row mt-[4px]">
-                    <SocialLinks userId={userId}/>
+                    <SocialLinks userId={userId} />
                 </div>
             </div>
         </div>

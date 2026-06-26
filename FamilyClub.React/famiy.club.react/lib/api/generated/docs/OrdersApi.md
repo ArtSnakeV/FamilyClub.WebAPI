@@ -4,12 +4,78 @@ All URIs are relative to *http://localhost*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
+| [**apiOrdersByUserUserIdGet**](OrdersApi.md#apiordersbyuseruseridget) | **GET** /api/Orders/by-user/{userId} |  |
 | [**apiOrdersGet**](OrdersApi.md#apiordersget) | **GET** /api/Orders |  |
 | [**apiOrdersIdDelete**](OrdersApi.md#apiordersiddelete) | **DELETE** /api/Orders/{id} |  |
 | [**apiOrdersIdGet**](OrdersApi.md#apiordersidget) | **GET** /api/Orders/{id} |  |
 | [**apiOrdersIdPut**](OrdersApi.md#apiordersidput) | **PUT** /api/Orders/{id} |  |
 | [**apiOrdersPost**](OrdersApi.md#apiorderspost) | **POST** /api/Orders |  |
 
+
+
+## apiOrdersByUserUserIdGet
+
+> Array&lt;OrderDTO&gt; apiOrdersByUserUserIdGet(userId)
+
+
+
+### Example
+
+```ts
+import {
+  Configuration,
+  OrdersApi,
+} from '';
+import type { ApiOrdersByUserUserIdGetRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const api = new OrdersApi();
+
+  const body = {
+    // string
+    userId: userId_example,
+  } satisfies ApiOrdersByUserUserIdGetRequest;
+
+  try {
+    const data = await api.apiOrdersByUserUserIdGet(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **userId** | `string` |  | [Defaults to `undefined`] |
+
+### Return type
+
+[**Array&lt;OrderDTO&gt;**](OrderDTO.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `text/plain`, `application/json`, `text/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | OK |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
 ## apiOrdersGet

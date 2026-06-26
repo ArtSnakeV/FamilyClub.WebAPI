@@ -12,5 +12,6 @@ namespace FamilyClub.BLL.Interfaces
 		Task<OrderDTO> CreateAsync(OrderDTO dto, CancellationToken cancellationToken = default);
 		Task<bool> UpdateAsync(int id, OrderDTO dto, CancellationToken cancellationToken = default);
 		Task<bool> DeleteAsync(int id, CancellationToken cancellationToken = default);
-	}
+        Task<IEnumerable<OrderDTO>> GetByUserIdAsync(string userId, CancellationToken cancellationToken = default);
+    }
 }

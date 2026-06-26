@@ -16,6 +16,7 @@ import ebookIcon from "@/public/images/userProfile/mobile-button-solid-full 1.pn
 import audioIcon from "@/public/images/userProfile/volume-solid-full 1.png";
 import printIcon from "@/public/images/userProfile/Паперова.svg";
 import { useFavorites } from "../hooks/useFavorites";
+import { useMyBooks } from "../hooks/useMyBooks";
 
 type Props = {
   onLibrary?: () => void;
@@ -45,8 +46,9 @@ export default function UserSideBArProfile({
   const [search, setSearch] = useState("");
   const [open, setOpen] = useState(false);
   const [clickBtn, setClickBtn] = useState(false);
-
-  const visibleBooks = favorites.slice(0, 8);
+  const { myBooks, setLoadingMyBooks } = useMyBooks(userId);
+  const visibleBooks = myBooks.slice(0, 8);
+  //const visibleBooks = favorites.slice(0, 8);
   const containerRef = useRef<HTMLDivElement>(null);
   const hasEbook = (book: ProductDto) =>
     book.formatIds?.includes(1) ?? false;
@@ -214,7 +216,7 @@ export default function UserSideBArProfile({
           backgroundPosition: "center",
         }}
       >
-        {favorites.length === 0 ? (
+        {myBooks.length === 0 ? (
           <div className="flex items-center justify-center h-full">
             <img
               className="w-[166px] h-[170px] object-contain"
