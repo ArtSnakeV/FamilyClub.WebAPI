@@ -72,5 +72,12 @@ namespace FamilyClub.WebAPI.Controllers
 
 			return NoContent();
 		}
-	}
+
+        [HttpGet("by-user/{userId}")]
+        public async Task<ActionResult<IEnumerable<OrderDTO>>> GetByUserId(string userId, CancellationToken cancellationToken)
+        {
+            var orders = await _orderService.GetByUserIdAsync(userId, cancellationToken);
+            return Ok(orders);
+        }
+    }
 }

@@ -68,23 +68,35 @@ export default function ManagerAuthorPage() {
         <img
           src="/images/authorPageAdmin/Rectangle 675.png"
           className="absolute"
-          style={{ width: "100vw", height: "auto", top: "36px", left: "-20px"  }}
+          style={{ width: "100vw", height: "auto", top: "36px", left: "-20px" }}
           alt=""
         />
 
         <div className="flex w-full flex-col">
-          <div
+          {/* <div
             className="relative z-20"
             style={{ top: "50px", left: "-190px", right: "0", height: "60px" }}
+          > */}
+          <div
+            className="relative z-20 md:left-[-190px]"
+            style={{ top: "50px", height: "60px" }}
           >
             <BooksNav />
           </div>
 
-          <div
+          {/* <div
             className="relative self-center mt-[80px] ml-0 w-[90%] max-w-[1500px]"
             style={{
               width: "1480px",
               marginLeft: "-420px",
+              minHeight: "800px",
+            }}
+          > */}
+          <div
+            className="relative self-center mt-[80px]"
+            style={{
+              width: "min(1480px, 100%)",
+              marginLeft: "clamp(-420px, calc(50vw - 1430px), 0px)",
               minHeight: "800px",
             }}
           >

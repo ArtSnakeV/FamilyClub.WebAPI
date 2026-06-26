@@ -21,7 +21,7 @@ function UserProfileContent() {
   const ebookParam = searchParams.get("ebook");
   const audioParam = searchParams.get("audio");
   const { user } = useCurrentUser();
-  const { favorites, loadingFavorites } = useFavorites(user?.id);
+  const { favorites, loadingFavorites, toggleFavorite } = useFavorites(user?.id);
   const [categories, setCategories] = useState<CategoryDto[]>([]);
   const [activeTab, setActiveTab] = useState<TabType | null>(null);
 
@@ -146,7 +146,10 @@ function UserProfileContent() {
 
       <div className="relative w-full -mb-2 gap-0 items-center" style={{ marginTop: "360px", }}>
         {/* <BookGrid books={shouldShowGrid ? sortedBooks : []} /> */}
-        <BookGrid books={activeTab === "favorite" && loadingFavorites ? [] : getBooksForTab()} />
+        <BookGrid books={activeTab === "favorite" && loadingFavorites ? [] : getBooksForTab()}
+          userId={user?.id}
+          favorites={favorites}
+          toggleFavorite={toggleFavorite} />
       </div>
 
     </div>

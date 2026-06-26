@@ -92,6 +92,15 @@ public class OrderRepository : Repository<Order>, IOrderRepository
 			.Include(o => o.OrderItems)
 			.FirstOrDefaultAsync(o => o.Id == id, cancellationToken);
 	}
+    public async Task<IEnumerable<Order>> GetByUserIdAsync(string userId, CancellationToken cancellationToken = default)
+    {
+        return await _context.Orders
+            .Include(o => o.OrderItems)
+                .ThenInclude(oi => oi.Product)
+                    .ThenInclude(p => p.ProductImages)
+            .Where(o => o.UserId == userId)
+            .ToListAsync(cancellationToken);
+    }
 };
 public class NotificationRepository : Repository<Notification>, INotificationRepository
 {
