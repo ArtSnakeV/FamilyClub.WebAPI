@@ -17,6 +17,7 @@ export default function DropDownAgeRestrictions() {
   const router = useRouter();
 
   useEffect(() => {
+
     const config = new Configuration({
       basePath: "https://localhost:7069",
     });
@@ -48,8 +49,8 @@ export default function DropDownAgeRestrictions() {
     }, 600);
   }
 
-  const selectedLabel =
-    ageFilters.find((x) => x.id === selectedAge)?.name ?? "Вік";
+  const selectedLabel = "Вік";
+
 
   return (
     <div ref={containerRef} className="relative w-[110px]">
@@ -74,7 +75,7 @@ export default function DropDownAgeRestrictions() {
             e.stopPropagation();
             setOpen((v) => !v);
           }}
-          className="absolute inset-0  flex justify-center items-end mb-[56px] z-10"
+          className="pointer-events-auto absolute inset-0  flex justify-center items-end mb-[56px] z-10"
         >
           <span className="text-[var(--color-white)]">{selectedLabel}</span>
         </button>
@@ -127,5 +128,6 @@ export default function DropDownAgeRestrictions() {
         )}
       </div>
     </div>
+  
   );
 }

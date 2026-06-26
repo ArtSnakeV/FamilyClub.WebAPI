@@ -10,6 +10,9 @@ import BookGrid from "./bookGrid/BookGrid";
 import BtnSection from "./section/BtnSection";
 import InfoUserSection from "./section/InfoUserSection";
 import { useCurrentUser } from "./hooks/useCurrentUser";
+import { useFavorites } from "./hooks/useFavorites";
+
+export type TabType = "myBooks" | "favorite" | "myPosts";
 
 function UserProfileContent() {
   const searchParams = useSearchParams();
@@ -18,7 +21,9 @@ function UserProfileContent() {
   const ebookParam = searchParams.get("ebook");
   const audioParam = searchParams.get("audio");
   const { user } = useCurrentUser();
+  const { favorites, loadingFavorites } = useFavorites(user?.id);
   const [categories, setCategories] = useState<CategoryDto[]>([]);
+  const [activeTab, setActiveTab] = useState<TabType | null>(null);
 
   const categoriesParam = searchParams.get("categories");
   const selectedIds = categoriesParam
@@ -39,6 +44,7 @@ function UserProfileContent() {
 
   const EBOOK_FORMAT_ID = 1;
   const AUDIO_FORMAT_ID = 2;
+  const Print_FORMAT_ID = 3;
 
   const ebookSelected = ebookParam === "true";
   const audioSelected = audioParam === "true";
@@ -78,19 +84,46 @@ function UserProfileContent() {
       return (b.productName ?? "").localeCompare(a.productName ?? "", "uk");
     return 0;
   });
-  const shouldShowGrid =
+
+  const hasFilters =
     Boolean(yearParam) ||
     Boolean(sortParam) ||
     ebookSelected ||
     audioSelected ||
     selectedIds.length > 0;
+
+  const getBooksForTab = (): ProductDto[] => {
+    if (activeTab === "favorite") {
+      const favoriteIds = new Set(favorites.map((f) => f.id));
+      const favoriteBooks = products.filter((p) => favoriteIds.has(p.id ?? -1));
+
+      // Є улюблені — показуємо їх
+      if (favoriteBooks.length > 0) {
+        return favoriteBooks;
+      }
+
+      // Улюблених нема — пробуємо фільтри/сортування з панелі
+      return hasFilters ? sortedBooks : [];
+    }
+
+    if (activeTab === "myBooks") {
+      return sortedBooks;
+    }
+
+    if (activeTab === "myPosts") {
+      return [];
+    }
+
+    // Вкладка не вибрана — показуємо за фільтрами
+    return hasFilters ? sortedBooks : [];
+  };
   return (
     <div className="relative min-h-screen" style={{
       backgroundImage: "url('/images/userProfile/Rectangle 326.png')",
       backgroundSize: "100% 100%",
       backgroundPosition: "center",
     }}>
-      <div className="w-[calc(100%-700px)] h-[200px] items-center ml-[400px] mt-[160px] flex absolute z-20"><InfoUserSection member={user} /></div>
+      <div className="w-[calc(100%-700px)] h-[200px] items-center ml-[400px] mt-[160px] flex absolute" ><InfoUserSection member={user} userId={user?.id} /></div>
       <div className="flex relative items-start gap-0">
         <UserSideBArProfile
           categories={categories}
@@ -106,13 +139,14 @@ function UserProfileContent() {
         backgroundSize: "100% 100%",
         backgroundPosition: "center",
       }}>
-        <div className="flex items-center ml-[332px]">
-          <BtnSection />
+        <div className="flex items-center ml-[328px]">
+          <BtnSection activeTab={activeTab} onTabChange={setActiveTab} />
         </div>
       </div>
 
-      <div className="relative w-full -mb-2" style={{ marginTop: "360px", }}>
-        <BookGrid books={shouldShowGrid ? sortedBooks : []} />
+      <div className="relative w-full -mb-2 gap-0 items-center" style={{ marginTop: "360px", }}>
+        {/* <BookGrid books={shouldShowGrid ? sortedBooks : []} /> */}
+        <BookGrid books={activeTab === "favorite" && loadingFavorites ? [] : getBooksForTab()} />
       </div>
 
     </div>

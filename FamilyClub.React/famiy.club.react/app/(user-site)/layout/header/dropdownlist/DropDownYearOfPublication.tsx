@@ -85,7 +85,7 @@ export default function DropDownYearOfPublication() {
             e.stopPropagation();
             setOpen((v) => !v);
           }}
-          className="absolute inset-0 flex justify-center items-end mb-[46px] z-10"
+          className="absolute pointer-events-auto inset-0 flex justify-center items-end mb-[46px] z-10"
         >
           <span className="text-white">Рік видання</span>
         </button>
