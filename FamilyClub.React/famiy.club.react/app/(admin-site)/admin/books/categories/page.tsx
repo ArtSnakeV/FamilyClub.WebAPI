@@ -99,7 +99,7 @@ export default function CategoriesPage() {
                     className="absolute inset-0 w-full h-full object-fill pointer-events-none z-0 rounded-xl shadow-sm"
                 />
                 {/* Контент */}
-                <div className="relative z-10 flex flex-col justify-between flex-1 min-h-[75vh] p-8 md:p-12">
+                <div className="relative z-10 flex flex-col justify-between flex-1 min-h-[75vh] p-8 md:p-5">
 
                     {/* Верхня частина контенту */}
                     <div className="pt-6">

@@ -38,8 +38,8 @@ export default function Pagination({
                     onClick={() => onPageChange(page)}
                     className={`w-9 h-9 rounded-[6px] text-sm font-semibold transition-all duration-200 ${
                         currentPage === page
-                            ? "bg-[#005B33] text-white shadow-md"
-                            : "bg-[#F5F3EE] text-[var(--foreground-primary)] border border-gray-300 hover:bg-gray-100"
+                            ? "bg-[#005B33] text-white shadow-md border border-gray-300 hover:bg-gray-100"
+                            : "bg-[#F5F3EE] text-[var(--foreground-primary)]"
                     }`}
                 >
                     {page}

@@ -105,7 +105,7 @@ export default function LanguagesPage() {
                 />
 
                 {/* ШАР 3: Контент (лежить поверх внутрішнього фону за рахунок z-10) */}
-                <div className="relative z-10 flex flex-col justify-between flex-1 min-h-[75vh] p-8 md:p-12">
+                <div className="relative z-10 flex flex-col justify-between flex-1 min-h-[75vh] p-8 md:p-5">
                     
                     {/* Верхня частина контенту */}
                     <div className="pt-6">
