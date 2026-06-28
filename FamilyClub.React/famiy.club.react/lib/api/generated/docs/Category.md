@@ -9,6 +9,7 @@ Name | Type
 `id` | number
 `categoryName` | string
 `products` | [Array&lt;Product&gt;](Product.md)
+`favoritedBy` | [Array&lt;ClubMember&gt;](ClubMember.md)
 
 ## Example
 
@@ -20,6 +21,7 @@ const example = {
   "id": null,
   "categoryName": null,
   "products": null,
+  "favoritedBy": null,
 } satisfies Category
 
 console.log(example)

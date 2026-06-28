@@ -17,6 +17,7 @@ export default function useEditForm(id: string) {
     const [links, setLinks] = useState<{ id: number; name: string; url: string }[]>([
         { id: 1, name: "", url: "" },
     ]);
+    const [selectedCategories, setSelectedCategories] = useState<number[]>([]);
 
     useEffect(() => {
         if (!user) return;
@@ -37,5 +38,17 @@ export default function useEditForm(id: string) {
         value: UpdateClubMemberDto[K]
     ) => setForm((prev) => ({ ...prev, [key]: value }));
 
-    return { form, setField, avatarData, setAvatarData, loading: loading || userLoading, about, setAbout, links, setLinks, };
+    return {
+        form,
+        setField,
+        avatarData,
+        setAvatarData,
+        loading: loading || userLoading,
+        about,
+        setAbout,
+        links,
+        setLinks,
+        selectedCategories,
+        setSelectedCategories
+    };
 }
