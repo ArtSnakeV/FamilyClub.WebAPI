@@ -101,7 +101,7 @@ export default function SocialLinks({ userId }: Props) {
                 zIndex: 19,
             }}
             className="px-4 py-2 text-[var(--color-white)] cursor-pointer rounded-[20px] text-[16px] bg-[#005B33] font-semibold hover:bg-[#097E4B] transition-colors duration-200"
-            onClick={() => router.push(`/editUserProfile/${userId}`)}
+            onClick={() => router.push(`/userProfile/editUserProfile/${userId}`)}
         >
             Редагувати профіль
         </button>
