@@ -98,4 +98,14 @@ public class ClubMemberController : ControllerBase
 
         return NoContent();
     }
+    [HttpPut("{id}/favorite-categories")]
+    public async Task<IActionResult> UpdateFavoriteCategories(
+     string id,
+     [FromBody] List<int> categoryIds,
+     CancellationToken cancellationToken)
+    {
+        var updated = await _clubMemberService.UpdateFavoriteCategoriesAsync(id, categoryIds, cancellationToken);
+        if (!updated) return NotFound();
+        return NoContent();
+    }
 }

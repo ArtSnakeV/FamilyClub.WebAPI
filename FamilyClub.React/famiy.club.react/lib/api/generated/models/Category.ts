@@ -20,6 +20,13 @@ import {
     ProductToJSON,
     ProductToJSONTyped,
 } from './Product';
+import type { ClubMember } from './ClubMember';
+import {
+    ClubMemberFromJSON,
+    ClubMemberFromJSONTyped,
+    ClubMemberToJSON,
+    ClubMemberToJSONTyped,
+} from './ClubMember';
 
 /**
  * 
@@ -45,6 +52,12 @@ export interface Category {
      * @memberof Category
      */
     products?: Array<Product> | null;
+    /**
+     * 
+     * @type {Array<ClubMember>}
+     * @memberof Category
+     */
+    favoritedBy?: Array<ClubMember> | null;
 }
 
 /**
@@ -67,6 +80,7 @@ export function CategoryFromJSONTyped(json: any, ignoreDiscriminator: boolean): 
         'id': json['id'] == null ? undefined : json['id'],
         'categoryName': json['categoryName'] == null ? undefined : json['categoryName'],
         'products': json['products'] == null ? undefined : ((json['products'] as Array<any>).map(ProductFromJSON)),
+        'favoritedBy': json['favoritedBy'] == null ? undefined : ((json['favoritedBy'] as Array<any>).map(ClubMemberFromJSON)),
     };
 }
 
@@ -84,6 +98,7 @@ export function CategoryToJSONTyped(value?: Category | null, ignoreDiscriminator
         'id': value['id'],
         'categoryName': value['categoryName'],
         'products': value['products'] == null ? undefined : ((value['products'] as Array<any>).map(ProductToJSON)),
+        'favoritedBy': value['favoritedBy'] == null ? undefined : ((value['favoritedBy'] as Array<any>).map(ClubMemberToJSON)),
     };
 }
 

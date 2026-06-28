@@ -12,7 +12,7 @@ import ButtonSubmitEditUserProfile from "./section/ButtonSubmitEditUserProfile";
 import useEditForm from "./hooks/useEditForm";
 
 export default function EditUserClient({ id }: { id: string }) {
-    const { form, setField, avatarData, setAvatarData, loading,  about, setAbout, links, setLinks} = useEditForm(id);
+    const { form, setField, avatarData, setAvatarData, loading, about, setAbout, links, setLinks, selectedCategories, setSelectedCategories } = useEditForm(id);
     useEffect(() => {
         document.body.style.backgroundImage =
             "url('/images/userProfile/editUserProfile/Rectangle 326.png')";
@@ -52,7 +52,7 @@ export default function EditUserClient({ id }: { id: string }) {
                     <SocialLinkEditUserProfile links={links} setLinks={setLinks} />
                 </div>
                 <div className="w-full flex items-center justify-center relative mt-[1vh]">
-                    <AboutBlockEditUserProfile about={about} setAbout={setAbout}/>
+                    <AboutBlockEditUserProfile about={about} setAbout={setAbout} />
                 </div>
                 <div className="flex flex-row items-center mb-6 pb-4">
                     <div className="flex flex-col items-center ">
@@ -60,7 +60,8 @@ export default function EditUserClient({ id }: { id: string }) {
                         <SettingsUserProfile />
                     </div>
                     <div className="flex flex-col items-center -mt-16">
-                        <FavoriteCategoryUserProfile />
+                        <FavoriteCategoryUserProfile selectedCategories={selectedCategories}
+                            setSelectedCategories={setSelectedCategories} />
                         <PrivacyAndAgeUserProfile />
                         <ButtonSubmitEditUserProfile />
                     </div>
