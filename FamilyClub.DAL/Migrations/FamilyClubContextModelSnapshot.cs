@@ -79,6 +79,25 @@ namespace FamilyClub.DAL.Migrations
                     b.ToTable("ProductBookSizes", (string)null);
                 });
 
+            modelBuilder.Entity("CategoryClubMember", b =>
+                {
+                    b.Property<int>("FavoriteCategoriesId")
+                        .HasColumnType("integer")
+                        .HasColumnName("favorite_categories_id");
+
+                    b.Property<string>("FavoritedById")
+                        .HasColumnType("text")
+                        .HasColumnName("favorited_by_id");
+
+                    b.HasKey("FavoriteCategoriesId", "FavoritedById")
+                        .HasName("pk_member_favorite_categories");
+
+                    b.HasIndex("FavoritedById")
+                        .HasDatabaseName("ix_member_favorite_categories_favorited_by_id");
+
+                    b.ToTable("MemberFavoriteCategories", (string)null);
+                });
+
             modelBuilder.Entity("CategoryProduct", b =>
                 {
                     b.Property<int>("CategoriesId")
@@ -1085,6 +1104,23 @@ namespace FamilyClub.DAL.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_product_book_sizes_products_products_id");
+                });
+
+            modelBuilder.Entity("CategoryClubMember", b =>
+                {
+                    b.HasOne("FamilyClubLibrary.Category", null)
+                        .WithMany()
+                        .HasForeignKey("FavoriteCategoriesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_member_favorite_categories_categories_favorite_categories_id");
+
+                    b.HasOne("FamilyClubLibrary.ClubMember", null)
+                        .WithMany()
+                        .HasForeignKey("FavoritedById")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_member_favorite_categories_asp_net_users_favorited_by_id");
                 });
 
             modelBuilder.Entity("CategoryProduct", b =>

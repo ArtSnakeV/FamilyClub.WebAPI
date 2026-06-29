@@ -24,7 +24,7 @@ export default function BtnSection({ activeTab, onTabChange }: Props) {
     ];
 
     return (
-        <div className="flex flex-row -mt-[26px] w-[1200px] h-[150px] p-0 m-0">
+        <div className="flex flex-row -mt-[26px] w-[1300px] h-[150px] p-0 m-0">
             {buttons.map(({ label, tab }) => {
                 //const isSelected = selected === label;
                 const isSelected = activeTab === tab;
@@ -44,7 +44,7 @@ export default function BtnSection({ activeTab, onTabChange }: Props) {
                             }
                         }}
                         type="button"
-                        className="group relative w-[400px] h-[118px] -mr-[32px] p-0 cursor-pointer overflow-visible"
+                        className="group relative w-[433px] h-[118px] -mr-[32px] p-0 cursor-pointer overflow-visible"
                     >
                         {/* Фон*/}
                         <div

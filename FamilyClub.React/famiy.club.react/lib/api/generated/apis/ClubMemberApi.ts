@@ -44,6 +44,11 @@ export interface ApiClubMemberIdDeleteRequest {
     id: string;
 }
 
+export interface ApiClubMemberIdFavoriteCategoriesPutRequest {
+    id: string;
+    requestBody?: Array<number>;
+}
+
 export interface ApiClubMemberIdFormPutRequest {
     id: string;
     phoneNumber?: string;
@@ -291,6 +296,51 @@ export class ClubMemberApi extends runtime.BaseAPI {
      */
     async apiClubMemberIdDelete(requestParameters: ApiClubMemberIdDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.apiClubMemberIdDeleteRaw(requestParameters, initOverrides);
+    }
+
+    /**
+     * Creates request options for apiClubMemberIdFavoriteCategoriesPut without sending the request
+     */
+    async apiClubMemberIdFavoriteCategoriesPutRequestOpts(requestParameters: ApiClubMemberIdFavoriteCategoriesPutRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling apiClubMemberIdFavoriteCategoriesPut().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+
+        let urlPath = `/api/ClubMember/{id}/favorite-categories`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
+        return {
+            path: urlPath,
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+            body: requestParameters['requestBody'],
+        };
+    }
+
+    /**
+     */
+    async apiClubMemberIdFavoriteCategoriesPutRaw(requestParameters: ApiClubMemberIdFavoriteCategoriesPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.apiClubMemberIdFavoriteCategoriesPutRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     */
+    async apiClubMemberIdFavoriteCategoriesPut(requestParameters: ApiClubMemberIdFavoriteCategoriesPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.apiClubMemberIdFavoriteCategoriesPutRaw(requestParameters, initOverrides);
     }
 
     /**

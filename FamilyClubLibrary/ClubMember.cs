@@ -23,5 +23,6 @@ namespace FamilyClubLibrary
 
         public byte[]? AvatarData { get; set; }
         public List<Product> FavoriteProducts { get; set; } = new();
+        public List<Category> FavoriteCategories { get; set; } = new();
     }
 }

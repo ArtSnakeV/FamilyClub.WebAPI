@@ -49,6 +49,11 @@ public class FamilyClubContext : IdentityDbContext<ClubMember>
         .HasMany(m => m.FavoriteProducts)
         .WithMany(p => p.FavoritedBy)
         .UsingEntity(j => j.ToTable("MemberFavoriteProducts"));
+
+        builder.Entity<ClubMember>()
+        .HasMany(m => m.FavoriteCategories)
+        .WithMany(c => c.FavoritedBy)
+        .UsingEntity(j => j.ToTable("MemberFavoriteCategories"));
         // Many-to-Many: Product <-> Author
         builder.Entity<Product>()
             .HasMany(p => p.Authors)

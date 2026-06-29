@@ -22,6 +22,10 @@ import {
     OrderDTOToJSON,
 } from '../models/index';
 
+export interface ApiOrdersByUserUserIdGetRequest {
+    userId: string;
+}
+
 export interface ApiOrdersIdDeleteRequest {
     id: number;
 }
@@ -43,6 +47,49 @@ export interface ApiOrdersPostRequest {
  * 
  */
 export class OrdersApi extends runtime.BaseAPI {
+
+    /**
+     * Creates request options for apiOrdersByUserUserIdGet without sending the request
+     */
+    async apiOrdersByUserUserIdGetRequestOpts(requestParameters: ApiOrdersByUserUserIdGetRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['userId'] == null) {
+            throw new runtime.RequiredError(
+                'userId',
+                'Required parameter "userId" was null or undefined when calling apiOrdersByUserUserIdGet().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+
+        let urlPath = `/api/Orders/by-user/{userId}`;
+        urlPath = urlPath.replace(`{${"userId"}}`, encodeURIComponent(String(requestParameters['userId'])));
+
+        return {
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     */
+    async apiOrdersByUserUserIdGetRaw(requestParameters: ApiOrdersByUserUserIdGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<OrderDTO>>> {
+        const requestOptions = await this.apiOrdersByUserUserIdGetRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(OrderDTOFromJSON));
+    }
+
+    /**
+     */
+    async apiOrdersByUserUserIdGet(requestParameters: ApiOrdersByUserUserIdGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<OrderDTO>> {
+        const response = await this.apiOrdersByUserUserIdGetRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
 
     /**
      * Creates request options for apiOrdersGet without sending the request
