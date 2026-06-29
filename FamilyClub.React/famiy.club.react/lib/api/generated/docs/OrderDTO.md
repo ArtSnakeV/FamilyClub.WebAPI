@@ -7,7 +7,7 @@
 Name | Type
 ------------ | -------------
 `id` | number
-`userId` | number
+`userId` | string
 `orderDate` | Date
 `status` | string
 `totalPrice` | number

@@ -159,6 +159,7 @@ import "../../styles/globals.css";
 import { Source_Sans_3, Roboto_Mono } from "next/font/google";
 import UpNavigation from "../(user-site)/layout/header/UpNavigation";
 import AdminLayoutSidebarItems from "./layout/layoutNav";
+import AdminSidebarUserCard from "./layout/AdminSidebarUserCard";
 
 const sourceSans = Source_Sans_3({
   subsets: ["cyrillic", "latin"],
@@ -190,7 +191,7 @@ export default async function AdminLayout({
             boxShadow: "0px 0px 15px 0px #24242499",
           }}
         >
-          <div className="max-w-[1220px] mx-auto flex items-center ml-8 lg:px-0">
+          <div className="max-w-[1220px] mx-auto flex items-center lg:px-0">
             <UpNavigation />
           </div>
         </header>
@@ -209,13 +210,16 @@ export default async function AdminLayout({
 
         {/* SIDEBAR — fixed */}
         <aside
-          className="fixed z-20 flex flex-col overflow-y-auto"
+          className="fixed z-20 flex flex-col"
           style={{
             top: "62px",
             left: "20px",
             bottom: 0,
             width: "389px",
             backgroundColor: "#C7A381",
+            /* overflowX: clip дозволяє y-scroll без неявного кліпінгу x */
+            overflowY: "auto",
+            overflowX: "clip",
           }}
         >
           <div className="relative box-border" style={{ padding: "24px 24px 24px 34px" }}>
@@ -234,52 +238,9 @@ export default async function AdminLayout({
               }}
             />
             <div className="relative">
-              <div className="flex items-center gap-3 mb-4">
-                <div
-                  style={{
-                    width: "60px",
-                    height: "60px",
-                    backgroundImage:
-                      "url('/images/admin_manager_layout/cat_circle.svg')",
-                    backgroundSize: "contain",
-                    backgroundPosition: "center",
-                    backgroundRepeat: "no-repeat",
-                  }}
-                ></div>
-                <div className="flex flex-col justify-center">
-                  <div
-                    style={{
-                      fontFamily: "var(--font-sans)",
-                      fontWeight: 600,
-                      fontSize: "24px",
-                      lineHeight: "150%",
-                      letterSpacing: "-1.1%",
-                      color: "var(--foreground-primary)",
-                      display: "flex",
-                      alignItems: "center",
-                    }}
-                  >
-                    Ink & Echo
-                  </div>
-                  <div
-                    style={{
-                      fontFamily: "var(--font-sans)",
-                      fontWeight: 400,
-                      fontSize: "16px",
-                      lineHeight: "150%",
-                      letterSpacing: "-1.1%",
-                      color: "rgba(255,255,255,0.85)",
-                      display: "flex",
-                      alignItems: "center",
-                      opacity: 0.75,
-                    }}
-                  >
-                    Адміністратор
-                  </div>
-                </div>
-              </div>
+              <AdminSidebarUserCard />
 
-              <div className="flex-1 overflow-y-auto">
+              <div className="flex-1">
                 <AdminLayoutSidebarItems />
               </div>
               {/* Portal root for sidebar selection (non-scrolling) */}
@@ -297,7 +258,8 @@ export default async function AdminLayout({
             boxShadow: "0px 0px 10px 0px rgba(0, 0, 0, 0.50)",
           }}
         >
-          <div className="w-full flex-1 p-6">{children}</div>
+          {/* <div className="w-full flex-1 p-6">{children}</div> */}
+          {children}
         </main>
       </body>
     </html>

@@ -13,7 +13,11 @@ public interface IProductRepository : IRepository<Product>
 }
 public interface IPromotionRepository : IRepository<Promotion>;
 public interface IPublisherRepository : IRepository<Publisher>;
-public interface IReviewRepository : IRepository<Review>;
+//public interface IReviewRepository : IRepository<Review>;
+public interface IReviewRepository : IRepository<Review>
+{
+    Task<IEnumerable<Review>> GetByUserIdAsync(string userId, CancellationToken cancellationToken = default);
+}
 public interface ISeriesRepository : IRepository<Series>;
 public interface ITranslatorRepository : IRepository<Translator>;
 public interface IClubMemberRepository : IRepository<ClubMember>;
@@ -21,6 +25,7 @@ public interface IOrderRepository : IRepository<Order>
 {
 	Task<IEnumerable<Order>> GetAllWithItemsAsync(CancellationToken cancellationToken = default);
 	Task<Order?> GetByIdWithItemsAsync(int id, CancellationToken cancellationToken = default);
+    Task<IEnumerable<Order>> GetByUserIdAsync(string userId, CancellationToken cancellationToken = default);
 };
 
 public interface INotificationRepository : IRepository<Notification> 
@@ -32,3 +37,13 @@ public interface INotificationRepository : IRepository<Notification>
 public interface IFormatRepository : IRepository<Format>;
 public interface IBookSizeRepository : IRepository<BookSize>;
 public interface IAgeRestrictionRepository : IRepository<AgeRestriction>;
+
+public interface ICartRepository : IRepository<Cart>
+{
+    Task<Cart?> GetByMemberIdAsync(string clubMemberId, CancellationToken cancellationToken = default);
+}
+
+public interface ICartItemRepository : IRepository<CartItem>
+{
+    Task<IEnumerable<CartItem>> GetByCartIdAsync(int cartId, CancellationToken cancellationToken = default);
+}

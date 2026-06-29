@@ -159,7 +159,7 @@ export default function UpNavigation() {
                     avatarData: member?.avatarData,
                   }}
                   notificationCount={notificationCount}
-                  onCabinet={() => router.push("/cabinetManager")}
+                  onCabinet={() => router.push("/userProfile")}
                   onNotifications={() => router.push("/notifications")}
                   onOrders={() => router.push("/orders")}
                   onLibrary={() => router.push("/library")}

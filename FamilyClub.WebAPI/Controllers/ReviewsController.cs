@@ -64,4 +64,10 @@ public class ReviewsController : ControllerBase
 
         return NoContent();
     }
+    [HttpGet("by-user/{userId}")]
+    public async Task<ActionResult<IEnumerable<ReviewDto>>> GetByUser(string userId, CancellationToken cancellationToken)
+    {
+        var reviews = await _reviewService.GetByUserIdAsync(userId, cancellationToken);
+        return Ok(reviews);
+    }
 }

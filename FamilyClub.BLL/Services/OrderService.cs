@@ -85,8 +85,12 @@ namespace FamilyClub.BLL.Services
 
 			return true;
 		}
-
-		private static OrderDTO MapToReadDto(Order order)
+        public async Task<IEnumerable<OrderDTO>> GetByUserIdAsync(string userId, CancellationToken cancellationToken = default)
+        {
+            var orders = await _orderRepository.GetByUserIdAsync(userId, cancellationToken);
+            return orders.Select(MapToReadDto);
+        }
+        private static OrderDTO MapToReadDto(Order order)
 		{
 			return new OrderDTO
 			{

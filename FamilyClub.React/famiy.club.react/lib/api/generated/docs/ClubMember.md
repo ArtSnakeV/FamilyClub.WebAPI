@@ -28,6 +28,8 @@ Name | Type
 `reviews` | [Array&lt;Review&gt;](Review.md)
 `notifications` | [Array&lt;Notification&gt;](Notification.md)
 `avatarData` | string
+`favoriteProducts` | [Array&lt;Product&gt;](Product.md)
+`favoriteCategories` | [Array&lt;Category&gt;](Category.md)
 
 ## Example
 
@@ -58,6 +60,8 @@ const example = {
   "reviews": null,
   "notifications": null,
   "avatarData": null,
+  "favoriteProducts": null,
+  "favoriteCategories": null,
 } satisfies ClubMember
 
 console.log(example)

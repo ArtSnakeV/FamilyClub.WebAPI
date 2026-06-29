@@ -1,199 +1,190 @@
-import Link from 'next/link';
-import BooksNav from './booksNav';
-import Image from "next/image";
-import { ProductsApi, Configuration } from '@/lib/api/generated'; // To get info about our Books
-import AddEditButton from '@/app/(admin-site)/common_elements/add_edit_button';
-import ItemActions from "@/app/(admin-site)/common_elements/item_actions";
+"use client";
 
+import BooksNav from './booksNav';
+import { ProductsApi, Configuration, ProductDto } from '@/lib/api/generated';
+import ItemActions from "@/app/(admin-site)/common_elements/item_actions";
+import { useEffect, useState } from "react";
+import EntitiesSearchSorting from "@/app/(admin-site)/common_elements/entities_search_sorting";
+import Pagination from "@/app/(admin-site)/common_elements/entities_pagination"; // Імпортуємо наш компонент пагінації
+
+// Опції сортування для книг
+const BOOK_SORT_OPTIONS = [
+    { value: "id_asc", label: "Старі на початку" },
+    { value: "id_desc", label: "Нові на початку" },
+    { value: "asc", label: "За алфавітом (А→Я)" },
+    { value: "desc", label: "За алфавітом (Я→А)" },
+];
+
+const ITEMS_PER_PAGE = 10;
 
 if (process.env.NODE_ENV === 'development') {
     process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 }
 
+export default function AllBooks() {
+    const [products, setProducts] = useState<ProductDto[]>([]);
+    const [search, setSearch] = useState("");
+    const [sortOrder, setSortOrder] = useState("asc");
+    const [currentPage, setCurrentPage] = useState(1); // Додаємо відстеження поточної сторінки
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState<unknown>(null);
 
-export default async function AllBooks() {
-    // Let's get data about our products
-    const config = new Configuration({
-        basePath: "https://localhost:7069"
-    });
+    useEffect(() => {
+        const config = new Configuration({ basePath: "https://localhost:7069" });
+        const api = new ProductsApi(config);
 
-    const api = new ProductsApi(config);
+        api.apiProductsGet()
+            .then((data) => {
+                setProducts(data);
+                setIsLoading(false);
+            })
+            .catch((err) => {
+                console.error("API ERROR FULL:", err);
+                setError(err);
+                setIsLoading(false);
+            });
+    }, []);
 
-    try {
-        const products = await api.apiProductsGet();
+    // Скидаємо сторінку на 1 при зміні пошукового запиту
+    const handleSearchChange = (value: string) => {
+        setSearch(value);
+        setCurrentPage(1);
+    };
 
-        return (
-            <>
+    // Фільтрація та сортування книг на стороні клієнта
+    const filteredAndSorted = products
+        .filter(p => (p.productName ?? "").toLowerCase().includes(search.toLowerCase()))
+        .sort((a, b) => {
+            if (sortOrder === "asc") {
+                return (a.productName ?? "").localeCompare(b.productName ?? "");
+            }
+            if (sortOrder === "desc") {
+                return (b.productName ?? "").localeCompare(a.productName ?? ""); // Виправлено друкарську помилку
+            }
 
-                {/* Top part (Header)*/}
-                {/* Links for entities pages */}
-                {/* Ссилки на сторінки сутностей */}
-                <BooksNav />
+            const idA = Number(a.id ?? 0);
+            const idB = Number(b.id ?? 0);
 
+            if (sortOrder === "id_asc") {
+                return idA - idB;
+            }
+            if (sortOrder === "id_desc") {
+                return idB - idA;
+            }
 
-                {/* Main content part*/}
-                <div
-                    className="absolute bg-cover bg-center bg-no-repeat overflow-hidden"
-                    style={{
-                        width: '1492.88px',
-                        height: '1062.04px',
-                        backgroundImage: "url('/images/entities/main_field_background.svg')",
-                    }}
-                >
+            return 0;
+        });
 
-                    <div className="absolute inset-[25px] overflow-auto">
+    // Нарізаємо масив (.slice), щоб отримати лише 10 елементів для поточної сторінки
+    const indexOfLastItem = currentPage * ITEMS_PER_PAGE;
+    const indexOfFirstItem = indexOfLastItem - ITEMS_PER_PAGE;
+    const currentPaginatedItems = filteredAndSorted.slice(indexOfFirstItem, indexOfLastItem);
 
-                        {/* Content goes here */}
+    if (error) {
+        return <div className="p-[35px]">Failed to load products.</div>;
+    }
 
-                        {/* Search part */}
-                        {/* search_icon.svg */}
-                        <div
-                            className="w-full flex items-center gap-[10px] p-[10px]"
-                            style={{
-                                opacity: '1',
-                            }}
-                        >
-                            {/* Input Field:
-                            - `flex-1`: Tells the input to grow and fill all available remaining space.
-                            - `min-w-[100px]`: Prevents the input from shrinking smaller than 100px on tiny screens.
-                            - `h-[49px]`: Sets the master height for the row elements.
-                        */}
-                            <div className="relative w-full max-w-[684px]">
-                                <input
-                                    type="text"
-                                    placeholder="Введіть будь ласка назву книги для пошуку"
-                                    className="
-                                    w-full
-                                    h-[49px]
-                                    border border-gray-300
-                                    rounded-[9px]
-                                    pl-4
-                                    pr-12
-                                    outline-none
-                                    focus:border-[#005B33]
-                                    transition-colors
-                                "
-                                />
-                                <button
-                                    type="button"
-                                    // onClick={() => {
-                                    //     console.log("Search clicked");
-                                    // }}
-                                    className="
-                                    absolute
-                                    right-4
-                                    top-1/2
-                                    -translate-y-1/2
-                                    flex
-                                    items-center
-                                    justify-center
-                                    cursor-pointer
-                                "
-                                    aria-label="Search"
-                                >
-                                    <Image
-                                        src="/images/common_icons/search_icon.svg"
-                                        alt=""
-                                        width={20}
-                                        height={20}
-                                    />
-                                </button>
-                            </div>
-                            {/* Action Button:
-                            - `h-[49px]`: Matches the input height exactly.
-                            - `w-[164px]`: Keeps your fixed Figma width for the button action.
-                            - `flex-shrink-0`: Prevents the button from squeezing or changing shape when the page gets small.
-                        */}
-                            {/* <button
-                            type="submit"
-                            className="flex-shrink-0 w-[164px] h-[49px] flex items-center justify-center bg-[#005B33] text-white font-medium hover:bg-[#004426] transition-all duration-200"
-                            style={{
-                                borderRadius: '9px',
-                                padding: '10px 20px',
-                                opacity: '1',
-                            }}
-                        >
-                            <span>Додати</span>
-                        </button> */}
+    return (
+        <div className="relative min-h-screen w-full flex flex-col">
+            
+            {/* ШАР 1: Глобальний фон для всієї сторінки (на весь екран) */}
+            <img
+                src="/images/entities/main_background.png" 
+                alt="Main Background"
+                className="absolute inset-0 w-full h-full object-cover pointer-events-none z-0"
+            />
+            
+            {/* Навігація зверху */}
+            <BooksNav />
+
+            {/* ШАР 2: Обгортка для контенту (Макс. ширина 1492px) */}
+            <div className="relative flex-1 flex flex-col w-full max-w-[1492px] mx-auto my-4 px-4 sm:px-8">
+                
+                {/* Фонова PNG-рамка для самого контентного блоку */}
+                <img
+                    src="/images/entities/main_field_background.png" 
+                    alt="Background Frame"
+                    className="absolute inset-0 w-full h-full object-fill pointer-events-none z-0 rounded-xl shadow-sm"
+                />
+
+                {/* ШАР 3: Контент поверх рамки завдяки z-10 */}
+                <div className="relative z-10 flex flex-col justify-between flex-1 min-h-[75vh] p-8 md:p-5">
+                    
+                    {/* Верхня частина контенту */}
+                    <div className="pt-6">
+                        <EntitiesSearchSorting
+                            searchPlaceholder="Введіть будь ласка назву книги для пошуку..."
+                            searchValue={search}
+                            onSearchChange={handleSearchChange} // Скидає сторінку на першу при пошуку
+                            addButtonText="Додати книгу"
+                            addButtonHref="/products/addProduct" 
+                            sortValue={sortOrder}
+                            onSortChange={setSortOrder}
+                            sortOptions={BOOK_SORT_OPTIONS}
+                        />
+
+                        {/* Table Header замість оригінальної таблиці */}
+                        <div className="flex border-none pb-4 pt-6 font-bold text-lg px-[20px]">
+                            <div className="flex-1">Товари</div>
+                            <div className="w-[100px] text-center md:mr-4">Дії</div>
                         </div>
 
+                        {/* Список усіх наявних продуктів */}
+                        <div className="grid gap-4 w-full">
+                            {isLoading ? (
+                                <div className="text-[20px] opacity-60">Завантаження...</div>
+                            ) : currentPaginatedItems.length > 0 ? (
+                                currentPaginatedItems.map((product) => (
+                                    <div
+                                        key={product.id}
+                                        className="w-full min-h-[50px] py-3 bg-[#F5F3EE] rounded-[9px] shadow-[0_0_10px_0_rgba(0,0,0,0.1)] px-[24px] flex items-center justify-between"
+                                    >
+                                        {/* Назва книги */}
+                                        <p className="font-sanspro font-semibold text-[18px] md:text-[20px]">
+                                            {product.productName || "Unknown name"}
+                                        </p>
+                                        
+                                        {/* Кнопки дій */}
+                                        <div className="flex items-center gap-[20px]">
+                                            <ItemActions 
+                                                id={product.id} 
+                                                type="product" 
+                                                onDeleteSuccess={(deletedId) => {
+                                                    setProducts((prev) => {
+                                                        const updated = prev.filter((p) => p.id !== deletedId);
+                                                        const totalFilteredAfterDelete = updated.filter(p =>
+                                                            (p.productName ?? "").toLowerCase().includes(search.toLowerCase())
+                                                        ).length;
+                                                        const maxPages = Math.ceil(totalFilteredAfterDelete / ITEMS_PER_PAGE);
 
-                        {/* <h1>Books:</h1> */}
-                        {/* List of Books */}
-                        {/* <div className="grid gap-4">
-                            {products.map((product) => (
-                                <div 
-                                    key={product.id} 
-                                    className="p-4 border border-brand-black/10 rounded shadow-sm bg-white"
-                                >
-                                    <h2 className="text-lg font-semibold text-primary-action">
-                                        {product.productName || "Unnamed Category"}
-                                    </h2>
-                                    <p className="text-brand-black opacity-70 font-mono text-sm">
-                                        ID: {product.id}
-                                    </p>
-                                </div>
-                            ))}
-                        </div> */}
-
-
-
-
-                        {/* Додавання нової книги */}
-                        <form
-                            className="max-w-[1464px] w-full h-[75px] bg-[#F5F3EE] rounded-[9px] shadow-[0_0_10px_0_rgba(0,0,0,0.25)] px-[24px] flex items-center justify-between">
-                            <p className="w-[373px] opacity-100 font-sans font-semibold text-[20px] leading-[150%] tracking-[-0.011em] text-[var(--foreground-primary)]">
-                                Додати книгу:
-                            </p>
-                            <Link href="../../products/addProduct">
-                                <AddEditButton type="submit">Додати</AddEditButton>
-                            </Link>
-                        </form>
-
-                        {/* Table Section */}
-                        <div className="mt-8 px-[20px] w-full text-left">
-                            {/* Table Header */}
-                            <div className="flex border-none pb-4 font-bold text-lg">
-                                <div className="flex-1 padding-10">Товари</div>
-                                <div className="w-[338px] text-center">Дії</div>
-                                {/* Width matches two buttons (164px * 2) + gap (10px) */}
-                            </div>
-
-                            {/* Список усіх наявних продуктів */}
-                            <div className="grid gap-4">
-                                {products.map((product) => (<div
-                                    key={product.id}
-                                    className="max-w-[1464px] w-full h-[50px] bg-[#F5F3EE] rounded-[9px] shadow-[0_0_10px_0_rgba(0,0,0,0.25)] px-[24px] flex items-center justify-between"
-                                >
-                                    {/* Left side: language name */}
-                                    <p className="font-sanspro font-semibold text-[20px] leading-[150%] tracking-[-0.011em] align-middle">
-                                        {product.productName || "Unknown name"}
-                                    </p>
-                                    {/* Right side: buttons */}
-                                    <div className="flex items-center gap-[20px]">
-                                        <ItemActions id={product.id} type="product" />
+                                                        if (currentPage > maxPages && maxPages >= 1) {
+                                                            setCurrentPage(maxPages);
+                                                        }
+                                                        return updated;
+                                                    });
+                                                }}
+                                            />
+                                        </div>
                                     </div>
-                                </div>
-                                ))}
-                            </div>
-
-
+                                ))
+                            ) : (
+                                <div className="text-[20px] opacity-60 px-[20px]">Книг не знайдено</div>
+                            )}
                         </div>
-
-
                     </div>
+
+                    {/* Пагінація знизу */}
+                    <div className="mt-8 flex justify-center">
+                        <Pagination 
+                            totalItems={filteredAndSorted.length} 
+                            itemsPerPage={ITEMS_PER_PAGE}
+                            currentPage={currentPage}
+                            onPageChange={setCurrentPage}
+                        />
+                    </div>
+
                 </div>
-
-
-            </>
-        );
-    }
-    catch (error) {
-        console.error("API ERROR FULL:", error);
-        return (
-            <div>
-                Failed to load products.
             </div>
-        );
-    }
+        </div>
+    );
 }

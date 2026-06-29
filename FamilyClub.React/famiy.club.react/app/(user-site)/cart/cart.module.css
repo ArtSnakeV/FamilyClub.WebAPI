@@ -1,0 +1,618 @@
+/* ==============================
+   Cart Page – cart.module.css
+   Matches Figma design tokens
+   ============================== */
+
+/* ---------- Page layout ---------- */
+.cartPage {
+  background-color: var(--background-main, #f5f3ee);
+  min-height: 100vh;
+  padding-bottom: 60px;
+}
+
+.cartHeader {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 30px 0 24px;
+  max-width: 1220px;
+  margin: 0 auto;
+}
+
+.backButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: var(--background-main, #f5f3ee);
+  border: 2px solid var(--color-black, #242424);
+  cursor: pointer;
+  transition: opacity 0.2s ease, transform 0.15s ease;
+  flex-shrink: 0;
+}
+
+.backButton:hover {
+  opacity: 0.7;
+  transform: scale(1.05);
+}
+
+.backButton svg {
+  width: 24px;
+  height: 24px;
+  color: var(--color-black, #242424);
+}
+
+.cartTitle {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 48px;
+  line-height: 1.5;
+  letter-spacing: -0.528px;
+  color: var(--color-black, #242424);
+  margin: 0;
+}
+
+/* ---------- Content grid ---------- */
+.cartContent {
+  display: grid;
+  grid-template-columns: 1fr 415px;
+  gap: 40px;
+  max-width: 1220px;
+  margin: 0 auto;
+  align-items: start;
+}
+
+.cartItems {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.emptyCart {
+  text-align: center;
+  padding: 80px 20px;
+  font-family: var(--font-sans);
+  font-size: 24px;
+  color: rgba(36, 36, 36, 0.5);
+}
+
+.emptyCartIcon {
+  font-size: 64px;
+  margin-bottom: 20px;
+  display: block;
+}
+
+/* ---------- Loyalty bar ---------- */
+.loyaltyBar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #a97e56;
+  border-radius: 25px;
+  padding: 4px 14px 4px 5px;
+  height: 40px;
+  margin-bottom: 4px;
+  width: fit-content;
+  margin-left: auto;
+}
+
+.loyaltySection {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.loyaltyLabel {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 14px;
+  color: rgba(36, 36, 36, 0.5);
+  letter-spacing: -0.154px;
+  line-height: 1;
+}
+
+.loyaltyValue {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--color-black, #242424);
+  letter-spacing: -0.154px;
+  line-height: 1;
+}
+
+.loyaltyDivider {
+  width: 15px;
+  height: 15px;
+  opacity: 0.5;
+}
+
+.loyaltyPaw {
+  width: 35px;
+  height: 35px;
+}
+
+/* ---------- Cart item card ---------- */
+.cartCard {
+  position: relative;
+  background: var(--background-main, #f5f3ee);
+  border-radius: 15px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.35);
+  padding: 30px;
+  display: grid;
+  grid-template-columns: 200px 1fr auto;
+  gap: 24px;
+  transition: box-shadow 0.2s ease;
+}
+
+.cartCard:hover {
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.25);
+}
+
+.cardImageWrap {
+  width: 200px;
+  height: 280px;
+  border-radius: 9px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.cardImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 9px;
+}
+
+.cardImagePlaceholder {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #ddd 0%, #ccc 100%);
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+  color: rgba(36, 36, 36, 0.2);
+}
+
+/* ---------- Card info ---------- */
+.cardInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+}
+
+.bookTitle {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 1.3;
+  letter-spacing: -0.44px;
+  color: var(--color-black, #242424);
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.bookAuthor {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.5;
+  letter-spacing: -0.198px;
+  color: rgba(36, 36, 36, 0.5);
+  margin: 0;
+}
+
+.availability {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 1.5;
+  letter-spacing: -0.22px;
+  color: var(--color-green, #005b33);
+}
+
+.unavailable {
+  color: #c81e1e;
+}
+
+/* ---------- Format rows ---------- */
+.formatRows {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: auto;
+}
+
+.formatRow {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  height: 52px;
+}
+
+.formatIcon {
+  width: 52px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.formatIconInner {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  color: white;
+}
+
+.formatPaper {
+  background: var(--color-green, #005b33);
+}
+
+.formatEbook {
+  background: var(--color-green, #005b33);
+}
+
+.formatAudio {
+  background: #a97e56;
+}
+
+.quantityControls {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-left: auto;
+}
+
+.qtyButton {
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  color: var(--color-black, #242424);
+  font-size: 18px;
+  padding: 0;
+  transition: opacity 0.15s ease;
+  border-radius: 50%;
+}
+
+.qtyButton:hover {
+  opacity: 0.6;
+}
+
+.qtyButton:active {
+  transform: scale(0.9);
+}
+
+.qtyValue {
+  background: var(--background-main, #f5f3ee);
+  box-shadow: 0 0 2.5px rgba(0, 0, 0, 0.25);
+  border-radius: 7px;
+  padding: 5px;
+  width: 29px;
+  text-align: center;
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 18px;
+  color: var(--color-black, #242424);
+  letter-spacing: -0.198px;
+}
+
+.formatPrice {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 32px;
+  line-height: 1.5;
+  letter-spacing: -0.352px;
+  color: var(--color-black, #242424);
+  white-space: nowrap;
+  min-width: 120px;
+  text-align: right;
+}
+
+/* ---------- Card actions ---------- */
+.cardActions {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0;
+}
+
+.favoriteBtn,
+.deleteBtn {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  padding: 0;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+  border-radius: 8px;
+}
+
+.favoriteBtn:hover,
+.deleteBtn:hover {
+  opacity: 0.7;
+  transform: scale(1.1);
+}
+
+.favoriteBtn svg,
+.deleteBtn svg {
+  width: 28px;
+  height: 28px;
+}
+
+.favoriteBtn svg {
+  color: var(--color-black, #242424);
+}
+
+.deleteBtn svg {
+  color: rgba(36, 36, 36, 0.6);
+}
+
+/* ---------- Summary sidebar ---------- */
+.summaryPanel {
+  position: sticky;
+  top: 80px;
+  background: var(--background-main, #f5f3ee);
+  border-radius: 23px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  padding: 40px 50px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.applyPointsBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 30px;
+  background: rgba(0, 91, 51, 0.5);
+  border-radius: 9px;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 16px;
+  color: var(--background-main, #f5f3ee);
+  letter-spacing: -0.176px;
+  transition: background 0.2s ease;
+  width: 100%;
+}
+
+.applyPointsBtn:hover {
+  background: rgba(0, 91, 51, 0.7);
+}
+
+/* ---------- Summary lines ---------- */
+.summaryLines {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.summaryRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.summaryLabel {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 1.5;
+  letter-spacing: -0.22px;
+  color: rgba(155, 158, 175, 0.5);
+}
+
+.summaryValue {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 1.5;
+  letter-spacing: -0.198px;
+  color: var(--color-black, #242424);
+}
+
+.discountValue {
+  color: #c81e1e;
+}
+
+.totalValue {
+  font-size: 24px;
+  letter-spacing: -0.264px;
+  color: #c81e1e;
+}
+
+.summaryDivider {
+  width: 100%;
+  height: 1px;
+  background: rgba(36, 36, 36, 0.2);
+  margin: 10px 0;
+}
+
+/* ---------- Agreement ---------- */
+.agreement {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.agreementCheckbox {
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+  cursor: pointer;
+  accent-color: var(--color-green, #005b33);
+}
+
+.agreementText {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 1.5;
+  letter-spacing: -0.165px;
+  color: #000;
+}
+
+.agreementLink {
+  color: var(--color-green, #005b33);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.agreementLink:hover {
+  text-decoration: underline;
+}
+
+/* ---------- Checkout button ---------- */
+.checkoutBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 30px;
+  background: var(--color-green, #005b33);
+  border-radius: 60px;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 20px;
+  color: white;
+  letter-spacing: -0.22px;
+  line-height: 1.5;
+  height: 59px;
+  width: 100%;
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.checkoutBtn:hover {
+  background: #004a2a;
+  transform: translateY(-1px);
+}
+
+.checkoutBtn:active {
+  transform: translateY(0);
+}
+
+.checkoutBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ---------- Promo code ---------- */
+.promoSection {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.promoLabel {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 1.5;
+  letter-spacing: -0.22px;
+  color: var(--color-black, #242424);
+}
+
+.promoInput {
+  background: var(--background-main, #f5f3ee);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+  border-radius: 9px;
+  border: none;
+  padding: 10px 20px;
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 18px;
+  letter-spacing: -0.198px;
+  color: var(--color-black, #242424);
+  width: 100%;
+  outline: none;
+  transition: box-shadow 0.2s ease;
+}
+
+.promoInput::placeholder {
+  color: rgba(36, 36, 36, 0.5);
+}
+
+.promoInput:focus {
+  box-shadow: 0 0 8px rgba(0, 91, 51, 0.4);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1280px) {
+  .cartContent {
+    grid-template-columns: 1fr 360px;
+    gap: 24px;
+    padding: 0 20px;
+  }
+  .cartHeader {
+    padding: 24px 20px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .cartContent {
+    grid-template-columns: 1fr;
+  }
+  .summaryPanel {
+    position: static;
+    order: -1;
+  }
+  .cartTitle {
+    font-size: 36px;
+  }
+}
+
+@media (max-width: 768px) {
+  .cartCard {
+    grid-template-columns: 140px 1fr;
+    gap: 16px;
+    padding: 20px;
+  }
+  .cardActions {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    flex-direction: row;
+    gap: 8px;
+  }
+  .bookTitle {
+    font-size: 22px;
+  }
+  .formatPrice {
+    font-size: 22px;
+    min-width: 80px;
+  }
+  .cartTitle {
+    font-size: 28px;
+  }
+  .summaryPanel {
+    padding: 24px 20px;
+  }
+}

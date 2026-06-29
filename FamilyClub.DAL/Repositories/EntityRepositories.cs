@@ -50,7 +50,23 @@ public class ProductRepository : Repository<Product>, IProductRepository
 }
 public class PromotionRepository(FamilyClubContext context) : Repository<Promotion>(context), IPromotionRepository;
 public class PublisherRepository(FamilyClubContext context) : Repository<Publisher>(context), IPublisherRepository;
-public class ReviewRepository(FamilyClubContext context) : Repository<Review>(context), IReviewRepository;
+//public class ReviewRepository(FamilyClubContext context) : Repository<Review>(context), IReviewRepository;
+public class ReviewRepository : Repository<Review>, IReviewRepository
+{
+    private readonly FamilyClubContext _context;
+
+    public ReviewRepository(FamilyClubContext context) : base(context)
+    {
+        _context = context;
+    }
+
+    public async Task<IEnumerable<Review>> GetByUserIdAsync(string userId, CancellationToken cancellationToken = default)
+    {
+        return await _context.Reviews
+            .Where(r => r.UserId == userId)
+            .ToListAsync(cancellationToken);
+    }
+}
 public class SeriesRepository(FamilyClubContext context) : Repository<Series>(context), ISeriesRepository;
 public class TranslatorRepository(FamilyClubContext context) : Repository<Translator>(context), ITranslatorRepository;
 public class ClubMemberRepository(FamilyClubContext context) : Repository<ClubMember>(context), IClubMemberRepository;
@@ -76,6 +92,15 @@ public class OrderRepository : Repository<Order>, IOrderRepository
 			.Include(o => o.OrderItems)
 			.FirstOrDefaultAsync(o => o.Id == id, cancellationToken);
 	}
+    public async Task<IEnumerable<Order>> GetByUserIdAsync(string userId, CancellationToken cancellationToken = default)
+    {
+        return await _context.Orders
+            .Include(o => o.OrderItems)
+                .ThenInclude(oi => oi.Product)
+                    .ThenInclude(p => p.ProductImages)
+            .Where(o => o.UserId == userId)
+            .ToListAsync(cancellationToken);
+    }
 };
 public class NotificationRepository : Repository<Notification>, INotificationRepository
 {
@@ -100,3 +125,34 @@ public class NotificationRepository : Repository<Notification>, INotificationRep
 public class FormatRepository(FamilyClubContext context) : Repository<Format>(context), IFormatRepository;
 public class AgeRestrictionRepository(FamilyClubContext context) : Repository<AgeRestriction>(context), IAgeRestrictionRepository;
 public class BookSizeRepository(FamilyClubContext context) : Repository<BookSize>(context), IBookSizeRepository;
+public class CartRepository : Repository<Cart>, ICartRepository
+{
+    private readonly FamilyClubContext _context;
+    public CartRepository(FamilyClubContext context) : base(context)
+    {
+        _context = context;
+    }
+    public async Task<Cart?> GetByMemberIdAsync(string clubMemberId, CancellationToken cancellationToken = default)
+    {
+        return await _context.Cart
+            .Include(c => c.CartItems)
+            .ThenInclude(ci => ci.Product)
+            .FirstOrDefaultAsync(c => c.ClubMemberId == clubMemberId, cancellationToken);
+    }
+}
+
+public class CartItemRepository : Repository<CartItem>, ICartItemRepository
+{
+    private readonly FamilyClubContext _context;
+    public CartItemRepository(FamilyClubContext context) : base(context)
+    {
+        _context = context;
+    }
+    public async Task<IEnumerable<CartItem>> GetByCartIdAsync(int cartId, CancellationToken cancellationToken = default)
+    {
+        return await _context.CartItems
+            .Where(ci => ci.CartId == cartId)
+            .Include(ci => ci.Product)
+            .ToListAsync(cancellationToken);
+    }
+}

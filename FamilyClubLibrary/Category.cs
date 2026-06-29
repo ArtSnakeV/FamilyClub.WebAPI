@@ -13,5 +13,6 @@ namespace FamilyClubLibrary
         //public string? Slug { get; set; }
 
         public List<Product> Products { get; set; } = new();
+        public List<ClubMember> FavoritedBy { get; set; } = new();
     }
 }

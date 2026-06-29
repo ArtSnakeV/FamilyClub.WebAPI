@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -17,5 +17,7 @@ namespace FamilyClubLibrary
 
         public int ProductId { get; set; } // Foreign key to Product 
         public Product Product { get; set; } = default!;
+
+        public string? Format { get; set; }
     }
 }

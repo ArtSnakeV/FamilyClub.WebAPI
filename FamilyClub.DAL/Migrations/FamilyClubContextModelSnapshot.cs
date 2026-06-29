@@ -79,6 +79,25 @@ namespace FamilyClub.DAL.Migrations
                     b.ToTable("ProductBookSizes", (string)null);
                 });
 
+            modelBuilder.Entity("CategoryClubMember", b =>
+                {
+                    b.Property<int>("FavoriteCategoriesId")
+                        .HasColumnType("integer")
+                        .HasColumnName("favorite_categories_id");
+
+                    b.Property<string>("FavoritedById")
+                        .HasColumnType("text")
+                        .HasColumnName("favorited_by_id");
+
+                    b.HasKey("FavoriteCategoriesId", "FavoritedById")
+                        .HasName("pk_member_favorite_categories");
+
+                    b.HasIndex("FavoritedById")
+                        .HasDatabaseName("ix_member_favorite_categories_favorited_by_id");
+
+                    b.ToTable("MemberFavoriteCategories", (string)null);
+                });
+
             modelBuilder.Entity("CategoryProduct", b =>
                 {
                     b.Property<int>("CategoriesId")
@@ -96,6 +115,25 @@ namespace FamilyClub.DAL.Migrations
                         .HasDatabaseName("ix_product_categories_products_id");
 
                     b.ToTable("ProductCategories", (string)null);
+                });
+
+            modelBuilder.Entity("ClubMemberProduct", b =>
+                {
+                    b.Property<int>("FavoriteProductsId")
+                        .HasColumnType("integer")
+                        .HasColumnName("favorite_products_id");
+
+                    b.Property<string>("FavoritedById")
+                        .HasColumnType("text")
+                        .HasColumnName("favorited_by_id");
+
+                    b.HasKey("FavoriteProductsId", "FavoritedById")
+                        .HasName("pk_member_favorite_products");
+
+                    b.HasIndex("FavoritedById")
+                        .HasDatabaseName("ix_member_favorite_products_favorited_by_id");
+
+                    b.ToTable("MemberFavoriteProducts", (string)null);
                 });
 
             modelBuilder.Entity("FamilyClubLibrary.AgeRestriction", b =>
@@ -174,6 +212,68 @@ namespace FamilyClub.DAL.Migrations
                         .HasName("pk_book_sizes");
 
                     b.ToTable("book_sizes", (string)null);
+                });
+
+            modelBuilder.Entity("FamilyClubLibrary.Cart", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ClubMemberId")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("club_member_id");
+
+                    b.HasKey("Id")
+                        .HasName("pk_cart");
+
+                    b.HasIndex("ClubMemberId")
+                        .IsUnique()
+                        .HasDatabaseName("ix_cart_club_member_id");
+
+                    b.ToTable("cart", (string)null);
+                });
+
+            modelBuilder.Entity("FamilyClubLibrary.CartItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CartId")
+                        .HasColumnType("integer")
+                        .HasColumnName("cart_id");
+
+                    b.Property<string>("Format")
+                        .HasColumnType("text")
+                        .HasColumnName("format");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("integer")
+                        .HasColumnName("product_id");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("integer")
+                        .HasColumnName("quantity");
+
+                    b.HasKey("Id")
+                        .HasName("pk_cart_items");
+
+                    b.HasIndex("ProductId")
+                        .HasDatabaseName("ix_cart_items_product_id");
+
+                    b.HasIndex("CartId", "ProductId", "Format")
+                        .IsUnique()
+                        .HasDatabaseName("ix_cart_items_cart_id_product_id_format");
+
+                    b.ToTable("cart_items", (string)null);
                 });
 
             modelBuilder.Entity("FamilyClubLibrary.Category", b =>
@@ -382,10 +482,6 @@ namespace FamilyClub.DAL.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("ClubMemberId")
-                        .HasColumnType("text")
-                        .HasColumnName("club_member_id");
-
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("order_date");
@@ -399,15 +495,16 @@ namespace FamilyClub.DAL.Migrations
                         .HasColumnType("numeric")
                         .HasColumnName("total_price");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer")
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("text")
                         .HasColumnName("user_id");
 
                     b.HasKey("Id")
                         .HasName("pk_orders");
 
-                    b.HasIndex("ClubMemberId")
-                        .HasDatabaseName("ix_orders_club_member_id");
+                    b.HasIndex("UserId")
+                        .HasDatabaseName("ix_orders_user_id");
 
                     b.ToTable("orders", (string)null);
                 });
@@ -420,6 +517,10 @@ namespace FamilyClub.DAL.Migrations
                         .HasColumnName("id");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Format")
+                        .HasColumnType("text")
+                        .HasColumnName("format");
 
                     b.Property<int>("OrderId")
                         .HasColumnType("integer")
@@ -443,9 +544,9 @@ namespace FamilyClub.DAL.Migrations
                     b.HasIndex("ProductId")
                         .HasDatabaseName("ix_order_items_product_id");
 
-                    b.HasIndex("OrderId", "ProductId")
+                    b.HasIndex("OrderId", "ProductId", "Format")
                         .IsUnique()
-                        .HasDatabaseName("ix_order_items_order_id_product_id");
+                        .HasDatabaseName("ix_order_items_order_id_product_id_format");
 
                     b.ToTable("order_items", (string)null);
                 });
@@ -1005,6 +1106,23 @@ namespace FamilyClub.DAL.Migrations
                         .HasConstraintName("fk_product_book_sizes_products_products_id");
                 });
 
+            modelBuilder.Entity("CategoryClubMember", b =>
+                {
+                    b.HasOne("FamilyClubLibrary.Category", null)
+                        .WithMany()
+                        .HasForeignKey("FavoriteCategoriesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_member_favorite_categories_categories_favorite_categories_id");
+
+                    b.HasOne("FamilyClubLibrary.ClubMember", null)
+                        .WithMany()
+                        .HasForeignKey("FavoritedById")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_member_favorite_categories_asp_net_users_favorited_by_id");
+                });
+
             modelBuilder.Entity("CategoryProduct", b =>
                 {
                     b.HasOne("FamilyClubLibrary.Category", null)
@@ -1020,6 +1138,44 @@ namespace FamilyClub.DAL.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_product_categories_products_products_id");
+                });
+
+            modelBuilder.Entity("ClubMemberProduct", b =>
+                {
+                    b.HasOne("FamilyClubLibrary.Product", null)
+                        .WithMany()
+                        .HasForeignKey("FavoriteProductsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_member_favorite_products_products_favorite_products_id");
+
+                    b.HasOne("FamilyClubLibrary.ClubMember", null)
+                        .WithMany()
+                        .HasForeignKey("FavoritedById")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_member_favorite_products_asp_net_users_favorited_by_id");
+                });
+
+            modelBuilder.Entity("FamilyClubLibrary.CartItem", b =>
+                {
+                    b.HasOne("FamilyClubLibrary.Cart", "Cart")
+                        .WithMany("CartItems")
+                        .HasForeignKey("CartId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_cart_items_cart_cart_id");
+
+                    b.HasOne("FamilyClubLibrary.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_cart_items_products_product_id");
+
+                    b.Navigation("Cart");
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("FamilyClubLibrary.Notification", b =>
@@ -1038,8 +1194,10 @@ namespace FamilyClub.DAL.Migrations
                 {
                     b.HasOne("FamilyClubLibrary.ClubMember", "ClubMember")
                         .WithMany("Orders")
-                        .HasForeignKey("ClubMemberId")
-                        .HasConstraintName("fk_orders_users_club_member_id");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_orders_asp_net_users_user_id");
 
                     b.Navigation("ClubMember");
                 });
@@ -1244,6 +1402,11 @@ namespace FamilyClub.DAL.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_product_translators_translator_translators_id");
+                });
+
+            modelBuilder.Entity("FamilyClubLibrary.Cart", b =>
+                {
+                    b.Navigation("CartItems");
                 });
 
             modelBuilder.Entity("FamilyClubLibrary.ClubMember", b =>

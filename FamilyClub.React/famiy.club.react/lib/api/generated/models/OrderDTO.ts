@@ -35,10 +35,10 @@ export interface OrderDTO {
     id?: number;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof OrderDTO
      */
-    userId?: number;
+    userId?: string | null;
     /**
      * 
      * @type {Date}

@@ -1,4 +1,4 @@
-﻿using FamilyClubLibrary;
+using FamilyClubLibrary;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 using Microsoft.EntityFrameworkCore;
@@ -33,6 +33,10 @@ public class FamilyClubContext : IdentityDbContext<ClubMember>
 
     public DbSet<Translator> Translator { get; set; }
 
+    public DbSet<Cart> Cart { get; set; }
+
+    public DbSet<CartItem> CartItems { get; set; }
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
         // Mandatory for Identity
@@ -41,8 +45,17 @@ public class FamilyClubContext : IdentityDbContext<ClubMember>
 		.Property(m => m.AvatarData)
 		.HasColumnName("avatar_data");
 
-		// Many-to-Many: Product <-> Author
-		builder.Entity<Product>()
+        builder.Entity<ClubMember>()
+        .HasMany(m => m.FavoriteProducts)
+        .WithMany(p => p.FavoritedBy)
+        .UsingEntity(j => j.ToTable("MemberFavoriteProducts"));
+
+        builder.Entity<ClubMember>()
+        .HasMany(m => m.FavoriteCategories)
+        .WithMany(c => c.FavoritedBy)
+        .UsingEntity(j => j.ToTable("MemberFavoriteCategories"));
+        // Many-to-Many: Product <-> Author
+        builder.Entity<Product>()
             .HasMany(p => p.Authors)
             .WithMany(a => a.Products)
             .UsingEntity(j => j.ToTable("ProductAuthors"));
@@ -100,7 +113,7 @@ public class FamilyClubContext : IdentityDbContext<ClubMember>
         // OrderItem Composite Key (Optional but recommended)
         // To ensure a product isn't duplicated in an order:
         builder.Entity<OrderItem>()
-            .HasIndex(oi => new { oi.OrderId, oi.ProductId })
+            .HasIndex(oi => new { oi.OrderId, oi.ProductId, oi.Format })
             .IsUnique();
 
         builder.Entity<ProductImage>()
@@ -112,6 +125,16 @@ public class FamilyClubContext : IdentityDbContext<ClubMember>
 		builder.Entity<Notification>()
 		.ToTable("notification");
 
+		// Cart: one cart per ClubMember (or SessionId/GuestId)
+		builder.Entity<Cart>()
+			.HasIndex(c => c.ClubMemberId)
+			.IsUnique();
+
+		// CartItem: ensure a product format isn't duplicated in a cart
+		builder.Entity<CartItem>()
+			.HasIndex(ci => new { ci.CartId, ci.ProductId, ci.Format })
+			.IsUnique();
+
 		// Can be added:
 		//// PRODUCT ↔ REVIEW (one-to-many)
 		//builder.Entity<Product>()
@@ -119,11 +142,12 @@ public class FamilyClubContext : IdentityDbContext<ClubMember>
 		//    .WithOne(r => r.Product)
 		//    .HasForeignKey(r => r.ProductId);
 
-		//// USER ↔ ORDER (one-to-many)
-		//builder.Entity<Order>()
-		//    .HasOne(o => o.ClubMember)
-		//    .WithMany()
-		//    .HasForeignKey(o => o.UserId);
+		// USER ↔ ORDER (one-to-many)
+		builder.Entity<Order>()
+		    .HasOne(o => o.ClubMember)
+		    .WithMany(m => m.Orders)
+		    .HasForeignKey(o => o.UserId)
+		    .OnDelete(DeleteBehavior.Cascade);
 
 		//// USER ↔ REVIEW (one-to-many)
 		//builder.Entity<Review>()

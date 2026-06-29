@@ -32,11 +32,11 @@ export default function EditAuthorClient({ id }: { id: string }) {
     if (!confirm("Ви точно бажаєте видалити цього автора?")) return;
     try {
       await authorService.apiAuthorsIdDelete({ id: Number(id) });
-      router.push("/authors");
+      router.push("/admin/books/authors");
     } catch (e) {
       console.error(e);
       alert("Помилка при видаленні");
-      
+
     }
   };
 
@@ -44,18 +44,19 @@ export default function EditAuthorClient({ id }: { id: string }) {
 
   return (
     <div
-      className="w-full min-h-screen flex flex-col"
+      className="w-full min-h-screen flex flex-col "
       style={{
         backgroundImage: "url('/images/addProducts/Rectangle 326.png')",
-        backgroundSize: "cover",
+        backgroundSize: "100% 100%",
       }}
     >
       <div
-        className="relative w-[900px] ml-[16.7vw] -mt-[68px] mx-auto bg-no-repeat min-h-screen"
+        className="relative self-center w-[80%] max-w-[900px] ml-[16.7vw] -mt-[30px] mx-auto bg-no-repeat pb-[60px]"
         style={{
           backgroundImage: "url('/images/addProducts/Rectangle 312.svg')",
           backgroundSize: "cover",
           backgroundPosition: "top",
+          minHeight: "1000px",
         }}
       >
         <div className="flex z-40 relative top-[130px] ml-[64px]">

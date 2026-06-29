@@ -2,6 +2,7 @@
 using FamilyClub.BLL.DTOs.Product;
 using FamilyClub.BLL.Interfaces;
 using FamilyClub.BLL.Mapping;
+using FamilyClub.DAL.EF;
 using FamilyClub.DAL.Interfaces;
 using FamilyClubLibrary;
 using Microsoft.AspNetCore.Http;
@@ -15,15 +16,17 @@ namespace FamilyClub.BLL.Services;
 // Method used by `admin` to manage club members (CRUD operations).
 public class ClubMemberService : IClubMemberService
 {
+    private readonly FamilyClubContext _context;
     private readonly IUnitOfWork _unitOfWork; // We do not use it now, but it can be used later if we decide to update some other entities together with ClubMember
     private readonly UserManager<ClubMember> _userManager;
     private readonly RoleManager<IdentityRole> _roleManager;
 
-    public ClubMemberService(IUnitOfWork unitOfWork, UserManager<ClubMember> userManager, RoleManager<IdentityRole> roleManager)
+    public ClubMemberService(IUnitOfWork unitOfWork, UserManager<ClubMember> userManager, RoleManager<IdentityRole> roleManager, FamilyClubContext context)
     {
         _unitOfWork = unitOfWork;
         _userManager = userManager;
         _roleManager = roleManager;
+        _context = context;
     }
 
     public async Task<IEnumerable<ClubMemberReadDto>> GetAllAsync(CancellationToken cancellationToken = default)
@@ -173,6 +176,25 @@ public class ClubMemberService : IClubMemberService
             dtos.Add(ClubMemberMapper.MapToReadDto(member, roles));
         }
         return dtos;
+    }
+    public async Task<bool> UpdateFavoriteCategoriesAsync(string id, List<int> categoryIds, CancellationToken cancellationToken = default)
+    {
+        var clubMember = await _userManager.Users
+            .Include(m => m.FavoriteCategories)
+            .FirstOrDefaultAsync(m => m.Id == id, cancellationToken);
+
+        if (clubMember is null) return false;
+
+        var selected = await _context.Categories
+            .Where(c => categoryIds.Contains(c.Id))
+            .ToListAsync(cancellationToken);
+
+        clubMember.FavoriteCategories.Clear();
+        foreach (var cat in selected)
+            clubMember.FavoriteCategories.Add(cat);
+
+        var result = await _userManager.UpdateAsync(clubMember);
+        return result.Succeeded;
     }
 
     // We always return ReadMapToReadDto to ensure consistent output format
