@@ -3,13 +3,14 @@ import { ClubMemberReadDto, UpdateClubMemberDto } from "@/lib/api/generated";
 import { clubMemberService } from "@/lib/api/services";
 import { useCurrentUser } from "../../../hooks/useCurrentUser";
 
+
 export default function useEditForm(id: string) {
     const { user, loading: userLoading } = useCurrentUser();
     const [form, setForm] = useState<UpdateClubMemberDto>({
         name: "",
         surname: "",
         phoneNumber: "",
-        dateOfBirth: undefined,
+        dateOfBirth: null,
     });
     const [avatarData, setAvatarData] = useState<string | null>(null);
     const [loading, setLoading] = useState(true);
@@ -25,7 +26,9 @@ export default function useEditForm(id: string) {
             name: user.name ?? "",
             surname: user.surname ?? "",
             phoneNumber: user.phoneNumber ?? "",
-            dateOfBirth: user.dateOfBirth ? new Date(user.dateOfBirth) as any : undefined,
+            dateOfBirth: user.dateOfBirth
+            ? new Date(user.dateOfBirth)
+            : null,
         });
         if (user.avatarData) {
             setAvatarData(user.avatarData);
@@ -36,7 +39,9 @@ export default function useEditForm(id: string) {
     const setField = <K extends keyof UpdateClubMemberDto>(
         key: K,
         value: UpdateClubMemberDto[K]
-    ) => setForm((prev) => ({ ...prev, [key]: value }));
+    ) => {
+        setForm((prev) => ({ ...prev, [key]: value }));
+    };
 
     return {
         form,
@@ -49,6 +54,7 @@ export default function useEditForm(id: string) {
         links,
         setLinks,
         selectedCategories,
-        setSelectedCategories
+        setSelectedCategories,
+
     };
 }

@@ -10,9 +10,25 @@ import SettingsUserProfile from "./section/SettingsUserProfile";
 import PrivacyAndAgeUserProfile from "./section/PrivacyAndAgeUserProfile";
 import ButtonSubmitEditUserProfile from "./section/ButtonSubmitEditUserProfile";
 import useEditForm from "./hooks/useEditForm";
+import { useCurrentUser } from "../../hooks/useCurrentUser";
+import { useRouter } from "next/navigation";
+import ButtonReturn from "./ui/ButtonReturn";
 
 export default function EditUserClient({ id }: { id: string }) {
-    const { form, setField, avatarData, setAvatarData, loading, about, setAbout, links, setLinks, selectedCategories, setSelectedCategories } = useEditForm(id);
+    const {
+        form,
+        setField,
+        avatarData,
+        setAvatarData,
+        loading,
+        about,
+        setAbout,
+        links,
+        setLinks,
+        selectedCategories,
+        setSelectedCategories } = useEditForm(id);
+    const { user } = useCurrentUser();
+    const router = useRouter();
     useEffect(() => {
         document.body.style.backgroundImage =
             "url('/images/userProfile/editUserProfile/Rectangle 326.png')";
@@ -29,44 +45,116 @@ export default function EditUserClient({ id }: { id: string }) {
             document.body.style.backgroundRepeat = "";
         };
     }, []);
-    return (
-        <div className="w-full min-h-screen flex flex-col  items-center">
-            <div
-                className="relative min-h-screen w-full mt-[48vh] flex flex-col  items-center"
-                style={{
-                    backgroundImage: "url('/images/userProfile/editUserProfile/Rectangle194.png')",
-                    backgroundSize: "100% auto",
-                    backgroundPosition: "top center",
-                    backgroundRepeat: "no-repeat",
-                    minHeight: "100vh",
-                }}
-            >
+    const handleSave = async () => {
+        const token = localStorage.getItem("token");
 
-                <div className="w-full flex items-center justify-center relative -mt-[14vh]">
-                    <HeaderEditUserProfile form={form}
-                        setField={setField}
-                        avatarData={avatarData}
-                        setAvatarData={setAvatarData} />
+        const formData = new FormData();
+        formData.append("name", form.name ?? "");
+        formData.append("surname", form.surname ?? "");
+        formData.append("phoneNumber", form.phoneNumber ?? "");
+        if (form.dateOfBirth) {
+            const d = new Date(form.dateOfBirth);
+            const dateOnly = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+            formData.append("dateOfBirth", dateOnly);
+        }
+        if (avatarData) {
+            const byteString = atob(avatarData);
+            const ab = new ArrayBuffer(byteString.length);
+            const ia = new Uint8Array(ab);
+            for (let i = 0; i < byteString.length; i++) {
+                ia[i] = byteString.charCodeAt(i);
+            }
+            const blob = new Blob([ab], { type: "image/jpeg" });
+            formData.append("avatar", blob, "avatar.jpg");
+        }
+
+        await fetch(`https://localhost:7069/api/ClubMember/${id}/form`, {
+            method: "PUT",
+            headers: { Authorization: `Bearer ${token}` },
+            body: formData,
+        });
+
+        await fetch(`https://localhost:7069/api/ClubMember/${id}/favorite-categories`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(selectedCategories),
+        });
+
+        // Спочатку диспатч — даємо час хедеру оновитись
+        window.dispatchEvent(new Event("auth-change"));
+
+        // Чекаємо поки fetchUser завершиться
+        await new Promise((resolve) => setTimeout(resolve, 500));
+
+        router.back();
+    };
+
+    return (
+        //<div className="w-full min-h-screen flex flex-col items-center">
+        <div
+            className="relative min-h-screen w-full mt-[40vh] flex flex-col items-center"
+            style={{
+                backgroundImage: "url('/images/userProfile/editUserProfile/Rectangle194.png')",
+                backgroundSize: "100% auto",
+                backgroundPosition: "top center",
+                backgroundRepeat: "no-repeat",
+                minHeight: "100vh",
+            }}
+        >
+            <div className="w-full flex flex-col text-left -top-[28vh] gap-2 ml-[53vw] justify-center relative">
+                <h2 className="text-[48px] text-[var(--color-white)]">Редагування профілю</h2>
+                <p className="text-[18px] text-[var(--color-white)] w-[600px]">Тут ви можете змінити інформацію про себе, налаштувати свій профіль та керувати вподобаннями!</p>
+            </div>
+            {/* <button
+                type="button"
+                className="px-4 relative mt-1 py-2 bg-[#005B33] text-[22px] w-[200px] h-[56px] text-[var(--color-white)] rounded-[8px] font-semibold hover:bg-[#097E4B] transition-colors"
+            >
+                Змінити банер
+            </button> */}
+            <div className="flex z-10 relative -top-[38vh] -ml-[53vw]">
+                <ButtonReturn />
+            </div>
+
+            <div className="w-full flex items-center justify-center relative -mt-[33vh]">
+                <HeaderEditUserProfile
+                    form={form}
+                    setField={setField}
+                    avatarData={avatarData}
+                    setAvatarData={setAvatarData} />
+            </div>
+            <div className="w-full flex items-center justify-center relative mt-[1vh]">
+                <SocialLinkEditUserProfile
+                    links={links}
+                    setLinks={setLinks} />
+            </div>
+            <div className="w-full flex items-center justify-center relative mt-[1vh]">
+                <AboutBlockEditUserProfile
+                    about={about}
+                    setAbout={setAbout} />
+            </div>
+            <div className="flex flex-row items-center mb-6 pb-4">
+                <div className="flex flex-col items-center ">
+                    <SecurityEditUserProfile
+                        userId={id}
+                        userEmail={user?.email ?? ""} />
+                    <SettingsUserProfile />
                 </div>
-                <div className="w-full flex items-center justify-center relative mt-[1vh]">
-                    <SocialLinkEditUserProfile links={links} setLinks={setLinks} />
-                </div>
-                <div className="w-full flex items-center justify-center relative mt-[1vh]">
-                    <AboutBlockEditUserProfile about={about} setAbout={setAbout} />
-                </div>
-                <div className="flex flex-row items-center mb-6 pb-4">
-                    <div className="flex flex-col items-center ">
-                        <SecurityEditUserProfile />
-                        <SettingsUserProfile />
-                    </div>
-                    <div className="flex flex-col items-center -mt-16">
-                        <FavoriteCategoryUserProfile selectedCategories={selectedCategories}
-                            setSelectedCategories={setSelectedCategories} />
-                        <PrivacyAndAgeUserProfile />
-                        <ButtonSubmitEditUserProfile />
-                    </div>
+                <div className="flex flex-col items-center -mt-16 mb-2 pb-2">
+                    <FavoriteCategoryUserProfile
+                        selectedCategories={selectedCategories}
+                        setSelectedCategories={setSelectedCategories} />
+                    <PrivacyAndAgeUserProfile
+                        initialDate={form.dateOfBirth ? new Date(form.dateOfBirth) : null}
+                        onDateChange={(date) => setField("dateOfBirth", date)} />
+                    <ButtonSubmitEditUserProfile onSave={handleSave}
+                        onCancel={() => router.back()}
+                        loading={loading} />
                 </div>
             </div>
         </div>
+        //</div>
     )
 }
