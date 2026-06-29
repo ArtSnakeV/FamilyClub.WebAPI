@@ -14,4 +14,5 @@ public interface IClubMemberService
     Task<ClubMemberReadDto?> GetByEmailAsync(string email, CancellationToken cancellationToken = default);
     Task<List<ClubMemberReadDto>> GetByPhoneNumberAsync(string phoneNumber, CancellationToken cancellationToken = default);
     Task<bool> UpdateFavoriteCategoriesAsync(string id, List<int> categoryIds, CancellationToken cancellationToken = default);
+    Task<bool> ChangePasswordAsync(string id, ChangePasswordClubMemberDto dto, CancellationToken cancellationToken = default);
 }
