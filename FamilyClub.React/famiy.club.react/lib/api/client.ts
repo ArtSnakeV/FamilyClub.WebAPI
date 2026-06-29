@@ -1,4 +1,4 @@
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://localhost:5001';
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://localhost:7069';
 
 export async function apiFetch<T>(endpoint: string, options?: RequestInit): Promise<T> {
   const response = await fetch(`${BASE_URL}${endpoint}`, {

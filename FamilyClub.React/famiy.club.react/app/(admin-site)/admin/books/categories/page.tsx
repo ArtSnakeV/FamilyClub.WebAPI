@@ -25,7 +25,9 @@ export default function CategoriesPage() {
     const [error, setError] = useState<unknown>(null);
 
     useEffect(() => {
-        const config = new Configuration({ basePath: "https://localhost:7069" });
+        const config = new Configuration({
+            basePath: apiBasePath
+        });
         const api = new CategoriesApi(config);
 
         api.apiCategoriesGet()

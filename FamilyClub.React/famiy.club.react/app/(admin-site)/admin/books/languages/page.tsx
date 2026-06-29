@@ -6,7 +6,7 @@ import ItemActions from "@/app/(admin-site)/common_elements/item_actions";
 import { useEffect, useState } from "react";
 import EntitiesSearchSorting from "@/app/(admin-site)/common_elements/entities_search_sorting";
 import Pagination from "@/app/(admin-site)/common_elements/entities_pagination"; // Імпортуємо наш компонент пагінації
-
+import { apiBasePath } from '@/lib/api/services';
 const LANGUAGE_SORT_OPTIONS = [
     { value: "id_asc", label: "Старі на початку" },
     { value: "id_desc", label: "Нові на початку" },
@@ -25,7 +25,9 @@ export default function LanguagesPage() {
     const [error, setError] = useState<unknown>(null);
 
     useEffect(() => {
-        const config = new Configuration({ basePath: "https://localhost:7069" });
+        const config = new Configuration({
+            basePath: apiBasePath
+        });
         const api = new LanguagesApi(config);
 
         api.apiLanguagesGet()
