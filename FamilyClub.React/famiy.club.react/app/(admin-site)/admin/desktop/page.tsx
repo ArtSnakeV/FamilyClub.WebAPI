@@ -20,6 +20,7 @@ import { useEffect, useState } from "react";
 
 
 export default function Desktop() {
+
     // 1. Establish state for all 5 dataset categories
     const [products, setProducts] = useState<ProductDto[]>([]);
     const [members, setMembers] = useState<ClubMemberReadDto[]>([]);
@@ -63,10 +64,28 @@ export default function Desktop() {
     }, []);
 
     return (
-      <div className="relative w-full min-h-screen flex flex-col gap-6 p-6 md:p-8">
-        {/* A. Привітання */}        
-        <GreetingBanner />
-  
+      <div className="relative w-full min-h-screen flex flex-col">
+
+        {/* A. Привітання */}
+        <div className="px-6 pt-6">
+          <h1 className="text-2xl font-bold mb-4">Менеджерська панель</h1>
+          <GreetingBanner />
+        </div>
+
+        {/* Content area with cut-edge decoration at the top */}
+        <div className="relative flex-1 overflow-hidden mt-6">
+          {/* Cut-edge decorative image — same pattern as authors/books pages */}
+          <img
+            src="/images/authorPageAdmin/Rectangle 675.png"
+            className="absolute"
+            // style={{ width: "calc(100% + 20px)", height: "auto", top: "0px", left: "-20px", zIndex: 0 }}
+            style={{ width: "calc(100%)", height: "auto", top: "0px", zIndex: 0 }}
+            alt=""
+          />
+
+          {/* All page content sits above the decoration */}
+          <div className="relative z-10 flex flex-col gap-6 p-6">
+
         {/* B. Статистика — 5 однакових карток */}
         <section className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-5 gap-4">
           {/* 1. Books Card */}
@@ -74,7 +93,7 @@ export default function Desktop() {
             title="Книги" 
             items={products} 
             isLoading={isLoading} 
-            icon="/images/admin/desktop/book-open-solid-full 1.svg"
+            icon="/images/admin_manager/desktop/book-open-solid-full 1.svg"
             getDate={(book) => book.publishingDate}
             href="/admin/books"
           />
@@ -84,7 +103,7 @@ export default function Desktop() {
             title="Відгуки" 
             items={reviews} 
             isLoading={isLoading} 
-            icon="/images/admin/desktop/newspaper-solid-full 1.svg"
+            icon="/images/admin_manager/desktop/newspaper-solid-full 1.svg"
             getDate={(review) => review.createdAt} 
             href="/admin/reviews"
           />
@@ -94,7 +113,7 @@ export default function Desktop() {
             title="Користувачі" 
             items={members} 
             isLoading={isLoading} 
-            icon="/images/admin/desktop/user-group-solid-full 1.svg"
+            icon="/images/admin_manager/desktop/user-group-solid-full 1.svg"
             getDate={(member) => member.dateOfBirth}
             href="/admin/users"
           />
@@ -104,7 +123,7 @@ export default function Desktop() {
             title="Замовлення" 
             items={orders} 
             isLoading={isLoading} 
-            icon="/images/admin/desktop/shopping-cart-solid-full 1.svg"
+            icon="/images/admin_manager/desktop/shopping-cart-solid-full 1.svg"
             getDate={(order) => order.orderDate || order.createdAt} // Fallback to your order structure field
             href="/admin/orders"
           />
@@ -114,12 +133,12 @@ export default function Desktop() {
             title="Скарги" 
             items={complaints} 
             isLoading={isLoading} 
-            icon="/images/admin/desktop/chart-simple-solid-full 1.svg"
+            icon="/images/admin_manager/desktop/chart-simple-solid-full 1.svg"
             getDate={(complaint) => complaint.submissionDate || complaint.createdAt} 
             href="/admin/complaints"
           />
       </section>
-  
+
         {/* C. Середній ряд — 3 колонки */}
         <section className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <ListPanel title="Нові газети" href="/admin/newspaper" />
@@ -138,6 +157,9 @@ export default function Desktop() {
             <p>Топ книг</p>
           </TornCard>
         </section>
+
+          </div>{/* end relative z-10 content */}
+        </div>{/* end cut-edge wrapper */}
       </div>
     );
   }

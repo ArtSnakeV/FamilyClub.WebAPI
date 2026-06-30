@@ -71,7 +71,7 @@ export default function StatCard<T>({
 
   // 4. Styles & Component Layout Variables
   const cardClasses = "group relative flex items-center gap-4 px-5 py-4 cursor-pointer overflow-hidden select-none w-full";
-  const bgImageUrl = "/images/admin/desktop/cut_edge_rectangle.png";
+  const bgImageUrl = "/images/admin_manager/desktop/cut_edge_rectangle.png";
 
   const cardContent = (
     <>

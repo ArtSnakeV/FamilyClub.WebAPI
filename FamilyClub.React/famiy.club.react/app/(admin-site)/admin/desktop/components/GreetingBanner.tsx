@@ -13,7 +13,7 @@ export default function GreetingBanner() {
       <div className="relative w-fit h-fit px-8 py-6">
         {/* Changed object-cover to object-fill to prevent any border cropping */}
         <img
-          src="/images/admin/desktop/HeaderCardBackground.png"
+          src="/images/admin_manager/desktop/HeaderCardBackground.png"
           alt=""
           className="absolute inset-0 w-full h-full object-fill pointer-events-none"
           aria-hidden="true"
