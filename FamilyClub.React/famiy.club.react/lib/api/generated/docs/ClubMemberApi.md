@@ -7,6 +7,7 @@ All URIs are relative to *http://localhost*
 | [**apiClubMemberByEmailEmailGet**](ClubMemberApi.md#apiclubmemberbyemailemailget) | **GET** /api/ClubMember/by-email/{email} |  |
 | [**apiClubMemberFormPost**](ClubMemberApi.md#apiclubmemberformpost) | **POST** /api/ClubMember/form |  |
 | [**apiClubMemberGet**](ClubMemberApi.md#apiclubmemberget) | **GET** /api/ClubMember |  |
+| [**apiClubMemberIdChangePasswordPut**](ClubMemberApi.md#apiclubmemberidchangepasswordput) | **PUT** /api/ClubMember/{id}/change-password |  |
 | [**apiClubMemberIdDelete**](ClubMemberApi.md#apiclubmemberiddelete) | **DELETE** /api/ClubMember/{id} |  |
 | [**apiClubMemberIdFavoriteCategoriesPut**](ClubMemberApi.md#apiclubmemberidfavoritecategoriesput) | **PUT** /api/ClubMember/{id}/favorite-categories |  |
 | [**apiClubMemberIdFormPut**](ClubMemberApi.md#apiclubmemberidformput) | **PUT** /api/ClubMember/{id}/form |  |
@@ -213,6 +214,74 @@ No authorization required
 
 - **Content-Type**: Not defined
 - **Accept**: `text/plain`, `application/json`, `text/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | OK |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## apiClubMemberIdChangePasswordPut
+
+> apiClubMemberIdChangePasswordPut(id, changePasswordClubMemberDto)
+
+
+
+### Example
+
+```ts
+import {
+  Configuration,
+  ClubMemberApi,
+} from '';
+import type { ApiClubMemberIdChangePasswordPutRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const api = new ClubMemberApi();
+
+  const body = {
+    // string
+    id: id_example,
+    // ChangePasswordClubMemberDto (optional)
+    changePasswordClubMemberDto: ...,
+  } satisfies ApiClubMemberIdChangePasswordPutRequest;
+
+  try {
+    const data = await api.apiClubMemberIdChangePasswordPut(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **id** | `string` |  | [Defaults to `undefined`] |
+| **changePasswordClubMemberDto** | [ChangePasswordClubMemberDto](ChangePasswordClubMemberDto.md) |  | [Optional] |
+
+### Return type
+
+`void` (Empty response body)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`, `text/json`, `application/*+json`
+- **Accept**: Not defined
 
 
 ### HTTP response details

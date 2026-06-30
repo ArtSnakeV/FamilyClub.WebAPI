@@ -15,10 +15,13 @@
 
 import * as runtime from '../runtime';
 import type {
+  ChangePasswordClubMemberDto,
   ClubMemberReadDto,
   UpdateClubMemberDto,
 } from '../models/index';
 import {
+    ChangePasswordClubMemberDtoFromJSON,
+    ChangePasswordClubMemberDtoToJSON,
     ClubMemberReadDtoFromJSON,
     ClubMemberReadDtoToJSON,
     UpdateClubMemberDtoFromJSON,
@@ -38,6 +41,11 @@ export interface ApiClubMemberFormPostRequest {
     surname?: string;
     dateOfBirth?: Date;
     avatar?: Blob;
+}
+
+export interface ApiClubMemberIdChangePasswordPutRequest {
+    id: string;
+    changePasswordClubMemberDto?: ChangePasswordClubMemberDto;
 }
 
 export interface ApiClubMemberIdDeleteRequest {
@@ -254,6 +262,51 @@ export class ClubMemberApi extends runtime.BaseAPI {
     async apiClubMemberGet(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<ClubMemberReadDto>> {
         const response = await this.apiClubMemberGetRaw(initOverrides);
         return await response.value();
+    }
+
+    /**
+     * Creates request options for apiClubMemberIdChangePasswordPut without sending the request
+     */
+    async apiClubMemberIdChangePasswordPutRequestOpts(requestParameters: ApiClubMemberIdChangePasswordPutRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling apiClubMemberIdChangePasswordPut().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+
+        let urlPath = `/api/ClubMember/{id}/change-password`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
+        return {
+            path: urlPath,
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+            body: ChangePasswordClubMemberDtoToJSON(requestParameters['changePasswordClubMemberDto']),
+        };
+    }
+
+    /**
+     */
+    async apiClubMemberIdChangePasswordPutRaw(requestParameters: ApiClubMemberIdChangePasswordPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.apiClubMemberIdChangePasswordPutRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     */
+    async apiClubMemberIdChangePasswordPut(requestParameters: ApiClubMemberIdChangePasswordPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.apiClubMemberIdChangePasswordPutRaw(requestParameters, initOverrides);
     }
 
     /**

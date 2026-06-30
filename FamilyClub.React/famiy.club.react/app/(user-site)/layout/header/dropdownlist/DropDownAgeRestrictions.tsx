@@ -82,7 +82,7 @@ export default function DropDownAgeRestrictions() {
 
         {/* DROPDOWN */}
         {open && (
-          <div className="absolute z-20 top-[30px] w-full flex flex-col items-center text-[var(--color-white)]">
+          <div className="absolute pointer-events-auto z-20 top-[30px] w-full flex flex-col items-center text-[var(--color-white)]">
             <div className="relative mt-[50px] flex flex-col gap-2">
               {ageFilters.map((f) => {
                 const isSelected = selectedAge === f.id;

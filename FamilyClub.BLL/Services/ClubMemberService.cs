@@ -196,7 +196,14 @@ public class ClubMemberService : IClubMemberService
         var result = await _userManager.UpdateAsync(clubMember);
         return result.Succeeded;
     }
+    public async Task<bool> ChangePasswordAsync(string id, ChangePasswordClubMemberDto dto, CancellationToken cancellationToken = default)
+    {
+        var user = await _userManager.FindByIdAsync(id);
+        if (user is null) return false;
 
+        var result = await _userManager.ChangePasswordAsync(user, dto.CurrentPassword, dto.NewPassword);
+        return result.Succeeded;
+    }
     // We always return ReadMapToReadDto to ensure consistent output format
     private async Task<List<ClubMemberReadDto>> MapToReadDtosAsync(List<ClubMember> clubMembers)
     {
