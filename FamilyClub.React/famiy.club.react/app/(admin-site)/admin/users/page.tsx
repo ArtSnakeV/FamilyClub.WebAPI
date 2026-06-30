@@ -2,8 +2,12 @@
 
 import { useEffect } from "react";
 import BlockForUsersInfo from "./section/BlockForUsersInfo";
+import { useUsersStats } from "./hooks/useUsersStats";
+
 
 export default function Page() {
+    const { stats, loading } = useUsersStats();
+
     useEffect(() => {
         document.body.style.backgroundImage =
             "url('/images/usersPageAdmin/Rectangle326.png')";
@@ -31,19 +35,12 @@ export default function Page() {
                     style={{ width: "100vw", height: "auto", top: "-40px", left: "-20px" }}
                     alt=""
                 />
-                <div className="flex flex-row relative items-center mt-24 ml-4">
-                    <div>
-                        <BlockForUsersInfo />
-                    </div>
-                    <div>
-                        <BlockForUsersInfo />
-                    </div>
-                    <div>
-                        <BlockForUsersInfo />
-                    </div>
-                    <div>
-                        <BlockForUsersInfo />
-                    </div>
+                <div className="flex flex-row relative items-center mt-24 ml-4 gap-4">
+                    {loading || !stats
+                        ? <p>Завантаження...</p>
+                        : stats.map((stat) => (
+                            <BlockForUsersInfo key={stat.title} {...stat} />
+                        ))}
                 </div>
             </div>
         </div>

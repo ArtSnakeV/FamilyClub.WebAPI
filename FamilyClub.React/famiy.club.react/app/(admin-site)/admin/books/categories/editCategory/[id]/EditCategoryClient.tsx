@@ -41,6 +41,7 @@ export default function EditCategoryClient({ id }: { id: string }) {
           backgroundImage: "url('/images/addProducts/Rectangle 312.svg')",
           backgroundSize: "cover",
           backgroundPosition: "top",
+          height: "1100px"
         }}
       >
         <div className="flex z-40 relative top-[130px] ml-[64px]">
