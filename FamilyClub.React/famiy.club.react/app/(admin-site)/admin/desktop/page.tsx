@@ -76,6 +76,7 @@ export default function Desktop() {
             isLoading={isLoading} 
             icon="/images/admin/desktop/book-open-solid-full 1.svg"
             getDate={(book) => book.publishingDate}
+            href="/admin/books"
           />
           
           {/* 2. Reviews Card */}
@@ -85,6 +86,7 @@ export default function Desktop() {
             isLoading={isLoading} 
             icon="/images/admin/desktop/newspaper-solid-full 1.svg"
             getDate={(review) => review.createdAt} 
+            href="/admin/reviews"
           />
           
           {/* 3. Club Members Card */}
@@ -93,7 +95,8 @@ export default function Desktop() {
             items={members} 
             isLoading={isLoading} 
             icon="/images/admin/desktop/user-group-solid-full 1.svg"
-            getDate={(member) => member.dateOfBirth} 
+            getDate={(member) => member.dateOfBirth}
+            href="/admin/users"
           />
           
           {/* 4. Orders Card */}
@@ -103,6 +106,7 @@ export default function Desktop() {
             isLoading={isLoading} 
             icon="/images/admin/desktop/shopping-cart-solid-full 1.svg"
             getDate={(order) => order.orderDate || order.createdAt} // Fallback to your order structure field
+            href="/admin/orders"
           />
           
           {/* 5. Complaints Card */}
@@ -112,6 +116,7 @@ export default function Desktop() {
             isLoading={isLoading} 
             icon="/images/admin/desktop/chart-simple-solid-full 1.svg"
             getDate={(complaint) => complaint.submissionDate || complaint.createdAt} 
+            href="/admin/complaints"
           />
       </section>
   
