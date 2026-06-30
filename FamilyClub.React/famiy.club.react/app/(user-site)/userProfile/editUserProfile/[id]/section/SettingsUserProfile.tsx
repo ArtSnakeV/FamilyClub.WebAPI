@@ -53,7 +53,7 @@ export default function SettingsUserProfile() {
                     </div>
                 </div>
 
-                {/* Сповіщення */}
+                {/* Сповіщення чи потрібне?*/}
                 <div className="flex flex-col gap-3 mt-4">
                     <label className="text-[20px] font-medium">Сповіщеня</label>
                     <NotificationUser

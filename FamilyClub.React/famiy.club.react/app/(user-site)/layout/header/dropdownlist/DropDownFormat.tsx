@@ -97,7 +97,7 @@ export default function DropDownFormat() {
 
         {/* DROPDOWN */}
         {open && (
-          <div className="absolute z-20 items-center top-[42px] w-full flex justify-center text-[var(--color-white)]">
+          <div className="absolute pointer-events-auto z-20 items-center top-[42px] w-full flex justify-center text-[var(--color-white)]">
             <div className="relative items-left mt-[50px] ml-2 w-[110px] flex flex-col gap-2">
               {formats.map((f) => {
                 const isSelected = selectedFormat === f.id;

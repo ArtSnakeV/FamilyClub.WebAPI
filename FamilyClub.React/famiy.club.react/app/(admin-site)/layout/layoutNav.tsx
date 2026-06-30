@@ -418,7 +418,6 @@ export default function AdminLayoutSidebarItems() {
     const isNewspaperActive = pathname === '/admin/newspaper' || pathname.startsWith('/admin/newspaper/');
     
     
-    console.log("Current path: " + pathname); // Added for checking pathes
 
     return (
         // <div className="absolute w-[260px] h-[625px] top-[104.76px]  left-[23.71px] gap-[21px] flex flex-col opacity-100">
