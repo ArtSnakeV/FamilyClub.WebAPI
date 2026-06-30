@@ -19,6 +19,7 @@ export default function AddPublisherPage() {
           backgroundImage: "url('/images/addProducts/Rectangle 312.svg')",
           backgroundSize: "cover",
           backgroundPosition: "top",
+          height: "1100px"
         }}
       >
         <div className="flex z-20 relative top-[130px] ml-[64px]">

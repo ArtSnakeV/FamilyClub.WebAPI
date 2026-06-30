@@ -13,11 +13,12 @@ type Props = {
 
 export function BasicInfoSectionEditTranslator({ form, setField, loading, handleDelete }: Props) {
   return (
-    <div className="w-full flex pb-4">
+    <div className="w-full flex">
       <SectionCard
-       title="Основна інформація"
-        backgroundImage="/images/addProducts/Rectangle 313.svg"
-        className="w-[600px] h-[580px]"
+        title="Основна інформація"
+        backgroundImage="/images/addProducts/Rectangle 314.png"
+        className="bg-contain h-[500px]"
+        backgroundSize="100% 100%"
       >
         <div className="flex w-[390px] relative top-[46px] flex-col gap-1">
           <p className="text-[var(--color-black)] font-sans-pro font-normal text-[18px] leading-[150%] tracking-[-0.011em]">
@@ -30,7 +31,7 @@ export function BasicInfoSectionEditTranslator({ form, setField, loading, handle
             className="input rounded-[9px] px-3 bg-[var(--color-white)] shadow-[0px_0px_10px_0px_#00000040] h-[44px]"
           />
 
-         <div className="p-4 top-[24px] relative w-full flex flex-col gap-5 ">
+          <div className="p-4 top-[24px] relative w-full flex flex-col gap-5 ">
             <button
               type="submit"
               disabled={loading}
