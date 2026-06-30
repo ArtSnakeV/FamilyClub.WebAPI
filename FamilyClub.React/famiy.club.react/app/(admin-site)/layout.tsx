@@ -291,12 +291,23 @@ export default async function AdminLayout({
           </div>
         </aside>
 
-        <main
+        {/* <main
           className="min-h-screen flex flex-col"
           style={{
             marginLeft: "409px",
             marginTop: "62px",
             backgroundColor: "#DBD7CD",
+            boxShadow: "0px 0px 10px 0px rgba(0, 0, 0, 0.50)",
+          }}
+        >
+          <div className="w-full flex-1">{children}</div>
+        </main> */}
+        <main
+          className="min-h-screen flex flex-col bg-cover bg-center bg-no-repeat bg-fixed"
+          style={{
+            marginLeft: "409px",
+            marginTop: "62px",
+            backgroundImage: "url('/images/usersPageAdmin/Rectangle326.png')",
             boxShadow: "0px 0px 10px 0px rgba(0, 0, 0, 0.50)",
           }}
         >

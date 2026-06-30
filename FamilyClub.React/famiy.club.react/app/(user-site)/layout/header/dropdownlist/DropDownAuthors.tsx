@@ -37,12 +37,18 @@ export default function DropDownAuthors() {
     return () => document.removeEventListener("click", handleClickOutside);
   }, []);
 
+  // const displayedAuthors =
+  //   search.trim() === ""
+  //     ? authors.slice(0, 4)
+  //     : authors.filter((a) =>
+  //         a.authorName?.toLowerCase().includes(search.toLowerCase()),
+  //       );
   const displayedAuthors =
     search.trim() === ""
-      ? authors.slice(0, 4)
+      ? authors.slice(0, ITEMS_PER_PAGE)
       : authors.filter((a) =>
-          a.authorName?.toLowerCase().includes(search.toLowerCase()),
-        );
+        a.authorName?.toLowerCase().includes(search.toLowerCase())
+      );
 
   function formatAuthorName(fullName?: string) {
     if (!fullName) return "";
@@ -86,7 +92,7 @@ export default function DropDownAuthors() {
         </button>
 
         {open && (
-          <div className="absolute z-20 top-[42px] w-full flex flex-col items-center gap-2 text-[var(--color-white)]">
+          <div className="absolute pointer-events-auto z-20 top-[42px] w-full flex flex-col items-center gap-2 text-[var(--color-white)]">
             <div className="relative top-[40px] w-[90px] h-[30px]">
               <Image
                 src="/images/header/Rectangle 58.svg"
@@ -127,8 +133,7 @@ export default function DropDownAuthors() {
               {displayedAuthors.length === 0 ? (
                 <div className="text-[13px]">Не знайдено</div>
               ) : (
-                visibleAuthors.map((a) => (
-                  // displayedAuthors.map((a) => (
+                displayedAuthors.map((a) => (
                   <Link
                     key={a.id}
                     href={`/products?authorId=${a.id}`}

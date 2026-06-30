@@ -108,12 +108,6 @@ export default function EditUserClient({ id }: { id: string }) {
                 <h2 className="text-[48px] text-[var(--color-white)]">Редагування профілю</h2>
                 <p className="text-[18px] text-[var(--color-white)] w-[600px]">Тут ви можете змінити інформацію про себе, налаштувати свій профіль та керувати вподобаннями!</p>
             </div>
-            {/* <button
-                type="button"
-                className="px-4 relative mt-1 py-2 bg-[#005B33] text-[22px] w-[200px] h-[56px] text-[var(--color-white)] rounded-[8px] font-semibold hover:bg-[#097E4B] transition-colors"
-            >
-                Змінити банер
-            </button> */}
             <div className="flex z-10 relative -top-[38vh] -ml-[53vw]">
                 <ButtonReturn />
             </div>
@@ -125,6 +119,7 @@ export default function EditUserClient({ id }: { id: string }) {
                     avatarData={avatarData}
                     setAvatarData={setAvatarData} />
             </div>
+            {/* чи потрібне? */}
             <div className="w-full flex items-center justify-center relative mt-[1vh]">
                 <SocialLinkEditUserProfile
                     links={links}

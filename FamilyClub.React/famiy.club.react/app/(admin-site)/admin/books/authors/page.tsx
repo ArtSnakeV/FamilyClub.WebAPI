@@ -53,10 +53,10 @@ export default function ManagerAuthorPage() {
   return (
     <div
       className="w-full min-h-screen overflow-hidden relative m-0 p-0"
-      style={{
-        backgroundImage: "url('/images/authorPageAdmin/Rectangle 326.png')",
-        backgroundSize: "100% 100%",
-      }}
+      // style={{
+      //   backgroundImage: "url('/images/authorPageAdmin/Rectangle 326.png')",
+      //   backgroundSize: "100% 100%",
+      // }}
     >
       <div className="w-[100vw] min-h-screen relative">
         {/* <img
@@ -93,11 +93,11 @@ export default function ManagerAuthorPage() {
             }}
           > */}
           <div
-            className="relative self-center mt-[80px]"
+            className="relative self-center mt-[90px]"
             style={{
               width: "min(1480px, 100%)",
               marginLeft: "clamp(-420px, calc(50vw - 1430px), 0px)",
-              minHeight: "800px",
+              minHeight: "740px",
             }}
           >
             <img

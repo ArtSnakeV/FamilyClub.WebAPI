@@ -17,16 +17,30 @@ export type TabType = "myBooks" | "favorite" | "myPosts";
 
 function UserProfileContent() {
   const searchParams = useSearchParams();
+  const tabParam = searchParams.get("tab");
   const yearParam = searchParams.get("year");
   const sortParam = searchParams.get("sort");
   const ebookParam = searchParams.get("ebook");
   const audioParam = searchParams.get("audio");
+
   const { user } = useCurrentUser();
   const { favorites, loadingFavorites, toggleFavorite } = useFavorites(user?.id);
   const { myBooks, loadingMyBooks } = useMyBooks(user?.id);
+
   const [categories, setCategories] = useState<CategoryDto[]>([]);
   const [activeTab, setActiveTab] = useState<TabType | null>(null);
   const [products, setProducts] = useState<ProductDto[]>([]);
+
+  useEffect(() => {
+    if (
+      tabParam === "favorite" ||
+      tabParam === "myBooks" ||
+      tabParam === "myPosts"
+    ) {
+      setActiveTab(tabParam);
+    }
+  }, [tabParam]);
+
   const categoriesParam = searchParams.get("categories");
   const selectedIds = categoriesParam
     ? categoriesParam.split(",").filter(Boolean).map(Number)
