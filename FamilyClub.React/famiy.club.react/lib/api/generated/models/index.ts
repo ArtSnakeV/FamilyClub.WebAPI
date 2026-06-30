@@ -12,6 +12,7 @@ export * from './CartDTO';
 export * from './CartItemDTO';
 export * from './Category';
 export * from './CategoryDto';
+export * from './ChangePasswordClubMemberDto';
 export * from './ClaimsClubMemberDto';
 export * from './ClubMember';
 export * from './ClubMemberReadDto';

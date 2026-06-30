@@ -6,13 +6,17 @@ import { LanguageDto } from "@/lib/api/generated";
 import { languageService } from "@/lib/api/services";
 import Link from "next/link";
 
+
 export default function DropDownLanguage() {
   const [languages, setLanguages] = useState<LanguageDto[]>([]);
   const [open, setOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    languageService.apiLanguagesGet().then(setLanguages).catch(console.error);
+    languageService
+      .apiLanguagesGet()
+      .then(setLanguages)
+      .catch(console.error);
   }, []);
 
   useEffect(() => {
@@ -55,7 +59,7 @@ export default function DropDownLanguage() {
         </button>
 
         {open && (
-          <div className="absolute z-20 top-[12px] w-full flex flex-col items-center gap-2 text-[var(--color-white)]">
+          <div className="absolute pointer-events-auto z-20 top-[12px] w-full flex flex-col items-center gap-2 text-[var(--color-white)]">
             <div className="relative top-[40px] w-[110px] h-[40px]">
               <div className="relative mt-[50px] flex flex-col items-center justify-center gap-4">
                 {languages.length === 0 ? (

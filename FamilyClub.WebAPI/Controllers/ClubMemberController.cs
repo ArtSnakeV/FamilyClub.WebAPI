@@ -108,4 +108,11 @@ public class ClubMemberController : ControllerBase
         if (!updated) return NotFound();
         return NoContent();
     }
+    [HttpPut("{id}/change-password")]
+    public async Task<IActionResult> ChangePassword(string id, [FromBody] ChangePasswordClubMemberDto dto, CancellationToken cancellationToken)
+    {
+        var result = await _clubMemberService.ChangePasswordAsync(id, dto, cancellationToken);
+        if (!result) return BadRequest("Невірний поточний пароль або помилка зміни");
+        return NoContent();
+    }
 }

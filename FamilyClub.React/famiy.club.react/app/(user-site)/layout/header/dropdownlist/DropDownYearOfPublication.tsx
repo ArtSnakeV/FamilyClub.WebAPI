@@ -92,7 +92,7 @@ export default function DropDownYearOfPublication() {
 
         {/* DROPDOWN */}
         {open && (
-          <div className="absolute ml-2 z-20 top-[42px] w-full flex flex-col items-start text-[var(--color-white)]">
+          <div className="absolute ml-2 pointer-events-auto z-20 top-[42px] w-full flex flex-col items-start text-[var(--color-white)]">
             {/* SEARCH */}
             <div className="relative mt-[40px] ml-2 w-[90px] h-[40px]">
               <Image

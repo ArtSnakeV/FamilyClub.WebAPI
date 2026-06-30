@@ -140,7 +140,7 @@ export default function UpNavigation() {
                 </Link>
               </div>
               <div className=" relative w-[40px] h-[40px] ">
-                <Link href="/favorites">
+                <Link  href="/userProfile?tab=favorite">
                   <FavoriteButton />
                 </Link>
               </div>

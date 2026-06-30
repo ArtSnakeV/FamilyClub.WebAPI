@@ -39,6 +39,7 @@ docs/CartsApi.md
 docs/CategoriesApi.md
 docs/Category.md
 docs/CategoryDto.md
+docs/ChangePasswordClubMemberDto.md
 docs/ClaimsClubMemberApi.md
 docs/ClaimsClubMemberDto.md
 docs/ClubMember.md
@@ -100,6 +101,7 @@ models/CartDTO.ts
 models/CartItemDTO.ts
 models/Category.ts
 models/CategoryDto.ts
+models/ChangePasswordClubMemberDto.ts
 models/ClaimsClubMemberDto.ts
 models/ClubMember.ts
 models/ClubMemberReadDto.ts
