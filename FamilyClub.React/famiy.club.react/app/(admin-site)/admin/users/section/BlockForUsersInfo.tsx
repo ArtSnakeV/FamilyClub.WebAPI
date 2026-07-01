@@ -24,13 +24,17 @@ export default function BlockForUsersInfo({
             }}
         >
             <div className="flex-shrink-0">
-                <Image src={icon} alt={title} width={48} height={48} />
+                <Image src={icon} alt={title} width={80} height={80} />
             </div>
-            <div className="flex flex-col">
-                <span className="text-[16px] font-semibold text-[#242424]">
+            <div className="flex flex-col w-[180px] -mt-2 -ml-6">
+                <span className="w-[180px] font-['Source_Sans_Pro'] 
+                text-[var(--color-black)] font-semibold 
+                text-[20px] leading-[150%] tracking-[-0.011em]">
                     {title}
                 </span>
-                <span className="text-[32px] font-bold text-[#242424]">
+                <span className="w-[180px] font-['Source_Sans_Pro'] 
+                text-[var(--color-black)] font-semibold 
+                text-[40px] leading-[150%] tracking-[-0.011em] ">
                     {value}
                 </span>
                 <span className="text-[13px] text-[#1F7A4D]">

@@ -127,6 +127,7 @@ builder.Services.AddScoped<ICartItemRepository, CartItemRepository>();
 builder.Services.AddScoped<ICartService, CartService>();
 
 builder.Services.AddScoped<IFavoriteService, FavoriteService>();
+builder.Services.AddSingleton<IPresenceService, PresenceService>();
 // Customize Identity cookie
 //builder.Services.ConfigureApplicationCookie(
 //    options => {

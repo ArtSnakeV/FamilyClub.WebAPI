@@ -1,4 +1,3 @@
-// CategoryButton.tsx
 "use client";
 
 type Props = {

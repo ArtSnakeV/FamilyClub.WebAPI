@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { PublisherDto } from "../types";
-import { publisherApi } from "../api/publisherApiClient";
+import { publisherService } from "@/lib/api/services";
 
 type Props = {
   form: PublisherDto;
@@ -21,7 +21,7 @@ export function useSubmitPublisher({ form, router }: Props) {
     const { signal } = abortRef.current;
 
     try {
-      const createdPublisher= await publisherApi.apiPublishersPost({
+      const createdPublisher= await publisherService.apiPublishersPost({
         publisherDto: {
           publisherName: form.publisherName,
         },

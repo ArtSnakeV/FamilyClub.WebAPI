@@ -2,11 +2,9 @@
 
 import {
   AuthorDTO,
-  AuthorsApi,
-  Configuration,
   ProductDto,
-  ProductsApi,
 } from "@/lib/api/generated";
+import { productService, authorService } from "@/lib/api/services";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -20,11 +18,15 @@ export default function SearchIco() {
 
   const containerRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const config = new Configuration({ basePath: "https://localhost:7069" });
+  // useEffect(() => {
+  //   const config = new Configuration({ basePath: "https://localhost:7069" });
 
-    new ProductsApi(config).apiProductsGet().then(setProducts).catch(console.error);
-    new AuthorsApi(config).apiAuthorsGet().then(setAuthors).catch(console.error);
+  //   new ProductsApi(config).apiProductsGet().then(setProducts).catch(console.error);
+  //   new AuthorsApi(config).apiAuthorsGet().then(setAuthors).catch(console.error);
+  // }, []);
+  useEffect(() => {
+    productService.apiProductsGet().then(setProducts).catch(console.error);
+    authorService.apiAuthorsGet().then(setAuthors).catch(console.error);
   }, []);
 
   useEffect(() => {

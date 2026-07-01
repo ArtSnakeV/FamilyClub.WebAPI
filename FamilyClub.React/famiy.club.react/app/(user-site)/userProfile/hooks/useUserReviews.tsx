@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { apiBasePath } from "@/lib/api/services";
+
 
 export type ReviewDto = {
     id: number;
@@ -22,7 +24,10 @@ export function useUserReviews(userId: string | undefined) {
         const token = localStorage.getItem("token");
         setLoading(true);
 
-        fetch(`https://localhost:7069/api/Reviews/by-user/${userId}`, {
+        // fetch(`https://localhost:7069/api/Reviews/by-user/${userId}`, {
+        //     headers: { Authorization: `Bearer ${token}` },
+        // })
+        fetch(`${apiBasePath}/api/Reviews/by-user/${userId}`, {
             headers: { Authorization: `Bearer ${token}` },
         })
             .then((res) => res.json())

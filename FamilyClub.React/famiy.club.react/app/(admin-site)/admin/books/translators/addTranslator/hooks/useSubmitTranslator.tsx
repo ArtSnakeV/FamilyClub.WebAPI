@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { TranslatorDto } from "../types";
-import { translatorApi } from "../api/translatorApiClient";
+import { translatorService } from "@/lib/api/services";
 
 type Props = {
   form: TranslatorDto;
@@ -21,7 +21,7 @@ export function useSubmitTranslator({ form, router }: Props) {
     const { signal } = abortRef.current;
 
     try {
-      const createdTranslator= await translatorApi.apiTranslatorsPost({
+      const createdTranslator= await translatorService.apiTranslatorsPost({
         translatorDto: {
           translatorName: form.translatorName,
         },

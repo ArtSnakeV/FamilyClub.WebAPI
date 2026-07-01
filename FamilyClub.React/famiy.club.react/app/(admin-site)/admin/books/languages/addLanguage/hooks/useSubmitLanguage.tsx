@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { LanguageDto } from "../types";
-import { languageApi } from "../api/languageApiClient";
+import { languageService } from "@/lib/api/services";
 
 type Props = {
   form: LanguageDto;
@@ -21,7 +21,7 @@ export function useSubmitLanguage({ form, router }: Props) {
     const { signal } = abortRef.current;
 
     try {
-      const createdLanguage = await languageApi.apiLanguagesPost({
+      const createdLanguage = await languageService.apiLanguagesPost({
         languageDto: {
           languageName: form.languageName,
         },

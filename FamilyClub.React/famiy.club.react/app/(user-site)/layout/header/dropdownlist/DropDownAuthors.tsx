@@ -1,6 +1,7 @@
 "use client";
 
-import { AuthorDTO, AuthorsApi, Configuration } from "@/lib/api/generated";
+import { AuthorDTO } from "@/lib/api/generated";
+import { authorService } from "@/lib/api/services";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
@@ -14,13 +15,16 @@ export default function DropDownAuthors() {
   const containerRef = useRef<HTMLDivElement>(null);
 
   const visibleAuthors = authors.slice(0, ITEMS_PER_PAGE);
-  useEffect(() => {
-    const config = new Configuration({
-      basePath: "https://localhost:7069",
-    });
-    const api = new AuthorsApi(config);
+  // useEffect(() => {
+  //   const config = new Configuration({
+  //     basePath: "https://localhost:7069",
+  //   });
+  //   const api = new AuthorsApi(config);
 
-    api.apiAuthorsGet().then(setAuthors).catch(console.error);
+  //   api.apiAuthorsGet().then(setAuthors).catch(console.error);
+  // }, []);
+  useEffect(() => {
+    authorService.apiAuthorsGet().then(setAuthors).catch(console.error);
   }, []);
 
   useEffect(() => {
@@ -37,12 +41,6 @@ export default function DropDownAuthors() {
     return () => document.removeEventListener("click", handleClickOutside);
   }, []);
 
-  // const displayedAuthors =
-  //   search.trim() === ""
-  //     ? authors.slice(0, 4)
-  //     : authors.filter((a) =>
-  //         a.authorName?.toLowerCase().includes(search.toLowerCase()),
-  //       );
   const displayedAuthors =
     search.trim() === ""
       ? authors.slice(0, ITEMS_PER_PAGE)

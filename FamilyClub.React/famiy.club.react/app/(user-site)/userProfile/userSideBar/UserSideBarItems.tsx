@@ -88,7 +88,6 @@ export default function UserSideBArProfile({
         setOpen(false);
         setSearch("");
         setClickBtn(false);
-        // router.replace("/userProfile");
       }
     }
     document.addEventListener("click", handleClickOutside);

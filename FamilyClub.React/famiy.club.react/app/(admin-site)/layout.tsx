@@ -159,6 +159,7 @@ import "../../styles/globals.css";
 import { Source_Sans_3, Roboto_Mono } from "next/font/google";
 import UpNavigation from "../(user-site)/layout/header/UpNavigation";
 import AdminLayoutSidebarItems from "./layout/layoutNav";
+import PresenceHeartbeatMount from "./admin/users/section/PresenceHeartbeatMount";
 
 const sourceSans = Source_Sans_3({
   subsets: ["cyrillic", "latin"],
@@ -175,9 +176,12 @@ export default async function AdminLayout({
 }: {
   children: React.ReactNode;
 }) {
+ 
   return (
+    
     <html lang="uk" className={`${sourceSans.variable} ${robotoMono.variable}`}>
       <body style={{ margin: 0, padding: 0 }}>
+        <PresenceHeartbeatMount />
         {/* HEADER — fixed */}
         <header
           className="bg-[var(--background-main)] flex flex-row z-30"

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
-import { productsApi } from "@/app/(user-site)/products/addProduct/api/productApiClient";
 import { ProductDto, ImageUploadState } from "@/app/(user-site)/products/addProduct/types";
+import { productService } from "@/lib/api/services";
 
 type Props = {
   form: ProductDto;
@@ -24,7 +24,7 @@ export function useSubmitProduct({ form, images, router, clearDraft }: Props) {
       if (images.mainImage) productImageFiles.push(images.mainImage);
       images.gallery.forEach((f) => f && productImageFiles.push(f));
 
-      await productsApi.apiProductsPost({
+      await productService.apiProductsPost({
         productName: form.productName,
         description: form.description,
         price: form.price,

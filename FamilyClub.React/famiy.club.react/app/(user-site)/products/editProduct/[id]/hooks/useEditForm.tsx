@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { CoverType } from "@/lib/api/generated";
 import { ProductDto } from "@/app/(user-site)/products/addProduct/types";
-import { productsApi } from "@/app/(user-site)/products/addProduct/api/productApiClient";
+import { productService } from "@/lib/api/services";
 
 const emptyDto: ProductDto = {
   productName: "",
@@ -31,7 +31,7 @@ export default function useEditForm(id: number) {
 
   useEffect(() => {
     if (!id) return;
-    productsApi
+    productService
       .apiProductsIdGet({ id })
       .then((product) => {
         const year = product.publishingDate

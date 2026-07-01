@@ -4,6 +4,7 @@ import { Source_Sans_3, Roboto_Mono } from 'next/font/google';
 import UpNavigation from "./layout/header/UpNavigation";
 import DropDownList from "./layout/header/dropdownlist/DropDownList";
 import Footer from "@/app/(user-site)/layout/footer/Footer";
+import PresenceHeartbeatMount from "../(admin-site)/admin/users/section/PresenceHeartbeatMount";
 
 // import "flag-icons/css/flag-icons.min.css";
 const sourceSans = Source_Sans_3({
@@ -26,6 +27,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html lang="uk" className={`${sourceSans.variable} ${robotoMono.variable}`} suppressHydrationWarning>
       <body className="antialiased bg-background text-foreground font-sans overflow-x-hidden flex flex-col min-h-screen">
+        <PresenceHeartbeatMount />
         <header className="bg-[var(--background-main)] w-full flex flex-row overflow-x-0 fixed z-30 h-[62px] shadow-[0px_0px_15px_0px_#24242499]">
           <div className="max-w-[1220px] mx-auto flex items-center lg:px-0">
             <UpNavigation />

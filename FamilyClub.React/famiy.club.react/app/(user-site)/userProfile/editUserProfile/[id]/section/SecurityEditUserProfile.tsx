@@ -1,8 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { UpdateClubMemberDto } from "@/lib/api/generated";
-
+import { apiBasePath } from "@/lib/api/services";
 
 type Props = {
     userId: string;
@@ -25,7 +24,15 @@ export default function SecurityEditUserProfile({ userId, userEmail }: Props) {
         }
 
         const token = localStorage.getItem("token");
-        const res = await fetch(`https://localhost:7069/api/ClubMember/${userId}/change-password`, {
+        // const res = await fetch(`https://localhost:7069/api/ClubMember/${userId}/change-password`, {
+        //     method: "PUT",
+        //     headers: {
+        //         "Content-Type": "application/json",
+        //         Authorization: `Bearer ${token}`,
+        //     },
+        //     body: JSON.stringify({ currentPassword, newPassword }),
+        // });
+        const res = await fetch(`${apiBasePath}/api/ClubMember/${userId}/change-password`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
