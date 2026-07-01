@@ -149,6 +149,7 @@
 
 import BooksNav from './booksNav';
 import { ProductsApi, Configuration, ProductDto } from '@/lib/api/generated';
+import { productService } from "@/lib/api/services";
 import ItemActions from "@/app/(admin-site)/common_elements/item_actions";
 import { useEffect, useState } from "react";
 import EntitiesSearchSorting from "@/app/(admin-site)/common_elements/entities_search_sorting";
@@ -173,10 +174,7 @@ export default function AllBooks() {
     const [error, setError] = useState<unknown>(null);
 
     useEffect(() => {
-        const config = new Configuration({ basePath: "https://localhost:7069" });
-        const api = new ProductsApi(config);
-
-        api.apiProductsGet()
+        productService.apiProductsGet()
             .then((data) => {
                 setProducts(data);
                 setIsLoading(false);

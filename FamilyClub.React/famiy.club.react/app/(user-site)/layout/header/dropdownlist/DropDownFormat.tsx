@@ -17,20 +17,13 @@ export default function DropDownFormat() {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const config = new Configuration({
-      basePath: "https://localhost:7069",
-    });
-
-    const productsApi = new ProductsApi(config);
-    const formatsApi = new FormatsApi(config);
-
-    productsApi
+    productService
       .apiProductsGet()
       .then((res) => {
         setProducts(res);
       })
       .catch((err) => console.error("API ERROR:", err));
-    formatsApi
+    formatService
       .apiFormatsGet()
       .then((res) => {
         setFormats(res);
@@ -49,21 +42,6 @@ export default function DropDownFormat() {
     }
 
     document.addEventListener("click", handleClickOutside);
-    return () => document.removeEventListener("click", handleClickOutside);
-  }, []);
-
-  useEffect(() => {
-    function handleClickOutside(e: MouseEvent) {
-      if (
-        containerRef.current &&
-        !containerRef.current.contains(e.target as Node)
-      ) {
-        setOpen(false);
-      }
-    }
-
-    document.addEventListener("click", handleClickOutside);
-
     return () => document.removeEventListener("click", handleClickOutside);
   }, []);
 

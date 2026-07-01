@@ -13,6 +13,8 @@ export type CurrentUser = {
   avatarData: string;
 };
 
+import { apiBasePath } from "@/lib/api/services";
+
 export function useCurrentUser() {
   const [user, setUser] = useState<CurrentUser | null>(null);
   const [loading, setLoading] = useState(true);
@@ -27,7 +29,7 @@ export function useCurrentUser() {
     }
 
     try {
-      const res = await fetch("https://localhost:7069/api/AuthClubMember/me", {
+      const res = await fetch(`${apiBasePath}/api/AuthClubMember/me`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 

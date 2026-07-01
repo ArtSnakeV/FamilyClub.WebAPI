@@ -1,9 +1,10 @@
+import { apiBasePath } from "@/lib/api/services";
 import {
   Configuration,
   CategoriesApi,
 } from "@/lib/api/generated";
 
-const BASE_PATH = "https://localhost:7069";
+const BASE_PATH = apiBasePath;
 const config = new Configuration({ basePath: BASE_PATH });
 
 export const BASE_URL = BASE_PATH;

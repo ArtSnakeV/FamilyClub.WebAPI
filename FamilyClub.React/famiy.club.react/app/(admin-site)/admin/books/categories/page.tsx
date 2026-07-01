@@ -172,6 +172,7 @@
 
 import BooksNav from '../booksNav';
 import { CategoriesApi, Configuration, CategoryDto } from '@/lib/api/generated';
+import { categoriesService } from "@/lib/api/services";
 import ItemActions from "@/app/(admin-site)/common_elements/item_actions";
 import { useEffect, useState } from "react";
 import EntitiesSearchSorting from "@/app/(admin-site)/common_elements/entities_search_sorting";
@@ -195,10 +196,7 @@ export default function CategoriesPage() {
     const [error, setError] = useState<unknown>(null);
 
     useEffect(() => {
-        const config = new Configuration({ basePath: "https://localhost:7069" });
-        const api = new CategoriesApi(config);
-
-        api.apiCategoriesGet()
+        categoriesService.apiCategoriesGet()
             .then((data) => {
                 setCategories(data);
                 setIsLoading(false);

@@ -16,13 +16,13 @@ var builder = WebApplication.CreateBuilder(args);
 // Allowing our requests from React
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowReact",
-        policy =>
-        {
-            policy.WithOrigins("http://localhost:3000") // React URL
-                  .AllowAnyHeader()
-                  .AllowAnyMethod();
-        });
+    options.AddPolicy("AllowReact", policy =>
+    {
+        policy.SetIsOriginAllowed(origin => true) // Allow dynamic IPs/domains
+              .AllowAnyHeader()
+              .AllowAnyMethod()
+              .AllowCredentials();
+    });
 });
 
 

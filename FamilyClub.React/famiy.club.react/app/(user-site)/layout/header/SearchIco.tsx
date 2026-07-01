@@ -12,6 +12,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState, useRef } from "react";
 
+import { productService, authorService } from "@/lib/api/services";
+
 export default function SearchIco() {
   const [products, setProducts] = useState<ProductDto[]>([]);
   const [authors, setAuthors] = useState<AuthorDTO[]>([]);
@@ -21,10 +23,8 @@ export default function SearchIco() {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const config = new Configuration({ basePath: "https://localhost:7069" });
-
-    new ProductsApi(config).apiProductsGet().then(setProducts).catch(console.error);
-    new AuthorsApi(config).apiAuthorsGet().then(setAuthors).catch(console.error);
+    productService.apiProductsGet().then(setProducts).catch(console.error);
+    authorService.apiAuthorsGet().then(setAuthors).catch(console.error);
   }, []);
 
   useEffect(() => {

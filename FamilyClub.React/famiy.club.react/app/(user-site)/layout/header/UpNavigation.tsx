@@ -12,6 +12,7 @@ import UserAuthorizationButton from "./UserAuthorizationButton";
 import { useEffect, useState } from "react";
 import UserLoginButton from "./UserLoginButton";
 import { useRouter } from "next/navigation";
+import { apiBasePath } from "@/lib/api/services";
 
 type User = {
   id: string;
@@ -36,7 +37,7 @@ export default function UpNavigation() {
 
     try {
       const res = await fetch(
-        `https://localhost:7069/api/Notifications/unread-count/${memberId}`,
+        `${apiBasePath}/api/Notifications/unread-count/${memberId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -63,7 +64,7 @@ export default function UpNavigation() {
     }
 
     try {
-      const res = await fetch("https://localhost:7069/api/AuthClubMember/me", {
+      const res = await fetch(`${apiBasePath}/api/AuthClubMember/me`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
