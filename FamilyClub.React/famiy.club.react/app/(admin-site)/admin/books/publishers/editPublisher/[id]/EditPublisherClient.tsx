@@ -36,11 +36,12 @@ export default function EditPublisherClient({ id }: { id: string }) {
       }}
     >
       <div
-        className="relative w-[900px] ml-[16.7vw] -mt-[68px] mx-auto bg-no-repeat min-h-screen"
+        className="relative w-[900px] pb-0 ml-[16.7vw] -mt-[68px] mx-auto bg-no-repeat min-h-screen"
         style={{
-          backgroundImage: "url('/images/addProducts/Rectangle 312.svg')",
+          backgroundImage: "url('/images/addProducts/Rectangle 312.png')",
           backgroundSize: "cover",
           backgroundPosition: "top",
+          height: "1200px"
         }}
       >
         <div className="flex z-40 relative top-[130px] ml-[64px]">

@@ -14,10 +14,10 @@ export default function AddPublisherPage() {
   return (
     <div className="w-full min-h-screen flex flex-col">
       <div
-        className="relative w-[1200px] pb-[60px] -mt-[68px] mx-auto bg-no-repeat"
+        className="relative w-[1200px] h-[1200px] pb-[60px] -mt-[68px] mx-auto bg-no-repeat"
         style={{
-          backgroundImage: "url('/images/addProducts/Rectangle 312.svg')",
-          backgroundSize: "cover",
+          backgroundImage: "url('/images/addProducts/Rectangle 312.png')",
+          backgroundSize: "100% 100%",
           backgroundPosition: "top",
         }}
       >

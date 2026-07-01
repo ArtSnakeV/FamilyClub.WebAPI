@@ -15,9 +15,10 @@ export function BasicInfoSectionEditCategory({ form, setField, loading, handleDe
   return (
     <div className="w-full flex pb-4">
       <SectionCard
-       title="Основна інформація"
+        title="Основна інформація"
         backgroundImage="/images/addProducts/Rectangle 313.svg"
         className="w-[600px] h-[580px]"
+        backgroundSize="100% 100%"
       >
         <div className="flex w-[390px] relative top-[46px] flex-col gap-1">
           <p className="text-[var(--color-black)] font-sans-pro font-normal text-[18px] leading-[150%] tracking-[-0.011em]">
@@ -30,7 +31,7 @@ export function BasicInfoSectionEditCategory({ form, setField, loading, handleDe
             className="relative z-10 input rounded-[9px] px-3 bg-[var(--color-white)] shadow-[0px_0px_10px_0px_#00000040] h-[44px]"
           />
 
-         <div className="p-4 top-[24px] relative w-full flex flex-col gap-5 ">
+          <div className="p-4 top-[24px] relative w-full flex flex-col gap-5 ">
             <button
               type="submit"
               disabled={loading}
