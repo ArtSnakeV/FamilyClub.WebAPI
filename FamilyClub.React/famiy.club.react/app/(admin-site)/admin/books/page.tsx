@@ -152,6 +152,7 @@ import { ProductsApi, Configuration, ProductDto } from '@/lib/api/generated';
 import ItemActions from "@/app/(admin-site)/common_elements/item_actions";
 import { useEffect, useState } from "react";
 import EntitiesSearchSorting from "@/app/(admin-site)/common_elements/entities_search_sorting";
+import Pagination from "@/app/(admin-site)/common_elements/entities_pagination"; // Імпортуємо наш компонент пагінації
 
 // Опції сортування для книг
 const BOOK_SORT_OPTIONS = [
@@ -161,6 +162,8 @@ const BOOK_SORT_OPTIONS = [
     { value: "desc", label: "За алфавітом (Я→А)" },
 ];
 
+const ITEMS_PER_PAGE = 10;
+
 if (process.env.NODE_ENV === 'development') {
     process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 }
@@ -169,6 +172,7 @@ export default function AllBooks() {
     const [products, setProducts] = useState<ProductDto[]>([]);
     const [search, setSearch] = useState("");
     const [sortOrder, setSortOrder] = useState("asc");
+    const [currentPage, setCurrentPage] = useState(1); // Додаємо відстеження поточної сторінки
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<unknown>(null);
 
@@ -188,6 +192,12 @@ export default function AllBooks() {
             });
     }, []);
 
+    // Скидаємо сторінку на 1 при зміні пошукового запиту
+    const handleSearchChange = (value: string) => {
+        setSearch(value);
+        setCurrentPage(1);
+    };
+
     // Фільтрація та сортування книг на стороні клієнта
     const filteredAndSorted = products
         .filter(p => (p.productName ?? "").toLowerCase().includes(search.toLowerCase()))
@@ -196,7 +206,7 @@ export default function AllBooks() {
                 return (a.productName ?? "").localeCompare(b.productName ?? "");
             }
             if (sortOrder === "desc") {
-                return (b.productName ?? "").localeCompare(b.productName ?? "");
+                return (b.productName ?? "").localeCompare(a.productName ?? ""); // Виправлено друкарську помилку
             }
 
             const idA = Number(a.id ?? 0);
@@ -211,6 +221,11 @@ export default function AllBooks() {
 
             return 0;
         });
+
+    // Нарізаємо масив (.slice), щоб отримати лише 10 елементів для поточної сторінки
+    const indexOfLastItem = currentPage * ITEMS_PER_PAGE;
+    const indexOfFirstItem = indexOfLastItem - ITEMS_PER_PAGE;
+    const currentPaginatedItems = filteredAndSorted.slice(indexOfFirstItem, indexOfLastItem);
 
     if (error) {
         return <div className="p-[35px]">Failed to load products.</div>;
