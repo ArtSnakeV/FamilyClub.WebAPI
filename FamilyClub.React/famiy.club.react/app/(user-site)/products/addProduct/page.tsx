@@ -790,6 +790,7 @@ import { ImageUploadSection } from "./sections/ImageUploadSection";
 import { SaleSection } from "./sections/SaleSection";
 import { useISBNLookup } from "./hooks/useISBNLookup";
 import { useEffect } from "react";
+import ButtonReturn from "./ui/ButtonReturn";
 
 export default function AddProductPage() {
   const router = useRouter();
@@ -826,11 +827,14 @@ export default function AddProductPage() {
   return (
     <div className="w-full min-h-screen flex flex-col">
       <div
-        className="relative w-[900px] pb-[60px] ml-[16.8vw] -mt-[68px] mx-auto bg-cover bg-center bg-no-repeat"
+        className="relative w-[900px] ml-[27vw] -mt-[4px] mx-auto bg-cover bg-center bg-no-repeat"
         style={{
           backgroundImage: "url('/images/addProducts/Rectangle 312.svg')",
         }}
       >
+        <div className="flex z-40 relative top-[130px] ml-[64px]">
+          <ButtonReturn />
+        </div>
         <div className="flex flex-col items-center mt-[100px]">
           <h1 className="text-[var(--color-black)] w-[600px] font-['Roboto_Mono'] font-bold text-[44px] leading-[150%] tracking-[-0.011em] text-center">
             Додати нову книгу
