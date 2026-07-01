@@ -1,5 +1,6 @@
-// hooks/useUsersStats.ts
+import { useEffect, useState } from "react";
 import { useUsersTotal } from "./useUsersTotal";
+import { apiBasePath } from "@/lib/api/services";
 
 interface UserStat {
     icon: string;
@@ -10,7 +11,22 @@ interface UserStat {
 
 export function useUsersStats() {
     const { members, total, loading } = useUsersTotal();
+    const [activeCount, setActiveCount] = useState<number | null>(null);
+    useEffect(() => {
+        const fetchActive = async () => {
+            try {
+                const res = await fetch(`${apiBasePath}/api/Presence/active-count`);
+                const data = await res.json();
+                setActiveCount(data.count);
+            } catch {
+                setActiveCount(null);
+            }
+        };
 
+        fetchActive();
+        const interval = setInterval(fetchActive, 15000); // оновлюємо кожні 15 сек
+        return () => clearInterval(interval);
+    }, []);
     const blocked = members.filter((m) => {
         if (!m.lockoutEnd) return false;
         return new Date(m.lockoutEnd).getTime() > Date.now();
@@ -18,25 +34,25 @@ export function useUsersStats() {
 
     const stats: UserStat[] = [
         {
-            icon: "/images/usersPageAdmin/icons/total.svg",
+            icon: "/images/usersPageAdmin/totalUsers.png",
             title: "Всього",
             value: total.toLocaleString("uk-UA"),
-            subtitle: "",
-        },
-        {
-            icon: "/images/usersPageAdmin/icons/active.svg",
-            title: "Активні",
-            value: "—",
             subtitle: "Дані недоступні",
         },
         {
-            icon: "/images/usersPageAdmin/icons/new.svg",
+            icon: "/images/usersPageAdmin/heartUser.png",
+            title: "Активні",
+            value: activeCount !== null ? activeCount.toLocaleString("uk-UA") : "—",
+            subtitle: activeCount !== null ? "Зараз на сайті" : "Дані недоступні",
+        },
+        {
+            icon: "/images/usersPageAdmin/userLastMons.png",
             title: "Нові за місяць",
             value: "—",
             subtitle: "Дані недоступні",
         },
         {
-            icon: "/images/usersPageAdmin/icons/blocked.svg",
+            icon: "/images/usersPageAdmin/lockUsers.png",
             title: "Заблоковані",
             value: blocked,
             subtitle: "Обмежений доступ",

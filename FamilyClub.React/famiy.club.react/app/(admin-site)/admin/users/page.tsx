@@ -1,13 +1,17 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import BlockForUsersInfo from "./section/BlockForUsersInfo";
 import { useUsersStats } from "./hooks/useUsersStats";
+import useAllUsersInfo, { UserInfo } from "./hooks/useAllUsersInfo";
+import AllUsersInfo from "./section/AllUsersInfo";
+import OneUserInfo from "./section/oneUserInfo/OneUserInfo";
 
 
 export default function Page() {
     const { stats, loading } = useUsersStats();
-
+    const { usersInfo, loadingUsersInfo } = useAllUsersInfo();
+    const [selectedUser, setSelectedUser] = useState<UserInfo | null>(null);
     useEffect(() => {
         document.body.style.backgroundImage =
             "url('/images/usersPageAdmin/Rectangle326.png')";
@@ -24,7 +28,11 @@ export default function Page() {
             document.body.style.backgroundRepeat = "";
         };
     }, []);
-
+    useEffect(() => {
+        if (!selectedUser && usersInfo.length > 0) {
+            setSelectedUser(usersInfo[0]);
+        }
+    }, [usersInfo, selectedUser]);
     return (
         <div
             className="w-full min-h-screen overflow-hidden relative m-0 p-0">
@@ -41,6 +49,19 @@ export default function Page() {
                         : stats.map((stat) => (
                             <BlockForUsersInfo key={stat.title} {...stat} />
                         ))}
+                </div>
+                <div className="flex flex-row relative mt-2 mx-4 gap-4 items-start">
+                    {loadingUsersInfo ? (
+                        <p>Завантаження...</p>
+                    ) : (
+                        <AllUsersInfo
+                            users={usersInfo}
+                            onSelectUser={setSelectedUser}
+                            selectedUserId={selectedUser?.id}
+                        />
+                    )}
+
+                    {selectedUser && <OneUserInfo user={selectedUser} />}
                 </div>
             </div>
         </div>

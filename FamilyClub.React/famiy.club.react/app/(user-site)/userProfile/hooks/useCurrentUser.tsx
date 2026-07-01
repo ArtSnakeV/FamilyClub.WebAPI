@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { apiBasePath } from "@/lib/api/services";
+
 
 export type CurrentUser = {
   id: string;
@@ -27,7 +29,10 @@ export function useCurrentUser() {
     }
 
     try {
-      const res = await fetch("https://localhost:7069/api/AuthClubMember/me", {
+      // const res = await fetch("https://localhost:7069/api/AuthClubMember/me", {
+      //   headers: { Authorization: `Bearer ${token}` },
+      // });
+      const res = await fetch(`${apiBasePath}/api/AuthClubMember/me`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 

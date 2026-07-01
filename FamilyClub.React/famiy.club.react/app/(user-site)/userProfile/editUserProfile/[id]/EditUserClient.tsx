@@ -13,6 +13,8 @@ import useEditForm from "./hooks/useEditForm";
 import { useCurrentUser } from "../../hooks/useCurrentUser";
 import { useRouter } from "next/navigation";
 import ButtonReturn from "./ui/ButtonReturn";
+import { apiBasePath } from "@/lib/api/services";
+
 
 export default function EditUserClient({ id }: { id: string }) {
     const {
@@ -68,13 +70,26 @@ export default function EditUserClient({ id }: { id: string }) {
             formData.append("avatar", blob, "avatar.jpg");
         }
 
-        await fetch(`https://localhost:7069/api/ClubMember/${id}/form`, {
+        // await fetch(`https://localhost:7069/api/ClubMember/${id}/form`, {
+        //     method: "PUT",
+        //     headers: { Authorization: `Bearer ${token}` },
+        //     body: formData,
+        // });
+        await fetch(`${apiBasePath}/api/ClubMember/${id}/form`, {
             method: "PUT",
             headers: { Authorization: `Bearer ${token}` },
             body: formData,
         });
 
-        await fetch(`https://localhost:7069/api/ClubMember/${id}/favorite-categories`, {
+        // await fetch(`https://localhost:7069/api/ClubMember/${id}/favorite-categories`, {
+        //     method: "PUT",
+        //     headers: {
+        //         "Content-Type": "application/json",
+        //         Authorization: `Bearer ${token}`,
+        //     },
+        //     body: JSON.stringify(selectedCategories),
+        // });
+        await fetch(`${apiBasePath}/api/ClubMember/${id}/favorite-categories`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"; // Додали useEffect для безпечної роботи з localStorage на стороні клієнта
+import { useState, useEffect } from "react"; 
 import { CoverType } from "@/lib/api/generated";
 import { ProductDto } from "@/app/(user-site)/products/addProduct/types";
 
@@ -28,11 +28,11 @@ const initialDto: ProductDto = {
 const DRAFT_KEY = "productDraft";
 
 export function useProductForm() {
-  // 1. Ініціалізуємо стейт чистим дефолтним об'єктом.
+  // Ініціалізуємо стейт чистим дефолтним об'єктом.
   // Під час збірки проєкту (SSR) Next.js візьме саме ці значення, не чіпаючи localStorage.
   const [form, setForm] = useState<ProductDto>(initialDto);
 
-  // 2. Цей хук спрацює ТІЛЬКИ в браузері користувача після того, як сторінка успішно завантажиться.
+  // Цей хук спрацює ТІЛЬКИ в браузері користувача після того, як сторінка успішно завантажиться.
   // Оскільки порожній масив залежностей [] означає виконання один раз при монтуванні,
   // ми безпечно дістаємо дані з localStorage, коли об'єкт window вже точно існує.
   useEffect(() => {

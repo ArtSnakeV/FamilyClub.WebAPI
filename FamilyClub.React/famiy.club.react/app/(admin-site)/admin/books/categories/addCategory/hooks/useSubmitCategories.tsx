@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { CategoryDto } from "../types";
-import { categoriesApi } from "../api/categoryApiClient";
+import { categoriesService } from "@/lib/api/services";
 
 type Props = {
   form: CategoryDto;
@@ -21,7 +21,7 @@ export function useSubmitCategories({ form, router }: Props) {
     const { signal } = abortRef.current;
 
     try {
-      const createdCategories= await categoriesApi.apiCategoriesPost({
+      const createdCategories= await categoriesService.apiCategoriesPost({
         categoryDto: {
           categoryName: form.categoryName,
         },
