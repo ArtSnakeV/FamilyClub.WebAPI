@@ -18,7 +18,8 @@ import styles from "./cart.module.css";
 function getImageSrc(product: ProductDto): string | null {
   const image = product.productImages?.[0];
   if (!image?.imageData) return null;
-  if (image.imageData.startsWith("data:")) return image.imageData;
+  const normalizedData = image.imageData.trim();
+  if (normalizedData.startsWith("data:") || normalizedData.startsWith("http://") || normalizedData.startsWith("https://") || normalizedData.startsWith("/")) return normalizedData;
 
   const extension = image.imageName?.split(".").pop()?.toLowerCase();
   const mimeType =
@@ -30,7 +31,7 @@ function getImageSrc(product: ProductDto): string | null {
           ? "image/gif"
           : "image/jpeg";
 
-  return `data:${mimeType};base64,${image.imageData}`;
+  return `data:${mimeType};base64,${normalizedData}`;
 }
 
 function getFormatTypes(
@@ -107,9 +108,9 @@ export default function CartPage() {
       try {
         const signal = { signal: controller.signal };
         const [productsRes, authorsRes, formatsRes] = await Promise.all([
-          productService.apiProductsGet(signal),
-          authorService.apiAuthorsGet(signal),
-          formatService.apiFormatsGet(signal),
+          productService.apiProductsGet(signal).catch((err) => { console.warn("Cart: failed to fetch products", err); return []; }),
+          authorService.apiAuthorsGet(signal).catch((err) => { console.warn("Cart: failed to fetch authors", err); return []; }),
+          formatService.apiFormatsGet(signal).catch((err) => { console.warn("Cart: failed to fetch formats", err); return []; }),
         ]);
         if (!mounted) return;
         setProducts(productsRes ?? []);

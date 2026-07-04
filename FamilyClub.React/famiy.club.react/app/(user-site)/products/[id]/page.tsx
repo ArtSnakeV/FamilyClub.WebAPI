@@ -12,7 +12,7 @@ const yearFilters = [
     "2020+",
 ];
 
-const fallbackParams = ["1"];
+const fallbackParams = ["4", "18"];
 
 export async function generateStaticParams(): Promise<ProductParams[]> {
     const params = new Set<string>([...yearFilters, ...fallbackParams]);

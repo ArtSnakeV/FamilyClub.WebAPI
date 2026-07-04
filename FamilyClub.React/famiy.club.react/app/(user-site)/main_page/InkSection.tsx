@@ -13,11 +13,11 @@ export default function InkSection() {
                         </div>
                     </div>
 
-                    <div className="max-w-[590px] text-[#242424]">
-                    <p className="font-sans text-[32px] font-bold leading-[1.2] text-[#407b61]">
+                    <div className="max-w-[590px] text-[#242424] font-serif">
+                    <p className="text-[32px] font-bold leading-[1.2] text-[#407b61]">
                         Ink — це тихий помічник
                     </p>
-                    <p className="font-sans text-[32px] font-bold leading-[1.2] text-[#407b61]">
+                    <p className="text-[32px] font-bold leading-[1.2] text-[#407b61]">
                         і провідник у світі книг.
                     </p>
                     <p className="mt-4 text-[20px] leading-[1.6]">

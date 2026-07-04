@@ -8,8 +8,10 @@ public interface ILanguageRepository : IRepository<Language>;
 public interface IOrderItemRepository : IRepository<OrderItem>;
 public interface IProductRepository : IRepository<Product>
 {
-    Task<IEnumerable<Product>> GetAllAsync(CancellationToken cancellationToken = default);
-    Task<Product?> GetByIdAsync(int id, CancellationToken cancellationToken = default);
+    new Task<IEnumerable<Product>> GetAllAsync(CancellationToken cancellationToken = default);
+    new Task<Product?> GetByIdAsync(int id, CancellationToken cancellationToken = default);
+    Task<IEnumerable<Product>> GetAllWithImagesAsync(CancellationToken cancellationToken = default);
+    Task<Product?> GetByIdWithImagesAsync(int id, CancellationToken cancellationToken = default);
 }
 public interface IPromotionRepository : IRepository<Promotion>;
 public interface IPublisherRepository : IRepository<Publisher>;

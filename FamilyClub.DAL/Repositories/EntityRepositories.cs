@@ -18,7 +18,7 @@ public class ProductRepository : Repository<Product>, IProductRepository
         _context = context;
     }
 
-    public async Task<IEnumerable<Product>> GetAllWithImagesAsync(CancellationToken cancellationToken = default)
+    public new async Task<IEnumerable<Product>> GetAllAsync(CancellationToken cancellationToken = default)
     {
 		return await _context.Products
 		.Include(p => p.ProductImages)
@@ -33,7 +33,7 @@ public class ProductRepository : Repository<Product>, IProductRepository
 		.ToListAsync(cancellationToken);
 	}
 
-    public async Task<Product?> GetByIdWithImagesAsync(int id, CancellationToken cancellationToken = default)
+    public new async Task<Product?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
     {
 		return await _context.Products
 		.Include(p => p.ProductImages)
@@ -47,6 +47,9 @@ public class ProductRepository : Repository<Product>, IProductRepository
 		.Include(p => p.AgeRestrictions)
 		.FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
 	}
+
+    public async Task<IEnumerable<Product>> GetAllWithImagesAsync(CancellationToken cancellationToken = default) => await GetAllAsync(cancellationToken);
+    public async Task<Product?> GetByIdWithImagesAsync(int id, CancellationToken cancellationToken = default) => await GetByIdAsync(id, cancellationToken);
 }
 public class PromotionRepository(FamilyClubContext context) : Repository<Promotion>(context), IPromotionRepository;
 public class PublisherRepository(FamilyClubContext context) : Repository<Publisher>(context), IPublisherRepository;

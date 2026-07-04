@@ -30,17 +30,17 @@ type AdvantageCardProps = {
 
 function AdvantageCard({ title, description, icon, className }: AdvantageCardProps) {
     return (
-        <div className={`relative h-[325px] w-[250px] text-center text-[#f5f3ee] ${className ?? ""}`}>
+        <div className={`relative h-[325px] w-[250px] text-center text-[#f5f3ee] transition-transform hover:-translate-y-2 ${className ?? ""}`}>
             <img alt="" className="absolute inset-0 h-full w-full" src="/images/main_page/advantages/advantages-card-bg.png" />
             <img
                 alt=""
-                className="absolute left-1/2 top-[20px] h-[197px] w-[197px] -translate-x-1/2"
+                className="absolute left-1/2 top-[20px] h-[197px] w-[197px] -translate-x-1/2 object-contain"
                 src={icon}
             />
-            <p className="absolute left-1/2 top-[10px] w-[210px] -translate-x-1/2 text-[15px] leading-[1.4]">
+            <p className="absolute left-1/2 top-[15px] w-[210px] -translate-x-1/2 text-[14px] leading-[1.3] text-[#f5f3ee] drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">
                 {description}
             </p>
-            <p className="absolute bottom-[40px] left-1/2 w-[200px] -translate-x-1/2 whitespace-pre-line font-mono text-[24px] font-semibold leading-[1.2]">
+            <p className="absolute bottom-[40px] left-1/2 w-[200px] -translate-x-1/2 whitespace-pre-line font-mono text-[22px] font-semibold leading-[1.2] text-[#f5f3ee] drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)]">
                 {title}
             </p>
         </div>
@@ -49,56 +49,17 @@ function AdvantageCard({ title, description, icon, className }: AdvantageCardPro
 
 export default function AdvantagesSection() {
     return (
-        <section className="relative z-0 -mt-[250px] pb-16 lg:-mt-[310px]">
-            <div className="relative mx-auto hidden h-[1165px] w-full max-w-[1220px] min-[1600px]:block">
-                <div className="absolute left-0 top-0 h-[840px] w-full rounded-[10px] bg-[linear-gradient(189deg,#b7895e_6.8%,rgba(224,195,169,0)_52.5%,#b7895e_94.6%),linear-gradient(90deg,#c7a381_0%,#c7a381_100%)] shadow-[0px_0px_10px_0px_rgba(0,0,0,0.5)]" />
-
-                <div className="absolute left-[63px] top-[28px] h-[594px] w-[1046px]">
-                    <div className="absolute left-0 top-0 h-[594px] w-[520px] rotate-[21deg] shadow-[0px_10px_10px_0px_rgba(0,0,0,0.4)]">
-                        <img
-                            alt=""
-                            className="h-full w-full box-border border-[40px] border-[#f5f3ee] object-cover"
-                            src="/images/body/Rectangle%20295.png"
-                        />
-                    </div>
-                    <div className="absolute right-0 top-[60px] h-[536px] w-[520px] rotate-[-2deg] shadow-[0px_10px_10px_0px_rgba(0,0,0,0.4)]">
-                        <img
-                            alt=""
-                            className="h-full w-full box-border border-[40px] border-[#f5f3ee] object-cover"
-                            src="/images/body/Rectangle%20296.png"
-                        />
-                    </div>
+        <section className="relative z-10 pb-16 pt-8">
+            <div className="mx-auto max-w-[1260px] px-4">
+                {/* Brown Banner */}
+                <div className="relative rounded-[15px] bg-gradient-to-r from-[#b7895e] via-[#c7a381] to-[#b7895e] py-8 text-center shadow-[0px_8px_20px_rgba(0,0,0,0.4)] border-[3px] border-[#a0744c]">
+                    <h2 className="font-mono text-[40px] font-bold text-[#242424] md:text-[56px]">
+                        Наші переваги
+                    </h2>
                 </div>
 
-                <h2 className="absolute left-1/2 top-[711px] w-full -translate-x-1/2 text-center font-mono text-[64px] font-bold text-[#242424]">
-                    Наші переваги
-                </h2>
-
-                <div className="absolute left-1/2 top-[840px] flex h-[325px] w-[1120px] -translate-x-1/2 items-start gap-[40px]">
-                    {advantages.map((item) => (
-                        <AdvantageCard key={item.title} {...item} />
-                    ))}
-                </div>
-            </div>
-
-            <div className="mx-auto max-w-[1220px] px-4 min-[1600px]:hidden">
-                <div className="relative rounded-[10px] bg-[linear-gradient(189deg,#b7895e_6.8%,rgba(224,195,169,0)_52.5%,#b7895e_94.6%),linear-gradient(90deg,#c7a381_0%,#c7a381_100%)] px-6 pb-20 pt-[360px] text-center shadow-[0px_0px_10px_0px_rgba(0,0,0,0.5)]">
-                    <div className="absolute left-1/2 top-[30px] h-[300px] w-[320px] -translate-x-1/2">
-                        <img
-                            alt=""
-                            className="absolute left-0 top-0 w-[180px] rotate-[20deg] shadow-[0px_10px_10px_0px_rgba(0,0,0,0.4)]"
-                            src="/images/body/Rectangle%20295.png"
-                        />
-                        <img
-                            alt=""
-                            className="absolute right-0 top-[40px] w-[180px] rotate-[-2deg] shadow-[0px_10px_10px_0px_rgba(0,0,0,0.4)]"
-                            src="/images/body/Rectangle%20296.png"
-                        />
-                    </div>
-                    <h2 className="font-mono text-[40px] font-bold text-[#242424] md:text-[64px]">Наші переваги</h2>
-                </div>
-
-                <div className="mt-10 grid justify-center gap-6 md:grid-cols-2">
+                {/* Hanging Advantage Cards Grid */}
+                <div className="mt-[-20px] flex flex-wrap justify-center gap-6 md:gap-8 pt-4">
                     {advantages.map((item) => (
                         <AdvantageCard key={item.title} {...item} />
                     ))}
