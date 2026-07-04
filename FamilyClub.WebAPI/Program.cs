@@ -127,6 +127,10 @@ builder.Services.AddScoped<ICartRepository, CartRepository>();
 builder.Services.AddScoped<ICartItemRepository, CartItemRepository>();
 builder.Services.AddScoped<ICartService, CartService>();
 
+// Complaints
+builder.Services.AddScoped<IComplaintRepository, ComplaintRepository>();
+builder.Services.AddScoped<IComplaintsService, ComplaintService>();
+
 builder.Services.AddScoped<IFavoriteService, FavoriteService>();
 builder.Services.AddSingleton<IPresenceService, PresenceService>();
 // Customize Identity cookie

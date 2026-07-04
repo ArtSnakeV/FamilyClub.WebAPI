@@ -156,3 +156,39 @@ public class CartItemRepository : Repository<CartItem>, ICartItemRepository
             .ToListAsync(cancellationToken);
     }
 }
+
+public class ComplaintRepository : Repository<Complaint>, IComplaintRepository
+{
+    private readonly FamilyClubContext _context;
+
+    public ComplaintRepository(FamilyClubContext context) : base(context)
+    {
+        _context = context;
+    }
+
+    // Hide base methods to include images by default
+    public new async Task<IEnumerable<Complaint>> GetAllAsync(CancellationToken cancellationToken = default)
+    {
+        return await _context.Complaints
+            .Include(c => c.ComplaintImages)
+            .Include(c => c.ClubMember)
+            .ToListAsync(cancellationToken);
+    }
+
+    public new async Task<Complaint?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
+    {
+        return await _context.Complaints
+            .Include(c => c.ComplaintImages)
+            .Include(c => c.ClubMember)
+            .FirstOrDefaultAsync(c => c.Id == id, cancellationToken);
+    }
+
+    public async Task<IEnumerable<Complaint>> GetByClubMemberIdAsync(string clubMemberId, CancellationToken cancellationToken = default)
+    {
+        return await _context.Complaints
+            .Include(c => c.ComplaintImages)
+            .Include(c => c.ClubMember)
+            .Where(c => c.ClubMemberId == clubMemberId)
+            .ToListAsync(cancellationToken);
+    }
+}

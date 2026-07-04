@@ -8,8 +8,8 @@ public interface ILanguageRepository : IRepository<Language>;
 public interface IOrderItemRepository : IRepository<OrderItem>;
 public interface IProductRepository : IRepository<Product>
 {
-    Task<IEnumerable<Product>> GetAllWithImagesAsync(CancellationToken cancellationToken = default);
-    Task<Product?> GetByIdWithImagesAsync(int id, CancellationToken cancellationToken = default);
+    Task<IEnumerable<Product>> GetAllAsync(CancellationToken cancellationToken = default);
+    Task<Product?> GetByIdAsync(int id, CancellationToken cancellationToken = default);
 }
 public interface IPromotionRepository : IRepository<Promotion>;
 public interface IPublisherRepository : IRepository<Publisher>;
@@ -23,8 +23,8 @@ public interface ITranslatorRepository : IRepository<Translator>;
 public interface IClubMemberRepository : IRepository<ClubMember>;
 public interface IOrderRepository : IRepository<Order>
 {
-	Task<IEnumerable<Order>> GetAllWithItemsAsync(CancellationToken cancellationToken = default);
-	Task<Order?> GetByIdWithItemsAsync(int id, CancellationToken cancellationToken = default);
+	Task<IEnumerable<Order>> GetAllAsync(CancellationToken cancellationToken = default);
+	Task<Order?> GetByIdAsync(int id, CancellationToken cancellationToken = default);
     Task<IEnumerable<Order>> GetByUserIdAsync(string userId, CancellationToken cancellationToken = default);
 };
 
@@ -46,4 +46,10 @@ public interface ICartRepository : IRepository<Cart>
 public interface ICartItemRepository : IRepository<CartItem>
 {
     Task<IEnumerable<CartItem>> GetByCartIdAsync(int cartId, CancellationToken cancellationToken = default);
+}
+
+public interface IComplaintRepository : IRepository<Complaint>
+{
+    // Метод для отримання всіх скарг конкретного користувача
+    Task<IEnumerable<Complaint>> GetByClubMemberIdAsync(string clubMemberId, CancellationToken cancellationToken = default);
 }

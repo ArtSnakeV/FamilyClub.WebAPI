@@ -751,14 +751,14 @@ export default function AdminLayoutSidebarItems() {
                 </Link>
             </div>
 
-            {/* Newspaper */}
-            <div className="pb-[0px] last:pb-0">
+            {/* Newspaper */} 
+            {/* Current part is not in use now, but left for future */}
+            {/* <div className="pb-[0px] last:pb-0">
                 <Link
                     href="/admin/newspaper"
                     className={`${styles.customTabLink} ${isNewspaperActive ? styles.active : ''}`}
                 >
                     <div className={styles.shapeContainer}>
-                        {/* Left Part: Image Container */}
                         <div className="relative w-[32px] h-[32px] flex-shrink-0">
                             <Image
                                 src="/images/admin_manager_layout/books.svg"
@@ -768,13 +768,12 @@ export default function AdminLayoutSidebarItems() {
                             />
                         </div>
 
-                        {/* Right Part: Text */}
                         <span className={styles.linkText}>
                             Газета
                         </span>
                     </div>
                 </Link>
-            </div>
+            </div> */}
 
         </div>
     );
