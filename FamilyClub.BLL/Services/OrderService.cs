@@ -22,13 +22,13 @@ namespace FamilyClub.BLL.Services
 
 		public async Task<IEnumerable<OrderDTO>> GetAllAsync(CancellationToken cancellationToken = default)
 		{
-			var orders = await _orderRepository.GetAllWithItemsAsync(cancellationToken);
+			var orders = await _orderRepository.GetAllAsync(cancellationToken);
 			return orders.Select(MapToReadDto);
 		}
 
 		public async Task<OrderDTO?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
 		{
-			var order = await _orderRepository.GetByIdWithItemsAsync(id, cancellationToken);
+			var order = await _orderRepository.GetByIdAsync(id, cancellationToken);
 			return order is null ? null : MapToReadDto(order);
 		}
 
