@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { MockOrderItem, OrderTabId } from "./mockData";
 import ebookIcon from "@/public/images/userProfile/mobile-button-solid-full 1.png";
@@ -14,6 +15,7 @@ interface OrderCardProps {
 }
 
 export default function OrderCard({ item, activeTab, onAction }: OrderCardProps) {
+  const router = useRouter();
   const [copied, setCopied] = useState(false);
 
   const handleCopy = () => {
@@ -134,7 +136,13 @@ export default function OrderCard({ item, activeTab, onAction }: OrderCardProps)
               Скасувати замовлення
             </button>
             <button
-              onClick={() => onAction && onAction("complain", item.id, item.dbOrderId)}
+              onClick={() => {
+                if (item.dbOrderId) {
+                  router.push(`/complaints?orderId=${item.dbOrderId}`);
+                } else {
+                  onAction && onAction("complain", item.id, item.dbOrderId);
+                }
+              }}
               className="bg-[#E5E0D5] hover:bg-[#D8D2C5] border border-[#C8C2B4] text-[#777777] hover:text-black px-5 py-2.5 rounded-xl font-medium transition text-sm shadow-sm"
             >
               Поскаржитися
@@ -157,7 +165,13 @@ export default function OrderCard({ item, activeTab, onAction }: OrderCardProps)
               Написати відгук
             </button>
             <button
-              onClick={() => onAction && onAction("complain", item.id, item.dbOrderId)}
+              onClick={() => {
+                if (item.dbOrderId) {
+                  router.push(`/complaints?orderId=${item.dbOrderId}`);
+                } else {
+                  onAction && onAction("complain", item.id, item.dbOrderId);
+                }
+              }}
               className="bg-[#E5E0D5] hover:bg-[#D8D2C5] border border-[#C8C2B4] text-[#777777] hover:text-black px-5 py-2.5 rounded-xl font-medium transition text-sm shadow-sm"
             >
               Поскаржитися
@@ -180,7 +194,13 @@ export default function OrderCard({ item, activeTab, onAction }: OrderCardProps)
               Повернути
             </button>
             <button
-              onClick={() => onAction && onAction("complain", item.id, item.dbOrderId)}
+              onClick={() => {
+                if (item.dbOrderId) {
+                  router.push(`/complaints?orderId=${item.dbOrderId}`);
+                } else {
+                  onAction && onAction("complain", item.id, item.dbOrderId);
+                }
+              }}
               className="bg-[#E5E0D5] hover:bg-[#D8D2C5] border border-[#C8C2B4] text-[#777777] hover:text-black px-5 py-2.5 rounded-xl font-medium transition text-sm shadow-sm"
             >
               Поскаржитися

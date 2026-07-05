@@ -3,8 +3,16 @@
 
 import TornCard from "../../common_elements/TornCard";
 import StatCard from "../../common_elements/StatCard";
+import DonutDiagramChart from "../../common_elements/DonutDiagramChart";
 import ListPanel from "../../common_elements/ListPanel";
+import { buildDonutSegments } from "../../common_elements/donutDiagramUtils";
+import RecentComplaintsPanel from "./components/RecentComplaintsPanel";
 import GreetingBanner from "./components/GreetingBanner";
+import { COMPLAINT_REASONS } from "@/lib/constants/complaintTypes";
+import {
+  ORDER_STATUS_GROUPS,
+  normalizeOrderStatusGroup,
+} from "@/lib/constants/orderStatusGroups";
 import {
   ProductsApi,
   ClubMemberApi,
@@ -18,7 +26,7 @@ import {
   OrderDTO,
   ComplaintsReadDto,
 } from '@/lib/api/generated';
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 // app/(admin-site)/admin/desktop/page.tsx
 
@@ -123,6 +131,35 @@ export default function Desktop() {
       cancelled = true;
     };
   }, []);
+
+  const complaintChartSegments = useMemo(
+    () =>
+      buildDonutSegments(
+        complaints,
+        COMPLAINT_REASONS.map((r) => ({
+          id: r.value,
+          label: r.label,
+          color: r.color,
+        })),
+        (c) => c.complaintType ?? "other"
+      ),
+    [complaints]
+  );
+
+  const orderChartSegments = useMemo(
+    () =>
+      buildDonutSegments(
+        orders,
+        ORDER_STATUS_GROUPS.map((g) => ({
+          id: g.id,
+          label: g.label,
+          color: g.color,
+        })),
+        (o) => normalizeOrderStatusGroup(o.status)
+      ),
+    [orders]
+  );
+
   return (
 
     <div className="relative w-full min-h-screen flex flex-col">
@@ -158,20 +195,20 @@ export default function Desktop() {
             <section className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-5 gap-4">
               {/* 1. Books Card */}
               <StatCard
-                title="Managers"
+                title="Менеджери"
                 items={products}
                 isLoading={isLoading}
-                icon="/images/admin_manager/desktop/book-open-solid-full 1.svg"
+                icon="/images/admin_manager/desktop/user-tie-solid-full 1.svg"
                 getDate={(book) => book.publishingDate}
                 href="/admin/books"
               />
 
               {/* 2. Reviews Card */}
               <StatCard
-                title="Відгуки"
+                title="Продажі"
                 items={reviews}
                 isLoading={isLoading}
-                icon="/images/admin_manager/desktop/newspaper-solid-full 1.svg"
+                icon="/images/admin_manager/desktop/tag-solid-full (1) 1.svg"
                 getDate={(review) => review.createdAt}
                 href="/admin/reviews"
               />
@@ -206,12 +243,45 @@ export default function Desktop() {
                 href="/admin/complaints"
               />
             </section>
-{/* C. Середній ряд — 2 колонки */}
+{/* C. Другий ряд — 2 колонки */}
             <section className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <ListPanel title="Нові газети" href="/admin/newspaper" />
-              <ListPanel title="Відгуки" href="/admin/reviews" />
-              
+              <DonutDiagramChart
+                title="Скарги за типами"
+                segments={complaintChartSegments}
+                isLoading={isLoading}
+                href="/admin/complaints"
+                emptyLabel="Немає скарг"
+              />
+              <DonutDiagramChart
+                title="Замовлення за статусами"
+                segments={orderChartSegments}
+                isLoading={isLoading}
+                href="/admin/orders"
+                emptyLabel="Немає замовлень"
+              />
             </section>
+{/* D. Третій ряд — 2:1 (наступні кроки) */}
+            {/* <section className="grid grid-cols-1 xl:grid-cols-3 gap-6">
+              <TornCard className="xl:col-span-2 p-6">
+                <p className="text-sm font-semibold text-[#242424]">
+                  Динаміка активності користувачів
+                </p>
+              </TornCard> */}
+              <RecentComplaintsPanel
+                complaints={complaints}
+                isLoading={isLoading}
+                href="/admin/complaints"
+              />
+            {/* </section> */}
+
+            {/* E. Четвертий ряд — 2 колонки (наступні кроки) */}
+            {/* <section className="grid grid-cols-1 lg:grid-cols-2 gap-6" /> */}
+
+
+
+
+
+
 
 
 
