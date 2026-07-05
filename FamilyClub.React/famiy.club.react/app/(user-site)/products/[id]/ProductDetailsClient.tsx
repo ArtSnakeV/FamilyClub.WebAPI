@@ -1,6 +1,7 @@
 "use client";
 
 import BookCard from "@/app/(user-site)/main_page/BookCard";
+import MobileProductDetails from "./MobileProductDetails";
 
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
@@ -637,7 +638,39 @@ export default function ProductDetailsClient({ id }: { id: string }) {
   ].filter((item) => item.value);
 
   return (
-    <div className="relative min-h-screen w-full bg-[#3a2618] pb-24 overflow-hidden">
+    <>
+      {/* 1. Мобільна версія (Figma Node 2298:4517 / "Картка товару" — 1-to-1 Dev Mode) */}
+      <div className="block md:hidden">
+        <MobileProductDetails
+          product={currentProduct}
+          authorName={authorName}
+          authorPhoto={authorPhoto}
+          categoryLabel={categoryLabel}
+          formatDisplay={formatDisplay}
+          pageCountText={pageCountText}
+          pageCountValue={pageCountValue}
+          weightText={weightText}
+          yearText={yearText}
+          languageName={languageName}
+          publisherName={publisherName}
+          priceText={priceText}
+          rating={rating}
+          ratingCount={ratingCount}
+          reviews={reviewCards}
+          booksByAuthorCards={booksByAuthorCards}
+          similarBookCards={similarBookCards}
+          isFavorite={isFavorite}
+          toggleFavorite={toggleFavorite}
+          addToCart={addToCart}
+          galleryImages={galleryImages}
+          displayImage={displayImage}
+          setSelectedImage={setSelectedImage}
+        />
+      </div>
+
+      {/* 2. Десктопна версія */}
+      <div className="hidden md:block">
+        <div className="relative min-h-screen w-full bg-[#3a2618] pb-24 overflow-hidden">
       <img
         alt=""
         className="absolute inset-0 h-full w-full object-cover opacity-25 pointer-events-none"
@@ -1025,6 +1058,8 @@ export default function ProductDetailsClient({ id }: { id: string }) {
           </div>
         </section>
       ) : null}
-    </div>
+        </div>
+      </div>
+    </>
   );
 }

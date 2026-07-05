@@ -61,11 +61,18 @@ export default function BookCard({ title, author, price, image, rating, href, fo
                 src="/images/main_page/icons/rec-icon-favorite.svg"
             />
 
-            <img
-                alt={title}
-                className="absolute left-1/2 top-[20px] h-[190px] w-[140px] -translate-x-1/2 object-contain"
-                src={image || "/images/main_page/books/rec-book-1.png"}
-            />
+            {image ? (
+                <img
+                    alt={title}
+                    className="absolute left-1/2 top-[20px] h-[190px] w-[140px] -translate-x-1/2 object-contain"
+                    src={image}
+                />
+            ) : (
+                <div className="absolute left-1/2 top-[20px] h-[190px] w-[140px] -translate-x-1/2 flex flex-col items-center justify-center text-gray-400 text-center p-2 bg-white/80 rounded-[6px] shadow-sm border border-gray-200">
+                    <span className="text-3xl mb-1">📖</span>
+                    <span className="text-xs font-serif">Немає фото</span>
+                </div>
+            )}
 
             <div className="absolute bottom-[20px] left-[20px] right-[20px]">
                 <div className="mb-3 flex gap-1.5" aria-label={`Рейтинг ${roundedRating}/5`}>
