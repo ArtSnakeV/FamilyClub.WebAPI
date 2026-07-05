@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "../../styles/globals.css";
-import { Source_Sans_3, Roboto_Mono } from 'next/font/google';
+import { Source_Sans_3, Roboto_Mono, Lora, Inter } from 'next/font/google';
 import UpNavigation from "./layout/header/UpNavigation";
 import DropDownList from "./layout/header/dropdownlist/DropDownList";
 import Footer from "@/app/(user-site)/layout/footer/Footer";
@@ -9,14 +9,27 @@ import PresenceHeartbeatMount from "../(admin-site)/admin/users/section/Presence
 // import "flag-icons/css/flag-icons.min.css";
 const sourceSans = Source_Sans_3({
   subsets: ['cyrillic', 'latin'],
-  variable: '--font-sans', // Назва CSS змінної для використання шрифту в стилях
+  variable: '--font-source-sans',
+  display: 'swap',
 });
 
 const robotoMono = Roboto_Mono({
   subsets: ['cyrillic', 'latin'],
-  variable: '--font-mono',
+  variable: '--font-roboto-mono',
+  display: 'swap',
 });
 
+const lora = Lora({
+  subsets: ['cyrillic', 'latin'],
+  variable: '--font-lora',
+  display: 'swap',
+});
+
+const inter = Inter({
+  subsets: ['cyrillic', 'latin'],
+  variable: '--font-inter',
+  display: 'swap',
+});
 
 export const metadata: Metadata = {
   title: "My App",
@@ -25,7 +38,7 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="uk" className={`${sourceSans.variable} ${robotoMono.variable}`} suppressHydrationWarning>
+    <html lang="uk" className={`${sourceSans.variable} ${robotoMono.variable} ${lora.variable} ${inter.variable}`} suppressHydrationWarning>
       <body className="antialiased bg-background text-foreground font-sans overflow-x-hidden flex flex-col min-h-screen">
         <PresenceHeartbeatMount />
         <header className="bg-[var(--background-main)] w-full flex flex-row overflow-x-0 fixed z-30 h-[62px] shadow-[0px_0px_15px_0px_#24242499]">

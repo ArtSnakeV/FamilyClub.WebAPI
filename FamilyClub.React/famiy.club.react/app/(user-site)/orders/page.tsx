@@ -89,7 +89,16 @@ export default function OrdersPage() {
           const prod = item.productId ? productMap.get(item.productId) : null;
           let imageSrc = "/images/catalog/hunger_games.png";
           if (prod?.productImages && prod.productImages.length > 0 && prod.productImages[0].imageData) {
-            imageSrc = `data:image/jpeg;base64,${prod.productImages[0].imageData}`;
+            const rawData = prod.productImages[0].imageData.trim();
+            if (rawData.startsWith("data:") || rawData.startsWith("http://") || rawData.startsWith("https://") || rawData.startsWith("/")) {
+              imageSrc = rawData;
+            } else {
+              let mimeType = "image/jpeg";
+              if (rawData.startsWith("UklGR")) mimeType = "image/webp";
+              else if (rawData.startsWith("iVBORw0KGgo")) mimeType = "image/png";
+              else if (rawData.startsWith("R0lGOD")) mimeType = "image/gif";
+              imageSrc = `data:${mimeType};base64,${rawData}`;
+            }
           }
 
           const cardItem: MockOrderItem = {

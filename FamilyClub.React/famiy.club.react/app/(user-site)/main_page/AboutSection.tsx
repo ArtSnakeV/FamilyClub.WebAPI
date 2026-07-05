@@ -2,7 +2,7 @@ export default function AboutSection() {
     return (
         <section className="relative z-10 pt-16 pb-0">
             <div className="mx-auto max-w-[1920px]">
-                <div className="relative mx-auto w-full max-w-[1260px] overflow-hidden border-[15px] border-[#f5f3ee] bg-[#f5f3ee] shadow-[0px_0px_20px_0px_rgba(0,0,0,0.9)]">
+                <div className="relative mx-auto w-full max-w-[1260px] overflow-hidden border-[15px] border-[#f5f3ee] bg-[#f5f3ee] shadow-[0px_0px_20px_0px_rgba(0,0,0,0.9)] rounded-[20px]">
                     <img
                         alt=""
                         className="absolute inset-0 h-full w-full object-cover opacity-20"
@@ -60,9 +60,26 @@ export default function AboutSection() {
                                 допоможе знайти щось нове, несподіване або саме те, що зараз потрібно.
                             </p>
                         </div>
+
+                        {/* Tilted Polaroid Photos from Figma Group 359 */}
+                        <div className="mt-12 flex flex-wrap items-center justify-center gap-6 pb-6 md:gap-16">
+                            <div className="relative h-[300px] w-[260px] rotate-[12deg] shadow-[0px_15px_25px_rgba(0,0,0,0.5)] transition-transform hover:z-20 hover:scale-105 md:h-[420px] md:w-[380px]">
+                                <img
+                                    alt="Читальний зал"
+                                    className="h-full w-full rounded-[4px] border-[16px] border-[#f5f3ee] object-cover shadow-inner md:border-[24px]"
+                                    src="/images/body/Rectangle%20295.png"
+                                />
+                            </div>
+                            <div className="relative h-[300px] w-[260px] rotate-[-5deg] shadow-[0px_15px_25px_rgba(0,0,0,0.5)] transition-transform hover:z-20 hover:scale-105 md:h-[400px] md:w-[360px]">
+                                <img
+                                    alt="Атмосфера бібліотеки"
+                                    className="h-full w-full rounded-[4px] border-[16px] border-[#f5f3ee] object-cover shadow-inner md:border-[24px]"
+                                    src="/images/body/Rectangle%20296.png"
+                                />
+                            </div>
+                        </div>
                     </div>
                 </div>
-
             </div>
         </section>
     );

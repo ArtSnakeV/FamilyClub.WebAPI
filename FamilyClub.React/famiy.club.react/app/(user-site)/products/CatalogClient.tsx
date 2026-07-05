@@ -175,11 +175,11 @@ export default function CatalogClient({ initialProducts }: CatalogClientProps) {
     if (product.productImages && product.productImages.length > 0) {
       const image = product.productImages[0];
       if (!image.imageData) return undefined;
-      if (image.imageData.startsWith("data:")) {
-        return image.imageData;
+      const normalizedData = image.imageData.trim();
+      if (normalizedData.startsWith("data:") || normalizedData.startsWith("http://") || normalizedData.startsWith("https://") || normalizedData.startsWith("/")) {
+        return normalizedData;
       }
 
-      const normalizedData = image.imageData.trim();
       const mimeType = (() => {
         if (normalizedData.startsWith("UklGR")) return "image/webp";
         if (normalizedData.startsWith("/9j/")) return "image/jpeg";
@@ -282,9 +282,8 @@ export default function CatalogClient({ initialProducts }: CatalogClientProps) {
       <div className="relative w-full overflow-hidden">
         {/* Background Shelf Layer (Fixed or repeating structure) */}
         <div className="absolute inset-0 pointer-events-none z-0 flex flex-col">
-          {/* We will render repeating shelves. Each shelf is ~605px high to match the grid row height. */}
           {Array.from({ length: Math.max(1, Math.ceil(paginatedProducts.length / 4)) }).map((_, rowIndex) => (
-            <div key={`shelf-${rowIndex}`} className="relative w-full h-[460px] flex-shrink-0">
+            <div key={`shelf-${rowIndex}`} className="relative w-full h-[605px] flex-shrink-0">
               {/* Shelf Texture 1 */}
               <div 
                 className="absolute inset-0"
@@ -292,11 +291,11 @@ export default function CatalogClient({ initialProducts }: CatalogClientProps) {
                   backgroundImage: "linear-gradient(180.074deg, rgba(36, 36, 36, 0.2) 0.24409%, rgba(36, 36, 36, 0) 17.892%), linear-gradient(180.074deg, rgba(36, 36, 36, 0.5) 9.5072%, rgba(36, 36, 36, 0) 49.996%), linear-gradient(90deg, rgb(245, 243, 238) 0%, rgb(245, 243, 238) 100%)" 
                 }} 
               />
-              <div className="absolute left-0 right-0 bottom-0 h-[105px] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] bg-[#7e4d1e]">
+              <div className="absolute left-0 right-0 top-0 h-[105px] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] bg-[#7e4d1e]">
                 <img src="/images/catalog/shelf_tex1.png" className="absolute inset-0 w-full h-full object-cover mix-blend-multiply opacity-50" alt="" />
                 <div className="absolute inset-0 bg-[rgba(0,0,0,0.27)]" />
               </div>
-              <div className="absolute left-0 right-0 bottom-0 h-[70px] bg-[#7e4d1e]">
+              <div className="absolute left-0 right-0 top-[35px] h-[70px] bg-[#7e4d1e]">
                 <img src="/images/catalog/shelf_tex2.png" className="absolute inset-0 w-full h-full object-cover mix-blend-multiply" alt="" />
                 <img src="/images/catalog/shelf_tex3.png" className="absolute inset-0 w-full h-full object-cover" alt="" />
               </div>
@@ -311,17 +310,17 @@ export default function CatalogClient({ initialProducts }: CatalogClientProps) {
            <img src="/images/catalog/pillows.png" className="absolute right-[0px] top-[200px] w-[314px] h-[251px]" alt="" />
            
            {/* Second shelf decorations */}
-           <img src="/images/catalog/train.png" className="absolute left-0 top-[610px] w-[306px] h-[210px]" alt="" />
-           <img src="/images/catalog/plaid.png" className="absolute right-[0px] top-[660px] w-[295px] h-[286px]" alt="" />
+           <img src="/images/catalog/train.png" className="absolute left-0 top-[660px] w-[306px] h-[210px]" alt="" />
+           <img src="/images/catalog/plaid.png" className="absolute right-[0px] top-[710px] w-[295px] h-[286px]" alt="" />
            
            {/* Third shelf decorations */}
-           <img src="/images/catalog/hunger_games.png" className="absolute left-0 top-[1130px] w-[336px] h-[128px]" alt="" />
+           <img src="/images/catalog/hunger_games.png" className="absolute left-0 top-[1210px] w-[336px] h-[128px]" alt="" />
         </div>
 
-        <div className="max-w-[1220px] mx-auto px-[16px] lg:px-0 pt-[40px] pb-[100px] relative z-20">
+        <div className="max-w-[1220px] mx-auto px-[16px] lg:px-0 pt-[180px] pb-[100px] relative z-20">
           {paginatedProducts.length > 0 ? (
             <>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-[60px] mb-[60px]">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-[60px] gap-y-[205px] mb-[60px]">
                 {paginatedProducts.map((product) => (
                 <Link
                   key={product.id}

@@ -64,28 +64,43 @@ const formatPrice = (value?: number | null) => {
 const getImageSrc = (product: ProductDto) => {
     const image = product.productImages?.[0];
     if (!image?.imageData) return null;
-    if (image.imageData.startsWith("data:")) {
-        return image.imageData;
+    const normalizedData = image.imageData.trim();
+    if (normalizedData.startsWith("data:") || normalizedData.startsWith("http://") || normalizedData.startsWith("https://") || normalizedData.startsWith("/")) {
+        return normalizedData;
     }
 
-    const extension = image.imageName?.split(".").pop()?.toLowerCase();
-    const mimeType = extension === "png"
-        ? "image/png"
-        : extension === "webp"
-            ? "image/webp"
-            : extension === "gif"
-                ? "image/gif"
-                    : "image/jpeg";
+    const mimeType = (() => {
+        if (normalizedData.startsWith("UklGR")) return "image/webp";
+        if (normalizedData.startsWith("/9j/")) return "image/jpeg";
+        if (normalizedData.startsWith("iVBORw0KGgo")) return "image/png";
+        if (normalizedData.startsWith("R0lGOD")) return "image/gif";
 
-    return `data:${mimeType};base64,${image.imageData}`;
+        const extension = image.imageName?.split(".").pop()?.toLowerCase();
+        switch (extension) {
+            case "webp": return "image/webp";
+            case "png": return "image/png";
+            case "gif": return "image/gif";
+            default: return "image/jpeg";
+        }
+    })();
+
+    return `data:${mimeType};base64,${normalizedData}`;
 };
 
 const getAvatarSrc = (avatarData?: string | null) => {
     if (!avatarData) return null;
-    if (avatarData.startsWith("data:")) {
-        return avatarData;
+    const normalizedData = avatarData.trim();
+    if (normalizedData.startsWith("data:")) {
+        return normalizedData;
     }
-    return `data:image/jpeg;base64,${avatarData}`;
+    const mimeType = (() => {
+        if (normalizedData.startsWith("UklGR")) return "image/webp";
+        if (normalizedData.startsWith("/9j/")) return "image/jpeg";
+        if (normalizedData.startsWith("iVBORw0KGgo")) return "image/png";
+        if (normalizedData.startsWith("R0lGOD")) return "image/gif";
+        return "image/jpeg";
+    })();
+    return `data:${mimeType};base64,${normalizedData}`;
 };
 
 const formatReviewDate = (value?: Date | string | null) => {
@@ -131,12 +146,12 @@ export default function Home() {
                     membersResult,
                     formatsResult,
                 ] = await Promise.all([
-                    productService.apiProductsGet(),
-                    reviewService.apiReviewsGet(),
-                    categoriesService.apiCategoriesGet(),
-                    authorService.apiAuthorsGet(),
-                    clubMemberService.apiClubMemberGet(),
-                    formatService.apiFormatsGet(),
+                    productService.apiProductsGet().catch((err) => { console.warn("Failed to fetch products:", err); return []; }),
+                    reviewService.apiReviewsGet().catch((err) => { console.warn("Failed to fetch reviews:", err); return []; }),
+                    categoriesService.apiCategoriesGet().catch((err) => { console.warn("Failed to fetch categories:", err); return []; }),
+                    authorService.apiAuthorsGet().catch((err) => { console.warn("Failed to fetch authors:", err); return []; }),
+                    clubMemberService.apiClubMemberGet().catch((err) => { console.warn("Failed to fetch club members:", err); return []; }),
+                    formatService.apiFormatsGet().catch((err) => { console.warn("Failed to fetch formats:", err); return []; }),
                 ]);
 
                 if (!isMounted) return;
@@ -380,11 +395,7 @@ export default function Home() {
                 <BookSection title="Фантастика" books={fantasyBooks} pillWidth={292} />
             ) : null}
 
-            <PromoBanner
-                title="Нові книги"
-                subtitle="Є ще що почитати"
-                href="/categories"
-            />
+            <PromoBanner />
 
             {hitsBooks.length > 0 ? (
                 <BookSection title="Хіти продажу" books={hitsBooks} pillWidth={355} />
