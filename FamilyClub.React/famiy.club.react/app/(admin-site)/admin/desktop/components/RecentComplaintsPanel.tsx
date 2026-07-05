@@ -62,7 +62,8 @@ export default function RecentComplaintsPanel({
           {recent.map((complaint) => {
             const badge = getComplaintBadge(complaint);
             const typeLabel = getComplaintTypeLabel(complaint.complaintType);
-            const preview = truncateText(complaint.complaintText ?? "", 56);
+            // const preview = truncateText(complaint.complaintText ?? "", 56);
+            const preview = truncateText(complaint.complaintText ?? "", 100);
 
             return (
               <li

@@ -7,6 +7,9 @@ import DonutDiagramChart from "../../common_elements/DonutDiagramChart";
 import ListPanel from "../../common_elements/ListPanel";
 import { buildDonutSegments } from "../../common_elements/donutDiagramUtils";
 import RecentComplaintsPanel from "./components/RecentComplaintsPanel";
+import RecentReviewsPanel from "./components/RecentReviewsPanel";
+import SalesChartPanel from "./components/SalesChartPanel";
+import TopBooksList from "./components/TopBooksList";
 import GreetingBanner from "./components/GreetingBanner";
 import { COMPLAINT_REASONS } from "@/lib/constants/complaintTypes";
 import {
@@ -19,12 +22,14 @@ import {
   ReviewsApi,
   OrdersApi,
   ComplaintsApi,
+  AuthorsApi,
   Configuration,
   ProductDto,
   ClubMemberReadDto,
   ReviewDto,
   OrderDTO,
   ComplaintsReadDto,
+  AuthorDTO,
 } from '@/lib/api/generated';
 import { useEffect, useMemo, useState } from "react";
 
@@ -39,6 +44,7 @@ export default function Desktop() {
   const [reviews, setReviews] = useState<ReviewDto[]>([]);
   const [orders, setOrders] = useState<OrderDTO[]>([]);
   const [complaints, setComplaints] = useState<ComplaintsReadDto[]>([]);
+  const [authors, setAuthors] = useState<AuthorDTO[]>([]);
   
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<unknown>(null);
@@ -65,6 +71,7 @@ export default function Desktop() {
       const reviewsApi = new ReviewsApi(config);
       const ordersApi = new OrdersApi(config);
       const complaintsApi = new ComplaintsApi(config);
+      const authorsApi = new AuthorsApi(config);
   
       try {
         const results = await Promise.allSettled([
@@ -73,11 +80,19 @@ export default function Desktop() {
           reviewsApi.apiReviewsGet(),
           ordersApi.apiOrdersGet(),
           complaintsApi.apiComplaintsGet(),
+          authorsApi.apiAuthorsGet(),
         ]);
   
         if (cancelled) return;
   
-        const [productsResult, membersResult, reviewsResult, ordersResult, complaintsResult] = results;
+        const [
+          productsResult,
+          membersResult,
+          reviewsResult,
+          ordersResult,
+          complaintsResult,
+          authorsResult,
+        ] = results;
   
         if (productsResult.status === "fulfilled") {
           setProducts(productsResult.value);
@@ -107,6 +122,12 @@ export default function Desktop() {
           setComplaints(complaintsResult.value);
         } else {
           console.error("Failed to load complaints:", complaintsResult.reason);
+        }
+
+        if (authorsResult.status === "fulfilled") {
+          setAuthors(authorsResult.value);
+        } else {
+          console.error("Failed to load authors:", authorsResult.reason);
         }
   
         const allFailed = results.every((r) => r.status === "rejected");
@@ -186,7 +207,7 @@ export default function Desktop() {
 
 
           {/* All page content sits above the decoration */}
-          <div className="relative z-10 flex flex-col gap-6 p-6">
+          <div className="relative z-10 flex flex-col gap-6 p-10">
 
 {/* ///////////////////////////////////////////////////////////////////////////////// */}
 {/* Part if we work with Admin */}
@@ -261,8 +282,8 @@ export default function Desktop() {
               />
             </section>
 {/* D. Третій ряд — 2:1 (наступні кроки) */}
-            {/* <section className="grid grid-cols-1 xl:grid-cols-3 gap-6">
-              <TornCard className="xl:col-span-2 p-6">
+            {/*  <section className="grid grid-cols-1 xl:grid-cols-3 gap-6"> */}
+              {/*<TornCard className="xl:col-span-2 p-6">
                 <p className="text-sm font-semibold text-[#242424]">
                   Динаміка активності користувачів
                 </p>
@@ -343,22 +364,36 @@ export default function Desktop() {
             </section>
 
             {/* C. Середній ряд — 3 колонки */}
-            <section className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            {/* <section className="grid grid-cols-1 lg:grid-cols-3 gap-6"> */}
               {/* <ListPanel title="Нові газети" href="/admin/newspaper" /> // Left for future implementation */}
-              <ListPanel title="Відгуки" href="/admin/reviews" />
-              <ListPanel title="Останні книги на модерації" href="/admin/books" />
-            </section>
+              {/* <ListPanel title="Відгуки" href="/admin/reviews" />
+              <ListPanel title="Останні книги на модерації" href="/admin/books" /> */}
+              <RecentReviewsPanel
+                reviews={reviews}
+                products={products}
+                members={members}
+                isLoading={isLoading}
+                href="/admin/reviews"
+                limit={5}
+              />
+
+            {/* </section> */}
 
             {/* D. Нижній ряд — 2:1 */}
             <section className="grid grid-cols-1 xl:grid-cols-3 gap-6">
-              <TornCard className="xl:col-span-2 p-6">
-                {/* графік продажів */}
-                <p>Графік продажів</p>
-              </TornCard>
-              <TornCard className="p-6">
-                {/* топ книг */}
-                <p>Топ книг</p>
-              </TornCard>
+            <SalesChartPanel
+              orders={orders}
+              isLoading={isLoading}
+              className="xl:col-span-2"
+            />
+            <TopBooksList
+              orders={orders}
+              products={products}
+              authors={authors}
+              isLoading={isLoading}
+              href="/admin/books"
+              limit={5}
+            />
             </section>
 
           </div>{/* end relative z-10 content */}
