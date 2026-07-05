@@ -6,7 +6,16 @@ import { apiBasePath } from "@/lib/api/services";
 function getSessionId(): string {
   let id = localStorage.getItem("presence_session_id");
   if (!id) {
-    id = crypto.randomUUID();
+    if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") {
+      id = crypto.randomUUID();
+    } else {
+      // Фоллбек для HTTP (небезпечний контекст), доступу по IP або старіших браузерів
+      id = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
+        const r = (Math.random() * 16) | 0;
+        const v = c === "x" ? r : (r & 0x3) | 0x8;
+        return v.toString(16);
+      });
+    }
     localStorage.setItem("presence_session_id", id);
   }
   return id;
