@@ -12,7 +12,7 @@ Name | Type
 `discountPrice` | number
 `description` | string
 `publisherId` | number
-`productImages` | [Array&lt;ProductImage&gt;](ProductImage.md)
+`productImages` | [Array&lt;FamilyClubLibraryProductImage&gt;](FamilyClubLibraryProductImage.md)
 `originalTitle` | string
 `pageCount` | number
 `publishingDate` | Date

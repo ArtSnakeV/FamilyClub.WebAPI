@@ -174,7 +174,10 @@ builder.Services.AddAutoMapper(cfg =>
 }
 );
 
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.CustomSchemaIds(type => type.FullName?.Replace("+", "."));
+});
 
 
 var app = builder.Build();

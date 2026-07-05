@@ -18,7 +18,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/AgeRestrictionDto"
+                    "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.AgeRestriction.AgeRestrictionDto"
                   }
                 }
               },
@@ -26,7 +26,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/AgeRestrictionDto"
+                    "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.AgeRestriction.AgeRestrictionDto"
                   }
                 }
               },
@@ -34,7 +34,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/AgeRestrictionDto"
+                    "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.AgeRestriction.AgeRestrictionDto"
                   }
                 }
               }
@@ -50,17 +50,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/AgeRestrictionDto"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.AgeRestriction.AgeRestrictionDto"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/AgeRestrictionDto"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.AgeRestriction.AgeRestrictionDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/AgeRestrictionDto"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.AgeRestriction.AgeRestrictionDto"
               }
             }
           }
@@ -94,17 +94,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/AgeRestrictionDto"
+                  "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.AgeRestriction.AgeRestrictionDto"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AgeRestrictionDto"
+                  "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.AgeRestriction.AgeRestrictionDto"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AgeRestrictionDto"
+                  "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.AgeRestriction.AgeRestrictionDto"
                 }
               }
             }
@@ -130,17 +130,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/AgeRestrictionDto"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.AgeRestriction.AgeRestrictionDto"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/AgeRestrictionDto"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.AgeRestriction.AgeRestrictionDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/AgeRestrictionDto"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.AgeRestriction.AgeRestrictionDto"
               }
             }
           }
@@ -182,17 +182,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/RegisterClubMemberDto"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.ClubMember.RegisterClubMemberDto"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/RegisterClubMemberDto"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.ClubMember.RegisterClubMemberDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/RegisterClubMemberDto"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.ClubMember.RegisterClubMemberDto"
               }
             }
           }
@@ -203,17 +203,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/ClubMemberReadDto"
+                  "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.ClubMember.ClubMemberReadDto"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ClubMemberReadDto"
+                  "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.ClubMember.ClubMemberReadDto"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ClubMemberReadDto"
+                  "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.ClubMember.ClubMemberReadDto"
                 }
               }
             }
@@ -230,17 +230,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/LoginClubMemberDto"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.ClubMember.LoginClubMemberDto"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/LoginClubMemberDto"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.ClubMember.LoginClubMemberDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/LoginClubMemberDto"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.ClubMember.LoginClubMemberDto"
               }
             }
           }
@@ -251,17 +251,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/AuthResponseClubMemberDTO"
+                  "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.ClubMember.AuthResponseClubMemberDTO"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AuthResponseClubMemberDTO"
+                  "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.ClubMember.AuthResponseClubMemberDTO"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AuthResponseClubMemberDTO"
+                  "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.ClubMember.AuthResponseClubMemberDTO"
                 }
               }
             }
@@ -292,17 +292,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/ClubMemberReadDto"
+                  "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.ClubMember.ClubMemberReadDto"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ClubMemberReadDto"
+                  "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.ClubMember.ClubMemberReadDto"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ClubMemberReadDto"
+                  "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.ClubMember.ClubMemberReadDto"
                 }
               }
             }
@@ -323,7 +323,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/AuthorDTO"
+                    "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Author.AuthorDTO"
                   }
                 }
               },
@@ -331,7 +331,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/AuthorDTO"
+                    "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Author.AuthorDTO"
                   }
                 }
               },
@@ -339,7 +339,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/AuthorDTO"
+                    "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Author.AuthorDTO"
                   }
                 }
               }
@@ -355,17 +355,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/AuthorDTO"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Author.AuthorDTO"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/AuthorDTO"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Author.AuthorDTO"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/AuthorDTO"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Author.AuthorDTO"
               }
             }
           }
@@ -376,17 +376,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/AuthorDTO"
+                  "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Author.AuthorDTO"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AuthorDTO"
+                  "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Author.AuthorDTO"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AuthorDTO"
+                  "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Author.AuthorDTO"
                 }
               }
             }
@@ -416,17 +416,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/AuthorDTO"
+                  "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Author.AuthorDTO"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AuthorDTO"
+                  "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Author.AuthorDTO"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AuthorDTO"
+                  "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Author.AuthorDTO"
                 }
               }
             }
@@ -452,17 +452,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/AuthorDTO"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Author.AuthorDTO"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/AuthorDTO"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Author.AuthorDTO"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/AuthorDTO"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Author.AuthorDTO"
               }
             }
           }
@@ -551,7 +551,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/BookSizeDto"
+                    "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.BookSize.BookSizeDto"
                   }
                 }
               },
@@ -559,7 +559,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/BookSizeDto"
+                    "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.BookSize.BookSizeDto"
                   }
                 }
               },
@@ -567,7 +567,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/BookSizeDto"
+                    "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.BookSize.BookSizeDto"
                   }
                 }
               }
@@ -583,17 +583,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/BookSizeDto"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.BookSize.BookSizeDto"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/BookSizeDto"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.BookSize.BookSizeDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/BookSizeDto"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.BookSize.BookSizeDto"
               }
             }
           }
@@ -627,17 +627,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/BookSizeDto"
+                  "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.BookSize.BookSizeDto"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/BookSizeDto"
+                  "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.BookSize.BookSizeDto"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/BookSizeDto"
+                  "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.BookSize.BookSizeDto"
                 }
               }
             }
@@ -663,17 +663,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/BookSizeDto"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.BookSize.BookSizeDto"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/BookSizeDto"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.BookSize.BookSizeDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/BookSizeDto"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.BookSize.BookSizeDto"
               }
             }
           }
@@ -727,17 +727,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/CartDTO"
+                  "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Cart.CartDTO"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/CartDTO"
+                  "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Cart.CartDTO"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/CartDTO"
+                  "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Cart.CartDTO"
                 }
               }
             }
@@ -784,17 +784,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CartItemDTO"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.CartItem.CartItemDTO"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/CartItemDTO"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.CartItem.CartItemDTO"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/CartItemDTO"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.CartItem.CartItemDTO"
               }
             }
           }
@@ -901,7 +901,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/CategoryDto"
+                    "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Category.CategoryDto"
                   }
                 }
               },
@@ -909,7 +909,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/CategoryDto"
+                    "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Category.CategoryDto"
                   }
                 }
               },
@@ -917,7 +917,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/CategoryDto"
+                    "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Category.CategoryDto"
                   }
                 }
               }
@@ -933,17 +933,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CategoryDto"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Category.CategoryDto"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/CategoryDto"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Category.CategoryDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/CategoryDto"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Category.CategoryDto"
               }
             }
           }
@@ -977,17 +977,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/CategoryDto"
+                  "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Category.CategoryDto"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/CategoryDto"
+                  "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Category.CategoryDto"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/CategoryDto"
+                  "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Category.CategoryDto"
                 }
               }
             }
@@ -1013,17 +1013,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CategoryDto"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Category.CategoryDto"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/CategoryDto"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Category.CategoryDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/CategoryDto"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Category.CategoryDto"
               }
             }
           }
@@ -1079,7 +1079,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/ClaimsClubMemberDto"
+                    "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Claims.ClaimsClubMemberDto"
                   }
                 }
               },
@@ -1087,7 +1087,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/ClaimsClubMemberDto"
+                    "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Claims.ClaimsClubMemberDto"
                   }
                 }
               },
@@ -1095,7 +1095,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/ClaimsClubMemberDto"
+                    "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Claims.ClaimsClubMemberDto"
                   }
                 }
               }
@@ -1123,17 +1123,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ClaimsClubMemberDto"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Claims.ClaimsClubMemberDto"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/ClaimsClubMemberDto"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Claims.ClaimsClubMemberDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/ClaimsClubMemberDto"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Claims.ClaimsClubMemberDto"
               }
             }
           }
@@ -1164,17 +1164,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ClaimsClubMemberDto"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Claims.ClaimsClubMemberDto"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/ClaimsClubMemberDto"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Claims.ClaimsClubMemberDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/ClaimsClubMemberDto"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Claims.ClaimsClubMemberDto"
               }
             }
           }
@@ -1205,17 +1205,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/UpdateClaimClubMemberDto"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Claims.UpdateClaimClubMemberDto"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/UpdateClaimClubMemberDto"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Claims.UpdateClaimClubMemberDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/UpdateClaimClubMemberDto"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Claims.UpdateClaimClubMemberDto"
               }
             }
           }
@@ -1240,7 +1240,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/ClubMemberReadDto"
+                    "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.ClubMember.ClubMemberReadDto"
                   }
                 }
               },
@@ -1248,7 +1248,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/ClubMemberReadDto"
+                    "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.ClubMember.ClubMemberReadDto"
                   }
                 }
               },
@@ -1256,7 +1256,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/ClubMemberReadDto"
+                    "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.ClubMember.ClubMemberReadDto"
                   }
                 }
               }
@@ -1286,17 +1286,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/ClubMemberReadDto"
+                  "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.ClubMember.ClubMemberReadDto"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ClubMemberReadDto"
+                  "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.ClubMember.ClubMemberReadDto"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ClubMemberReadDto"
+                  "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.ClubMember.ClubMemberReadDto"
                 }
               }
             }
@@ -1345,17 +1345,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/ClubMemberReadDto"
+                  "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.ClubMember.ClubMemberReadDto"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ClubMemberReadDto"
+                  "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.ClubMember.ClubMemberReadDto"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ClubMemberReadDto"
+                  "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.ClubMember.ClubMemberReadDto"
                 }
               }
             }
@@ -1468,7 +1468,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/UpdateClubMemberDto"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.ClubMember.UpdateClubMemberDto"
               }
             }
           }
@@ -1548,6 +1548,559 @@
         }
       }
     },
+    "/api/ClubMember/{id}/favorite-categories": {
+      "put": {
+        "tags": [
+          "ClubMember"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/ClubMember/{id}/change-password": {
+      "put": {
+        "tags": [
+          "ClubMember"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.ClubMember.ChangePasswordClubMemberDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.ClubMember.ChangePasswordClubMemberDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.ClubMember.ChangePasswordClubMemberDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Complaints": {
+      "get": {
+        "tags": [
+          "Complaints"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Complaint.ComplaintsReadDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Complaint.ComplaintsReadDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Complaint.ComplaintsReadDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Complaints"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Complaint.ComplaintsCreateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Complaint.ComplaintsCreateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Complaint.ComplaintsCreateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Complaints/{id}": {
+      "get": {
+        "tags": [
+          "Complaints"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Complaint.ComplaintsReadDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Complaint.ComplaintsReadDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Complaint.ComplaintsReadDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Complaints"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Complaint.ComplaintsReadDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Complaint.ComplaintsReadDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Complaint.ComplaintsReadDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Complaints"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Complaints/by-member/{clubMemberId}": {
+      "get": {
+        "tags": [
+          "Complaints"
+        ],
+        "parameters": [
+          {
+            "name": "clubMemberId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Complaint.ComplaintsReadDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Complaint.ComplaintsReadDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Complaint.ComplaintsReadDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Complaints/{complaintId}/images": {
+      "get": {
+        "tags": [
+          "Complaints"
+        ],
+        "parameters": [
+          {
+            "name": "complaintId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Complaint.ComplaintImageDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Complaint.ComplaintImageDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Complaint.ComplaintImageDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Complaints"
+        ],
+        "parameters": [
+          {
+            "name": "complaintId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Complaint.ComplaintImageCreateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Complaint.ComplaintImageCreateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Complaint.ComplaintImageCreateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Complaints/{complaintId}/images/{imageId}": {
+      "delete": {
+        "tags": [
+          "Complaints"
+        ],
+        "parameters": [
+          {
+            "name": "complaintId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "imageId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Favorites": {
+      "get": {
+        "tags": [
+          "Favorites"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Product.ProductDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Product.ProductDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Product.ProductDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Favorites/{productId}": {
+      "post": {
+        "tags": [
+          "Favorites"
+        ],
+        "parameters": [
+          {
+            "name": "productId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Favorites"
+        ],
+        "parameters": [
+          {
+            "name": "productId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Favorites/{productId}/is-favorite": {
+      "get": {
+        "tags": [
+          "Favorites"
+        ],
+        "parameters": [
+          {
+            "name": "productId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "boolean"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/Formats": {
       "get": {
         "tags": [
@@ -1561,7 +2114,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/FormatDto"
+                    "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Format.FormatDto"
                   }
                 }
               },
@@ -1569,7 +2122,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/FormatDto"
+                    "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Format.FormatDto"
                   }
                 }
               },
@@ -1577,7 +2130,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/FormatDto"
+                    "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Format.FormatDto"
                   }
                 }
               }
@@ -1593,17 +2146,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/FormatDto"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Format.FormatDto"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/FormatDto"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Format.FormatDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/FormatDto"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Format.FormatDto"
               }
             }
           }
@@ -1637,17 +2190,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/FormatDto"
+                  "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Format.FormatDto"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/FormatDto"
+                  "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Format.FormatDto"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/FormatDto"
+                  "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Format.FormatDto"
                 }
               }
             }
@@ -1673,17 +2226,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/FormatDto"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Format.FormatDto"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/FormatDto"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Format.FormatDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/FormatDto"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Format.FormatDto"
               }
             }
           }
@@ -1741,7 +2294,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/LanguageDto"
+                    "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Language.LanguageDto"
                   }
                 }
               },
@@ -1749,7 +2302,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/LanguageDto"
+                    "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Language.LanguageDto"
                   }
                 }
               },
@@ -1757,7 +2310,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/LanguageDto"
+                    "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Language.LanguageDto"
                   }
                 }
               }
@@ -1773,17 +2326,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/LanguageDto"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Language.LanguageDto"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/LanguageDto"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Language.LanguageDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/LanguageDto"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Language.LanguageDto"
               }
             }
           }
@@ -1817,17 +2370,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/LanguageDto"
+                  "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Language.LanguageDto"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/LanguageDto"
+                  "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Language.LanguageDto"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/LanguageDto"
+                  "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Language.LanguageDto"
                 }
               }
             }
@@ -1853,17 +2406,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/LanguageDto"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Language.LanguageDto"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/LanguageDto"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Language.LanguageDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/LanguageDto"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Language.LanguageDto"
               }
             }
           }
@@ -1909,7 +2462,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/NotificationDTO"
+                    "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Notification.NotificationDTO"
                   }
                 }
               },
@@ -1917,7 +2470,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/NotificationDTO"
+                    "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Notification.NotificationDTO"
                   }
                 }
               },
@@ -1925,7 +2478,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/NotificationDTO"
+                    "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Notification.NotificationDTO"
                   }
                 }
               }
@@ -1941,17 +2494,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CreateNotificationDTO"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Notification.CreateNotificationDTO"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/CreateNotificationDTO"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Notification.CreateNotificationDTO"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/CreateNotificationDTO"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Notification.CreateNotificationDTO"
               }
             }
           }
@@ -1985,17 +2538,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/NotificationDTO"
+                  "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Notification.NotificationDTO"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/NotificationDTO"
+                  "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Notification.NotificationDTO"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/NotificationDTO"
+                  "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Notification.NotificationDTO"
                 }
               }
             }
@@ -2021,17 +2574,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NotificationDTO"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Notification.NotificationDTO"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/NotificationDTO"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Notification.NotificationDTO"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/NotificationDTO"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Notification.NotificationDTO"
               }
             }
           }
@@ -2151,7 +2704,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/OrderItemDTO"
+                    "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.OrderItem.OrderItemDTO"
                   }
                 }
               },
@@ -2159,7 +2712,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/OrderItemDTO"
+                    "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.OrderItem.OrderItemDTO"
                   }
                 }
               },
@@ -2167,7 +2720,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/OrderItemDTO"
+                    "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.OrderItem.OrderItemDTO"
                   }
                 }
               }
@@ -2183,17 +2736,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/OrderItemDTO"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.OrderItem.OrderItemDTO"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/OrderItemDTO"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.OrderItem.OrderItemDTO"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/OrderItemDTO"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.OrderItem.OrderItemDTO"
               }
             }
           }
@@ -2227,17 +2780,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/OrderItemDTO"
+                  "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.OrderItem.OrderItemDTO"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/OrderItemDTO"
+                  "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.OrderItem.OrderItemDTO"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/OrderItemDTO"
+                  "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.OrderItem.OrderItemDTO"
                 }
               }
             }
@@ -2263,17 +2816,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/OrderItemDTO"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.OrderItem.OrderItemDTO"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/OrderItemDTO"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.OrderItem.OrderItemDTO"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/OrderItemDTO"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.OrderItem.OrderItemDTO"
               }
             }
           }
@@ -2319,7 +2872,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/OrderDTO"
+                    "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Order.OrderDTO"
                   }
                 }
               },
@@ -2327,7 +2880,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/OrderDTO"
+                    "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Order.OrderDTO"
                   }
                 }
               },
@@ -2335,7 +2888,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/OrderDTO"
+                    "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Order.OrderDTO"
                   }
                 }
               }
@@ -2351,17 +2904,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/OrderDTO"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Order.OrderDTO"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/OrderDTO"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Order.OrderDTO"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/OrderDTO"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Order.OrderDTO"
               }
             }
           }
@@ -2395,17 +2948,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/OrderDTO"
+                  "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Order.OrderDTO"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/OrderDTO"
+                  "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Order.OrderDTO"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/OrderDTO"
+                  "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Order.OrderDTO"
                 }
               }
             }
@@ -2431,17 +2984,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/OrderDTO"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Order.OrderDTO"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/OrderDTO"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Order.OrderDTO"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/OrderDTO"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Order.OrderDTO"
               }
             }
           }
@@ -2474,6 +3027,97 @@
         }
       }
     },
+    "/api/Orders/by-user/{userId}": {
+      "get": {
+        "tags": [
+          "Orders"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Order.OrderDTO"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Order.OrderDTO"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Order.OrderDTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Presence/heartbeat": {
+      "post": {
+        "tags": [
+          "Presence"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HeartbeatRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HeartbeatRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/HeartbeatRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Presence/active-count": {
+      "get": {
+        "tags": [
+          "Presence"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Products": {
       "get": {
         "tags": [
@@ -2487,7 +3131,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/ProductDto"
+                    "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Product.ProductDto"
                   }
                 }
               },
@@ -2495,7 +3139,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/ProductDto"
+                    "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Product.ProductDto"
                   }
                 }
               },
@@ -2503,7 +3147,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/ProductDto"
+                    "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Product.ProductDto"
                   }
                 }
               }
@@ -2546,7 +3190,7 @@
                   "ProductImages": {
                     "type": "array",
                     "items": {
-                      "$ref": "#/components/schemas/ProductImage"
+                      "$ref": "#/components/schemas/FamilyClubLibrary.ProductImage"
                     }
                   },
                   "OriginalTitle": {
@@ -2561,10 +3205,10 @@
                     "format": "date"
                   },
                   "CoverType": {
-                    "$ref": "#/components/schemas/CoverType"
+                    "$ref": "#/components/schemas/FamilyClubLibrary.Enum.CoverType"
                   },
                   "Availability": {
-                    "$ref": "#/components/schemas/Availability"
+                    "$ref": "#/components/schemas/FamilyClubLibrary.Enum.Availability"
                   },
                   "QuantityInStock": {
                     "type": "integer",
@@ -2781,17 +3425,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/ProductDto"
+                  "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Product.ProductDto"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ProductDto"
+                  "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Product.ProductDto"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ProductDto"
+                  "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Product.ProductDto"
                 }
               }
             }
@@ -2844,7 +3488,7 @@
                   "ProductImages": {
                     "type": "array",
                     "items": {
-                      "$ref": "#/components/schemas/ProductImage"
+                      "$ref": "#/components/schemas/FamilyClubLibrary.ProductImage"
                     }
                   },
                   "OriginalTitle": {
@@ -2859,10 +3503,10 @@
                     "format": "date"
                   },
                   "CoverType": {
-                    "$ref": "#/components/schemas/CoverType"
+                    "$ref": "#/components/schemas/FamilyClubLibrary.Enum.CoverType"
                   },
                   "Availability": {
-                    "$ref": "#/components/schemas/Availability"
+                    "$ref": "#/components/schemas/FamilyClubLibrary.Enum.Availability"
                   },
                   "QuantityInStock": {
                     "type": "integer",
@@ -3091,7 +3735,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/PromotionDto"
+                    "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Promotion.PromotionDto"
                   }
                 }
               },
@@ -3099,7 +3743,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/PromotionDto"
+                    "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Promotion.PromotionDto"
                   }
                 }
               },
@@ -3107,7 +3751,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/PromotionDto"
+                    "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Promotion.PromotionDto"
                   }
                 }
               }
@@ -3123,17 +3767,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/PromotionDto"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Promotion.PromotionDto"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/PromotionDto"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Promotion.PromotionDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/PromotionDto"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Promotion.PromotionDto"
               }
             }
           }
@@ -3167,17 +3811,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/PromotionDto"
+                  "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Promotion.PromotionDto"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PromotionDto"
+                  "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Promotion.PromotionDto"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PromotionDto"
+                  "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Promotion.PromotionDto"
                 }
               }
             }
@@ -3203,17 +3847,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/PromotionDto"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Promotion.PromotionDto"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/PromotionDto"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Promotion.PromotionDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/PromotionDto"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Promotion.PromotionDto"
               }
             }
           }
@@ -3259,7 +3903,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/PublisherDto"
+                    "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Publisher.PublisherDto"
                   }
                 }
               },
@@ -3267,7 +3911,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/PublisherDto"
+                    "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Publisher.PublisherDto"
                   }
                 }
               },
@@ -3275,7 +3919,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/PublisherDto"
+                    "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Publisher.PublisherDto"
                   }
                 }
               }
@@ -3291,17 +3935,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/PublisherDto"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Publisher.PublisherDto"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/PublisherDto"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Publisher.PublisherDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/PublisherDto"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Publisher.PublisherDto"
               }
             }
           }
@@ -3335,17 +3979,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/PublisherDto"
+                  "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Publisher.PublisherDto"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PublisherDto"
+                  "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Publisher.PublisherDto"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PublisherDto"
+                  "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Publisher.PublisherDto"
                 }
               }
             }
@@ -3371,17 +4015,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/PublisherDto"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Publisher.PublisherDto"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/PublisherDto"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Publisher.PublisherDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/PublisherDto"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Publisher.PublisherDto"
               }
             }
           }
@@ -3427,7 +4071,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/ReviewDto"
+                    "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Review.ReviewDto"
                   }
                 }
               },
@@ -3435,7 +4079,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/ReviewDto"
+                    "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Review.ReviewDto"
                   }
                 }
               },
@@ -3443,7 +4087,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/ReviewDto"
+                    "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Review.ReviewDto"
                   }
                 }
               }
@@ -3459,17 +4103,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ReviewDto"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Review.ReviewDto"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/ReviewDto"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Review.ReviewDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/ReviewDto"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Review.ReviewDto"
               }
             }
           }
@@ -3503,17 +4147,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/ReviewDto"
+                  "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Review.ReviewDto"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ReviewDto"
+                  "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Review.ReviewDto"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ReviewDto"
+                  "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Review.ReviewDto"
                 }
               }
             }
@@ -3539,17 +4183,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ReviewDto"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Review.ReviewDto"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/ReviewDto"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Review.ReviewDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/ReviewDto"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Review.ReviewDto"
               }
             }
           }
@@ -3578,6 +4222,54 @@
         "responses": {
           "200": {
             "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Reviews/by-user/{userId}": {
+      "get": {
+        "tags": [
+          "Reviews"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Review.ReviewDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Review.ReviewDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Review.ReviewDto"
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -3739,7 +4431,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/SeriesDto"
+                    "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Series.SeriesDto"
                   }
                 }
               },
@@ -3747,7 +4439,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/SeriesDto"
+                    "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Series.SeriesDto"
                   }
                 }
               },
@@ -3755,7 +4447,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/SeriesDto"
+                    "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Series.SeriesDto"
                   }
                 }
               }
@@ -3771,17 +4463,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/SeriesDto"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Series.SeriesDto"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/SeriesDto"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Series.SeriesDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/SeriesDto"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Series.SeriesDto"
               }
             }
           }
@@ -3815,17 +4507,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/SeriesDto"
+                  "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Series.SeriesDto"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/SeriesDto"
+                  "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Series.SeriesDto"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/SeriesDto"
+                  "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Series.SeriesDto"
                 }
               }
             }
@@ -3851,17 +4543,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/SeriesDto"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Series.SeriesDto"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/SeriesDto"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Series.SeriesDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/SeriesDto"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Series.SeriesDto"
               }
             }
           }
@@ -3907,7 +4599,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/TranslatorDto"
+                    "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Translator.TranslatorDto"
                   }
                 }
               },
@@ -3915,7 +4607,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/TranslatorDto"
+                    "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Translator.TranslatorDto"
                   }
                 }
               },
@@ -3923,7 +4615,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/TranslatorDto"
+                    "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Translator.TranslatorDto"
                   }
                 }
               }
@@ -3939,17 +4631,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/TranslatorDto"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Translator.TranslatorDto"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/TranslatorDto"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Translator.TranslatorDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/TranslatorDto"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Translator.TranslatorDto"
               }
             }
           }
@@ -3983,17 +4675,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/TranslatorDto"
+                  "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Translator.TranslatorDto"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/TranslatorDto"
+                  "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Translator.TranslatorDto"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/TranslatorDto"
+                  "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Translator.TranslatorDto"
                 }
               }
             }
@@ -4019,17 +4711,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/TranslatorDto"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Translator.TranslatorDto"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/TranslatorDto"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Translator.TranslatorDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/TranslatorDto"
+                "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Translator.TranslatorDto"
               }
             }
           }
@@ -4065,32 +4757,7 @@
   },
   "components": {
     "schemas": {
-      "AgeRestriction": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "name": {
-            "type": "string",
-            "nullable": true
-          },
-          "code": {
-            "type": "string",
-            "nullable": true
-          },
-          "products": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Product"
-            },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "AgeRestrictionDto": {
+      "FamilyClub.BLL.DTOs.AgeRestriction.AgeRestrictionDto": {
         "type": "object",
         "properties": {
           "id": {
@@ -4108,57 +4775,7 @@
         },
         "additionalProperties": false
       },
-      "AuthResponseClubMemberDTO": {
-        "type": "object",
-        "properties": {
-          "clubMember": {
-            "$ref": "#/components/schemas/ClubMemberReadDto"
-          },
-          "token": {
-            "type": "string",
-            "nullable": true
-          },
-          "expiration": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "returnUrl": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "Author": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "authorName": {
-            "type": "string",
-            "nullable": true
-          },
-          "biography": {
-            "type": "string",
-            "nullable": true
-          },
-          "photoUrl": {
-            "type": "string",
-            "nullable": true
-          },
-          "products": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Product"
-            },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "AuthorDTO": {
+      "FamilyClub.BLL.DTOs.Author.AuthorDTO": {
         "type": "object",
         "properties": {
           "id": {
@@ -4180,41 +4797,7 @@
         },
         "additionalProperties": false
       },
-      "Availability": {
-        "enum": [
-          0,
-          1,
-          2
-        ],
-        "type": "integer",
-        "format": "int32"
-      },
-      "BookSize": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "name": {
-            "type": "string",
-            "nullable": true
-          },
-          "code": {
-            "type": "string",
-            "nullable": true
-          },
-          "products": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Product"
-            },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "BookSizeDto": {
+      "FamilyClub.BLL.DTOs.BookSize.BookSizeDto": {
         "type": "object",
         "properties": {
           "id": {
@@ -4232,7 +4815,7 @@
         },
         "additionalProperties": false
       },
-      "CartDTO": {
+      "FamilyClub.BLL.DTOs.Cart.CartDTO": {
         "type": "object",
         "properties": {
           "id": {
@@ -4246,14 +4829,14 @@
           "cartItems": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/CartItemDTO"
+              "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.CartItem.CartItemDTO"
             },
             "nullable": true
           }
         },
         "additionalProperties": false
       },
-      "CartItemDTO": {
+      "FamilyClub.BLL.DTOs.CartItem.CartItemDTO": {
         "type": "object",
         "properties": {
           "id": {
@@ -4273,6 +4856,10 @@
             "type": "integer",
             "format": "int32"
           },
+          "format": {
+            "type": "string",
+            "nullable": true
+          },
           "productName": {
             "type": "string",
             "nullable": true
@@ -4285,28 +4872,7 @@
         },
         "additionalProperties": false
       },
-      "Category": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "categoryName": {
-            "type": "string",
-            "nullable": true
-          },
-          "products": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Product"
-            },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "CategoryDto": {
+      "FamilyClub.BLL.DTOs.Category.CategoryDto": {
         "type": "object",
         "properties": {
           "id": {
@@ -4320,7 +4886,7 @@
         },
         "additionalProperties": false
       },
-      "ClaimsClubMemberDto": {
+      "FamilyClub.BLL.DTOs.Claims.ClaimsClubMemberDto": {
         "required": [
           "claimType",
           "claimValue"
@@ -4338,109 +4904,72 @@
         },
         "additionalProperties": false
       },
-      "ClubMember": {
+      "FamilyClub.BLL.DTOs.Claims.UpdateClaimClubMemberDto": {
         "type": "object",
         "properties": {
-          "id": {
+          "memberId": {
             "type": "string",
             "nullable": true
           },
-          "userName": {
+          "oldClaimType": {
             "type": "string",
             "nullable": true
           },
-          "normalizedUserName": {
+          "oldClaimValue": {
             "type": "string",
             "nullable": true
           },
-          "email": {
+          "newClaimType": {
             "type": "string",
             "nullable": true
           },
-          "normalizedEmail": {
+          "newClaimValue": {
             "type": "string",
-            "nullable": true
-          },
-          "emailConfirmed": {
-            "type": "boolean"
-          },
-          "passwordHash": {
-            "type": "string",
-            "nullable": true
-          },
-          "securityStamp": {
-            "type": "string",
-            "nullable": true
-          },
-          "concurrencyStamp": {
-            "type": "string",
-            "nullable": true
-          },
-          "phoneNumber": {
-            "type": "string",
-            "nullable": true
-          },
-          "phoneNumberConfirmed": {
-            "type": "boolean"
-          },
-          "twoFactorEnabled": {
-            "type": "boolean"
-          },
-          "lockoutEnd": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "lockoutEnabled": {
-            "type": "boolean"
-          },
-          "accessFailedCount": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "name": {
-            "type": "string",
-            "nullable": true
-          },
-          "surname": {
-            "type": "string",
-            "nullable": true
-          },
-          "dateOfBirth": {
-            "type": "string",
-            "format": "date",
-            "nullable": true
-          },
-          "orders": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Order"
-            },
-            "nullable": true
-          },
-          "reviews": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Review"
-            },
-            "nullable": true
-          },
-          "notifications": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Notification"
-            },
-            "nullable": true
-          },
-          "avatarData": {
-            "type": "string",
-            "format": "byte",
             "nullable": true
           }
         },
         "additionalProperties": false
       },
-      "ClubMemberReadDto": {
+      "FamilyClub.BLL.DTOs.ClubMember.AuthResponseClubMemberDTO": {
+        "type": "object",
+        "properties": {
+          "clubMember": {
+            "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.ClubMember.ClubMemberReadDto"
+          },
+          "token": {
+            "type": "string",
+            "nullable": true
+          },
+          "expiration": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "returnUrl": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FamilyClub.BLL.DTOs.ClubMember.ChangePasswordClubMemberDto": {
+        "required": [
+          "currentPassword",
+          "newPassword"
+        ],
+        "type": "object",
+        "properties": {
+          "currentPassword": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "newPassword": {
+            "minLength": 6,
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "FamilyClub.BLL.DTOs.ClubMember.ClubMemberReadDto": {
         "type": "object",
         "properties": {
           "id": {
@@ -4483,107 +5012,7 @@
         },
         "additionalProperties": false
       },
-      "CoverType": {
-        "enum": [
-          0,
-          1
-        ],
-        "type": "integer",
-        "format": "int32"
-      },
-      "CreateNotificationDTO": {
-        "type": "object",
-        "properties": {
-          "text": {
-            "type": "string",
-            "nullable": true
-          },
-          "clubMemberId": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "Format": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "name": {
-            "type": "string",
-            "nullable": true
-          },
-          "code": {
-            "type": "string",
-            "nullable": true
-          },
-          "products": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Product"
-            },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "FormatDto": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "name": {
-            "type": "string",
-            "nullable": true
-          },
-          "code": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "Language": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "languageName": {
-            "type": "string",
-            "nullable": true
-          },
-          "products": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Product"
-            },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "LanguageDto": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "languageName": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "LoginClubMemberDto": {
+      "FamilyClub.BLL.DTOs.ClubMember.LoginClubMemberDto": {
         "required": [
           "password",
           "username"
@@ -4609,362 +5038,336 @@
         },
         "additionalProperties": false
       },
-      "Notification": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "text": {
-            "type": "string",
-            "nullable": true
-          },
-          "isRead": {
-            "type": "boolean"
-          },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "clubMemberId": {
-            "type": "string",
-            "nullable": true
-          },
-          "clubMember": {
-            "$ref": "#/components/schemas/ClubMember"
-          }
-        },
-        "additionalProperties": false
-      },
-      "NotificationDTO": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "text": {
-            "type": "string",
-            "nullable": true
-          },
-          "isRead": {
-            "type": "boolean"
-          },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "clubMemberId": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "Order": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "userId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "clubMember": {
-            "$ref": "#/components/schemas/ClubMember"
-          },
-          "orderDate": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "status": {
-            "type": "string",
-            "nullable": true
-          },
-          "totalPrice": {
-            "type": "number",
-            "format": "double"
-          },
-          "orderItems": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/OrderItem"
-            },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "OrderDTO": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "userId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "orderDate": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "status": {
-            "type": "string",
-            "nullable": true
-          },
-          "totalPrice": {
-            "type": "number",
-            "format": "double"
-          },
-          "orderItems": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/OrderItemDTO"
-            },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "OrderItem": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "quantity": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "unitPrice": {
-            "type": "number",
-            "format": "double"
-          },
-          "orderId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "order": {
-            "$ref": "#/components/schemas/Order"
-          },
-          "productId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "product": {
-            "$ref": "#/components/schemas/Product"
-          }
-        },
-        "additionalProperties": false
-      },
-      "OrderItemDTO": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "quantity": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "unitPrice": {
-            "type": "number",
-            "format": "double"
-          },
-          "productId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "orderId": {
-            "type": "integer",
-            "format": "int32"
-          }
-        },
-        "additionalProperties": false
-      },
-      "Product": {
+      "FamilyClub.BLL.DTOs.ClubMember.RegisterClubMemberDto": {
         "required": [
-          "price",
-          "productName"
+          "email",
+          "password",
+          "phoneNumber"
         ],
         "type": "object",
         "properties": {
+          "email": {
+            "minLength": 1,
+            "type": "string",
+            "format": "email"
+          },
+          "password": {
+            "minLength": 6,
+            "type": "string"
+          },
+          "phoneNumber": {
+            "minLength": 1,
+            "type": "string",
+            "format": "tel"
+          },
+          "selectedRoles": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "surname": {
+            "type": "string",
+            "nullable": true
+          },
+          "dateOfBirth": {
+            "type": "string",
+            "format": "date",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FamilyClub.BLL.DTOs.ClubMember.UpdateClubMemberDto": {
+        "type": "object",
+        "properties": {
+          "phoneNumber": {
+            "type": "string",
+            "format": "tel",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "surname": {
+            "type": "string",
+            "nullable": true
+          },
+          "dateOfBirth": {
+            "type": "string",
+            "format": "date",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FamilyClub.BLL.DTOs.Complaint.ComplaintImageCreateDto": {
+        "required": [
+          "imageData"
+        ],
+        "type": "object",
+        "properties": {
+          "imageData": {
+            "type": "string",
+            "format": "byte"
+          },
+          "imageName": {
+            "maxLength": 255,
+            "type": "string",
+            "nullable": true
+          },
+          "contentType": {
+            "maxLength": 50,
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FamilyClub.BLL.DTOs.Complaint.ComplaintImageDto": {
+        "type": "object",
+        "properties": {
           "id": {
             "type": "integer",
             "format": "int32"
           },
-          "productName": {
-            "maxLength": 255,
-            "minLength": 1,
+          "imageName": {
+            "type": "string",
+            "nullable": true
+          },
+          "contentType": {
+            "type": "string",
+            "nullable": true
+          },
+          "uploadedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "imageData": {
+            "type": "string",
+            "format": "byte",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FamilyClub.BLL.DTOs.Complaint.ComplaintsCreateDto": {
+        "required": [
+          "complaintText"
+        ],
+        "type": "object",
+        "properties": {
+          "complaintText": {
+            "maxLength": 2000,
+            "minLength": 0,
             "type": "string"
           },
-          "price": {
-            "type": "number",
-            "format": "double"
-          },
-          "discountPrice": {
-            "type": "number",
-            "format": "double",
-            "nullable": true
-          },
-          "description": {
+          "complaintType": {
             "type": "string",
             "nullable": true
           },
-          "publisherId": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "publisher": {
-            "$ref": "#/components/schemas/Publisher"
-          },
-          "productImages": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/ProductImage"
-            },
-            "nullable": true
-          },
-          "reviews": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Review"
-            },
-            "nullable": true
-          },
-          "rating": {
-            "type": "number",
-            "format": "double",
-            "readOnly": true
-          },
-          "originalTitle": {
+          "clubMemberId": {
             "type": "string",
             "nullable": true
           },
-          "pageCount": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "authors": {
+          "images": {
+            "maxItems": 5,
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/Author"
-            },
-            "nullable": true
-          },
-          "languages": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Language"
-            },
-            "nullable": true
-          },
-          "publishingDate": {
-            "type": "string",
-            "format": "date",
-            "nullable": true
-          },
-          "categories": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Category"
-            },
-            "nullable": true
-          },
-          "series": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Series"
-            },
-            "nullable": true
-          },
-          "formats": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Format"
-            },
-            "nullable": true
-          },
-          "ageRestrictions": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/AgeRestriction"
-            },
-            "nullable": true
-          },
-          "bookSizes": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/BookSize"
-            },
-            "nullable": true
-          },
-          "originalLanguageId": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "originalLanguage": {
-            "$ref": "#/components/schemas/Language"
-          },
-          "isbn": {
-            "type": "string",
-            "nullable": true
-          },
-          "promotionId": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "promotion": {
-            "$ref": "#/components/schemas/Promotion"
-          },
-          "coverType": {
-            "$ref": "#/components/schemas/CoverType"
-          },
-          "availability": {
-            "$ref": "#/components/schemas/Availability"
-          },
-          "quantityInStock": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "productCode": {
-            "type": "string",
-            "nullable": true
-          },
-          "weightGrams": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "itemsInSet": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "translators": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Translator"
+              "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Complaint.ComplaintImageCreateDto"
             },
             "nullable": true
           }
         },
         "additionalProperties": false
       },
-      "ProductDto": {
+      "FamilyClub.BLL.DTOs.Complaint.ComplaintsReadDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "complaintText": {
+            "type": "string",
+            "nullable": true
+          },
+          "complaintType": {
+            "type": "string",
+            "nullable": true
+          },
+          "isResolved": {
+            "type": "boolean"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "resolvedAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "clubMemberId": {
+            "type": "string",
+            "nullable": true
+          },
+          "resolutionNotes": {
+            "type": "string",
+            "nullable": true
+          },
+          "images": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.Complaint.ComplaintImageDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FamilyClub.BLL.DTOs.Format.FormatDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "code": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FamilyClub.BLL.DTOs.Language.LanguageDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "languageName": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FamilyClub.BLL.DTOs.Notification.CreateNotificationDTO": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string",
+            "nullable": true
+          },
+          "clubMemberId": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FamilyClub.BLL.DTOs.Notification.NotificationDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "text": {
+            "type": "string",
+            "nullable": true
+          },
+          "isRead": {
+            "type": "boolean"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "clubMemberId": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FamilyClub.BLL.DTOs.Order.OrderDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "userId": {
+            "type": "string",
+            "nullable": true
+          },
+          "orderDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "status": {
+            "type": "string",
+            "nullable": true
+          },
+          "totalPrice": {
+            "type": "number",
+            "format": "double"
+          },
+          "orderItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FamilyClub.BLL.DTOs.OrderItem.OrderItemDTO"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FamilyClub.BLL.DTOs.OrderItem.OrderItemDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "quantity": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "unitPrice": {
+            "type": "number",
+            "format": "double"
+          },
+          "productId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "orderId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "format": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FamilyClub.BLL.DTOs.Product.ProductDto": {
         "type": "object",
         "properties": {
           "id": {
@@ -4996,7 +5399,7 @@
           "productImages": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/ProductImage"
+              "$ref": "#/components/schemas/FamilyClubLibrary.ProductImage"
             },
             "nullable": true
           },
@@ -5015,10 +5418,10 @@
             "nullable": true
           },
           "coverType": {
-            "$ref": "#/components/schemas/CoverType"
+            "$ref": "#/components/schemas/FamilyClubLibrary.Enum.CoverType"
           },
           "availability": {
-            "$ref": "#/components/schemas/Availability"
+            "$ref": "#/components/schemas/FamilyClubLibrary.Enum.Availability"
           },
           "quantityInStock": {
             "type": "integer",
@@ -5123,7 +5526,674 @@
         },
         "additionalProperties": false
       },
-      "ProductImage": {
+      "FamilyClub.BLL.DTOs.Promotion.PromotionDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "discountPercent": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "endDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FamilyClub.BLL.DTOs.Publisher.PublisherDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "publisherName": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FamilyClub.BLL.DTOs.Review.ReviewDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "productId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "userId": {
+            "type": "string",
+            "nullable": true
+          },
+          "rating": {
+            "type": "number",
+            "format": "double"
+          },
+          "comment": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "approved": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "FamilyClub.BLL.DTOs.Series.SeriesDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "serieTitle": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FamilyClub.BLL.DTOs.Translator.TranslatorDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "translatorName": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FamilyClubLibrary.AgeRestriction": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "code": {
+            "type": "string",
+            "nullable": true
+          },
+          "products": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FamilyClubLibrary.Product"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FamilyClubLibrary.Author": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "authorName": {
+            "type": "string",
+            "nullable": true
+          },
+          "biography": {
+            "type": "string",
+            "nullable": true
+          },
+          "photoUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "products": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FamilyClubLibrary.Product"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FamilyClubLibrary.BookSize": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "code": {
+            "type": "string",
+            "nullable": true
+          },
+          "products": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FamilyClubLibrary.Product"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FamilyClubLibrary.Category": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "categoryName": {
+            "type": "string",
+            "nullable": true
+          },
+          "products": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FamilyClubLibrary.Product"
+            },
+            "nullable": true
+          },
+          "favoritedBy": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FamilyClubLibrary.ClubMember"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FamilyClubLibrary.ClubMember": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "userName": {
+            "type": "string",
+            "nullable": true
+          },
+          "normalizedUserName": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "normalizedEmail": {
+            "type": "string",
+            "nullable": true
+          },
+          "emailConfirmed": {
+            "type": "boolean"
+          },
+          "passwordHash": {
+            "type": "string",
+            "nullable": true
+          },
+          "securityStamp": {
+            "type": "string",
+            "nullable": true
+          },
+          "concurrencyStamp": {
+            "type": "string",
+            "nullable": true
+          },
+          "phoneNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "phoneNumberConfirmed": {
+            "type": "boolean"
+          },
+          "twoFactorEnabled": {
+            "type": "boolean"
+          },
+          "lockoutEnd": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "lockoutEnabled": {
+            "type": "boolean"
+          },
+          "accessFailedCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "surname": {
+            "type": "string",
+            "nullable": true
+          },
+          "dateOfBirth": {
+            "type": "string",
+            "format": "date",
+            "nullable": true
+          },
+          "orders": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FamilyClubLibrary.Order"
+            },
+            "nullable": true
+          },
+          "reviews": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FamilyClubLibrary.Review"
+            },
+            "nullable": true
+          },
+          "notifications": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FamilyClubLibrary.Notification"
+            },
+            "nullable": true
+          },
+          "avatarData": {
+            "type": "string",
+            "format": "byte",
+            "nullable": true
+          },
+          "favoriteProducts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FamilyClubLibrary.Product"
+            },
+            "nullable": true
+          },
+          "favoriteCategories": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FamilyClubLibrary.Category"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FamilyClubLibrary.Enum.Availability": {
+        "enum": [
+          0,
+          1,
+          2
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "FamilyClubLibrary.Enum.CoverType": {
+        "enum": [
+          0,
+          1
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "FamilyClubLibrary.Format": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "code": {
+            "type": "string",
+            "nullable": true
+          },
+          "products": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FamilyClubLibrary.Product"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FamilyClubLibrary.Language": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "languageName": {
+            "type": "string",
+            "nullable": true
+          },
+          "products": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FamilyClubLibrary.Product"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FamilyClubLibrary.Notification": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "text": {
+            "type": "string",
+            "nullable": true
+          },
+          "isRead": {
+            "type": "boolean"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "clubMemberId": {
+            "type": "string",
+            "nullable": true
+          },
+          "clubMember": {
+            "$ref": "#/components/schemas/FamilyClubLibrary.ClubMember"
+          }
+        },
+        "additionalProperties": false
+      },
+      "FamilyClubLibrary.Order": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "userId": {
+            "type": "string",
+            "nullable": true
+          },
+          "clubMember": {
+            "$ref": "#/components/schemas/FamilyClubLibrary.ClubMember"
+          },
+          "orderDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "status": {
+            "type": "string",
+            "nullable": true
+          },
+          "totalPrice": {
+            "type": "number",
+            "format": "double"
+          },
+          "orderItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FamilyClubLibrary.OrderItem"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FamilyClubLibrary.OrderItem": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "quantity": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "unitPrice": {
+            "type": "number",
+            "format": "double"
+          },
+          "orderId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "order": {
+            "$ref": "#/components/schemas/FamilyClubLibrary.Order"
+          },
+          "productId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "product": {
+            "$ref": "#/components/schemas/FamilyClubLibrary.Product"
+          },
+          "format": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FamilyClubLibrary.Product": {
+        "required": [
+          "price",
+          "productName"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "productName": {
+            "maxLength": 255,
+            "minLength": 1,
+            "type": "string"
+          },
+          "price": {
+            "type": "number",
+            "format": "double"
+          },
+          "discountPrice": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "publisherId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "publisher": {
+            "$ref": "#/components/schemas/FamilyClubLibrary.Publisher"
+          },
+          "productImages": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FamilyClubLibrary.ProductImage"
+            },
+            "nullable": true
+          },
+          "reviews": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FamilyClubLibrary.Review"
+            },
+            "nullable": true
+          },
+          "rating": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          },
+          "originalTitle": {
+            "type": "string",
+            "nullable": true
+          },
+          "pageCount": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "authors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FamilyClubLibrary.Author"
+            },
+            "nullable": true
+          },
+          "languages": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FamilyClubLibrary.Language"
+            },
+            "nullable": true
+          },
+          "publishingDate": {
+            "type": "string",
+            "format": "date",
+            "nullable": true
+          },
+          "categories": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FamilyClubLibrary.Category"
+            },
+            "nullable": true
+          },
+          "series": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FamilyClubLibrary.Series"
+            },
+            "nullable": true
+          },
+          "formats": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FamilyClubLibrary.Format"
+            },
+            "nullable": true
+          },
+          "ageRestrictions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FamilyClubLibrary.AgeRestriction"
+            },
+            "nullable": true
+          },
+          "bookSizes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FamilyClubLibrary.BookSize"
+            },
+            "nullable": true
+          },
+          "originalLanguageId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "originalLanguage": {
+            "$ref": "#/components/schemas/FamilyClubLibrary.Language"
+          },
+          "isbn": {
+            "type": "string",
+            "nullable": true
+          },
+          "promotionId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "promotion": {
+            "$ref": "#/components/schemas/FamilyClubLibrary.Promotion"
+          },
+          "coverType": {
+            "$ref": "#/components/schemas/FamilyClubLibrary.Enum.CoverType"
+          },
+          "availability": {
+            "$ref": "#/components/schemas/FamilyClubLibrary.Enum.Availability"
+          },
+          "quantityInStock": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "productCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "weightGrams": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "itemsInSet": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "translators": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FamilyClubLibrary.Translator"
+            },
+            "nullable": true
+          },
+          "favoritedBy": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FamilyClubLibrary.ClubMember"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FamilyClubLibrary.ProductImage": {
         "required": [
           "imageData",
           "imageName"
@@ -5149,12 +6219,12 @@
             "format": "int32"
           },
           "product": {
-            "$ref": "#/components/schemas/Product"
+            "$ref": "#/components/schemas/FamilyClubLibrary.Product"
           }
         },
         "additionalProperties": false
       },
-      "Promotion": {
+      "FamilyClubLibrary.Promotion": {
         "type": "object",
         "properties": {
           "id": {
@@ -5179,39 +6249,14 @@
           "products": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/Product"
+              "$ref": "#/components/schemas/FamilyClubLibrary.Product"
             },
             "nullable": true
           }
         },
         "additionalProperties": false
       },
-      "PromotionDto": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "discountPercent": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "startDate": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "endDate": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "Publisher": {
+      "FamilyClubLibrary.Publisher": {
         "type": "object",
         "properties": {
           "id": {
@@ -5225,66 +6270,7 @@
         },
         "additionalProperties": false
       },
-      "PublisherDto": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "publisherName": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "RegisterClubMemberDto": {
-        "required": [
-          "email",
-          "password",
-          "phoneNumber"
-        ],
-        "type": "object",
-        "properties": {
-          "email": {
-            "minLength": 1,
-            "type": "string",
-            "format": "email"
-          },
-          "password": {
-            "minLength": 6,
-            "type": "string"
-          },
-          "phoneNumber": {
-            "minLength": 1,
-            "type": "string",
-            "format": "tel"
-          },
-          "selectedRoles": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "nullable": true
-          },
-          "name": {
-            "type": "string",
-            "nullable": true
-          },
-          "surname": {
-            "type": "string",
-            "nullable": true
-          },
-          "dateOfBirth": {
-            "type": "string",
-            "format": "date",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "Review": {
+      "FamilyClubLibrary.Review": {
         "required": [
           "userId"
         ],
@@ -5299,14 +6285,14 @@
             "format": "int32"
           },
           "product": {
-            "$ref": "#/components/schemas/Product"
+            "$ref": "#/components/schemas/FamilyClubLibrary.Product"
           },
           "userId": {
             "type": "string",
             "nullable": true
           },
           "clubMember": {
-            "$ref": "#/components/schemas/ClubMember"
+            "$ref": "#/components/schemas/FamilyClubLibrary.ClubMember"
           },
           "rating": {
             "maximum": 5,
@@ -5328,40 +6314,7 @@
         },
         "additionalProperties": false
       },
-      "ReviewDto": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "productId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "userId": {
-            "type": "string",
-            "nullable": true
-          },
-          "rating": {
-            "type": "number",
-            "format": "double"
-          },
-          "comment": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "approved": {
-            "type": "boolean"
-          }
-        },
-        "additionalProperties": false
-      },
-      "Series": {
+      "FamilyClubLibrary.Series": {
         "type": "object",
         "properties": {
           "id": {
@@ -5375,28 +6328,14 @@
           "products": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/Product"
+              "$ref": "#/components/schemas/FamilyClubLibrary.Product"
             },
             "nullable": true
           }
         },
         "additionalProperties": false
       },
-      "SeriesDto": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "serieTitle": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "Translator": {
+      "FamilyClubLibrary.Translator": {
         "type": "object",
         "properties": {
           "id": {
@@ -5410,72 +6349,18 @@
           "products": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/Product"
+              "$ref": "#/components/schemas/FamilyClubLibrary.Product"
             },
             "nullable": true
           }
         },
         "additionalProperties": false
       },
-      "TranslatorDto": {
+      "HeartbeatRequest": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "translatorName": {
+          "sessionId": {
             "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "UpdateClaimClubMemberDto": {
-        "type": "object",
-        "properties": {
-          "memberId": {
-            "type": "string",
-            "nullable": true
-          },
-          "oldClaimType": {
-            "type": "string",
-            "nullable": true
-          },
-          "oldClaimValue": {
-            "type": "string",
-            "nullable": true
-          },
-          "newClaimType": {
-            "type": "string",
-            "nullable": true
-          },
-          "newClaimValue": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "UpdateClubMemberDto": {
-        "type": "object",
-        "properties": {
-          "phoneNumber": {
-            "type": "string",
-            "format": "tel",
-            "nullable": true
-          },
-          "name": {
-            "type": "string",
-            "nullable": true
-          },
-          "surname": {
-            "type": "string",
-            "nullable": true
-          },
-          "dateOfBirth": {
-            "type": "string",
-            "format": "date",
             "nullable": true
           }
         },
@@ -5509,6 +6394,12 @@
       "name": "ClubMember"
     },
     {
+      "name": "Complaints"
+    },
+    {
+      "name": "Favorites"
+    },
+    {
       "name": "Formats"
     },
     {
@@ -5525,6 +6416,9 @@
     },
     {
       "name": "Orders"
+    },
+    {
+      "name": "Presence"
     },
     {
       "name": "Products"

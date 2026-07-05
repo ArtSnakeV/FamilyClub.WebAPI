@@ -16,6 +16,7 @@ import {
   OrdersApi,
   FavoritesApi,
   AgeRestrictionsApi,
+  ComplaintsApi,
 } from "./generated";
 
 // Configuration tells the client where your backend is
@@ -44,3 +45,4 @@ export const cartService = new CartsApi(apiConfig);
 export const orderService = new OrdersApi(apiConfig);
 export const favoriteService = new FavoritesApi(apiConfig);
 export const ageRestrictionService = new AgeRestrictionsApi(apiConfig);
+export const complaintsService = new ComplaintsApi(apiConfig);

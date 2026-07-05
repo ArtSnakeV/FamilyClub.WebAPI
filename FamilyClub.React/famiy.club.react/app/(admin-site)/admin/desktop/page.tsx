@@ -10,10 +10,13 @@ import {
   ClubMemberApi,
   ReviewsApi,
   OrdersApi,
-  // ComplaintsApi,
+  ComplaintsApi,
   Configuration,
   ProductDto,
-  ClubMemberReadDto
+  ClubMemberReadDto,
+  ReviewDto,
+  OrderDTO,
+  ComplaintsReadDto,
 } from '@/lib/api/generated';
 import { useEffect, useState } from "react";
 
@@ -25,45 +28,101 @@ export default function Desktop() {
   // 1. Establish state for all 5 dataset categories
   const [products, setProducts] = useState<ProductDto[]>([]);
   const [members, setMembers] = useState<ClubMemberReadDto[]>([]);
-  const [reviews, setReviews] = useState<any[]>([]);
-  const [orders, setOrders] = useState<any[]>([]);       // Added for Orders
-  const [complaints, setComplaints] = useState<any[]>([]); // Added for Complaints
-
+  const [reviews, setReviews] = useState<ReviewDto[]>([]);
+  const [orders, setOrders] = useState<OrderDTO[]>([]);
+  const [complaints, setComplaints] = useState<ComplaintsReadDto[]>([]);
+  
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<unknown>(null);
 
   useEffect(() => {
-    const config = new Configuration({ basePath: "https://localhost:7069" });
-
-    const productsApi = new ProductsApi(config);
-    const memberApi = new ClubMemberApi(config);
-    const reviewsApi = new ReviewsApi(config);
-    const ordersApi = new OrdersApi(config);
-    // const complaintsApi = new ComplaintsApi(config);
-
-    // Concurrent fetching for all metrics
-    Promise.all([
-      productsApi.apiProductsGet(),
-      memberApi.apiClubMemberGet(),
-      reviewsApi.apiReviewsGet(), // Assuming this is the correct method for fetching reviews
-      ordersApi.apiOrdersGet(), // Assuming this is the correct method for fetching orders
-      Promise.resolve([])  // Temporary placeholder for Complaints
-    ])
-      .then(([productsData, membersData, reviewsData, ordersData, complaintsData]) => {
-        setProducts(productsData);
-        setMembers(membersData);
-        setReviews(reviewsData);
-        setOrders(ordersData);
-        setComplaints(complaintsData);
+    let cancelled = false;
+  
+    const loadDashboard = async () => {
+      const token = localStorage.getItem("token");
+  
+      if (!token) {
+        setError(new Error("Not authenticated"));
         setIsLoading(false);
-      })
-      .catch((err) => {
-        console.error("DASHBOARD DATA FETCH ERROR:", err);
-        setError(err);
-        setIsLoading(false);
+        return;
+      }
+  
+      const config = new Configuration({
+        basePath: process.env.NEXT_PUBLIC_API_URL ?? "https://localhost:7069",
+        headers: { Authorization: `Bearer ${token}` },
       });
+  
+      const productsApi = new ProductsApi(config);
+      const memberApi = new ClubMemberApi(config);
+      const reviewsApi = new ReviewsApi(config);
+      const ordersApi = new OrdersApi(config);
+      const complaintsApi = new ComplaintsApi(config);
+  
+      try {
+        const results = await Promise.allSettled([
+          productsApi.apiProductsGet(),
+          memberApi.apiClubMemberGet(),
+          reviewsApi.apiReviewsGet(),
+          ordersApi.apiOrdersGet(),
+          complaintsApi.apiComplaintsGet(),
+        ]);
+  
+        if (cancelled) return;
+  
+        const [productsResult, membersResult, reviewsResult, ordersResult, complaintsResult] = results;
+  
+        if (productsResult.status === "fulfilled") {
+          setProducts(productsResult.value);
+        } else {
+          console.error("Failed to load products:", productsResult.reason);
+        }
+  
+        if (membersResult.status === "fulfilled") {
+          setMembers(membersResult.value);
+        } else {
+          console.error("Failed to load members:", membersResult.reason);
+        }
+  
+        if (reviewsResult.status === "fulfilled") {
+          setReviews(reviewsResult.value);
+        } else {
+          console.error("Failed to load reviews:", reviewsResult.reason);
+        }
+  
+        if (ordersResult.status === "fulfilled") {
+          setOrders(ordersResult.value);
+        } else {
+          console.error("Failed to load orders:", ordersResult.reason);
+        }
+  
+        if (complaintsResult.status === "fulfilled") {
+          setComplaints(complaintsResult.value);
+        } else {
+          console.error("Failed to load complaints:", complaintsResult.reason);
+        }
+  
+        const allFailed = results.every((r) => r.status === "rejected");
+        if (allFailed) {
+          setError(new Error("Failed to load dashboard data"));
+        }
+      } catch (err) {
+        if (!cancelled) {
+          console.error("DASHBOARD DATA FETCH ERROR:", err);
+          setError(err);
+        }
+      } finally {
+        if (!cancelled) {
+          setIsLoading(false);
+        }
+      }
+    };
+  
+    loadDashboard();
+  
+    return () => {
+      cancelled = true;
+    };
   }, []);
-
   return (
 
     <div className="relative w-full min-h-screen flex flex-col">
@@ -133,7 +192,7 @@ export default function Desktop() {
                 items={orders}
                 isLoading={isLoading}
                 icon="/images/admin_manager/desktop/shopping-cart-solid-full 1.svg"
-                getDate={(order) => order.orderDate || order.createdAt} // Fallback to your order structure field
+                getDate={(order) => order.orderDate}
                 href="/admin/orders"
               />
 
@@ -143,7 +202,7 @@ export default function Desktop() {
                 items={complaints}
                 isLoading={isLoading}
                 icon="/images/admin_manager/desktop/chart-simple-solid-full 1.svg"
-                getDate={(complaint) => complaint.submissionDate || complaint.createdAt}
+                getDate={(complaint) => complaint.createdAt}
                 href="/admin/complaints"
               />
             </section>
@@ -198,7 +257,7 @@ export default function Desktop() {
                 items={orders}
                 isLoading={isLoading}
                 icon="/images/admin_manager/desktop/shopping-cart-solid-full 1.svg"
-                getDate={(order) => order.orderDate || order.createdAt} // Fallback to your order structure field
+                getDate={(order) => order.orderDate}
                 href="/admin/orders"
               />
 
@@ -208,7 +267,7 @@ export default function Desktop() {
                 items={complaints}
                 isLoading={isLoading}
                 icon="/images/admin_manager/desktop/chart-simple-solid-full 1.svg"
-                getDate={(complaint) => complaint.submissionDate || complaint.createdAt}
+                getDate={(complaint) => complaint.createdAt}
                 href="/admin/complaints"
               />
             </section>
@@ -378,7 +437,7 @@ export default function Desktop() {
 //               items={orders}
 //               isLoading={isLoading}
 //               icon="/images/admin_manager/desktop/shopping-cart-solid-full 1.svg"
-//               getDate={(order) => order.orderDate || order.createdAt} // Fallback to your order structure field
+//               getDate={(order) => order.orderDate}
 //               href="/admin/orders"
 //             />
 
@@ -388,7 +447,7 @@ export default function Desktop() {
 //               items={complaints}
 //               isLoading={isLoading}
 //               icon="/images/admin_manager/desktop/chart-simple-solid-full 1.svg"
-//               getDate={(complaint) => complaint.submissionDate || complaint.createdAt}
+//               getDate={(complaint) => complaint.createdAt}
 //               href="/admin/complaints"
 //             />
 //           </section>
