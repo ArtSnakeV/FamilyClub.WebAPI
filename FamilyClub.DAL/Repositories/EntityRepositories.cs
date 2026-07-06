@@ -18,7 +18,7 @@ public class ProductRepository : Repository<Product>, IProductRepository
         _context = context;
     }
 
-    public async Task<IEnumerable<Product>> GetAllWithImagesAsync(CancellationToken cancellationToken = default)
+    public new async Task<IEnumerable<Product>> GetAllAsync(CancellationToken cancellationToken = default)
     {
 		return await _context.Products
 		.Include(p => p.ProductImages)
@@ -33,7 +33,7 @@ public class ProductRepository : Repository<Product>, IProductRepository
 		.ToListAsync(cancellationToken);
 	}
 
-    public async Task<Product?> GetByIdWithImagesAsync(int id, CancellationToken cancellationToken = default)
+    public new async Task<Product?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
     {
 		return await _context.Products
 		.Include(p => p.ProductImages)
@@ -47,6 +47,9 @@ public class ProductRepository : Repository<Product>, IProductRepository
 		.Include(p => p.AgeRestrictions)
 		.FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
 	}
+
+    public async Task<IEnumerable<Product>> GetAllWithImagesAsync(CancellationToken cancellationToken = default) => await GetAllAsync(cancellationToken);
+    public async Task<Product?> GetByIdWithImagesAsync(int id, CancellationToken cancellationToken = default) => await GetByIdAsync(id, cancellationToken);
 }
 public class PromotionRepository(FamilyClubContext context) : Repository<Promotion>(context), IPromotionRepository;
 public class PublisherRepository(FamilyClubContext context) : Repository<Publisher>(context), IPublisherRepository;
@@ -73,25 +76,23 @@ public class ClubMemberRepository(FamilyClubContext context) : Repository<ClubMe
 
 public class OrderRepository : Repository<Order>, IOrderRepository
 {
-	private readonly FamilyClubContext _context;
-	public OrderRepository(FamilyClubContext context) : base(context)
-	{
-		_context = context;
-	}
-
-	public async Task<IEnumerable<Order>> GetAllWithItemsAsync(CancellationToken cancellationToken = default)
-	{
-		return await _context.Orders
-			.Include(o => o.OrderItems)
-			.ToListAsync(cancellationToken);
-	}
-
-	public async Task<Order?> GetByIdWithItemsAsync(int id, CancellationToken cancellationToken = default)
-	{
-		return await _context.Orders
-			.Include(o => o.OrderItems)
-			.FirstOrDefaultAsync(o => o.Id == id, cancellationToken);
-	}
+    private readonly FamilyClubContext _context;
+    public OrderRepository(FamilyClubContext context) : base(context)
+    {
+        _context = context;
+    }
+    public new async Task<IEnumerable<Order>> GetAllAsync(CancellationToken cancellationToken = default)
+    {
+        return await _context.Orders
+            .Include(o => o.OrderItems)
+            .ToListAsync(cancellationToken);
+    }
+    public new async Task<Order?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
+    {
+        return await _context.Orders
+            .Include(o => o.OrderItems)
+            .FirstOrDefaultAsync(o => o.Id == id, cancellationToken);
+    }
     public async Task<IEnumerable<Order>> GetByUserIdAsync(string userId, CancellationToken cancellationToken = default)
     {
         return await _context.Orders
@@ -101,7 +102,7 @@ public class OrderRepository : Repository<Order>, IOrderRepository
             .Where(o => o.UserId == userId)
             .ToListAsync(cancellationToken);
     }
-};
+}
 public class NotificationRepository : Repository<Notification>, INotificationRepository
 {
 	private readonly FamilyClubContext _context;
@@ -153,6 +154,42 @@ public class CartItemRepository : Repository<CartItem>, ICartItemRepository
         return await _context.CartItems
             .Where(ci => ci.CartId == cartId)
             .Include(ci => ci.Product)
+            .ToListAsync(cancellationToken);
+    }
+}
+
+public class ComplaintRepository : Repository<Complaint>, IComplaintRepository
+{
+    private readonly FamilyClubContext _context;
+
+    public ComplaintRepository(FamilyClubContext context) : base(context)
+    {
+        _context = context;
+    }
+
+    // Hide base methods to include images by default
+    public new async Task<IEnumerable<Complaint>> GetAllAsync(CancellationToken cancellationToken = default)
+    {
+        return await _context.Complaints
+            .Include(c => c.ComplaintImages)
+            .Include(c => c.ClubMember)
+            .ToListAsync(cancellationToken);
+    }
+
+    public new async Task<Complaint?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
+    {
+        return await _context.Complaints
+            .Include(c => c.ComplaintImages)
+            .Include(c => c.ClubMember)
+            .FirstOrDefaultAsync(c => c.Id == id, cancellationToken);
+    }
+
+    public async Task<IEnumerable<Complaint>> GetByClubMemberIdAsync(string clubMemberId, CancellationToken cancellationToken = default)
+    {
+        return await _context.Complaints
+            .Include(c => c.ComplaintImages)
+            .Include(c => c.ClubMember)
+            .Where(c => c.ClubMemberId == clubMemberId)
             .ToListAsync(cancellationToken);
     }
 }

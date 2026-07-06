@@ -2,6 +2,7 @@ using FamilyClubLibrary;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 using Microsoft.EntityFrameworkCore;
+using System.Reflection.Emit;
 
 namespace FamilyClub.DAL.EF;
 public class FamilyClubContext : IdentityDbContext<ClubMember>
@@ -36,6 +37,8 @@ public class FamilyClubContext : IdentityDbContext<ClubMember>
     public DbSet<Cart> Cart { get; set; }
 
     public DbSet<CartItem> CartItems { get; set; }
+    public DbSet<Complaint> Complaints { get; set; }
+    public DbSet<ComplaintImage> ComplaintImages { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -149,21 +152,35 @@ public class FamilyClubContext : IdentityDbContext<ClubMember>
 		    .HasForeignKey(o => o.UserId)
 		    .OnDelete(DeleteBehavior.Cascade);
 
-		//// USER ↔ REVIEW (one-to-many)
-		//builder.Entity<Review>()
-		//    .HasOne(r => r.ClubMember)
-		//    .WithMany()
-		//    .HasForeignKey(r => r.UserId);
+        //// USER ↔ REVIEW (one-to-many)
+        //builder.Entity<Review>()
+        //    .HasOne(r => r.ClubMember)
+        //    .WithMany()
+        //    .HasForeignKey(r => r.UserId);
 
 
-		// For PROMOTIONS if we deside to change them to Many-to-Many
-		// For the moment one product can have only one assigned promotion to avoid problems with pricing due to unexpected price reduce with multiple promotions summarizing.
-		//// PROMOTION ↔ PRODUCT (many-to-many)
-		//builder.Entity<Product>()
-		//    .HasOne(p => p.Promotion)
-		//    .WithMany(pr => pr.Products)
-		//    .HasForeignKey(p => p.PromotionId)
-		//    .OnDelete(DeleteBehavior.SetNull);
-	}
+        // For PROMOTIONS if we deside to change them to Many-to-Many
+        // For the moment one product can have only one assigned promotion to avoid problems with pricing due to unexpected price reduce with multiple promotions summarizing.
+        //// PROMOTION ↔ PRODUCT (many-to-many)
+        //builder.Entity<Product>()
+        //    .HasOne(p => p.Promotion)
+        //    .WithMany(pr => pr.Products)
+        //    .HasForeignKey(p => p.PromotionId)
+        //    .OnDelete(DeleteBehavior.SetNull);
+
+        // Configure Complaint - ComplaintImage relationship
+        builder.Entity<Complaint>()
+            .HasMany(c => c.ComplaintImages)
+            .WithOne(ci => ci.Complaint)
+            .HasForeignKey(ci => ci.ComplaintId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        // Configure Complaint - ClubMember relationship
+        builder.Entity<Complaint>()
+            .HasOne(c => c.ClubMember)
+            .WithMany()  // or WithMany(cm => cm.Complaints) if you add navigation property in ClubMember
+            .HasForeignKey(c => c.ClubMemberId)
+            .OnDelete(DeleteBehavior.Cascade);
+    }
 
 }

@@ -29,7 +29,6 @@ const formatIconMap = {
 
 export default function BookCard({ title, author, price, image, rating, href, formatTags }: BookCardProps) {
     const roundedRating = clampRating(Math.round(rating ?? 0));
-    const ratingStars = Array.from({ length: 5 }, (_, index) => (index < roundedRating ? "★" : "☆"));
     const activeFormatTags = formatTags?.length ? formatTags : [];
 
     const card = (
@@ -43,13 +42,13 @@ export default function BookCard({ title, author, price, image, rating, href, fo
             />
 
             {activeFormatTags.length > 0 ? (
-                <div className="absolute left-0 top-[20px] flex flex-col gap-2">
+                <div className="absolute left-0 top-[20px] z-10 flex flex-col gap-2">
                     {activeFormatTags.map((tag) => {
                         const item = formatIconMap[tag];
                         return (
-                            <div key={tag} className="relative h-[30px] w-[30px]">
-                                <img alt="" className="absolute inset-0" src={item.bg} />
-                                <img alt="" className="absolute inset-[5px]" src={item.icon} />
+                            <div key={tag} className="relative h-[30px] w-[35px]">
+                                <img alt="" className="absolute inset-0 h-full w-full object-fill" src={item.bg} />
+                                <img alt="" className="absolute left-[5px] top-[5px] h-[20px] w-[20px] object-contain" src={item.icon} />
                             </div>
                         );
                     })}
@@ -57,9 +56,9 @@ export default function BookCard({ title, author, price, image, rating, href, fo
             ) : null}
 
             <img
-                alt=""
-                className="absolute right-[18px] top-[20px] z-10 h-[34px] w-[34px]"
-                src="/images/header/favorite_border_24px.png"
+                alt="Улюблене"
+                className="absolute right-[18px] top-[20px] z-10 h-[30px] w-[30px] cursor-pointer"
+                src="/images/main_page/icons/rec-icon-favorite.svg"
             />
 
             {image ? (
@@ -69,30 +68,38 @@ export default function BookCard({ title, author, price, image, rating, href, fo
                     src={image}
                 />
             ) : (
-                <div className="absolute left-1/2 top-[20px] h-[190px] w-[140px] -translate-x-1/2" />
+                <div className="absolute left-1/2 top-[20px] h-[190px] w-[140px] -translate-x-1/2 flex flex-col items-center justify-center text-gray-400 text-center p-2 bg-white/80 rounded-[6px] shadow-sm border border-gray-200">
+                    <span className="text-3xl mb-1">📖</span>
+                    <span className="text-xs font-serif">Немає фото</span>
+                </div>
             )}
 
             <div className="absolute bottom-[20px] left-[20px] right-[20px]">
-                <div className="mb-3 flex gap-1 text-[21px] tracking-[2px]" aria-label={`Рейтинг ${roundedRating}/5`}>
-                    {ratingStars.map((star, index) => (
-                        <span key={`${title}-star-${index}`}>{star}</span>
+                <div className="mb-3 flex gap-1.5" aria-label={`Рейтинг ${roundedRating}/5`}>
+                    {Array.from({ length: 5 }, (_, index) => (
+                        <img
+                            key={`${title}-star-${index}`}
+                            src="/images/main_page/icons/rec-icon-star.svg"
+                            className={`h-[18px] w-[18px] ${index < roundedRating ? "opacity-100" : "opacity-30"}`}
+                            alt=""
+                        />
                     ))}
                 </div>
 
                 <div className="mb-3">
-                    <p className="font-mono text-[18px] font-medium leading-[1.2] text-[#242424]">
+                    <p className="font-serif text-[18px] font-medium leading-[1.2] text-[#242424] line-clamp-2 overflow-hidden text-ellipsis h-[48px]">
                         {title}
                     </p>
                     {author ? (
-                        <p className="text-[14px] text-[rgba(36,36,36,0.7)]">{author}</p>
+                        <p className="text-[14px] text-[rgba(36,36,36,0.7)] overflow-hidden text-ellipsis whitespace-nowrap">{author}</p>
                     ) : (
-                        <div className="h-[18px]" />
+                        <div className="h-[20px]" />
                     )}
                 </div>
 
                 <div className="flex items-center justify-between">
                     <span className="text-[24px] text-[#242424]">{price}</span>
-                    <img alt="" className="h-[30px] w-[30px]" src="/images/main_page/icons/rec-icon-basket.svg" />
+                    <img alt="Кошик" className="h-[30px] w-[30px] cursor-pointer" src="/images/main_page/icons/rec-icon-basket.svg" />
                 </div>
             </div>
         </div>

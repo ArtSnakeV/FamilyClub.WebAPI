@@ -1,6 +1,7 @@
 "use client";
 
 import BookCard from "@/app/(user-site)/main_page/BookCard";
+import MobileProductDetails from "./MobileProductDetails";
 
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
@@ -22,6 +23,7 @@ import {
   BookSizeDto,
   CategoryDto,
   ClubMemberReadDto,
+  CoverType,
   FormatDto,
   LanguageDto,
   ProductDto,
@@ -29,7 +31,6 @@ import {
   ReviewDto,
 } from "@/lib/api/generated";
 import { useCart } from "@/lib/hooks/useCart";
-import { log } from "console";
 
 type ReviewCardData = {
   id: number | string;
@@ -38,6 +39,25 @@ type ReviewCardData = {
   timeLabel: string;
   avatar?: string | null;
   bookImage?: string | null;
+  likesCount?: number;
+};
+
+const formatIconMap = {
+  paper: {
+    bg: "/images/main_page/icons/rec-icon-paper-bg.svg",
+    icon: "/images/main_page/icons/rec-icon-paper.svg",
+    label: "Паперова",
+  },
+  ebook: {
+    bg: "/images/main_page/icons/rec-icon-ebook-bg.svg",
+    icon: "/images/main_page/icons/rec-icon-ebook.svg",
+    label: "eBooks",
+  },
+  audio: {
+    bg: "/images/main_page/icons/rec-icon-audio-bg.svg",
+    icon: "/images/main_page/icons/rec-icon-audio.svg",
+    label: "Аудіо книга",
+  },
 };
 
 const formatPrice = (value?: number | null) => {
@@ -63,29 +83,43 @@ const getImageSrc = (product?: ProductDto | null) => {
   if (!product) return null;
   const image = product.productImages?.[0];
   if (!image?.imageData) return null;
-  if (image.imageData.startsWith("data:")) {
-    return image.imageData;
+  const normalizedData = image.imageData.trim();
+  if (normalizedData.startsWith("data:")) {
+    return normalizedData;
   }
 
-  const extension = image.imageName?.split(".").pop()?.toLowerCase();
-  const mimeType =
-    extension === "png"
-      ? "image/png"
-      : extension === "webp"
-        ? "image/webp"
-        : extension === "gif"
-          ? "image/gif"
-          : "image/jpeg";
+  const mimeType = (() => {
+    if (normalizedData.startsWith("UklGR")) return "image/webp";
+    if (normalizedData.startsWith("/9j/")) return "image/jpeg";
+    if (normalizedData.startsWith("iVBORw0KGgo")) return "image/png";
+    if (normalizedData.startsWith("R0lGOD")) return "image/gif";
 
-  return `data:${mimeType};base64,${image.imageData}`;
+    const extension = image.imageName?.split(".").pop()?.toLowerCase();
+    switch (extension) {
+      case "webp": return "image/webp";
+      case "png": return "image/png";
+      case "gif": return "image/gif";
+      default: return "image/jpeg";
+    }
+  })();
+
+  return `data:${mimeType};base64,${normalizedData}`;
 };
 
 const getAvatarSrc = (avatarData?: string | null) => {
   if (!avatarData) return null;
-  if (avatarData.startsWith("data:")) {
-    return avatarData;
+  const normalizedData = avatarData.trim();
+  if (normalizedData.startsWith("data:")) {
+    return normalizedData;
   }
-  return `data:image/jpeg;base64,${avatarData}`;
+  const mimeType = (() => {
+    if (normalizedData.startsWith("UklGR")) return "image/webp";
+    if (normalizedData.startsWith("/9j/")) return "image/jpeg";
+    if (normalizedData.startsWith("iVBORw0KGgo")) return "image/png";
+    if (normalizedData.startsWith("R0lGOD")) return "image/gif";
+    return "image/jpeg";
+  })();
+  return `data:${mimeType};base64,${normalizedData}`;
 };
 
 const getGalleryImages = (product?: ProductDto | null) => {
@@ -93,17 +127,24 @@ const getGalleryImages = (product?: ProductDto | null) => {
   const images = (product.productImages ?? [])
     .map((image) => {
       if (!image.imageData) return null;
-      if (image.imageData.startsWith("data:")) return image.imageData;
-      const extension = image.imageName?.split(".").pop()?.toLowerCase();
-      const mimeType =
-        extension === "png"
-          ? "image/png"
-          : extension === "webp"
-            ? "image/webp"
-            : extension === "gif"
-              ? "image/gif"
-              : "image/jpeg";
-      return `data:${mimeType};base64,${image.imageData}`;
+      const normalizedData = image.imageData.trim();
+      if (normalizedData.startsWith("data:")) return normalizedData;
+
+      const mimeType = (() => {
+        if (normalizedData.startsWith("UklGR")) return "image/webp";
+        if (normalizedData.startsWith("/9j/")) return "image/jpeg";
+        if (normalizedData.startsWith("iVBORw0KGgo")) return "image/png";
+        if (normalizedData.startsWith("R0lGOD")) return "image/gif";
+
+        const extension = image.imageName?.split(".").pop()?.toLowerCase();
+        switch (extension) {
+          case "webp": return "image/webp";
+          case "png": return "image/png";
+          case "gif": return "image/gif";
+          default: return "image/jpeg";
+        }
+      })();
+      return `data:${mimeType};base64,${normalizedData}`;
     })
     .filter(Boolean) as string[];
 
@@ -123,38 +164,50 @@ const formatWeight = (value?: number | null) => {
   return `${kilograms.toFixed(2)} кг`;
 };
 
-const desktopReviewLayout = [
-  { left: -84, top: 22, height: 217 },
-  { left: -84, top: 259, height: 168 },
-  { left: 443, top: 22, height: 168 },
-  { left: 443, top: 210, height: 217 },
-  { left: 970, top: 22, height: 183 },
-  { left: 970, top: 225, height: 168 },
-  { left: 1497, top: 22, height: 168 },
-  { left: 1497, top: 210, height: 183 },
-];
-
-function ReviewCard({ author, text, timeLabel, avatar, bookImage }: ReviewCardData) {
+function TornPaperBox({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   return (
-    <div className="flex h-full flex-col gap-3 rounded-[21px] bg-[#f5f3ee] p-4 shadow-[0px_0px_15px_0px_rgba(0,0,0,0.6)]">
-      <div className="flex gap-4">
+    <div className={`relative w-full drop-shadow-[0_8px_12px_rgba(36,36,36,0.15)] ${className}`}>
+      <div className="w-full overflow-hidden leading-none text-[#f5f3ee] -mb-[1px]">
+        <svg className="w-full h-[10px] block" viewBox="0 0 1200 10" fill="currentColor" preserveAspectRatio="none">
+          <path d="M0,10 L0,5 C 15,2 30,7 45,4 S 75,1 90,5 S 120,2 135,6 S 165,1 180,4 S 210,7 225,3 S 255,1 270,5 S 300,2 315,6 S 345,1 360,4 S 390,7 405,3 S 435,1 450,5 S 480,2 495,6 S 525,1 540,4 S 570,7 585,3 S 615,1 630,5 S 660,2 675,6 S 705,1 720,4 S 750,7 765,3 S 795,1 810,5 S 840,2 855,6 S 885,1 900,4 S 930,7 945,3 S 975,1 990,5 S 1020,2 1035,6 S 1065,1 1080,4 S 1110,7 1125,3 S 1155,1 1170,5 S 1185,3 1200,4 L1200,10 Z" />
+        </svg>
+      </div>
+      <div className="bg-[#f5f3ee] px-6 py-6">
+        {children}
+      </div>
+      <div className="w-full overflow-hidden leading-none text-[#f5f3ee] -mt-[1px]">
+        <svg className="w-full h-[10px] block rotate-180" viewBox="0 0 1200 10" fill="currentColor" preserveAspectRatio="none">
+          <path d="M0,10 L0,5 C 15,2 30,7 45,4 S 75,1 90,5 S 120,2 135,6 S 165,1 180,4 S 210,7 225,3 S 255,1 270,5 S 300,2 315,6 S 345,1 360,4 S 390,7 405,3 S 435,1 450,5 S 480,2 495,6 S 525,1 540,4 S 570,7 585,3 S 615,1 630,5 S 660,2 675,6 S 705,1 720,4 S 750,7 765,3 S 795,1 810,5 S 840,2 855,6 S 885,1 900,4 S 930,7 945,3 S 975,1 990,5 S 1020,2 1035,6 S 1065,1 1080,4 S 1110,7 1125,3 S 1155,1 1170,5 S 1185,3 1200,4 L1200,10 Z" />
+        </svg>
+      </div>
+    </div>
+  );
+}
+
+function ReviewCard({ author, text, timeLabel, avatar, bookImage, likesCount }: ReviewCardData) {
+  const displayLikes = likesCount ?? 0;
+  return (
+    <div className="flex h-full flex-col justify-between gap-4 rounded-[21px] bg-[#fcfbf8] p-5 shadow-[0px_4px_15px_rgba(0,0,0,0.12)] border border-[#242424]/5">
+      <div className="flex gap-5">
         {avatar ? (
           <img
             alt=""
-            className="h-[80px] w-[80px] rounded-full object-cover"
+            className="h-[80px] w-[80px] shrink-0 rounded-full object-cover shadow-sm"
             src={avatar}
           />
         ) : (
-          <div className="h-[80px] w-[80px]" />
+          <div className="flex h-[80px] w-[80px] shrink-0 items-center justify-center rounded-full bg-[#e8e6e1] font-mono text-2xl font-bold text-[#7e4d1e]">
+            {author ? author.charAt(0).toUpperCase() : "?"}
+          </div>
         )}
-        <div className="flex-1">
+        <div className="flex-1 overflow-hidden">
           {author ? (
-            <p className="font-mono text-[24px] font-medium text-[#242424]">
+            <p className="font-mono text-[22px] font-bold text-[#242424] truncate">
               {author}
             </p>
           ) : null}
           {text ? (
-            <p className="mt-2 max-h-[120px] overflow-hidden text-[14px] text-[#242424]">
+            <p className="mt-2 text-[14px] leading-relaxed text-[#242424]/90 line-clamp-4">
               {text}
             </p>
           ) : null}
@@ -162,66 +215,30 @@ function ReviewCard({ author, text, timeLabel, avatar, bookImage }: ReviewCardDa
         {bookImage ? (
           <img
             alt=""
-            className="h-[108px] w-[77px] rounded-[9px] object-cover"
+            className="h-[108px] w-[77px] shrink-0 rounded-[9px] object-cover shadow-md"
             src={bookImage}
           />
         ) : (
-          <div className="h-[108px] w-[77px]" />
+          <div className="h-[108px] w-[77px] shrink-0 rounded-[9px] bg-[#e8e6e1]" />
         )}
       </div>
-      {timeLabel ? (
-        <div className="flex items-center justify-between">
-          <span className="text-[14px] font-medium text-[#242424]">
-            {timeLabel}
-          </span>
+      <div className="flex items-center justify-between pt-3 border-t border-[#242424]/10">
+        <span className="text-[14px] font-medium text-[#242424]/70">
+          {timeLabel || "Щойно"}
+        </span>
+        <div className="flex items-center gap-2 text-[16px] font-semibold text-[#242424]">
+          <span>{displayLikes}</span>
+          <img
+            alt="Вподобати"
+            className="h-[22px] w-[22px] cursor-pointer hover:scale-110 transition-transform"
+            src="/images/main_page/icons/reviews-heart.svg"
+          />
         </div>
-      ) : null}
+      </div>
     </div>
   );
 }
 
-function MiniBookCard({
-  title,
-  price,
-  image,
-  href,
-}: {
-  title: string;
-  price: string;
-  image?: string | null;
-  href?: string;
-}) {
-  const card = (
-    <div className="flex h-[250px] w-[180px] flex-col items-center justify-between rounded-[16px] bg-[#f5f3ee] px-4 py-4 shadow-[0px_6px_10px_0px_rgba(36,36,36,0.2)]">
-      {image ? (
-        <img
-          alt={title}
-          className="h-[160px] w-[120px] object-contain"
-          src={image}
-        />
-      ) : (
-        <div className="h-[160px] w-[120px]" />
-      )}
-      <p
-        className="max-h-[34px] min-h-[34px] overflow-hidden text-center font-mono text-[14px] leading-[1.2] text-[#242424]"
-        title={title}
-      >
-        {title}
-      </p>
-      <span className="text-[16px] text-[#242424]">{price}</span>
-    </div>
-  );
-
-  if (href) {
-    return (
-      <Link aria-label={title} className="block" href={href}>
-        {card}
-      </Link>
-    );
-  }
-
-  return card;
-}
 
 export default function ProductDetailsClient({ id }: { id: string }) {
   const router = useRouter();
@@ -238,7 +255,44 @@ export default function ProductDetailsClient({ id }: { id: string }) {
   const [clubMembers, setClubMembers] = useState<ClubMemberReadDto[]>([]);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [isFavorite, setIsFavorite] = useState(false);
- const toggleFavorite = async () => {
+  const [newComment, setNewComment] = useState("");
+  const [isSubmittingComment, setIsSubmittingComment] = useState(false);
+
+  const handleCommentSubmit = async () => {
+    if (!newComment.trim()) return;
+    const token = localStorage.getItem("token");
+    if (!token) {
+      alert("Потрібно увійти в акаунт, щоб залишити коментар");
+      return;
+    }
+    const pid = Number(id);
+    if (!Number.isFinite(pid)) return;
+
+    try {
+      setIsSubmittingComment(true);
+      await reviewService.apiReviewsPost(
+        {
+          reviewDto: {
+            productId: pid,
+            comment: newComment.trim(),
+            rating: 5,
+            createdAt: new Date(),
+          },
+        },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      setNewComment("");
+      const updatedReviews = await reviewService.apiReviewsGet().catch(() => []);
+      setReviews(updatedReviews ?? []);
+    } catch (e) {
+      console.error("Помилка при відправці коментаря:", e);
+      alert("Помилка при відправці коментаря");
+    } finally {
+      setIsSubmittingComment(false);
+    }
+  };
+
+  const toggleFavorite = async () => {
   const token = localStorage.getItem("token");
   if (!token) {
     alert("Потрібно увійти в акаунт");
@@ -285,15 +339,15 @@ export default function ProductDetailsClient({ id }: { id: string }) {
           membersResult,
         ] = await Promise.all([
           productService.apiProductsIdGet({ id: productId }),
-          productService.apiProductsGet(),
-          reviewService.apiReviewsGet(),
-          languageService.apiLanguagesGet(),
-          publisherService.apiPublishersGet(),
-          authorService.apiAuthorsGet(),
-          categoriesService.apiCategoriesGet(),
-          formatService.apiFormatsGet(),
-          bookSizeService.apiBookSizesGet(),
-          clubMemberService.apiClubMemberGet(),
+          productService.apiProductsGet().catch((err) => { console.warn("Failed to fetch products:", err); return []; }),
+          reviewService.apiReviewsGet().catch((err) => { console.warn("Failed to fetch reviews:", err); return []; }),
+          languageService.apiLanguagesGet().catch((err) => { console.warn("Failed to fetch languages:", err); return []; }),
+          publisherService.apiPublishersGet().catch((err) => { console.warn("Failed to fetch publishers:", err); return []; }),
+          authorService.apiAuthorsGet().catch((err) => { console.warn("Failed to fetch authors:", err); return []; }),
+          categoriesService.apiCategoriesGet().catch((err) => { console.warn("Failed to fetch categories:", err); return []; }),
+          formatService.apiFormatsGet().catch((err) => { console.warn("Failed to fetch formats:", err); return []; }),
+          bookSizeService.apiBookSizesGet().catch((err) => { console.warn("Failed to fetch book sizes:", err); return []; }),
+          clubMemberService.apiClubMemberGet().catch((err) => { console.warn("Failed to fetch club members:", err); return []; }),
         ]);
 
         if (!isMounted) return;
@@ -310,11 +364,16 @@ export default function ProductDetailsClient({ id }: { id: string }) {
 
         const token = localStorage.getItem("token");
         if (token) {
-          const fav = await favoriteService.apiFavoritesProductIdIsFavoriteGet(
-            { productId },
-            { headers: { Authorization: `Bearer ${token}` } }
-          );
-          if (isMounted) setIsFavorite(fav);
+          try {
+            const fav = await favoriteService.apiFavoritesProductIdIsFavoriteGet(
+              { productId },
+              { headers: { Authorization: `Bearer ${token}` } }
+            );
+            if (isMounted) setIsFavorite(fav);
+          } catch (favErr) {
+            console.warn("Failed to check favorites (token may be expired):", favErr);
+            if (isMounted) setIsFavorite(false);
+          }
         }
       } catch (error) {
         console.error("Failed to load product details:", error);
@@ -424,7 +483,7 @@ export default function ProductDetailsClient({ id }: { id: string }) {
     .filter((name): name is string => Boolean(name));
   const bookSizeLabel = bookSizeNames.join(", ");
 
-  const formatDisplay = formatLabel || bookSizeLabel;
+  const formatDisplay = bookSizeLabel || formatLabel;
   const pageCountValue =
     currentProduct?.pageCount != null ? `${currentProduct.pageCount}` : "";
   const pageCountText = pageCountValue ? `${pageCountValue} стор.` : "";
@@ -513,6 +572,7 @@ export default function ProductDetailsClient({ id }: { id: string }) {
         timeLabel: formatReviewDate(review.createdAt),
         avatar: getAvatarSrc(member?.avatarData),
         bookImage: primaryImage,
+        likesCount: 0,
       };
     });
 
@@ -561,9 +621,10 @@ export default function ProductDetailsClient({ id }: { id: string }) {
   const priceValue = currentProduct?.discountPrice ?? currentProduct?.price;
   const priceText = priceValue != null ? formatPrice(priceValue) : "";
   const hasAuthorDetails = Boolean(authorName || authorBio || authorPhoto);
+  const formatTags = getFormatTags(currentProduct?.formatIds);
 
   const characteristics = [
-    { label: "Код товару:", value: currentProduct?.productCode ?? "" },
+    { label: "Код товару:", value: currentProduct?.productCode ?? `#${currentProduct?.id ?? ""}` },
     { label: "Назва книги:", value: productTitle },
     { label: "Сторінок:", value: pageCountValue },
     { label: "Вага:", value: weightText },
@@ -572,232 +633,281 @@ export default function ProductDetailsClient({ id }: { id: string }) {
     { label: "Автор:", value: authorName },
     { label: "Мова:", value: languageName },
     { label: "Видавництво:", value: publisherName },
+    { label: "Обкладинка:", value: currentProduct?.coverType != null ? (currentProduct.coverType === CoverType.NUMBER_1 ? "Мʼяка" : "Тверда") : "" },
     { label: "Формат:", value: formatDisplay },
   ].filter((item) => item.value);
 
-  const handleDelete = async () => {
-    const confirmDelete = confirm("Ви точно хочете видалити цей товар?");
-    if (!confirmDelete) return;
-
-    try {
-      await productService.apiProductsIdDelete({
-        id: Number(id),
-      });
-      router.push("/products");
-    } catch (e) {
-      console.error(e);
-      alert("Помилка при видаленні");
-    }
-  };
-
   return (
-    <div className="bg-[#f5f3ee] text-[#242424]">
-      <div className="mx-auto max-w-[1260px] px-4 pb-24 pt-24 lg:px-0">
-        <div className="rounded-[24px] bg-[#f5f3ee] px-5 pb-16 pt-6 shadow-[0px_0px_25px_0px_rgba(0,0,0,0.25)]">
-          <button
-            className="flex h-[50px] w-[50px] items-center justify-center rounded-full bg-[#f5f3ee] text-[28px] shadow-[0px_6px_10px_0px_rgba(36,36,36,0.2)]"
-            onClick={() => router.back()}
-            type="button"
-            aria-label="Назад"
-          >
-            ‹
-          </button>
+    <>
+      {/* 1. Мобільна версія (Figma Node 2298:4517 / "Картка товару" — 1-to-1 Dev Mode) */}
+      <div className="block md:hidden">
+        <MobileProductDetails
+          product={currentProduct}
+          authorName={authorName}
+          authorPhoto={authorPhoto}
+          categoryLabel={categoryLabel}
+          formatDisplay={formatDisplay}
+          pageCountText={pageCountText}
+          pageCountValue={pageCountValue}
+          weightText={weightText}
+          yearText={yearText}
+          languageName={languageName}
+          publisherName={publisherName}
+          priceText={priceText}
+          rating={rating}
+          ratingCount={ratingCount}
+          reviews={reviewCards}
+          booksByAuthorCards={booksByAuthorCards}
+          similarBookCards={similarBookCards}
+          isFavorite={isFavorite}
+          toggleFavorite={toggleFavorite}
+          addToCart={addToCart}
+          galleryImages={galleryImages}
+          displayImage={displayImage}
+          setSelectedImage={setSelectedImage}
+        />
+      </div>
 
-          <div className="mt-6 grid gap-10 lg:grid-cols-[500px_1fr_330px]">
-            <div className="flex flex-col gap-6 lg:flex-row">
-              <div className="flex flex-row gap-4 lg:flex-col">
+      {/* 2. Десктопна версія */}
+      <div className="hidden md:block">
+        <div className="relative min-h-screen w-full bg-[#3a2618] pb-24 overflow-hidden">
+      <img
+        alt=""
+        className="absolute inset-0 h-full w-full object-cover opacity-25 pointer-events-none"
+        src="/images/body/Rectangle 287.png"
+      />
+
+      {/* 1. ВЕРХНІЙ БЛОК: ДОШКА З ІНФОРМАЦІЄЮ ПРО КНИГУ (УСЕ ВЕРХНЄ В СЕРЕДИНІ БЕЖЕВОЇ ДОШКИ) */}
+      <div className="relative pt-20 pb-16">
+        <div className="relative mx-auto max-w-[1360px] rounded-t-[16px] bg-[#c4a680] pt-10 sm:pt-14 md:pt-16 px-6 sm:px-10 md:px-14 pb-16 shadow-[0_25px_60px_rgba(0,0,0,0.6)] text-[#242424]">
+          <div className="mb-6">
+            <button
+              className="flex h-[44px] w-[44px] items-center justify-center rounded-full bg-[#f5f3ee] text-[24px] font-bold text-[#242424] shadow-md transition-transform hover:scale-105"
+              onClick={() => router.back()}
+              type="button"
+              aria-label="Назад"
+            >
+              ←
+            </button>
+          </div>
+
+          <div className="grid gap-8 lg:grid-cols-[500px_1fr_360px] items-start">
+            <div className="flex gap-4">
+              <div className="flex flex-col gap-3 shrink-0">
                 {thumbnails.map((image, index) => {
                   const isActive = image === displayImage;
                   return (
                     <button
                       key={`thumb-${index}`}
                       type="button"
-                      className={`flex h-[120px] w-[88px] items-center justify-center rounded-[12px] bg-[#f5f3ee] shadow-[0px_6px_10px_0px_rgba(36,36,36,0.2)] ${isActive ? "ring-2 ring-[#7e4d1e]" : ""
-                        }`}
+                      className={`flex h-[120px] w-[88px] items-center justify-center rounded-[8px] bg-white p-1.5 shadow-md transition-all ${isActive ? "ring-2 ring-[#0e503f] scale-105" : "opacity-80 hover:opacity-100"}`}
                       onClick={() => setSelectedImage(image)}
-                      aria-label={`Переглянути фото ${index + 1}`}
-                      aria-pressed={isActive}
                     >
-                      <img
-                        alt=""
-                        className="h-[110px] w-[78px] object-contain"
-                        src={image}
-                      />
+                      <img alt="" className="h-full w-full object-contain" src={image} />
                     </button>
                   );
                 })}
               </div>
 
-              <div className="flex h-[535px] w-full items-center justify-center rounded-[16px] bg-[#f5f3ee] shadow-[0px_10px_15px_0px_rgba(36,36,36,0.25)]">
+              <div className="relative flex h-[500px] flex-1 items-center justify-center">
                 {displayImage ? (
-                  <img
-                    alt={productTitle}
-                    className="h-[500px] w-[380px] object-contain"
-                    src={displayImage}
-                  />
-                ) : null}
+                  <img alt={productTitle} className="max-h-full max-w-full object-contain drop-shadow-[0_20px_35px_rgba(0,0,0,0.5)] rounded-[4px]" src={displayImage} />
+                ) : (
+                  <div className="flex h-[420px] w-[300px] flex-col items-center justify-center rounded-[12px] bg-[#f5f3ee]/80 border-2 border-dashed border-[#242424]/30 text-[#242424]/50 shadow-md">
+                    <span className="text-4xl mb-2">📖</span>
+                    <span className="font-serif text-lg">Обкладинка відсутня</span>
+                  </div>
+                )}
               </div>
             </div>
 
-            <div className="flex flex-col gap-6">
-              {ratingCount > 0 ? (
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div
-                      className="flex gap-1 text-[20px] text-[#242424]"
-                      aria-label={`Рейтинг ${rating.toFixed(1)}/5`}
-                    >
-                      {ratingToStars(rating)}
-                    </div>
-                    <span className="text-[18px] font-medium">
-                      {rating.toFixed(1)}
-                    </span>
-                  </div>
-                  <span className="text-[14px] text-[#242424]">
+            <div className="flex flex-col py-2">
+              <div className="flex items-center gap-3">
+                <div className="flex gap-1 text-[18px] text-[#242424]">
+                  {ratingToStars(rating)}
+                </div>
+                <span className="font-mono text-[16px] font-bold">{rating.toFixed(0)}</span>
+                {ratingCount > 0 ? (
+                  <span className="text-[14px] font-semibold text-[#0e503f] underline cursor-pointer hover:text-[#093529]">
                     {ratingCount} оцінок
                   </span>
+                ) : null}
+              </div>
+
+              <h1 className="mt-2 font-serif text-[38px] font-bold leading-tight text-[#242424]">
+                {productTitle}
+              </h1>
+
+              {authorName ? (
+                <div className="mt-2 flex items-center gap-2 text-[18px]">
+                  <span className="text-[#242424]/70">автор:</span>
+                  <span className="font-semibold text-[#242424]">{authorName}</span>
                 </div>
               ) : null}
 
-              <div>
-                <h1 className="font-mono text-[32px] font-semibold">
-                  {productTitle}
-                </h1>
-                {authorName ? (
-                  <div className="mt-3 flex items-center gap-2 text-[16px]">
-                    <span className="text-[#242424]/70">Автор:</span>
-                    <span className="text-[#242424]">{authorName}</span>
-                  </div>
-                ) : null}
-              </div>
+              {formatTags.length > 0 ? (
+                <div className="mt-6 flex flex-col gap-3.5">
+                  {formatTags.map((tag, idx) => {
+                    const item = formatIconMap[tag];
+                    if (!item) return null;
+                    const isGreen = idx % 2 !== 0;
+                    return (
+                      <div
+                        key={tag}
+                        className={`relative flex h-[52px] w-[80px] items-center justify-center rounded-l-[8px] shadow-md transition-transform hover:translate-x-1 ${isGreen ? "bg-[#0e503f]" : "bg-[#7e4d1e]"}`}
+                        title={item.label}
+                      >
+                        <img alt={item.label} className="h-[28px] w-[28px] object-contain brightness-200" src={item.icon} />
+                        <div className={`absolute -right-[14px] top-0 h-[52px] w-[14px] ${isGreen ? "text-[#0e503f]" : "text-[#7e4d1e]"}`}>
+                          <svg className="h-full w-full block" viewBox="0 0 14 52" fill="currentColor">
+                            <path d="M0,0 L14,26 L0,52 Z" />
+                          </svg>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              ) : null}
 
-              <div className="space-y-4">
-                {pageCountText ? (
-                  <div className="text-[18px]">{pageCountText}</div>
-                ) : null}
-                {categoryLabel ? (
-                  <div className="border-t border-[#242424]/20 pt-3 text-[16px]">
-                    {categoryLabel}
-                  </div>
-                ) : null}
-              </div>
+              {pageCountText ? (
+                <div className="mt-8 text-[16px] text-[#242424]">{pageCountText}</div>
+              ) : null}
+
+              <div className="my-3 border-b border-[#242424]/30 w-full" />
+
+              {categoryLabel ? (
+                <div className="text-[18px] font-medium text-[#242424]">{categoryLabel}</div>
+              ) : null}
             </div>
 
-            <div className="h-fit rounded-[20px] bg-[#f5f3ee] shadow-[0px_10px_20px_0px_rgba(36,36,36,0.2)]">
-              <div className="border-b border-[#242424]/10 px-5 py-5">
-                <p className="text-[14px] text-[#242424]/70">Ціна в Libria:</p>
-                <p className="mt-2 font-mono text-[36px] font-semibold">
-                  {priceText}
-                </p>
-              </div>
-
-              <div className="space-y-5 px-5 py-5">
-                <div className="flex items-center gap-4">
+            {/* ДОШКА КУПІВЛІ (BUY BOX - GROUP 448) */}
+            <div className="flex flex-col">
+              <div className="flex flex-col drop-shadow-[0_10px_20px_rgba(36,36,36,0.25)]">
+                <div className="flex h-[64px] items-center justify-between rounded-t-[20px] bg-[#0e503f] px-6 text-white">
+                  <div className="flex items-center gap-3">
+                    {authorPhoto ? (
+                      <img alt={authorName || "Автор"} className="h-[44px] w-[44px] rounded-full object-cover border-2 border-white shadow-sm" src={authorPhoto} />
+                    ) : (
+                      <div className="flex h-[44px] w-[44px] items-center justify-center rounded-full bg-white/20 font-bold text-lg">
+                        {authorName ? authorName.charAt(0) : "А"}
+                      </div>
+                    )}
+                    <span className="font-serif text-[18px] font-medium">{authorName || "Автор не вказаний"}</span>
+                  </div>
                   <button
-                    className="h-[40px] flex-1 rounded-[12px] bg-[#7e4d1e] text-[16px] text-[#f5f3ee] shadow-[0px_4px_8px_0px_rgba(36,36,36,0.3)] transition-transform hover:scale-[1.02] active:scale-[0.98]"
                     type="button"
-                    onClick={() => {
-                      if (currentProduct?.id) {
-                        addToCart(currentProduct.id);
-                        alert("Товар додано в кошик");
-                      }
-                    }}
+                    className="flex h-[36px] w-[36px] items-center justify-center rounded-full bg-white/20 text-2xl font-bold hover:bg-white/30 transition-colors"
+                    title="Підписатися / Більше"
                   >
-                    Додати в кошик
-                  </button>
-                  <button
-                    className="flex h-[40px] w-[40px] cursor-pointer items-center justify-center rounded-[12px] bg-[#f5f3ee] shadow-[0px_4px_8px_0px_rgba(36,36,36,0.3)]"
-                    type="button"
-                    aria-label="Додати в улюблені"
-                    onClick={toggleFavorite}
-                  >
-                    <img
-                      alt=""
-                      className="h-[24px] w-[24px]"
-                      src="/images/main_page/icons/rec-icon-favorite.svg"
-                    />
+                    +
                   </button>
                 </div>
-              </div>
-              <div className="h-fit mt-4">
-                <div className="space-y-5 px-5 py-5">
-                  <div className="flex items-center gap-4">
+
+                <TornPaperBox className="rounded-t-none">
+                  <div className="text-[14px] text-[#242424]/70">Ціна в Libria:</div>
+                  <div className="mt-1 font-mono text-[38px] font-bold text-[#242424]">{priceText || "0 грн"}</div>
+
+                  <div className="mt-8 flex items-center justify-between gap-4">
                     <button
-                      className="h-[40px] cursor-pointer flex-1 rounded-[12px] bg-[#7e4d1e] text-[16px] text-[#f5f3ee] shadow-[0px_4px_8px_0px_rgba(36,36,36,0.3)]"
+                      className="flex flex-1 items-center justify-center gap-3 py-3 text-[18px] text-[#242424]/70 hover:text-[#242424] transition-colors"
                       type="button"
-                      onClick={() => router.push(`/editProduct/${id}`)}
+                      onClick={() => {
+                        if (currentProduct?.id) {
+                          addToCart(currentProduct.id);
+                          alert("Товар додано в кошик");
+                        }
+                      }}
                     >
-                      Редагувати
+                      <img alt="" className="h-[24px] w-[24px]" src="/images/main_page/icons/rec-icon-basket.svg" />
+                      <span>Додати кошик</span>
                     </button>
                     <button
-                      className="h-[40px] cursor-pointer flex-1 rounded-[12px] bg-[#f5f3ee] text-[16px] text-[#242424] shadow-[0px_4px_8px_0px_rgba(36,36,36,0.3)]"
+                      className={`flex h-[40px] w-[40px] items-center justify-center transition-transform ${isFavorite ? "text-red-500 scale-110" : "opacity-80 hover:opacity-100"}`}
                       type="button"
-                      onClick={handleDelete}
+                      onClick={toggleFavorite}
+                      aria-label="Додати в улюблені"
                     >
-                      Видалити
+                      <img alt="" className="h-[30px] w-[30px]" src="/images/main_page/icons/rec-icon-favorite.svg" />
                     </button>
                   </div>
-                </div>
+
+                  {isFavorite ? (
+                    <div className="mt-4 text-center text-[14px] font-medium text-[#0e503f]">
+                      Товар у вашому списку бажань
+                    </div>
+                  ) : (
+                    <div className="mt-4 text-center text-[13px] text-[#242424]/70">
+                      Додайте до списку бажань, щоб не втратити
+                    </div>
+                  )}
+
+                  <div className="mt-6 border-t border-[#242424]/20 pt-4">
+                    <div className="font-mono text-[16px] font-bold text-[#242424]">Оплата</div>
+                    <div className="mt-1 text-[13px] leading-relaxed text-[#242424]/80">
+                      Онлайн-оплата платіжною картою або при отриманні
+                    </div>
+                  </div>
+                </TornPaperBox>
               </div>
             </div>
           </div>
 
           {descriptionText ? (
-            <div className="mt-10 rounded-[20px] bg-[#f5f3ee] px-5 py-6 shadow-[0px_10px_15px_0px_rgba(36,36,36,0.2)]">
-              <h2 className="font-mono text-[22px] font-semibold">Опис</h2>
-              <p className="mt-4 text-[14px] leading-relaxed text-[#242424]/80">
-                {descriptionText}
-              </p>
+            <div className="mt-14">
+              <TornPaperBox className="shadow-lg">
+                <h2 className="font-serif text-[28px] font-bold text-[#242424]">Опис</h2>
+                <p className="mt-4 text-[16px] leading-relaxed text-[#242424]/90 whitespace-pre-line font-sans">
+                  {descriptionText}
+                </p>
+              </TornPaperBox>
             </div>
           ) : null}
 
-          <div className="mt-10 grid gap-10 lg:grid-cols-[300px_1fr]">
-            <div className="rounded-[20px] bg-[#f5f3ee] px-5 py-6 shadow-[0px_10px_15px_0px_rgba(36,36,36,0.2)]">
-              <h3 className="font-mono text-[24px] font-semibold">
+          <div className="mt-14 grid gap-0 lg:grid-cols-[400px_1px_1fr]">
+            <div>
+              <h3 className="font-serif text-[26px] font-bold text-[#242424] mb-6">
                 Характеристика
               </h3>
-              <div className="mt-6 grid gap-3 text-[14px]">
-                {characteristics.map((item) => (
-                  <div
-                    key={item.label}
-                    className="grid grid-cols-[120px_1fr] gap-2"
-                  >
-                    <span>{item.label}</span>
-                    <span>{item.value}</span>
-                  </div>
-                ))}
+              <div className="space-y-3.5 text-[15px]">
+                {characteristics.map((item) => {
+                  const isHighlighted = item.label === "Жанри:" || item.label === "Автор:";
+                  return (
+                    <div key={item.label} className="grid grid-cols-[130px_1fr] gap-2 items-start">
+                      <span className="text-[#242424]/80">{item.label}</span>
+                      <span className={`${isHighlighted ? "font-semibold underline" : "font-medium"} text-[#242424]`}>
+                        {item.value}
+                      </span>
+                    </div>
+                  );
+                })}
               </div>
             </div>
 
-            <div className="space-y-8 border-[#242424]/10 lg:border-l lg:pl-8">
+            {/* Vertical divider per Figma */}
+            <div className="hidden lg:block w-px bg-[#242424]/20 self-stretch" />
+
+            <div className="flex flex-col lg:pl-12">
               {hasAuthorDetails ? (
                 <div>
-                  <h3 className="font-mono text-[24px] font-semibold">
+                  <h3 className="font-serif text-[26px] font-bold text-[#242424] mb-6">
                     Про автора
                   </h3>
-                  <div className="mt-4 flex gap-6 rounded-[20px] bg-[#f5f3ee] p-5 shadow-[0px_10px_15px_0px_rgba(36,36,36,0.2)]">
+                  <div className="flex flex-col sm:flex-row gap-6 items-start">
                     {authorPhoto ? (
-                      <img
-                        alt={authorName}
-                        className="h-[170px] w-[120px] rounded-[12px] object-cover"
-                        src={authorPhoto}
-                      />
+                      <img alt={authorName} className="h-[180px] w-[130px] rounded-[12px] object-cover shadow-md shrink-0" src={authorPhoto} />
                     ) : (
-                      <div className="h-[170px] w-[120px]" />
+                      <div className="h-[180px] w-[130px] rounded-[12px] bg-[#f5f3ee] shrink-0" />
                     )}
-                    <div className="flex flex-col gap-3">
+                    <div className="flex flex-col">
                       {authorName ? (
-                        <p className="font-mono text-[20px]">{authorName}</p>
+                        <p className="font-serif text-[22px] font-bold text-[#242424]">{authorName}</p>
                       ) : null}
                       {authorBio ? (
-                        <p className="text-[14px] text-[#242424]/80">
+                        <p className="mt-2 text-[14px] leading-relaxed text-[#242424]/90 line-clamp-4">
                           {authorBio}
                         </p>
                       ) : null}
-                      <button
-                        className="text-left text-[14px] font-semibold text-[#7e4d1e]"
-                        type="button"
-                      >
+                      <button className="mt-3 text-left font-semibold text-[#0e503f] hover:underline text-[15px]" type="button">
                         Більше про автора
                       </button>
                     </div>
@@ -806,28 +916,22 @@ export default function ProductDetailsClient({ id }: { id: string }) {
               ) : null}
 
               {booksByAuthorCards.length > 0 ? (
-                <div>
-                  <div className="flex items-center justify-between">
-                    <h3 className="font-mono text-[24px] font-semibold">
+                <div className="mt-12">
+                  <div className="flex items-center justify-between mb-6">
+                    <h3 className="font-serif text-[26px] font-bold text-[#242424]">
                       Книжки цього автора
                     </h3>
                     <button
-                      className="flex h-[36px] w-[36px] items-center justify-center rounded-full border border-[#242424]/20"
+                      className="flex h-[40px] w-[40px] items-center justify-center rounded-full bg-[#f5f3ee] text-xl font-bold text-[#242424] shadow-md hover:scale-105 transition-transform"
                       type="button"
                       aria-label="Більше книжок автора"
                     >
-                      &gt;
+                      →
                     </button>
                   </div>
-                  <div className="mt-6 flex flex-wrap gap-5">
-                    {booksByAuthorCards.map((book) => (
-                      <MiniBookCard
-                        key={book.title}
-                        title={book.title}
-                        price={book.price}
-                        image={book.image}
-                        href={book.href}
-                      />
+                  <div className="flex flex-wrap gap-6">
+                    {booksByAuthorCards.map((book, index) => (
+                      <BookCard key={`${book.title}-${index}`} {...book} />
                     ))}
                   </div>
                 </div>
@@ -835,102 +939,127 @@ export default function ProductDetailsClient({ id }: { id: string }) {
             </div>
           </div>
 
-          <section className="mt-16">
-            <div className="mx-auto max-w-[1218px]">
-              <div className="flex items-center gap-4 rounded-[20px] bg-[#f5f3ee] px-6 py-4 shadow-[0px_6px_12px_0px_rgba(36,36,36,0.2)]">
-                <input
-                  className="flex-1 bg-transparent text-[16px] text-[#242424] placeholder:text-[#242424]/60 focus:outline-none"
-                  placeholder="Додайте коментар..."
-                  type="text"
-                />
-                <button
-                  className="flex h-[50px] w-[50px] items-center justify-center rounded-[12px] bg-[#7e4d1e] text-[20px] text-[#f5f3ee]"
-                  type="button"
-                  aria-label="Надіслати коментар"
-                >
-                  &gt;
-                </button>
+          <div className="mt-16 flex justify-end -mr-6 sm:-mr-10 md:-mr-14">
+            <div
+              className="flex cursor-pointer items-center gap-4 rounded-l-[30px] bg-[#7e4d1e] px-8 py-5 text-[#ffd9d9] shadow-2xl transition-transform hover:translate-x-[-8px]"
+              onClick={() => router.push("/community")}
+            >
+              <div className="flex h-[40px] w-[40px] items-center justify-center rounded-full bg-white/20 text-2xl font-bold text-white">
+                📖
               </div>
+              <span className="font-serif text-[24px] font-bold">Перейти до спільноти</span>
             </div>
+          </div>
 
-            {/* {reviewCards.length > 0 ? (
-              <>
-                <div className="relative mx-auto mt-8 hidden h-[450px] w-[1920px] max-w-full lg:block">
-                  <div className="absolute inset-0 border-[20px] border-[#f5f3ee] shadow-[0px_0px_40px_0px_rgba(0,0,0,0.7)]">
-                    <img
-                      alt=""
-                      className="absolute inset-0 h-full w-full object-cover opacity-20"
-                      src="/images/body/Rectangle%20287.png"
-                    />
-                  </div>
-                  {desktopReviewLayout.map((layout, index) => {
-                    const review = reviewCards[index % reviewCards.length];
-                    return (
-                      <div
-                        key={`review-${review.id}-${index}`}
-                        className="absolute w-[507px]"
-                        style={{
-                          left: layout.left,
-                          top: layout.top,
-                          height: layout.height,
-                        }}
-                      >
-                        <ReviewCard {...review} />
-                      </div>
-                    );
-                  })}
-                </div>
-
-                <div className="relative mx-auto mt-8 max-w-[1920px] px-4 lg:hidden">
-                  <div className="relative border-[20px] border-[#f5f3ee] shadow-[0px_0px_40px_0px_rgba(0,0,0,0.7)]">
-                    <img
-                      alt=""
-                      className="absolute inset-0 h-full w-full object-cover opacity-20"
-                      src="/images/body/Rectangle%20287.png"
-                    />
-                    <div className="relative grid gap-6 px-6 py-8 md:grid-cols-2">
-                      {reviewCards.map((review) => (
-                        <ReviewCard
-                          key={`review-mobile-${review.id}`}
-                          {...review}
-                        />
-                      ))}
-                    </div>
-                  </div>
-                </div>
-
-                <div className="mx-auto mt-6 max-w-[1218px]">
-                  <div className="h-[15px] w-full rounded-[12px] bg-[#f5f3ee] shadow-[0px_4px_6px_0px_rgba(36,36,36,0.2)]">
-                    <div className="h-full w-[22%] rounded-[12px] bg-[#7e4d1e]" />
-                  </div>
-                </div>
-              </>
-            ) : null} */}
-          </section>
-
-          {similarBookCards.length > 0 ? (
-            <section className="mt-16">
-              <div className="flex flex-wrap items-center justify-between gap-4">
-                <div className="flex h-[57px] items-center justify-center rounded-t-[10px] rounded-b-[30px] bg-[#f5f3ee] px-8 shadow-[0px_8px_8.5px_0px_rgba(0,0,0,0.5)]">
-                  <h2 className="font-mono text-[32px] font-bold">Схожі</h2>
-                </div>
-                <button
-                  className="flex h-[55px] w-[150px] items-center justify-center rounded-b-[25px] bg-[#f5f3ee] text-[24px] shadow-[0px_3px_2.7px_0px_rgba(0,0,0,0.3)]"
-                  type="button"
-                >
-                  Дивитись
-                </button>
-              </div>
-
-              <div className="mt-10 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-[60px]">
-                {similarBookCards.map((book, index) => (
-                  <BookCard key={`${book.title}-${index}`} {...book} />
-                ))}
-              </div>
-            </section>
-          ) : null}
+          {/* Bottom torn paper edge of the main board */}
+          <div className="w-full overflow-hidden leading-none text-[#c4a680] absolute left-0 right-0 top-full z-10 -mt-[1px]">
+            <svg className="w-full h-[18px] block rotate-180" viewBox="0 0 1200 10" fill="currentColor" preserveAspectRatio="none">
+              <path d="M0,10 L0,5 C 15,2 30,7 45,4 S 75,1 90,5 S 120,2 135,6 S 165,1 180,4 S 210,7 225,3 S 255,1 270,5 S 300,2 315,6 S 345,1 360,4 S 390,7 405,3 S 435,1 450,5 S 480,2 495,6 S 525,1 540,4 S 570,7 585,3 S 615,1 630,5 S 660,2 675,6 S 705,1 720,4 S 750,7 765,3 S 795,1 810,5 S 840,2 855,6 S 885,1 900,4 S 930,7 945,3 S 975,1 990,5 S 1020,2 1035,6 S 1065,1 1080,4 S 1110,7 1125,3 S 1155,1 1170,5 S 1185,3 1200,4 L1200,10 Z" />
+            </svg>
+          </div>
         </div>
       </div>
-    </div>
+
+      {/* 2. СЕРЕДНІЙ БЛОК: СМУГА ВІДГУКІВ НА ПОВНУ ШИРИНУ ЕКРАНУ (ЯК У FIGMA) */}
+      <section className="relative w-full bg-[#fcfbf8] py-20 my-16 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+        {/* Top torn edge pointing up */}
+        <div className="w-full overflow-hidden leading-none text-[#fcfbf8] absolute left-0 right-0 bottom-full">
+          <svg className="w-full h-[16px] block" viewBox="0 0 1200 10" fill="currentColor" preserveAspectRatio="none">
+            <path d="M0,10 L0,5 C 15,2 30,7 45,4 S 75,1 90,5 S 120,2 135,6 S 165,1 180,4 S 210,7 225,3 S 255,1 270,5 S 300,2 315,6 S 345,1 360,4 S 390,7 405,3 S 435,1 450,5 S 480,2 495,6 S 525,1 540,4 S 570,7 585,3 S 615,1 630,5 S 660,2 675,6 S 705,1 720,4 S 750,7 765,3 S 795,1 810,5 S 840,2 855,6 S 885,1 900,4 S 930,7 945,3 S 975,1 990,5 S 1020,2 1035,6 S 1065,1 1080,4 S 1110,7 1125,3 S 1155,1 1170,5 S 1185,3 1200,4 L1200,10 Z" />
+          </svg>
+        </div>
+
+        <div className="mx-auto max-w-[1280px] px-4 md:px-8">
+          <div className="flex items-center gap-4 rounded-full bg-white px-6 py-3 shadow-md border border-[#242424]/10 max-w-[900px] mx-auto mb-12">
+            <input
+              className="flex-1 bg-transparent text-[16px] text-[#242424] placeholder:text-[#242424]/60 focus:outline-none"
+              placeholder="Додайте коментар..."
+              type="text"
+              value={newComment}
+              onChange={(e) => setNewComment(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && handleCommentSubmit()}
+              disabled={isSubmittingComment}
+            />
+            <button
+              className="flex h-[44px] w-[54px] shrink-0 items-center justify-center rounded-full bg-[#242424] text-[20px] font-bold text-white transition-transform hover:scale-105 disabled:opacity-50"
+              type="button"
+              onClick={handleCommentSubmit}
+              disabled={isSubmittingComment || !newComment.trim()}
+              aria-label="Надіслати коментар"
+            >
+              {isSubmittingComment ? "..." : "➢"}
+            </button>
+          </div>
+
+          <div>
+            {reviewCards.length > 0 ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {reviewCards.map((rev) => (
+                  <ReviewCard
+                    key={rev.id}
+                    id={rev.id}
+                    author={rev.author}
+                    text={rev.text}
+                    timeLabel={rev.timeLabel}
+                    avatar={rev.avatar}
+                    bookImage={rev.bookImage}
+                    likesCount={rev.likesCount}
+                  />
+                ))}
+              </div>
+            ) : (
+              <div className="rounded-[20px] border border-dashed border-[#242424]/30 p-10 text-center">
+                <p className="text-[16px] text-[#242424]/60">
+                  Ще немає коментарів до цієї книги. Будьте першим, хто залишить відгук!
+                </p>
+              </div>
+            )}
+          </div>
+
+          <div className="mt-12 flex justify-center">
+            <div className="h-[6px] w-[300px] rounded-full bg-[#242424]/10 overflow-hidden">
+              <div className="h-full w-1/3 rounded-full bg-[#0e503f]" />
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom torn edge pointing down */}
+        <div className="w-full overflow-hidden leading-none text-[#fcfbf8] absolute left-0 right-0 top-full">
+          <svg className="w-full h-[16px] block rotate-180" viewBox="0 0 1200 10" fill="currentColor" preserveAspectRatio="none">
+            <path d="M0,10 L0,5 C 15,2 30,7 45,4 S 75,1 90,5 S 120,2 135,6 S 165,1 180,4 S 210,7 225,3 S 255,1 270,5 S 300,2 315,6 S 345,1 360,4 S 390,7 405,3 S 435,1 450,5 S 480,2 495,6 S 525,1 540,4 S 570,7 585,3 S 615,1 630,5 S 660,2 675,6 S 705,1 720,4 S 750,7 765,3 S 795,1 810,5 S 840,2 855,6 S 885,1 900,4 S 930,7 945,3 S 975,1 990,5 S 1020,2 1035,6 S 1065,1 1080,4 S 1110,7 1125,3 S 1155,1 1170,5 S 1185,3 1200,4 L1200,10 Z" />
+          </svg>
+        </div>
+      </section>
+
+      {/* 3. НИЖНІЙ БЛОК: СХОЖІ ТА БІЛЬШЕ (НА ДЕРЕВ'ЯНОМУ ФОНІ З ВЕРХНІМИ ВКЛАДКАМИ ЯК У FIGMA) */}
+      {similarBookCards.length > 0 ? (
+        <section className="relative w-full py-16 overflow-hidden">
+          {/* Top wooden shelf edge */}
+          <div className="w-full h-[24px] bg-[#4a2e18] shadow-[0_4px_10px_rgba(0,0,0,0.6)] border-t-2 border-[#684323] border-b border-[#2a1a0c] mb-8" />
+          
+          <div className="mx-auto max-w-[1280px] px-4 md:px-8">
+            <div className="flex items-center justify-between mb-10">
+              <div className="rounded-[20px] bg-[#f5f3ee] px-8 py-3 font-serif text-[26px] font-bold text-[#242424] shadow-lg border border-[#242424]/10">
+                Схожі
+              </div>
+              <button
+                type="button"
+                className="rounded-[20px] bg-[#f5f3ee] px-8 py-3 font-serif text-[18px] font-semibold text-[#242424] shadow-lg border border-[#242424]/10 hover:scale-105 transition-transform cursor-pointer"
+              >
+                Більше
+              </button>
+            </div>
+
+            <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4 justify-items-center">
+              {similarBookCards.map((book, index) => (
+                <BookCard key={`${book.title}-${index}`} {...book} />
+              ))}
+            </div>
+          </div>
+        </section>
+      ) : null}
+        </div>
+      </div>
+    </>
   );
 }

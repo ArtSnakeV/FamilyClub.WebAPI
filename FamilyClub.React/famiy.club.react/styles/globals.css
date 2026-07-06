@@ -29,8 +29,10 @@
   --foreground: var(--foreground-primary);
 
 
-  --font-geist-sans: 'Source Sans Pro', Source Sans 3, Segoe UIf, Roboto, Helvetica, Arial, sans-serif; /* Geist Sans font (Шрифт Geist Sans) */
-  --font-geist-mono: 'Roboto Mono', monospace, Consolas, 'Courier New'; /* Geist Mono font (Шрифт Geist Mono) */
+  --font-geist-sans: var(--font-source-sans), 'Source Sans Pro', 'Source Sans 3', Segoe UIf, Roboto, Helvetica, Arial, sans-serif; /* Source Sans 3 font from Figma */
+  --font-geist-mono: var(--font-roboto-mono), 'Roboto Mono', monospace, Consolas, 'Courier New'; /* Roboto Mono font from Figma */
+  --font-geist-serif: var(--font-lora), 'Lora', Georgia, Cambria, 'Times New Roman', Times, serif; /* Lora font from Figma */
+  --font-geist-inter: var(--font-inter), 'Inter', sans-serif; /* Inter font from Figma */
 
 
 
@@ -69,6 +71,8 @@
   /* Fonts (Шрифти) */
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-serif: var(--font-geist-serif);
+  --font-inter: var(--font-geist-inter);
 
 
   /* Footer (Футер) */
