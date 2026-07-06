@@ -115,4 +115,25 @@ public class ClubMemberController : ControllerBase
         if (!result) return BadRequest("Невірний поточний пароль або помилка зміни");
         return NoContent();
     }
+
+    [HttpPut("{id}/lock")]
+    public async Task<IActionResult> LockUser(string id, CancellationToken cancellationToken)
+    {
+        var result = await _clubMemberService.LockUserAsync(id, cancellationToken);
+
+        if (!result)
+            return NotFound();
+
+        return NoContent();
+    }
+    [HttpPut("{id}/unlock")]
+    public async Task<IActionResult> UnlockUser(string id, CancellationToken cancellationToken)
+    {
+        var result = await _clubMemberService.UnlockUserAsync(id, cancellationToken);
+
+        if (!result)
+            return NotFound();
+
+        return NoContent();
+    }
 }

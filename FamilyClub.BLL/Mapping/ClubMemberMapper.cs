@@ -16,7 +16,8 @@ public static class ClubMemberMapper
             PhoneNumber = clubMember.PhoneNumber!,
             DateOfBirth = clubMember.DateOfBirth,
             AvatarData = clubMember.AvatarData,
-            Roles = roles ?? new List<string>()
+            Roles = roles ?? new List<string>(),
+            LockoutEnd = clubMember.LockoutEnd,
         };
     }
 }

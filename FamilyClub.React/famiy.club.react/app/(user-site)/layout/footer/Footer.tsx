@@ -10,7 +10,7 @@ const Footer = () => {
 
 
         /* Root footer container (Кореневий контейнер футера) */
-        <footer style={{zIndex: "3"}} className="w-full flex flex-col justify-end overflow-visible">
+        <footer style={{ zIndex: "3" }} className="w-full flex flex-col justify-end overflow-visible">
             {/* 
                 1. MAIN INNER BLOCK (ГОЛОВНИЙ ВНУТРІШНІЙ БЛОК) 
                 - backgroundImage: sets the footer background (встановлює фон футера)
@@ -38,7 +38,7 @@ const Footer = () => {
                             {/* QR Code image (Зображення QR-коду) */}
                             <div className="w-[215px] h-[215px] mb-[28px]">
                                 <Image
-                                    src="/images/Layout/Footer/FooterQRCode.png"
+                                    src="/images/Layout/Footer/FooterQrCode.png"
                                     alt="QR Code"
                                     width={215}
                                     height={215}
