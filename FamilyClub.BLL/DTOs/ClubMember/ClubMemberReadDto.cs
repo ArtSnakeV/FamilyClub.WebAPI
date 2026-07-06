@@ -13,6 +13,7 @@ public class ClubMemberReadDto
     public string? Name { get; set; }
     public string? Surname { get; set; }
     public DateOnly? DateOfBirth { get; set; }
+    public DateTimeOffset? LockoutEnd { get; set; }
 
     // Roles of our User
     public IEnumerable<string> Roles { get; set; } = new List<string>();

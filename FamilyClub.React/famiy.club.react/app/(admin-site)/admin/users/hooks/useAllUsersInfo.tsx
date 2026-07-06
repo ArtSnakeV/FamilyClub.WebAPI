@@ -11,15 +11,20 @@ export interface UserInfo {
     avatarData?: string;
     role?: string;
     roles?: string[];
+    lockoutEnd?: string | null;
+    ordersCount?: number;
+    spentAmount?: number;
+    reviewsCount?: number;
+    complaintsCount?: number;
     lastLoginAt?: string;
     createdAt?: string;
-    lockoutEnd?: string;
+    language?: string;
+    timeZone?: string;
 }
 
 export default function useAllUsersInfo() {
     const [usersInfo, setUsersInfo] = useState<UserInfo[]>([]);
     const [loadingUsersInfo, setLoadingUsersInfo] = useState(true);
-
     useEffect(() => {
         const fetchUsers = async () => {
             try {
