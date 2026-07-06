@@ -13,12 +13,12 @@ export default function Hero() {
 
                 <img
                     alt=""
-                    className="absolute left-0 top-[458px] h-[476px] w-[383px]"
+                    className="absolute left-0 top-[458px] h-[476px] w-[383px] z-30 pointer-events-none"
                     src="/images/main_page/hero/hero-vines-left.png"
                 />
                 <img
                     alt=""
-                    className="absolute left-[1532px] top-[451px] h-[452px] w-[387px]"
+                    className="absolute left-[1532px] top-[451px] h-[452px] w-[387px] z-30 pointer-events-none"
                     src="/images/main_page/hero/hero-vines-right.png"
                 />
 

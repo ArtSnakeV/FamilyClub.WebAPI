@@ -9,21 +9,20 @@ export default function GreetingBanner() {
     user?.email?.split("@")[0] ||
     "Ink";
     
-
     return (
-      <div className="relative w-full px-8 py-6">
-        {/* Background image */}
+      <div className="relative w-fit h-fit px-8 py-6">
+        {/* Changed object-cover to object-fill to prevent any border cropping */}
         <img
-          src="/images/admin/desktop/HeaderCardBackground.png"
+          src="/images/admin_manager/desktop/HeaderCardBackground.png"
           alt=""
-          className="absolute inset-0 max-w-[440px] h-full object-fill pointer-events-none"
+          className="absolute inset-0 w-full h-full object-fill pointer-events-none"
           aria-hidden="true"
         />
   
-        {/* Text on top */}
-        <div className="relative z-10">
+        {/* Text content */}
+        <div className="relative z-10 whitespace-nowrap">
           <h1 className="text-[32px] font-semibold text-[var(--foreground-primary)]">
-            Доброго дня, Ink!
+            Доброго дня, {loading ? "Завантаження..." : displayName}!
           </h1>
           <p className="text-[16px] opacity-70 mt-1">
             Ось що відбувається на сайті
@@ -31,4 +30,4 @@ export default function GreetingBanner() {
         </div>
       </div>
     );
-  }
+}

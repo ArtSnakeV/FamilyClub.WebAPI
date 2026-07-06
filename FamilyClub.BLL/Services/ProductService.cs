@@ -22,13 +22,13 @@ public class ProductService : IProductService
 
     public async Task<IEnumerable<ProductDto>> GetAllAsync(CancellationToken cancellationToken = default)
     {
-        var products = await _productRepository.GetAllWithImagesAsync(cancellationToken);
+        var products = await _productRepository.GetAllAsync(cancellationToken);
         return products.Select(MapToDto);
     }
 
     public async Task<ProductDto?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
     {
-        var product = await _productRepository.GetByIdWithImagesAsync(id, cancellationToken);
+        var product = await _productRepository.GetByIdAsync(id, cancellationToken);
         if (product is null)
         {
             return null;
@@ -161,7 +161,7 @@ public class ProductService : IProductService
 	List<IFormFile> productImageFiles,
 	CancellationToken cancellationToken = default)
 	{
-		var existingProduct = await _productRepository.GetByIdWithImagesAsync(id, cancellationToken);
+		var existingProduct = await _productRepository.GetByIdAsync(id, cancellationToken);
 
 		if (existingProduct is null)
 			return false;

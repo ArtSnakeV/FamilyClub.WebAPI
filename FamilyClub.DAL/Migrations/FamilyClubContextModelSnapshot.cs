@@ -392,6 +392,97 @@ namespace FamilyClub.DAL.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("FamilyClubLibrary.Complaint", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ClubMemberId")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("club_member_id");
+
+                    b.Property<string>("ComplaintText")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("complaint_text");
+
+                    b.Property<string>("ComplaintType")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("complaint_type");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<bool>("IsResolved")
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_resolved");
+
+                    b.Property<string>("ResolutionNotes")
+                        .HasColumnType("text")
+                        .HasColumnName("resolution_notes");
+
+                    b.Property<DateTime?>("ResolvedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("resolved_at");
+
+                    b.HasKey("Id")
+                        .HasName("pk_complaints");
+
+                    b.HasIndex("ClubMemberId")
+                        .HasDatabaseName("ix_complaints_club_member_id");
+
+                    b.ToTable("complaints", (string)null);
+                });
+
+            modelBuilder.Entity("FamilyClubLibrary.ComplaintImage", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ComplaintId")
+                        .HasColumnType("integer")
+                        .HasColumnName("complaint_id");
+
+                    b.Property<string>("ContentType")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("content_type");
+
+                    b.Property<byte[]>("ImageData")
+                        .IsRequired()
+                        .HasColumnType("bytea")
+                        .HasColumnName("image_data");
+
+                    b.Property<string>("ImageName")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)")
+                        .HasColumnName("image_name");
+
+                    b.Property<DateTime>("UploadedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("uploaded_at");
+
+                    b.HasKey("Id")
+                        .HasName("pk_complaint_images");
+
+                    b.HasIndex("ComplaintId")
+                        .HasDatabaseName("ix_complaint_images_complaint_id");
+
+                    b.ToTable("complaint_images", (string)null);
+                });
+
             modelBuilder.Entity("FamilyClubLibrary.Format", b =>
                 {
                     b.Property<int>("Id")
@@ -1178,6 +1269,30 @@ namespace FamilyClub.DAL.Migrations
                     b.Navigation("Product");
                 });
 
+            modelBuilder.Entity("FamilyClubLibrary.Complaint", b =>
+                {
+                    b.HasOne("FamilyClubLibrary.ClubMember", "ClubMember")
+                        .WithMany()
+                        .HasForeignKey("ClubMemberId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_complaints_users_club_member_id");
+
+                    b.Navigation("ClubMember");
+                });
+
+            modelBuilder.Entity("FamilyClubLibrary.ComplaintImage", b =>
+                {
+                    b.HasOne("FamilyClubLibrary.Complaint", "Complaint")
+                        .WithMany("ComplaintImages")
+                        .HasForeignKey("ComplaintId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_complaint_images_complaints_complaint_id");
+
+                    b.Navigation("Complaint");
+                });
+
             modelBuilder.Entity("FamilyClubLibrary.Notification", b =>
                 {
                     b.HasOne("FamilyClubLibrary.ClubMember", "ClubMember")
@@ -1416,6 +1531,11 @@ namespace FamilyClub.DAL.Migrations
                     b.Navigation("Orders");
 
                     b.Navigation("Reviews");
+                });
+
+            modelBuilder.Entity("FamilyClubLibrary.Complaint", b =>
+                {
+                    b.Navigation("ComplaintImages");
                 });
 
             modelBuilder.Entity("FamilyClubLibrary.Order", b =>

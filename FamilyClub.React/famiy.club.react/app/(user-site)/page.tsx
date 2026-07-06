@@ -38,6 +38,7 @@ import AdvantagesSection from "@/app/(user-site)/main_page/AdvantagesSection";
 import ReviewsSection from "@/app/(user-site)/main_page/ReviewsSection";
 import FormatSection from "@/app/(user-site)/main_page/FormatSection";
 import PromoBanner from "@/app/(user-site)/main_page/PromoBanner";
+import MobileHome from "@/app/(user-site)/main_page/mobile/MobileHome";
 import {
     authorService,
     categoriesService,
@@ -64,28 +65,43 @@ const formatPrice = (value?: number | null) => {
 const getImageSrc = (product: ProductDto) => {
     const image = product.productImages?.[0];
     if (!image?.imageData) return null;
-    if (image.imageData.startsWith("data:")) {
-        return image.imageData;
+    const normalizedData = image.imageData.trim();
+    if (normalizedData.startsWith("data:") || normalizedData.startsWith("http://") || normalizedData.startsWith("https://") || normalizedData.startsWith("/")) {
+        return normalizedData;
     }
 
-    const extension = image.imageName?.split(".").pop()?.toLowerCase();
-    const mimeType = extension === "png"
-        ? "image/png"
-        : extension === "webp"
-            ? "image/webp"
-            : extension === "gif"
-                ? "image/gif"
-                    : "image/jpeg";
+    const mimeType = (() => {
+        if (normalizedData.startsWith("UklGR")) return "image/webp";
+        if (normalizedData.startsWith("/9j/")) return "image/jpeg";
+        if (normalizedData.startsWith("iVBORw0KGgo")) return "image/png";
+        if (normalizedData.startsWith("R0lGOD")) return "image/gif";
 
-    return `data:${mimeType};base64,${image.imageData}`;
+        const extension = image.imageName?.split(".").pop()?.toLowerCase();
+        switch (extension) {
+            case "webp": return "image/webp";
+            case "png": return "image/png";
+            case "gif": return "image/gif";
+            default: return "image/jpeg";
+        }
+    })();
+
+    return `data:${mimeType};base64,${normalizedData}`;
 };
 
 const getAvatarSrc = (avatarData?: string | null) => {
     if (!avatarData) return null;
-    if (avatarData.startsWith("data:")) {
-        return avatarData;
+    const normalizedData = avatarData.trim();
+    if (normalizedData.startsWith("data:")) {
+        return normalizedData;
     }
-    return `data:image/jpeg;base64,${avatarData}`;
+    const mimeType = (() => {
+        if (normalizedData.startsWith("UklGR")) return "image/webp";
+        if (normalizedData.startsWith("/9j/")) return "image/jpeg";
+        if (normalizedData.startsWith("iVBORw0KGgo")) return "image/png";
+        if (normalizedData.startsWith("R0lGOD")) return "image/gif";
+        return "image/jpeg";
+    })();
+    return `data:${mimeType};base64,${normalizedData}`;
 };
 
 const formatReviewDate = (value?: Date | string | null) => {
@@ -131,12 +147,12 @@ export default function Home() {
                     membersResult,
                     formatsResult,
                 ] = await Promise.all([
-                    productService.apiProductsGet(),
-                    reviewService.apiReviewsGet(),
-                    categoriesService.apiCategoriesGet(),
-                    authorService.apiAuthorsGet(),
-                    clubMemberService.apiClubMemberGet(),
-                    formatService.apiFormatsGet(),
+                    productService.apiProductsGet().catch((err) => { console.warn("Failed to fetch products:", err); return []; }),
+                    reviewService.apiReviewsGet().catch((err) => { console.warn("Failed to fetch reviews:", err); return []; }),
+                    categoriesService.apiCategoriesGet().catch((err) => { console.warn("Failed to fetch categories:", err); return []; }),
+                    authorService.apiAuthorsGet().catch((err) => { console.warn("Failed to fetch authors:", err); return []; }),
+                    clubMemberService.apiClubMemberGet().catch((err) => { console.warn("Failed to fetch club members:", err); return []; }),
+                    formatService.apiFormatsGet().catch((err) => { console.warn("Failed to fetch formats:", err); return []; }),
                 ]);
 
                 if (!isMounted) return;
@@ -351,51 +367,78 @@ export default function Home() {
                 };
             });
     }, [reviews, memberById, productById]);
+
+    const allBooks = mapProductsToBooks(products);
+
+    const gazetteItems = useMemo(() => {
+        return reviewCards.slice(0, 4).map((r, idx) => ({
+            id: String(r.id),
+            authorName: r.author || "Користувач",
+            authorHandle: `@${(r.author || "user").toLowerCase().replace(/\s+/g, "_")}`,
+            tag: "#новини",
+            title: r.text.slice(0, 30) || "",
+            image: r.bookImage || null,
+            avatar: r.avatar || "/images/body/cat.png",
+            href: "/categories",
+        }));
+    }, [reviewCards]);
+
     return (
         <main className="bg-[#f5f3ee] text-[#242424] overflow-x-hidden">
-            <Hero />
+            {/* Mobile Home Page Version (1-to-1 Figma Node 2119:32862) */}
+            <div className="block md:hidden">
+                <MobileHome
+                    recommendations={recommendationBooks}
+                    newBooks={newBooks}
+                    announcements={announcementBooks}
+                    hitsBooks={hitsBooks}
+                    otherBooks={allBooks}
+                    gazetteItems={gazetteItems}
+                />
+            </div>
 
-            {recommendationBooks.length > 0 ? (
-                <BookSection title="Рекомендації для тебе" books={recommendationBooks} showMore pillWidth={631} />
-            ) : null}
+            {/* Desktop Home Page Version */}
+            <div className="hidden md:block">
+                <Hero />
 
-            <InkSection />
+                {recommendationBooks.length > 0 ? (
+                    <BookSection title="Рекомендації для тебе" books={recommendationBooks} showMore pillWidth={631} />
+                ) : null}
 
-            <AboutSection />
+                <InkSection />
 
-            <AdvantagesSection />
+                <AboutSection />
 
-            <ReviewsSection reviews={reviewCards} />
+                <AdvantagesSection />
 
-            <FormatSection />
+                <ReviewsSection reviews={reviewCards} />
 
-            {romanceBooks.length > 0 ? <BookSection title="Роман" books={romanceBooks} pillWidth={206} /> : null}
-            {thrillerBooks.length > 0 ? (
-                <BookSection title="Триллери" books={thrillerBooks} pillWidth={253} />
-            ) : null}
-            {scienceBooks.length > 0 ? (
-                <BookSection title="Наукові" books={scienceBooks} pillWidth={211} />
-            ) : null}
-            {fantasyBooks.length > 0 ? (
-                <BookSection title="Фантастика" books={fantasyBooks} pillWidth={292} />
-            ) : null}
+                <FormatSection />
 
-            <PromoBanner
-                title="Нові книги"
-                subtitle="Є ще що почитати"
-                href="/categories"
-            />
+                {romanceBooks.length > 0 ? <BookSection title="Роман" books={romanceBooks} pillWidth={206} /> : null}
+                {thrillerBooks.length > 0 ? (
+                    <BookSection title="Триллери" books={thrillerBooks} pillWidth={253} />
+                ) : null}
+                {scienceBooks.length > 0 ? (
+                    <BookSection title="Наукові" books={scienceBooks} pillWidth={211} />
+                ) : null}
+                {fantasyBooks.length > 0 ? (
+                    <BookSection title="Фантастика" books={fantasyBooks} pillWidth={292} />
+                ) : null}
 
-            {hitsBooks.length > 0 ? (
-                <BookSection title="Хіти продажу" books={hitsBooks} pillWidth={355} />
-            ) : null}
-            {newBooks.length > 0 ? <BookSection title="Новинки" books={newBooks} pillWidth={237} /> : null}
-            {setBooks.length > 0 ? (
-                <BookSection title="Книжкові комплекти" books={setBooks} pillWidth={472} />
-            ) : null}
-            {announcementBooks.length > 0 ? (
-                <BookSection title="Анонси" books={announcementBooks} pillWidth={204} />
-            ) : null}
+                <PromoBanner />
+
+                {hitsBooks.length > 0 ? (
+                    <BookSection title="Хіти продажу" books={hitsBooks} pillWidth={355} />
+                ) : null}
+                {newBooks.length > 0 ? <BookSection title="Новинки" books={newBooks} pillWidth={237} /> : null}
+                {setBooks.length > 0 ? (
+                    <BookSection title="Книжкові комплекти" books={setBooks} pillWidth={472} />
+                ) : null}
+                {announcementBooks.length > 0 ? (
+                    <BookSection title="Анонси" books={announcementBooks} pillWidth={204} />
+                ) : null}
+            </div>
         </main>
     );
 }

@@ -16,12 +16,12 @@ import {
   OrdersApi,
   FavoritesApi,
   AgeRestrictionsApi,
+  ComplaintsApi,
 } from "./generated";
 
 // Configuration tells the client where your backend is
-//const defaultBasePath = typeof window !== "undefined" ? "" : "https://localhost:7069";
-//export const apiBasePath = process.env.NEXT_PUBLIC_API_URL || defaultBasePath;
-export const apiBasePath = process.env.NEXT_PUBLIC_API_URL || "https://localhost:7069";
+const defaultBasePath = typeof window !== "undefined" ? "" : "https://localhost:7069";
+export const apiBasePath = process.env.NEXT_PUBLIC_API_URL || defaultBasePath;
 
 
 export const apiConfig = new Configuration({
@@ -44,3 +44,4 @@ export const cartService = new CartsApi(apiConfig);
 export const orderService = new OrdersApi(apiConfig);
 export const favoriteService = new FavoritesApi(apiConfig);
 export const ageRestrictionService = new AgeRestrictionsApi(apiConfig);
+export const complaintsService = new ComplaintsApi(apiConfig);

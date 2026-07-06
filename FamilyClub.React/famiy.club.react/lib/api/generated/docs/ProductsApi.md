@@ -233,7 +233,7 @@ async function example() {
     description: description_example,
     // number (optional)
     publisherId: 56,
-    // Array<ProductImage> (optional)
+    // Array<FamilyClubLibraryProductImage> (optional)
     productImages: ...,
     // string (optional)
     originalTitle: originalTitle_example,
@@ -305,7 +305,7 @@ example().catch(console.error);
 | **discountPrice** | `number` |  | [Optional] [Defaults to `undefined`] |
 | **description** | `string` |  | [Optional] [Defaults to `undefined`] |
 | **publisherId** | `number` |  | [Optional] [Defaults to `undefined`] |
-| **productImages** | `Array<ProductImage>` |  | [Optional] |
+| **productImages** | `Array<FamilyClubLibraryProductImage>` |  | [Optional] |
 | **originalTitle** | `string` |  | [Optional] [Defaults to `undefined`] |
 | **pageCount** | `number` |  | [Optional] [Defaults to `undefined`] |
 | **publishingDate** | `Date` |  | [Optional] [Defaults to `undefined`] |
@@ -383,7 +383,7 @@ async function example() {
     description: description_example,
     // number (optional)
     publisherId: 56,
-    // Array<ProductImage> (optional)
+    // Array<FamilyClubLibraryProductImage> (optional)
     productImages: ...,
     // string (optional)
     originalTitle: originalTitle_example,
@@ -454,7 +454,7 @@ example().catch(console.error);
 | **discountPrice** | `number` |  | [Optional] [Defaults to `undefined`] |
 | **description** | `string` |  | [Optional] [Defaults to `undefined`] |
 | **publisherId** | `number` |  | [Optional] [Defaults to `undefined`] |
-| **productImages** | `Array<ProductImage>` |  | [Optional] |
+| **productImages** | `Array<FamilyClubLibraryProductImage>` |  | [Optional] |
 | **originalTitle** | `string` |  | [Optional] [Defaults to `undefined`] |
 | **pageCount** | `number` |  | [Optional] [Defaults to `undefined`] |
 | **publishingDate** | `Date` |  | [Optional] [Defaults to `undefined`] |
