@@ -13,6 +13,7 @@ import { useEffect, useState } from "react";
 import UserLoginButton from "./UserLoginButton";
 import { useRouter } from "next/navigation";
 import { apiBasePath } from "@/lib/api/services";
+import { clearAuthSession, getAuthToken } from "@/lib/auth/tokenStorage";
 
 
 type User = {
@@ -33,7 +34,7 @@ export default function UpNavigation() {
   const router = useRouter();
 
   const fetchNotifications = async (memberId: string) => {
-    const token = localStorage.getItem("token");
+    const token = getAuthToken();
     if (!token) return;
 
     try {
@@ -64,7 +65,7 @@ export default function UpNavigation() {
   };
 
   const fetchUser = async () => {
-    const token = localStorage.getItem("token");
+    const token = getAuthToken();
 
     if (!token) {
       setMember(null);
@@ -121,10 +122,9 @@ export default function UpNavigation() {
   }
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
+    clearAuthSession();
     setMember(null);
     setNotificationCount(0);
-    window.dispatchEvent(new Event("auth-change"));
     router.push("/");
   };
   return (

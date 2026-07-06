@@ -6,6 +6,7 @@ import OrdersTabs from "./OrdersTabs";
 import OrderCard from "./OrderCard";
 import { EMPTY_ORDERS_BY_TAB, MockOrderItem, OrderTabId } from "./mockData";
 import { orderService, productService } from "@/lib/api/services";
+import { getAuthUserId } from "@/lib/auth/tokenStorage";
 import { OrderDTO, ProductDto } from "@/lib/api/generated";
 
 export default function OrdersPage() {
@@ -22,7 +23,7 @@ export default function OrdersPage() {
   const loadDatabaseOrders = async () => {
     setLoading(true);
     try {
-      const userId = typeof window !== "undefined" ? localStorage.getItem("userId") : null;
+      const userId = typeof window !== "undefined" ? getAuthUserId() : null;
       
       // Завантажуємо продукти з БД для визначення назв та обкладинок
       const allProducts: ProductDto[] = (await productService.apiProductsGet().catch(() => [])) || [];

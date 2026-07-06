@@ -32,6 +32,7 @@ import {
   AuthorDTO,
 } from '@/lib/api/generated';
 import { useEffect, useMemo, useState } from "react";
+import { getAuthToken } from "@/lib/auth/tokenStorage";
 
 // app/(admin-site)/admin/desktop/page.tsx
 
@@ -53,7 +54,7 @@ export default function Desktop() {
     let cancelled = false;
   
     const loadDashboard = async () => {
-      const token = localStorage.getItem("token");
+      const token = getAuthToken();
   
       if (!token) {
         setError(new Error("Not authenticated"));

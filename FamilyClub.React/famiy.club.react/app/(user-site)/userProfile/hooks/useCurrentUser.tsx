@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { apiBasePath } from "@/lib/api/services";
+import { getAuthToken } from "@/lib/auth/tokenStorage";
 
 
 export type CurrentUser = {
@@ -20,7 +21,7 @@ export function useCurrentUser() {
   const [loading, setLoading] = useState(true);
 
   const fetchUser = async () => {
-    const token = localStorage.getItem("token");
+    const token = getAuthToken();
 
     if (!token) {
       setUser(null);

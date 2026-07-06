@@ -18,6 +18,7 @@ import {
   publisherService,
   reviewService,
 } from "@/lib/api/services";
+import { getAuthToken } from "@/lib/auth/tokenStorage";
 import {
   AuthorDTO,
   BookSizeDto,
@@ -260,7 +261,7 @@ export default function ProductDetailsClient({ id }: { id: string }) {
 
   const handleCommentSubmit = async () => {
     if (!newComment.trim()) return;
-    const token = localStorage.getItem("token");
+    const token = getAuthToken();
     if (!token) {
       alert("Потрібно увійти в акаунт, щоб залишити коментар");
       return;
@@ -293,7 +294,7 @@ export default function ProductDetailsClient({ id }: { id: string }) {
   };
 
   const toggleFavorite = async () => {
-  const token = localStorage.getItem("token");
+  const token = getAuthToken();
   if (!token) {
     alert("Потрібно увійти в акаунт");
     return;
@@ -362,7 +363,7 @@ export default function ProductDetailsClient({ id }: { id: string }) {
         setBookSizes(bookSizesResult ?? []);
         setClubMembers(membersResult ?? []);
 
-        const token = localStorage.getItem("token");
+        const token = getAuthToken();
         if (token) {
           try {
             const fav = await favoriteService.apiFavoritesProductIdIsFavoriteGet(

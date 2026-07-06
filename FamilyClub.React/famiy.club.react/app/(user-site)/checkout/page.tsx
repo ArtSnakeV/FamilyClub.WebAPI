@@ -8,6 +8,7 @@ import {
   orderService,
 } from "@/lib/api/services";
 import type { ProductDto } from "@/lib/api/generated";
+import { getAuthToken, getAuthUserId } from "@/lib/auth/tokenStorage";
 import styles from "./checkout.module.css";
 
 // ─── Types ───
@@ -117,8 +118,8 @@ export default function CheckoutPage() {
   // ─── Enforce login ───
   useEffect(() => {
     if (typeof window !== "undefined") {
-      const token = localStorage.getItem("token");
-      const userId = localStorage.getItem("userId");
+      const token = getAuthToken();
+      const userId = getAuthUserId();
       if (!token || !userId) {
         router.push("/login");
       }
@@ -216,7 +217,7 @@ export default function CheckoutPage() {
 
       // Get the stored member ID
       const storedId = typeof window !== "undefined"
-        ? localStorage.getItem("userId")
+        ? getAuthUserId()
         : null;
 
       if (!storedId) {
