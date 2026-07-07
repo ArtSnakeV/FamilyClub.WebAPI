@@ -27,13 +27,13 @@ import {
     CoverTypeToJSON,
     CoverTypeToJSONTyped,
 } from './CoverType';
-import type { FamilyClubLibraryProductImage } from './FamilyClubLibraryProductImage';
+import type { ProductImage } from './ProductImage';
 import {
-    FamilyClubLibraryProductImageFromJSON,
-    FamilyClubLibraryProductImageFromJSONTyped,
-    FamilyClubLibraryProductImageToJSON,
-    FamilyClubLibraryProductImageToJSONTyped,
-} from './FamilyClubLibraryProductImage';
+    ProductImageFromJSON,
+    ProductImageFromJSONTyped,
+    ProductImageToJSON,
+    ProductImageToJSONTyped,
+} from './ProductImage';
 
 /**
  * 
@@ -79,10 +79,10 @@ export interface ProductDto {
     publisherId?: number | null;
     /**
      * 
-     * @type {Array<FamilyClubLibraryProductImage>}
+     * @type {Array<ProductImage>}
      * @memberof ProductDto
      */
-    productImages?: Array<FamilyClubLibraryProductImage> | null;
+    productImages?: Array<ProductImage> | null;
     /**
      * 
      * @type {string}
@@ -236,7 +236,7 @@ export function ProductDtoFromJSONTyped(json: any, ignoreDiscriminator: boolean)
         'discountPrice': json['discountPrice'] == null ? undefined : json['discountPrice'],
         'description': json['description'] == null ? undefined : json['description'],
         'publisherId': json['publisherId'] == null ? undefined : json['publisherId'],
-        'productImages': json['productImages'] == null ? undefined : ((json['productImages'] as Array<any>).map(FamilyClubLibraryProductImageFromJSON)),
+        'productImages': json['productImages'] == null ? undefined : ((json['productImages'] as Array<any>).map(ProductImageFromJSON)),
         'originalTitle': json['originalTitle'] == null ? undefined : json['originalTitle'],
         'pageCount': json['pageCount'] == null ? undefined : json['pageCount'],
         'publishingDate': json['publishingDate'] == null ? undefined : (new Date(json['publishingDate'])),
@@ -278,7 +278,7 @@ export function ProductDtoToJSONTyped(value?: ProductDto | null, ignoreDiscrimin
         'discountPrice': value['discountPrice'],
         'description': value['description'],
         'publisherId': value['publisherId'],
-        'productImages': value['productImages'] == null ? undefined : ((value['productImages'] as Array<any>).map(FamilyClubLibraryProductImageToJSON)),
+        'productImages': value['productImages'] == null ? undefined : ((value['productImages'] as Array<any>).map(ProductImageToJSON)),
         'originalTitle': value['originalTitle'],
         'pageCount': value['pageCount'],
         'publishingDate': value['publishingDate'] == null ? value['publishingDate'] : value['publishingDate'].toISOString().substring(0,10),

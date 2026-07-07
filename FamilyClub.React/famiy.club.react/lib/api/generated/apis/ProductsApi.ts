@@ -17,18 +17,18 @@ import * as runtime from '../runtime';
 import type {
   Availability,
   CoverType,
-  FamilyClubLibraryProductImage,
   ProductDto,
+  ProductImage,
 } from '../models/index';
 import {
     AvailabilityFromJSON,
     AvailabilityToJSON,
     CoverTypeFromJSON,
     CoverTypeToJSON,
-    FamilyClubLibraryProductImageFromJSON,
-    FamilyClubLibraryProductImageToJSON,
     ProductDtoFromJSON,
     ProductDtoToJSON,
+    ProductImageFromJSON,
+    ProductImageToJSON,
 } from '../models/index';
 
 export interface ApiProductsIdDeleteRequest {
@@ -47,7 +47,7 @@ export interface ApiProductsIdPutRequest {
     discountPrice?: number;
     description?: string;
     publisherId?: number;
-    productImages?: Array<FamilyClubLibraryProductImage>;
+    productImages?: Array<ProductImage>;
     originalTitle?: string;
     pageCount?: number;
     publishingDate?: Date;
@@ -79,7 +79,7 @@ export interface ApiProductsPostRequest {
     discountPrice?: number;
     description?: string;
     publisherId?: number;
-    productImages?: Array<FamilyClubLibraryProductImage>;
+    productImages?: Array<ProductImage>;
     originalTitle?: string;
     pageCount?: number;
     publishingDate?: Date;

@@ -66,6 +66,7 @@ public class ReviewRepository : Repository<Review>, IReviewRepository
     public async Task<IEnumerable<Review>> GetByUserIdAsync(string userId, CancellationToken cancellationToken = default)
     {
         return await _context.Reviews
+            .Include(p => p.Product)
             .Where(r => r.UserId == userId)
             .ToListAsync(cancellationToken);
     }

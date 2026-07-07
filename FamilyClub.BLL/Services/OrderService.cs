@@ -105,8 +105,10 @@ namespace FamilyClub.BLL.Services
 					Quantity = oi.Quantity,
 					UnitPrice = oi.UnitPrice,
 					ProductId = oi.ProductId,
-					OrderId = oi.OrderId
-				}).ToList()
+                    ProductName = oi.Product?.ProductName,
+                    OrderId = oi.OrderId,
+                    Format = oi.Format
+                }).ToList()
 			};
 		}
 	}

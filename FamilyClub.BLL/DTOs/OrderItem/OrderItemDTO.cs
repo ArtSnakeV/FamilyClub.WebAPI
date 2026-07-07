@@ -12,7 +12,8 @@ namespace FamilyClub.BLL.DTOs.OrderItem
 
 		public decimal UnitPrice { get; set; }
         public int ProductId { get; set; }//FK
-		public int OrderId { get; set; }   //FK
+        public string? ProductName { get; set; }
+        public int OrderId { get; set; }   //FK
 		public string? Format { get; set; }
 	}
 }

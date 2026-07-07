@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "update-api": "npx openapi-generator-cli generate -i swagger.json -g typescript-fetch -o ./lib/api/generated -c openapi-generator-config.json"
+    "update-api": "npx openapi-generator-cli generate -i https://localhost:7069/swagger/v1/swagger.json -g typescript-fetch -o ./lib/api/generated"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.10",

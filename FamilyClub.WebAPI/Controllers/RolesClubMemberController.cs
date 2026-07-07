@@ -1,5 +1,6 @@
 ﻿using FamilyClub.BLL.DTOs.Roles;
 using FamilyClub.BLL.Interfaces;
+using FamilyClub.BLL.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -70,5 +71,16 @@ public class RolesClubMemberController : ControllerBase
     {
         var users = await _roleService.GetUsersInRoleAsync(roleName, cancellationToken);
         return Ok(users);
+    }
+
+    [HttpPut("{id}/assign-roles")]
+    public async Task<IActionResult> AssignRoles([FromRoute] string id, [FromBody] AssignRolesDto dto, CancellationToken cancellationToken)
+    {
+        var result = await _roleService.AssignRolesToUserAsync(id, dto.Roles);
+
+        if (!result)
+            return NotFound();
+
+        return NoContent();
     }
 }

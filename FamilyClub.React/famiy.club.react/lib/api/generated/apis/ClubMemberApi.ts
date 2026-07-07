@@ -75,6 +75,14 @@ export interface ApiClubMemberIdJsonPutRequest {
     updateClubMemberDto?: UpdateClubMemberDto;
 }
 
+export interface ApiClubMemberIdLockPutRequest {
+    id: string;
+}
+
+export interface ApiClubMemberIdUnlockPutRequest {
+    id: string;
+}
+
 /**
  * 
  */
@@ -561,6 +569,90 @@ export class ClubMemberApi extends runtime.BaseAPI {
      */
     async apiClubMemberIdJsonPut(requestParameters: ApiClubMemberIdJsonPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.apiClubMemberIdJsonPutRaw(requestParameters, initOverrides);
+    }
+
+    /**
+     * Creates request options for apiClubMemberIdLockPut without sending the request
+     */
+    async apiClubMemberIdLockPutRequestOpts(requestParameters: ApiClubMemberIdLockPutRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling apiClubMemberIdLockPut().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+
+        let urlPath = `/api/ClubMember/{id}/lock`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
+        return {
+            path: urlPath,
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     */
+    async apiClubMemberIdLockPutRaw(requestParameters: ApiClubMemberIdLockPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.apiClubMemberIdLockPutRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     */
+    async apiClubMemberIdLockPut(requestParameters: ApiClubMemberIdLockPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.apiClubMemberIdLockPutRaw(requestParameters, initOverrides);
+    }
+
+    /**
+     * Creates request options for apiClubMemberIdUnlockPut without sending the request
+     */
+    async apiClubMemberIdUnlockPutRequestOpts(requestParameters: ApiClubMemberIdUnlockPutRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling apiClubMemberIdUnlockPut().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+
+        let urlPath = `/api/ClubMember/{id}/unlock`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
+        return {
+            path: urlPath,
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     */
+    async apiClubMemberIdUnlockPutRaw(requestParameters: ApiClubMemberIdUnlockPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.apiClubMemberIdUnlockPutRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     */
+    async apiClubMemberIdUnlockPut(requestParameters: ApiClubMemberIdUnlockPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.apiClubMemberIdUnlockPutRaw(requestParameters, initOverrides);
     }
 
 }

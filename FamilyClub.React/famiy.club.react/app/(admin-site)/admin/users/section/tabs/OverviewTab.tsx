@@ -88,10 +88,12 @@ interface Props {
     ordersCount: number;
     spentAmount: number;
     reviewsCount: number;
+    complaintsCount: number;
     handleLockoutEnd: () => void;
+    onAddManager: (id: string) => void;
 }
 
-export default function OverviewTab({ user, ordersCount, spentAmount, reviewsCount, handleLockoutEnd }: Props) {
+export default function OverviewTab({ user, ordersCount, spentAmount, reviewsCount, handleLockoutEnd, complaintsCount, onAddManager }: Props) {
     const isLocked = !!user.lockoutEnd && new Date(user.lockoutEnd).getTime() > Date.now();
 
     const rows: [string, string][] = [
@@ -106,7 +108,7 @@ export default function OverviewTab({ user, ordersCount, spentAmount, reviewsCou
         ["Оформлено замовлень", `${ordersCount}`],
         ["Витрачено коштів", `${spentAmount.toLocaleString("uk-UA")} грн`],
         ["Додано відгуків", `${reviewsCount}`],
-        // ["Додано скарг", `${user.complaintsCount ?? ""}`.trim() || "—"],
+        ["Додано скарг", `${complaintsCount}`],
         // ["Останній вхід", user.lastLoginAt ?? "—"],
     ];
 
@@ -137,15 +139,16 @@ export default function OverviewTab({ user, ordersCount, spentAmount, reviewsCou
                 <div className="p-4 top-[24px] relative w-full max-w-full gap-4 flex flex-wrap">
                     <button
                         type="submit"
+                        onClick={onAddManager ? () => onAddManager(user.id) : undefined}
                         className="flex-1 min-w-[160px] h-[40px] rounded-[9px] bg-[var(--color-green)] text-[var(--color-white)] 
                         text-[20px] font-medium transition-all duration-200 hover:opacity-90 hover:shadow-[0px_0px_20px_0px_#00000080] 
                         active:scale-[0.98] disabled:opacity-50 whitespace-nowrap"
                     >
-                        Переглянути профіль
+                        Редагувати профіль
                     </button>
                     <button
                         type="button"
-                        onClick={handleLockoutEnd}
+                        onClick={() => onAddManager(user.id)}
                         className="flex-1 min-w-[160px] h-[40px] rounded-[9px] bg-transparent text-[var(--color-green)] border-2 
                         border-[#005B3380] text-[#005B33] text-[20px] font-medium transition-all
                          duration-200 hover:opacity-90 hover:shadow-[0px_0px_20px_0px_#00000080] 

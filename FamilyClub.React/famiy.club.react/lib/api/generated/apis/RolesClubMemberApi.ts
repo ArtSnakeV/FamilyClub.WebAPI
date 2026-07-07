@@ -14,6 +14,18 @@
 
 
 import * as runtime from '../runtime';
+import type {
+  AssignRolesDto,
+} from '../models/index';
+import {
+    AssignRolesDtoFromJSON,
+    AssignRolesDtoToJSON,
+} from '../models/index';
+
+export interface ApiRolesClubMemberIdAssignRolesPutRequest {
+    id: string;
+    assignRolesDto?: AssignRolesDto;
+}
 
 export interface ApiRolesClubMemberIdDeleteRequest {
     id: string;
@@ -73,6 +85,51 @@ export class RolesClubMemberApi extends runtime.BaseAPI {
      */
     async apiRolesClubMemberGet(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.apiRolesClubMemberGetRaw(initOverrides);
+    }
+
+    /**
+     * Creates request options for apiRolesClubMemberIdAssignRolesPut without sending the request
+     */
+    async apiRolesClubMemberIdAssignRolesPutRequestOpts(requestParameters: ApiRolesClubMemberIdAssignRolesPutRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling apiRolesClubMemberIdAssignRolesPut().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+
+        let urlPath = `/api/RolesClubMember/{id}/assign-roles`;
+        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+
+        return {
+            path: urlPath,
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+            body: AssignRolesDtoToJSON(requestParameters['assignRolesDto']),
+        };
+    }
+
+    /**
+     */
+    async apiRolesClubMemberIdAssignRolesPutRaw(requestParameters: ApiRolesClubMemberIdAssignRolesPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.apiRolesClubMemberIdAssignRolesPutRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     */
+    async apiRolesClubMemberIdAssignRolesPut(requestParameters: ApiRolesClubMemberIdAssignRolesPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.apiRolesClubMemberIdAssignRolesPutRaw(requestParameters, initOverrides);
     }
 
     /**
