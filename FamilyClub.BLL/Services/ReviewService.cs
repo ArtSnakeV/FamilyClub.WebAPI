@@ -90,6 +90,7 @@ public class ReviewService : IReviewService
         {
             Id = review.Id,
             ProductId = review.ProductId,
+            ProductName = review.Product?.ProductName,
             UserId = review.UserId,
             Rating = review.Rating,
             Comment = review.Comment,

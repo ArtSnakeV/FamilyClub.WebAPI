@@ -285,7 +285,7 @@ export default function Page() {
                 </div>
 
                 <QuickActionsBar
-                    onAddManager={() => router.push(`/admin/managers/addManager`)}
+                    onAddManager={() => router.push(`/admin/managers/addEditManager`)}
                     onToggleBlockedFilter={() => setShowOnlyBlocked((prev) => !prev)}
                     isBlockedFilterActive={showOnlyBlocked}
                 />

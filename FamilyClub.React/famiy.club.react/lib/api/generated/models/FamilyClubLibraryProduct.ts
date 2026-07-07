@@ -13,20 +13,6 @@
  */
 
 import { mapValues } from '../runtime';
-import type { Availability } from './Availability';
-import {
-    AvailabilityFromJSON,
-    AvailabilityFromJSONTyped,
-    AvailabilityToJSON,
-    AvailabilityToJSONTyped,
-} from './Availability';
-import type { CoverType } from './CoverType';
-import {
-    CoverTypeFromJSON,
-    CoverTypeFromJSONTyped,
-    CoverTypeToJSON,
-    CoverTypeToJSONTyped,
-} from './CoverType';
 import type { FamilyClubLibraryReview } from './FamilyClubLibraryReview';
 import {
     FamilyClubLibraryReviewFromJSON,
@@ -55,6 +41,13 @@ import {
     FamilyClubLibraryAgeRestrictionToJSON,
     FamilyClubLibraryAgeRestrictionToJSONTyped,
 } from './FamilyClubLibraryAgeRestriction';
+import type { FamilyClubLibraryEnumCoverType } from './FamilyClubLibraryEnumCoverType';
+import {
+    FamilyClubLibraryEnumCoverTypeFromJSON,
+    FamilyClubLibraryEnumCoverTypeFromJSONTyped,
+    FamilyClubLibraryEnumCoverTypeToJSON,
+    FamilyClubLibraryEnumCoverTypeToJSONTyped,
+} from './FamilyClubLibraryEnumCoverType';
 import type { FamilyClubLibraryProductImage } from './FamilyClubLibraryProductImage';
 import {
     FamilyClubLibraryProductImageFromJSON,
@@ -83,6 +76,13 @@ import {
     FamilyClubLibraryTranslatorToJSON,
     FamilyClubLibraryTranslatorToJSONTyped,
 } from './FamilyClubLibraryTranslator';
+import type { FamilyClubLibraryEnumAvailability } from './FamilyClubLibraryEnumAvailability';
+import {
+    FamilyClubLibraryEnumAvailabilityFromJSON,
+    FamilyClubLibraryEnumAvailabilityFromJSONTyped,
+    FamilyClubLibraryEnumAvailabilityToJSON,
+    FamilyClubLibraryEnumAvailabilityToJSONTyped,
+} from './FamilyClubLibraryEnumAvailability';
 import type { FamilyClubLibraryClubMember } from './FamilyClubLibraryClubMember';
 import {
     FamilyClubLibraryClubMemberFromJSON,
@@ -277,16 +277,16 @@ export interface FamilyClubLibraryProduct {
     promotion?: FamilyClubLibraryPromotion;
     /**
      * 
-     * @type {CoverType}
+     * @type {FamilyClubLibraryEnumCoverType}
      * @memberof FamilyClubLibraryProduct
      */
-    coverType?: CoverType;
+    coverType?: FamilyClubLibraryEnumCoverType;
     /**
      * 
-     * @type {Availability}
+     * @type {FamilyClubLibraryEnumAvailability}
      * @memberof FamilyClubLibraryProduct
      */
-    availability?: Availability;
+    availability?: FamilyClubLibraryEnumAvailability;
     /**
      * 
      * @type {number}
@@ -371,8 +371,8 @@ export function FamilyClubLibraryProductFromJSONTyped(json: any, ignoreDiscrimin
         'isbn': json['isbn'] == null ? undefined : json['isbn'],
         'promotionId': json['promotionId'] == null ? undefined : json['promotionId'],
         'promotion': json['promotion'] == null ? undefined : FamilyClubLibraryPromotionFromJSON(json['promotion']),
-        'coverType': json['coverType'] == null ? undefined : CoverTypeFromJSON(json['coverType']),
-        'availability': json['availability'] == null ? undefined : AvailabilityFromJSON(json['availability']),
+        'coverType': json['coverType'] == null ? undefined : FamilyClubLibraryEnumCoverTypeFromJSON(json['coverType']),
+        'availability': json['availability'] == null ? undefined : FamilyClubLibraryEnumAvailabilityFromJSON(json['availability']),
         'quantityInStock': json['quantityInStock'] == null ? undefined : json['quantityInStock'],
         'productCode': json['productCode'] == null ? undefined : json['productCode'],
         'weightGrams': json['weightGrams'] == null ? undefined : json['weightGrams'],
@@ -417,8 +417,8 @@ export function FamilyClubLibraryProductToJSONTyped(value?: Omit<FamilyClubLibra
         'isbn': value['isbn'],
         'promotionId': value['promotionId'],
         'promotion': FamilyClubLibraryPromotionToJSON(value['promotion']),
-        'coverType': CoverTypeToJSON(value['coverType']),
-        'availability': AvailabilityToJSON(value['availability']),
+        'coverType': FamilyClubLibraryEnumCoverTypeToJSON(value['coverType']),
+        'availability': FamilyClubLibraryEnumAvailabilityToJSON(value['availability']),
         'quantityInStock': value['quantityInStock'],
         'productCode': value['productCode'],
         'weightGrams': value['weightGrams'],
