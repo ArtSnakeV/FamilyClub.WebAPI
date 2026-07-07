@@ -78,7 +78,7 @@ export default function OrdersTab({ user }: Props) {
                                         className="flex flex-wrap justify-between gap-x-4 text-sm text-gray-600"
                                     >
                                         <span className="truncate min-w-0 flex-1">
-                                            Товар #{item.productId}
+                                            {item.productName ?? `Товар #${item.productId}`}
                                             {item.format ? ` (${item.format})` : ""}
                                         </span>
                                         <span className="whitespace-nowrap shrink-0">

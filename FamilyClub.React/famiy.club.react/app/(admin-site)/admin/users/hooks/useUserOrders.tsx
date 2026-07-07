@@ -9,7 +9,8 @@ export interface OrderItem {
     unitPrice: number;
     productId: number;
     orderId: number;
-    format?: string;
+    productName?: string | null;
+    format?: string | null;
 }
 
 export interface Order {

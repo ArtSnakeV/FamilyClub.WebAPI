@@ -8,6 +8,7 @@ Name | Type
 ------------ | -------------
 `id` | number
 `productId` | number
+`productName` | string
 `userId` | string
 `rating` | number
 `comment` | string
@@ -23,6 +24,7 @@ import type { ReviewDto } from ''
 const example = {
   "id": null,
   "productId": null,
+  "productName": null,
   "userId": null,
   "rating": null,
   "comment": null,

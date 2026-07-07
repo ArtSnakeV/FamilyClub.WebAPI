@@ -31,8 +31,8 @@ Name | Type
 `isbn` | string
 `promotionId` | number
 `promotion` | [FamilyClubLibraryPromotion](FamilyClubLibraryPromotion.md)
-`coverType` | [CoverType](CoverType.md)
-`availability` | [Availability](Availability.md)
+`coverType` | [FamilyClubLibraryEnumCoverType](FamilyClubLibraryEnumCoverType.md)
+`availability` | [FamilyClubLibraryEnumAvailability](FamilyClubLibraryEnumAvailability.md)
 `quantityInStock` | number
 `productCode` | string
 `weightGrams` | number

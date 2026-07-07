@@ -93,9 +93,11 @@ namespace FamilyClub.BLL.Services
 				Id = orderItem.Id,
 				Quantity = orderItem.Quantity,
 				UnitPrice = orderItem.UnitPrice,
-				ProductId = orderItem.ProductId,
-				OrderId = orderItem.OrderId
-			};
+                ProductName = orderItem.Product?.ProductName,
+                ProductId = orderItem.ProductId,
+				OrderId = orderItem.OrderId,
+                Format = orderItem.Format
+            };
 		}
 	}
 }

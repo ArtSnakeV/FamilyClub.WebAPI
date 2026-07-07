@@ -5,6 +5,7 @@ All URIs are relative to *http://localhost*
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
 | [**apiRolesClubMemberGet**](RolesClubMemberApi.md#apirolesclubmemberget) | **GET** /api/RolesClubMember |  |
+| [**apiRolesClubMemberIdAssignRolesPut**](RolesClubMemberApi.md#apirolesclubmemberidassignrolesput) | **PUT** /api/RolesClubMember/{id}/assign-roles |  |
 | [**apiRolesClubMemberIdDelete**](RolesClubMemberApi.md#apirolesclubmemberiddelete) | **DELETE** /api/RolesClubMember/{id} |  |
 | [**apiRolesClubMemberIdGet**](RolesClubMemberApi.md#apirolesclubmemberidget) | **GET** /api/RolesClubMember/{id} |  |
 | [**apiRolesClubMemberIdPut**](RolesClubMemberApi.md#apirolesclubmemberidput) | **PUT** /api/RolesClubMember/{id} |  |
@@ -59,6 +60,74 @@ No authorization required
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: Not defined
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | OK |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## apiRolesClubMemberIdAssignRolesPut
+
+> apiRolesClubMemberIdAssignRolesPut(id, assignRolesDto)
+
+
+
+### Example
+
+```ts
+import {
+  Configuration,
+  RolesClubMemberApi,
+} from '';
+import type { ApiRolesClubMemberIdAssignRolesPutRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const api = new RolesClubMemberApi();
+
+  const body = {
+    // string
+    id: id_example,
+    // AssignRolesDto (optional)
+    assignRolesDto: ...,
+  } satisfies ApiRolesClubMemberIdAssignRolesPutRequest;
+
+  try {
+    const data = await api.apiRolesClubMemberIdAssignRolesPut(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **id** | `string` |  | [Defaults to `undefined`] |
+| **assignRolesDto** | [AssignRolesDto](AssignRolesDto.md) |  | [Optional] |
+
+### Return type
+
+`void` (Empty response body)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`, `text/json`, `application/*+json`
 - **Accept**: Not defined
 
 

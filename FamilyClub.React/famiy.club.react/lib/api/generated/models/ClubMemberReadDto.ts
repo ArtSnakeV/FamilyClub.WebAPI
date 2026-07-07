@@ -63,6 +63,12 @@ export interface ClubMemberReadDto {
     dateOfBirth?: Date | null;
     /**
      * 
+     * @type {Date}
+     * @memberof ClubMemberReadDto
+     */
+    lockoutEnd?: Date | null;
+    /**
+     * 
      * @type {Array<string>}
      * @memberof ClubMemberReadDto
      */
@@ -93,6 +99,7 @@ export function ClubMemberReadDtoFromJSONTyped(json: any, ignoreDiscriminator: b
         'name': json['name'] == null ? undefined : json['name'],
         'surname': json['surname'] == null ? undefined : json['surname'],
         'dateOfBirth': json['dateOfBirth'] == null ? undefined : (new Date(json['dateOfBirth'])),
+        'lockoutEnd': json['lockoutEnd'] == null ? undefined : (new Date(json['lockoutEnd'])),
         'roles': json['roles'] == null ? undefined : json['roles'],
     };
 }
@@ -115,6 +122,7 @@ export function ClubMemberReadDtoToJSONTyped(value?: ClubMemberReadDto | null, i
         'name': value['name'],
         'surname': value['surname'],
         'dateOfBirth': value['dateOfBirth'] == null ? value['dateOfBirth'] : value['dateOfBirth'].toISOString().substring(0,10),
+        'lockoutEnd': value['lockoutEnd'] == null ? value['lockoutEnd'] : value['lockoutEnd'].toISOString(),
         'roles': value['roles'],
     };
 }

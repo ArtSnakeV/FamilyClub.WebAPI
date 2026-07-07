@@ -92,7 +92,33 @@ public class RoleClubMemberService : IRoleClubMemberService
         var result = await _roleManager.UpdateAsync(role);
         return result.Succeeded;
     }
+    public async Task<bool> AssignRolesToUserAsync(string userId,  List<string> roles, CancellationToken cancellationToken = default)
+    {
+        var user = await _userManager.FindByIdAsync(userId);
 
+        if (user == null)
+            return false;
+
+        var currentRoles = await _userManager.GetRolesAsync(user);
+
+        if (currentRoles.Any())
+        {
+            var removeResult = await _userManager.RemoveFromRolesAsync(user, currentRoles);
+
+            if (!removeResult.Succeeded)
+                return false;
+        }
+
+        if (roles.Any())
+        {
+            var addResult = await _userManager.AddToRolesAsync(user, roles);
+
+            if (!addResult.Succeeded)
+                return false;
+        }
+
+        return true;
+    }
 }
 
 

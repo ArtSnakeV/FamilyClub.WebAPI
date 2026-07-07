@@ -87,6 +87,9 @@ import ReviewsTab from "../tabs/ReviewsTab";
 import { useUserReviews } from "@/app/(user-site)/userProfile/hooks/useUserReviews";
 import { useUserOrderStats } from "../../hooks/useUserOrderStats";
 import { lockUser, unlockUser } from "../../api/ActionUsers";
+import ComplaintsTab from "../tabs/ComplaintsTab";
+import { useUserComplaints } from "../../hooks/useUserComplaints";
+import { useRouter } from "next/navigation";
 
 
 interface Props {
@@ -94,22 +97,24 @@ interface Props {
     onLockToggle: (user: UserInfo) => void;
 }
 
-type TabKey = "overview" | "orders" | "reviews";
+type TabKey = "overview" | "orders" | "complaints" | "reviews";
 
 const TABS: { key: TabKey; label: string }[] = [
     { key: "overview", label: "Огляд" },
     { key: "orders", label: "Замовлення" },
+    { key: "complaints", label: "Скарги" },
     { key: "reviews", label: "Відгуки" },
 ];
 
 export default function OneUserInfo({ user, onLockToggle }: Props) {
+    const router = useRouter();
     const [activeTab, setActiveTab] = useState<TabKey>("overview");
 
     const { ordersCount, spentAmount } = useUserOrderStats(user.id);
     const { reviews } = useUserReviews(user.id);
 
     const isLocked = !!user.lockoutEnd && new Date(user.lockoutEnd).getTime() > Date.now();
-
+    const { complaints } = useUserComplaints(user.id);
 
     return (
         <div className="w-[560px] max-w-full -ml-8 h-[900px] rounded-2xl overflow-hidden"
@@ -145,9 +150,12 @@ export default function OneUserInfo({ user, onLockToggle }: Props) {
                         ordersCount={ordersCount}
                         spentAmount={spentAmount}
                         reviewsCount={reviews.length}
+                        complaintsCount={complaints.length}
                         handleLockoutEnd={() => onLockToggle(user)}
+                        onAddManager={(id) => router.push(`/admin/managers/addEditManager?id=${id}`)}
                     />}
                 {activeTab === "orders" && <OrdersTab user={user} />}
+                {activeTab === "complaints" && <ComplaintsTab user={user} />}
                 {activeTab === "reviews" && <ReviewsTab user={user} />}
             </div>
 

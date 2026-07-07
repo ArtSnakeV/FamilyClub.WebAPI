@@ -45,6 +45,12 @@ export interface OrderItemDTO {
     productId?: number;
     /**
      * 
+     * @type {string}
+     * @memberof OrderItemDTO
+     */
+    productName?: string | null;
+    /**
+     * 
      * @type {number}
      * @memberof OrderItemDTO
      */
@@ -78,6 +84,7 @@ export function OrderItemDTOFromJSONTyped(json: any, ignoreDiscriminator: boolea
         'quantity': json['quantity'] == null ? undefined : json['quantity'],
         'unitPrice': json['unitPrice'] == null ? undefined : json['unitPrice'],
         'productId': json['productId'] == null ? undefined : json['productId'],
+        'productName': json['productName'] == null ? undefined : json['productName'],
         'orderId': json['orderId'] == null ? undefined : json['orderId'],
         'format': json['format'] == null ? undefined : json['format'],
     };
@@ -98,6 +105,7 @@ export function OrderItemDTOToJSONTyped(value?: OrderItemDTO | null, ignoreDiscr
         'quantity': value['quantity'],
         'unitPrice': value['unitPrice'],
         'productId': value['productId'],
+        'productName': value['productName'],
         'orderId': value['orderId'],
         'format': value['format'],
     };
