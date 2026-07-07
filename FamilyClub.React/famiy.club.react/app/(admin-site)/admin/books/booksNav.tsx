@@ -13,6 +13,7 @@ export default function BooksNav() {
     const isAuthorActive = pathname === '/admin/books/authors';
     const isTranslatorActive = pathname === '/admin/books/translators';
     const isFormatsActive = pathname === '/admin/books/formats';
+    const isBookSizesActive = pathname === '/admin/books/bookSizes';
 
     {/*
     This page works on creating a 'navigation bar' related to book entities and allows you to highlight the current entity, depending on the url address
@@ -38,7 +39,7 @@ export default function BooksNav() {
             style={{
                 backgroundImage: "url('/images/entities/books/top_frame.svg')",
                 opacity: 1,
-                backgroundSize: "110% 110%",
+                backgroundSize: "125% 125%",
                 backgroundPosition: "center",
                 backgroundRepeat: "no-repeat",
                 display: "flex",
@@ -170,6 +171,24 @@ export default function BooksNav() {
                 `}
             >
                 Формати
+            </Link>
+
+            {/* Book Sizes */}
+            {/* Розміри книг */}
+            <Link
+                href="/admin/books/bookSizes"
+                className={`
+                    font-['Source_Sans_Pro'] font-normal text-[20px] leading-[125%] tracking-[-0.011em] align-middle no-underline                    
+                    px-5 py-2.5 rounded-[9px]                    
+                    hover:text-[var(--foreground-on-dark)] hover:bg-[var(--color-brand-green)]                    
+                    transition-colors duration-200 ease-in-out
+                    ${isBookSizesActive
+                        ? 'text-[var(--foreground-on-dark)] bg-[var(--color-brand-green)]'
+                        : 'text-[var(--foreground-primary)] bg-transparent'
+                    }
+                `}
+            >
+                Розміри книг
             </Link>
         </div>
 
