@@ -77,17 +77,52 @@ export default function RegistrationPage() {
         }
     };
     const handleRegister = async () => {
-        if (!formData.email || !formData.password || formData.password !== formData.confirmPassword) {
-            setError("Please check your input and ensure passwords match.");
+        setError("");
+
+        if (!formData.firstName.trim() || !formData.lastName.trim()) {
+            setError("Будь ласка, введіть ім'я та прізвище.");
             return;
         }
+        if (!phone.trim()) {
+            setError("Будь ласка, введіть номер телефону.");
+            return;
+        }
+        if (!formData.email.trim()) {
+            setError("Будь ласка, введіть email.");
+            return;
+        }
+        if (!formData.password) {
+            setError("Будь ласка, введіть пароль.");
+            return;
+        }
+        if (formData.password !== formData.confirmPassword) {
+            setError("Паролі не співпадають.");
+            return;
+        }
+        if (!formData.agreeToTerms) {
+            setError("Потрібно погодитись з умовами використання.");
+            return;
+        }
+
         setLoading(true);
         try {
-            // Logic for registration would go here
-            console.log("Registering:", formData);
+            await authService.apiAuthClubMemberRegisterPost({
+                registerClubMemberDto: {
+                    email: formData.email.trim(),
+                    password: formData.password,
+                    phoneNumber: phone.trim(),
+                    name: formData.firstName.trim(),
+                    surname: formData.lastName.trim(),
+                    selectedRoles: ["ClubMember"],
+                },
+            });
+
             router.push("/login");
         } catch (err) {
-            setError("Registration failed.");
+            const message =
+                (err as { message?: string })?.message ??
+                "Registration failed.";
+            setError(message);
         } finally {
             setLoading(false);
         }
