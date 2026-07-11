@@ -204,6 +204,36 @@ public class ClubMemberService : IClubMemberService
         var result = await _userManager.ChangePasswordAsync(user, dto.CurrentPassword, dto.NewPassword);
         return result.Succeeded;
     }
+
+    public async Task<bool> LockUserAsync(string id, CancellationToken cancellationToken = default)
+    {
+        var user = await _userManager.FindByIdAsync(id);
+        if (user == null) return false;
+
+        await _userManager.SetLockoutEnabledAsync(user, true);
+
+        await _userManager.SetLockoutEndDateAsync(
+            user,
+            DateTimeOffset.UtcNow.AddYears(100));
+
+        await _userManager.UpdateSecurityStampAsync(user);
+
+        return true;
+    }
+    public async Task<bool> UnlockUserAsync(string id, CancellationToken cancellationToken = default)
+    {
+        var user = await _userManager.FindByIdAsync(id);
+        if (user == null) return false;
+
+        // знімаємо блок
+        await _userManager.SetLockoutEndDateAsync(user, null);
+
+        // очищаємо лічильник спроб
+        await _userManager.ResetAccessFailedCountAsync(user);
+
+        return true;
+    }
+
     // We always return ReadMapToReadDto to ensure consistent output format
     private async Task<List<ClubMemberReadDto>> MapToReadDtosAsync(List<ClubMember> clubMembers)
     {

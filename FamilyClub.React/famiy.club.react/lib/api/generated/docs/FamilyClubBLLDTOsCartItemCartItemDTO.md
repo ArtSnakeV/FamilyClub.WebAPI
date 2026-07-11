@@ -1,20 +1,34 @@
 
-# ProductFormat
+# FamilyClubBLLDTOsCartItemCartItemDTO
 
 
 ## Properties
 
 Name | Type
 ------------ | -------------
+`id` | number
+`cartId` | number
+`productId` | number
+`quantity` | number
+`format` | string
+`productName` | string
+`productPrice` | number
 
 ## Example
 
 ```typescript
-import type { ProductFormat } from ''
+import type { FamilyClubBLLDTOsCartItemCartItemDTO } from ''
 
 // TODO: Update the object below with actual values
 const example = {
-} satisfies ProductFormat
+  "id": null,
+  "cartId": null,
+  "productId": null,
+  "quantity": null,
+  "format": null,
+  "productName": null,
+  "productPrice": null,
+} satisfies FamilyClubBLLDTOsCartItemCartItemDTO
 
 console.log(example)
 
@@ -23,7 +37,7 @@ const exampleJSON: string = JSON.stringify(example)
 console.log(exampleJSON)
 
 // Parse the JSON string back to an object
-const exampleParsed = JSON.parse(exampleJSON) as ProductFormat
+const exampleParsed = JSON.parse(exampleJSON) as FamilyClubBLLDTOsCartItemCartItemDTO
 console.log(exampleParsed)
 ```
 

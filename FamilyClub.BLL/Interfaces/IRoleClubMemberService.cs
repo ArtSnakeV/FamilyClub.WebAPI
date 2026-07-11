@@ -11,5 +11,6 @@ public interface IRoleClubMemberService
     Task<bool> UpdateRoleAsync(string id, string newRoleName, CancellationToken cancellationToken = default);
     Task<bool> DeleteRoleAsync(string id, CancellationToken cancellationToken = default);
     Task<IEnumerable<ClubMemberReadDto>> GetUsersInRoleAsync(string roleName, CancellationToken cancellationToken = default);
+    Task<bool> AssignRolesToUserAsync(string userId, List<string> roles, CancellationToken cancellationToken = default);
 
 }

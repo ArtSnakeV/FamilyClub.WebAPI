@@ -13,6 +13,7 @@ Name | Type
 `name` | string
 `surname` | string
 `dateOfBirth` | Date
+`lockoutEnd` | Date
 `roles` | Array&lt;string&gt;
 
 ## Example
@@ -29,6 +30,7 @@ const example = {
   "name": null,
   "surname": null,
   "dateOfBirth": null,
+  "lockoutEnd": null,
   "roles": null,
 } satisfies ClubMemberReadDto
 

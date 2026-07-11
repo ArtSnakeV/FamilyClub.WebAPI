@@ -20,7 +20,7 @@ public class ComplaintsController : ControllerBase
     /// Get all complaints (Admin only)
     /// </summary>
     [HttpGet]
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     public async Task<ActionResult<IEnumerable<ComplaintsReadDto>>> GetAll(CancellationToken cancellationToken)
     {
         var complaints = await _complaintsService.GetAllAsync(cancellationToken);
@@ -74,7 +74,7 @@ public class ComplaintsController : ControllerBase
     /// Update complaint (Admin only - for resolving complaints)
     /// </summary>
     [HttpPut("{id:int}")]
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     public async Task<IActionResult> Update(int id, [FromBody] ComplaintsReadDto dto, CancellationToken cancellationToken)
     {
         var updated = await _complaintsService.UpdateAsync(id, dto, cancellationToken);
@@ -90,7 +90,7 @@ public class ComplaintsController : ControllerBase
     /// Delete complaint (Admin only)
     /// </summary>
     [HttpDelete("{id:int}")]
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     public async Task<IActionResult> Delete(int id, CancellationToken cancellationToken)
     {
         var deleted = await _complaintsService.DeleteAsync(id, cancellationToken);

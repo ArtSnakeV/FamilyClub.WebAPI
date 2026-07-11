@@ -10,6 +10,7 @@ Name | Type
 `quantity` | number
 `unitPrice` | number
 `productId` | number
+`productName` | string
 `orderId` | number
 `format` | string
 
@@ -24,6 +25,7 @@ const example = {
   "quantity": null,
   "unitPrice": null,
   "productId": null,
+  "productName": null,
   "orderId": null,
   "format": null,
 } satisfies OrderItemDTO

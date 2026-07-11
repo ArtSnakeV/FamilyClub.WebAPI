@@ -2,6 +2,7 @@
 /* eslint-disable */
 export * from './AgeRestriction';
 export * from './AgeRestrictionDto';
+export * from './AssignRolesDto';
 export * from './AuthResponseClubMemberDTO';
 export * from './Author';
 export * from './AuthorDTO';
@@ -16,10 +17,15 @@ export * from './ChangePasswordClubMemberDto';
 export * from './ClaimsClubMemberDto';
 export * from './ClubMember';
 export * from './ClubMemberReadDto';
+export * from './ComplaintImageCreateDto';
+export * from './ComplaintImageDto';
+export * from './ComplaintsCreateDto';
+export * from './ComplaintsReadDto';
 export * from './CoverType';
 export * from './CreateNotificationDTO';
 export * from './Format';
 export * from './FormatDto';
+export * from './HeartbeatRequest';
 export * from './Language';
 export * from './LanguageDto';
 export * from './LoginClubMemberDto';

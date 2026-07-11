@@ -6,6 +6,7 @@ apis/CartsApi.ts
 apis/CategoriesApi.ts
 apis/ClaimsClubMemberApi.ts
 apis/ClubMemberApi.ts
+apis/ComplaintsApi.ts
 apis/FavoritesApi.ts
 apis/FormatsApi.ts
 apis/HomeApi.ts
@@ -13,6 +14,7 @@ apis/LanguagesApi.ts
 apis/NotificationsApi.ts
 apis/OrderItemsApi.ts
 apis/OrdersApi.ts
+apis/PresenceApi.ts
 apis/ProductsApi.ts
 apis/PromotionsApi.ts
 apis/PublishersApi.ts
@@ -24,6 +26,7 @@ apis/index.ts
 docs/AgeRestriction.md
 docs/AgeRestrictionDto.md
 docs/AgeRestrictionsApi.md
+docs/AssignRolesDto.md
 docs/AuthClubMemberApi.md
 docs/AuthResponseClubMemberDTO.md
 docs/Author.md
@@ -45,12 +48,18 @@ docs/ClaimsClubMemberDto.md
 docs/ClubMember.md
 docs/ClubMemberApi.md
 docs/ClubMemberReadDto.md
+docs/ComplaintImageCreateDto.md
+docs/ComplaintImageDto.md
+docs/ComplaintsApi.md
+docs/ComplaintsCreateDto.md
+docs/ComplaintsReadDto.md
 docs/CoverType.md
 docs/CreateNotificationDTO.md
 docs/FavoritesApi.md
 docs/Format.md
 docs/FormatDto.md
 docs/FormatsApi.md
+docs/HeartbeatRequest.md
 docs/HomeApi.md
 docs/Language.md
 docs/LanguageDto.md
@@ -65,6 +74,7 @@ docs/OrderItem.md
 docs/OrderItemDTO.md
 docs/OrderItemsApi.md
 docs/OrdersApi.md
+docs/PresenceApi.md
 docs/Product.md
 docs/ProductDto.md
 docs/ProductImage.md
@@ -91,6 +101,7 @@ docs/UpdateClubMemberDto.md
 index.ts
 models/AgeRestriction.ts
 models/AgeRestrictionDto.ts
+models/AssignRolesDto.ts
 models/AuthResponseClubMemberDTO.ts
 models/Author.ts
 models/AuthorDTO.ts
@@ -105,10 +116,15 @@ models/ChangePasswordClubMemberDto.ts
 models/ClaimsClubMemberDto.ts
 models/ClubMember.ts
 models/ClubMemberReadDto.ts
+models/ComplaintImageCreateDto.ts
+models/ComplaintImageDto.ts
+models/ComplaintsCreateDto.ts
+models/ComplaintsReadDto.ts
 models/CoverType.ts
 models/CreateNotificationDTO.ts
 models/Format.ts
 models/FormatDto.ts
+models/HeartbeatRequest.ts
 models/Language.ts
 models/LanguageDto.ts
 models/LoginClubMemberDto.ts

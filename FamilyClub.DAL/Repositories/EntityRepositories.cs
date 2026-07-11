@@ -66,6 +66,7 @@ public class ReviewRepository : Repository<Review>, IReviewRepository
     public async Task<IEnumerable<Review>> GetByUserIdAsync(string userId, CancellationToken cancellationToken = default)
     {
         return await _context.Reviews
+            .Include(p => p.Product)
             .Where(r => r.UserId == userId)
             .ToListAsync(cancellationToken);
     }
@@ -76,25 +77,23 @@ public class ClubMemberRepository(FamilyClubContext context) : Repository<ClubMe
 
 public class OrderRepository : Repository<Order>, IOrderRepository
 {
-	private readonly FamilyClubContext _context;
-	public OrderRepository(FamilyClubContext context) : base(context)
-	{
-		_context = context;
-	}
-
-	public async Task<IEnumerable<Order>> GetAllWithItemsAsync(CancellationToken cancellationToken = default)
-	{
-		return await _context.Orders
-			.Include(o => o.OrderItems)
-			.ToListAsync(cancellationToken);
-	}
-
-	public async Task<Order?> GetByIdWithItemsAsync(int id, CancellationToken cancellationToken = default)
-	{
-		return await _context.Orders
-			.Include(o => o.OrderItems)
-			.FirstOrDefaultAsync(o => o.Id == id, cancellationToken);
-	}
+    private readonly FamilyClubContext _context;
+    public OrderRepository(FamilyClubContext context) : base(context)
+    {
+        _context = context;
+    }
+    public new async Task<IEnumerable<Order>> GetAllAsync(CancellationToken cancellationToken = default)
+    {
+        return await _context.Orders
+            .Include(o => o.OrderItems)
+            .ToListAsync(cancellationToken);
+    }
+    public new async Task<Order?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
+    {
+        return await _context.Orders
+            .Include(o => o.OrderItems)
+            .FirstOrDefaultAsync(o => o.Id == id, cancellationToken);
+    }
     public async Task<IEnumerable<Order>> GetByUserIdAsync(string userId, CancellationToken cancellationToken = default)
     {
         return await _context.Orders
@@ -104,7 +103,7 @@ public class OrderRepository : Repository<Order>, IOrderRepository
             .Where(o => o.UserId == userId)
             .ToListAsync(cancellationToken);
     }
-};
+}
 public class NotificationRepository : Repository<Notification>, INotificationRepository
 {
 	private readonly FamilyClubContext _context;
