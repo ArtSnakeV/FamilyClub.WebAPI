@@ -64,7 +64,8 @@ export default function MobileProductDetails({
   rating,
   ratingCount,
   reviews,
-  similarBookCards,
+  booksByAuthorCards = [],
+  similarBookCards = [],
   isFavorite,
   toggleFavorite,
   addToCart,
@@ -131,23 +132,46 @@ export default function MobileProductDetails({
               </div>
             )}
 
-            {/* Price Box with Heart */}
-            <div className="mt-3 bg-[#f5f3ee] rounded-[6px] border border-[#242424]/15 p-2.5 relative shadow-sm">
-              <div className="text-[12px] text-[#242424]/70">Ціна в Libria:</div>
-              <div className="text-[22px] sm:text-[24px] font-bold text-[#242424] leading-tight mt-0.5">
-                {priceText || "0 грн"}
+            {/* Price Box with Heart & Cart Button */}
+            <div className="mt-3 bg-[#f5f3ee] rounded-[8px] border border-[#242424]/15 p-3 relative shadow-sm flex flex-col gap-3">
+              <div className="flex items-center justify-between">
+                <div>
+                  <div className="text-[12px] text-[#242424]/70">Ціна в Libria:</div>
+                  <div className="text-[22px] sm:text-[24px] font-bold text-[#242424] leading-tight mt-0.5">
+                    {priceText || "0 грн"}
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={toggleFavorite}
+                  className="w-[38px] h-[38px] rounded-full flex items-center justify-center hover:bg-black/5 active:scale-90 transition-all"
+                  aria-label="Улюблене"
+                >
+                  <img
+                    src="/images/main_page/icons/rec-icon-favorite.svg"
+                    alt="Heart"
+                    className={`w-[26px] h-[26px] transition-transform ${isFavorite ? "filter invert-[0.2] sepia-[1] saturate-[5] hue-rotate-[320deg] scale-110" : "opacity-80"}`}
+                  />
+                </button>
               </div>
+
+              {/* Кнопка "Додати в кошик" */}
               <button
                 type="button"
-                onClick={toggleFavorite}
-                className="absolute right-2 top-1/2 -translate-y-1/2 w-[38px] h-[38px] rounded-full flex items-center justify-center hover:bg-black/5 transition-colors"
-                aria-label="Улюблене"
+                onClick={() => {
+                  if (product?.id) {
+                    addToCart(product.id);
+                    alert("Товар додано в кошик");
+                  }
+                }}
+                className="w-full py-2.5 px-3 rounded-[6px] bg-[#0e503f] hover:bg-[#093529] active:scale-[0.98] transition-all text-white font-medium text-[15px] flex items-center justify-center gap-2 shadow-sm cursor-pointer"
               >
                 <img
-                  src="/images/main_page/icons/rec-icon-favorite.svg"
-                  alt="Heart"
-                  className={`w-[26px] h-[26px] transition-transform ${isFavorite ? "filter invert-[0.2] sepia-[1] saturate-[5] hue-rotate-[320deg] scale-110" : "opacity-80"}`}
+                  src="/images/main_page/icons/rec-icon-basket.svg"
+                  alt=""
+                  className="w-[20px] h-[20px] brightness-200"
                 />
+                <span>Додати в кошик</span>
               </button>
             </div>
 
@@ -207,6 +231,55 @@ export default function MobileProductDetails({
             >
               +
             </button>
+          </div>
+        )}
+
+        {/* Books by Author Cards */}
+        {booksByAuthorCards && booksByAuthorCards.length > 0 && (
+          <div className="mt-5 px-4 sm:px-6">
+            <div className="text-[18px] font-bold text-[#242424] mb-3">Інші книги автора:</div>
+            <div className="flex gap-4 overflow-x-auto pb-4 no-scrollbar">
+              {booksByAuthorCards.map((book: any, idx: number) => (
+                <div
+                  key={idx}
+                  className="w-[160px] shrink-0 bg-gradient-to-b from-[#f5f3ee] to-[#e8e6e1] rounded-b-[16px] rounded-t-[6px] p-2.5 shadow-md border border-[#242424]/10 flex flex-col justify-between relative"
+                >
+                  <Link href={book.href || "#"} className="w-[110px] h-[145px] mx-auto bg-white rounded-[4px] p-1 shadow-sm flex items-center justify-center mt-1">
+                    {book.image ? (
+                      <img src={book.image} alt={book.title} className="w-full h-full object-contain" />
+                    ) : (
+                      <div className="flex flex-col items-center justify-center text-gray-400 text-center p-1">
+                        <span className="text-xl">📖</span>
+                        <span className="text-[9px] font-serif">Немає фото</span>
+                      </div>
+                    )}
+                  </Link>
+
+                  <div className="mt-2.5">
+                    <Link href={book.href || "#"} className="font-bold text-[14px] text-[#242424] block truncate hover:underline">
+                      {book.title || ""}
+                    </Link>
+                  </div>
+
+                  <div className="flex items-center justify-between mt-2 pt-2 border-t border-[#242424]/10">
+                    <span className="font-bold text-[15px] text-[#242424]">{book.price || ""}</span>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const targetId = book.id ?? product?.id;
+                        if (targetId) {
+                          addToCart(targetId);
+                          alert("Товар додано в кошик");
+                        }
+                      }}
+                      className="w-[32px] h-[32px] rounded-full bg-[#0e503f] text-white flex items-center justify-center shadow-sm hover:bg-[#093529] transition-colors"
+                    >
+                      <img src="/images/main_page/icons/rec-icon-basket.svg" alt="" className="w-4 h-4 brightness-200" />
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         )}
 
@@ -344,7 +417,11 @@ export default function MobileProductDetails({
                     <button
                       type="button"
                       onClick={() => {
-                        if (product?.id) addToCart(product.id);
+                        const targetId = sim.id ?? product?.id;
+                        if (targetId) {
+                          addToCart(targetId);
+                          alert("Товар додано в кошик");
+                        }
                       }}
                       className="w-[32px] h-[32px] rounded-full bg-[#0e503f] text-white flex items-center justify-center shadow-sm hover:bg-[#093529] transition-colors"
                     >
@@ -473,6 +550,34 @@ export default function MobileProductDetails({
             </svg>
           </button>
         </div>
+      </div>
+
+      {/* 10. Sticky / Fixed Bottom Action Bar for Mobile */}
+      <div className="fixed bottom-0 left-0 right-0 z-50 bg-[#f5f3ee]/95 backdrop-blur-md border-t border-[#242424]/15 px-4 py-2.5 shadow-[0_-4px_25px_rgba(0,0,0,0.18)] flex items-center justify-between gap-3 sm:gap-4 md:hidden">
+        <div className="flex items-center gap-2.5 min-w-0 flex-1">
+          {displayImage ? (
+            <img src={displayImage} alt="" className="w-[36px] h-[48px] object-contain rounded-[4px] bg-white p-0.5 shadow-xs shrink-0" />
+          ) : (
+            <div className="w-[36px] h-[48px] rounded-[4px] bg-white flex items-center justify-center shrink-0">📖</div>
+          )}
+          <div className="min-w-0 flex-1">
+            <div className="font-bold text-[14px] text-[#242424] truncate">{productTitle}</div>
+            <div className="font-bold text-[15px] text-[#0e503f]">{priceText || "0 грн"}</div>
+          </div>
+        </div>
+        <button
+          type="button"
+          onClick={() => {
+            if (product?.id) {
+              addToCart(product.id);
+              alert("Товар додано в кошик");
+            }
+          }}
+          className="bg-[#0e503f] hover:bg-[#093529] active:scale-95 text-white px-4 py-2.5 rounded-[10px] font-bold text-[14px] flex items-center gap-2 shadow-md shrink-0 transition-all cursor-pointer"
+        >
+          <img src="/images/main_page/icons/rec-icon-basket.svg" alt="" className="w-4 h-4 brightness-200" />
+          <span>У кошик</span>
+        </button>
       </div>
     </div>
   );

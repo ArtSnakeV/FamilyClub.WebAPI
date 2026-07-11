@@ -7,6 +7,7 @@ import { useState, useMemo } from "react";
 import { authService } from "@/lib/api/services";
 import { AsYouType } from 'libphonenumber-js';
 import { getCountries, getCountryCallingCode } from 'libphonenumber-js';
+import MobileRegisterView from "../MobileRegisterView";
 
 export default function RegistrationPage() {
     const router = useRouter();
@@ -96,9 +97,10 @@ export default function RegistrationPage() {
     const togglePasswordVisibility = () => setIsPasswordVisible(!isPasswordVisible);
 
     return (
-
-        // <div className="fixed inset-0 z-[100] flex justify-end backdrop-blur-sm">
-        <div className="fixed inset-0 z-[100] flex justify-end backdrop-blur-sm">
+        <>
+            <MobileRegisterView />
+            {/* <div className="fixed inset-0 z-[100] flex justify-end backdrop-blur-sm"> */}
+            <div className="hidden md:flex fixed inset-0 z-[100] justify-end backdrop-blur-sm">
 
             {/* LEFT SIDE: Background Image */}
             <div
@@ -199,13 +201,6 @@ export default function RegistrationPage() {
                                 color: 'var(--color-black)'
                             }}
                         />
-                        {/* Стили для placeholder */}
-                        <style jsx>{`
-                            .custom-placeholder::placeholder {
-                                color: var(--color-black);
-                                opacity: 0.5; /* Это соответствует твоему #24242480 */
-                            }
-                        `}</style>
                     </div>
 
                     {/* Block for Surname Input (Блок для вводу прізвища)*/}
@@ -271,13 +266,6 @@ export default function RegistrationPage() {
                                 color: 'var(--color-black)',
                             }}
                         />
-
-                        <style jsx>{`
-                            .lastname-input::placeholder {
-                            color: var(--color-black);
-                            opacity: 0.5; /* Для достижения эффекта #24242480 */
-                            }
-                        `}</style>
                     </div>
 
                     {/* Block for Phone Number Input */}
@@ -414,9 +402,6 @@ export default function RegistrationPage() {
                             </>
                         )}
 
-                        <style jsx>{`
-                        .hover-item:hover { background-color: #E0C3A9; }
-                    `}</style>
                     </div>
                     {/* Block for Email Input */}
                     <div
@@ -476,13 +461,6 @@ export default function RegistrationPage() {
                             }}
                         />
 
-                        {/* Placeholder Styling */}
-                        <style jsx>{`
-                            .email-input::placeholder {
-                                color: var(--color-black);
-                                opacity: 0.5; /* Matches #24242480 (50% opacity) */
-                            }
-                        `}</style>
                     </div>
                     {/* PASSWORD SECTION START */}
                     <div className="flex flex-col mt-4">
@@ -642,12 +620,6 @@ export default function RegistrationPage() {
                             Погоджуюсь з умовами використання
                         </span>
 
-                        <style jsx>{`
-                            @keyframes fadeIn {
-                                from { opacity: 0; transform: scale(0.5); }
-                                to { opacity: 1; transform: scale(1); }
-                            }
-                        `}</style>
                     </div>
                     {/* Legal Disclaimer Block */}
                     <div style={{
@@ -751,17 +723,31 @@ export default function RegistrationPage() {
 
             </div>
         </div>
+        <style jsx>{`
+            .custom-placeholder::placeholder,
+            .lastname-input::placeholder,
+            .email-input::placeholder {
+                color: var(--color-black);
+                opacity: 0.5;
+            }
+            .hover-item:hover {
+                background-color: #E0C3A9;
+            }
+            @keyframes fadeIn {
+                from { opacity: 0; transform: scale(0.5); }
+                to { opacity: 1; transform: scale(1); }
+            }
+            @keyframes tickIn {
+                0% { 
+                    opacity: 0; 
+                    transform: rotate(45deg) scale(0.5); 
+                }
+                100% { 
+                    opacity: 1; 
+                    transform: rotate(45deg) scale(1); 
+                }
+            }
+        `}</style>
+        </>
     );
 }
-<style jsx>{`
-    @keyframes tickIn {
-        0% { 
-            opacity: 0; 
-            transform: rotate(45deg) scale(0.5); 
-        }
-        100% { 
-            opacity: 1; 
-            transform: rotate(45deg) scale(1); 
-        }
-    }
-`}</style>

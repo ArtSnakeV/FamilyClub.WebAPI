@@ -12,6 +12,7 @@ import InfoUserSection from "./section/InfoUserSection";
 import { useCurrentUser } from "./hooks/useCurrentUser";
 import { useFavorites } from "./hooks/useFavorites";
 import { useMyBooks } from "./hooks/useMyBooks";
+import MobileUserProfileView from "./MobileUserProfileView";
 
 export type TabType = "myBooks" | "favorite" | "myPosts";
 
@@ -135,43 +136,63 @@ function UserProfileContent() {
     return hasFilters ? sortedBooks : [];
   };
   return (
-    <div className="relative min-h-screen" style={{
-      backgroundImage: "url('/images/userProfile/Rectangle 326.png')",
-      backgroundSize: "100% 100%",
-      backgroundPosition: "center",
-    }}>
-      <div className="w-[calc(100%-700px)] h-[200px] items-center ml-[400px] mt-[160px] flex absolute" >
-        <InfoUserSection member={user} userId={user?.id} />
-      </div>
-      <div className="flex relative items-start gap-0">
-        <UserSideBArProfile
-          categories={categories}
-          selectedIds={selectedIds}
-          ebookSelected={ebookSelected}
-          audioSelected={audioSelected}
+    <>
+      <div className="block md:hidden">
+        <MobileUserProfileView
+          user={user}
           userId={user?.id}
+          favorites={favorites}
+          loadingFavorites={loadingFavorites}
+          toggleFavorite={toggleFavorite}
+          myBooks={myBooks}
+          loadingMyBooks={loadingMyBooks}
+          products={products}
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+          hasFilters={hasFilters}
+          sortedBooks={sortedBooks}
+          getBooksForTab={getBooksForTab}
         />
-
       </div>
-      <div className="relative h-[200px] w-full top-[41vh]" style={{
-        backgroundImage: "url('/images/userProfile/Rectangle 194.png')",
+
+      <div className="hidden md:block relative min-h-screen" style={{
+        backgroundImage: "url('/images/userProfile/Rectangle 326.png')",
         backgroundSize: "100% 100%",
         backgroundPosition: "center",
       }}>
-        <div className="flex items-center ml-[328px]">
-          <BtnSection activeTab={activeTab} onTabChange={setActiveTab} />
+        <div className="w-[calc(100%-700px)] h-[200px] items-center ml-[400px] mt-[160px] flex absolute" >
+          <InfoUserSection member={user} userId={user?.id} />
         </div>
-      </div>
+        <div className="flex relative items-start gap-0">
+          <UserSideBArProfile
+            categories={categories}
+            selectedIds={selectedIds}
+            ebookSelected={ebookSelected}
+            audioSelected={audioSelected}
+            userId={user?.id}
+          />
 
-      <div className="relative w-full -mb-2 gap-0 items-center" style={{ marginTop: "360px", }}>
-        {/* <BookGrid books={shouldShowGrid ? sortedBooks : []} /> */}
-        <BookGrid books={activeTab === "favorite" && loadingFavorites ? [] : getBooksForTab()}
-          userId={user?.id}
-          favorites={favorites}
-          toggleFavorite={toggleFavorite} />
-      </div>
+        </div>
+        <div className="relative h-[200px] w-full top-[41vh]" style={{
+          backgroundImage: "url('/images/userProfile/Rectangle 194.png')",
+          backgroundSize: "100% 100%",
+          backgroundPosition: "center",
+        }}>
+          <div className="flex items-center ml-[328px]">
+            <BtnSection activeTab={activeTab} onTabChange={setActiveTab} />
+          </div>
+        </div>
 
-    </div>
+        <div className="relative w-full -mb-2 gap-0 items-center" style={{ marginTop: "360px", }}>
+          {/* <BookGrid books={shouldShowGrid ? sortedBooks : []} /> */}
+          <BookGrid books={activeTab === "favorite" && loadingFavorites ? [] : getBooksForTab()}
+            userId={user?.id}
+            favorites={favorites}
+            toggleFavorite={toggleFavorite} />
+        </div>
+
+      </div>
+    </>
   );
 
 }

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { authService } from "@/lib/api/services";
+import MobileAuthView from "../MobileAuthView";
 
 export default function AuthorizationPage() {
   const router = useRouter();
@@ -54,9 +55,11 @@ export default function AuthorizationPage() {
     setIsPasswordVisible(!isPasswordVisible);
   };
   return (
-    // <div className="fixed inset-0 z-[100] flex justify-end backdrop-blur-sm">
-    <div className="fixed inset-0 z-[100] flex justify-end">
-      {/* LEFT SIDE: Background Image */}
+    <>
+      <MobileAuthView />
+      {/* <div className="fixed inset-0 z-[100] flex justify-end backdrop-blur-sm"> */}
+      <div className="hidden md:flex fixed inset-0 z-[100] justify-end">
+        {/* LEFT SIDE: Background Image */}
       <div
         className="absolute inset-0 z-[-1]" // flex-grow takes remaining space
         style={{
@@ -206,13 +209,6 @@ export default function AuthorizationPage() {
                 }}
               />
 
-              {/* CSS to target the placeholder specifically for that 50% opacity */}
-              <style jsx>{`
-                input::placeholder {
-                  color: #24242480;
-                  opacity: 1; /* Browser default override */
-                }
-              `}</style>
             </div>
             <div
               style={{
@@ -311,12 +307,6 @@ export default function AuthorizationPage() {
                   {loading ? "..." : ""}
                 </button>
               </div>
-              <style jsx>{`
-                input::placeholder {
-                  color: var(--color-black);
-                  opacity: 0.5;
-                }
-              `}</style>
             </div>
             <button
               type="submit"
@@ -511,5 +501,12 @@ export default function AuthorizationPage() {
         </div>
       </div>
     </div>
+    <style jsx>{`
+      input::placeholder {
+        color: var(--color-black);
+        opacity: 0.5;
+      }
+    `}</style>
+    </>
   );
 }
