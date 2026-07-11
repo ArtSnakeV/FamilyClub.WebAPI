@@ -170,7 +170,8 @@
 "use client";
 
 import BooksNav from '../booksNav';
-import { TranslatorsApi, Configuration, TranslatorDto } from '@/lib/api/generated';
+import { TranslatorDto } from '@/lib/api/generated';
+import { translatorService } from '@/lib/api/services';
 import ItemActions from "@/app/(admin-site)/common_elements/item_actions";
 import { useEffect, useState } from "react";
 import EntitiesSearchSorting from "@/app/(admin-site)/common_elements/entities_search_sorting";
@@ -194,10 +195,7 @@ export default function TranslatorsPage() {
     const [error, setError] = useState<unknown>(null);
 
     useEffect(() => {
-        const config = new Configuration({ basePath: "https://localhost:7069" });
-        const api = new TranslatorsApi(config);
-
-        api.apiTranslatorsGet()
+        translatorService.apiTranslatorsGet()
             .then((data) => {
                 setTranslators(data);
                 setIsLoading(false);

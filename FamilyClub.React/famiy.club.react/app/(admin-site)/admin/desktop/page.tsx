@@ -6,15 +6,15 @@ import StatCard from "../../common_elements/StatCard";
 import ListPanel from "../../common_elements/ListPanel";
 import GreetingBanner from "./components/GreetingBanner";
 import {
-  ProductsApi,
-  ClubMemberApi,
-  ReviewsApi,
-  OrdersApi,
-  // ComplaintsApi,
-  Configuration,
   ProductDto,
   ClubMemberReadDto
 } from '@/lib/api/generated';
+import {
+  productService,
+  clubMemberService,
+  reviewService,
+  orderService,
+} from '@/lib/api/services';
 import { useEffect, useState } from "react";
 
 // app/(admin-site)/admin/desktop/page.tsx
@@ -33,21 +33,12 @@ export default function Desktop() {
   const [error, setError] = useState<unknown>(null);
 
   useEffect(() => {
-    const config = new Configuration({ basePath: "https://localhost:7069" });
-
-    const productsApi = new ProductsApi(config);
-    const memberApi = new ClubMemberApi(config);
-    const reviewsApi = new ReviewsApi(config);
-    const ordersApi = new OrdersApi(config);
-    // const complaintsApi = new ComplaintsApi(config);
-
-    // Concurrent fetching for all metrics
     Promise.all([
-      productsApi.apiProductsGet(),
-      memberApi.apiClubMemberGet(),
-      reviewsApi.apiReviewsGet(), // Assuming this is the correct method for fetching reviews
-      ordersApi.apiOrdersGet(), // Assuming this is the correct method for fetching orders
-      Promise.resolve([])  // Temporary placeholder for Complaints
+      productService.apiProductsGet(),
+      clubMemberService.apiClubMemberGet(),
+      reviewService.apiReviewsGet(),
+      orderService.apiOrdersGet(),
+      Promise.resolve([])
     ])
       .then(([productsData, membersData, reviewsData, ordersData, complaintsData]) => {
         setProducts(productsData);

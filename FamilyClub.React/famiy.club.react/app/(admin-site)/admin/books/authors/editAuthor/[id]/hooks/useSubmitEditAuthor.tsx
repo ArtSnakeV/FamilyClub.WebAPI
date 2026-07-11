@@ -37,7 +37,7 @@ export default function useSubmitEditAuthor({ id, form, mainImage, router }: Pro
         if (!response.ok) throw new Error("Помилка завантаження фото");
       }
 
-      router.push("/authors");
+      router.push("/admin/books/authors");
     } catch (e) {
       console.error(e);
       alert("Помилка при редагуванні автора");
