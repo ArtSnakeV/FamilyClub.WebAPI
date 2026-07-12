@@ -1,7 +1,8 @@
 "use client";
 
 import BooksNav from "../booksNav";
-import { FormatsApi, Configuration, FormatDto } from "@/lib/api/generated";
+import { FormatDto } from "@/lib/api/generated";
+import { formatService } from "@/lib/api/services";
 import ItemActions from "@/app/(admin-site)/common_elements/item_actions";
 import { useEffect, useState } from "react";
 import EntitiesSearchSorting from "@/app/(admin-site)/common_elements/entities_search_sorting";
@@ -25,12 +26,7 @@ export default function FormatsPage() {
   const [error, setError] = useState<unknown>(null);
 
   useEffect(() => {
-    const config = new Configuration({
-      basePath: process.env.NEXT_PUBLIC_API_URL ?? "https://localhost:7069",
-    });
-    const api = new FormatsApi(config);
-
-    api
+    formatService
       .apiFormatsGet()
       .then((data) => {
         setFormats(data);

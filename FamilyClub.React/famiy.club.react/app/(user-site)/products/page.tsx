@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { productService } from "@/lib/api/services";
 import CatalogClient from "./CatalogClient";
 
@@ -5,7 +6,11 @@ export default async function CatalogPage() {
   try {
     const products = await productService.apiProductsGet();
     
-    return <CatalogClient initialProducts={products} />;
+    return (
+      <Suspense fallback={<div className="p-8">Завантаження каталогу...</div>}>
+        <CatalogClient initialProducts={products} />
+      </Suspense>
+    );
   } catch (error) {
     console.error("Failed to fetch products:", error);
     return (

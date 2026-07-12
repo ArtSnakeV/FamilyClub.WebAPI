@@ -45,7 +45,7 @@ export function useSubmitAuthor({ form, router, mainImage }: Props) {
         }
       }
 
-      router.push("/authors");
+      router.push("/admin/books/authors");
     } catch (err) {
       if ((err as { name?: string }).name === "AbortError") return;
       console.error(err);

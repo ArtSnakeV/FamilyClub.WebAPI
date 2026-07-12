@@ -33,6 +33,7 @@ import {
 } from '@/lib/api/generated';
 import { useEffect, useMemo, useState } from "react";
 import { getAuthToken } from "@/lib/auth/tokenStorage";
+import { apiBasePath } from "@/lib/api/services";
 
 // app/(admin-site)/admin/desktop/page.tsx
 
@@ -63,7 +64,7 @@ export default function Desktop() {
       }
   
       const config = new Configuration({
-        basePath: process.env.NEXT_PUBLIC_API_URL ?? "https://localhost:7069",
+        basePath: apiBasePath,
         headers: { Authorization: `Bearer ${token}` },
       });
   

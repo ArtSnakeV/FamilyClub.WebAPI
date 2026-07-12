@@ -1,7 +1,8 @@
 "use client";
 
 import BooksNav from "../booksNav";
-import { BookSizesApi, Configuration, BookSizeDto } from "@/lib/api/generated";
+import { BookSizeDto } from "@/lib/api/generated";
+import { bookSizeService } from "@/lib/api/services";
 import ItemActions from "@/app/(admin-site)/common_elements/item_actions";
 import { useEffect, useState } from "react";
 import EntitiesSearchSorting from "@/app/(admin-site)/common_elements/entities_search_sorting";
@@ -25,12 +26,7 @@ export default function BookSizesPage() {
   const [error, setError] = useState<unknown>(null);
 
   useEffect(() => {
-    const config = new Configuration({
-      basePath: process.env.NEXT_PUBLIC_API_URL ?? "https://localhost:7069",
-    });
-    const api = new BookSizesApi(config);
-
-    api
+    bookSizeService
       .apiBookSizesGet()
       .then((data) => {
         setBookSizes(data);
