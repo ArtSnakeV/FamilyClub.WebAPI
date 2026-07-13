@@ -165,7 +165,7 @@ export default function Page() {
 
     const [localUsers, setLocalUsers] = useState<UserInfo[]>([]);
     const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
-    const [showOnlyBlocked, setShowOnlyBlocked] = useState(false);
+    // const [showOnlyBlocked, setShowOnlyBlocked] = useState(false);
 
     useEffect(() => {
         setLocalUsers(usersInfo);
@@ -238,12 +238,12 @@ export default function Page() {
         }
     };
 
-    const isBlocked = (user: UserInfo) =>
-        !!user.lockoutEnd && new Date(user.lockoutEnd).getTime() > Date.now();
+    // const isBlocked = (user: UserInfo) =>
+    //     !!user.lockoutEnd && new Date(user.lockoutEnd).getTime() > Date.now();
 
-    const visibleUsers = showOnlyBlocked
-        ? localUsers.filter(isBlocked)
-        : localUsers;
+    // const visibleUsers = showOnlyBlocked
+    //     ? localUsers.filter(isBlocked)
+    //     : localUsers;
 
     const selectedUser = localUsers.find((u) => u.id === selectedUserId) ?? null;
 
@@ -268,7 +268,8 @@ export default function Page() {
                         <p>Завантаження...</p>
                     ) : (
                         <AllUsersInfo
-                            users={visibleUsers}
+                            // users={visibleUsers}
+                            users={localUsers}
                             onSelectUser={(u) => setSelectedUserId(u.id)}
                             selectedUserId={selectedUser?.id}
                             onLockToggle={handleLockToggle}
@@ -286,8 +287,8 @@ export default function Page() {
 
                 <QuickActionsBar
                     onAddManager={() => router.push(`/admin/managers/addEditManager`)}
-                    onToggleBlockedFilter={() => setShowOnlyBlocked((prev) => !prev)}
-                    isBlockedFilterActive={showOnlyBlocked}
+                    // onToggleBlockedFilter={() => setShowOnlyBlocked((prev) => !prev)}
+                    // isBlockedFilterActive={showOnlyBlocked}
                 />
             </div>
         </div>

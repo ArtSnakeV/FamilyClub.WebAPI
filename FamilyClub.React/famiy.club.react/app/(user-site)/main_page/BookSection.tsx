@@ -8,6 +8,7 @@ type Book = {
     rating?: number | null;
     href?: string;
     formatTags?: Array<"paper" | "ebook" | "audio">;
+    productId?: number;
 };
 
 type BookSectionProps = {
@@ -15,15 +16,17 @@ type BookSectionProps = {
     books: Book[];
     showMore?: boolean;
     pillWidth?: number;
+    isFav?: (id?: number) => boolean;
+    onToggleFavorite?: (productId: number) => void;
 };
 
-export default function BookSection({ title, books, showMore = false, pillWidth }: BookSectionProps) {
+export default function BookSection({ title, books, showMore = false, pillWidth, isFav, onToggleFavorite }: BookSectionProps) {
     const titleNoWrapClass = title === "Книжкові комплекти" ? "whitespace-nowrap" : "";
     return (
-        <section 
+        <section
             className="relative w-full overflow-hidden pt-0 pb-0"
-            style={{ 
-                backgroundImage: "linear-gradient(180.074deg, rgba(36, 36, 36, 0.2) 0.24409%, rgba(36, 36, 36, 0) 17.892%), linear-gradient(180.074deg, rgba(36, 36, 36, 0.5) 9.5072%, rgba(36, 36, 36, 0) 49.996%), linear-gradient(90deg, rgb(245, 243, 238) 0%, rgb(245, 243, 238) 100%)" 
+            style={{
+                backgroundImage: "linear-gradient(180.074deg, rgba(36, 36, 36, 0.2) 0.24409%, rgba(36, 36, 36, 0) 17.892%), linear-gradient(180.074deg, rgba(36, 36, 36, 0.5) 9.5072%, rgba(36, 36, 36, 0) 49.996%), linear-gradient(90deg, rgb(245, 243, 238) 0%, rgb(245, 243, 238) 100%)"
             }}
         >
             {/* Top Full-Width Wooden Bookshelf Bar (on which books and pill hang) */}
@@ -60,7 +63,8 @@ export default function BookSection({ title, books, showMore = false, pillWidth 
                 {/* Book Cards Grid - starting below hanging pill matching Figma */}
                 <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-[60px] pb-12 pt-[75px]">
                     {books.map((book, index) => (
-                        <BookCard key={`${book.title}-${index}`} {...book} />
+                        <BookCard key={`${book.title}-${index}`} {...book} isFavorite={isFav?.(book.productId)}
+                            onToggleFavorite={onToggleFavorite} />
                     ))}
                 </div>
             </div>

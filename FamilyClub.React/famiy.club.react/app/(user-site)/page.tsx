@@ -56,6 +56,9 @@ import type {
     ProductDto,
     ReviewDto,
 } from "@/lib/api/generated";
+import { useFavorites } from "@/lib/hooks/useFavorites";
+import { useCurrentUser } from "@/app/(user-site)/userProfile/hooks/useCurrentUser";
+
 
 const formatPrice = (value?: number | null) => {
     if (value == null) return "";
@@ -117,6 +120,7 @@ const mapProductToBook = (
     author: string | null,
     formatTags: Array<"paper" | "ebook" | "audio">,
 ) => ({
+    productId: product.id, 
     href: product.id ? `/products/${product.id}` : undefined,
     title: product.productName ?? "",
     author,
@@ -133,6 +137,9 @@ export default function Home() {
     const [authors, setAuthors] = useState<AuthorDTO[]>([]);
     const [clubMembers, setClubMembers] = useState<ClubMemberReadDto[]>([]);
     const [formats, setFormats] = useState<FormatDto[]>([]);
+    const { user } = useCurrentUser();
+    const { favorites, toggleFavorite } = useFavorites(user?.id);
+    const isFav = (id?: number) => !!id && favorites.some((f) => f.id === id);
 
     useEffect(() => {
         let isMounted = true;
@@ -305,23 +312,23 @@ export default function Home() {
 
     const romanceBooks = romanceCategoryId
         ? mapProductsToBooks(
-              products.filter((product) => product.categoryIds?.includes(romanceCategoryId)),
-          ).slice(0, 4)
+            products.filter((product) => product.categoryIds?.includes(romanceCategoryId)),
+        ).slice(0, 4)
         : [];
     const thrillerBooks = thrillerCategoryId
         ? mapProductsToBooks(
-              products.filter((product) => product.categoryIds?.includes(thrillerCategoryId)),
-          ).slice(0, 4)
+            products.filter((product) => product.categoryIds?.includes(thrillerCategoryId)),
+        ).slice(0, 4)
         : [];
     const scienceBooks = scienceCategoryId
         ? mapProductsToBooks(
-              products.filter((product) => product.categoryIds?.includes(scienceCategoryId)),
-          ).slice(0, 4)
+            products.filter((product) => product.categoryIds?.includes(scienceCategoryId)),
+        ).slice(0, 4)
         : [];
     const fantasyBooks = fantasyCategoryId
         ? mapProductsToBooks(
-              products.filter((product) => product.categoryIds?.includes(fantasyCategoryId)),
-          ).slice(0, 4)
+            products.filter((product) => product.categoryIds?.includes(fantasyCategoryId)),
+        ).slice(0, 4)
         : [];
 
     const hitsBooks = mapProductsToBooks(
@@ -402,7 +409,9 @@ export default function Home() {
                 <Hero />
 
                 {recommendationBooks.length > 0 ? (
-                    <BookSection title="Рекомендації для тебе" books={recommendationBooks} showMore pillWidth={531} />
+
+                    <BookSection title="Рекомендації для тебе" books={recommendationBooks} showMore pillWidth={631} 
+                    isFav={isFav} onToggleFavorite={toggleFavorite}/>
                 ) : null}
 
                 <InkSection />
@@ -415,28 +424,28 @@ export default function Home() {
 
                 <FormatSection />
 
-                {romanceBooks.length > 0 ? <BookSection title="Романи" books={romanceBooks} pillWidth={206} /> : null}
+                {romanceBooks.length > 0 ? <BookSection title="Роман" books={romanceBooks} pillWidth={206} isFav={isFav} onToggleFavorite={toggleFavorite} /> : null}
                 {thrillerBooks.length > 0 ? (
-                    <BookSection title="Триллери" books={thrillerBooks} pillWidth={253} />
+                    <BookSection title="Триллери" books={thrillerBooks} pillWidth={253} isFav={isFav} onToggleFavorite={toggleFavorite} />
                 ) : null}
                 {scienceBooks.length > 0 ? (
-                    <BookSection title="Наукові" books={scienceBooks} pillWidth={211} />
+                    <BookSection title="Наукові" books={scienceBooks} pillWidth={211} isFav={isFav} onToggleFavorite={toggleFavorite}/>
                 ) : null}
                 {fantasyBooks.length > 0 ? (
-                    <BookSection title="Фантастика" books={fantasyBooks} pillWidth={292} />
+                    <BookSection title="Фантастика" books={fantasyBooks} pillWidth={292} isFav={isFav} onToggleFavorite={toggleFavorite}/>
                 ) : null}
 
                 <PromoBanner />
 
                 {hitsBooks.length > 0 ? (
-                    <BookSection title="Хіти продажу" books={hitsBooks} pillWidth={355} />
+                    <BookSection title="Хіти продажу" books={hitsBooks} pillWidth={355} isFav={isFav} onToggleFavorite={toggleFavorite}/>
                 ) : null}
-                {newBooks.length > 0 ? <BookSection title="Новинки" books={newBooks} pillWidth={237} /> : null}
+                {newBooks.length > 0 ? <BookSection title="Новинки" books={newBooks} pillWidth={237} isFav={isFav} onToggleFavorite={toggleFavorite}/> : null}
                 {setBooks.length > 0 ? (
-                    <BookSection title="Книжкові комплекти" books={setBooks} pillWidth={472} />
+                    <BookSection title="Книжкові комплекти" books={setBooks} pillWidth={472} isFav={isFav} onToggleFavorite={toggleFavorite}/>
                 ) : null}
                 {announcementBooks.length > 0 ? (
-                    <BookSection title="Анонси" books={announcementBooks} pillWidth={204} />
+                    <BookSection title="Анонси" books={announcementBooks} pillWidth={204} isFav={isFav} onToggleFavorite={toggleFavorite}/>
                 ) : null}
             </div>
         </main>
