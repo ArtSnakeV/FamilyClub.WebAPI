@@ -10,11 +10,12 @@ import {
 import type { ProductDto } from "@/lib/api/generated";
 import { getAuthToken, getAuthUserId } from "@/lib/auth/tokenStorage";
 import styles from "./checkout.module.css";
+import MobileCheckoutView from "./MobileCheckoutView";
 
 // ─── Types ───
-type DeliveryProvider = "nova_poshta" | "ukr_poshta" | "meest";
-type DeliveryType = "branch" | "postbox";
-type PaymentMethod = "card_online" | "card_dia" | "cash_on_delivery";
+export type DeliveryProvider = "nova_poshta" | "ukr_poshta" | "meest";
+export type DeliveryType = "branch" | "postbox";
+export type PaymentMethod = "card_online" | "card_dia" | "cash_on_delivery";
 
 // ─── Helpers ───
 function formatPrice(value: number): string {
@@ -268,8 +269,9 @@ export default function CheckoutPage() {
     );
   }
 
-  // ─── Loading ───
-  if (loading) {
+  const renderDesktopContent = () => {
+    // ─── Loading ───
+    if (loading) {
     return (
       <div className={styles.checkoutPage}>
         <div className={styles.checkoutHeader}>
@@ -716,5 +718,55 @@ export default function CheckoutPage() {
         </aside>
       </div>
     </div>
+    );
+  };
+
+  return (
+    <>
+      <div className="block md:hidden">
+        <MobileCheckoutView
+          loading={loading}
+          cartItems={cartItems}
+          success={success}
+          hasPhysicalItems={hasPhysicalItems}
+          firstName={firstName}
+          setFirstName={setFirstName}
+          lastName={lastName}
+          setLastName={setLastName}
+          email={email}
+          setEmail={setEmail}
+          phone={phone}
+          setPhone={setPhone}
+          deliveryProvider={deliveryProvider}
+          setDeliveryProvider={setDeliveryProvider}
+          deliveryType={deliveryType}
+          setDeliveryType={setDeliveryType}
+          city={city}
+          setCity={setCity}
+          branch={branch}
+          setBranch={setBranch}
+          paymentMethod={paymentMethod}
+          setPaymentMethod={setPaymentMethod}
+          comment={comment}
+          setComment={setComment}
+          subtotal={subtotal}
+          discount={discount}
+          deliveryCost={deliveryCost}
+          total={total}
+          agreed={agreed}
+          setAgreed={setAgreed}
+          promoCode={promoCode}
+          setPromoCode={setPromoCode}
+          isFormValid={isFormValid}
+          submitting={submitting}
+          handleSubmit={handleSubmit}
+          formatPrice={formatPrice}
+        />
+      </div>
+
+      <div className="hidden md:block">
+        {renderDesktopContent()}
+      </div>
+    </>
   );
 }

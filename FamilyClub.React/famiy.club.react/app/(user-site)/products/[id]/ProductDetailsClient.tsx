@@ -587,6 +587,7 @@ export default function ProductDetailsClient({ id }: { id: string }) {
     .filter((item) => item.categoryIds?.some((id) => categoryIdSet.has(id)));
 
   const booksByAuthorCards = booksByAuthor.slice(0, 4).map((item) => ({
+    id: item.id,
     href: item.id ? `/products/${item.id}` : undefined,
     title: item.productName ?? "",
     author: (item.authorIds ?? [])
@@ -602,6 +603,7 @@ export default function ProductDetailsClient({ id }: { id: string }) {
     formatTags: getFormatTags(item.formatIds),
   }));
   const similarBookCards = similarByCategory.slice(0, 4).map((item) => ({
+    id: item.id,
     href: item.id ? `/products/${item.id}` : undefined,
     title: item.productName ?? "",
     author: (item.authorIds ?? [])
