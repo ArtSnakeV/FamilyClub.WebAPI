@@ -49,6 +49,7 @@ builder.Services.AddDbContext<FamilyClubContext>(options => {
     options.UseNpgsql(connStr, npgsql =>
     {
         npgsql.MigrationsAssembly("FamilyClub.DAL");
+        npgsql.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery);
         // Note: Aiven cloud PostgreSQL uses "defaultdb" as the admin database.
         // Standard PostgreSQL instances use "postgres" by default.
         // npgsql.UseAdminDatabase("defaultdb");

@@ -298,7 +298,7 @@ export default function Home() {
     );
     const recommendationBooks = mapProductsToBooks(sortedByRating).slice(0, 4);
 
-    const romanceCategoryId = resolveCategoryId("Роман");
+    const romanceCategoryId = resolveCategoryId("Романи") ?? resolveCategoryId("Роман");
     const thrillerCategoryId = resolveCategoryId("Триллери");
     const scienceCategoryId = resolveCategoryId("Наукові");
     const fantasyCategoryId = resolveCategoryId("Фантастика");
@@ -402,7 +402,7 @@ export default function Home() {
                 <Hero />
 
                 {recommendationBooks.length > 0 ? (
-                    <BookSection title="Рекомендації для тебе" books={recommendationBooks} showMore pillWidth={631} />
+                    <BookSection title="Рекомендації для тебе" books={recommendationBooks} showMore pillWidth={531} />
                 ) : null}
 
                 <InkSection />
@@ -415,7 +415,7 @@ export default function Home() {
 
                 <FormatSection />
 
-                {romanceBooks.length > 0 ? <BookSection title="Роман" books={romanceBooks} pillWidth={206} /> : null}
+                {romanceBooks.length > 0 ? <BookSection title="Романи" books={romanceBooks} pillWidth={206} /> : null}
                 {thrillerBooks.length > 0 ? (
                     <BookSection title="Триллери" books={thrillerBooks} pillWidth={253} />
                 ) : null}
