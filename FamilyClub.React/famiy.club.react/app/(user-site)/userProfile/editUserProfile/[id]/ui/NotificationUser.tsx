@@ -16,7 +16,7 @@ const ITEMS = [
     { key: "comments" as const, name: "Коментарі", icon: "/images/userProfile/editUserProfile/comments-solid-full 1.png" },
     { key: "likes" as const, name: "Лайки", icon: "/images/userProfile/editUserProfile/iconHeart.png" },
     { key: "assistant" as const, name: "Помічник", icon: "/images/userProfile/editUserProfile/paw-solid-full 1.png" },
-    { key: "messages" as const, name: "Нотифікації", icon: "/images/userProfile/editUserProfile/message-solid-full 1.png" },
+    { key: "messages" as const, name: "Повідомлення", icon: "/images/userProfile/editUserProfile/message-solid-full 1.png" },
 ];
 
 export default function NotificationUser({ notifications, setNotifications }: Props) {

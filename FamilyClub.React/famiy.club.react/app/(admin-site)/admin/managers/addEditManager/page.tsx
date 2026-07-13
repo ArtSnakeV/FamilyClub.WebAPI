@@ -474,7 +474,7 @@ export default function AddManagerPage() {
                 backgroundSize: "100% 100%",
             }}
         >
-            <div className="w-[1600px] h-[1150px] relative top-[36px] left-[-20px]"
+            <div className="w-[1600px] h-[1400px] relative top-[36px] left-[-20px]"
                 style={{
                     backgroundImage: "url('/images/authorPageAdmin/Rectangle 675.png')",
                     backgroundSize: "cover",
@@ -498,15 +498,18 @@ export default function AddManagerPage() {
                                 Основна інформація
                             </h2>
 
-                            <UserSearchBlock
+                            {/* <UserSearchBlock
                                 searchEmail={searchEmail}
                                 onSearchEmailChange={setSearchEmail}
                                 searching={searching}
                                 userFound={userFound}
                                 onSearch={handleSearch}
-                            />
+                            /> */}
 
-                            <ManagerInfoFields form={form} updateField={updateField} disabled={userFound} />
+                            <ManagerInfoFields form={form}
+                                updateField={updateField}
+                                disabled={submitting || searching}
+                                emailDisabled={userFound} />
 
                             {/* Пароль показуємо тільки для нового користувача */}
                             {!userFound && (
@@ -525,7 +528,7 @@ export default function AddManagerPage() {
                                     ? "Обробка..."
                                     : userFound
                                         ? "Оновити профіль користувача"
-                                        : "Додати менеджера"}
+                                        : "Додати користувача"}
                             </button>
                         </div>
 

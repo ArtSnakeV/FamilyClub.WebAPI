@@ -70,25 +70,12 @@ export default function EditUserClient({ id }: { id: string }) {
             formData.append("avatar", blob, "avatar.jpg");
         }
 
-        // await fetch(`https://localhost:7069/api/ClubMember/${id}/form`, {
-        //     method: "PUT",
-        //     headers: { Authorization: `Bearer ${token}` },
-        //     body: formData,
-        // });
         await fetch(`${apiBasePath}/api/ClubMember/${id}/form`, {
             method: "PUT",
             headers: { Authorization: `Bearer ${token}` },
             body: formData,
         });
 
-        // await fetch(`https://localhost:7069/api/ClubMember/${id}/favorite-categories`, {
-        //     method: "PUT",
-        //     headers: {
-        //         "Content-Type": "application/json",
-        //         Authorization: `Bearer ${token}`,
-        //     },
-        //     body: JSON.stringify(selectedCategories),
-        // });
         await fetch(`${apiBasePath}/api/ClubMember/${id}/favorite-categories`, {
             method: "PUT",
             headers: {
@@ -108,7 +95,6 @@ export default function EditUserClient({ id }: { id: string }) {
     };
 
     return (
-        //<div className="w-full min-h-screen flex flex-col items-center">
         <div
             className="relative min-h-screen w-full mt-[40vh] flex flex-col items-center"
             style={{

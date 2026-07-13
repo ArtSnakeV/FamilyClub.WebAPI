@@ -305,14 +305,12 @@ export default function ProductDetailsClient({ id }: { id: string }) {
         { productId: pid },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      console.log("видалено з улюблених");
       setIsFavorite(false);
     } else {
       await favoriteService.apiFavoritesProductIdPost(
         { productId: pid },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      console.log("додано в улюблені");
       setIsFavorite(true);
     }
   } catch (e) {
