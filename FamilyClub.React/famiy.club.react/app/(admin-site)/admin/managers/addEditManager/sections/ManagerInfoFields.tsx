@@ -81,6 +81,11 @@ interface ManagerInfoFieldsProps {
     updateField: <K extends keyof ManagerFormState>(key: K, value: ManagerFormState[K]) => void;
     disabled: boolean;
     emailDisabled?: boolean;
+    searchEmail: string;
+    setSearchEmail: (value: string) => void;
+    searching: boolean;
+    userFound: boolean;
+    handleSearch: () => void;
 }
 
 function toDateInputValue(date: Date | null): string {
@@ -92,14 +97,15 @@ function toDateInputValue(date: Date | null): string {
     return `${yyyy}-${mm}-${dd}`;
 }
 
-export default function ManagerInfoFields({ form, updateField, disabled, emailDisabled }: ManagerInfoFieldsProps) {
-    const {
-        searchEmail,
-        setSearchEmail,
-        searching,
-        userFound,
-        handleSearch,
-    } = useAddManagerForm();
+export default function ManagerInfoFields({ form,
+    updateField,
+    disabled,
+    emailDisabled,
+    searchEmail,
+    setSearchEmail,
+    searching,
+    userFound,
+    handleSearch }: ManagerInfoFieldsProps) {
 
     const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
