@@ -18,6 +18,7 @@ import {
   publisherService,
   reviewService,
 } from "@/lib/api/services";
+import { getAuthToken } from "@/lib/auth/tokenStorage";
 import {
   AuthorDTO,
   BookSizeDto,
@@ -260,7 +261,7 @@ export default function ProductDetailsClient({ id }: { id: string }) {
 
   const handleCommentSubmit = async () => {
     if (!newComment.trim()) return;
-    const token = localStorage.getItem("token");
+    const token = getAuthToken();
     if (!token) {
       alert("Потрібно увійти в акаунт, щоб залишити коментар");
       return;
@@ -293,7 +294,7 @@ export default function ProductDetailsClient({ id }: { id: string }) {
   };
 
   const toggleFavorite = async () => {
-  const token = localStorage.getItem("token");
+  const token = getAuthToken();
   if (!token) {
     alert("Потрібно увійти в акаунт");
     return;
@@ -360,7 +361,7 @@ export default function ProductDetailsClient({ id }: { id: string }) {
         setBookSizes(bookSizesResult ?? []);
         setClubMembers(membersResult ?? []);
 
-        const token = localStorage.getItem("token");
+        const token = getAuthToken();
         if (token) {
           try {
             const fav = await favoriteService.apiFavoritesProductIdIsFavoriteGet(
@@ -584,6 +585,7 @@ export default function ProductDetailsClient({ id }: { id: string }) {
     .filter((item) => item.categoryIds?.some((id) => categoryIdSet.has(id)));
 
   const booksByAuthorCards = booksByAuthor.slice(0, 4).map((item) => ({
+    id: item.id,
     href: item.id ? `/products/${item.id}` : undefined,
     title: item.productName ?? "",
     author: (item.authorIds ?? [])
@@ -599,6 +601,7 @@ export default function ProductDetailsClient({ id }: { id: string }) {
     formatTags: getFormatTags(item.formatIds),
   }));
   const similarBookCards = similarByCategory.slice(0, 4).map((item) => ({
+    id: item.id,
     href: item.id ? `/products/${item.id}` : undefined,
     title: item.productName ?? "",
     author: (item.authorIds ?? [])

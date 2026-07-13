@@ -1,4 +1,5 @@
 import ProductDetailsClient from "./ProductDetailsClient";
+import { apiBasePath } from "@/lib/api/services";
 
 type ApiProduct = { id?: number | null };
 
@@ -16,7 +17,6 @@ const fallbackParams = ["4", "18"];
 
 export async function generateStaticParams(): Promise<ProductParams[]> {
     const params = new Set<string>([...yearFilters, ...fallbackParams]);
-    const apiBasePath = process.env.NEXT_PUBLIC_API_URL ?? "https://localhost:7069";
 
     try {
         const response = await fetch(`${apiBasePath}/api/Products`);

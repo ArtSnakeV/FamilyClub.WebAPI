@@ -172,7 +172,8 @@
 "use client";
 
 import BooksNav from '../booksNav';
-import { LanguagesApi, Configuration, LanguageDto } from '@/lib/api/generated';
+import { LanguageDto } from '@/lib/api/generated';
+import { languageService } from '@/lib/api/services';
 import ItemActions from "@/app/(admin-site)/common_elements/item_actions";
 import { useEffect, useState } from "react";
 import EntitiesSearchSorting from "@/app/(admin-site)/common_elements/entities_search_sorting";
@@ -196,10 +197,7 @@ export default function LanguagesPage() {
     const [error, setError] = useState<unknown>(null);
 
     useEffect(() => {
-        const config = new Configuration({ basePath: "https://localhost:7069" });
-        const api = new LanguagesApi(config);
-
-        api.apiLanguagesGet()
+        languageService.apiLanguagesGet()
             .then((data) => {
                 setLanguages(data);
                 setIsLoading(false);

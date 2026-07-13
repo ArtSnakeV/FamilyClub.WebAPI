@@ -5,9 +5,9 @@ import AddEditButton from "./add_edit_button";
 import DeleteWithConfirm from "./delete_with_confirm"; 
 
 // Імпортуємо саме з services.ts
-import { productService, languageService, authorService, translatorService, categoriesService, publisherService } from "@/lib/api/services"; 
+import { productService, languageService, authorService, translatorService, categoriesService, publisherService, formatService, bookSizeService } from "@/lib/api/services"; 
 
-type EntityType = "product" | "language" | "author" | "translator" | "category" | "publisher";
+type EntityType = "product" | "language" | "author" | "translator" | "category" | "publisher" | "format" | "bookSize";
 
 interface ItemActionsProps {
   id: number | undefined;
@@ -25,6 +25,8 @@ export default function ItemActions({ id, type, onDeleteSuccess }: ItemActionsPr
     translator: `/admin/books/translators/editTranslator/${id}`,
     category: `/admin/books/categories/editCategory/${id}`,
     publisher: `/admin/books/publishers/editPublisher/${id}`,
+    format: `/admin/books/formats/editFormat/${id}`,
+    bookSize: `/admin/books/bookSizes/editBookSize/${id}`,
   };
 
   // 2. Карта назв для повідомлень
@@ -35,6 +37,8 @@ export default function ItemActions({ id, type, onDeleteSuccess }: ItemActionsPr
     translator: "перекладача",
     category: "категорію",
     publisher: "видавництво",
+    format: "формат",
+    bookSize: "розмір книги",
   };
 
   // 3. Функція видалення, яка викликає відповідний готовий сервіс
@@ -59,6 +63,12 @@ export default function ItemActions({ id, type, onDeleteSuccess }: ItemActionsPr
         break;
       case "publisher":
         await publisherService.apiPublishersIdDelete({ id: currentId });
+        break;
+      case "format":
+        await formatService.apiFormatsIdDelete({ id: currentId });
+        break;
+      case "bookSize":
+        await bookSizeService.apiBookSizesIdDelete({ id: currentId });
         break;
       default:
         console.error("Невідомий тип сутності для видалення");

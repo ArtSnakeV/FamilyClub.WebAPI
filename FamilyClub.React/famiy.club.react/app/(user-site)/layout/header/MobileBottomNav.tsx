@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { apiBasePath } from "@/lib/api/services";
+import { getAuthToken } from "@/lib/auth/tokenStorage";
 
 type User = {
   id: string;
@@ -18,7 +19,7 @@ export default function MobileBottomNav() {
 
   useEffect(() => {
     const fetchUser = async () => {
-      const token = localStorage.getItem("token");
+      const token = getAuthToken();
       if (!token) {
         setMember(null);
         return;

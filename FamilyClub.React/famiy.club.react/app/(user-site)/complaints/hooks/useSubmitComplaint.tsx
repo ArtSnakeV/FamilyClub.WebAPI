@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { complaintsService } from "@/lib/api/services";
+import { getAuthToken } from "@/lib/auth/tokenStorage";
 import { ResponseError } from "@/lib/api/generated/runtime";
 import type { ComplaintReason } from "./useComplaintForm";
 import type { useComplaintImages } from "./useComplaintImages";
@@ -72,8 +73,7 @@ export function useSubmitComplaint() {
     setError(null);
 
     try {
-      const token =
-        typeof window !== "undefined" ? localStorage.getItem("token") : null;
+      const token = typeof window !== "undefined" ? getAuthToken() : null;
 
       const imageDtos = await images.toCreateDtos();
 

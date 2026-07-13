@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { favoriteService } from "@/lib/api/services";
+import { getAuthToken } from "@/lib/auth/tokenStorage";
 
 export type FavoriteBook = {
     id: number;
@@ -16,7 +17,7 @@ export function useFavorites(userId: string | undefined) {
     useEffect(() => {
         if (!userId) return;
 
-        const token = localStorage.getItem("token");
+        const token = getAuthToken();
         if (!token) return;
 
         setLoadingFavorites(true);
@@ -38,7 +39,7 @@ export function useFavorites(userId: string | undefined) {
             .finally(() => setLoadingFavorites(false));
     }, [userId]);
     const toggleFavorite = useCallback(async (productId: number) => {
-        const token = localStorage.getItem("token");
+        const token = getAuthToken();
         if (!token) return;
 
         const wasAlreadyFav = favorites.some((f) => f.id === productId);

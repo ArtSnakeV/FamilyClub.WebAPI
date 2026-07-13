@@ -4,8 +4,10 @@ import React, { useEffect, useState, useMemo } from "react";
 import OrdersHeader from "./OrdersHeader";
 import OrdersTabs from "./OrdersTabs";
 import OrderCard from "./OrderCard";
+import MobileOrdersView from "./MobileOrdersView";
 import { EMPTY_ORDERS_BY_TAB, MockOrderItem, OrderTabId } from "./mockData";
 import { orderService, productService } from "@/lib/api/services";
+import { getAuthUserId } from "@/lib/auth/tokenStorage";
 import { OrderDTO, ProductDto } from "@/lib/api/generated";
 
 export default function OrdersPage() {
@@ -22,7 +24,7 @@ export default function OrdersPage() {
   const loadDatabaseOrders = async () => {
     setLoading(true);
     try {
-      const userId = typeof window !== "undefined" ? localStorage.getItem("userId") : null;
+      const userId = typeof window !== "undefined" ? getAuthUserId() : null;
       
       // Завантажуємо продукти з БД для визначення назв та обкладинок
       const allProducts: ProductDto[] = (await productService.apiProductsGet().catch(() => [])) || [];
@@ -204,15 +206,7 @@ export default function OrdersPage() {
   const currentItems = ordersByTab[activeTab] || [];
 
   return (
-    <div
-      className="relative min-h-screen pt-[80px] pb-20 font-sans"
-      style={{
-        backgroundImage: "url('/images/userProfile/Rectangle 326.png')",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundAttachment: "fixed",
-      }}
-    >
+    <>
       {/* Toast Notification */}
       {toastMessage && (
         <div className="fixed top-24 right-6 z-50 bg-[#242424] text-white px-6 py-3 rounded-2xl shadow-2xl flex items-center gap-3 animate-fade-in border border-gray-700">
@@ -221,56 +215,83 @@ export default function OrdersPage() {
         </div>
       )}
 
-      <div className="max-w-[1100px] mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header Block */}
-        <OrdersHeader paws={paws} discount={discount} />
+      {/* Мобільна версія (Figma Node 2544:5283 "Мої замовлення") */}
+      <div className="block md:hidden">
+        <MobileOrdersView
+          ordersByTab={ordersByTab}
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+          counts={counts}
+          loading={loading}
+          onAction={handleAction}
+          paws={paws}
+          discount={discount}
+        />
+      </div>
 
-        {/* Brown Background Board Container under cards */}
+      {/* Десктопна версія */}
+      <div className="hidden md:block">
         <div
-          className="relative w-full pt-4 pb-20 px-4 sm:px-8 rounded-3xl min-h-[680px] shadow-xl border border-[#B7895E]/40 mt-4"
+          className="relative min-h-screen pt-[80px] pb-20 font-sans"
           style={{
-            backgroundImage: "url('/images/addProducts/Rectangle 312.svg')",
+            backgroundImage: "url('/images/userProfile/Rectangle 326.png')",
             backgroundSize: "cover",
-            backgroundPosition: "top center",
+            backgroundPosition: "center",
+            backgroundAttachment: "fixed",
           }}
         >
-          {/* Tabs Bar */}
-          <div className="-mt-2 mb-6">
-            <OrdersTabs activeTab={activeTab} onSelectTab={setActiveTab} counts={counts} />
-          </div>
+          <div className="max-w-[1100px] mx-auto px-4 sm:px-6 lg:px-8">
+            {/* Header Block */}
+            <OrdersHeader paws={paws} discount={discount} />
 
-          {/* Informational Text Under Tabs for Certain States */}
-          {(activeTab === "add_review" || activeTab === "returns" || activeTab === "history") && (
-            <div className="text-center text-sm md:text-base font-semibold text-[#242424] my-4 tracking-wide bg-white/70 backdrop-blur-sm py-2.5 px-6 rounded-2xl max-w-md mx-auto shadow-sm border border-white/40">
-              Всі карточки автоматично приберуться через місяць
+            {/* Brown Background Board Container under cards */}
+            <div
+              className="relative w-full pt-4 pb-20 px-4 sm:px-8 rounded-3xl min-h-[680px] shadow-xl border border-[#B7895E]/40 mt-4"
+              style={{
+                backgroundImage: "url('/images/addProducts/Rectangle 312.svg')",
+                backgroundSize: "cover",
+                backgroundPosition: "top center",
+              }}
+            >
+              {/* Tabs Bar */}
+              <div className="-mt-2 mb-6">
+                <OrdersTabs activeTab={activeTab} onSelectTab={setActiveTab} counts={counts} />
+              </div>
+
+              {/* Informational Text Under Tabs for Certain States */}
+              {(activeTab === "add_review" || activeTab === "returns" || activeTab === "history") && (
+                <div className="text-center text-sm md:text-base font-semibold text-[#242424] my-4 tracking-wide bg-white/70 backdrop-blur-sm py-2.5 px-6 rounded-2xl max-w-md mx-auto shadow-sm border border-white/40">
+                  Всі карточки автоматично приберуться через місяць
+                </div>
+              )}
+
+              {/* Orders List Container */}
+              <div className="mt-8">
+                {loading ? (
+                  <div className="flex justify-center items-center py-20">
+                    <div className="w-10 h-10 border-4 border-[#005b33] border-t-transparent rounded-full animate-spin"></div>
+                  </div>
+                ) : currentItems.length === 0 ? (
+                  <div className="bg-[#D8D3C8]/90 backdrop-blur-sm rounded-3xl p-12 text-center border border-[#C8C2B4] shadow-md my-6 max-w-xl mx-auto">
+                    <span className="text-4xl block mb-3">📦</span>
+                    <h3 className="text-xl font-bold text-[#242424] mb-1">Тут наразі пусто</h3>
+                    <p className="text-sm text-[#555555]">Тут з&apos;являтимуться ваші реальні замовлення після оформлення</p>
+                  </div>
+                ) : (
+                  currentItems.map((item) => (
+                    <OrderCard
+                      key={item.id}
+                      item={item}
+                      activeTab={activeTab}
+                      onAction={handleAction}
+                    />
+                  ))
+                )}
+              </div>
             </div>
-          )}
-
-          {/* Orders List Container */}
-          <div className="mt-8">
-            {loading ? (
-              <div className="flex justify-center items-center py-20">
-                <div className="w-10 h-10 border-4 border-[#005b33] border-t-transparent rounded-full animate-spin"></div>
-              </div>
-            ) : currentItems.length === 0 ? (
-              <div className="bg-[#D8D3C8]/90 backdrop-blur-sm rounded-3xl p-12 text-center border border-[#C8C2B4] shadow-md my-6 max-w-xl mx-auto">
-                <span className="text-4xl block mb-3">📦</span>
-                <h3 className="text-xl font-bold text-[#242424] mb-1">Тут наразі пусто</h3>
-                <p className="text-sm text-[#555555]">Тут з&apos;являтимуться ваші реальні замовлення після оформлення</p>
-              </div>
-            ) : (
-              currentItems.map((item) => (
-                <OrderCard
-                  key={item.id}
-                  item={item}
-                  activeTab={activeTab}
-                  onAction={handleAction}
-                />
-              ))
-            )}
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

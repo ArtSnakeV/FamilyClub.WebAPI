@@ -2,6 +2,7 @@
 
 import { useRef, useState } from "react";
 import { apiBasePath } from "@/lib/api/services";
+import { getAuthToken } from "@/lib/auth/tokenStorage";
 
 type Props = {
     userId: string;
@@ -23,7 +24,7 @@ export default function SecurityEditUserProfile({ userId, userEmail }: Props) {
             return;
         }
 
-        const token = localStorage.getItem("token");
+        const token = getAuthToken();
         // const res = await fetch(`https://localhost:7069/api/ClubMember/${userId}/change-password`, {
         //     method: "PUT",
         //     headers: {

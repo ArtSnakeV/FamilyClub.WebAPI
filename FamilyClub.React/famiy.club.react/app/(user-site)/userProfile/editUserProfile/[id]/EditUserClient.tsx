@@ -14,6 +14,7 @@ import { useCurrentUser } from "../../hooks/useCurrentUser";
 import { useRouter } from "next/navigation";
 import ButtonReturn from "./ui/ButtonReturn";
 import { apiBasePath } from "@/lib/api/services";
+import { getAuthToken } from "@/lib/auth/tokenStorage";
 
 
 export default function EditUserClient({ id }: { id: string }) {
@@ -48,7 +49,7 @@ export default function EditUserClient({ id }: { id: string }) {
         };
     }, []);
     const handleSave = async () => {
-        const token = localStorage.getItem("token");
+        const token = getAuthToken();
 
         const formData = new FormData();
         formData.append("name", form.name ?? "");

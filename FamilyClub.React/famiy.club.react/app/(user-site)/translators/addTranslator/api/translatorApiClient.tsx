@@ -1,11 +1,5 @@
-import {
-  Configuration,
-  TranslatorsApi,
-} from "@/lib/api/generated";
+import { apiBasePath, translatorService } from "@/lib/api/services";
 
-const BASE_PATH = "https://localhost:7069";
-const config = new Configuration({ basePath: BASE_PATH });
+export const BASE_URL = apiBasePath;
 
-export const BASE_URL = BASE_PATH;
-
-export const translatorApi = new TranslatorsApi(config);
+export const translatorApi = translatorService;

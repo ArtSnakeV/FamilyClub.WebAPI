@@ -79,10 +79,16 @@ export default function CartSummary({ subtotal, discount, deliveryCost }: CartSu
       {/* Checkout button */}
       <button
         className={styles.checkoutBtn}
-        disabled={!agreed || subtotal === 0}
+        disabled={subtotal === 0}
         type="button"
         id="checkout-btn"
-        onClick={() => router.push("/checkout")}
+        onClick={() => {
+          if (!agreed) {
+            alert("Будь ласка, підтвердіть згоду з Політикою конфіденційності та Користувацькою угодою (поставте галочку)");
+            return;
+          }
+          router.push("/checkout");
+        }}
       >
         До оформлення замовлення
       </button>

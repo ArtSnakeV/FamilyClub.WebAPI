@@ -102,7 +102,7 @@ export default function UserSideBArProfile({
   // return (
   const sidebar = (
     <div
-      className="flex fixed flex-col"
+      className="hidden md:flex fixed flex-col"
       style={{
         width: "370px", height: "900px",
         position: "fixed",

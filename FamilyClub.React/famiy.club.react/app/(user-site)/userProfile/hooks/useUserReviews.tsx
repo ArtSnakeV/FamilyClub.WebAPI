@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { apiBasePath } from "@/lib/api/services";
+import { getAuthToken } from "@/lib/auth/tokenStorage";
 
 
 export type ReviewDto = {
@@ -21,7 +22,7 @@ export function useUserReviews(userId: string | undefined) {
     useEffect(() => {
         if (!userId) return;
 
-        const token = localStorage.getItem("token");
+        const token = getAuthToken();
         setLoading(true);
 
         // fetch(`https://localhost:7069/api/Reviews/by-user/${userId}`, {
