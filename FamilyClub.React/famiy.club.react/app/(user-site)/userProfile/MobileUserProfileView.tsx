@@ -9,7 +9,7 @@ import { getImageSrc } from "./hooks/useImageBook";
 import { useCart } from "@/lib/hooks/useCart";
 import { useUserReviews } from "./hooks/useUserReviews";
 import { CurrentUser } from "./hooks/useCurrentUser";
-import { FavoriteBook } from "./hooks/useFavorites";
+import { FavoriteBook } from "@/lib/hooks/useFavorites";
 import { TabType } from "./page";
 import FormatBadge from "./section/FormatBadge";
 

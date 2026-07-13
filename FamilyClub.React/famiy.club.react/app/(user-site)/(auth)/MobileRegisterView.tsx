@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { AsYouType } from "libphonenumber-js";
+import { authService } from "@/lib/api/services";
 
 export default function MobileRegisterView() {
   const router = useRouter();
@@ -65,7 +66,7 @@ export default function MobileRegisterView() {
 
   const handleRegister = async (e?: React.FormEvent) => {
     if (e) e.preventDefault();
-    if (!formData.email || !formData.password || !formData.lastName) {
+    if (!formData.email || !formData.password || !formData.lastName || !formData.firstName) {
       setError("Будь ласка, заповніть всі обов'язкові поля");
       return;
     }
@@ -80,11 +81,18 @@ export default function MobileRegisterView() {
     setLoading(true);
     setError("");
     try {
-      // Registration API logic or fallback to login page after successful registration
-      console.log("Registering:", { ...formData, phone });
+      await authService.apiAuthClubMemberRegisterPost({
+        registerClubMemberDto: {
+          name: formData.firstName,
+          surname: formData.lastName,
+          email: formData.email,
+          phoneNumber: phone,
+          password: formData.password,
+        },
+      });
       router.push("/login");
     } catch (err) {
-      setError("Помилка під час реєстрації");
+      setError("Помилка під час реєстрації або користувач вже існує");
     } finally {
       setLoading(false);
     }
