@@ -30,9 +30,6 @@ export function useCurrentUser() {
     }
 
     try {
-      // const res = await fetch("https://localhost:7069/api/AuthClubMember/me", {
-      //   headers: { Authorization: `Bearer ${token}` },
-      // });
       const res = await fetch(`${apiBasePath}/api/AuthClubMember/me`, {
         headers: { Authorization: `Bearer ${token}` },
       });
