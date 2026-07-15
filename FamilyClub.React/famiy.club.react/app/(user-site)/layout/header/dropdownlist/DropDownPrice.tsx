@@ -28,18 +28,26 @@ export default function DropDownPrice() {
     document.addEventListener("click", handleClickOutside);
     return () => document.removeEventListener("click", handleClickOutside);
   }, []);
-
   function applyFilters() {
     const params = new URLSearchParams();
 
     if (from) params.set("minPrice", from);
     if (to) params.set("maxPrice", to);
-    if (promotionOnly) params.set("promo", "true");
 
-    router.push(`/products?${params.toString()}`);
+    if (promotionOnly) {
+      router.push("/promotions");
+    } else {
+      router.push(`/products?${params.toString()}`);
+    }
+
+    setFrom("");
+    setTo("");
+    setPromotionOnly(false);
     setOpen(false);
   }
-
+  function goToPromotions() {
+    setPromotionOnly((v) => !v);
+  }
   return (
     <div ref={containerRef} className="relative w-[110px]">
       <div
@@ -122,13 +130,16 @@ export default function DropDownPrice() {
                     height={22}
                     className={`
     object-contain
-    transition-transform duration-200
+    transition-transform duration-300
     ${promotionOnly ? "scale-125 -mt-[6px] ml-[3px]" : "scale-90"}
   `}
                   />
                 </button>
 
-                <span className="text-[13px] text-white">Акції</span>
+                <span className="text-[13px] text-white"
+                  onClick={goToPromotions}
+                >Акції
+                </span>
               </div>
 
               {/* APPLY */}

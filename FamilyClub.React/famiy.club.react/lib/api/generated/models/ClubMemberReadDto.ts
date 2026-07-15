@@ -69,6 +69,24 @@ export interface ClubMemberReadDto {
     lockoutEnd?: Date | null;
     /**
      * 
+     * @type {Date}
+     * @memberof ClubMemberReadDto
+     */
+    lockedAt?: Date | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClubMemberReadDto
+     */
+    lockedBy?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClubMemberReadDto
+     */
+    lockoutReason?: string | null;
+    /**
+     * 
      * @type {Array<string>}
      * @memberof ClubMemberReadDto
      */
@@ -100,6 +118,9 @@ export function ClubMemberReadDtoFromJSONTyped(json: any, ignoreDiscriminator: b
         'surname': json['surname'] == null ? undefined : json['surname'],
         'dateOfBirth': json['dateOfBirth'] == null ? undefined : (new Date(json['dateOfBirth'])),
         'lockoutEnd': json['lockoutEnd'] == null ? undefined : (new Date(json['lockoutEnd'])),
+        'lockedAt': json['lockedAt'] == null ? undefined : (new Date(json['lockedAt'])),
+        'lockedBy': json['lockedBy'] == null ? undefined : json['lockedBy'],
+        'lockoutReason': json['lockoutReason'] == null ? undefined : json['lockoutReason'],
         'roles': json['roles'] == null ? undefined : json['roles'],
     };
 }
@@ -123,6 +144,9 @@ export function ClubMemberReadDtoToJSONTyped(value?: ClubMemberReadDto | null, i
         'surname': value['surname'],
         'dateOfBirth': value['dateOfBirth'] == null ? value['dateOfBirth'] : value['dateOfBirth'].toISOString().substring(0,10),
         'lockoutEnd': value['lockoutEnd'] == null ? value['lockoutEnd'] : value['lockoutEnd'].toISOString(),
+        'lockedAt': value['lockedAt'] == null ? value['lockedAt'] : value['lockedAt'].toISOString(),
+        'lockedBy': value['lockedBy'],
+        'lockoutReason': value['lockoutReason'],
         'roles': value['roles'],
     };
 }
