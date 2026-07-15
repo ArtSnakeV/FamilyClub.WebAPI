@@ -7,6 +7,8 @@ import { useCart } from "@/lib/hooks/useCart";
 import { useFavorites } from "@/lib/hooks/useFavorites";
 import { useCurrentUser } from "../userProfile/hooks/useCurrentUser";
 import BookShelf from "./BookShelf";
+import { usePagination } from "./hooks/usePagination";
+import Pagination from "./Pagination";
 
 function isActive(promotion: PromotionDto): boolean {
     const now = new Date();
@@ -20,6 +22,7 @@ function isActive(promotion: PromotionDto): boolean {
 export default function PromotionsPage() {
     const { items, addToCart } = useCart();
     const { user } = useCurrentUser();
+
     const { favorites, toggleFavorite } = useFavorites(user?.id);
 
     const [promotions, setPromotions] = useState<PromotionDto[]>([]);
@@ -76,6 +79,14 @@ export default function PromotionsPage() {
         // [allProducts, activePromotionIds]
         [allProducts, activePromotionIds, selectedPromotionId]
     );
+    //pagin
+    const {
+        currentPage,
+        totalPages,
+        paginatedItems: paginatedBooks,
+        setCurrentPage,
+    } = usePagination(books, 6);
+    //
     const activePromotionsList = useMemo(
         () => promotions.filter(isActive),
         [promotions]
@@ -121,8 +132,11 @@ export default function PromotionsPage() {
     if (books.length === 0) {
         rows.push([], []); // порожні полиці, якщо товарів немає
     } else {
-        for (let i = 0; i < books.length; i += 3) {
-            rows.push(books.slice(i, i + 3));
+        // for (let i = 0; i < books.length; i += 3) {
+        //     rows.push(books.slice(i, i + 3));
+        // }
+        for (let i = 0; i < paginatedBooks.length; i += 3) {
+            rows.push(paginatedBooks.slice(i, i + 3));
         }
     }
 
@@ -146,7 +160,11 @@ export default function PromotionsPage() {
                 >
                     <button
                         type="button"
-                        onClick={() => setSelectedPromotionId(null)}
+                        // onClick={() => setSelectedPromotionId(null)}
+                        onClick={() => {
+                            setSelectedPromotionId(null);
+                            setCurrentPage(1);
+                        }}
                         className={`
                         font-['Source_Sans_Pro'] font-normal text-[20px] leading-[125%] tracking-[-0.011em]
                         px-5 py-2.5 rounded-[9px]
@@ -165,7 +183,11 @@ export default function PromotionsPage() {
                         <button
                             key={p.id}
                             type="button"
-                            onClick={() => setSelectedPromotionId(p.id!)}
+                            // onClick={() => setSelectedPromotionId(p.id!)}
+                            onClick={() => {
+                                setSelectedPromotionId(p.id!);
+                                setCurrentPage(1);
+                            }}
                             className={`
                             font-['Source_Sans_Pro'] font-normal text-[20px] leading-[125%] tracking-[-0.011em]
                             px-5 py-2.5 rounded-[9px]
@@ -177,7 +199,7 @@ export default function PromotionsPage() {
                                 }
                         `}
                         >
-                           {p.name} — {p.discountPercent}%
+                            {p.name} — {p.discountPercent}%
                         </button>
                     ))}
                 </div>
@@ -194,6 +216,13 @@ export default function PromotionsPage() {
                 favorites={favorites}
                 isFav={isFav}
             />
+            <div className="w-full flex justify-center mt-10 mb-16 min-h-[40px]">
+                <Pagination
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    onPageChange={setCurrentPage}
+                />
+            </div>
         </div>
     );
 }
