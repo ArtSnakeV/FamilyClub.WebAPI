@@ -27,6 +27,13 @@ import {
     CategoryToJSON,
     CategoryToJSONTyped,
 } from './Category';
+import type { BlockReason } from './BlockReason';
+import {
+    BlockReasonFromJSON,
+    BlockReasonFromJSONTyped,
+    BlockReasonToJSON,
+    BlockReasonToJSONTyped,
+} from './BlockReason';
 import type { Product } from './Product';
 import {
     ProductFromJSON,
@@ -199,6 +206,42 @@ export interface ClubMember {
      * @memberof ClubMember
      */
     favoriteCategories?: Array<Category> | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof ClubMember
+     */
+    blockReasonId?: number | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClubMember
+     */
+    lockoutComment?: string | null;
+    /**
+     * 
+     * @type {BlockReason}
+     * @memberof ClubMember
+     */
+    blockReason?: BlockReason;
+    /**
+     * 
+     * @type {Date}
+     * @memberof ClubMember
+     */
+    lockedAt?: Date | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClubMember
+     */
+    lockedById?: string | null;
+    /**
+     * 
+     * @type {ClubMember}
+     * @memberof ClubMember
+     */
+    lockedBy?: ClubMember;
 }
 
 /**
@@ -242,6 +285,12 @@ export function ClubMemberFromJSONTyped(json: any, ignoreDiscriminator: boolean)
         'avatarData': json['avatarData'] == null ? undefined : json['avatarData'],
         'favoriteProducts': json['favoriteProducts'] == null ? undefined : ((json['favoriteProducts'] as Array<any>).map(ProductFromJSON)),
         'favoriteCategories': json['favoriteCategories'] == null ? undefined : ((json['favoriteCategories'] as Array<any>).map(CategoryFromJSON)),
+        'blockReasonId': json['blockReasonId'] == null ? undefined : json['blockReasonId'],
+        'lockoutComment': json['lockoutComment'] == null ? undefined : json['lockoutComment'],
+        'blockReason': json['blockReason'] == null ? undefined : BlockReasonFromJSON(json['blockReason']),
+        'lockedAt': json['lockedAt'] == null ? undefined : (new Date(json['lockedAt'])),
+        'lockedById': json['lockedById'] == null ? undefined : json['lockedById'],
+        'lockedBy': json['lockedBy'] == null ? undefined : ClubMemberFromJSON(json['lockedBy']),
     };
 }
 
@@ -280,6 +329,12 @@ export function ClubMemberToJSONTyped(value?: ClubMember | null, ignoreDiscrimin
         'avatarData': value['avatarData'],
         'favoriteProducts': value['favoriteProducts'] == null ? undefined : ((value['favoriteProducts'] as Array<any>).map(ProductToJSON)),
         'favoriteCategories': value['favoriteCategories'] == null ? undefined : ((value['favoriteCategories'] as Array<any>).map(CategoryToJSON)),
+        'blockReasonId': value['blockReasonId'],
+        'lockoutComment': value['lockoutComment'],
+        'blockReason': BlockReasonToJSON(value['blockReason']),
+        'lockedAt': value['lockedAt'] == null ? value['lockedAt'] : value['lockedAt'].toISOString(),
+        'lockedById': value['lockedById'],
+        'lockedBy': ClubMemberToJSON(value['lockedBy']),
     };
 }
 

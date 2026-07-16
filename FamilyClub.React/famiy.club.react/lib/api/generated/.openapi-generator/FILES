@@ -1,6 +1,7 @@
 apis/AgeRestrictionsApi.ts
 apis/AuthClubMemberApi.ts
 apis/AuthorsApi.ts
+apis/BlockReasonsApi.ts
 apis/BookSizesApi.ts
 apis/CartsApi.ts
 apis/CategoriesApi.ts
@@ -33,6 +34,9 @@ docs/Author.md
 docs/AuthorDTO.md
 docs/AuthorsApi.md
 docs/Availability.md
+docs/BlockReason.md
+docs/BlockReasonDto.md
+docs/BlockReasonsApi.md
 docs/BookSize.md
 docs/BookSizeDto.md
 docs/BookSizesApi.md
@@ -64,6 +68,7 @@ docs/HomeApi.md
 docs/Language.md
 docs/LanguageDto.md
 docs/LanguagesApi.md
+docs/LockUserDto.md
 docs/LoginClubMemberDto.md
 docs/Notification.md
 docs/NotificationDTO.md
@@ -106,6 +111,8 @@ models/AuthResponseClubMemberDTO.ts
 models/Author.ts
 models/AuthorDTO.ts
 models/Availability.ts
+models/BlockReason.ts
+models/BlockReasonDto.ts
 models/BookSize.ts
 models/BookSizeDto.ts
 models/CartDTO.ts
@@ -127,6 +134,7 @@ models/FormatDto.ts
 models/HeartbeatRequest.ts
 models/Language.ts
 models/LanguageDto.ts
+models/LockUserDto.ts
 models/LoginClubMemberDto.ts
 models/Notification.ts
 models/NotificationDTO.ts

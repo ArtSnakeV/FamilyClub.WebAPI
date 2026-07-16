@@ -31,7 +31,11 @@ public class ClubMemberService : IClubMemberService
 
     public async Task<IEnumerable<ClubMemberReadDto>> GetAllAsync(CancellationToken cancellationToken = default)
     {
-        var members = await _userManager.Users.ToListAsync(cancellationToken);
+        //var members = await _userManager.Users.ToListAsync(cancellationToken);
+        var members = await _userManager.Users
+        .Include(m => m.BlockReason)
+        .Include(m => m.LockedBy)
+        .ToListAsync(cancellationToken);
         var dtos = new List<ClubMemberReadDto>();
 
         foreach (var member in members)
@@ -47,7 +51,12 @@ public class ClubMemberService : IClubMemberService
     {
         cancellationToken.ThrowIfCancellationRequested(); // Checking for cancellation before starting the operation
 
-        var clubMember = await _userManager.FindByIdAsync(id);
+        //var clubMember = await _userManager.FindByIdAsync(id);
+        var clubMember = await _userManager.Users
+        .Include(m => m.BlockReason)
+        .Include(m => m.LockedBy)
+        .FirstOrDefaultAsync(m => m.Id == id, cancellationToken);
+
         if (clubMember == null) return null;
 
         var roles = await _userManager.GetRolesAsync(clubMember);
@@ -205,17 +214,24 @@ public class ClubMemberService : IClubMemberService
         return result.Succeeded;
     }
 
-    public async Task<bool> LockUserAsync(string id, CancellationToken cancellationToken = default)
+    public async Task<bool> LockUserAsync(string id, LockUserDto dto, string? lockedByUserId, CancellationToken cancellationToken = default)
     {
         var user = await _userManager.FindByIdAsync(id);
         if (user == null) return false;
 
         await _userManager.SetLockoutEnabledAsync(user, true);
 
-        await _userManager.SetLockoutEndDateAsync(
-            user,
-            DateTimeOffset.UtcNow.AddYears(100));
+        // Identity вимагає конкретну дату,
+        // для постійного бану ставимо далеко в майбутнє
+        var lockoutEnd = dto.LockoutEnd ?? DateTimeOffset.UtcNow.AddYears(100);
+        await _userManager.SetLockoutEndDateAsync(user, lockoutEnd);
 
+        user.BlockReasonId = dto.BlockReasonId;
+        user.LockoutComment = dto.Comment;
+        user.LockedAt = DateTimeOffset.UtcNow;
+        user.LockedById = lockedByUserId;
+
+        await _userManager.UpdateAsync(user);
         await _userManager.UpdateSecurityStampAsync(user);
 
         return true;
@@ -230,6 +246,14 @@ public class ClubMemberService : IClubMemberService
 
         // очищаємо лічильник спроб
         await _userManager.ResetAccessFailedCountAsync(user);
+
+        // очищаємо інформацію про причину/автора блокування
+        user.BlockReasonId = null;
+        user.LockoutComment = null;
+        user.LockedAt = null;
+        user.LockedById = null;
+
+        await _userManager.UpdateAsync(user);
 
         return true;
     }

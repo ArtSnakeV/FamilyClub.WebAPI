@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { apiBasePath } from "@/lib/api/services";
 
 export interface UserInfo {
@@ -21,6 +21,7 @@ export interface UserInfo {
     language?: string;
     timeZone?: string;
     /////
+    blockReasonId?: number | null;
     lockoutReason?: string;
     lockoutReasonDetail?: string;
     lockedBy?: string;
@@ -30,26 +31,29 @@ export interface UserInfo {
 export default function useAllUsersInfo() {
     const [usersInfo, setUsersInfo] = useState<UserInfo[]>([]);
     const [loadingUsersInfo, setLoadingUsersInfo] = useState(true);
-    useEffect(() => {
-        const fetchUsers = async () => {
-            try {
-                const res = await fetch(`${apiBasePath}/api/ClubMember`);
-                const data = await res.json();
 
-                const mapped: UserInfo[] = data.map((u: any) => ({
-                    ...u,
-                    role: u.roles?.[0] ?? "User",
-                }));
+    const fetchUsers = useCallback(async () => {
+        try {
+            setLoadingUsersInfo(true);
+            const res = await fetch(`${apiBasePath}/api/ClubMember`);
+            const data = await res.json();
 
-                setUsersInfo(mapped);
-            } catch (e) {
-                console.error(e);
-            } finally {
-                setLoadingUsersInfo(false);
-            }
-        };
-        fetchUsers();
+            const mapped: UserInfo[] = data.map((u: any) => ({
+                ...u,
+                role: u.roles?.[0] ?? "User",
+            }));
+
+            setUsersInfo(mapped);
+        } catch (e) {
+            console.error(e);
+        } finally {
+            setLoadingUsersInfo(false);
+        }
     }, []);
 
-    return { usersInfo, loadingUsersInfo };
+    useEffect(() => {
+        fetchUsers();
+    }, [fetchUsers]);
+
+    return { usersInfo, loadingUsersInfo, refetch: fetchUsers };
 }
