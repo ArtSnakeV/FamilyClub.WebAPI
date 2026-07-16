@@ -18,6 +18,12 @@ public static class ClubMemberMapper
             AvatarData = clubMember.AvatarData,
             Roles = roles ?? new List<string>(),
             LockoutEnd = clubMember.LockoutEnd,
+            LockedAt = clubMember.LockedAt,
+            LockedBy = clubMember.LockedBy != null
+                ? $"{clubMember.LockedBy.Name} {clubMember.LockedBy.Surname}".Trim()
+                : null,
+            LockoutReason = clubMember.BlockReason?.Name,
+            LockoutReasonDetail = clubMember.LockoutComment,
         };
     }
 }

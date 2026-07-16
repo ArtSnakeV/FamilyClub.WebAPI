@@ -87,6 +87,12 @@ export interface ClubMemberReadDto {
     lockoutReason?: string | null;
     /**
      * 
+     * @type {string}
+     * @memberof ClubMemberReadDto
+     */
+    lockoutReasonDetail?: string | null;
+    /**
+     * 
      * @type {Array<string>}
      * @memberof ClubMemberReadDto
      */
@@ -121,6 +127,7 @@ export function ClubMemberReadDtoFromJSONTyped(json: any, ignoreDiscriminator: b
         'lockedAt': json['lockedAt'] == null ? undefined : (new Date(json['lockedAt'])),
         'lockedBy': json['lockedBy'] == null ? undefined : json['lockedBy'],
         'lockoutReason': json['lockoutReason'] == null ? undefined : json['lockoutReason'],
+        'lockoutReasonDetail': json['lockoutReasonDetail'] == null ? undefined : json['lockoutReasonDetail'],
         'roles': json['roles'] == null ? undefined : json['roles'],
     };
 }
@@ -147,6 +154,7 @@ export function ClubMemberReadDtoToJSONTyped(value?: ClubMemberReadDto | null, i
         'lockedAt': value['lockedAt'] == null ? value['lockedAt'] : value['lockedAt'].toISOString(),
         'lockedBy': value['lockedBy'],
         'lockoutReason': value['lockoutReason'],
+        'lockoutReasonDetail': value['lockoutReasonDetail'],
         'roles': value['roles'],
     };
 }

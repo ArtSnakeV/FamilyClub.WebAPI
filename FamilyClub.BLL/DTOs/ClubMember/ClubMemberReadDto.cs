@@ -17,9 +17,8 @@ public class ClubMemberReadDto
     public DateTimeOffset? LockedAt { get; set; }
 
     public string? LockedBy { get; set; }
-
-    public string? LockoutReason { get; set; }
-
+    public string? LockoutReason { get; set; }       // назва причини (BlockReason.Name)
+    public string? LockoutReasonDetail { get; set; } // коментар адміна (LockoutComment)
     // Roles of our User
     public IEnumerable<string> Roles { get; set; } = new List<string>();
 

@@ -11,6 +11,7 @@ import BlockFilteredBlockedUsers from "./section/searchSetions/BlockFilteredBloc
 import BlockTabsBlockedUsers from "./section/searchSetions/BlockTabsBlockedUsers";
 import { isBlocked, isPermanentBlock } from "./hooks/blockUtils";
 import EmptyDiv from "./ui/EmptyDiv";
+import LockUserModal from "./ui/LockUserModal";
 
 const EXPIRING_SOON_DAYS = 7;
 const isExpiringSoon = (user: UserInfo) => {
@@ -22,7 +23,7 @@ type TabKey = "allBlocked" | "temporary" | "permanent" | "expiring" | "active";
 
 export default function Page() {
     const router = useRouter();
-    const { usersInfo, loadingUsersInfo } = useAllUsersInfo();
+    const { usersInfo, loadingUsersInfo, refetch } = useAllUsersInfo();
 
     const [localUsers, setLocalUsers] = useState<UserInfo[]>([]);
     const [selectedUserId, setSelectedUserIdBlocked] = useState<string | null>(null);
@@ -30,6 +31,7 @@ export default function Page() {
     const [status, setStatus] = useState("all");
     const [reason, setReason] = useState("all");
     const [sort, setSort] = useState("newest");
+    const [userToLock, setUserToLock] = useState<UserInfo | null>(null);
 
     useEffect(() => {
         setLocalUsers(usersInfo);
@@ -107,26 +109,22 @@ export default function Page() {
 
         if (blocked) {
             await unlockUser(user.id);
+            await refetch();
+
+            if (selectedUserId === user.id) {
+                setSelectedUserIdBlocked(null);
+            }
         } else {
-            await lockUser(user.id);
+            setUserToLock(user);
         }
+    };
+    const handleConfirmLock = async (blockReasonId: number, comment: string,  lockoutEnd: string | null) => {
+        if (!userToLock) return;
 
-        setLocalUsers((prev) =>
-            prev.map((u) =>
-                u.id === user.id
-                    ? {
-                        ...u,
-                        lockoutEnd: blocked
-                            ? null
-                            : new Date(Date.now() + 1000 * 60 * 60 * 24 * 365 * 100).toISOString(),
-                    }
-                    : u
-            )
-        );
+        await lockUser(userToLock.id, { blockReasonId, comment, lockoutEnd });
+        await refetch();
 
-        if (blocked && selectedUserId === user.id) {
-            setSelectedUserIdBlocked(null);
-        }
+        setUserToLock(null);
     };
 
     const handleDeleteUser = async (user: UserInfo) => {
@@ -207,6 +205,13 @@ export default function Page() {
                         />
                     )}
                 </div>
+                {userToLock && (
+                    <LockUserModal
+                        user={userToLock}
+                        onConfirm={handleConfirmLock}
+                        onCancel={() => setUserToLock(null)}
+                    />
+                )}
             </div>
         </div>
     );

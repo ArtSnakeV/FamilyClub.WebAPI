@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { PromotionDto, ProductDto, ReviewDto } from "@/lib/api/generated";
 import { promotionService, productService, reviewService } from "@/lib/api/services";
 import { useCart } from "@/lib/hooks/useCart";
@@ -20,6 +20,7 @@ function isActive(promotion: PromotionDto): boolean {
 }
 
 export default function PromotionsPage() {
+    const shelfRef = useRef<HTMLDivElement>(null);
     const { items, addToCart } = useCart();
     const { user } = useCurrentUser();
 
@@ -87,6 +88,9 @@ export default function PromotionsPage() {
         setCurrentPage,
     } = usePagination(books, 6);
     //
+    useEffect(() => {
+        shelfRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, [currentPage]);
     const activePromotionsList = useMemo(
         () => promotions.filter(isActive),
         [promotions]
@@ -128,21 +132,35 @@ export default function PromotionsPage() {
         );
     }
 
+    // const rows: ProductDto[][] = [];
+    // if (books.length === 0) {
+    //     rows.push([], []); // порожні полиці, якщо товарів немає
+    // } else {
+    //     // for (let i = 0; i < books.length; i += 3) {
+    //     //     rows.push(books.slice(i, i + 3));
+    //     // }
+    //     for (let i = 0; i < paginatedBooks.length; i += 3) {
+    //         rows.push(paginatedBooks.slice(i, i + 3));
+    //     }
+    // }
     const rows: ProductDto[][] = [];
-    if (books.length === 0) {
-        rows.push([], []); // порожні полиці, якщо товарів немає
-    } else {
-        // for (let i = 0; i < books.length; i += 3) {
-        //     rows.push(books.slice(i, i + 3));
-        // }
-        for (let i = 0; i < paginatedBooks.length; i += 3) {
-            rows.push(paginatedBooks.slice(i, i + 3));
-        }
+    for (let i = 0; i < paginatedBooks.length; i += 3) {
+        rows.push(paginatedBooks.slice(i, i + 3));
+    }
+    // завжди мінімум 2 полички, навіть якщо книг мало або немає зовсім
+    while (rows.length < 2) {
+        rows.push([]);
     }
 
+
     return (
+        // <div
+        //     className="w-full mt-40 min-h-screen relative"
+        // >
         <div
-            className="w-full mt-40 min-h-screen relative"
+            ref={shelfRef}
+            key={currentPage}
+            className="transition-opacity duration-300 ease-in-out animate-[fadeIn_0.3s_ease-in-out]"
         >
             {activePromotionsList.length > 0 && (
                 <div

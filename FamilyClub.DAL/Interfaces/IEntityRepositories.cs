@@ -38,6 +38,7 @@ public interface INotificationRepository : IRepository<Notification>
 };
 public interface IFormatRepository : IRepository<Format>;
 public interface IBookSizeRepository : IRepository<BookSize>;
+public interface IBlockReasonRepository : IRepository<BlockReason>;
 public interface IAgeRestrictionRepository : IRepository<AgeRestriction>;
 
 public interface ICartRepository : IRepository<Cart>
