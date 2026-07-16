@@ -31,6 +31,7 @@ public class Repository<T> : IRepository<T> where T : class
         if (typeof(T) != typeof(Product))
             throw new InvalidOperationException("This method is only valid for Product entities.");
         var product = await Context.Products
+            .AsNoTracking()
             .Include(p => p.ProductImages)
             .FirstOrDefaultAsync(p => p.Id == productId, cancellationToken);
         return product?.ProductImages ?? Enumerable.Empty<ProductImage>();

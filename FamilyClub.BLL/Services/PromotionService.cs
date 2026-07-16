@@ -32,6 +32,7 @@ public class PromotionService : IPromotionService
     {
         var promotion = new Promotion
         {
+            Name = dto.Name,
             DiscountPercent = dto.DiscountPercent,
             StartDate = dto.StartDate,
             EndDate = dto.EndDate
@@ -50,7 +51,7 @@ public class PromotionService : IPromotionService
         {
             return false;
         }
-
+        promotion.Name = dto.Name;
         promotion.DiscountPercent = dto.DiscountPercent;
         promotion.StartDate = dto.StartDate;
         promotion.EndDate = dto.EndDate;
@@ -79,6 +80,7 @@ public class PromotionService : IPromotionService
         return new PromotionDto
         {
             Id = promotion.Id,
+            Name = promotion.Name,
             DiscountPercent = promotion.DiscountPercent,
             StartDate = promotion.StartDate,
             EndDate = promotion.EndDate

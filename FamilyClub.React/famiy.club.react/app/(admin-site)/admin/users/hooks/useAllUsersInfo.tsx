@@ -20,6 +20,11 @@ export interface UserInfo {
     createdAt?: string;
     language?: string;
     timeZone?: string;
+    /////
+    lockoutReason?: string;
+    lockoutReasonDetail?: string;
+    lockedBy?: string;
+    lockedAt?: string;
 }
 
 export default function useAllUsersInfo() {

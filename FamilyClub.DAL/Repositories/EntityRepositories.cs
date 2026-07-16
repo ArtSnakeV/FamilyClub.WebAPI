@@ -21,6 +21,7 @@ public class ProductRepository : Repository<Product>, IProductRepository
     public new async Task<IEnumerable<Product>> GetAllAsync(CancellationToken cancellationToken = default)
     {
 		return await _context.Products
+		.AsNoTracking()
 		.Include(p => p.ProductImages)
 		.Include(p => p.Authors)
 		.Include(p => p.Languages)
@@ -30,6 +31,7 @@ public class ProductRepository : Repository<Product>, IProductRepository
 		.Include(p => p.Formats)
 		.Include(p => p.BookSizes)
 		.Include(p => p.AgeRestrictions)
+		.AsSplitQuery()
 		.ToListAsync(cancellationToken);
 	}
 
@@ -45,6 +47,7 @@ public class ProductRepository : Repository<Product>, IProductRepository
 		.Include(p => p.Formats)
 		.Include(p => p.BookSizes)
 		.Include(p => p.AgeRestrictions)
+		.AsSplitQuery()
 		.FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
 	}
 
@@ -86,12 +89,14 @@ public class OrderRepository : Repository<Order>, IOrderRepository
     {
         return await _context.Orders
             .Include(o => o.OrderItems)
+            .AsSplitQuery()
             .ToListAsync(cancellationToken);
     }
     public new async Task<Order?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
     {
         return await _context.Orders
             .Include(o => o.OrderItems)
+            .AsSplitQuery()
             .FirstOrDefaultAsync(o => o.Id == id, cancellationToken);
     }
     public async Task<IEnumerable<Order>> GetByUserIdAsync(string userId, CancellationToken cancellationToken = default)
@@ -101,6 +106,7 @@ public class OrderRepository : Repository<Order>, IOrderRepository
                 .ThenInclude(oi => oi.Product)
                     .ThenInclude(p => p.ProductImages)
             .Where(o => o.UserId == userId)
+            .AsSplitQuery()
             .ToListAsync(cancellationToken);
     }
 }
@@ -139,6 +145,7 @@ public class CartRepository : Repository<Cart>, ICartRepository
         return await _context.Cart
             .Include(c => c.CartItems)
             .ThenInclude(ci => ci.Product)
+            .AsSplitQuery()
             .FirstOrDefaultAsync(c => c.ClubMemberId == clubMemberId, cancellationToken);
     }
 }
@@ -174,6 +181,7 @@ public class ComplaintRepository : Repository<Complaint>, IComplaintRepository
         return await _context.Complaints
             .Include(c => c.ComplaintImages)
             .Include(c => c.ClubMember)
+            .AsSplitQuery()
             .ToListAsync(cancellationToken);
     }
 
@@ -182,6 +190,7 @@ public class ComplaintRepository : Repository<Complaint>, IComplaintRepository
         return await _context.Complaints
             .Include(c => c.ComplaintImages)
             .Include(c => c.ClubMember)
+            .AsSplitQuery()
             .FirstOrDefaultAsync(c => c.Id == id, cancellationToken);
     }
 
@@ -191,6 +200,7 @@ public class ComplaintRepository : Repository<Complaint>, IComplaintRepository
             .Include(c => c.ComplaintImages)
             .Include(c => c.ClubMember)
             .Where(c => c.ClubMemberId == clubMemberId)
+            .AsSplitQuery()
             .ToListAsync(cancellationToken);
     }
 }

@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { authService } from "@/lib/api/services";
+import { setAuthSession } from "@/lib/auth/tokenStorage";
 
 export default function MobileAuthView() {
   const router = useRouter();
@@ -26,14 +27,12 @@ export default function MobileAuthView() {
         loginClubMemberDto: {
           username: formData.login,
           password: formData.password,
+          rememberMe: true,
         },
       });
 
       if (response && response.token) {
-        localStorage.setItem("token", response.token);
-        if (response.clubMember?.id) {
-          localStorage.setItem("userId", response.clubMember.id);
-        }
+        setAuthSession(response.token, response.clubMember?.id ?? undefined, true);
         window.dispatchEvent(new Event("auth-change"));
       }
       router.push("/");
@@ -50,19 +49,19 @@ export default function MobileAuthView() {
 
   return (
     <div className="flex md:hidden fixed inset-0 z-[100] bg-[#c7a381] flex-col justify-between items-center py-6 px-5 overflow-y-auto min-h-screen font-['Source_Sans_Pro',sans-serif]">
-      {/* Back Button (top-left navigation) */}
+      {/* Back Button */}
       <div className="w-full flex justify-start pt-2 px-1 max-w-[372px]">
         <button
           type="button"
           onClick={() => router.back()}
-          className="w-[40px] h-[40px] rounded-full bg-[#f5f3ee]/50 flex items-center justify-center text-[20px] text-[#242424] hover:bg-[#f5f3ee] transition-colors active:scale-95"
+          className="w-[40px] h-[40px] rounded-full bg-[#f5f3ee]/50 flex items-center justify-center text-[20px] text-[#242424] hover:bg-[#f5f3ee] transition-colors active:scale-95 shadow-sm"
           aria-label="Назад"
         >
           ←
         </button>
       </div>
 
-      {/* Top Section: Logo */}
+      {/* Logo */}
       <div className="flex flex-col items-center justify-center mt-2 mb-6">
         <img
           src="/images/login register/mobile-logo.png"
@@ -76,14 +75,13 @@ export default function MobileAuthView() {
         onSubmit={handleLogin}
         className="w-full max-w-[372px] flex flex-col gap-[15px] my-auto"
       >
-        {/* Error message if any */}
         {error && (
           <div className="bg-red-500/20 border border-red-500/50 rounded-[9px] px-4 py-2.5 text-center text-[#242424] font-medium text-[15px]">
             {error}
           </div>
         )}
 
-        {/* Login Input Group */}
+        {/* Login Input */}
         <div className="flex flex-col gap-[10px] w-full">
           <label className="text-[20px] font-semibold text-[#242424] leading-normal">
             Логін
@@ -101,7 +99,7 @@ export default function MobileAuthView() {
           </div>
         </div>
 
-        {/* Password Input Group */}
+        {/* Password Input */}
         <div className="flex flex-col gap-[10px] w-full mt-[2px]">
           <div className="flex items-end justify-between w-full">
             <label className="text-[20px] font-semibold text-[#242424] leading-normal">
@@ -109,7 +107,7 @@ export default function MobileAuthView() {
             </label>
             <Link
               href="/resetpassword"
-              className="text-[14px] text-[#242424] hover:underline transition-all"
+              className="text-[14px] text-[#242424] hover:underline transition-all font-normal"
             >
               Забули пароль?
             </Link>
@@ -153,7 +151,7 @@ export default function MobileAuthView() {
         <button
           type="submit"
           disabled={loading}
-          className="mt-[4px] bg-[#005b33] h-[50px] w-full rounded-[9px] px-[20px] py-[10px] drop-shadow-[0px_0px_5px_rgba(0,0,0,0.25)] flex items-center justify-center text-[24px] text-white tracking-[-0.264px] transition-all hover:brightness-110 active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed"
+          className="mt-[4px] bg-[#005b33] h-[50px] w-full rounded-[9px] px-[20px] py-[10px] drop-shadow-[0px_0px_5px_rgba(0,0,0,0.25)] flex items-center justify-center text-[24px] text-white tracking-[-0.264px] transition-all hover:brightness-110 active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed font-normal"
         >
           {loading ? "Завантаження..." : "Увійти"}
         </button>
@@ -161,7 +159,7 @@ export default function MobileAuthView() {
         {/* Divider "або" */}
         <div className="flex items-center justify-between gap-4 w-full my-[6px]">
           <div className="flex-1 h-[1px] bg-[#242424]" />
-          <span className="text-[20px] text-[#242424] tracking-[-0.22px]">
+          <span className="text-[20px] text-[#242424] tracking-[-0.22px] font-normal">
             або
           </span>
           <div className="flex-1 h-[1px] bg-[#242424]" />
@@ -173,7 +171,7 @@ export default function MobileAuthView() {
           onClick={() => {
             /* Google Login Handler */
           }}
-          className="bg-[#f5f3ee] h-[54px] w-full rounded-[9px] px-[20px] py-[10px] drop-shadow-[0px_0px_5px_rgba(0,0,0,0.25)] flex items-center justify-center gap-[15px] transition-all hover:brightness-95 active:scale-[0.98]"
+          className="bg-[#f5f3ee] h-[50px] sm:h-[54px] w-full rounded-[9px] px-[20px] py-[10px] drop-shadow-[0px_0px_5px_rgba(0,0,0,0.25)] flex items-center justify-center gap-[15px] transition-all hover:brightness-95 active:scale-[0.98]"
         >
           <img
             src="/images/Layout/Footer/GoogleBrandIcon.svg"
@@ -186,10 +184,9 @@ export default function MobileAuthView() {
         </button>
       </form>
 
-      {/* Bottom Text */}
-      {/* Bottom Navigation */}
-      <div className="w-full max-w-[392px] text-center mt-6 mb-4 flex flex-col gap-1.5">
-        <p className="text-[#242424] text-[17px] leading-normal font-normal">
+      {/* Bottom Text from Figma 2146:32621 + Mobile Register Link */}
+      <div className="w-full max-w-[392px] text-center mt-6 mb-4 flex flex-col gap-2">
+        <p className="text-[#242424] text-[15px] leading-normal font-normal">
           Немає акаунту?{" "}
           <Link
             href="/register"

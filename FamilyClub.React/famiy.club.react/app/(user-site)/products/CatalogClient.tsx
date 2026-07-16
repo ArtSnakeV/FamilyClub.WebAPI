@@ -22,38 +22,34 @@ export default function CatalogClient({ initialProducts }: CatalogClientProps) {
     let products = [...initialProducts];
 
     // Filter by category
-    const categoryId = searchParams.get("categoryId");
-    if (categoryId) {
-      const catId = parseInt(categoryId);
+    const categoryIds = searchParams.getAll("categoryId").flatMap(v => v.split(',')).map(id => parseInt(id)).filter(id => !isNaN(id));
+    if (categoryIds.length > 0) {
       products = products.filter(
-        (p) => p.categoryIds?.includes(catId)
+        (p) => p.categoryIds?.some(id => categoryIds.includes(id))
       );
     }
 
     // Filter by author
-    const authorId = searchParams.get("authorId");
-    if (authorId) {
-      const authId = parseInt(authorId);
+    const authorIds = searchParams.getAll("authorId").flatMap(v => v.split(',')).map(id => parseInt(id)).filter(id => !isNaN(id));
+    if (authorIds.length > 0) {
       products = products.filter(
-        (p) => p.authorIds?.includes(authId)
+        (p) => p.authorIds?.some(id => authorIds.includes(id))
       );
     }
 
     // Filter by language
-    const languageId = searchParams.get("languageId");
-    if (languageId) {
-      const langId = parseInt(languageId);
+    const languageIds = searchParams.getAll("languageId").flatMap(v => v.split(',')).map(id => parseInt(id)).filter(id => !isNaN(id));
+    if (languageIds.length > 0) {
       products = products.filter(
-        (p) => p.languageIds?.includes(langId)
+        (p) => p.languageIds?.some(id => languageIds.includes(id))
       );
     }
 
     // Filter by format
-    const formatId = searchParams.get("formatId");
-    if (formatId) {
-      const fmtId = parseInt(formatId);
+    const formatIds = searchParams.getAll("formatId").flatMap(v => v.split(',')).map(id => parseInt(id)).filter(id => !isNaN(id));
+    if (formatIds.length > 0) {
       products = products.filter(
-        (p) => p.formatIds?.includes(fmtId)
+        (p) => p.formatIds?.some(id => formatIds.includes(id))
       );
     }
 
@@ -70,11 +66,10 @@ export default function CatalogClient({ initialProducts }: CatalogClientProps) {
     }
 
     // Filter by age restriction
-    const ageRestrictionId = searchParams.get("ageRestrictionId");
-    if (ageRestrictionId) {
-      const ageId = parseInt(ageRestrictionId);
+    const ageRestrictionIds = searchParams.getAll("ageRestrictionId").flatMap(v => v.split(',')).map(id => parseInt(id)).filter(id => !isNaN(id));
+    if (ageRestrictionIds.length > 0) {
       products = products.filter(
-        (p) => p.ageRestrictionIds?.includes(ageId)
+        (p) => p.ageRestrictionIds?.some(id => ageRestrictionIds.includes(id))
       );
     }
 
