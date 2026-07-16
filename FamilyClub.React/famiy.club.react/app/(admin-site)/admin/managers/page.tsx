@@ -220,26 +220,35 @@ export default function Page() {
         const blocked =
             !!user.lockoutEnd && new Date(user.lockoutEnd).getTime() > Date.now();
 
-        if (blocked) {
-            await unlockUser(user.id);
-        } else {
-            await lockUser(user.id);
-        }
+        try {
+            if (blocked) {
+                await unlockUser(user.id);
+            } else {
+                await lockUser(user.id);
+            }
 
-        setLocalUsers((prev) =>
-            prev.map((u) =>
-                u.id === user.id
-                    ? {
-                        ...u,
-                        lockoutEnd: blocked
-                            ? null
-                            : new Date(
-                                Date.now() + 1000 * 60 * 60 * 24 * 365 * 100
-                            ).toISOString(),
-                    }
-                    : u
-            )
-        );
+            setLocalUsers((prev) =>
+                prev.map((u) =>
+                    u.id === user.id
+                        ? {
+                              ...u,
+                              lockoutEnd: blocked
+                                  ? null
+                                  : new Date(
+                                        Date.now() + 1000 * 60 * 60 * 24 * 365 * 100
+                                    ).toISOString(),
+                          }
+                        : u
+                )
+            );
+        } catch (error) {
+            console.error(error);
+            alert(
+                error instanceof Error
+                    ? error.message
+                    : "Не вдалося змінити статус користувача"
+            );
+        }
     };
 
     const handleDeleteUser = async (user: UserInfo) => {

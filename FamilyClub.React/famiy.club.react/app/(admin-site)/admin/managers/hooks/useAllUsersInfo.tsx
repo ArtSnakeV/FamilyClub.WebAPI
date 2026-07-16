@@ -47,6 +47,7 @@ export default function useAllUsersInfo() {
                 const data = await res.json();
                 const mapped: UserInfo[] = (Array.isArray(data) ? data : []).map((u) => ({
                     ...u,
+                    id: u.id ?? (u as { Id?: string }).Id ?? "",
                     role: u.roles?.[0] ?? MANAGER_ROLE,
                 }));
 
