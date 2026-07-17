@@ -1,0 +1,196 @@
+trigger:
+  branches:
+    include:
+      - DeploymentTest5
+  paths:
+    exclude:
+      - KUBERNETES/*
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  dockerId: 'metra638'
+  repoName: 'test1'
+  frontendDigest: ''
+  backendDigest: ''
+
+steps:
+  - script: |
+      echo "$(DOCKERHUB_PASSWORD)" | docker login -u "$(DOCKERHUB_USERNAME)" --password-stdin
+    displayName: 'Login to Docker Hub'
+    env:
+      DOCKERHUB_USERNAME: $(DOCKERHUB_USERNAME)
+      DOCKERHUB_PASSWORD: $(DOCKERHUB_PASSWORD)
+
+  - script: |
+      docker run --rm -i hadolint/hadolint < dockerfile.frontend
+      docker run --rm -i hadolint/hadolint < dockerfile.backend
+    displayName: 'Lint Dockerfiles with Hadolint'
+
+  - script: |
+      docker run --rm -v $(Build.SourcesDirectory):/path -w /path zricethezav/gitleaks detect --verbose --redact || true
+    displayName: 'Scan for secrets with Gitleaks'
+
+  - script: |
+      sudo apt-get update
+      sudo apt-get install -y wget apt-transport-https gnupg
+      wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | sudo apt-key add -
+      echo "deb https://aquasecurity.github.io/trivy-repo/deb generic main" | sudo tee /etc/apt/sources.list.d/trivy.list
+      sudo apt-get update
+      sudo apt-get install -y trivy
+    displayName: 'Install Trivy'
+
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '22.x'
+    displayName: 'Install Node.js'
+
+  - script: |
+      cd FamilyClub.React/famiy.club.react
+      echo "Auditing npm dependencies for vulnerabilities"
+      npm audit --audit-level=high || true
+    displayName: 'Audit npm dependencies (security)'
+
+  - script: |
+      cd FamilyClub.React/famiy.club.react
+      echo "Installing ESLint security plugin"
+      npm install --save-dev eslint-plugin-security || true
+      echo "Running ESLint security rules"
+      npx eslint --plugin security . || true
+    displayName: 'Run ESLint security plugin'
+
+  - script: |
+      cd FamilyClub.React/famiy.club.react
+      echo "Installing dependencies"
+      npm ci || npm install
+      echo "Running linter (ESLint)"
+      npm run lint || true
+      echo "Running TypeScript type check"
+      npx tsc --noEmit || true
+      echo "Building project (check build)"
+      npm run build || true
+    displayName: 'Run frontend code checks (lint, types, build)'
+
+  - task: UseDotNet@2
+    inputs:
+      packageType: 'sdk'
+      version: '10.x'
+    displayName: 'Install .NET SDK'
+
+  - script: |
+      echo "Auditing NuGet dependencies for vulnerabilities"
+      dotnet list package --vulnerable --include-transitive || true
+    displayName: 'Audit NuGet dependencies (security)'
+
+  - script: |
+      echo "Checking code formatting"
+      dotnet format --verify-no-changes --verbosity minimal || true
+    displayName: 'Check code formatting (dotnet format)'
+
+  - script: |
+      echo "Restoring dependencies"
+      dotnet restore
+      echo "Building project with code analyzers enabled..."
+      dotnet build --no-restore -c Release /p:RunAnalyzers=true /p:EnforceCodeStyleInBuild=true
+    displayName: 'Run backend build with analyzers'
+
+  - script: |
+      docker buildx create --use --name multiarch-builder || true
+      docker buildx build \
+        --no-cache \
+        --platform linux/arm64 \
+        -f dockerfile.frontend \
+        -o type=docker,dest=frontend.tar \
+        --build-arg BUILD_DATE=$(date -Iseconds) \
+        --build-arg VCS_REF=$(Build.SourceVersion) \
+        --build-arg VERSION=$(Build.BuildId) \
+        .
+    displayName: 'Build frontend image and export to tar'
+
+  - script: |
+      trivy image --severity HIGH,CRITICAL --exit-code 0 --no-progress --input frontend.tar
+    displayName: 'Scan frontend image with Trivy'
+
+  - script: |
+      docker system prune -af
+      docker volume prune -f
+    displayName: 'Clean Docker cache'
+
+  - script: |
+      docker load < frontend.tar
+    displayName: 'Load frontend image from tar'
+
+  - script: |
+      IMAGE_ID=$(docker images --format "{{.ID}}" | head -n1)
+      docker tag $IMAGE_ID $(dockerId)/$(repoName):frontend-$(Build.BuildId)
+    displayName: 'Tag frontend image'
+
+  - script: |
+      docker push $(dockerId)/$(repoName):frontend-$(Build.BuildId) | tee push-frontend.log
+      DIGEST=$(grep -E 'digest: sha256:[a-f0-9]{64}' push-frontend.log | head -1 | sed -E 's/.*(sha256:[a-f0-9]{64}).*/\1/')
+      echo "Frontend digest: $DIGEST"
+      echo "##vso[task.setvariable variable=frontendDigest]$DIGEST"
+    displayName: 'Push frontend image and capture digest'
+
+  - script: |
+      sed -i "s|metra638/test1@[^ ]*|metra638/test1@$(frontendDigest)|g" KUBERNETES/frontend-deployment.yaml
+      sed -i "s|app.kubernetes.io/image-digest: \"[^\"]*\"|app.kubernetes.io/image-digest: \"$(frontendDigest)\"|g" KUBERNETES/frontend-deployment.yaml
+      sed -i "s|app.kubernetes.io/build-date: \".*\"|app.kubernetes.io/build-date: \"$(date -Iseconds)\"|g" KUBERNETES/frontend-deployment.yaml
+      sed -i "s|app.kubernetes.io/commit-hash: \".*\"|app.kubernetes.io/commit-hash: \"$(Build.SourceVersion)\"|g" KUBERNETES/frontend-deployment.yaml
+      sed -i "s|app.kubernetes.io/branch: \".*\"|app.kubernetes.io/branch: \"$(Build.SourceBranchName)\"|g" KUBERNETES/frontend-deployment.yaml
+
+      git config user.email "apofeoz638@gmail.com"
+      git config user.name "Artem Malashevskyi"
+      git add KUBERNETES/frontend-deployment.yaml
+      git commit -m "Update frontend manifest (digest, build-date, commit, branch) [skip ci]" || echo "No changes to commit"
+      git remote set-url origin https://$(GH_PAT)@github.com/Metra638/FamilyClub.WebAPI1.git
+      git push origin HEAD:DeploymentTest5
+    displayName: 'Update frontend manifest on current branch'
+
+  - script: |
+      docker buildx create --use --name multiarch-builder || true
+      docker buildx build \
+        --platform linux/arm64 \
+        -f dockerfile.backend \
+        -o type=docker,dest=backend.tar \
+        --build-arg BUILD_DATE=$(date -Iseconds) \
+        --build-arg VCS_REF=$(Build.SourceVersion) \
+        --build-arg VERSION=$(Build.BuildId) \
+        .
+    displayName: 'Build backend image and export to tar'
+
+  - script: |
+      trivy image --severity HIGH,CRITICAL --exit-code 0 --no-progress --input backend.tar
+    displayName: 'Scan backend image with Trivy'
+
+  - script: |
+      docker load < backend.tar
+    displayName: 'Load backend image from tar'
+
+  - script: |
+      IMAGE_ID=$(docker images --format "{{.ID}}" | head -n1)
+      docker tag $IMAGE_ID $(dockerId)/$(repoName):backend-$(Build.BuildId)
+    displayName: 'Tag backend image'
+
+  - script: |
+      docker push $(dockerId)/$(repoName):backend-$(Build.BuildId) | tee push-backend.log
+      DIGEST=$(grep -E 'digest: sha256:[a-f0-9]{64}' push-backend.log | head -1 | sed -E 's/.*(sha256:[a-f0-9]{64}).*/\1/')
+      echo "Backend digest: $DIGEST"
+      echo "##vso[task.setvariable variable=backendDigest]$DIGEST"
+    displayName: 'Push backend image and capture digest'
+
+  - script: |
+      sed -i "s|metra638/test1@[^ ]*|metra638/test1@$(backendDigest)|g" KUBERNETES/backend-deployment.yaml
+      sed -i "s|app.kubernetes.io/image-digest: \"[^\"]*\"|app.kubernetes.io/image-digest: \"$(backendDigest)\"|g" KUBERNETES/backend-deployment.yaml
+      sed -i "s|app.kubernetes.io/build-date: \".*\"|app.kubernetes.io/build-date: \"$(date -Iseconds)\"|g" KUBERNETES/backend-deployment.yaml
+      sed -i "s|app.kubernetes.io/commit-hash: \".*\"|app.kubernetes.io/commit-hash: \"$(Build.SourceVersion)\"|g" KUBERNETES/backend-deployment.yaml
+      sed -i "s|app.kubernetes.io/branch: \".*\"|app.kubernetes.io/branch: \"$(Build.SourceBranchName)\"|g" KUBERNETES/backend-deployment.yaml
+
+      git config user.email "apofeoz638@gmail.com"
+      git config user.name "Artem Malashevskyi"
+      git add KUBERNETES/backend-deployment.yaml
+      git commit -m "Update backend manifest (digest, build-date, commit, branch) [skip ci]" || echo "No changes to commit"
+      git remote set-url origin https://$(GH_PAT)@github.com/Metra638/FamilyClub.WebAPI1.git
+      git push origin HEAD:DeploymentTest5
+    displayName: 'Update backend manifest on current branch'

@@ -1,0 +1,220 @@
+using FamilyClub.BLL.Interfaces;
+using FamilyClub.BLL.Services;
+using FamilyClub.DAL.EF;
+using FamilyClub.DAL.EF.DB;
+using FamilyClub.DAL.Interfaces;
+using FamilyClub.DAL.Repositories;
+using FamilyClubLibrary;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+
+var builder = WebApplication.CreateBuilder(args);
+
+// Allowing our requests from React
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowReact",
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:3000") // React URL
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
+        });
+});
+
+
+
+// MVC + Views
+// Add services to the container.
+builder.Services.AddControllers();
+//builder.Services.AddControllersWithViews();
+// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+builder.Services.AddOpenApi();
+
+builder.Services.AddEndpointsApiExplorer();
+
+
+// Connection string
+//string connStr = builder.Configuration.GetConnectionString("FamilyClubContext")
+//    ?? throw new InvalidOperationException("Connection string 'FamilyClubContext' not found!");
+
+string connStr = builder.Configuration.GetConnectionString("FamilyClub_DB")
+    ?? throw new InvalidOperationException("Connection string 'FamilyClub_DB' not found!");
+
+// DB CONTEXT
+builder.Services.AddDbContext<FamilyClubContext>(options => {
+    options.UseNpgsql(connStr, npgsql =>
+    {
+        npgsql.MigrationsAssembly("FamilyClub.DAL");
+        // Note: Aiven cloud PostgreSQL uses "defaultdb" as the admin database.
+        // Standard PostgreSQL instances use "postgres" by default.
+        // npgsql.UseAdminDatabase("defaultdb");
+    });
+    options.UseSnakeCaseNamingConvention(); // Line to use automatic snake_case naming convention for PostgreSQL
+});
+
+// Identity
+builder.Services.AddIdentity<ClubMember, IdentityRole>()
+    .AddEntityFrameworkStores<FamilyClubContext>()
+    .AddDefaultTokenProviders();
+
+// Publisher
+builder.Services.AddScoped<IPublisherRepository, PublisherRepository>();
+builder.Services.AddScoped<IAuthorRepository, AuthorRepository>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IPublisherService, PublisherService>();
+
+builder.Services.AddScoped<IAuthorService, AuthorService>();
+// Language
+builder.Services.AddScoped<ILanguageRepository, LanguageRepository>();
+builder.Services.AddScoped<ILanguageService, LanguageService>();
+// Translator
+builder.Services.AddScoped<ITranslatorRepository, TranslatorRepository>();
+builder.Services.AddScoped<ITranslatorService, TranslatorService>();
+// Category
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<ICategoryService,  CategoryService>();
+// Series
+builder.Services.AddScoped<ISeriesRepository, SeriesRepository>();
+builder.Services.AddScoped<ISeriesService, SeriesService>();
+// Promotion
+builder.Services.AddScoped<IPromotionRepository,  PromotionRepository>();
+builder.Services.AddScoped<IPromotionService, PromotionService>();
+//Order
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+builder.Services.AddScoped<IOrderService, OrderService>();
+//OrderItem
+builder.Services.AddScoped<IOrderItemRepository, OrderItemRepository>();
+builder.Services.AddScoped<IOrderItemService, OrderItemService>();
+// ClubMember
+//builder.Services.AddScoped<IClubMemberRepository, ClubMemberRepository>();
+builder.Services.AddScoped<IClubMemberService, ClubMemberService>();
+// Authentification (Login, Register, Logout)
+builder.Services.AddScoped<IAuthClubMemberService, AuthClubMemberService>();
+// RoleClubMember
+builder.Services.AddScoped<IRoleClubMemberService, RoleClubMemberService>();
+// ClaimsClubMember
+builder.Services.AddScoped<IClaimsClubMemberService, ClaimsClubMemberService>();
+
+//Review
+builder.Services.AddScoped<IReviewRepository, ReviewRepository>();
+builder.Services.AddScoped<IReviewService, ReviewService>();
+//Product
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<IProductService, ProductService>();
+
+//Notification
+builder.Services.AddScoped<INotificationRepository,  NotificationRepository>();
+builder.Services.AddScoped<INotificationService, NotificationService>();
+
+//Format
+builder.Services.AddScoped<IFormatRepository, FormatRepository>();
+builder.Services.AddScoped<IFormatService, FormatService>();
+
+//BookSize
+builder.Services.AddScoped<IBookSizeRepository, BookSizeRepository>();
+builder.Services.AddScoped<IBookSizeService, BookSizeService>();
+
+//AgeRestiction
+builder.Services.AddScoped<IAgeRestrictionRepository, AgeRestrictionRepository>();
+builder.Services.AddScoped<IAgeRestrictionService, AgeRestrictionService>();
+
+//Cart
+builder.Services.AddScoped<ICartRepository, CartRepository>();
+builder.Services.AddScoped<ICartItemRepository, CartItemRepository>();
+builder.Services.AddScoped<ICartService, CartService>();
+
+// Complaints
+builder.Services.AddScoped<IComplaintRepository, ComplaintRepository>();
+builder.Services.AddScoped<IComplaintsService, ComplaintService>();
+
+builder.Services.AddScoped<IFavoriteService, FavoriteService>();
+builder.Services.AddSingleton<IPresenceService, PresenceService>();
+// Customize Identity cookie
+//builder.Services.ConfigureApplicationCookie(
+//    options => {
+//        options.LoginPath = "/Account/Login";
+//        options.AccessDeniedPath = "/Account/AccessDenied";
+//    });
+
+// JWT authentification
+var jwtSettings = builder.Configuration.GetSection("Jwt");
+var secretKey = jwtSettings["Key"]
+    ?? throw new InvalidOperationException("JWT Secret Key is not configured.");
+var key = Encoding.ASCII.GetBytes(secretKey);
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = jwtSettings["Issuer"],
+            ValidAudience = jwtSettings["Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(key)
+        };
+    });
+
+
+
+// Adding AutoMapper
+builder.Services.AddAutoMapper(cfg =>
+{
+    // Here will be added `Profiles` like on example below:
+    //cfg.AddProfile(new ProductProfile());
+}
+);
+
+//builder.Services.AddSwaggerGen(options =>
+//{
+//    options.CustomSchemaIds(type => type.FullName?.Replace("+", "."));
+//});
+builder.Services.AddSwaggerGen();
+
+var app = builder.Build();
+
+
+using (IServiceScope scope = app.Services.CreateScope())
+{
+	var services = scope.ServiceProvider;
+	await DbInitializer.Initialize(services, app.Configuration);
+}
+
+app.UseCors("AllowReact"); // Allowing to use React
+
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    //app.MapOpenApi();
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
+
+app.UseHttpsRedirection();
+app.UseStaticFiles(); // Serve static files from wwwroot
+
+
+app.UseDefaultFiles(); // Serve default files like index.html
+
+app.UseAuthentication();
+app.UseAuthorization();
+
+
+app.MapControllers();
+
+//app.MapControllerRoute(
+//    name: "default",
+//    pattern: "{controller=Home}/{action=Index}/{id?}");
+//1
+
+app.Run();

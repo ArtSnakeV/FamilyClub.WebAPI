@@ -1,0 +1,14 @@
+<svg width="1220" height="3192" viewBox="0 0 1220 3192" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<path d="M0 40C0 17.9086 17.9086 0 40 0H1180C1202.09 0 1220 17.9086 1220 40V3152C1220 3174.09 1202.09 3192 1180 3192H40C17.9086 3192 0 3174.09 0 3152V40Z" fill="#C7A381"/>
+<path d="M0 40C0 17.9086 17.9086 0 40 0H1180C1202.09 0 1220 17.9086 1220 40V3152C1220 3174.09 1202.09 3192 1180 3192H40C17.9086 3192 0 3174.09 0 3152V40Z" fill="url(#paint0_linear_1_738)"/>
+<defs>
+<linearGradient id="paint0_linear_1_738" x1="1220" y1="4.14987e-05" x2="-534.355" y2="2864.77" gradientUnits="userSpaceOnUse">
+<stop offset="0.068133" stop-color="#B7895E"/>
+<stop offset="0.525072" stop-color="#E0C3A9" stop-opacity="0"/>
+<stop offset="0.94611" stop-color="#B7895E"/>
+</linearGradient>
+<g id="stroke0_1_738" data-figma-scatter-ref="stroke0_1_738_ref" data-figma-scatter="f0.51_w0.06_aj180_sj0.65_r0_s4780845404653767085_sw20">
+</g>
+<path id="stroke0_1_738_ref" d="M40 3192H1180C1202.09 3192 1220 3174.09 1220 3152V40C1220 17.9086 1202.09 0 1180 0H40C17.9086 0 0 17.9086 0 40V3152C0 3174.09 17.9086 3192 40 3192Z"/>
+</defs>
+</svg>

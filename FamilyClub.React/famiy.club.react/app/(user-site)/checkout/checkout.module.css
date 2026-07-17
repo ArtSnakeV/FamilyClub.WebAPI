@@ -1,0 +1,801 @@
+/* ==============================
+   Checkout Page – checkout.module.css
+   Matches Figma "Оформлення замовлення"
+   Design tokens: #242424, #F5F3EE, #005B33
+   ============================== */
+
+/* ---------- Page layout ---------- */
+.checkoutPage {
+  background-color: var(--background-main, #f5f3ee);
+  min-height: 100vh;
+  padding-bottom: 60px;
+}
+
+.checkoutHeader {
+  display: flex;
+  align-items: center;
+  gap: 55px;
+  padding: 30px 0 24px;
+  max-width: 1220px;
+  margin: 0 auto;
+}
+
+.backButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: var(--background-main, #f5f3ee);
+  border: 2px solid var(--color-black, #242424);
+  cursor: pointer;
+  transition: opacity 0.2s ease, transform 0.15s ease;
+  flex-shrink: 0;
+}
+
+.backButton:hover {
+  opacity: 0.7;
+  transform: scale(1.05);
+}
+
+.backButton svg {
+  width: 24px;
+  height: 24px;
+  color: var(--color-black, #242424);
+}
+
+.checkoutTitle {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 48px;
+  line-height: 1.5;
+  letter-spacing: -0.528px;
+  color: var(--color-black, #242424);
+  margin: 0;
+}
+
+/* ---------- Content grid ---------- */
+.checkoutContent {
+  display: grid;
+  grid-template-columns: 1fr 415px;
+  gap: 40px;
+  max-width: 1220px;
+  margin: 0 auto;
+  align-items: start;
+}
+
+.checkoutSections {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+}
+
+/* ---------- Section card ---------- */
+.sectionCard {
+  background: var(--background-main, #f5f3ee);
+  border-radius: 0;
+  padding: 30px 62px;
+}
+
+.sectionTitle {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 40px;
+  line-height: 1.5;
+  letter-spacing: -0.44px;
+  color: var(--color-black, #242424);
+  margin: 0 0 30px;
+}
+
+.sectionTitleNote {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 20px;
+  color: rgba(36, 36, 36, 0.5);
+  letter-spacing: -0.22px;
+}
+
+/* ---------- Personal Data form ---------- */
+.formGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 50px 40px;
+}
+
+.formInput {
+  background: var(--background-main, #f5f3ee);
+  border: none;
+  border-radius: 9px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+  padding: 18px 34px;
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 24px;
+  color: var(--color-black, #242424);
+  width: 474px;
+  outline: none;
+  transition: box-shadow 0.2s ease;
+}
+
+.formInput::placeholder {
+  color: var(--color-black, #242424);
+  opacity: 1;
+}
+
+.formInput:focus {
+  box-shadow: 0 0 10px rgba(0, 91, 51, 0.4);
+}
+
+.phoneInputWrap {
+  position: relative;
+  width: 474px;
+}
+
+.phoneInput {
+  width: 100%;
+}
+
+.phoneDropdownIcon {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 34px;
+  height: 34px;
+  pointer-events: none;
+  opacity: 0.4;
+}
+
+/* ---------- Delivery section ---------- */
+.deliveryOptions {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.deliveryOption {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 0;
+  border-bottom: 1px solid rgba(36, 36, 36, 0.15);
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.deliveryOption:last-child {
+  border-bottom: none;
+}
+
+.deliveryOption:hover {
+  background: rgba(0, 91, 51, 0.03);
+}
+
+.deliveryOptionLeft {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+
+.deliveryOptionRight {
+  display: flex;
+  align-items: center;
+  gap: 75px;
+}
+
+.deliveryOptionName {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 24px;
+  color: var(--color-black, #242424);
+}
+
+.deliveryTerm {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 20px;
+  color: var(--color-black, #242424);
+}
+
+.deliveryTermLabel {
+  color: rgba(36, 36, 36, 0.5);
+}
+
+.deliveryLogo {
+  height: 40px;
+  width: auto;
+  object-fit: contain;
+}
+
+/* Sub-options (Відділення / Поштомат) */
+.deliverySubOptions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 75px;
+  padding: 10px 0 20px 55px;
+  border-bottom: 1px solid rgba(36, 36, 36, 0.15);
+}
+
+.deliverySubOption {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.deliverySubOptionRow {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+
+.deliverySubOptionName {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 24px;
+  color: var(--color-black, #242424);
+}
+
+.deliverySubOptionCost {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 14px;
+  color: var(--color-black, #242424);
+  text-align: right;
+}
+
+/* City / Branch selectors */
+.deliverySelectors {
+  display: flex;
+  gap: 40px;
+  padding: 20px 0 20px 37px;
+  flex-wrap: wrap;
+}
+
+.deliverySelect {
+  position: relative;
+  width: 434px;
+}
+
+.deliverySelectInput {
+  background: var(--background-main, #f5f3ee);
+  border: none;
+  border-radius: 9px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+  padding: 18px 60px 18px 31px;
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 24px;
+  color: var(--color-black, #242424);
+  width: 100%;
+  outline: none;
+  cursor: pointer;
+  appearance: none;
+  transition: box-shadow 0.2s ease;
+}
+
+.deliverySelectInput:focus {
+  box-shadow: 0 0 10px rgba(0, 91, 51, 0.4);
+}
+
+.deliverySelectIcon {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 34px;
+  height: 34px;
+  pointer-events: none;
+  opacity: 0.4;
+}
+
+/* ---------- Payment section ---------- */
+.paymentOptions {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.paymentOption {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 25px 0;
+  border-bottom: 1px solid rgba(36, 36, 36, 0.15);
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.paymentOption:last-child {
+  border-bottom: none;
+}
+
+.paymentOption:hover {
+  background: rgba(0, 91, 51, 0.03);
+}
+
+.paymentOptionLeft {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+
+.paymentOptionName {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 24px;
+  color: var(--color-black, #242424);
+}
+
+.paymentLogos {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.paymentLogo {
+  height: 18px;
+  width: auto;
+  object-fit: contain;
+}
+
+/* ---------- Radio button ---------- */
+.radioButton {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 2px solid rgba(36, 36, 36, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+}
+
+.radioButton.radioActive {
+  border-color: var(--color-green, #005b33);
+}
+
+.radioButtonInner {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--color-green, #005b33);
+  transform: scale(0);
+  transition: transform 0.15s ease;
+}
+
+.radioActive .radioButtonInner {
+  transform: scale(1);
+}
+
+/* ---------- Comment section ---------- */
+.commentTextarea {
+  background: var(--background-main, #f5f3ee);
+  border: none;
+  border-radius: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+  padding: 20px 24px;
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 18px;
+  color: var(--color-black, #242424);
+  width: 100%;
+  min-height: 355px;
+  resize: vertical;
+  outline: none;
+  transition: box-shadow 0.2s ease;
+}
+
+.commentTextarea::placeholder {
+  color: rgba(36, 36, 36, 0.5);
+}
+
+.commentTextarea:focus {
+  box-shadow: 0 0 10px rgba(0, 91, 51, 0.4);
+}
+
+.commentFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 8px;
+}
+
+.commentCharCount {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 18px;
+  letter-spacing: -0.198px;
+  color: var(--color-black, #242424);
+}
+
+.commentActions {
+  display: flex;
+  gap: 20px;
+}
+
+.commentCancelBtn {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 18px;
+  letter-spacing: -0.198px;
+  color: var(--color-black, #242424);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.commentSaveBtn {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 18px;
+  letter-spacing: -0.198px;
+  color: var(--color-green, #005b33);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+/* ---------- Summary sidebar ---------- */
+.summaryPanel {
+  position: sticky;
+  top: 80px;
+  background: var(--background-main, #f5f3ee);
+  border-radius: 23px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  padding: 40px 50px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.applyPointsBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 30px;
+  background: rgba(0, 91, 51, 0.5);
+  border-radius: 9px;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 16px;
+  color: var(--background-main, #f5f3ee);
+  letter-spacing: -0.176px;
+  transition: background 0.2s ease;
+  width: 100%;
+}
+
+.applyPointsBtn:hover {
+  background: rgba(0, 91, 51, 0.7);
+}
+
+.summaryLines {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.summaryRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.summaryLabel {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 1.5;
+  letter-spacing: -0.22px;
+  color: rgba(155, 158, 175, 0.5);
+}
+
+.summaryValue {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 1.5;
+  letter-spacing: -0.198px;
+  color: var(--color-black, #242424);
+}
+
+.discountValue {
+  color: #c81e1e;
+}
+
+.totalValue {
+  font-size: 24px;
+  letter-spacing: -0.264px;
+  color: #c81e1e;
+}
+
+.summaryDivider {
+  width: 100%;
+  height: 1px;
+  background: rgba(36, 36, 36, 0.2);
+  margin: 10px 0;
+}
+
+/* ---------- Agreement ---------- */
+.agreement {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.agreementCheckbox {
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+  cursor: pointer;
+  accent-color: var(--color-green, #005b33);
+}
+
+.agreementText {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 1.5;
+  letter-spacing: -0.165px;
+  color: #000;
+}
+
+.agreementLink {
+  color: var(--color-green, #005b33);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.agreementLink:hover {
+  text-decoration: underline;
+}
+
+/* ---------- Order button ---------- */
+.orderBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 30px;
+  background: var(--color-green, #005b33);
+  border-radius: 60px;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 24px;
+  color: var(--background-main, #f5f3ee);
+  letter-spacing: -0.264px;
+  line-height: 1.5;
+  width: 100%;
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.orderBtn:hover {
+  background: #004a2a;
+  transform: translateY(-1px);
+}
+
+.orderBtn:active {
+  transform: translateY(0);
+}
+
+.orderBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ---------- Promo code ---------- */
+.promoSection {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.promoLabel {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 1.5;
+  letter-spacing: -0.22px;
+  color: var(--color-black, #242424);
+}
+
+.promoInput {
+  background: var(--background-main, #f5f3ee);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+  border-radius: 9px;
+  border: none;
+  padding: 10px 20px;
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 18px;
+  letter-spacing: -0.198px;
+  color: var(--color-black, #242424);
+  width: 100%;
+  outline: none;
+  transition: box-shadow 0.2s ease;
+}
+
+.promoInput::placeholder {
+  color: rgba(36, 36, 36, 0.5);
+}
+
+.promoInput:focus {
+  box-shadow: 0 0 8px rgba(0, 91, 51, 0.4);
+}
+
+/* ---------- Success overlay ---------- */
+.successOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(36, 36, 36, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
+}
+
+.successCard {
+  background: var(--background-main, #f5f3ee);
+  border-radius: 20px;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.3);
+  padding: 60px 80px;
+  text-align: center;
+  max-width: 500px;
+  animation: slideUp 0.4s ease;
+}
+
+.successIcon {
+  font-size: 72px;
+  margin-bottom: 20px;
+  display: block;
+}
+
+.successTitle {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 32px;
+  color: var(--color-black, #242424);
+  margin: 0 0 12px;
+}
+
+.successText {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 18px;
+  color: rgba(36, 36, 36, 0.7);
+  margin: 0 0 30px;
+  line-height: 1.5;
+}
+
+.successBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 40px;
+  background: var(--color-green, #005b33);
+  border-radius: 60px;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 20px;
+  color: var(--background-main, #f5f3ee);
+  letter-spacing: -0.22px;
+  transition: background 0.2s ease;
+}
+
+.successBtn:hover {
+  background: #004a2a;
+}
+
+/* ---------- Loading ---------- */
+.loadingState {
+  text-align: center;
+  padding: 80px 20px;
+  font-family: var(--font-sans);
+  font-size: 24px;
+  color: rgba(36, 36, 36, 0.5);
+}
+
+.loadingIcon {
+  font-size: 64px;
+  margin-bottom: 20px;
+  display: block;
+}
+
+/* ---------- Animations ---------- */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1280px) {
+  .checkoutContent {
+    grid-template-columns: 1fr 360px;
+    gap: 24px;
+    padding: 0 20px;
+  }
+  .checkoutHeader {
+    padding: 24px 20px;
+    gap: 30px;
+  }
+  .formInput,
+  .phoneInputWrap {
+    width: 100%;
+    max-width: 474px;
+  }
+  .deliverySelect {
+    width: 100%;
+    max-width: 434px;
+  }
+  .sectionCard {
+    padding: 30px 30px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .checkoutContent {
+    grid-template-columns: 1fr;
+  }
+  .summaryPanel {
+    position: static;
+    order: -1;
+  }
+  .checkoutTitle {
+    font-size: 36px;
+  }
+  .sectionTitle {
+    font-size: 30px;
+  }
+}
+
+@media (max-width: 768px) {
+  .checkoutTitle {
+    font-size: 28px;
+  }
+  .checkoutHeader {
+    gap: 20px;
+  }
+  .sectionCard {
+    padding: 20px 16px;
+  }
+  .formGrid {
+    gap: 20px;
+  }
+  .formInput,
+  .phoneInputWrap {
+    width: 100%;
+  }
+  .deliverySelectors {
+    flex-direction: column;
+    gap: 16px;
+    padding-left: 0;
+  }
+  .deliverySelect {
+    width: 100%;
+  }
+  .summaryPanel {
+    padding: 24px 20px;
+  }
+  .successCard {
+    padding: 40px 30px;
+    margin: 20px;
+  }
+}

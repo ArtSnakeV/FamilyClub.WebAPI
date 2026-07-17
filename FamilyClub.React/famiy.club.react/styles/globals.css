@@ -1,0 +1,130 @@
+@import "tailwindcss";
+
+:root {
+
+  /* 1. BRAND COLORS (КОЛЬОРИ БРЕНДУ) */
+  --color-black: #242424; /* Black (Чорний) */
+  --color-white: #F5F3EE; /* White (Білий) */
+  --color-brown: #7E4D1E; /* Brown (Коричневий) */
+  --color-green: #005B33; /* Green (Зелений) */
+
+  /* SEMANTIC TOKENS (СЕМАНТИЧНІ ТОКЕНИ) */
+
+  /* Foreground color from Figma (Колір переднього плану з Figma) */
+  --foreground-primary: var(--color-black); /* Primary foreground (Основний передній план) */
+  --foreground-on-dark: var(--color-white); /* Foreground on dark background (Передній план на темному фоні) */
+  --foreground-accent: var(--color-brown); /* Accent foreground (Акцентний передній план) */
+
+  /* Background color from Figma (Колір фона з Figma) */
+  --background-main: var(--color-white); /* Main background (Основний фон) */
+  --background-dark: var(--color-black); /* Dark background (Темний фон) */
+  --background-surface: var(--color-green); /* Surface background (Фон поверхні) */
+
+  /* Actions/Status (Дії/Статуси) */
+  --color-success: var(--color-green); /* Success (Успіх) */
+  --color-primary-action: var(--color-brown); /* Primary action (Основна дія) */
+
+  /* Using basic variables for theme support */
+  --background: var(--background-main);
+  --foreground: var(--foreground-primary);
+
+
+  --font-geist-sans: var(--font-source-sans), 'Source Sans Pro', 'Source Sans 3', Segoe UIf, Roboto, Helvetica, Arial, sans-serif; /* Source Sans 3 font from Figma */
+  --font-geist-mono: var(--font-roboto-mono), 'Roboto Mono', monospace, Consolas, 'Courier New'; /* Roboto Mono font from Figma */
+  --font-geist-serif: var(--font-lora), 'Lora', Georgia, Cambria, 'Times New Roman', Times, serif; /* Lora font from Figma */
+  --font-geist-inter: var(--font-inter), 'Inter', sans-serif; /* Inter font from Figma */
+
+
+
+
+
+  /* FOOTER and it's content */
+  /* Footer Title */
+  --footer-title-color: var(--foreground-primary);
+  --footer-title-font-size: 32px;
+  --footer-title-font-weight: 600;
+  --footer-title-line-height: 150%;
+  --footer-title-letter-spacing: -0.011em;
+  /* Footer Text */
+  --footer-text-color: var(--foreground-primary);
+  --footer-text-font-size: 18px;
+  --footer-text-font-weight: 400;
+  --footer-text-line-height: 150%;
+  --footer-text-letter-spacing: -0.011em;
+  --footer-inner-div-border-color: #F5F3EE; /* Border color for inner div in footer (Колір границі для внутреннего div в футере) */
+  
+  
+}
+
+@theme inline {
+  /* Brand Colors (Кольори) */
+  --color-brand-black: var(--color-black);
+  --color-brand-white: var(--color-white);
+  --color-brand-brown: var(--color-brown);
+  --color-brand-green: var(--color-green);
+  
+  /* Semantic Tokens ( Семантичні кольори) */
+  --color-success: var(--color-green);
+  --color-primary-action: var(--color-brown);
+  --color-surface: var(--background-surface);
+
+  /* Fonts (Шрифти) */
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-serif: var(--font-geist-serif);
+  --font-inter: var(--font-geist-inter);
+
+
+  /* Footer (Футер) */
+  --color-footer-inner: var(--footer-inner-div-border-color); /* inner div border color for footer (колір границі для внутреннего div в футере) */
+  --color-footer-divider: var(--footer-divider-color);
+
+
+}
+
+@media (prefers-color-scheme: white) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #6b1818;
+  }
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+}
+
+html,
+body {
+  overflow-x: hidden;
+}
+
+
+/* Footer classes (Класи футера) */
+.footer-title {
+  font-family: var(--font-mono); /* Roboto Mono из Figma */
+    font-weight: 600;
+    font-size: 32px;
+    line-height: 1.5;
+    letter-spacing: -0.011em;
+    color: var(--brand-black);
+    display: flex;
+    align-items: left;
+    justify-content: left;
+}
+.footer-text {
+  font-family: var(--font-sans); /* Source Sans Pro из Figma */
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 1.5;
+    letter-spacing: -0.011em;
+    color: var(--brand-black);
+    transition: opacity 0.2s ease;
+}
+.shadow-footer-heavy {
+  box-shadow: var(--shadow-footer-heavy);
+}
+.footer-text:hover {
+    opacity: 0.7;
+}

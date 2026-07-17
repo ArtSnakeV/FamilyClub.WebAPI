@@ -1,0 +1,79 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: familyclub-frontend
+  namespace: production
+  labels:
+    app.kubernetes.io/name: familyclub-frontend
+    app.kubernetes.io/part-of: familyclub
+    app.kubernetes.io/component: frontend
+    app.kubernetes.io/environment: production
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: familyclub-frontend
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: familyclub-frontend
+        app.kubernetes.io/version: "1.0"
+      annotations:
+        app.kubernetes.io/image-digest: "sha256:0b37efd3a24e0c1fff5450aa13d6c32a754ad01903c08f8d5375c1efb807f871"
+        app.kubernetes.io/build-date: "2026-07-17T19:33:38+00:00"
+        app.kubernetes.io/commit-hash: "5ea0a6602ac433c3c9cd5f2d8a3598137a932297"
+        app.kubernetes.io/branch: "DeploymentTest5"
+        app.kubernetes.io/repository: "https://github.com/Metra638/FamilyClub.WebAPI1"
+    spec:
+      imagePullSecrets:
+      - name: dockerhub-secret
+      terminationGracePeriodSeconds: 60
+      containers:
+      - name: frontend
+        image: metra638/test1@sha256:0b37efd3a24e0c1fff5450aa13d6c32a754ad01903c08f8d5375c1efb807f871   # заменяется pipeline
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 3000
+        # Ресурсы (requests/limits) не указаны намеренно:
+        # - Кластер имеет жёсткие ограничения по CPU/памяти, это приводит к "Pending".
+        securityContext:
+          runAsNonRoot: true
+          runAsUser: 1000
+          readOnlyRootFilesystem: true
+          allowPrivilegeEscalation: false
+        lifecycle:
+          preStop:
+            exec:
+              command: ["/bin/sh", "-c", "sleep 15"]
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-service
+  namespace: production
+  labels:
+    app.kubernetes.io/name: familyclub-frontend
+spec:
+  selector:
+    app.kubernetes.io/name: familyclub-frontend
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
+  type: ClusterIP
+---
+# apiVersion: policy/v1
+# kind: PodDisruptionBudget
+# metadata:
+#   name: frontend-pdb
+#   namespace: production
+#   labels:
+#     app.kubernetes.io/name: familyclub-frontend
+# spec:
+#   minAvailable: 1
+#   selector:
+#     matchLabels:
+#       app.kubernetes.io/name: familyclub-frontend

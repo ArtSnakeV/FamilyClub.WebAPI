@@ -1,0 +1,149 @@
+/* Base link setups */
+/* .customTabLink {
+  position: relative;
+  width: 315px;
+  height: 48px;
+  text-decoration: none;
+
+  --current-text: var(--foreground-primary);
+  --current-bg: transparent;
+  --icon-filter: none;
+
+  display: flex;
+  align-items: center;
+} */
+
+/* Hover & Active */
+/* .customTabLink:hover,
+.customTabLink.active {
+  --current-text: var(--foreground-on-dark);
+  --current-bg: var(--color-brand-green);
+  --icon-filter: invert(100%) brightness(100%);
+} */
+
+/* Background shape (pseudo-element) */
+/* .customTabLink::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  left: -35px; 
+  width: calc(100% + 5px);
+
+  background: var(--current-bg);
+  border-radius: 9px 0 0 9px;
+
+  clip-path: polygon(
+    0% 0%,
+    100% 0%,
+    calc(100% - 24px) 24px,
+    100% 48px,
+    0% 48px
+  );
+
+  transition: background 0.2s ease-in-out;
+  z-index: 0;
+} */
+
+/* Content container */
+/* .shapeContainer {
+  position: relative;
+  z-index: 1;
+
+  display: flex;
+  align-items: center;
+
+  padding-left: 16px;
+  padding-right: 36px;
+  width: 100%;
+  height: 100%;
+} */
+
+/* Icon */
+/* .icon {
+  filter: var(--icon-filter);
+  transition: filter 0.2s ease-in-out;
+} */
+
+/* Text */
+/* .linkText {
+  margin-left: 24px;
+  width: 180px;
+  color: var(--current-text);
+  font-family: sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 150%;
+  transition: color 0.2s ease-in-out;
+} */
+
+
+/* Base link setups */
+.customTabLink {
+  position: relative;
+  /* Від'ємний margin = padding-left aside (34px), розширює ribbon до лівого краю.
+     width компенсує margin щоб ribbon доходив до правого краю контенту */
+  margin-left: -34px;
+  width: calc(100% + 34px);
+  height: 36px;
+  text-decoration: none;
+  --current-text: var(--foreground-primary);
+  --current-bg: transparent;
+  --icon-filter: none;
+  display: flex;
+  align-items: center;
+}
+
+.customTabLink:hover,
+.customTabLink.active {
+  --current-text: var(--foreground-on-dark);
+  --current-bg: var(--color-brand-green);
+  --icon-filter: invert(100%) brightness(100%);
+}
+
+.customTabLink::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background: var(--current-bg);
+
+  /*
+   * path() з арками для закруглених лівих кутів (r=9px) + ribbon V-виріз праворуч.
+   * Ширина = aside(389) − padding-right(24) = 365px;
+   * висота = 36px; виріз = 18px; 347 = 365 − 18.
+   *
+   * Arc (top-left):    M 9 0  → A → 0 9   (CCW, sweep=0)
+   * Arc (bottom-left): 0 27   → A → 9 36  (CW,  sweep=1)
+   */
+  clip-path: path('M 9 0 A 9 9 0 0 0 0 9 L 0 27 A 9 9 0 0 0 9 36 L 365 36 L 347 18 L 365 0 Z');
+
+  transition: background 0.2s ease-in-out;
+  z-index: 0;
+}
+
+.shapeContainer {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;      /* вертикальне центрування */
+  padding-left: 18px;
+  padding-right: 18px;
+  width: 100%;
+  height: 100%;             /* займає всі 36px батька */
+}
+
+.icon {
+  filter: var(--icon-filter);
+  transition: filter 0.2s ease-in-out;
+}
+
+.linkText {
+  margin-left: 24px;
+  width: 180px;
+  color: var(--current-text);
+  font-family: sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 150%;
+  transition: color 0.2s ease-in-out;
+}
