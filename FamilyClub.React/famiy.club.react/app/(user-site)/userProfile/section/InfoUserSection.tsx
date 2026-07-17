@@ -55,7 +55,7 @@ export default function InfoUserSection({ member, userId }: Props) {
 
                 </div>
                 <div className="flex flex-col w-[880px] text-[var(--color-white)] text-[16px] text-left p-1">
-                    <p>Докладніше про цей канал придумать, как визуально оформить все фильтры в одном стиле закладок, чтобы это выглядело не как форма, а как часть дизайнапридумать, как визуально оформить все фильтры в одном стиле закладок, чтобы это выглядело не как форма, а как часть дизайна</p>
+                    <p>Особиста сторінка користувача у Family Club. Тут зібрані улюблені книги, рецензії, відгуки та читацька активність.</p>
                 </div>
                 <div className="flex flex-row mt-[4px]">
                     <SocialLinks userId={userId} />

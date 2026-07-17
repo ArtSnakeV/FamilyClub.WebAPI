@@ -71,7 +71,7 @@ export default function MobileBottomNav() {
     },
     {
       name: "Бібліотека",
-      href: "/categories",
+      href: "/library",
       icon: (active: boolean) => (
         <svg
           className={`w-[24px] h-[24px] transition-colors ${
