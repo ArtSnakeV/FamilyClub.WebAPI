@@ -22,11 +22,11 @@ spec:
         app.kubernetes.io/name: familyclub-frontend
         app.kubernetes.io/version: "1.0"
       annotations:
-        app.kubernetes.io/image-digest: "sha256:0b37efd3a24e0c1fff5450aa13d6c32a754ad01903c08f8d5375c1efb807f871"
-        app.kubernetes.io/build-date: "2026-07-17T19:33:38+00:00"
-        app.kubernetes.io/commit-hash: "5ea0a6602ac433c3c9cd5f2d8a3598137a932297"
-        app.kubernetes.io/branch: "DeploymentTest5"
-        app.kubernetes.io/repository: "https://github.com/Metra638/FamilyClub.WebAPI1"
+        image-digest: "sha256:0b37efd3a24e0c1fff5450aa13d6c32a754ad01903c08f8d5375c1efb807f871"
+        build-date: "2026-07-17T19:33:38+00:00"
+        commit-hash: "5ea0a6602ac433c3c9cd5f2d8a3598137a932297"
+        branch: "DeploymentTest5"
+        repository: "https://github.com/Metra638/FamilyClub.WebAPI1"
     spec:
       imagePullSecrets:
       - name: dockerhub-secret
@@ -37,6 +37,7 @@ spec:
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 3000
+          protocol: TCP
         # Ресурсы (requests/limits) не указаны намеренно:
         # - Кластер имеет жёсткие ограничения по CPU/памяти, это приводит к "Pending".
         securityContext:
