@@ -33,9 +33,11 @@ spec:
             app.kubernetes.io/component: backup-pod
             app.kubernetes.io/environment: production
         spec:
+          securityContext:
+            fsGroup: 999
           containers:
           - name: backup
-            image: postgres:15
+            image: postgres:15-alpine
             imagePullPolicy: IfNotPresent
             command:
             - /bin/sh
@@ -43,6 +45,10 @@ spec:
             - |
               PGPASSWORD=$POSTGRES_PASSWORD pg_dump -U postgres -h postgres-svc familyclub_db > /backup/backup-$(date +%Y%m%d-%H%M%S).sql
               find /backup -name "*.sql" -mtime +7 -delete
+            securityContext:
+              runAsNonRoot: true
+              runAsUser: 999
+              allowPrivilegeEscalation: false
             env:
             - name: POSTGRES_PASSWORD
               valueFrom:
