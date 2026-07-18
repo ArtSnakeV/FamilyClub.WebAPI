@@ -45,6 +45,10 @@ spec:
           runAsUser: 1000
           readOnlyRootFilesystem: true
           allowPrivilegeEscalation: false
+          capabilities:
+            drop: ["ALL"]
+          seccompProfile:
+            type: RuntimeDefault
         lifecycle:
           preStop:
             exec:
