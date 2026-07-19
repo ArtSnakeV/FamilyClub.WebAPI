@@ -47,7 +47,6 @@ data:
         Tag               kube.*
         Refresh_Interval  5
         Mem_Buf_Limit     5MB
-        Read_From_Head    true
 
     [FILTER]
         Name                kubernetes
