@@ -17,6 +17,7 @@ import * as runtime from '../runtime';
 import type {
   ChangePasswordClubMemberDto,
   ClubMemberReadDto,
+  LockUserDto,
   UpdateClubMemberDto,
 } from '../models/index';
 import {
@@ -24,6 +25,8 @@ import {
     ChangePasswordClubMemberDtoToJSON,
     ClubMemberReadDtoFromJSON,
     ClubMemberReadDtoToJSON,
+    LockUserDtoFromJSON,
+    LockUserDtoToJSON,
     UpdateClubMemberDtoFromJSON,
     UpdateClubMemberDtoToJSON,
 } from '../models/index';
@@ -77,6 +80,7 @@ export interface ApiClubMemberIdJsonPutRequest {
 
 export interface ApiClubMemberIdLockPutRequest {
     id: string;
+    lockUserDto?: LockUserDto;
 }
 
 export interface ApiClubMemberIdUnlockPutRequest {
@@ -586,6 +590,8 @@ export class ClubMemberApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+        headerParameters['Content-Type'] = 'application/json';
+
 
         let urlPath = `/api/ClubMember/{id}/lock`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
@@ -595,6 +601,7 @@ export class ClubMemberApi extends runtime.BaseAPI {
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
+            body: LockUserDtoToJSON(requestParameters['lockUserDto']),
         };
     }
 

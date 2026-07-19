@@ -1,0 +1,20 @@
+FROM mcr.microsoft.com/dotnet/sdk:10.0-preview AS build
+WORKDIR /src
+
+COPY ["FamilyClub.WebAPI/FamilyClub.WebAPI.csproj", "FamilyClub.WebAPI/"]
+COPY ["FamilyClub.BLL/FamilyClub.BLL.csproj", "FamilyClub.BLL/"]
+COPY ["FamilyClub.DAL/FamilyClub.DAL.csproj", "FamilyClub.DAL/"]
+COPY ["FamilyClubLibrary/FamilyClubLibrary.csproj", "FamilyClubLibrary/"]
+RUN dotnet restore "FamilyClub.WebAPI/FamilyClub.WebAPI.csproj"
+
+COPY --link FamilyClub.DAL/ ./FamilyClub.DAL/
+COPY --link FamilyClub.BLL/ ./FamilyClub.BLL/
+COPY --link FamilyClubLibrary/ ./FamilyClubLibrary/
+COPY --link FamilyClub.WebAPI/ ./FamilyClub.WebAPI/
+
+RUN dotnet publish "./FamilyClub.WebAPI/FamilyClub.WebAPI.csproj" -c Release -o /app/publish --no-restore
+
+FROM mcr.microsoft.com/dotnet/aspnet:10.0-preview AS final
+WORKDIR /app
+COPY --from=build /app/publish .
+ENTRYPOINT ["dotnet", "FamilyClub.WebAPI.dll"]

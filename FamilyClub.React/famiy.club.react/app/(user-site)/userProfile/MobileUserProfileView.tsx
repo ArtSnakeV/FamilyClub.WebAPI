@@ -160,8 +160,8 @@ export default function MobileUserProfileView({
                 @{user?.email?.split("@")[0] || "user"} · {!loadingMyBooks ? `${myBooks.length} книг` : "..."} · {!loadingUserReviews ? `${userReviews.length} постів` : "..."}
               </p>
               <p className="text-[13px] text-[#f5f3ee]/95 leading-snug tracking-[-0.154px] truncate mt-0.5">
-                <span>Докладніше про цей канал придумать, как </span>
-                <span className="font-bold">ще...</span>
+                <span>Особиста читацька сторінка у Family Club. </span>
+                <span className="font-bold cursor-pointer underline">Докладніше</span>
               </p>
             </div>
           </div>
@@ -181,15 +181,28 @@ export default function MobileUserProfileView({
               ))}
             </div>
 
-            {userId && (
+            <div className="flex items-center gap-2">
               <button
                 type="button"
-                onClick={() => router.push(`/userProfile/editUserProfile/${userId}`)}
+                onClick={() => router.push("/library")}
                 className="px-3.5 py-1.5 rounded-full bg-[#005B33] text-[#f5f3ee] text-[13px] font-semibold tracking-tight shadow-md flex items-center gap-1.5 hover:bg-[#097E4B] active:scale-95 transition-all"
               >
-                <span>Редагувати</span>
+                <svg className="w-4 h-4 text-[#f5f3ee] shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0-2-.9-2-2V4c0-1.1-.9-2-2-2zm-1 9H9V9h10v2zm-4 4H9v-2h6v2zm4-8H9V5h10v2z" />
+                </svg>
+                <span>Бібліотека</span>
               </button>
-            )}
+
+              {userId && (
+                <button
+                  type="button"
+                  onClick={() => router.push(`/userProfile/editUserProfile/${userId}`)}
+                  className="px-3.5 py-1.5 rounded-full bg-[#3c2a1e] text-[#f5f3ee] text-[13px] font-semibold tracking-tight shadow-md flex items-center gap-1.5 hover:bg-[#4d3728] active:scale-95 transition-all"
+                >
+                  <span>Редагувати</span>
+                </button>
+              )}
+            </div>
           </div>
         </div>
       </div>

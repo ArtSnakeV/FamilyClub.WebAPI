@@ -39,7 +39,7 @@ public class FamilyClubContext : IdentityDbContext<ClubMember>
     public DbSet<CartItem> CartItems { get; set; }
     public DbSet<Complaint> Complaints { get; set; }
     public DbSet<ComplaintImage> ComplaintImages { get; set; }
-
+    public DbSet<BlockReason> BlockReasons { get; set; }
     protected override void OnModelCreating(ModelBuilder builder)
     {
         // Mandatory for Identity
@@ -57,6 +57,19 @@ public class FamilyClubContext : IdentityDbContext<ClubMember>
         .HasMany(m => m.FavoriteCategories)
         .WithMany(c => c.FavoritedBy)
         .UsingEntity(j => j.ToTable("MemberFavoriteCategories"));
+
+        builder.Entity<ClubMember>()
+       .HasOne(m => m.BlockReason)
+       .WithMany(r => r.ClubMembers)
+       .HasForeignKey(m => m.BlockReasonId)
+       .OnDelete(DeleteBehavior.SetNull);
+
+        builder.Entity<ClubMember>()
+            .HasOne(m => m.LockedBy)
+            .WithMany()
+            .HasForeignKey(m => m.LockedById)
+            .OnDelete(DeleteBehavior.SetNull);
+
         // Many-to-Many: Product <-> Author
         builder.Entity<Product>()
             .HasMany(p => p.Authors)

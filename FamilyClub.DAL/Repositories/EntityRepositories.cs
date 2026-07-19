@@ -130,6 +130,7 @@ public class NotificationRepository : Repository<Notification>, INotificationRep
 			.CountAsync(n => n.ClubMemberId == clubMemberId && !n.IsRead, cancellationToken);
 	}
 }
+public class BlockReasonRepository(FamilyClubContext context) : Repository<BlockReason>(context), IBlockReasonRepository;
 public class FormatRepository(FamilyClubContext context) : Repository<Format>(context), IFormatRepository;
 public class AgeRestrictionRepository(FamilyClubContext context) : Repository<AgeRestriction>(context), IAgeRestrictionRepository;
 public class BookSizeRepository(FamilyClubContext context) : Repository<BookSize>(context), IBookSizeRepository;

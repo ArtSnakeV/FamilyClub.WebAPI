@@ -134,6 +134,10 @@ builder.Services.AddScoped<IComplaintsService, ComplaintService>();
 
 builder.Services.AddScoped<IFavoriteService, FavoriteService>();
 builder.Services.AddSingleton<IPresenceService, PresenceService>();
+
+//BlockReason
+builder.Services.AddScoped<IBlockReasonRepository, BlockReasonRepository>();
+builder.Services.AddScoped<IBlockReasonService, BlockReasonService>();
 // Customize Identity cookie
 //builder.Services.ConfigureApplicationCookie(
 //    options => {
