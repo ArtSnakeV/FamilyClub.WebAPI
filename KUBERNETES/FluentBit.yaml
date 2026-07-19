@@ -90,7 +90,7 @@ spec:
       - operator: Exists
       containers:
       - name: fluent-bit
-        image: dhi.io/fluent-bit@sha256:b38de007f0832990fbbf570d2a5e136111294f974198b21a9e545cfcf206f8a6
+        image: fluent/fluent-bit:5.0-debian13
         imagePullPolicy: IfNotPresent
         securityContext:
           runAsNonRoot: true
