@@ -68,6 +68,7 @@ spec:
     - protocol: TCP
       port: 80
       targetPort: 3000
+      appProtocol: http
   type: ClusterIP
 ---
 # apiVersion: policy/v1
