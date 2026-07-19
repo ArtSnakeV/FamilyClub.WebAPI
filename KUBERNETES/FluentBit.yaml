@@ -90,7 +90,7 @@ spec:
       - operator: Exists
       containers:
       - name: fluent-bit
-        image: fluent/fluent-bit:5.0-debian13
+        image: fluent/fluent-bit:5.0.9
         imagePullPolicy: IfNotPresent
         securityContext:
           runAsNonRoot: true
