@@ -56,11 +56,13 @@ data:
         Merge_Log           On
         Keep_Log            Off
 
+    # Оставляем только логи от конкретных подов
     [FILTER]
         Name       grep
         Match      kube.*
-        Regex      kubernetes_namespace_name (production|ingress-nginx)
+        Regex      kubernetes_pod_name (familyclub-backend.*|familyclub-frontend.*|familyclub-postgres.*|ingress-nginx-controller.*)
 
+    # Исключаем логи самого Fluent Bit (на всякий случай)
     [FILTER]
         Name       grep
         Match      kube.*
@@ -82,7 +84,7 @@ metadata:
     app.kubernetes.io/managed-by: kubectl
     k8s-app: fluent-bit
   annotations:
-    description: "DaemonSet for collecting logs from production + ingress-nginx"
+    description: "DaemonSet for collecting logs from specific pods"
 spec:
   selector:
     matchLabels:
