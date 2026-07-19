@@ -36,7 +36,7 @@ data:
   fluent-bit.conf: |
     [SERVICE]
         Flush         1
-        Log_Level     error
+        Log_Level     info
         Daemon        off
         Parsers_File  parsers.conf
 
@@ -55,6 +55,7 @@ data:
         Kube_Tag_Prefix     kube.var.log.containers.
         Merge_Log           On
         Keep_Log            Off
+
     [FILTER]
         Name       grep
         Match      kube.*
