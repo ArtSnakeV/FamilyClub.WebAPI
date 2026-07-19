@@ -86,6 +86,7 @@ interface ManagerInfoFieldsProps {
     searching: boolean;
     userFound: boolean;
     handleSearch: () => void;
+    roleOptions?: Array<{ value: string; label: string }>;
 }
 
 function toDateInputValue(date: Date | null): string {
@@ -105,7 +106,13 @@ export default function ManagerInfoFields({ form,
     setSearchEmail,
     searching,
     userFound,
-    handleSearch }: ManagerInfoFieldsProps) {
+    handleSearch,
+    roleOptions = [
+        { value: "Manager", label: "Менеджер" },
+        { value: "Admin", label: "Адмін" },
+        { value: "User", label: "Користувач" },
+    ],
+}: ManagerInfoFieldsProps) {
 
     const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
@@ -221,13 +228,19 @@ export default function ManagerInfoFields({ form,
                 <div className="relative">
                     <select
                         value={form.role}
-                        onChange={(e) => updateField("role", e.target.value as ManagerFormState["role"])}
+                        onChange={(e) => updateField("role", e.target.value)}
                         disabled={disabled}
                         className="w-full rounded-[10px] shadow-[0_0_10px_0_#00000040] bg-[#F0EDE7] px-5 py-3 text-sm outline-none focus:ring-2 focus:ring-[var(--color-green)] appearance-none disabled:opacity-60"
                     >
-                        <option value="Manager">Менеджер</option>
-                        <option value="Admin">Адмін</option>
-                        <option value="User">Користувач</option>
+                        {roleOptions.map((opt) => (
+                            <option key={opt.value} value={opt.value}>
+                                {opt.label}
+                            </option>
+                        ))}
+                        {/* Якщо поточна роль ще не в списку (рідкісний кейс) — показуємо її */}
+                        {!roleOptions.some((o) => o.value === form.role) && form.role && (
+                            <option value={form.role}>{form.role}</option>
+                        )}
                     </select>
                     <Image
                         src="/images/addManagerPageAdmin/angle-down-solid-full.png"

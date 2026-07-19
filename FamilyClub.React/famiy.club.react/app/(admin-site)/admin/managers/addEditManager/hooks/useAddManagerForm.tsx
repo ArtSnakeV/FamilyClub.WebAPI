@@ -183,8 +183,10 @@
 import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { clubMemberService, roleClubMemberService, apiBasePath } from "@/lib/api/services";
+import { getAuthToken } from "@/lib/auth/tokenStorage";
+import { getRoleLabel } from "@/app/(admin-site)/admin/roles/data/rolesData";
 
-export type ManagerRole = "Manager" | "Admin" | "User";
+export type ManagerRole = string;
 
 export interface ManagerFormState {
     firstName: string;
@@ -210,12 +212,16 @@ const initialState: ManagerFormState = {
     avatarData: null,
 };
 
-// Порядок важливий: перевіряємо від "вищої" ролі до "нижчої"
-function resolveRole(roles?: string[] | null): ManagerRole {
-    if (roles?.includes("Admin")) return "Admin";
-    if (roles?.includes("Manager")) return "Manager";
-    if (roles?.includes("User")) return "User";
-    return "Manager";
+/** Пріоритет відомих ролей, інакше — перша з профілю користувача. */
+function resolveRole(roles?: string[] | null, available?: string[]): ManagerRole {
+    const list = roles?.filter(Boolean) ?? [];
+    const priority = ["Admin", "Manager", "User"];
+    for (const p of priority) {
+        if (list.includes(p)) return p;
+    }
+    if (list[0]) return list[0];
+    if (available?.includes("Manager")) return "Manager";
+    return available?.[0] ?? "Manager";
 }
 function base64ToBlob(base64: string, mimeType: string): Blob {
     const byteString = atob(base64);
@@ -235,6 +241,7 @@ export function useAddManagerForm() {
     const [form, setForm] = useState<ManagerFormState>(initialState);
     const [submitting, setSubmitting] = useState(false);
     const [error, setError] = useState<string | null>(null);
+    const [availableRoles, setAvailableRoles] = useState<string[]>([]);
 
     // ---------- пошук існуючого користувача ----------
     const [searchEmail, setSearchEmail] = useState("");
@@ -242,6 +249,34 @@ export function useAddManagerForm() {
     const [userFound, setUserFound] = useState(false);
     const [existingUserId, setExistingUserId] = useState<string | null>(null);
     // --------------------------------------------------
+
+    useEffect(() => {
+        const loadRoles = async () => {
+            try {
+                const token = getAuthToken();
+                const res = await fetch(`${apiBasePath}/api/RolesClubMember`, {
+                    headers: token ? { Authorization: `Bearer ${token}` } : {},
+                });
+                if (!res.ok) throw new Error(`Failed to load roles: ${res.status}`);
+                const data = await res.json();
+                const names = (Array.isArray(data) ? data : [])
+                    .map((r: { name?: string }) => r.name)
+                    .filter((n: string | undefined): n is string => Boolean(n));
+                setAvailableRoles(names);
+                setForm((prev) => {
+                    if (names.includes(prev.role)) return prev;
+                    return {
+                        ...prev,
+                        role: resolveRole(null, names),
+                    };
+                });
+            } catch (e) {
+                console.error("Failed to load roles", e);
+                setAvailableRoles(["Admin", "Manager", "User"]);
+            }
+        };
+        loadRoles();
+    }, []);
 
     const updateField = <K extends keyof ManagerFormState>(
         key: K,
@@ -263,7 +298,7 @@ export function useAddManagerForm() {
         lastName: user.surname ?? "",
         email: user.email ?? "",
         phone: user.phoneNumber ?? "",
-        role: resolveRole(user.roles),
+        role: resolveRole(user.roles, availableRoles),
         dateOfBirth: user.dateOfBirth ? new Date(user.dateOfBirth) : null,
         avatarData: user.avatarData ?? null,
     });
@@ -415,5 +450,10 @@ export function useAddManagerForm() {
         userFound,
         handleSearch,
         handleSubmit,
+        availableRoles,
+        roleOptions: availableRoles.map((name) => ({
+            value: name,
+            label: getRoleLabel(name),
+        })),
     };
 }

@@ -1,9 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { apiBasePath, authorService, publisherService } from "@/lib/api/services";
+import { apiBasePath } from "@/lib/api/services";
 import { getAuthToken } from "@/lib/auth/tokenStorage";
-import { SUMMARY_CARD_DEFINITIONS } from "../data/rolesData";
+import {
+    EXCLUDED_MATRIX_ROLES,
+    normalizeRoleKey,
+} from "../data/rolesData";
 
 export type RoleCounts = Record<string, number>;
 
@@ -20,41 +23,49 @@ async function fetchRoleUserCount(roleName: string): Promise<number> {
     return Array.isArray(data) ? data.length : 0;
 }
 
-export default function useRoleCounts() {
+/** Кількість користувачів для наявних Identity-ролей (без Publisher/Author). */
+export default function useRoleCounts(roleNames: string[]) {
     const [counts, setCounts] = useState<RoleCounts>({});
     const [loading, setLoading] = useState(true);
 
+    const roleKey = roleNames
+        .map(normalizeRoleKey)
+        .filter((n) => !EXCLUDED_MATRIX_ROLES.has(n))
+        .sort()
+        .join("|");
+
     useEffect(() => {
+        const names = roleKey ? roleKey.split("|") : [];
+        if (names.length === 0) {
+            setCounts({});
+            setLoading(false);
+            return;
+        }
+
+        let cancelled = false;
+        setLoading(true);
+
         const load = async () => {
             try {
                 const next: RoleCounts = {};
-
                 await Promise.all(
-                    SUMMARY_CARD_DEFINITIONS.map(async (card) => {
-                        if (card.apiRoleName) {
-                            next[card.key] = await fetchRoleUserCount(card.apiRoleName);
-                        }
+                    names.map(async (name) => {
+                        next[name] = await fetchRoleUserCount(name);
                     })
                 );
-
-                const [publishers, authors] = await Promise.all([
-                    publisherService.apiPublishersGet().catch(() => []),
-                    authorService.apiAuthorsGet().catch(() => []),
-                ]);
-
-                next.publishers = publishers.length;
-                next.authors = authors.length;
-
-                setCounts(next);
+                if (!cancelled) setCounts(next);
             } catch (error) {
                 console.error("Failed to load role counts", error);
             } finally {
-                setLoading(false);
+                if (!cancelled) setLoading(false);
             }
         };
 
         load();
-    }, []);
+        return () => {
+            cancelled = true;
+        };
+    }, [roleKey]);
 
     return { counts, loading };
 }

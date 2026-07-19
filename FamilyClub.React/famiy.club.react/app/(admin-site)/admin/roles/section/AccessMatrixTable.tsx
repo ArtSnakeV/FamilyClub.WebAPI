@@ -8,6 +8,9 @@ interface AccessMatrixTableProps {
     selectedColumn: string;
     onSelectColumn: (column: string) => void;
     onTogglePermission: (rowId: string, column: string) => void;
+    readOnly?: boolean;
+    /** Без власної картки — коли вкладено в спільний контейнер */
+    embedded?: boolean;
 }
 
 export default function AccessMatrixTable({
@@ -16,100 +19,127 @@ export default function AccessMatrixTable({
     selectedColumn,
     onSelectColumn,
     onTogglePermission,
+    readOnly = false,
+    embedded = false,
 }: AccessMatrixTableProps) {
-    return (
-        <div className="flex-1 min-w-0 max-w-full">
-            <div
-                className="rounded-2xl overflow-hidden shadow-sm"
+    const roleColMin = 100;
+    const functionColMin = 240;
+    const tableMinWidth = functionColMin + columns.length * roleColMin;
+
+    const scrollArea = (
+        <div
+            className={`overflow-x-auto overscroll-x-contain ${
+                embedded ? "px-4 py-4" : "px-5 py-4"
+            }`}
+            style={{ WebkitOverflowScrolling: "touch" }}
+        >
+            <table
+                className="border-collapse"
                 style={{
-                    backgroundImage: "url('/images/usersPageAdmin/Rectangle 793.png')",
-                    backgroundSize: "100% 100%",
-                    backgroundRepeat: "no-repeat",
+                    width: "max(100%, " + tableMinWidth + "px)",
+                    minWidth: tableMinWidth,
                 }}
             >
-                <div className="overflow-x-auto overscroll-x-contain">
-                    <div className="min-w-0 px-8 py-6 sm:px-10">
-                        <table className="w-full min-w-[900px] border-collapse">
-                            <thead>
-                                <tr className="text-left text-[14px] font-semibold text-[#2F2F2F]">
-                                    <th className="pb-4 pr-6 w-[260px] min-w-[200px] sticky left-0 z-10 bg-transparent">
-                                        Функція
-                                    </th>
-                                    {columns.map((column) => (
-                                        <th
-                                            key={column.key}
-                                            className="pb-4 px-2 text-center min-w-[96px]"
-                                        >
-                                            <button
-                                                type="button"
-                                                onClick={() => onSelectColumn(column.key)}
-                                                className={`mx-auto block max-w-[110px] text-center leading-tight transition ${
-                                                    selectedColumn === column.key
-                                                        ? "text-[var(--color-green)]"
-                                                        : "text-[#2F2F2F] hover:text-[var(--color-green)]"
-                                                }`}
-                                            >
-                                                {column.label}
-                                            </button>
-                                        </th>
-                                    ))}
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {rows.map((row, index) => (
-                                    <tr
-                                        key={row.id}
-                                        className={
-                                            index % 2 === 0
-                                                ? "bg-white/40"
-                                                : "bg-transparent"
-                                        }
+                <thead>
+                    <tr className="text-left text-[14px] font-semibold text-[#2F2F2F]">
+                        <th
+                            className="pb-3 pr-3 sticky left-0 z-20"
+                            style={{
+                                minWidth: functionColMin,
+                                background: "#F5F2EB",
+                            }}
+                        >
+                            Функція
+                        </th>
+                        {columns.map((column) => (
+                            <th
+                                key={column.key}
+                                className="pb-3 px-1.5 text-center"
+                                style={{ minWidth: roleColMin }}
+                            >
+                                <button
+                                    type="button"
+                                    onClick={() => onSelectColumn(column.key)}
+                                    className={`mx-auto block max-w-[96px] text-center leading-tight transition ${
+                                        selectedColumn === column.key
+                                            ? "text-[var(--color-green)]"
+                                            : "text-[#2F2F2F] hover:text-[var(--color-green)]"
+                                    }`}
+                                >
+                                    {column.label}
+                                </button>
+                            </th>
+                        ))}
+                    </tr>
+                </thead>
+                <tbody>
+                    {rows.map((row, index) => {
+                        const even = index % 2 === 0;
+                        const stickyBg = even ? "#FAF8F3" : "#F5F2EB";
+
+                        return (
+                            <tr
+                                key={row.id}
+                                className={even ? "bg-white/35" : "bg-transparent"}
+                            >
+                                <td
+                                    className="py-2.5 pr-3 align-middle sticky left-0 z-10"
+                                    style={{
+                                        minWidth: functionColMin,
+                                        backgroundColor: stickyBg,
+                                    }}
+                                >
+                                    <div className="flex items-center gap-2.5">
+                                        <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-white/70">
+                                            <Image
+                                                src={row.icon}
+                                                alt=""
+                                                width={18}
+                                                height={18}
+                                            />
+                                        </div>
+                                        <div className="min-w-0">
+                                            <p className="font-semibold text-[14px] text-[#1F1F1F]">
+                                                {row.title}
+                                            </p>
+                                            <p className="text-[11px] text-[#6B6B6B]">
+                                                {row.subtitle}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </td>
+                                {columns.map((column) => (
+                                    <td
+                                        key={column.key}
+                                        className="py-2.5 px-1.5 text-center align-middle"
                                     >
-                                        <td className="py-3 pr-6 align-middle sticky left-0 z-10 bg-inherit">
-                                            <div className="flex items-center gap-3 min-w-[200px]">
-                                                <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-white/70">
-                                                    <Image
-                                                        src={row.icon}
-                                                        alt=""
-                                                        width={20}
-                                                        height={20}
-                                                    />
-                                                </div>
-                                                <div className="min-w-0">
-                                                    <p className="font-semibold text-[15px] text-[#1F1F1F]">
-                                                        {row.title}
-                                                    </p>
-                                                    <p className="text-[12px] text-[#6B6B6B]">
-                                                        {row.subtitle}
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        {columns.map((column) => (
-                                            <td
-                                                key={column.key}
-                                                className="py-3 px-2 text-center align-middle"
-                                            >
-                                                <PermissionCell
-                                                    allowed={
-                                                        row.permissions[column.key] ??
-                                                        false
-                                                    }
-                                                    onToggle={() =>
-                                                        onTogglePermission(
-                                                            row.id,
-                                                            column.key
-                                                        )
-                                                    }
-                                                />
-                                            </td>
-                                        ))}
-                                    </tr>
+                                        <PermissionCell
+                                            allowed={
+                                                row.permissions[column.key] ?? false
+                                            }
+                                            disabled={readOnly}
+                                            onToggle={() =>
+                                                onTogglePermission(row.id, column.key)
+                                            }
+                                        />
+                                    </td>
                                 ))}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+                            </tr>
+                        );
+                    })}
+                </tbody>
+            </table>
+        </div>
+    );
+
+    if (embedded) {
+        return <div className="w-full min-w-0">{scrollArea}</div>;
+    }
+
+    return (
+        <div className="w-full min-w-0">
+            <div className="w-full rounded-2xl shadow-sm bg-[#F5F2EB] overflow-hidden">
+                {scrollArea}
             </div>
         </div>
     );

@@ -159,7 +159,10 @@ import { lockUser, unlockUser, deleteUser } from "./api/ActionUsers";
 import QuickActionsBar from "./section/QuickActionsBar";
 import { useRouter } from "next/navigation";
 
-const MANAGER_ROLE = "Manager";
+const STAFF_ROLES = ["Manager", "Admin"] as const;
+
+const isStaffUser = (user: UserInfo) =>
+    STAFF_ROLES.some((role) => user.roles?.includes(role));
 
 const isBlocked = (user: UserInfo) =>
     !!user.lockoutEnd && new Date(user.lockoutEnd).getTime() > Date.now();
@@ -177,9 +180,7 @@ export default function Page() {
     const [showOnlyBlocked, setShowOnlyBlocked] = useState(false);
 
     useEffect(() => {
-        setLocalUsers(
-            usersInfo.filter((u) => u.roles?.includes(MANAGER_ROLE))
-        );
+        setLocalUsers(usersInfo.filter(isStaffUser));
     }, [usersInfo]);
 
     const managerTotal = localUsers.length;

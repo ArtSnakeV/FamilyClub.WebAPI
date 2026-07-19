@@ -99,7 +99,7 @@ export const PERMISSION_ROW_TEMPLATES: PermissionRowTemplate[] = [
 ];
 
 /** Початкові права для відомих ролей (нові ролі отримують false за замовчуванням). */
-const DEFAULT_PERMISSIONS: Record<string, Record<string, boolean>> = {
+export const DEFAULT_PERMISSIONS: Record<string, Record<string, boolean>> = {
     Admin: {
         dashboard: true,
         books: true,
@@ -188,8 +188,11 @@ export const ROLE_LABELS_UK: Record<string, string> = {
     User: "Користувачі",
 };
 
-/** Порядок колонок як на макеті; Publisher/Author — завжди в матриці. */
-const MATRIX_ROLE_ORDER = ["Admin", "Manager", "Publisher", "Author", "User"];
+/** Порядок колонок ролей Identity (без сутностей Видавництво/Автор). */
+const MATRIX_ROLE_ORDER = ["Admin", "Manager", "User"];
+
+/** Ролі-сутності каталогу — не показуємо в матриці доступів адмінки. */
+export const EXCLUDED_MATRIX_ROLES = new Set(["Publisher", "Author"]);
 
 const ROLE_KEY_ALIASES: Record<string, string> = {
     admin: "Admin",
@@ -248,11 +251,10 @@ export const ROLE_META_BY_NAME: Record<string, RoleDisplayInfo> = {
     },
 };
 
-/** Картки зверху — відомі ролі + сутності (видавництва/автори). */
+/** Картки зверху — лише Identity-ролі (без видавництв/авторів). */
 export interface SummaryCardDefinition {
     key: string;
     apiRoleName?: string;
-    entityCount?: "publishers" | "authors";
     title: string;
     icon: string;
     subtitle: string;
@@ -270,36 +272,6 @@ export const SUMMARY_CARD_DEFINITIONS: SummaryCardDefinition[] = [
         key: "Manager",
         apiRoleName: "Manager",
         ...ROLE_META_BY_NAME.Manager,
-    },
-    {
-        key: "publishers",
-        entityCount: "publishers",
-        title: "Видавництва",
-        icon: "/images/admin_manager/desktop/leanpub-brands-solid-full 1.svg",
-        subtitle: "Виставляють книги на продаж.",
-        description:
-            "Видавництво керує каталогом своїх книг, додає нові видання та оновлює інформацію про продукти.",
-        capabilities: [
-            "Додавання та редагування книг",
-            "Керування власним каталогом",
-            "Оновлення цін і форматів",
-            "Перегляд статистики продажів",
-        ],
-    },
-    {
-        key: "authors",
-        entityCount: "authors",
-        title: "Автор",
-        icon: "/images/admin_manager/desktop/user-solid-full (4) 1.svg",
-        subtitle: "Публікує книги від свого імені.",
-        description:
-            "Автор публікує власні книги, оновлює описи та взаємодіє з читачами через відгуки й пости.",
-        capabilities: [
-            "Публікація власних книг",
-            "Редагування описів і метаданих",
-            "Створення постів",
-            "Перегляд відгуків на свої книги",
-        ],
     },
     {
         key: "User",
@@ -328,33 +300,12 @@ export function getRoleDisplayInfo(roleKey: string): RoleDisplayInfo {
         };
     }
 
+    const meta = ROLE_META_BY_NAME[normalizeRoleKey(roleKey)];
+    if (meta) return meta;
+
     const summary = SUMMARY_CARD_DEFINITIONS.find(
         (c) => c.key === roleKey || c.apiRoleName === roleKey
     );
-    if (roleKey === "Publisher") {
-        const pub = SUMMARY_CARD_DEFINITIONS.find((c) => c.key === "publishers");
-        if (pub) {
-            return {
-                title: pub.title,
-                icon: pub.icon,
-                subtitle: pub.subtitle,
-                description: pub.description,
-                capabilities: pub.capabilities,
-            };
-        }
-    }
-    if (roleKey === "Author") {
-        const author = SUMMARY_CARD_DEFINITIONS.find((c) => c.key === "authors");
-        if (author) {
-            return {
-                title: author.title,
-                icon: author.icon,
-                subtitle: author.subtitle,
-                description: author.description,
-                capabilities: author.capabilities,
-            };
-        }
-    }
     if (summary) {
         return {
             title: summary.title,
@@ -374,16 +325,46 @@ export function getRoleDisplayInfo(roleKey: string): RoleDisplayInfo {
     };
 }
 
+/** Картки зверху: наявні ролі з API (без Publisher/Author). */
+export function buildSummaryCardsFromRoles(
+    roleNames: string[]
+): SummaryCardDefinition[] {
+    const normalized = [
+        ...new Set(roleNames.map(normalizeRoleKey)),
+    ].filter((name) => !EXCLUDED_MATRIX_ROLES.has(name));
+
+    const ordered: string[] = [];
+    MATRIX_ROLE_ORDER.forEach((name) => {
+        if (normalized.includes(name)) ordered.push(name);
+    });
+    normalized.forEach((name) => {
+        if (!ordered.includes(name)) ordered.push(name);
+    });
+
+    return ordered.map((name) => {
+        const info = getRoleDisplayInfo(name);
+        return {
+            key: name,
+            apiRoleName: name,
+            title: info.title,
+            icon: info.icon,
+            subtitle: info.subtitle,
+            description: info.description,
+            capabilities: info.capabilities,
+        };
+    });
+}
+
 export function buildMatrixColumns(roleNames: string[]): MatrixColumn[] {
-    const apiRoles = roleNames.map(normalizeRoleKey);
+    const apiRoles = roleNames
+        .map(normalizeRoleKey)
+        .filter((name) => !EXCLUDED_MATRIX_ROLES.has(name));
     const apiSet = new Set(apiRoles);
     const orderedKeys: string[] = [];
 
     MATRIX_ROLE_ORDER.forEach((name) => {
-        if (name === "Publisher" || name === "Author" || apiSet.has(name)) {
-            if (!orderedKeys.includes(name)) {
-                orderedKeys.push(name);
-            }
+        if (apiSet.has(name) && !orderedKeys.includes(name)) {
+            orderedKeys.push(name);
         }
     });
 
@@ -397,7 +378,7 @@ export function buildMatrixColumns(roleNames: string[]): MatrixColumn[] {
         ...orderedKeys.map((name) => ({
             key: name,
             label: getRoleLabel(name),
-            roleName: apiSet.has(name) ? name : undefined,
+            roleName: name,
         })),
         {
             key: GUEST_COLUMN_KEY,
@@ -406,7 +387,7 @@ export function buildMatrixColumns(roleNames: string[]): MatrixColumn[] {
     ];
 }
 
-function defaultPermission(roleKey: string, permissionId: string): boolean {
+export function defaultPermission(roleKey: string, permissionId: string): boolean {
     const key = normalizeRoleKey(roleKey);
     return DEFAULT_PERMISSIONS[key]?.[permissionId] ?? false;
 }
