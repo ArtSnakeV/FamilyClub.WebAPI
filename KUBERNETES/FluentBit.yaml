@@ -94,8 +94,7 @@ spec:
         image: fluent/fluent-bit:5.0.9
         imagePullPolicy: IfNotPresent
         securityContext:
-          runAsNonRoot: true
-          runAsUser: 65532
+          runAsUser: 0
           readOnlyRootFilesystem: true
           allowPrivilegeEscalation: false
           capabilities:
