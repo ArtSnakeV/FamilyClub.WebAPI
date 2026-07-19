@@ -24,12 +24,22 @@ spec:
     ports:
     - protocol: TCP
       port: 8080
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: ingress-nginx
+      podSelector:
+        matchLabels:
+          app.kubernetes.io/name: ingress-nginx
+    ports:
+    - protocol: TCP
+      port: 8080
   egress:
   - to:
     - namespaceSelector: {}
       podSelector:
         matchLabels:
-          k8s-app: kube-dns   # или coredns, зависит от вашего кластера
+          k8s-app: kube-dns
     ports:
     - protocol: UDP
       port: 53
