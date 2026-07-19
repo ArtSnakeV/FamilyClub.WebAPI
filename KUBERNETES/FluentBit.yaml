@@ -42,7 +42,7 @@ data:
 
     [INPUT]
         Name              tail
-        Path              /var/log/containers/*.log
+        Path /var/log/containers/*.log,/var/log/pods/*/*.log
         Parser            docker
         Tag               kube.*
         Refresh_Interval  5
