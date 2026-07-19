@@ -15,16 +15,6 @@ spec:
   policyTypes: [Ingress, Egress]
   ingress:
   - from:
-    - podSelector:
-        matchLabels:
-          app.kubernetes.io/name: familyclub-frontend
-      namespaceSelector:
-        matchLabels:
-          app.kubernetes.io/environment: production
-    ports:
-    - protocol: TCP
-      port: 8080
-  - from:
     - namespaceSelector:
         matchLabels:
           kubernetes.io/metadata.name: ingress-nginx
