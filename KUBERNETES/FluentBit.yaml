@@ -36,7 +36,7 @@ data:
   fluent-bit.conf: |
     [SERVICE]
         Flush         1
-        Log_Level     info
+        Log_Level     error
         Daemon        off
         Parsers_File  parsers.conf
 
@@ -55,14 +55,11 @@ data:
         Kube_Tag_Prefix     kube.var.log.containers.
         Merge_Log           On
         Keep_Log            Off
-
-    # Оставляем только логи от конкретных подов
     [FILTER]
         Name       grep
         Match      kube.*
-        Regex      kubernetes_pod_name (familyclub-backend.*|familyclub-frontend.*|familyclub-postgres.*|ingress-nginx-controller.*)
+        Regex      $kubernetes['pod_name'] (familyclub-backend.*|familyclub-frontend.*|familyclub-postgres.*|ingress-nginx-controller.*)
 
-    # Исключаем логи самого Fluent Bit (на всякий случай)
     [FILTER]
         Name       grep
         Match      kube.*
