@@ -59,6 +59,11 @@ data:
     [FILTER]
         Name       grep
         Match      kube.*
+        Regex      kubernetes_namespace_name (production|ingress-nginx)
+
+    [FILTER]
+        Name       grep
+        Match      kube.*
         Exclude    log .*fluent-bit.*
 
     [OUTPUT]
@@ -77,7 +82,7 @@ metadata:
     app.kubernetes.io/managed-by: kubectl
     k8s-app: fluent-bit
   annotations:
-    description: "DaemonSet for collecting container logs using Fluent Bit"
+    description: "DaemonSet for collecting logs from production + ingress-nginx"
 spec:
   selector:
     matchLabels:
