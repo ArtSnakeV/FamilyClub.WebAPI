@@ -60,6 +60,7 @@ spec:
         securityContext:
           runAsNonRoot: true
           runAsUser: 1000
+          # runAsGroup: 1000 - не известно, какой GID будет у пользователя 1000 в контейнере, проверить
           readOnlyRootFilesystem: true
           allowPrivilegeEscalation: false
           capabilities:

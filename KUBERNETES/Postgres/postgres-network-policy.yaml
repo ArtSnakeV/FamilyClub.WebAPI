@@ -9,18 +9,18 @@ metadata:
     app.kubernetes.io/component: postgres
     app.kubernetes.io/environment: production
 spec:
-  podSelector: # к каким подам применяется данная политика
+  podSelector:
     matchLabels:
-      app.kubernetes.io/name: familyclub-postgres   # применяется к поду PostgreSQL
-  policyTypes: [Ingress] # только входящий трафик разрешён, исходящий запрещён по умолчанию
-  ingress: # правила для входящего трафика
-  - from: # источник трафика
-    - podSelector: # разрешается доступ от подов
+      app.kubernetes.io/name: familyclub-postgres
+  policyTypes: [Ingress]
+  ingress:
+  - from:
+    - podSelector:
         matchLabels: 
-          app.kubernetes.io/name: familyclub-backend   # разрешаем доступ от подов с этой меткой
-      namespaceSelector:                               # и только из этого namespace
+          app.kubernetes.io/name: familyclub-backend
+      namespaceSelector:
         matchLabels:
-          app.kubernetes.io/environment: production    # стандартная метка для имени namespace
+          app.kubernetes.io/environment: production
     ports:
     - protocol: TCP
       port: 5432
