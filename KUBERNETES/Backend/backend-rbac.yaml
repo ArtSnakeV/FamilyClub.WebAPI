@@ -27,4 +27,4 @@ subjects:
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: backend-secret-reader          # ← ссылка на роль выше
+  name: backend-secret-reader
