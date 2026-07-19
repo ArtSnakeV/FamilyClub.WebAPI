@@ -1,0 +1,47 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: backend-network-policy
+  namespace: production
+  labels:
+    app.kubernetes.io/name: familyclub-backend
+    app.kubernetes.io/part-of: familyclub
+    app.kubernetes.io/component: backend
+    app.kubernetes.io/environment: production
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: familyclub-backend
+  policyTypes: [Ingress, Egress]
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/name: familyclub-frontend
+      namespaceSelector:
+        matchLabels:
+          app.kubernetes.io/environment: production
+    ports:
+    - protocol: TCP
+      port: 8080
+  egress:
+  - to:
+    - namespaceSelector: {}
+      podSelector:
+        matchLabels:
+          k8s-app: kube-dns   # или coredns, зависит от вашего кластера
+    ports:
+    - protocol: UDP
+      port: 53
+    - protocol: TCP
+      port: 53
+  - to:
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/name: familyclub-postgres
+      namespaceSelector:
+        matchLabels:
+          app.kubernetes.io/environment: production
+    ports:
+    - protocol: TCP
+      port: 5432

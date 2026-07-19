@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: postgres-network-policy
+  namespace: production
+  labels:
+    app.kubernetes.io/name: familyclub-postgres
+    app.kubernetes.io/part-of: familyclub
+    app.kubernetes.io/component: postgres
+    app.kubernetes.io/environment: production
+spec:
+  podSelector: # к каким подам применяется данная политика
+    matchLabels:
+      app.kubernetes.io/name: familyclub-postgres   # применяется к поду PostgreSQL
+  policyTypes: [Ingress] # только входящий трафик разрешён, исходящий запрещён по умолчанию
+  ingress: # правила для входящего трафика
+  - from: # источник трафика
+    - podSelector: # разрешается доступ от подов
+        matchLabels: 
+          app.kubernetes.io/name: familyclub-backend   # разрешаем доступ от подов с этой меткой
+      namespaceSelector:                               # и только из этого namespace
+        matchLabels:
+          app.kubernetes.io/environment: production    # стандартная метка для имени namespace
+    ports:
+    - protocol: TCP
+      port: 5432
