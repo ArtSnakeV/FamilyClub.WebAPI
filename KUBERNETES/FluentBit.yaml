@@ -46,7 +46,7 @@ data:
         Parser            cri
         Tag               kube.*
         Refresh_Interval  5
-        Mem_Buf_Limit     5MB
+        Mem_Buf_Limit     50MB
 
     [FILTER]
         Name                kubernetes
@@ -55,6 +55,11 @@ data:
         Kube_Tag_Prefix     kube.var.log.containers.
         Merge_Log           On
         Keep_Log            Off
+
+    [FILTER]
+        Name       grep
+        Match      kube.*
+        Exclude    log .*fluent-bit.*
 
     [OUTPUT]
         Name   stdout
