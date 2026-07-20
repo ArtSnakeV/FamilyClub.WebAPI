@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { apiBasePath } from "@/lib/api/services";
-import { isBlocked, isPermanentBlock } from "../hooks/blockUtils";
+import { isBlocked, isPermanentBlock } from "../../hooks/blockUtils";
 import { UserInfo } from "../../hooks/useAllUsersInfo";
 
 interface BlockedUserStat {
