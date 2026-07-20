@@ -22,13 +22,8 @@ export async function lockUser(id: string, payload: LockUserPayload) {
         throw new Error(`Failed to lock user (${res.status}): ${details}`);
     }
 
-    // Бекенд повертає 204 No Content — тіла немає, res.json() впаде з помилкою
     if (res.status === 204) return null;
     return res.json();
-}
-
-export async function lockUser(id: string) {
-    await clubMemberAction(id, "lock");
 }
 
 export async function unlockUser(id: string) {
