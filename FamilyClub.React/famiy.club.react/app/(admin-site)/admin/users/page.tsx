@@ -9,23 +9,22 @@
 // import { lockUser, unlockUser, deleteUser } from "./api/ActionUsers";
 // import QuickActionsBar from "./section/QuickActionsBar";
 // import { useRouter } from "next/navigation";
-
+// import { isBlocked } from "./hooks/blockUtils"; 
+// import LockUserModal from "./blockedUsers/ui/LockUserModal"; 
 
 // export default function Page() {
 //     const router = useRouter();
-//     const { usersInfo, loadingUsersInfo } = useAllUsersInfo();
+//     const { usersInfo, loadingUsersInfo, refetch } = useAllUsersInfo();
 
 //     const [localUsers, setLocalUsers] = useState<UserInfo[]>([]);
 //     const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
-//     const [showOnlyBlocked, setShowOnlyBlocked] = useState(false);
+//     const [userToLock, setUserToLock] = useState<UserInfo | null>(null);
 
 //     useEffect(() => {
 //         setLocalUsers(usersInfo);
 //     }, [usersInfo]);
 
-//     const blockedCount = localUsers.filter(
-//         (u) => !!u.lockoutEnd && new Date(u.lockoutEnd).getTime() > Date.now()
-//     ).length;
+//     const blockedCount = localUsers.filter((u) => isBlocked(u.lockoutEnd)).length;
 
 //     const { stats, loading } = useUsersStats(
 //         localUsers.length > 0 ? blockedCount : undefined
@@ -55,32 +54,27 @@
 //     }, []);
 
 //     const handleLockToggle = async (user: UserInfo) => {
-//         const blocked =
-//             !!user.lockoutEnd && new Date(user.lockoutEnd).getTime() > Date.now();
-
-//         if (blocked) {
+//         if (isBlocked(user.lockoutEnd)) {
 //             await unlockUser(user.id);
+//             await refetch();
 //         } else {
-//             await lockUser(user.id);
+//             setUserToLock(user);
 //         }
-
-//         setLocalUsers((prev) =>
-//             prev.map((u) =>
-//                 u.id === user.id
-//                     ? {
-//                         ...u,
-//                         lockoutEnd: blocked
-//                             ? null
-//                             : new Date(
-//                                 Date.now() + 1000 * 60 * 60 * 24 * 365 * 100
-//                             ).toISOString(),
-//                     }
-//                     : u
-//             )
-//         );
 //     };
 
-//     const selectedUser = localUsers.find((u) => u.id === selectedUserId) ?? null;
+//     const handleConfirmLock = async (
+//         blockReasonId: number,
+//         comment: string,
+//         lockoutEnd: string | null
+//     ) => {
+//         if (!userToLock) return;
+
+//         await lockUser(userToLock.id, { blockReasonId, comment, lockoutEnd });
+//         await refetch();
+
+//         setUserToLock(null);
+//     };
+
 //     const handleDeleteUser = async (user: UserInfo) => {
 //         await deleteUser(user.id);
 
@@ -91,18 +85,10 @@
 //         }
 //     };
 
-//     const isBlocked = (user: UserInfo) =>
-//         !!user.lockoutEnd && new Date(user.lockoutEnd).getTime() > Date.now();
-
-//     const visibleUsers = showOnlyBlocked
-//         ? localUsers.filter(isBlocked)
-//         : localUsers;
-
-//     const selectedUserBlocked = localUsers.find((u) => u.id === selectedUserId) ?? null;
+//     const selectedUser = localUsers.find((u) => u.id === selectedUserId) ?? null;
 
 //     return (
-//         <div
-//             className="w-full min-h-screen overflow-hidden relative m-0 p-0">
+//         <div className="w-full min-h-screen overflow-hidden relative m-0 p-0">
 //             <div className="w-[100vw] min-h-screen relative">
 //                 <img
 //                     src="/images/usersPageAdmin/Rectangle 675.png"
@@ -117,7 +103,7 @@
 //                             <BlockForUsersInfo key={stat.title} {...stat} />
 //                         ))}
 //                 </div>
-//                 <div className="flex flex-row relative mt-2 mx-4 gap-4 items-start">
+//                 <div className="flex flex-row relative mt-2 mx-4 gap-6 items-start">
 //                     {loadingUsersInfo ? (
 //                         <p>Завантаження...</p>
 //                     ) : (
@@ -139,10 +125,16 @@
 //                 </div>
 
 //                 <QuickActionsBar
-//                     onAddManager={() => router.push(`/admin/managers/addManager`)}
-//                     onToggleBlockedFilter={() => setShowOnlyBlocked((prev) => !prev)}
-//                     isBlockedFilterActive={showOnlyBlocked}
+//                     onAddManager={() => router.push(`/admin/managers/addEditManager`)}
 //                 />
+
+//                 {userToLock && (
+//                     <LockUserModal
+//                         user={userToLock}
+//                         onConfirm={handleConfirmLock}
+//                         onCancel={() => setUserToLock(null)}
+//                     />
+//                 )}
 //             </div>
 //         </div>
 //     );
@@ -155,17 +147,21 @@ import { useUsersStats } from "./hooks/useUsersStats";
 import useAllUsersInfo, { UserInfo } from "./hooks/useAllUsersInfo";
 import AllUsersInfo from "./section/AllUsersInfo";
 import OneUserInfo from "./section/oneUserInfo/OneUserInfo";
-import { lockUser, unlockUser, deleteUser } from "./api/ActionUsers";
+import { deleteUser } from "./api/ActionUsers";
 import QuickActionsBar from "./section/QuickActionsBar";
 import { useRouter } from "next/navigation";
+import { useLockUserFlow } from "./hooks/useLockUserFlow";
+import LockUserModal from "./blockedUsers/ui/LockUserModal";
 
 export default function Page() {
     const router = useRouter();
-    const { usersInfo, loadingUsersInfo } = useAllUsersInfo();
+    const { usersInfo, loadingUsersInfo, refetch } = useAllUsersInfo();
 
     const [localUsers, setLocalUsers] = useState<UserInfo[]>([]);
     const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
-    // const [showOnlyBlocked, setShowOnlyBlocked] = useState(false);
+
+    const { userToLock, setUserToLock, handleLockToggle, handleConfirmLock } =
+        useLockUserFlow(refetch);
 
     useEffect(() => {
         setLocalUsers(usersInfo);
@@ -202,32 +198,6 @@ export default function Page() {
         };
     }, []);
 
-    const handleLockToggle = async (user: UserInfo) => {
-        const blocked =
-            !!user.lockoutEnd && new Date(user.lockoutEnd).getTime() > Date.now();
-
-        if (blocked) {
-            await unlockUser(user.id);
-        } else {
-            await lockUser(user.id);
-        }
-
-        setLocalUsers((prev) =>
-            prev.map((u) =>
-                u.id === user.id
-                    ? {
-                        ...u,
-                        lockoutEnd: blocked
-                            ? null
-                            : new Date(
-                                Date.now() + 1000 * 60 * 60 * 24 * 365 * 100
-                            ).toISOString(),
-                    }
-                    : u
-            )
-        );
-    };
-
     const handleDeleteUser = async (user: UserInfo) => {
         await deleteUser(user.id);
 
@@ -237,13 +207,6 @@ export default function Page() {
             setSelectedUserId(null);
         }
     };
-
-    // const isBlocked = (user: UserInfo) =>
-    //     !!user.lockoutEnd && new Date(user.lockoutEnd).getTime() > Date.now();
-
-    // const visibleUsers = showOnlyBlocked
-    //     ? localUsers.filter(isBlocked)
-    //     : localUsers;
 
     const selectedUser = localUsers.find((u) => u.id === selectedUserId) ?? null;
 
@@ -268,7 +231,6 @@ export default function Page() {
                         <p>Завантаження...</p>
                     ) : (
                         <AllUsersInfo
-                            // users={visibleUsers}
                             users={localUsers}
                             onSelectUser={(u) => setSelectedUserId(u.id)}
                             selectedUserId={selectedUser?.id}
@@ -287,9 +249,15 @@ export default function Page() {
 
                 <QuickActionsBar
                     onAddManager={() => router.push(`/admin/managers/addEditManager`)}
-                    // onToggleBlockedFilter={() => setShowOnlyBlocked((prev) => !prev)}
-                    // isBlockedFilterActive={showOnlyBlocked}
                 />
+
+                {userToLock && (
+                    <LockUserModal
+                        user={userToLock}
+                        onConfirm={handleConfirmLock}
+                        onCancel={() => setUserToLock(null)}
+                    />
+                )}
             </div>
         </div>
     );

@@ -3,7 +3,7 @@
 import { useMemo } from "react";
 import { UserInfo } from "../../hooks/useAllUsersInfo";
 import UserCardBlockedUser from "./UserCardBlockedUser";
-import { isBlocked, isPermanentBlock, daysLeft, formatDate, getBlockStatus } from "../hooks/blockUtils";
+import { isBlocked, isPermanentBlock, daysLeft, formatDate, getBlockStatus } from "../../hooks/blockUtils";
 
 interface Props {
     users: UserInfo[];
