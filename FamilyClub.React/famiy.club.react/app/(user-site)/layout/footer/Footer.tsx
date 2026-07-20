@@ -99,6 +99,7 @@ const Footer = () => {
                                 <Link className="footer-text" href="#">Умови користування</Link>
                                 <Link className="footer-text" href="#">Повернення товару</Link>
                                 <Link className="footer-text" href="#">Політика публікації товару</Link>
+                                <Link className="footer-text" href="/complaints">Поскаржитись</Link>
                             </nav>
                         </div>
 
