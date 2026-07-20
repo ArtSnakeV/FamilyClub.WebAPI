@@ -23,6 +23,7 @@ spec:
       annotations:
         app.kubernetes.io/repository: "https://github.com/Metra638/FamilyClub.WebAPI1"
     spec:
+      serviceAccountName: postgres
       terminationGracePeriodSeconds: 60
       initContainers:
       - name: fix-permissions

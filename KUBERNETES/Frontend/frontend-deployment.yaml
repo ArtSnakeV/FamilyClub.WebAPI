@@ -28,6 +28,7 @@ spec:
         branch: "DeploymentTest5"
         repository: "https://github.com/Metra638/FamilyClub.WebAPI1"
     spec:
+      serviceAccountName: frontend
       imagePullSecrets:
       - name: dockerhub-secret
       terminationGracePeriodSeconds: 60
