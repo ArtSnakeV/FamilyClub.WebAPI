@@ -48,9 +48,8 @@ export async function lockUser(id: string, payload: LockUserPayload) {
         );
     }
 
-    // Бекенд повертає 204 No Content
     if (res.status === 204) return null;
-    return res.json().catch(() => null);
+    return res.json();
 }
 
 export async function unlockUser(id: string) {

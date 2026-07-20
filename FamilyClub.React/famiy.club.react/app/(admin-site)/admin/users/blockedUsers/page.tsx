@@ -3,15 +3,17 @@
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import useAllUsersInfo, { UserInfo } from "../hooks/useAllUsersInfo";
-import { lockUser, unlockUser, deleteUser } from "../api/ActionUsers";
 import { useBlockedUsersStats } from "./hooks/useBlockedUsersStats";
 import BlockedSectionUsersHeader from "./section/BlockedSectionUsersHeader";
 import AllBlockedUsersInfo from "./section/AllBlockedUsersInfo";
 import BlockFilteredBlockedUsers from "./section/searchSetions/BlockFilteredBlockedUsers";
 import BlockTabsBlockedUsers from "./section/searchSetions/BlockTabsBlockedUsers";
-import { isBlocked, isPermanentBlock } from "./hooks/blockUtils";
+import { isBlocked, isPermanentBlock } from "../hooks/blockUtils";
 import EmptyDiv from "./ui/EmptyDiv";
 import LockUserModal from "./ui/LockUserModal";
+import { deleteUser } from "../api/ActionUsers";
+import { useLockUserFlow } from "../hooks/useLockUserFlow";
+
 
 const EXPIRING_SOON_DAYS = 7;
 const isExpiringSoon = (user: UserInfo) => {
@@ -31,7 +33,8 @@ export default function Page() {
     const [status, setStatus] = useState("all");
     const [reason, setReason] = useState("all");
     const [sort, setSort] = useState("newest");
-    const [userToLock, setUserToLock] = useState<UserInfo | null>(null);
+    const { userToLock, setUserToLock, handleLockToggle, handleConfirmLock } =
+        useLockUserFlow(refetch);
 
     useEffect(() => {
         setLocalUsers(usersInfo);
@@ -103,29 +106,6 @@ export default function Page() {
             document.body.style.backgroundRepeat = "";
         };
     }, []);
-
-    const handleLockToggle = async (user: UserInfo) => {
-        const blocked = isBlocked(user.lockoutEnd);
-
-        if (blocked) {
-            await unlockUser(user.id);
-            await refetch();
-
-            if (selectedUserId === user.id) {
-                setSelectedUserIdBlocked(null);
-            }
-        } else {
-            setUserToLock(user);
-        }
-    };
-    const handleConfirmLock = async (blockReasonId: number, comment: string,  lockoutEnd: string | null) => {
-        if (!userToLock) return;
-
-        await lockUser(userToLock.id, { blockReasonId, comment, lockoutEnd });
-        await refetch();
-
-        setUserToLock(null);
-    };
 
     const handleDeleteUser = async (user: UserInfo) => {
         await deleteUser(user.id);
