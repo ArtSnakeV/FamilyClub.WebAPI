@@ -40,6 +40,8 @@ public class FamilyClubContext : IdentityDbContext<ClubMember>
     public DbSet<Complaint> Complaints { get; set; }
     public DbSet<ComplaintImage> ComplaintImages { get; set; }
     public DbSet<BlockReason> BlockReasons { get; set; }
+    public DbSet<BlockedIp> BlockedIps { get; set; }
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
         // Mandatory for Identity
