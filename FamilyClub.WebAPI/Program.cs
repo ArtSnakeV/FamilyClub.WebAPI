@@ -5,6 +5,10 @@ using FamilyClub.DAL.EF.DB;
 using FamilyClub.DAL.Interfaces;
 using FamilyClub.DAL.Repositories;
 using FamilyClubLibrary;
+using FamilyClub.WebAPI.Middlewares;
+using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.AspNetCore.RateLimiting;
+using System.Threading.RateLimiting;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -138,6 +142,11 @@ builder.Services.AddSingleton<IPresenceService, PresenceService>();
 //BlockReason
 builder.Services.AddScoped<IBlockReasonRepository, BlockReasonRepository>();
 builder.Services.AddScoped<IBlockReasonService, BlockReasonService>();
+
+// Blocked IPs
+builder.Services.AddScoped<IBlockedIpRepository, BlockedIpRepository>();
+builder.Services.AddScoped<IBlockedIpService, BlockedIpService>();
+
 // Customize Identity cookie
 //builder.Services.ConfigureApplicationCookie(
 //    options => {
@@ -185,6 +194,26 @@ builder.Services.AddAutoMapper(cfg =>
 //});
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddMemoryCache();
+
+builder.Services.Configure<ForwardedHeadersOptions>(options =>
+{
+    options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+    // Note: If you have a trusted proxy, you might need to add it to KnownProxies or KnownNetworks here.
+});
+
+builder.Services.AddRateLimiter(options =>
+{
+    options.AddFixedWindowLimiter("GlobalLimit", opt =>
+    {
+        opt.PermitLimit = 100;
+        opt.Window = TimeSpan.FromMinutes(1);
+        opt.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
+        opt.QueueLimit = 2;
+    });
+    options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+});
+
 var app = builder.Build();
 
 
@@ -194,6 +223,7 @@ using (IServiceScope scope = app.Services.CreateScope())
 	await DbInitializer.Initialize(services, app.Configuration);
 }
 
+app.UseForwardedHeaders(); // Must be early in pipeline to resolve real IP
 app.UseCors("AllowReact"); // Allowing to use React
 
 // Configure the HTTP request pipeline.
@@ -210,6 +240,9 @@ app.UseStaticFiles(); // Serve static files from wwwroot
 
 
 app.UseDefaultFiles(); // Serve default files like index.html
+
+app.UseRateLimiter(); // Apply Rate Limiter before Auth and Controllers
+app.UseMiddleware<IpBlockingMiddleware>(); // Block bad IPs before Auth
 
 app.UseAuthentication();
 app.UseAuthorization();
