@@ -11,6 +11,7 @@ metadata:
     app.kubernetes.io/environment: production
 spec:
   replicas: 1
+  revisionHistoryLimit: 5
   updateStrategy:
     type: OnDelete
   selector:
