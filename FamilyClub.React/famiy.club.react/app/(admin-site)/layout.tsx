@@ -162,6 +162,7 @@ import AdminLayoutSidebarItems from "./layout/layoutNav";
 import PresenceHeartbeatMount from "./admin/users/section/PresenceHeartbeatMount";
 import AdminSidebarUserCard from "./layout/AdminSidebarUserCard";
 import AdminAccessGuard from "./layout/AdminAccessGuard";
+import AdminProviders from "./layout/AdminProviders";
 
 const sourceSans = Source_Sans_3({
   subsets: ["cyrillic", "latin"],
@@ -183,6 +184,7 @@ export default async function AdminLayout({
     
     <html lang="uk" className={`${sourceSans.variable} ${robotoMono.variable}`}>
       <body style={{ margin: 0, padding: 0, backgroundColor: "#DBD7CD" }}>
+        <AdminProviders>
         <PresenceHeartbeatMount />
         {/* HEADER — fixed */}
         <header
@@ -254,17 +256,6 @@ export default async function AdminLayout({
           </div>
         </aside>
 
-        {/* <main
-          className="min-h-screen flex flex-col"
-          style={{
-            marginLeft: "409px",
-            marginTop: "62px",
-            backgroundColor: "#DBD7CD",
-            boxShadow: "0px 0px 10px 0px rgba(0, 0, 0, 0.50)",
-          }}
-        >
-          <div className="w-full flex-1">{children}</div>
-        </main> */}
         <main
           className="min-h-screen flex flex-col bg-cover bg-center bg-no-repeat bg-fixed"
           style={{
@@ -278,9 +269,10 @@ export default async function AdminLayout({
           }}
         >
           <div className="w-full flex-1">
-            <AdminAccessGuard>{children}</AdminAccessGuard>
+              <AdminAccessGuard>{children}</AdminAccessGuard>
           </div>
         </main>
+        </AdminProviders>
       </body>
     </html>
   );

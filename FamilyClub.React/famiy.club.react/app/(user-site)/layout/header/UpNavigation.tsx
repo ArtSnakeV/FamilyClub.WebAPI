@@ -130,10 +130,8 @@ export default function UpNavigation() {
   return (
     <>
       <div className="max-w-[1100px] mx-auto flex items-center h-full ml-[92px] relative flex-nowrap justify-between">
-        <Link href="/">
-          <Logo />
-        </Link>
-        <div className="flex items-center w-[800px] relative ml-[180px] gap-1 mt-[2px]">
+        <Logo />
+        <div className="flex items-center w-[800px] relative ml-[140px] gap-1 mt-[2px]">
           <div className="w-[80px] gap-5 h-[50px] flex items-center justify-center">
             <UaCircle />
           </div>

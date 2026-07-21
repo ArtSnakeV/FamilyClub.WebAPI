@@ -14,6 +14,7 @@ import {
 import ComplaintsFiltersBar from "./ComplaintsFiltersBar";
 import ComplaintsTable from "./ComplaintsTable";
 import ManagerComplaintTypeTabs from "./ManagerComplaintTypeTabs";
+import PlatformContactStrip from "@/app/(admin-site)/admin/platform-settings/components/PlatformContactStrip";
 
 type Props = {
     complaints: ComplaintsReadDto[];
@@ -50,6 +51,8 @@ export default function ManagerComplaintsPanel({
                     Обробка скарг користувачів за типами та статусами
                 </p>
             </div>
+
+            <PlatformContactStrip />
 
             <ManagerComplaintTypeTabs
                 complaints={complaints}
