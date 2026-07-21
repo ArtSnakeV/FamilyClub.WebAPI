@@ -41,6 +41,23 @@ spec:
           protocol: TCP
         # Ресурсы (requests/limits) не указаны намеренно:
         # - Кластер имеет жёсткие ограничения по CPU/памяти, это приводит к "Pending".
+        startupProbe:
+          tcpSocket:
+            port: 8080
+          initialDelaySeconds: 90
+          timeoutSeconds: 5
+          periodSeconds: 5
+          failureThreshold: 30
+        livenessProbe:
+          tcpSocket:
+            port: 8080
+          timeoutSeconds: 5
+          periodSeconds: 15
+        readinessProbe:
+          tcpSocket:
+            port: 8080
+          timeoutSeconds: 5
+          periodSeconds: 5
         env:
         - name: Jwt__Key
           valueFrom:
