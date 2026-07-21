@@ -115,17 +115,3 @@ spec:
       port: 5432
       targetPort: 5432
   type: ClusterIP
-
----
-# apiVersion: policy/v1
-# kind: PodDisruptionBudget
-# metadata:
-#   name: postgres-pdb
-#   namespace: production
-#   labels:
-#     app.kubernetes.io/name: familyclub-postgres
-# spec:
-#   minAvailable: 1
-#   selector:
-#     matchLabels:
-#       app.kubernetes.io/name: familyclub-postgres
