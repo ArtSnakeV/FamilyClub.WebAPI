@@ -89,15 +89,16 @@ spec:
       appProtocol: http
   type: ClusterIP
 ---
-# apiVersion: policy/v1
-# kind: PodDisruptionBudget
-# metadata:
-#   name: frontend-pdb
-#   namespace: production
-#   labels:
-#     app.kubernetes.io/name: familyclub-frontend
-# spec:
-#   minAvailable: 1
-#   selector:
-#     matchLabels:
-#       app.kubernetes.io/name: familyclub-frontend
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: frontend-pdb
+  namespace: production
+  labels:
+    app.kubernetes.io/name: familyclub-frontend
+  spec:
+    minAvailable: 1
+    selector:
+      matchLabels:
+        app.kubernetes.io/name: familyclub-frontend
+
