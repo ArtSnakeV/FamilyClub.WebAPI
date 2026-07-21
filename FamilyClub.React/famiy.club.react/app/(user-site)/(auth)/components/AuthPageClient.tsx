@@ -150,7 +150,7 @@ export default function AuthPageClient() {
         <div
           className="absolute inset-0 z-[-1]"
           style={{
-            backgroundImage: 'url("images/login register/background.png")',
+            backgroundImage: 'url("/images/login register/background.png")',
             backgroundSize: "cover",
             backgroundPosition: "center",
             backgroundRepeat: "no-repeat",

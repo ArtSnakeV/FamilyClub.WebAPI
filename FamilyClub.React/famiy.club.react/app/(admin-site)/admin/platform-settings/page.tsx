@@ -1,20 +1,31 @@
+"use client";
 
-export default async function PlatformSettings() {
+import PlatformSettingsPanel from "./components/PlatformSettingsPanel";
+
+export default function PlatformSettingsPage() {
     return (
-        <>
-            <span>Platform settings</span>
-            {/* Main content part*/}
+        <div className="w-full min-h-screen overflow-x-hidden relative m-0 p-0">
             <div
-                className="absolute bg-cover bg-center bg-no-repeat overflow-hidden"
-                style={{
-                    width: '1492.88px',
-                    height: '1062.04px',
-                    backgroundImage: "url('/images/entities/main_field_background.svg')",
-                }}
+                className="relative min-h-screen pb-10"
+                style={{ marginLeft: "-1rem", width: "calc(100% + 2rem)" }}
             >
+                <img
+                    src="/images/usersPageAdmin/Rectangle 675.png"
+                    className="absolute pointer-events-none"
+                    style={{
+                        width: "calc(100% + 20px)",
+                        height: "calc(100% + 40px)",
+                        top: "-40px",
+                        left: "-20px",
+                        objectFit: "fill",
+                    }}
+                    alt=""
+                />
 
-                
+                <div className="relative z-10 mt-24 px-10 pb-6 flex flex-col gap-6 box-border">
+                    <PlatformSettingsPanel />
+                </div>
             </div>
-        </>
+        </div>
     );
 }

@@ -2,9 +2,16 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import { usePlatformSettingsOptional } from "@/lib/platformSettings/PlatformSettingsContext";
+import { mediaSrc } from "@/lib/platformSettings/platformSettingsApi";
 
 export default function MobileHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const { settings } = usePlatformSettingsOptional();
+  const logoSrc =
+    mediaSrc(settings.logoData, settings.logoContentType) ??
+    "/images/main_page/logo.png";
+  const logoAlt = settings.companyName || "LIBRELLIS";
 
   return (
     <>
@@ -25,12 +32,22 @@ export default function MobileHeader() {
             <Link
               href="/"
               aria-label="Головна"
-              className="absolute top-0 left-[16px] z-50 block transition-transform hover:scale-105"
+              className="absolute top-0 left-[16px] z-50 block w-[85px] h-[56px] sm:w-[95px] sm:h-[62px] isolate transition-transform hover:scale-105"
             >
               <img
-                src="/images/header/logo.png"
-                alt="Libria"
-                className="w-[75px] sm:w-[85px] h-auto object-contain drop-shadow-[0px_4px_8px_rgba(0,0,0,0.3)]"
+                src="/images/main_page/logo-background.png"
+                alt=""
+                aria-hidden
+                className="absolute inset-0 w-full h-full object-fill pointer-events-none"
+              />
+              <img
+                src={logoSrc}
+                alt={logoAlt}
+                className={`relative z-10 w-full h-full object-contain p-[4px_6px_10px] drop-shadow-[0px_4px_8px_rgba(0,0,0,0.3)] ${
+                  logoSrc === "/images/main_page/logo.png"
+                    ? "mix-blend-screen"
+                    : ""
+                }`}
               />
             </Link>
           </div>

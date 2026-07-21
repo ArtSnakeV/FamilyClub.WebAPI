@@ -28,6 +28,7 @@ import ComplaintsFiltersBar from "./ComplaintsFiltersBar";
 import ComplaintsTable from "./ComplaintsTable";
 import ManagersWorkloadPanel from "./ManagersWorkloadPanel";
 import RecentComplaintsResponses from "./RecentComplaintsResponses";
+import PlatformContactStrip from "@/app/(admin-site)/admin/platform-settings/components/PlatformContactStrip";
 
 type Props = {
     complaints: ComplaintsReadDto[];
@@ -94,6 +95,8 @@ export default function AdminComplaintsPanel({
                     Огляд, динаміка та обробка скарг користувачів
                 </p>
             </div>
+
+            <PlatformContactStrip />
 
             <section className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-6 gap-4">
                 <AnalyticsKpiCard

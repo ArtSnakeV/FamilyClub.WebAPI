@@ -147,6 +147,10 @@ builder.Services.AddScoped<IBlockReasonService, BlockReasonService>();
 builder.Services.AddScoped<IBlockedIpRepository, BlockedIpRepository>();
 builder.Services.AddScoped<IBlockedIpService, BlockedIpService>();
 
+// Platform settings
+builder.Services.AddScoped<IPlatformSettingsRepository, PlatformSettingsRepository>();
+builder.Services.AddScoped<IPlatformSettingsService, PlatformSettingsService>();
+
 // Customize Identity cookie
 //builder.Services.ConfigureApplicationCookie(
 //    options => {
