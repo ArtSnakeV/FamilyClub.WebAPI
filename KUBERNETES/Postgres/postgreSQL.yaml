@@ -28,9 +28,26 @@ spec:
       terminationGracePeriodSeconds: 60
       securityContext:
         fsGroup: 999
-        runAsNonRoot: true
-        seccompProfile:
-          type: RuntimeDefault
+      initContainers:
+      - name: fix-permissions
+        image: busybox:1.37
+        securityContext:
+          runAsUser: 0                  # root для выполнения chown
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop: ["ALL"]
+          seccompProfile:
+            type: RuntimeDefault
+        command:
+        - sh
+        - -c
+        - |
+          mkdir -p /data/postgres-data
+          chown -R 999:999 /data
+          chmod 700 /data/postgres-data
+        volumeMounts:
+        - name: postgres-data
+          mountPath: /data
       containers:
       - name: postgres
         image: postgres@sha256:74e110c41804365e3915fcc09d5e7a1eff50161aaa94d5da0e58e0cd75ae509c
@@ -81,7 +98,7 @@ spec:
         volumeMounts:
         - name: postgres-data
           mountPath: /var/lib/postgresql/data
-          # subPath удалён — PostgreSQL работает с корнем PVC
+          subPath: postgres-data      # возвращаем subPath
         securityContext:
           runAsNonRoot: true
           runAsUser: 999
