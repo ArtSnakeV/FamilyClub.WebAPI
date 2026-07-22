@@ -235,8 +235,14 @@ export function BrandingMaintenanceSection({ settings, onSave }: SectionProps) {
                 try {
                     await onSave(draft);
                     setMessage("Збережено");
-                } catch {
-                    setMessage("Помилка збереження");
+                } catch (e) {
+                    const detail =
+                        e instanceof Error ? e.message : "Помилка збереження";
+                    setMessage(
+                        detail.includes("401") || detail.includes("403")
+                            ? "Немає доступу (увійдіть знову як Admin)"
+                            : "Помилка збереження"
+                    );
                 } finally {
                     setSaving(false);
                 }
@@ -317,7 +323,15 @@ export function BrandingMaintenanceSection({ settings, onSave }: SectionProps) {
                 </div>
             </div>
             {message && (
-                <p className="text-[13px] text-[#005b33]">{message}</p>
+                <p
+                    className={`text-[13px] ${
+                        message === "Збережено"
+                            ? "text-[#005b33]"
+                            : "text-[#B42318]"
+                    }`}
+                >
+                    {message}
+                </p>
             )}
         </SettingsCard>
     );
