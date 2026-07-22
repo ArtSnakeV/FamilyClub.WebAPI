@@ -97,9 +97,9 @@ metadata:
   namespace: production
   labels:
     app.kubernetes.io/name: familyclub-frontend
-  spec:
-    minAvailable: 1
-    selector:
-      matchLabels:
-        app.kubernetes.io/name: familyclub-frontend
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: familyclub-frontend
 
