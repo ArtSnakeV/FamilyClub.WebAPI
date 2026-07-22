@@ -27,7 +27,7 @@ spec:
       terminationGracePeriodSeconds: 60
       initContainers:
       - name: fix-permissions
-        image: busybox:1.37
+        image: busybox:latest
         securityContext:
           runAsNonRoot: true
           runAsUser: 65534
