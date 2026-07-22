@@ -1,3 +1,4 @@
+---
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
@@ -27,15 +28,7 @@ spec:
       terminationGracePeriodSeconds: 60
       initContainers:
       - name: fix-permissions
-        image: busybox:latest
-        securityContext:
-          runAsNonRoot: true
-          runAsUser: 65534
-          allowPrivilegeEscalation: false
-          capabilities:
-            drop: ["ALL"]
-          seccompProfile:
-            type: RuntimeDefault
+        image: busybox:1.37
         command:
         - sh
         - -c
@@ -56,9 +49,11 @@ spec:
         startupProbe:
           exec:
             command:
-            - /bin/sh
-            - -c
-            - pg_isready -U postgres -h 127.0.0.1
+            - pg_isready
+            - -U
+            - postgres
+            - -h
+            - 127.0.0.1
           initialDelaySeconds: 90
           timeoutSeconds: 5
           periodSeconds: 5
@@ -66,17 +61,21 @@ spec:
         livenessProbe:
           exec:
             command:
-            - /bin/sh
-            - -c
-            - pg_isready -U postgres -h 127.0.0.1
+            - pg_isready
+            - -U
+            - postgres
+            - -h
+            - 127.0.0.1
           timeoutSeconds: 5
           periodSeconds: 15
         readinessProbe:
           exec:
             command:
-            - /bin/sh
-            - -c
-            - pg_isready -U postgres -h 127.0.0.1
+            - pg_isready
+            - -U
+            - postgres
+            - -h
+            - 127.0.0.1
           timeoutSeconds: 5
           periodSeconds: 5
         env:
