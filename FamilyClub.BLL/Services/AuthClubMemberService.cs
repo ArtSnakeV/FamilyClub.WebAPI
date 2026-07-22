@@ -56,13 +56,15 @@ public class AuthClubMemberService : IAuthClubMemberService
         }
 
         // Let's generate our token here and return it along with the user info
-        var response =  GenerateJwtToken(clubMember, dto.RememberMe);
+        var response = await GenerateJwtTokenAsync(clubMember, dto.RememberMe);
         response.ReturnUrl = dto.ReturnUrl;
 
         return response;
     }
 
-    private AuthResponseClubMemberDTO GenerateJwtToken(ClubMember clubMember, bool rememberMe)
+    private async Task<AuthResponseClubMemberDTO> GenerateJwtTokenAsync(
+        ClubMember clubMember,
+        bool rememberMe)
     {
         var authClaims = new List<Claim>
         {
@@ -70,6 +72,14 @@ public class AuthClubMemberService : IAuthClubMemberService
             new Claim(ClaimTypes.NameIdentifier, clubMember.Id),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
         };
+
+        // Roles must be in the JWT for [Authorize(Roles = "...")] endpoints
+        var roles = await _userManager.GetRolesAsync(clubMember);
+        foreach (var role in roles)
+        {
+            authClaims.Add(new Claim(ClaimTypes.Role, role));
+        }
+
         var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"] ?? throw new InvalidOperationException("JWT Secret Key is not configured.")));
         var expiration = rememberMe
             ? DateTime.UtcNow.AddDays(30)

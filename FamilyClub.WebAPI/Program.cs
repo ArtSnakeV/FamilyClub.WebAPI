@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -178,8 +179,13 @@ builder.Services.AddAuthentication(options =>
             ValidateIssuerSigningKey = true,
             ValidIssuer = jwtSettings["Issuer"],
             ValidAudience = jwtSettings["Audience"],
-            IssuerSigningKey = new SymmetricSecurityKey(key)
+            IssuerSigningKey = new SymmetricSecurityKey(key),
+            // JWT stores roles as short claim type "role"; needed for [Authorize(Roles)]
+            RoleClaimType = ClaimTypes.Role,
+            NameClaimType = ClaimTypes.Name,
         };
+        // Keep inbound mapping so "role" → ClaimTypes.Role for Authorize(Roles = "...")
+        options.MapInboundClaims = true;
     });
 
 
