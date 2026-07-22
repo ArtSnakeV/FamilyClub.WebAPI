@@ -81,7 +81,7 @@ spec:
         volumeMounts:
         - name: postgres-data
           mountPath: /var/lib/postgresql/data
-          subPath: postgres-data
+          # subPath удалён — PostgreSQL работает с корнем PVC
         securityContext:
           runAsNonRoot: true
           runAsUser: 999
