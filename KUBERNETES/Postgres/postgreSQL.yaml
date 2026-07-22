@@ -26,27 +26,11 @@ spec:
     spec:
       serviceAccountName: postgres
       terminationGracePeriodSeconds: 60
-      initContainers:
-      - name: fix-permissions
-        image: busybox:1.37
-        securityContext:
-          runAsNonRoot: true
-          runAsUser: 65534
-          allowPrivilegeEscalation: false
-          capabilities:
-            drop: ["ALL"]
-          seccompProfile:
-            type: RuntimeDefault
-        command:
-        - sh
-        - -c
-        - |
-          mkdir -p /data/postgres-data
-          chown -R 999:999 /data
-          chmod 700 /data/postgres-data
-        volumeMounts:
-        - name: postgres-data
-          mountPath: /data
+      securityContext:
+        fsGroup: 999
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
       containers:
       - name: postgres
         image: postgres@sha256:74e110c41804365e3915fcc09d5e7a1eff50161aaa94d5da0e58e0cd75ae509c
@@ -57,9 +41,11 @@ spec:
         startupProbe:
           exec:
             command:
-            - /bin/sh
-            - -c
-            - pg_isready -U postgres -h 127.0.0.1
+            - pg_isready
+            - -U
+            - postgres
+            - -h
+            - 127.0.0.1
           initialDelaySeconds: 90
           timeoutSeconds: 5
           periodSeconds: 5
@@ -67,17 +53,21 @@ spec:
         livenessProbe:
           exec:
             command:
-            - /bin/sh
-            - -c
-            - pg_isready -U postgres -h 127.0.0.1
+            - pg_isready
+            - -U
+            - postgres
+            - -h
+            - 127.0.0.1
           timeoutSeconds: 5
           periodSeconds: 15
         readinessProbe:
           exec:
             command:
-            - /bin/sh
-            - -c
-            - pg_isready -U postgres -h 127.0.0.1
+            - pg_isready
+            - -U
+            - postgres
+            - -h
+            - 127.0.0.1
           timeoutSeconds: 5
           periodSeconds: 5
         env:
