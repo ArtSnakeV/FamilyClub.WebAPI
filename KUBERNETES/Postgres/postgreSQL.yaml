@@ -26,18 +26,12 @@ spec:
     spec:
       serviceAccountName: postgres
       terminationGracePeriodSeconds: 60
-      securityContext:
-        fsGroup: 999
       initContainers:
       - name: fix-permissions
         image: busybox:1.37
         securityContext:
-          runAsUser: 0                  # root для выполнения chown
-          allowPrivilegeEscalation: false
-          capabilities:
-            drop: ["ALL"]
-          seccompProfile:
-            type: RuntimeDefault
+          privileged: true
+          runAsUser: 0
         command:
         - sh
         - -c
@@ -98,7 +92,7 @@ spec:
         volumeMounts:
         - name: postgres-data
           mountPath: /var/lib/postgresql/data
-          subPath: postgres-data      # возвращаем subPath
+          subPath: postgres-data
         securityContext:
           runAsNonRoot: true
           runAsUser: 999
