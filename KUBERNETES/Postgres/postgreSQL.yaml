@@ -28,7 +28,15 @@ spec:
       terminationGracePeriodSeconds: 60
       initContainers:
       - name: fix-permissions
-        image: busybox:latest
+        image: busybox:1.37
+        securityContext:
+          runAsNonRoot: true
+          runAsUser: 65534
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop: ["ALL"]
+          seccompProfile:
+            type: RuntimeDefault
         command:
         - sh
         - -c
@@ -88,6 +96,10 @@ spec:
           runAsNonRoot: true
           runAsUser: 999
           allowPrivilegeEscalation: false
+          capabilities:
+            drop: ["ALL"]
+          seccompProfile:
+            type: RuntimeDefault
         lifecycle:
           preStop:
             exec:
