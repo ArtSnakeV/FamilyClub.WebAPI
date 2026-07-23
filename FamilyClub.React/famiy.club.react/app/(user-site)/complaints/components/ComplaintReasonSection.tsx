@@ -38,9 +38,7 @@ export default function ComplaintReasonSection({ value, onChange }: Props) {
   return (
     <div className={styles.card}>
       <div className={styles.sectionLabel}>
-        Виберіть причину{" "}
-        <span className={styles.sectionLabelHighlight}>скарги</span>
-        <span className={styles.required}> *</span>
+        Виберіть причину скарги
       </div>
       <div className={styles.reasonList}>
         {COMPLAINT_REASONS.map((opt) => (

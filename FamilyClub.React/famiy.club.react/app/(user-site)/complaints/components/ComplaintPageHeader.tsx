@@ -18,7 +18,7 @@ export default function ComplaintPageHeader() {
         ←
       </button>
       <h1 className={styles.title}>
-        Подати <span className={styles.highlight}>скаргу</span>
+        Подати скаргу
       </h1>
     </div>
   );

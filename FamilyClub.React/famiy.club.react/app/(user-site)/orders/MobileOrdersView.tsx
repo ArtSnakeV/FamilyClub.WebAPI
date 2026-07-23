@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { MockOrderItem, OrderTabId, ORDERS_TABS } from "./mockData";
+import OrdersPagination from "./OrdersPagination";
 import printIcon from "@/public/images/userProfile/Паперова.svg";
 import ebookIcon from "@/public/images/userProfile/mobile-button-solid-full 1.png";
 import audioIcon from "@/public/images/userProfile/volume-solid-full 1.png";
@@ -16,6 +17,10 @@ interface MobileOrdersViewProps {
   onAction: (actionName: string, itemId: string, dbOrderId?: number) => void;
   paws?: number;
   discount?: number;
+  currentPage: number;
+  totalPages: number;
+  onPageChange: (page: number) => void;
+  currentItems: MockOrderItem[];
 }
 
 export default function MobileOrdersView({
@@ -27,6 +32,10 @@ export default function MobileOrdersView({
   onAction,
   paws = 0,
   discount = 0,
+  currentPage,
+  totalPages,
+  onPageChange,
+  currentItems,
 }: MobileOrdersViewProps) {
   const router = useRouter();
   const [copiedId, setCopiedId] = useState<string | null>(null);
@@ -90,8 +99,6 @@ export default function MobileOrdersView({
         );
     }
   };
-
-  const currentItems = ordersByTab[activeTab] || [];
 
   return (
     <div className="block md:hidden min-h-screen bg-[#c7a381] pt-[65px] pb-[85px] px-3 font-['Source_Sans_Pro',sans-serif]">
@@ -425,6 +432,14 @@ export default function MobileOrdersView({
           })
         )}
       </div>
+
+      {!loading && currentItems.length > 0 && (
+        <OrdersPagination 
+          currentPage={currentPage} 
+          totalPages={totalPages} 
+          onPageChange={onPageChange} 
+        />
+      )}
     </div>
   );
 }

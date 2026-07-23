@@ -214,6 +214,36 @@ namespace FamilyClub.DAL.Migrations
                     b.ToTable("block_reasons", (string)null);
                 });
 
+            modelBuilder.Entity("FamilyClubLibrary.BlockedIp", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<string>("IpAddress")
+                        .IsRequired()
+                        .HasMaxLength(45)
+                        .HasColumnType("character varying(45)")
+                        .HasColumnName("ip_address");
+
+                    b.Property<string>("Reason")
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)")
+                        .HasColumnName("reason");
+
+                    b.HasKey("Id")
+                        .HasName("pk_blocked_ips");
+
+                    b.ToTable("blocked_ips", (string)null);
+                });
+
             modelBuilder.Entity("FamilyClubLibrary.BookSize", b =>
                 {
                     b.Property<int>("Id")
@@ -687,6 +717,108 @@ namespace FamilyClub.DAL.Migrations
                         .HasDatabaseName("ix_order_items_order_id_product_id_format");
 
                     b.ToTable("order_items", (string)null);
+                });
+
+            modelBuilder.Entity("FamilyClubLibrary.PlatformSettings", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("AllowedFileFormats")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)")
+                        .HasColumnName("allowed_file_formats");
+
+                    b.Property<string>("BannerContentType")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("banner_content_type");
+
+                    b.Property<string>("BannerData")
+                        .HasColumnType("text")
+                        .HasColumnName("banner_data");
+
+                    b.Property<int>("BooksPerPage")
+                        .HasColumnType("integer")
+                        .HasColumnName("books_per_page");
+
+                    b.Property<string>("CompanyAddress")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)")
+                        .HasColumnName("company_address");
+
+                    b.Property<string>("CompanyName")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)")
+                        .HasColumnName("company_name");
+
+                    b.Property<string>("IconContentType")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("icon_content_type");
+
+                    b.Property<string>("IconData")
+                        .HasColumnType("text")
+                        .HasColumnName("icon_data");
+
+                    b.Property<string>("ImageResizeMode")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("image_resize_mode");
+
+                    b.Property<string>("LogoContentType")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("logo_content_type");
+
+                    b.Property<string>("LogoData")
+                        .HasColumnType("text")
+                        .HasColumnName("logo_data");
+
+                    b.Property<string>("MaintenanceMessage")
+                        .IsRequired()
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)")
+                        .HasColumnName("maintenance_message");
+
+                    b.Property<bool>("MaintenanceMode")
+                        .HasColumnType("boolean")
+                        .HasColumnName("maintenance_mode");
+
+                    b.Property<int>("MaxFileSizeMb")
+                        .HasColumnType("integer")
+                        .HasColumnName("max_file_size_mb");
+
+                    b.Property<string>("Slogan")
+                        .HasMaxLength(300)
+                        .HasColumnType("character varying(300)")
+                        .HasColumnName("slogan");
+
+                    b.Property<string>("SupportEmail")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)")
+                        .HasColumnName("support_email");
+
+                    b.Property<string>("SupportPhone")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("support_phone");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("updated_at");
+
+                    b.HasKey("Id")
+                        .HasName("pk_platform_settings");
+
+                    b.ToTable("platform_settings", (string)null);
                 });
 
             modelBuilder.Entity("FamilyClubLibrary.Product", b =>
