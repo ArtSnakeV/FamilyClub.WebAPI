@@ -1,18 +1,33 @@
 interface PermissionCellProps {
     allowed: boolean;
     onToggle?: () => void;
+    disabled?: boolean;
 }
 
-export default function PermissionCell({ allowed, onToggle }: PermissionCellProps) {
+export default function PermissionCell({
+    allowed,
+    onToggle,
+    disabled = false,
+}: PermissionCellProps) {
     return (
         <button
             type="button"
-            onClick={onToggle}
-            className="mx-auto flex h-8 w-8 items-center justify-center rounded-full transition hover:scale-105"
+            onClick={disabled ? undefined : onToggle}
+            disabled={disabled}
+            className={`mx-auto flex h-8 w-8 items-center justify-center rounded-full transition ${
+                disabled
+                    ? "cursor-not-allowed opacity-90"
+                    : "hover:scale-105 cursor-pointer"
+            }`}
             style={{
                 backgroundColor: allowed ? "#1F7A4D" : "#D9D9D9",
             }}
             aria-label={allowed ? "Доступ дозволено" : "Доступ заборонено"}
+            title={
+                disabled
+                    ? "Змінювати матрицю може лише адміністратор"
+                    : undefined
+            }
         >
             {allowed ? (
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">

@@ -58,3 +58,13 @@ public interface IComplaintRepository : IRepository<Complaint>
     // Метод для отримання всіх скарг конкретного користувача
     Task<IEnumerable<Complaint>> GetByClubMemberIdAsync(string clubMemberId, CancellationToken cancellationToken = default);
 }
+
+public interface IBlockedIpRepository : IRepository<BlockedIp>
+{
+    Task<BlockedIp?> GetByIpAsync(string ipAddress, CancellationToken cancellationToken = default);
+}
+
+public interface IPlatformSettingsRepository : IRepository<PlatformSettings>
+{
+    Task<PlatformSettings?> GetSingletonAsync(CancellationToken cancellationToken = default);
+}

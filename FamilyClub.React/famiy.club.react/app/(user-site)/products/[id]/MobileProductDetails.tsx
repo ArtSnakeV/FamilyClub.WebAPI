@@ -3,6 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { ProductDto, CoverType } from "@/lib/api/generated";
+import ReviewPagination from "./ReviewPagination";
 
 type ReviewCardData = {
   id: number | string;
@@ -30,6 +31,9 @@ type MobileProductDetailsProps = {
   rating: number;
   ratingCount: number;
   reviews: ReviewCardData[];
+  currentReviewPage: number;
+  totalReviewPages: number;
+  onReviewPageChange: (page: number) => void;
   booksByAuthorCards: any[];
   similarBookCards: any[];
   isFavorite: boolean;
@@ -64,6 +68,9 @@ export default function MobileProductDetails({
   rating,
   ratingCount,
   reviews,
+  currentReviewPage,
+  totalReviewPages,
+  onReviewPageChange,
   booksByAuthorCards = [],
   similarBookCards = [],
   isFavorite,
@@ -530,6 +537,14 @@ export default function MobileProductDetails({
               <p className="font-serif text-lg text-[#242424]/70">Поки що немає відгуків на цю книгу.</p>
               <p className="mt-1 text-xs text-[#242424]/50">Станьте першим, хто поділиться своїми враженнями!</p>
             </div>
+          )}
+
+          {reviews.length > 0 && (
+            <ReviewPagination
+              currentPage={currentReviewPage}
+              totalPages={totalReviewPages}
+              onPageChange={onReviewPageChange}
+            />
           )}
         </div>
 

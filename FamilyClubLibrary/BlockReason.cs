@@ -10,7 +10,7 @@ namespace FamilyClubLibrary
         public int Id { get; set; }
 
         [Required, MaxLength(100)]
-        public string Name { get; set; } = string.Empty; // Спам, Образи, Фейкові відгуки, Порушення правил, Інше
+        public string Name { get; set; } = string.Empty;
 
         public string? Description { get; set; }
 

@@ -18,6 +18,7 @@ export default function AddManagerPage() {
         userFound,
         handleSearch,
         handleSubmit,
+        roleOptions,
     } = useAddManagerForm();
 
     return (
@@ -54,7 +55,9 @@ export default function AddManagerPage() {
                                 setSearchEmail={setSearchEmail}
                                 searching={searching}
                                 userFound={userFound}
-                                handleSearch={handleSearch} />
+                                handleSearch={handleSearch}
+                                roleOptions={roleOptions}
+                            />
 
                             {/* Пароль показуємо тільки для нового користувача */}
                             {!userFound && (

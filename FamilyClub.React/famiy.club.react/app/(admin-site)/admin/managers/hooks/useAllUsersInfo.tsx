@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { apiBasePath } from "@/lib/api/services";
 import { getAuthToken } from "@/lib/auth/tokenStorage";
 
-const MANAGER_ROLE = "Manager";
+const STAFF_ROLES = ["Manager", "Admin"] as const;
 
 export interface UserInfo {
     id: string;
@@ -25,6 +25,29 @@ export interface UserInfo {
     timeZone?: string;
 }
 
+function resolvePrimaryRole(roles?: string[] | null): string {
+    if (roles?.includes("Admin")) return "Admin";
+    if (roles?.includes("Manager")) return "Manager";
+    return roles?.[0] ?? "Manager";
+}
+
+async function fetchUsersByRole(roleName: string, token: string | null) {
+    const res = await fetch(
+        `${apiBasePath}/api/RolesClubMember/${encodeURIComponent(roleName)}/users`,
+        {
+            headers: token ? { Authorization: `Bearer ${token}` } : {},
+        }
+    );
+
+    if (!res.ok) {
+        throw new Error(`Failed to load ${roleName} users: ${res.status}`);
+    }
+
+    const data = await res.json();
+    return Array.isArray(data) ? data : [];
+}
+
+/** Користувачі з ролями Manager та Admin (без дублікатів). */
 export default function useAllUsersInfo() {
     const [usersInfo, setUsersInfo] = useState<UserInfo[]>([]);
     const [loadingUsersInfo, setLoadingUsersInfo] = useState(true);
@@ -33,25 +56,41 @@ export default function useAllUsersInfo() {
         const fetchUsers = async () => {
             try {
                 const token = getAuthToken();
-                const res = await fetch(
-                    `${apiBasePath}/api/RolesClubMember/${encodeURIComponent(MANAGER_ROLE)}/users`,
-                    {
-                        headers: token ? { Authorization: `Bearer ${token}` } : {},
-                    }
+                const results = await Promise.allSettled(
+                    STAFF_ROLES.map((role) => fetchUsersByRole(role, token))
                 );
 
-                if (!res.ok) {
-                    throw new Error(`Failed to load managers: ${res.status}`);
+                const byId = new Map<string, UserInfo>();
+
+                for (const result of results) {
+                    if (result.status !== "fulfilled") {
+                        console.error(result.reason);
+                        continue;
+                    }
+
+                    for (const u of result.value) {
+                        const id = u.id ?? (u as { Id?: string }).Id ?? "";
+                        if (!id) continue;
+
+                        const roles: string[] = Array.isArray(u.roles)
+                            ? u.roles
+                            : [];
+                        const existing = byId.get(id);
+                        const mergedRoles = [
+                            ...new Set([...(existing?.roles ?? []), ...roles]),
+                        ];
+
+                        byId.set(id, {
+                            ...existing,
+                            ...u,
+                            id,
+                            roles: mergedRoles,
+                            role: resolvePrimaryRole(mergedRoles),
+                        });
+                    }
                 }
 
-                const data = await res.json();
-                const mapped: UserInfo[] = (Array.isArray(data) ? data : []).map((u) => ({
-                    ...u,
-                    id: u.id ?? (u as { Id?: string }).Id ?? "",
-                    role: u.roles?.[0] ?? MANAGER_ROLE,
-                }));
-
-                setUsersInfo(mapped);
+                setUsersInfo(Array.from(byId.values()));
             } catch (e) {
                 console.error(e);
                 setUsersInfo([]);

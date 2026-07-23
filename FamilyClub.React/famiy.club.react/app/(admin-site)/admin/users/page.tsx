@@ -198,6 +198,45 @@ export default function Page() {
         };
     }, []);
 
+    // const handleLockToggle = async (user: UserInfo) => {
+    //     const blocked =
+    //         !!user.lockoutEnd && new Date(user.lockoutEnd).getTime() > Date.now();
+
+    //     const nextLockoutEnd = new Date(
+    //         Date.now() + 1000 * 60 * 60 * 24 * 365 * 100
+    //     ).toISOString();
+
+    //     try {
+    //         if (blocked) {
+    //             await unlockUser(user.id);
+    //         } else {
+    //             await lockUser(user.id, {
+    //                 blockReasonId: 1,
+    //                 comment: "Заблоковано адміністратором",
+    //                 lockoutEnd: nextLockoutEnd,
+    //             });
+    //         }
+
+    //         setLocalUsers((prev) =>
+    //             prev.map((u) =>
+    //                 u.id === user.id
+    //                     ? {
+    //                           ...u,
+    //                           lockoutEnd: blocked ? null : nextLockoutEnd,
+    //                       }
+    //                     : u
+    //             )
+    //         );
+    //     } catch (error) {
+    //         console.error(error);
+    //         alert(
+    //             error instanceof Error
+    //                 ? error.message
+    //                 : "Не вдалося змінити статус користувача"
+    //         );
+    //     }
+    // };
+
     const handleDeleteUser = async (user: UserInfo) => {
         await deleteUser(user.id);
 

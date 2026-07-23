@@ -232,3 +232,35 @@ public class ComplaintRepository : Repository<Complaint>, IComplaintRepository
             .ToListAsync(cancellationToken);
     }
 }
+
+public class BlockedIpRepository : Repository<BlockedIp>, IBlockedIpRepository
+{
+    private readonly FamilyClubContext _context;
+
+    public BlockedIpRepository(FamilyClubContext context) : base(context)
+    {
+        _context = context;
+    }
+
+    public async Task<BlockedIp?> GetByIpAsync(string ipAddress, CancellationToken cancellationToken = default)
+    {
+        return await _context.BlockedIps
+            .FirstOrDefaultAsync(b => b.IpAddress == ipAddress, cancellationToken);
+    }
+}
+
+public class PlatformSettingsRepository : Repository<PlatformSettings>, IPlatformSettingsRepository
+{
+    private readonly FamilyClubContext _context;
+
+    public PlatformSettingsRepository(FamilyClubContext context) : base(context)
+    {
+        _context = context;
+    }
+
+    public async Task<PlatformSettings?> GetSingletonAsync(CancellationToken cancellationToken = default)
+    {
+        return await _context.PlatformSettings
+            .FirstOrDefaultAsync(s => s.Id == 1, cancellationToken);
+    }
+}
