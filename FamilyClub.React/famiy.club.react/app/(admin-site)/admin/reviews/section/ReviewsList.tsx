@@ -9,7 +9,8 @@ import { usePagination } from "../hooks/usePagination";
 interface Props {
   reviews: Review[];
   selectedId?: number;
-  onSelect: (r: Review) => void;
+  // onSelect: (r: Review) => void;
+  onSelect: (r: Review | null) => void;
   getImageSrc: (review: Review) => string | null;
 }
 
@@ -25,7 +26,7 @@ export default function ReviewsList({
     totalPages,
     paginatedItems,
     setCurrentPage,
-  } = usePagination(reviews, 5);
+  } = usePagination(reviews, 1);
 
   return (
     <div className="bg-white rounded-2xl flex flex-col justify-between w-[800px] h-[700px] border border-gray-100 p-4">
@@ -39,8 +40,9 @@ export default function ReviewsList({
             <button
               key={r.id}
               type="button"
-              onClick={() => onSelect(r)}
-              className={`w-[760px] h-[114px] shrink-0 py-[15px] mt-6 px-[30px] ml-5 rounded-[9px] text-left transition-all flex items-center justify-between gap-4 border ${isSelected
+              // onClick={() => onSelect(r)}
+             onClick={() => onSelect(isSelected ? null : r)}
+              className={`w-[730px] h-[114px] shrink-0 py-[15px] mt-6 px-[30px] ml-5 rounded-[9px] text-left transition-all flex items-center justify-between gap-4 border ${isSelected
                 ? "border-[#005B33] shadow-sm bg-[#FFFFFF]"
                 : "border-transparent hover:border-gray-200"
                 }`}
@@ -114,7 +116,7 @@ export default function ReviewsList({
           );
         })}
       </div>
-      <div className="w-full flex justify-center pt-4 mt-2 border-t border-gray-100 shrink-0">
+      <div className="w-full flex justify-center pt-4 mt-2 shrink-0">
         <Pagination
           currentPage={currentPage}
           totalPages={totalPages}
