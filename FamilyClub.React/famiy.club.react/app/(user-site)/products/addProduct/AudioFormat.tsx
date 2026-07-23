@@ -2,7 +2,10 @@
 
 import { useRef, useState } from "react";
 
-export default function AudioFormat() {
+type Props = {
+  onSelect?: () => void;
+};
+export default function AudioFormat({ onSelect }: Props) {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [file, setFile] = useState<File | null>(null);
   const handleClick = () => {
@@ -31,9 +34,11 @@ export default function AudioFormat() {
         onChange={(e) => {
           const selectedFile = e.target.files?.[0] ?? null;
           setFile(selectedFile);
+          if (selectedFile) {
+            onSelect?.();
+          }
         }}
       />
     </div>
   );
 }
-  
