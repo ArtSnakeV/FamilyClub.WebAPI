@@ -62,6 +62,12 @@ export default function PaginationBlockedUser({
 
     return (
         <div className="w-full flex items-center justify-center gap-4 flex-wrap">
+            {hasCountInfo && (
+                <p className="font-['Source_Sans_Pro'] text-[16px] ml-4 text-[#4b4b4b]">
+                    Показано {startIndex}-{endIndex} з {totalItems}
+                </p>
+            )}
+
             <ul className="flex items-center gap-2 mx-auto">
                 {/* Prev */}
                 <li>
