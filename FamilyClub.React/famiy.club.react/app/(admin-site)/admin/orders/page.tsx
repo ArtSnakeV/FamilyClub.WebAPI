@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import OrderTabsStatus from "./section/OrderTabsStatus";
-import { useOrdersStats } from "./hooks/useOrders";
-import OrdersList from "./section/OrdersList";
+import OrderTabsStatus from "./sectionR/OrderTabsStatus";
+import { useOrdersStats } from "./hooksR/useOrders";
+import OrdersList from "./sectionR/OrdersList";
 
 export type OrderTabKey =
     | "all"
