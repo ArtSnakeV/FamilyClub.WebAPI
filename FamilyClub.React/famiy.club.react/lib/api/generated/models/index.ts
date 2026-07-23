@@ -41,6 +41,7 @@ export * from './OrderItemDTO';
 export * from './Product';
 export * from './ProductDto';
 export * from './ProductImage';
+export * from './ProductImageDto';
 export * from './Promotion';
 export * from './PromotionDto';
 export * from './Publisher';

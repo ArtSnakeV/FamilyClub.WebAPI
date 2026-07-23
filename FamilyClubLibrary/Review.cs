@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace FamilyClubLibrary
@@ -13,6 +14,8 @@ namespace FamilyClubLibrary
         public Product Product { get; set; } = default!; // Added naviagation
 
         public required string UserId { get; set; }
+
+        [ForeignKey(nameof(UserId))]
         public ClubMember ClubMember { get; set; } = default!; // Added navigation
 
         [Range(0, 5)]

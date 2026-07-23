@@ -18,6 +18,8 @@ public interface IPublisherRepository : IRepository<Publisher>;
 //public interface IReviewRepository : IRepository<Review>;
 public interface IReviewRepository : IRepository<Review>
 {
+    new Task<IEnumerable<Review>> GetAllAsync(CancellationToken cancellationToken = default);
+    new Task<Review?> GetByIdAsync(int id, CancellationToken cancellationToken = default);
     Task<IEnumerable<Review>> GetByUserIdAsync(string userId, CancellationToken cancellationToken = default);
 }
 public interface ISeriesRepository : IRepository<Series>;

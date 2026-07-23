@@ -66,6 +66,30 @@ public class ReviewRepository : Repository<Review>, IReviewRepository
         _context = context;
     }
 
+    public new async Task<IEnumerable<Review>> GetAllAsync(CancellationToken cancellationToken = default)
+    {
+        return await _context.Reviews
+         .Include(r => r.ClubMember)
+         .Include(r => r.Product)
+             .ThenInclude(p => p.Authors)
+         .Include(r => r.Product)
+             .ThenInclude(p => p.ProductImages)
+         .AsSplitQuery()
+         .ToListAsync(cancellationToken);
+    }
+
+    public new async Task<Review?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
+    {
+        return await _context.Reviews
+            .Include(r => r.ClubMember)
+            .Include(r => r.Product)
+              .ThenInclude(p => p.Authors)
+            .Include(r => r.Product)
+              .ThenInclude(p => p.ProductImages)
+            .AsSplitQuery()
+            .FirstOrDefaultAsync(r => r.Id == id, cancellationToken);
+    }
+
     public async Task<IEnumerable<Review>> GetByUserIdAsync(string userId, CancellationToken cancellationToken = default)
     {
         return await _context.Reviews
@@ -89,6 +113,7 @@ public class OrderRepository : Repository<Order>, IOrderRepository
     {
         return await _context.Orders
             .Include(o => o.OrderItems)
+            .Include(o => o.ClubMember)
             .AsSplitQuery()
             .ToListAsync(cancellationToken);
     }
@@ -96,6 +121,7 @@ public class OrderRepository : Repository<Order>, IOrderRepository
     {
         return await _context.Orders
             .Include(o => o.OrderItems)
+            .Include(o => o.ClubMember)
             .AsSplitQuery()
             .FirstOrDefaultAsync(o => o.Id == id, cancellationToken);
     }
@@ -105,6 +131,7 @@ public class OrderRepository : Repository<Order>, IOrderRepository
             .Include(o => o.OrderItems)
                 .ThenInclude(oi => oi.Product)
                     .ThenInclude(p => p.ProductImages)
+                     .Include(o => o.ClubMember)
             .Where(o => o.UserId == userId)
             .AsSplitQuery()
             .ToListAsync(cancellationToken);

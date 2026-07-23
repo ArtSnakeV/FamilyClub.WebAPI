@@ -1,5 +1,5 @@
 
-# OrderDTO
+# ProductImageDto
 
 
 ## Properties
@@ -7,28 +7,20 @@
 Name | Type
 ------------ | -------------
 `id` | number
-`userId` | string
-`userName` | string
-`orderDate` | Date
-`status` | string
-`totalPrice` | number
-`orderItems` | [Array&lt;OrderItemDTO&gt;](OrderItemDTO.md)
+`imageData` | string
+`imageName` | string
 
 ## Example
 
 ```typescript
-import type { OrderDTO } from ''
+import type { ProductImageDto } from ''
 
 // TODO: Update the object below with actual values
 const example = {
   "id": null,
-  "userId": null,
-  "userName": null,
-  "orderDate": null,
-  "status": null,
-  "totalPrice": null,
-  "orderItems": null,
-} satisfies OrderDTO
+  "imageData": null,
+  "imageName": null,
+} satisfies ProductImageDto
 
 console.log(example)
 
@@ -37,7 +29,7 @@ const exampleJSON: string = JSON.stringify(example)
 console.log(exampleJSON)
 
 // Parse the JSON string back to an object
-const exampleParsed = JSON.parse(exampleJSON) as OrderDTO
+const exampleParsed = JSON.parse(exampleJSON) as ProductImageDto
 console.log(exampleParsed)
 ```
 
