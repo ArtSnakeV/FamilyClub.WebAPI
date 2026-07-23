@@ -104,7 +104,8 @@ export default function DigitalFormatsBlock({
               />
             </div>
           </label>
-          <EbookFormat />
+          <EbookFormat onSelect={() => !isSelected(ebookFormat.id!) && toggleFormat(ebookFormat.id!)} />
+          {/* <EbookFormat /> */}
         </div>
       )}
       {audioFormat && (
@@ -143,7 +144,7 @@ export default function DigitalFormatsBlock({
               />
             </div>
           </label>
-          <AudioFormat />
+          <AudioFormat onSelect={() => !isSelected(audioFormat.id!) && toggleFormat(audioFormat.id!)}/>
         </div>
       )}
     </div>

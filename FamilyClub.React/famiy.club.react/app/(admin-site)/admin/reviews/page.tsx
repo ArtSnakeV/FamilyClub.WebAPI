@@ -1,37 +1,51 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import useReviews from "./hooks/useReviews";
 import { setReviewApproved, deleteReview } from "./api/ActionReviews";
 import ReviewsFilterBar from "./section/ReviewsFilterBar";
 import ReviewsList from "./section/ReviewsList";
 import ReviewDetail from "./section/ReviewDetail";
 import { Review } from "./types";
+import { usePagination } from "./hooks/usePagination";
+import Pagination from "./Pagination";
 
 
 export default function Page() {
     const { reviews, loadingReviews, refetch } = useReviews();
-
+    const shelfRef = useRef<HTMLDivElement>(null);
     const [selectedId, setSelectedId] = useState<number | null>(null);
     const [search, setSearch] = useState("");
     const [book, setBook] = useState("all");
     const [rating, setRating] = useState("all");
+    //pagin
+    const {
+        currentPage,
+        totalPages,
+        paginatedItems: paginatedBooks,
+        setCurrentPage,
+    } = usePagination(reviews, 6);
 
+    useEffect(() => {
+        shelfRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, [currentPage]);
+
+    //
     // useEffect(() => {
-    //     document.body.style.backgroundImage =
-    //         "url('/images/usersPageAdmin/Rectangle326.png')";
-    //     document.body.style.backgroundSize = "cover";
-    //     document.body.style.backgroundAttachment = "fixed";
-    //     document.body.style.backgroundPosition = "center";
-    //     document.body.style.backgroundRepeat = "no-repeat";
+    //     document.body.style.backgroundImage =
+    //         "url('/images/usersPageAdmin/Rectangle326.png')";
+    //     document.body.style.backgroundSize = "cover";
+    //     document.body.style.backgroundAttachment = "fixed";
+    //     document.body.style.backgroundPosition = "center";
+    //     document.body.style.backgroundRepeat = "no-repeat";
 
-    //     return () => {
-    //         document.body.style.backgroundImage = "";
-    //         document.body.style.backgroundSize = "";
-    //         document.body.style.backgroundAttachment = "";
-    //         document.body.style.backgroundPosition = "";
-    //         document.body.style.backgroundRepeat = "";
-    //     };
+    //     return () => {
+    //         document.body.style.backgroundImage = "";
+    //         document.body.style.backgroundSize = "";
+    //         document.body.style.backgroundAttachment = "";
+    //         document.body.style.backgroundPosition = "";
+    //         document.body.style.backgroundRepeat = "";
+    //     };
     // }, []);
 
     const bookOptions = useMemo(() => {
@@ -78,9 +92,16 @@ export default function Page() {
         setBook("all");
         setRating("all");
     };
-
+    const getImageSrc = (review: Review) => {
+        const firstImage = review.productImages?.[0];
+        if (!firstImage?.imageData) return null;
+        return firstImage.imageData.startsWith("data:")
+            ? firstImage.imageData
+            : `data:image/jpeg;base64,${firstImage.imageData}`;
+    };
     return (
-        <div className="w-full min-h-screen overflow-hidden relative m-0 p-0">
+        <div className="w-full min-h-screen overflow-hidden relative m-0 p-0" ref={shelfRef}
+            key={currentPage}>
             <div className="w-[100vw] min-h-screen relative">
                 <img
                     src="/images/usersPageAdmin/Rectangle 675.png"
@@ -89,7 +110,7 @@ export default function Page() {
                     alt=""
                 />
 
-                <div className="relative pt-20 px-6 flex flex-col gap-4">
+                <div className="relative pt-20 px-2 flex flex-col gap-4">
                     <ReviewsFilterBar
                         search={search}
                         book={book}
@@ -99,14 +120,16 @@ export default function Page() {
                         onRatingChange={setRating}
                         onReset={resetFilters}
                         bookOptions={bookOptions}
+
                     />
 
-                    <div className="flex gap-4 items-start">
+                    <div className="flex gap-4 items-center px-5 -mt-4">
                         {loadingReviews ? (
                             <p>Завантаження...</p>
                         ) : (
                             <ReviewsList
                                 reviews={filtered}
+                                getImageSrc={getImageSrc}
                                 selectedId={selectedReview?.id}
                                 onSelect={(r: Review) => setSelectedId(r.id)}
                             />
@@ -115,11 +138,13 @@ export default function Page() {
                         {selectedReview && (
                             <ReviewDetail
                                 review={selectedReview}
+                                getImageSrc={getImageSrc}
                                 onToggleApprove={handleToggleApprove}
                                 onDelete={handleDelete}
                             />
                         )}
                     </div>
+
                 </div>
             </div>
         </div>

@@ -2,7 +2,12 @@
 
 import { useRef, useState } from "react";
 
-export default function EbookFormat() {
+
+type Props = {
+  onSelect?: () => void;
+};
+
+export default function EbookFormat({onSelect}: Props) {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [file, setFile] = useState<File | null>(null);
   const handleClick = () => {
@@ -32,6 +37,9 @@ export default function EbookFormat() {
         onChange={(e) => {
           const selectedFile = e.target.files?.[0] ?? null;
           setFile(selectedFile);
+          if (selectedFile) {
+            onSelect?.(); 
+          }
         }}
       />
     </div>
