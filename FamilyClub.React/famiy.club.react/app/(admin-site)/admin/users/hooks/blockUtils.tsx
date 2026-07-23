@@ -25,14 +25,7 @@ export function formatDate(dateStr?: string | null): string {
         minute: "2-digit",
     });
 }
-// export function getBlockStatus(lockoutEnd?: string | null) {
-//     const blocked = isBlocked(lockoutEnd);
-//     const permanent = isPermanentBlock(lockoutEnd);
 
-//     if (!blocked) return { label: "Активний", className: "bg-[#E3F5EA] text-[#1F5C3D]" };
-//     if (permanent) return { label: "Заблокований назавжди", className: "bg-[#F6D9D9] text-[#981717]" };
-//     return { label: "Тимчасово заблокований", className: "bg-[#FBE8C6] text-[#8A5A00]" };
-// }
 export function getBlockStatus(lockoutEnd?: string | null) {
     const blocked = isBlocked(lockoutEnd);
     const permanent = isPermanentBlock(lockoutEnd);
