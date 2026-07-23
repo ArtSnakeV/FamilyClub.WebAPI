@@ -4,7 +4,7 @@ trigger:
       - DeploymentTest5
   paths:
     exclude:
-      - KUBERNETES/*
+      - KUBERNETES/**
 
 pool:
   vmImage: 'ubuntu-latest'
