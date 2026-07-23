@@ -14,7 +14,7 @@ spec:
       app.kubernetes.io/name: familyclub-backend
   policyTypes: [Ingress]
   ingress:
-  - from:
+  - from: # Внешний трафик через Ingress
     - namespaceSelector:
         matchLabels:
           kubernetes.io/metadata.name: ingress-nginx
@@ -24,3 +24,17 @@ spec:
     ports:
     - protocol: TCP
       port: 8080
+  # - protocol: UDP
+  #   port: 8080
+  - from: # Внутренние вызовы (SSR)
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/name: familyclub-frontend
+      namespaceSelector:
+        matchLabels:
+          app.kubernetes.io/environment: production
+    ports:
+    - protocol: TCP
+      port: 8080
+  # - protocol: UDP
+  #   port: 8080
