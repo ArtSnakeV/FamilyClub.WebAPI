@@ -19,7 +19,6 @@ export default function ReviewDetail({
     // Отримуємо головну обкладинку книги
     const mainImage = getImageSrc ? getImageSrc(review) : null;
     const productName = review.productName ?? `Товар #${review.productId}`;
-    console.log("Оцінка поточного відгуку:", review.rating, typeof review.rating);
     return (
         <div
             style={{

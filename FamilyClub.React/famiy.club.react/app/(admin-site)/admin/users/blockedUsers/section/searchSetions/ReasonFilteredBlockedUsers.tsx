@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import useBlockReasons from "../../hooks/useBlockReasons"; 
 
 interface Props {
     reason: string;
@@ -11,6 +12,8 @@ export default function ReasonFilteredBlockedUsers({
     reason,
     onChange,
 }: Props) {
+    const { blockReasons, loadingBlockReasons } = useBlockReasons();
+
     return (
         <div className="relative w-[180px] ml-6">
             <label className="block font-source-sans text-[18px] font-semibold leading-[150%] tracking-[-0.011em] text-[var(--color-black)]">
@@ -21,6 +24,7 @@ export default function ReasonFilteredBlockedUsers({
                 <select
                     value={reason}
                     onChange={(e) => onChange(e.target.value)}
+                    disabled={loadingBlockReasons}
                     className="
                         w-full
                         h-[50px]
@@ -38,11 +42,11 @@ export default function ReasonFilteredBlockedUsers({
                     "
                 >
                     <option value="all">Всі типи</option>
-                    <option value="spam">Спам</option>
-                    <option value="insult">Образи</option>
-                    <option value="fake">Фейкові відгуки</option>
-                    <option value="rules">Порушення правил</option>
-                    <option value="other">Інше</option>
+                    {blockReasons.map((r) => (
+                        <option key={r.id} value={String(r.name)}>
+                            {r.name}
+                        </option>
+                    ))}
                 </select>
 
                 <Image

@@ -152,10 +152,12 @@ import QuickActionsBar from "./section/QuickActionsBar";
 import { useRouter } from "next/navigation";
 import { useLockUserFlow } from "./hooks/useLockUserFlow";
 import LockUserModal from "./blockedUsers/ui/LockUserModal";
+import { usePagination } from "./hooks/usePagination";
 
 export default function Page() {
     const router = useRouter();
     const { usersInfo, loadingUsersInfo, refetch } = useAllUsersInfo();
+
 
     const [localUsers, setLocalUsers] = useState<UserInfo[]>([]);
     const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
@@ -180,7 +182,7 @@ export default function Page() {
             setSelectedUserId(localUsers[0].id);
         }
     }, [localUsers, selectedUserId]);
-
+   
     useEffect(() => {
         document.body.style.backgroundImage =
             "url('/images/usersPageAdmin/Rectangle326.png')";

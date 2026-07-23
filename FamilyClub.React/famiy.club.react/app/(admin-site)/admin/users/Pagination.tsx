@@ -43,7 +43,7 @@ function getPageItems(currentPage: number, totalPages: number): PageItem[] {
     return items;
 }
 
-export default function PaginationBlockedUser({
+export default function Pagination({
     currentPage,
     totalPages,
     onPageChange,
@@ -61,7 +61,13 @@ export default function PaginationBlockedUser({
         : null;
 
     return (
-        <div className="w-full flex items-center justify-center gap-4 flex-wrap">
+        <div className="w-full flex items-center justify-between gap-4 flex-wrap">
+            {/* {hasCountInfo && (
+                <p className="font-['Source_Sans_Pro'] text-[16px] text-[#4b4b4b]">
+                    Показано {startIndex}-{endIndex} з {totalItems}
+                </p>
+            )} */}
+
             <ul className="flex items-center gap-2 mx-auto">
                 {/* Prev */}
                 <li>
