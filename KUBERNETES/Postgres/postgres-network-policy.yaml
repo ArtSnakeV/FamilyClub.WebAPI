@@ -12,7 +12,7 @@ spec:
   podSelector:
     matchLabels:
       app.kubernetes.io/name: familyclub-postgres
-  policyTypes: [Ingress]
+  policyTypes: [Ingress, Egress]
   ingress:
   - from:
     - podSelector:
