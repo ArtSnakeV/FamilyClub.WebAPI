@@ -28,7 +28,7 @@ export default function OrdersList({
     }, [orders, currentPage, pageSize]);
 
     return (
-        <div className="w-[600px] h-[700px] bg-[var(--color-white)] rounded-3xl px-6 py-4">
+        <div className="w-[600px] h-[700px] bg-[var(--color-white)] rounded-[20px] ml-3 px-6 py-4">
             <div className="grid grid-cols-[1.2fr_1.5fr_1fr_1fr_1fr] gap-4 px-4 pb-3 border-b border-[#D8D3C4] text-[14px] text-[var(--color-black)]">
                 <span>№ Замовлення</span>
                 <span>Клієнт</span>
@@ -37,7 +37,7 @@ export default function OrdersList({
                 <span>Дата</span>
             </div>
 
-            <div className="flex flex-col gap-2 mt-3 ">
+            <div className="flex flex-col gap-4 mt-3 ">
                 {pageOrders.map((order) => {
                     const isSelected = selectedId === order.id;
 
