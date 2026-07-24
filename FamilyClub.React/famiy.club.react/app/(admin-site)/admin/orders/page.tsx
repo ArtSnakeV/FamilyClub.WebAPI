@@ -1,43 +1,36 @@
 "use client";
 
 import { useState } from "react";
-import OrderTabsStatus from "./sectionR/OrderTabsStatus";
+import OrderTabsStatus from "./componentsR/OrderTabsStatus";
+import OrdersList from "./componentsR/OrdersList";
 import { useOrdersStats } from "./hooksR/useOrders";
-import OrdersList from "./sectionR/OrdersList";
-
-export type OrderTabKey =
-    | "all"
-    | "accepted"
-    | "shipped"
-    | "delivered"
-    | "cancelled"
-    | "return";
-
-const STATUS_BY_TAB: Record<OrderTabKey, string | null> = {
-    all: null,
-    accepted: "Pending",
-    shipped: "Shipped",
-    delivered: "Delivered",
-    cancelled: "Cancelled",
-    return: "Return",
-};
+import { useOrdersEnrichment } from "./hooksR/useOrdersEnrichment";
+import type { OrderDTO } from "@/lib/api/generated";
+import type { OrderTabKey } from "./types";
+import { normalizeOrderStatusGroup } from "@/lib/constants/orderStatusGroups";
+import OrderDetail from "./componentsR/OrderDetail";
 
 export default function Page() {
     const { stats, orders, loading } = useOrdersStats();
     const [status, setStatus] = useState<OrderTabKey>("all");
+    const [selectedOrder, setSelectedOrder] = useState<OrderDTO | null>(null);
 
-    const filteredOrders = orders.filter((o) => {
-        const target = STATUS_BY_TAB[status];
-        return target === null || o.status === target;
-    });
+    const { members, products, authors } = useOrdersEnrichment(orders);
+
+    const filteredOrders = orders.filter(
+        (o) => status === "all" || normalizeOrderStatusGroup(o.status) === status
+    );
+
+    const selectedMember =
+        selectedOrder?.userId ? members.get(selectedOrder.userId) ?? null : null;
 
     const tabs = [
         { key: "all" as OrderTabKey, label: "Всі замовлення", count: stats.all },
         { key: "accepted" as OrderTabKey, label: "Прийняті", count: stats.accepted },
         { key: "shipped" as OrderTabKey, label: "Відправленні", count: stats.shipped },
-        { key: "delivered" as OrderTabKey, label: "Доставленні", count: stats.delivered },
+        { key: "completed" as OrderTabKey, label: "Доставленні", count: stats.completed },
         { key: "cancelled" as OrderTabKey, label: "Скасовані", count: stats.cancelled },
-        { key: "return" as OrderTabKey, label: "На повернення", count: stats.return },
+        { key: "disputed" as OrderTabKey, label: "На повернення", count: stats.disputed },
     ];
 
     return (
@@ -57,15 +50,29 @@ export default function Page() {
                         onChange={(k) => setStatus(k as OrderTabKey)}
                     />
                 </div>
-
-                <div className="relative mt-6 mx-3">
-                    {loading ? (
-                        <p className="text-center text-[#6B6B6B] py-10">
-                            Завантаження...
-                        </p>
-                    ) : (
-                        <OrdersList orders={filteredOrders} />
-                    )}
+                <div className="flex flex-row gap-0">
+                    <div className="relative mt-2 mx-3">
+                        {loading ? (
+                            <p className="text-center text-[#6B6B6B] py-10">
+                                Завантаження...
+                            </p>
+                        ) : (
+                            <OrdersList
+                                orders={filteredOrders}
+                                members={members}
+                                selectedId={selectedOrder?.id ?? null}
+                                onSelectOrder={setSelectedOrder}
+                            />
+                        )}
+                    </div>
+                    <div className="relative mt-2 mx-3 w-[420px]">
+                        <OrderDetail
+                            order={selectedOrder}
+                            member={selectedMember}
+                            products={products}
+                            authors={authors}
+                        />
+                    </div>
                 </div>
             </div>
         </div>
