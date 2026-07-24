@@ -3,6 +3,12 @@ kind: ServiceAccount
 metadata:
   name: backend        
   namespace: production
+  labels:
+    app.kubernetes.io/name: backend
+    app.kubernetes.io/part-of: familyclub
+    app.kubernetes.io/component: backend
+  annotations:
+    description: "ServiceAccount for backend pods to access secrets"
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
