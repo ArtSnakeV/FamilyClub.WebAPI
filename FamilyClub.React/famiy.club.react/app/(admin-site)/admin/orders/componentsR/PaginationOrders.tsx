@@ -43,7 +43,7 @@ function getPageItems(currentPage: number, totalPages: number): PageItem[] {
     return items;
 }
 
-export default function PaginationBlockedUser({
+export default function PaginationOrders({
     currentPage,
     totalPages,
     onPageChange,

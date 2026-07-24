@@ -1,42 +1,32 @@
 import { useEffect, useState, useCallback } from "react";
 import { orderService } from "@/lib/api/services";
 import type { OrderDTO } from "@/lib/api/generated";
+import { normalizeOrderStatusGroup } from "@/lib/constants/orderStatusGroups";
 
 export interface OrdersStats {
     all: number;
     accepted: number;
     shipped: number;
-    delivered: number;
+    completed: number;
     cancelled: number;
-    return: number;
+    disputed: number;
 }
-
-export const ORDER_STATUS = {
-    Accepted: "Pending",     
-    Shipped: "Shipped",
-    Delivered: "Delivered",
-    Cancelled: "Cancelled",
-    Return: "Return",
-} as const;
 
 const initialStats: OrdersStats = {
     all: 0,
     accepted: 0,
     shipped: 0,
-    delivered: 0,
+    completed: 0,
     cancelled: 0,
-    return: 0,
+    disputed: 0,
 };
 
 function computeStats(orders: OrderDTO[]): OrdersStats {
-    return {
-        all: orders.length,
-        accepted: orders.filter((o) => o.status === ORDER_STATUS.Accepted).length,
-        shipped: orders.filter((o) => o.status === ORDER_STATUS.Shipped).length,
-        delivered: orders.filter((o) => o.status === ORDER_STATUS.Delivered).length,
-        cancelled: orders.filter((o) => o.status === ORDER_STATUS.Cancelled).length,
-        return: orders.filter((o) => o.status === ORDER_STATUS.Return).length,
-    };
+    const stats = { ...initialStats, all: orders.length };
+    for (const o of orders) {
+        stats[normalizeOrderStatusGroup(o.status)] += 1;
+    }
+    return stats;
 }
 
 export function useOrdersStats() {
