@@ -83,6 +83,7 @@ docs/PresenceApi.md
 docs/Product.md
 docs/ProductDto.md
 docs/ProductImage.md
+docs/ProductImageDto.md
 docs/ProductsApi.md
 docs/Promotion.md
 docs/PromotionDto.md
@@ -145,6 +146,7 @@ models/OrderItemDTO.ts
 models/Product.ts
 models/ProductDto.ts
 models/ProductImage.ts
+models/ProductImageDto.ts
 models/Promotion.ts
 models/PromotionDto.ts
 models/Publisher.ts

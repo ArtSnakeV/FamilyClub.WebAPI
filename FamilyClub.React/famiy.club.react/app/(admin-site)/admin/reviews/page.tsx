@@ -1,6 +1,160 @@
+// "use client";
+
+// import { useEffect, useMemo, useRef, useState } from "react";
+// import useReviews from "./hooks/useReviews";
+// import { setReviewApproved, deleteReview } from "./api/ActionReviews";
+// import ReviewsFilterBar from "./section/ReviewsFilterBar";
+// import ReviewsList from "./section/ReviewsList";
+// import ReviewDetail from "./section/ReviewDetail";
+// import { Review } from "./types";
+// import { usePagination } from "./hooks/usePagination";
+// import Pagination from "./Pagination";
+
+
+// export default function Page() {
+//     const { reviews, loadingReviews, refetch } = useReviews();
+//     const shelfRef = useRef<HTMLDivElement>(null);
+//     const [selectedId, setSelectedId] = useState<number | null>(null);
+//     const [openedReview, setOpenedReview] = useState<Review | null>(null);
+//     const [search, setSearch] = useState("");
+//     const [book, setBook] = useState("all");
+//     const [rating, setRating] = useState("all");
+//     //pagin
+//     // const {
+//     //     currentPage,
+//     //     totalPages,
+//     //     paginatedItems: paginatedBooks,
+//     //     setCurrentPage,
+//     // } = usePagination(reviews, 6);
+
+//     // useEffect(() => {
+//     //     shelfRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+//     // }, [currentPage]);
+
+//     //
+//     // useEffect(() => {
+//     //     document.body.style.backgroundImage =
+//     //         "url('/images/usersPageAdmin/Rectangle326.png')";
+//     //     document.body.style.backgroundSize = "cover";
+//     //     document.body.style.backgroundAttachment = "fixed";
+//     //     document.body.style.backgroundPosition = "center";
+//     //     document.body.style.backgroundRepeat = "no-repeat";
+
+//     //     return () => {
+//     //         document.body.style.backgroundImage = "";
+//     //         document.body.style.backgroundSize = "";
+//     //         document.body.style.backgroundAttachment = "";
+//     //         document.body.style.backgroundPosition = "";
+//     //         document.body.style.backgroundRepeat = "";
+//     //     };
+//     // }, []);
+
+//     const bookOptions = useMemo(() => {
+//         const map = new Map<number, string>();
+//         reviews.forEach((r) => {
+//             if (r.productName) map.set(r.productId, r.productName);
+//         });
+//         return Array.from(map, ([id, title]) => ({ id: String(id), title }));
+//     }, [reviews]);
+
+//     const filtered = useMemo(() => {
+//         return reviews.filter((r) => {
+//             if (search && !(r.comment ?? "").toLowerCase().includes(search.toLowerCase()))
+//                 return false;
+//             if (book !== "all" && String(r.productId) !== book) return false;
+//             if (rating !== "all" && r.rating !== Number(rating)) return false;
+//             return true;
+//         });
+//     }, [reviews, search, book, rating]);
+
+//     useEffect(() => {
+//         if (!selectedId && filtered.length > 0) {
+//             setSelectedId(filtered[0].id);
+//         }
+//     }, [filtered, selectedId]);
+
+//     const selectedReview = filtered.find((r) => r.id === selectedId) ?? null;
+
+//     const handleToggleApprove = async () => {
+//         if (!selectedReview) return;
+//         await setReviewApproved(selectedReview, !selectedReview.approved);
+//         await refetch();
+//     };
+
+//     const handleDelete = async () => {
+//         if (!selectedReview) return;
+//         await deleteReview(selectedReview.id);
+//         setSelectedId(null);
+//         await refetch();
+//     };
+
+//     const resetFilters = () => {
+//         setSearch("");
+//         setBook("all");
+//         setRating("all");
+//     };
+//     const getImageSrc = (review: Review) => {
+//         const firstImage = review.productImages?.[0];
+//         if (!firstImage?.imageData) return null;
+//         return firstImage.imageData.startsWith("data:")
+//             ? firstImage.imageData
+//             : `data:image/jpeg;base64,${firstImage.imageData}`;
+//     };
+//     return (
+//         <div className="w-full min-h-screen overflow-hidden relative m-0 p-0" ref={shelfRef}>
+//             {/* // key={currentPage}> */}
+//             <div className="w-[100vw] min-h-screen relative">
+//                 <img
+//                     src="/images/usersPageAdmin/Rectangle 675.png"
+//                     className="absolute"
+//                     style={{ width: "100vw", height: "auto", top: "40px", left: "-20px" }}
+//                     alt=""
+//                 />
+
+//                 <div className="relative pt-20 px-2 flex flex-col gap-4">
+//                     <ReviewsFilterBar
+//                         search={search}
+//                         book={book}
+//                         rating={rating}
+//                         onSearchChange={setSearch}
+//                         onBookChange={setBook}
+//                         onRatingChange={setRating}
+//                         onReset={resetFilters}
+//                         bookOptions={bookOptions}
+
+//                     />
+
+//                     <div className="flex gap-4 items-center px-5 -mt-4">
+//                         {loadingReviews ? (
+//                             <p>Завантаження...</p>
+//                         ) : (
+//                             <ReviewsList
+//                                 reviews={filtered}
+//                                 getImageSrc={getImageSrc}
+//                                 selectedId={selectedReview?.id}
+//                                 // onSelect={(r: Review) => setSelectedId(r.id)}
+//                                 onSelect={(r) => setSelectedId(r?.id ?? null)}
+//                             />
+//                         )}
+
+//                         {selectedReview && (
+//                             <ReviewDetail
+//                                 review={selectedReview}
+//                                 getImageSrc={getImageSrc}
+//                                 onToggleApprove={handleToggleApprove}
+//                                 onDelete={handleDelete}
+//                             />
+//                         )}
+//                     </div>
+
+//                 </div>
+//             </div>
+//         </div>
+//     );
+// }
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import useReviews from "./hooks/useReviews";
 import { setReviewApproved, deleteReview } from "./api/ActionReviews";
 import ReviewsFilterBar from "./section/ReviewsFilterBar";
@@ -11,52 +165,84 @@ import { Review } from "./types";
 export default function Page() {
   const { reviews, loadingReviews, refetch } = useReviews();
 
-  const [selectedId, setSelectedId] = useState<number | null>(null);
-  const [search, setSearch] = useState("");
-  const [book, setBook] = useState("all");
-  const [rating, setRating] = useState("all");
+    const shelfRef = useRef<HTMLDivElement>(null);
 
-  const bookOptions = useMemo(() => {
-    const map = new Map<number, string>();
-    reviews.forEach((r) => {
-      if (r.productName) map.set(r.productId, r.productName);
-    });
-    return Array.from(map, ([id, title]) => ({ id: String(id), title }));
-  }, [reviews]);
+    // тільки підсвітка
+    const [selectedId, setSelectedId] = useState<number | null>(null);
 
-  const filtered = useMemo(() => {
-    return reviews.filter((r) => {
-      if (
-        search &&
-        !(r.comment ?? "").toLowerCase().includes(search.toLowerCase())
-      )
-        return false;
-      if (book !== "all" && String(r.productId) !== book) return false;
-      if (rating !== "all" && r.rating !== Number(rating)) return false;
-      return true;
-    });
-  }, [reviews, search, book, rating]);
+    // відгук, який відкритий справа
+    const [openedReview, setOpenedReview] = useState<Review | null>(null);
 
-  useEffect(() => {
-    if (!selectedId && filtered.length > 0) {
-      setSelectedId(filtered[0].id);
-    }
-  }, [filtered, selectedId]);
+    const [search, setSearch] = useState("");
+    const [book, setBook] = useState("all");
+    const [rating, setRating] = useState("all");
 
-  const selectedReview = filtered.find((r) => r.id === selectedId) ?? null;
+    const bookOptions = useMemo(() => {
+        const map = new Map<number, string>();
 
-  const handleToggleApprove = async () => {
-    if (!selectedReview) return;
-    await setReviewApproved(selectedReview, !selectedReview.approved);
-    await refetch();
-  };
+        reviews.forEach((r) => {
+            if (r.productName) {
+                map.set(r.productId, r.productName);
+            }
+        });
 
-  const handleDelete = async () => {
-    if (!selectedReview) return;
-    await deleteReview(selectedReview.id);
-    setSelectedId(null);
-    await refetch();
-  };
+        return Array.from(map, ([id, title]) => ({
+            id: String(id),
+            title,
+        }));
+    }, [reviews]);
+
+    const filtered = useMemo(() => {
+        return reviews.filter((r) => {
+            if (
+                search &&
+                !(r.comment ?? "").toLowerCase().includes(search.toLowerCase())
+            ) {
+                return false;
+            }
+
+            if (book !== "all" && String(r.productId) !== book) {
+                return false;
+            }
+
+            if (rating !== "all" && r.rating !== Number(rating)) {
+                return false;
+            }
+
+            return true;
+        });
+    }, [reviews, search, book, rating]);
+
+    // Якщо відкритого відгуку немає або він зник після фільтрації
+    useEffect(() => {
+        if (
+            !openedReview ||
+            !filtered.some((r) => r.id === openedReview.id)
+        ) {
+            setOpenedReview(filtered[0] ?? null);
+        }
+    }, [filtered]);
+
+    const handleToggleApprove = async () => {
+        if (!openedReview) return;
+
+        await setReviewApproved(
+            openedReview,
+            !openedReview.approved
+        );
+
+        await refetch();
+    };
+
+    const handleDelete = async () => {
+        if (!openedReview) return;
+
+        await deleteReview(openedReview.id);
+
+        setSelectedId(null);
+
+        await refetch();
+    };
 
   const resetFilters = () => {
     setSearch("");
@@ -64,64 +250,77 @@ export default function Page() {
     setRating("all");
   };
 
-  return (
-    <div className="w-full max-w-full min-h-screen overflow-x-hidden relative m-0 p-0 box-border">
-      <div
-        className="relative min-h-screen pb-10 box-border"
-        style={{ marginLeft: "-1rem", width: "calc(100% + 2rem)", maxWidth: "calc(100% + 2rem)" }}
-      >
-        <img
-          src="/images/usersPageAdmin/Rectangle 675.png"
-          className="absolute pointer-events-none"
-          style={{
-            width: "calc(100% + 20px)",
-            height: "calc(100% + 40px)",
-            top: "-40px",
-            left: "-20px",
-            objectFit: "fill",
-          }}
-          alt=""
-        />
+    const getImageSrc = (review: Review) => {
+        const firstImage = review.productImages?.[0];
 
-        <div className="relative z-10 mt-24 px-6 lg:px-10 pb-6 flex flex-col gap-4 box-border w-full max-w-full">
-          <ReviewsFilterBar
-            search={search}
-            book={book}
-            rating={rating}
-            onSearchChange={setSearch}
-            onBookChange={setBook}
-            onRatingChange={setRating}
-            onReset={resetFilters}
-            bookOptions={bookOptions}
-          />
+        if (!firstImage?.imageData) return null;
 
-          <div className="grid grid-cols-1 xl:grid-cols-[minmax(260px,340px)_minmax(0,1fr)] gap-4 items-start w-full max-w-full">
-            {loadingReviews ? (
-              <p className="text-[#6B6B6B]">Завантаження...</p>
-            ) : (
-              <ReviewsList
-                reviews={filtered}
-                selectedId={selectedReview?.id}
-                onSelect={(r: Review) => setSelectedId(r.id)}
-              />
-            )}
+        return firstImage.imageData.startsWith("data:")
+            ? firstImage.imageData
+            : `data:image/jpeg;base64,${firstImage.imageData}`;
+    };
 
-            {selectedReview ? (
-              <ReviewDetail
-                review={selectedReview}
-                onToggleApprove={handleToggleApprove}
-                onDelete={handleDelete}
-              />
-            ) : (
-              !loadingReviews && (
-                <div className="bg-white rounded-2xl p-6 text-[14px] text-[#888] min-w-0">
-                  Оберіть відгук зі списку
+    return (
+        <div
+            ref={shelfRef}
+            className="w-full min-h-screen overflow-hidden relative m-0 p-0"
+        >
+            <div className="w-[100vw] min-h-screen relative">
+                <img
+                    src="/images/usersPageAdmin/Rectangle 675.png"
+                    className="absolute"
+                    style={{
+                        width: "100vw",
+                        height: "auto",
+                        top: "40px",
+                        left: "-20px",
+                    }}
+                    alt=""
+                />
+
+                <div className="relative pt-20 px-2 flex flex-col gap-4">
+                    <ReviewsFilterBar
+                        search={search}
+                        book={book}
+                        rating={rating}
+                        onSearchChange={setSearch}
+                        onBookChange={setBook}
+                        onRatingChange={setRating}
+                        onReset={resetFilters}
+                        bookOptions={bookOptions}
+                    />
+
+                    <div className="flex gap-4 items-center px-5 -mt-4">
+                        {loadingReviews ? (
+                            <p>Завантаження...</p>
+                        ) : (
+                            <ReviewsList
+                                reviews={filtered}
+                                getImageSrc={getImageSrc}
+                                selectedId={selectedId ?? undefined}
+                                onSelect={(r) => {
+                                    if (!r) {
+                                        setSelectedId(null);
+                                        return;
+                                    }
+
+                                    setOpenedReview(r);
+                                    setSelectedId(r.id);
+                                }}
+                            />
+                        )}
+
+                        {openedReview && (
+                            <ReviewDetail
+                                review={openedReview}
+                                getImageSrc={getImageSrc}
+                                onToggleApprove={handleToggleApprove}
+                                onDelete={handleDelete}
+                            />
+                        )}
+                    </div>
                 </div>
-              )
-            )}
-          </div>
+            </div>
         </div>
-      </div>
-    </div>
-  );
+    );
 }

@@ -41,6 +41,12 @@ export interface OrderDTO {
     userId?: string | null;
     /**
      * 
+     * @type {string}
+     * @memberof OrderDTO
+     */
+    userName?: string | null;
+    /**
+     * 
      * @type {Date}
      * @memberof OrderDTO
      */
@@ -84,6 +90,7 @@ export function OrderDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): 
         
         'id': json['id'] == null ? undefined : json['id'],
         'userId': json['userId'] == null ? undefined : json['userId'],
+        'userName': json['userName'] == null ? undefined : json['userName'],
         'orderDate': json['orderDate'] == null ? undefined : (new Date(json['orderDate'])),
         'status': json['status'] == null ? undefined : json['status'],
         'totalPrice': json['totalPrice'] == null ? undefined : json['totalPrice'],
@@ -104,6 +111,7 @@ export function OrderDTOToJSONTyped(value?: OrderDTO | null, ignoreDiscriminator
         
         'id': value['id'],
         'userId': value['userId'],
+        'userName': value['userName'],
         'orderDate': value['orderDate'] == null ? value['orderDate'] : value['orderDate'].toISOString(),
         'status': value['status'],
         'totalPrice': value['totalPrice'],

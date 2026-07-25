@@ -4,6 +4,8 @@ import { useMemo } from "react";
 import { UserInfo } from "../../hooks/useAllUsersInfo";
 import UserCardBlockedUser from "./UserCardBlockedUser";
 import { isBlocked, isPermanentBlock, daysLeft, formatDate, getBlockStatus } from "../../hooks/blockUtils";
+import { usePagination } from "../../hooks/usePagination";
+import PaginationBlockedUser from "../PaginationBlockedUser";
 
 interface Props {
     users: UserInfo[];
@@ -24,39 +26,25 @@ export default function AllBlockedUsersInfo({
     users, search, status, sort, reason, onSelectUser, onLockToggle, selectedUserId, onDelete
 }: Props) {
 
-
-    // const filteredUsers = useMemo(() => {
-    //     const q = search.trim().toLowerCase();
-    //     if (!q) return users;
-
-    //     return users.filter((u) => {
-    //         const fullName = `${u.name ?? ""} ${u.surname ?? ""}`.trim().toLowerCase();
-    //         return (
-    //             fullName.includes(q) ||
-    //             u.email?.toLowerCase().includes(q) ||
-    //             u.id?.toLowerCase().includes(q)
-    //         );
-    //     });
-    // }, [users, search]);
     const filteredUsers = useMemo(() => {
         let result = [...users];
 
         // пошук
         const q = search.trim().toLowerCase();
-
         if (q) {
             result = result.filter((u) => {
-                const fullName =
-                    `${u.name ?? ""} ${u.surname ?? ""}`
-                        .trim()
-                        .toLowerCase();
-
+                const fullName = `${u.name ?? ""} ${u.surname ?? ""}`.trim().toLowerCase();
                 return (
                     fullName.includes(q) ||
                     u.email?.toLowerCase().includes(q) ||
                     u.id?.toLowerCase().includes(q)
                 );
             });
+        }
+
+        // фільтр по причині блокування
+        if (reason !== "all") {
+            result = result.filter((u) => String(u.lockoutReason) === reason);
         }
 
         // сортування
@@ -69,7 +57,6 @@ export default function AllBlockedUsersInfo({
                     )
                 );
                 break;
-
             case "nameDesc":
                 result.sort((a, b) =>
                     `${b.name ?? ""} ${b.surname ?? ""}`.localeCompare(
@@ -78,7 +65,6 @@ export default function AllBlockedUsersInfo({
                     )
                 );
                 break;
-
             case "newest":
                 result.sort(
                     (a, b) =>
@@ -86,7 +72,6 @@ export default function AllBlockedUsersInfo({
                         new Date(a.lockedAt ?? 0).getTime()
                 );
                 break;
-
             case "oldest":
                 result.sort(
                     (a, b) =>
@@ -94,7 +79,6 @@ export default function AllBlockedUsersInfo({
                         new Date(b.lockedAt ?? 0).getTime()
                 );
                 break;
-
             case "expires":
                 result.sort(
                     (a, b) =>
@@ -105,11 +89,18 @@ export default function AllBlockedUsersInfo({
         }
 
         return result;
-    }, [users, search, sort]);
+    }, [users, search, sort, reason]);
+
+    const {
+        currentPage,
+        totalPages,
+        paginatedItems: paginatedUsers,
+        setCurrentPage,
+    } = usePagination(filteredUsers, 6);
 
     return (
         <div
-            className="w-[78.3vw] max-w-full h-auto min-h-[900px] rounded-1xl overflow-hidden"
+            className="w-[78.3vw] max-w-full flex flex-col h-auto min-h-[820px] rounded-1xl overflow-hidden"
             style={{
                 backgroundImage: "url('/images/usersPageAdmin/Rectangle 793.png')",
                 backgroundSize: "100% 100%",
@@ -128,83 +119,91 @@ export default function AllBlockedUsersInfo({
             <div className="mx-7 h-px bg-[#8D8C89] mt-3 mb-4" />
 
             {/* ROWS */}
-            {filteredUsers.length === 0 ? (
-                <p className="ml-12 mt-6 opacity-60">Нічого не знайдено</p>
-            ) : (
-                filteredUsers.map((user) => {
-                    // const permanent = isPermanentBlock(user.lockoutEnd);
-                    // const blocked = isBlocked(user.lockoutEnd);
-                    // const left = daysLeft(user.lockoutEnd);
-                    // const status = getBlockStatus(user.lockoutEnd);
-                    const left = daysLeft(user.lockoutEnd);
-                    const status = getBlockStatus(user.lockoutEnd);
-                    return (
-                        <div
-                            key={user.id}
-                            onClick={() => onSelectUser(user)}
-                            className={`grid ${GRID_COLS} ml-8  w-[95%] gap-x-13 relative px-8 py-4 items-center`}
-                        >
-                            {/* USER */}
-                            <div className="min-w-0">
-                                <UserCardBlockedUser user={user} variant="row" />
-                            </div>
-
-                            {/* STATUS */}
-                            <div className="min-w-0 h-[60px] w-[130px] ml-4">
-                                <span
-                                    className={`inline-block rounded-[9px] w-full px-3 py-1 text-[16px] font-medium whitespace-wrap ${status.className}`}
-                                >
-                                    {status.label}
-                                </span>
-                            </div>
-
-                            {/* BLOCK REASON */}
-                            <div className="min-w-0 text-sm">
-                                <p className="font-medium truncate">{user.lockoutReason ?? "-"}</p>
-                                {user.lockoutReasonDetail && (
-                                    <p className="opacity-60 truncate">{user.lockoutReasonDetail}</p>
-                                )}
-                            </div>
-
-                            {/* BLOCKED BY / AT */}
-                            <div className="min-w-0 text-sm">
-                                <p className="font-medium truncate">{user.lockedBy ?? "-"}</p>
-                                <p className="opacity-60 truncate">{formatDate(user.lockedAt)}</p>
-                            </div>
-
-                            {/* VALID UNTIL */}
-                            <div className="min-w-0 text-sm">
-                                <p className="font-medium truncate">
-                                    {status.permanent
-                                        ? "-"
-                                        : formatDate(user.lockoutEnd)}
-                                </p>
-                                <p className="opacity-60 truncate">
-                                    {status.permanent
-                                        ? "Назавжди"
-                                        : left !== null
-                                            ? `Залишилося ${left} днів`
-                                            : "-"}
-                                </p>
-                            </div>
-
-                            {/* ACTIONS */}
+            <div className="flex-1">
+                {filteredUsers.length === 0 ? (
+                    <p className="ml-12 mt-6 opacity-60">Нічого не знайдено</p>
+                ) : (
+                    // filteredUsers.map((user) => {
+                    paginatedUsers.map((user) => {
+                        const left = daysLeft(user.lockoutEnd);
+                        const status = getBlockStatus(user.lockoutEnd);
+                        return (
                             <div
-                                className="flex items-center w-[120px] h-[60px] gap-2 justify-self-center"
-                                onClick={(e) => e.stopPropagation()}
+                                key={user.id}
+                                onClick={() => onSelectUser(user)}
+                                className={`grid ${GRID_COLS} ml-8 w-[95%] gap-x-13 relative px-8 py-4 items-center`}
                             >
-                                <button
-                                    onClick={() => onLockToggle(user)}
-                                    className="px-3 py-2 rounded-[9px] w-full bg-[#1F5C3D] text-[var(--color-white)] text-[16px]
-                                     font-medium whitespace-wrap hover:bg-[#164529] transition"
+                                {/* USER */}
+                                <div className="min-w-0">
+                                    <UserCardBlockedUser user={user} variant="row" />
+                                </div>
+
+                                {/* STATUS */}
+                                <div className="min-w-0 h-[60px] w-[130px] ml-4">
+                                    <span
+                                        className={`inline-block rounded-[9px] w-full px-3 py-1 text-[16px] font-medium whitespace-wrap ${status.className}`}
+                                    >
+                                        {status.label}
+                                    </span>
+                                </div>
+
+                                {/* BLOCK REASON */}
+                                <div className="min-w-0 text-sm">
+                                    <p className="font-medium truncate">{user.lockoutReason ?? "-"}</p>
+                                    {user.lockoutReasonDetail && (
+                                        <p className="opacity-60 truncate">{user.lockoutReasonDetail}</p>
+                                    )}
+                                </div>
+
+                                {/* BLOCKED BY / AT */}
+                                <div className="min-w-0 text-sm">
+                                    <p className="font-medium truncate">{user.lockedBy ?? "-"}</p>
+                                    <p className="opacity-60 truncate">{formatDate(user.lockedAt)}</p>
+                                </div>
+
+                                {/* VALID UNTIL */}
+                                <div className="min-w-0 text-sm">
+                                    <p className="font-medium truncate">
+                                        {status.permanent
+                                            ? "-"
+                                            : formatDate(user.lockoutEnd)}
+                                    </p>
+                                    <p className="opacity-60 truncate">
+                                        {status.permanent
+                                            ? "Назавжди"
+                                            : left !== null
+                                                ? `Залишилося ${left} днів`
+                                                : "-"}
+                                    </p>
+                                </div>
+
+                                {/* ACTIONS */}
+                                <div
+                                    className="flex items-center w-[120px] h-[60px] gap-2 justify-self-center"
+                                    onClick={(e) => e.stopPropagation()}
                                 >
-                                    {status.blocked ? "Розблокувати" : "Заблокувати"}
-                                </button>
+                                    <button
+                                        onClick={() => onLockToggle(user)}
+                                        className="px-3 py-2 rounded-[9px] w-full bg-[#1F5C3D] text-[var(--color-white)] text-[16px]
+                                     font-medium whitespace-wrap hover:bg-[#164529] transition"
+                                    >
+                                        {status.blocked ? "Розблокувати" : "Заблокувати"}
+                                    </button>
+                                </div>
                             </div>
-                        </div>
-                    );
-                })
-            )}
+                        );
+                    })
+                )}
+            </div>
+            <div className="w-full flex justify-center pt-2 pb-10 mt-auto shrink-0 px-8">
+                <PaginationBlockedUser
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    onPageChange={setCurrentPage}
+                    totalItems={filteredUsers.length}
+                    itemsPerPage={6}
+                />
+            </div>
         </div>
     );
 }
