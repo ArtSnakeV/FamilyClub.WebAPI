@@ -134,15 +134,15 @@ steps:
     displayName: 'Push frontend image and capture digest'
 
   - script: |
-      sed -i "s|metra638/test1@[^ ]*|metra638/test1@$(frontendDigest)|g" KUBERNETES/frontend-deployment.yaml
-      sed -i "s|app.kubernetes.io/image-digest: \"[^\"]*\"|app.kubernetes.io/image-digest: \"$(frontendDigest)\"|g" KUBERNETES/frontend-deployment.yaml
-      sed -i "s|app.kubernetes.io/build-date: \".*\"|app.kubernetes.io/build-date: \"$(date -Iseconds)\"|g" KUBERNETES/frontend-deployment.yaml
-      sed -i "s|app.kubernetes.io/commit-hash: \".*\"|app.kubernetes.io/commit-hash: \"$(Build.SourceVersion)\"|g" KUBERNETES/frontend-deployment.yaml
-      sed -i "s|app.kubernetes.io/branch: \".*\"|app.kubernetes.io/branch: \"$(Build.SourceBranchName)\"|g" KUBERNETES/frontend-deployment.yaml
+      sed -i "s|metra638/test1@[^ ]*|metra638/test1@$(frontendDigest)|g" KUBERNETES/Frontend/frontend-deployment.yaml
+      sed -i "s|app.kubernetes.io/image-digest: \"[^\"]*\"|app.kubernetes.io/image-digest: \"$(frontendDigest)\"|g" KUBERNETES/Frontend/frontend-deployment.yaml
+      sed -i "s|app.kubernetes.io/build-date: \".*\"|app.kubernetes.io/build-date: \"$(date -Iseconds)\"|g" KUBERNETES/Frontend/frontend-deployment.yaml
+      sed -i "s|app.kubernetes.io/commit-hash: \".*\"|app.kubernetes.io/commit-hash: \"$(Build.SourceVersion)\"|g" KUBERNETES/Frontend/frontend-deployment.yaml
+      sed -i "s|app.kubernetes.io/branch: \".*\"|app.kubernetes.io/branch: \"$(Build.SourceBranchName)\"|g" KUBERNETES/Frontend/frontend-deployment.yaml
 
       git config user.email "apofeoz638@gmail.com"
       git config user.name "Artem Malashevskyi"
-      git add KUBERNETES/frontend-deployment.yaml
+      git add KUBERNETES/Frontend/frontend-deployment.yaml
       git commit -m "Update frontend manifest (digest, build-date, commit, branch)" || echo "No changes to commit"
       git remote set-url origin https://$(GH_PAT)@github.com/Metra638/FamilyClub.WebAPI1.git
       git push origin HEAD:DeploymentTest5
@@ -181,15 +181,15 @@ steps:
     displayName: 'Push backend image and capture digest'
 
   - script: |
-      sed -i "s|metra638/test1@[^ ]*|metra638/test1@$(backendDigest)|g" KUBERNETES/backend-deployment.yaml
-      sed -i "s|app.kubernetes.io/image-digest: \"[^\"]*\"|app.kubernetes.io/image-digest: \"$(backendDigest)\"|g" KUBERNETES/backend-deployment.yaml
-      sed -i "s|app.kubernetes.io/build-date: \".*\"|app.kubernetes.io/build-date: \"$(date -Iseconds)\"|g" KUBERNETES/backend-deployment.yaml
-      sed -i "s|app.kubernetes.io/commit-hash: \".*\"|app.kubernetes.io/commit-hash: \"$(Build.SourceVersion)\"|g" KUBERNETES/backend-deployment.yaml
-      sed -i "s|app.kubernetes.io/branch: \".*\"|app.kubernetes.io/branch: \"$(Build.SourceBranchName)\"|g" KUBERNETES/backend-deployment.yaml
+      sed -i "s|metra638/test1@[^ ]*|metra638/test1@$(backendDigest)|g" KUBERNETES/Backend/backend-deployment.yaml
+      sed -i "s|app.kubernetes.io/image-digest: \"[^\"]*\"|app.kubernetes.io/image-digest: \"$(backendDigest)\"|g" KUBERNETES/Backend/backend-deployment.yaml
+      sed -i "s|app.kubernetes.io/build-date: \".*\"|app.kubernetes.io/build-date: \"$(date -Iseconds)\"|g" KUBERNETES/Backend/backend-deployment.yaml
+      sed -i "s|app.kubernetes.io/commit-hash: \".*\"|app.kubernetes.io/commit-hash: \"$(Build.SourceVersion)\"|g" KUBERNETES/Backend/backend-deployment.yaml
+      sed -i "s|app.kubernetes.io/branch: \".*\"|app.kubernetes.io/branch: \"$(Build.SourceBranchName)\"|g" KUBERNETES/Backend/backend-deployment.yaml
 
       git config user.email "apofeoz638@gmail.com"
       git config user.name "Artem Malashevskyi"
-      git add KUBERNETES/backend-deployment.yaml
+      git add KUBERNETES/Backend/backend-deployment.yaml
       git commit -m "Update backend manifest (digest, build-date, commit, branch)" || echo "No changes to commit"
       git remote set-url origin https://$(GH_PAT)@github.com/Metra638/FamilyClub.WebAPI1.git
       git push origin HEAD:DeploymentTest5
