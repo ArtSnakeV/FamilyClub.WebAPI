@@ -237,3 +237,158 @@ public class PlatformSettingsRepository : Repository<PlatformSettings>, IPlatfor
             .FirstOrDefaultAsync(s => s.Id == 1, cancellationToken);
     }
 }
+
+public class ActionLogRepository : Repository<ActionLog>, IActionLogRepository
+{
+    private readonly FamilyClubContext _context;
+
+    public ActionLogRepository(FamilyClubContext context) : base(context)
+    {
+        _context = context;
+    }
+
+    public async Task<ActionLog?> GetByIdAsync(long id, CancellationToken cancellationToken = default)
+    {
+        return await _context.ActionLogs
+            .Include(x => x.ClubMember)
+            .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+    }
+
+    public async Task<(IReadOnlyList<ActionLog> Items, int TotalCount)> GetPagedAsync(
+        string? search,
+        string? action,
+        string? module,
+        string? clubMemberId,
+        string? level,
+        DateTime? fromUtc,
+        DateTime? toUtc,
+        int page,
+        int pageSize,
+        CancellationToken cancellationToken = default)
+    {
+        if (page < 1) page = 1;
+        if (pageSize < 1) pageSize = 10;
+        if (pageSize > 100) pageSize = 100;
+
+        var query = BuildFilterQuery(search, action, module, clubMemberId, level, fromUtc, toUtc);
+
+        var total = await query.CountAsync(cancellationToken);
+
+        var items = await query
+            .OrderByDescending(x => x.CreatedAt)
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize)
+            .Include(x => x.ClubMember)
+            .AsNoTracking()
+            .ToListAsync(cancellationToken);
+
+        return (items, total);
+    }
+
+    public async Task<ActionLogStatsRow> GetStatsAsync(
+        DateTime? fromUtc,
+        DateTime? toUtc,
+        CancellationToken cancellationToken = default)
+    {
+        var query = BuildFilterQuery(null, null, null, null, null, fromUtc, toUtc);
+
+        var total = await query.CountAsync(cancellationToken);
+        var success = await query.CountAsync(x => x.Level == "success", cancellationToken);
+        var warning = await query.CountAsync(x => x.Level == "warning", cancellationToken);
+        var error = await query.CountAsync(x => x.Level == "error", cancellationToken);
+        var info = await query.CountAsync(x => x.Level == "info", cancellationToken);
+        var uniqueUsers = await query
+            .Where(x => x.ClubMemberId != null)
+            .Select(x => x.ClubMemberId)
+            .Distinct()
+            .CountAsync(cancellationToken);
+
+        return new ActionLogStatsRow
+        {
+            Total = total,
+            Success = success,
+            Warning = warning,
+            Error = error,
+            Info = info,
+            UniqueUsers = uniqueUsers,
+        };
+    }
+
+    public async Task<IReadOnlyList<ActionLog>> GetOlderThanAsync(
+        DateTime cutoffUtc,
+        CancellationToken cancellationToken = default)
+    {
+        return await _context.ActionLogs
+            .AsNoTracking()
+            .Where(x => x.CreatedAt < cutoffUtc)
+            .OrderBy(x => x.CreatedAt)
+            .ToListAsync(cancellationToken);
+    }
+
+    public async Task DeleteRangeByIdsAsync(
+        IEnumerable<long> ids,
+        CancellationToken cancellationToken = default)
+    {
+        var idList = ids.ToList();
+        if (idList.Count == 0) return;
+
+        await _context.ActionLogs
+            .Where(x => idList.Contains(x.Id))
+            .ExecuteDeleteAsync(cancellationToken);
+    }
+
+    public async Task<ActionLogArchive?> GetCurrentArchiveAsync(
+        CancellationToken cancellationToken = default)
+    {
+        return await _context.ActionLogArchives
+            .AsNoTracking()
+            .OrderByDescending(x => x.CreatedAt)
+            .FirstOrDefaultAsync(cancellationToken);
+    }
+
+    public async Task ReplaceArchiveAsync(
+        ActionLogArchive archive,
+        CancellationToken cancellationToken = default)
+    {
+        // Один архів: попередній видаляється
+        await _context.ActionLogArchives.ExecuteDeleteAsync(cancellationToken);
+        await _context.ActionLogArchives.AddAsync(archive, cancellationToken);
+    }
+
+    private IQueryable<ActionLog> BuildFilterQuery(
+        string? search,
+        string? action,
+        string? module,
+        string? clubMemberId,
+        string? level,
+        DateTime? fromUtc,
+        DateTime? toUtc)
+    {
+        var query = _context.ActionLogs.AsQueryable();
+
+        if (fromUtc.HasValue)
+            query = query.Where(x => x.CreatedAt >= fromUtc.Value);
+        if (toUtc.HasValue)
+            query = query.Where(x => x.CreatedAt <= toUtc.Value);
+        if (!string.IsNullOrWhiteSpace(action))
+            query = query.Where(x => x.Action == action);
+        if (!string.IsNullOrWhiteSpace(module))
+            query = query.Where(x => x.Module == module);
+        if (!string.IsNullOrWhiteSpace(clubMemberId))
+            query = query.Where(x => x.ClubMemberId == clubMemberId);
+        if (!string.IsNullOrWhiteSpace(level))
+            query = query.Where(x => x.Level == level);
+
+        if (!string.IsNullOrWhiteSpace(search))
+        {
+            var term = search.Trim();
+            query = query.Where(x =>
+                x.Action.Contains(term) ||
+                x.Module.Contains(term) ||
+                (x.Details != null && x.Details.Contains(term)) ||
+                (x.IpAddress != null && x.IpAddress.Contains(term)));
+        }
+
+        return query;
+    }
+}

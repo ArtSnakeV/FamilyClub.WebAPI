@@ -42,7 +42,8 @@ public class FamilyClubContext : IdentityDbContext<ClubMember>
     public DbSet<BlockReason> BlockReasons { get; set; }
     public DbSet<BlockedIp> BlockedIps { get; set; }
     public DbSet<PlatformSettings> PlatformSettings { get; set; }
-
+    public DbSet<ActionLog> ActionLogs { get; set; }
+    public DbSet<ActionLogArchive> ActionLogArchives { get; set; }
     protected override void OnModelCreating(ModelBuilder builder)
     {
         // Mandatory for Identity

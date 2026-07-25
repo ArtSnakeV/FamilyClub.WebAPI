@@ -66,3 +66,51 @@ public interface IPlatformSettingsRepository : IRepository<PlatformSettings>
 {
     Task<PlatformSettings?> GetSingletonAsync(CancellationToken cancellationToken = default);
 }
+
+public interface IActionLogRepository : IRepository<ActionLog>
+{
+    Task<ActionLog?> GetByIdAsync(long id, CancellationToken cancellationToken = default);
+
+    Task<(IReadOnlyList<ActionLog> Items, int TotalCount)> GetPagedAsync(
+        string? search,
+        string? action,
+        string? module,
+        string? clubMemberId,
+        string? level,
+        DateTime? fromUtc,
+        DateTime? toUtc,
+        int page,
+        int pageSize,
+        CancellationToken cancellationToken = default);
+
+    Task<ActionLogStatsRow> GetStatsAsync(
+        DateTime? fromUtc,
+        DateTime? toUtc,
+        CancellationToken cancellationToken = default);
+
+    Task<IReadOnlyList<ActionLog>> GetOlderThanAsync(
+        DateTime cutoffUtc,
+        CancellationToken cancellationToken = default);
+
+    Task DeleteRangeByIdsAsync(
+        IEnumerable<long> ids,
+        CancellationToken cancellationToken = default);
+
+    Task<ActionLogArchive?> GetCurrentArchiveAsync(
+        CancellationToken cancellationToken = default);
+
+    Task ReplaceArchiveAsync(
+        ActionLogArchive archive,
+        CancellationToken cancellationToken = default);
+}
+
+/// <summary>Агрегати для KPI журналу дій.</summary>
+public sealed class ActionLogStatsRow
+{
+    public int Total { get; init; }
+    public int Success { get; init; }
+    public int Warning { get; init; }
+    public int Error { get; init; }
+    public int Info { get; init; }
+    public int UniqueUsers { get; init; }
+}

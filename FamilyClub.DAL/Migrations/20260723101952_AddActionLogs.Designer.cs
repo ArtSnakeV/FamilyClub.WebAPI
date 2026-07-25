@@ -3,6 +3,7 @@ using System;
 using FamilyClub.DAL.EF;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace FamilyClub.DAL.Migrations
 {
     [DbContext(typeof(FamilyClubContext))]
-    partial class FamilyClubContextModelSnapshot : ModelSnapshot
+    [Migration("20260723101952_AddActionLogs")]
+    partial class AddActionLogs
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -189,42 +192,6 @@ namespace FamilyClub.DAL.Migrations
                         .HasDatabaseName("ix_action_logs_club_member_id");
 
                     b.ToTable("action_logs", (string)null);
-                });
-
-            modelBuilder.Entity("FamilyClubLibrary.ActionLogArchive", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasColumnName("id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("created_at");
-
-                    b.Property<string>("PayloadJson")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("payload_json");
-
-                    b.Property<DateTime>("PeriodFromUtc")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("period_from_utc");
-
-                    b.Property<DateTime>("PeriodToUtc")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("period_to_utc");
-
-                    b.Property<int>("RecordCount")
-                        .HasColumnType("integer")
-                        .HasColumnName("record_count");
-
-                    b.HasKey("Id")
-                        .HasName("pk_action_log_archives");
-
-                    b.ToTable("action_log_archives", (string)null);
                 });
 
             modelBuilder.Entity("FamilyClubLibrary.AgeRestriction", b =>

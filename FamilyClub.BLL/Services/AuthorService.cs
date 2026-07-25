@@ -1,10 +1,8 @@
-﻿using FamilyClub.BLL.DTOs.Author;
+﻿using FamilyClub.BLL.DTOs.ActionLog;
+using FamilyClub.BLL.DTOs.Author;
 using FamilyClub.BLL.Interfaces;
 using FamilyClub.DAL.Interfaces;
 using FamilyClubLibrary;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace FamilyClub.BLL.Services
 {
@@ -12,11 +10,16 @@ namespace FamilyClub.BLL.Services
 	{
 		private readonly IAuthorRepository _authorRepository;
 		private readonly IUnitOfWork _unitOfWork;
+		private readonly IActionLogService _actionLog;
 
-		public AuthorService(IAuthorRepository authorRepository, IUnitOfWork unitOfWork)
+		public AuthorService(
+			IAuthorRepository authorRepository,
+			IUnitOfWork unitOfWork,
+			IActionLogService actionLog)
 		{
 			_authorRepository = authorRepository;
 			_unitOfWork = unitOfWork;
+			_actionLog = actionLog;
 		}
 
 		public async Task<IEnumerable<AuthorDTO>> GetAllAsync(CancellationToken cancellationToken = default)
@@ -38,12 +41,17 @@ namespace FamilyClub.BLL.Services
 				AuthorName = dto.AuthorName.Trim(),
 				Biography = dto.Biography?.Trim(),
 				PhotoUrl = dto.PhotoUrl,
-
-
 			};
 
 			await _authorRepository.AddAsync(author, cancellationToken);
 			await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+			await SafeLogAsync(
+				ActionLogCodes.Actions.Created,
+				ActionLogCodes.Modules.Authors,
+				$"Створено автора «{author.AuthorName}», Id={author.Id}",
+				ActionLogCodes.Levels.Success,
+				cancellationToken);
 
 			return MapToReadDto(author);
 		}
@@ -74,10 +82,34 @@ namespace FamilyClub.BLL.Services
 				return false;
 			}
 
+			var name = author.AuthorName;
 			_authorRepository.Delete(author);
 			await _unitOfWork.SaveChangesAsync(cancellationToken);
 
+			await SafeLogAsync(
+				ActionLogCodes.Actions.Deleted,
+				ActionLogCodes.Modules.Authors,
+				$"Видалено автора «{name}», Id={id}",
+				ActionLogCodes.Levels.Warning,
+				cancellationToken);
+
 			return true;
+		}
+
+		private async Task SafeLogAsync(
+			string action,
+			string module,
+			string details,
+			string level,
+			CancellationToken cancellationToken)
+		{
+			try
+			{
+				await _actionLog.LogAsync(action, module, details, level, cancellationToken: cancellationToken);
+			}
+			catch
+			{
+			}
 		}
 
 		private static AuthorDTO MapToReadDto(Author author)

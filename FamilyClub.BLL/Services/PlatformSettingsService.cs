@@ -1,3 +1,4 @@
+using FamilyClub.BLL.DTOs.ActionLog;
 using FamilyClub.BLL.DTOs.PlatformSettings;
 using FamilyClub.BLL.Interfaces;
 using FamilyClub.DAL.Interfaces;
@@ -9,13 +10,16 @@ public class PlatformSettingsService : IPlatformSettingsService
 {
     private readonly IPlatformSettingsRepository _repository;
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IActionLogService _actionLog;
 
     public PlatformSettingsService(
         IPlatformSettingsRepository repository,
-        IUnitOfWork unitOfWork)
+        IUnitOfWork unitOfWork,
+        IActionLogService actionLog)
     {
         _repository = repository;
         _unitOfWork = unitOfWork;
+        _actionLog = actionLog;
     }
 
     public async Task<PlatformSettingsDto> GetAsync(CancellationToken cancellationToken = default)
@@ -41,6 +45,8 @@ public class PlatformSettingsService : IPlatformSettingsService
             entity = CreateDefault();
             await _repository.AddAsync(entity, cancellationToken);
         }
+
+        var previousMaintenance = entity.MaintenanceMode;
 
         entity.CompanyName = string.IsNullOrWhiteSpace(dto.CompanyName)
             ? "Ink & Echo"
@@ -86,6 +92,26 @@ public class PlatformSettingsService : IPlatformSettingsService
 
         _repository.Update(entity);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+        if (previousMaintenance != entity.MaintenanceMode)
+        {
+            try
+            {
+                await _actionLog.LogAsync(
+                    entity.MaintenanceMode
+                        ? ActionLogCodes.Actions.MaintenanceEnabled
+                        : ActionLogCodes.Actions.MaintenanceDisabled,
+                    ActionLogCodes.Modules.Platform,
+                    entity.MaintenanceMode
+                        ? "Увімкнено режим обслуговування"
+                        : "Вимкнено режим обслуговування",
+                    ActionLogCodes.Levels.Warning,
+                    cancellationToken: cancellationToken);
+            }
+            catch
+            {
+            }
+        }
 
         return Map(entity);
     }
