@@ -144,6 +144,9 @@ steps:
       git config user.name "Artem Malashevskyi"
       git add KUBERNETES/Frontend/frontend-deployment.yaml
       git commit -m "Update frontend manifest (digest, build-date, commit, branch)" || echo "No changes to commit"
+
+      git pull --rebase origin DeploymentTest5 || echo "Rebase skipped or failed"
+
       git remote set-url origin https://$(GH_PAT)@github.com/Metra638/FamilyClub.WebAPI1.git
       git push origin HEAD:DeploymentTest5
     displayName: 'Update frontend manifest on current branch'
@@ -191,6 +194,9 @@ steps:
       git config user.name "Artem Malashevskyi"
       git add KUBERNETES/Backend/backend-deployment.yaml
       git commit -m "Update backend manifest (digest, build-date, commit, branch)" || echo "No changes to commit"
+
+      git pull --rebase origin DeploymentTest5 || echo "Rebase skipped or failed"
+
       git remote set-url origin https://$(GH_PAT)@github.com/Metra638/FamilyClub.WebAPI1.git
       git push origin HEAD:DeploymentTest5
     displayName: 'Update backend manifest on current branch'
