@@ -1,10 +1,24 @@
 #!/bin/bash
 
 # ===================== КОНФИГУРАЦИЯ =====================
-STATIC_IP="20.246.149.219"
-RG_NAME="KBS"
-AKS_NAME="test1"
+IP_RESOURCE_GROUP="KBSIP"          # группа, где лежит статический IP
+IP_NAME="ingressIP1"               # имя IP-адреса
+RG_NAME="KBS"                      # группа кластера
+AKS_NAME="test1"                   # имя кластера
 # =======================================================
+
+# Получаем ID ресурса IP
+IP_ID=$(az network public-ip show \
+  --resource-group $IP_RESOURCE_GROUP \
+  --name $IP_NAME \
+  --query id -o tsv)
+
+if [ -z "$IP_ID" ]; then
+  echo "Ошибка: IP $IP_NAME не найден в группе $IP_RESOURCE_GROUP"
+  exit 1
+fi
+
+echo "Найден IP: $IP_ID"
 
 echo "Поиск ресурсной группы MC_..."
 MC_RG=$(az aks show --resource-group $RG_NAME --name $AKS_NAME --query nodeResourceGroup -o tsv)
@@ -14,7 +28,7 @@ if [ -z "$MC_RG" ]; then
 fi
 echo "Найдена MC группа: $MC_RG"
 
-echo "Установка Ingress-контроллера с IP $STATIC_IP..."
+echo "Установка Ingress-контроллера с IP $IP_ID..."
 helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx > /dev/null 2>&1
 helm repo update > /dev/null 2>&1
 
@@ -29,16 +43,16 @@ helm upgrade --install ingress-nginx ingress-nginx/ingress-nginx \
   --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-internal"=false \
   --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-health-probe-request-path"=/healthz \
   --set controller.service.externalTrafficPolicy=Local \
-  --set controller.service.loadBalancerIP=$STATIC_IP
+  --set controller.service.loadBalancerIPResourceID=$IP_ID
 
 echo "Ожидание назначения IP..."
 sleep 10
 
 EXTERNAL_IP=$(kubectl get svc -n ingress-nginx ingress-nginx-controller -o jsonpath='{.status.loadBalancer.ingress[0].ip}' 2>/dev/null)
-if [ "$EXTERNAL_IP" == "$STATIC_IP" ]; then
+if [ -n "$EXTERNAL_IP" ]; then
   echo "IP успешно назначен: $EXTERNAL_IP"
 else
-  echo "Внимание: ожидался $STATIC_IP, получен $EXTERNAL_IP. Проверьте настройки."
+  echo "Внимание: IP не назначился. Проверьте состояние сервиса."
 fi
 
 echo "Поиск NSG в группе $MC_RG..."
