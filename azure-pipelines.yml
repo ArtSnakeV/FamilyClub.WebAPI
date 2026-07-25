@@ -143,7 +143,7 @@ steps:
       git config user.email "apofeoz638@gmail.com"
       git config user.name "Artem Malashevskyi"
       git add KUBERNETES/frontend-deployment.yaml
-      git commit -m "Update frontend manifest (digest, build-date, commit, branch) [skip ci]" || echo "No changes to commit"
+      git commit -m "Update frontend manifest (digest, build-date, commit, branch)" || echo "No changes to commit"
       git remote set-url origin https://$(GH_PAT)@github.com/Metra638/FamilyClub.WebAPI1.git
       git push origin HEAD:DeploymentTest5
     displayName: 'Update frontend manifest on current branch'
@@ -190,7 +190,7 @@ steps:
       git config user.email "apofeoz638@gmail.com"
       git config user.name "Artem Malashevskyi"
       git add KUBERNETES/backend-deployment.yaml
-      git commit -m "Update backend manifest (digest, build-date, commit, branch) [skip ci]" || echo "No changes to commit"
+      git commit -m "Update backend manifest (digest, build-date, commit, branch)" || echo "No changes to commit"
       git remote set-url origin https://$(GH_PAT)@github.com/Metra638/FamilyClub.WebAPI1.git
       git push origin HEAD:DeploymentTest5
     displayName: 'Update backend manifest on current branch'
