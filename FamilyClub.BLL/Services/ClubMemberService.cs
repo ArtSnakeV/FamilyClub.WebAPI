@@ -1,4 +1,5 @@
-﻿using FamilyClub.BLL.DTOs.ClubMember;
+﻿using FamilyClub.BLL.DTOs.ActionLog;
+using FamilyClub.BLL.DTOs.ClubMember;
 using FamilyClub.BLL.DTOs.Product;
 using FamilyClub.BLL.Interfaces;
 using FamilyClub.BLL.Mapping;
@@ -8,7 +9,6 @@ using FamilyClubLibrary;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using System.Xml.Linq;
 
 namespace FamilyClub.BLL.Services;
 
@@ -20,13 +20,20 @@ public class ClubMemberService : IClubMemberService
     private readonly IUnitOfWork _unitOfWork; // We do not use it now, but it can be used later if we decide to update some other entities together with ClubMember
     private readonly UserManager<ClubMember> _userManager;
     private readonly RoleManager<IdentityRole> _roleManager;
+    private readonly IActionLogService _actionLog;
 
-    public ClubMemberService(IUnitOfWork unitOfWork, UserManager<ClubMember> userManager, RoleManager<IdentityRole> roleManager, FamilyClubContext context)
+    public ClubMemberService(
+        IUnitOfWork unitOfWork,
+        UserManager<ClubMember> userManager,
+        RoleManager<IdentityRole> roleManager,
+        FamilyClubContext context,
+        IActionLogService actionLog)
     {
         _unitOfWork = unitOfWork;
         _userManager = userManager;
         _roleManager = roleManager;
         _context = context;
+        _actionLog = actionLog;
     }
 
     public async Task<IEnumerable<ClubMemberReadDto>> GetAllAsync(CancellationToken cancellationToken = default)
@@ -109,6 +116,12 @@ public class ClubMemberService : IClubMemberService
         //}
 
         var roles = await _userManager.GetRolesAsync(clubMember);
+        await SafeLogAsync(
+            ActionLogCodes.Actions.Created,
+            ActionLogCodes.Modules.Users,
+            $"Створено користувача {clubMember.Email}, Id={clubMember.Id}",
+            ActionLogCodes.Levels.Success,
+            cancellationToken);
         return ClubMemberMapper.MapToReadDto(clubMember, roles);
     }
 
@@ -155,7 +168,15 @@ public class ClubMemberService : IClubMemberService
             return false;
         }
 
+        var email = clubMember.Email;
         await _userManager.DeleteAsync(clubMember);
+
+        await SafeLogAsync(
+            ActionLogCodes.Actions.Deleted,
+            ActionLogCodes.Modules.Users,
+            $"Видалено користувача {email}, Id={id}",
+            ActionLogCodes.Levels.Warning,
+            cancellationToken);
 
         return true;
     }
@@ -234,6 +255,13 @@ public class ClubMemberService : IClubMemberService
         await _userManager.UpdateAsync(user);
         await _userManager.UpdateSecurityStampAsync(user);
 
+        await SafeLogAsync(
+            ActionLogCodes.Actions.Blocked,
+            ActionLogCodes.Modules.Users,
+            $"Заблоковано користувача {user.Email}, Id={id}",
+            ActionLogCodes.Levels.Warning,
+            cancellationToken);
+
         return true;
     }
     public async Task<bool> UnlockUserAsync(string id, CancellationToken cancellationToken = default)
@@ -255,7 +283,30 @@ public class ClubMemberService : IClubMemberService
 
         await _userManager.UpdateAsync(user);
 
+        await SafeLogAsync(
+            ActionLogCodes.Actions.Unblocked,
+            ActionLogCodes.Modules.Users,
+            $"Розблоковано користувача {user.Email}, Id={id}",
+            ActionLogCodes.Levels.Success,
+            cancellationToken);
+
         return true;
+    }
+
+    private async Task SafeLogAsync(
+        string action,
+        string module,
+        string details,
+        string level,
+        CancellationToken cancellationToken)
+    {
+        try
+        {
+            await _actionLog.LogAsync(action, module, details, level, cancellationToken: cancellationToken);
+        }
+        catch
+        {
+        }
     }
 
     // We always return ReadMapToReadDto to ensure consistent output format

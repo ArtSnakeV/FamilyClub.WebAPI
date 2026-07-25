@@ -152,6 +152,11 @@ builder.Services.AddScoped<IBlockedIpService, BlockedIpService>();
 builder.Services.AddScoped<IPlatformSettingsRepository, PlatformSettingsRepository>();
 builder.Services.AddScoped<IPlatformSettingsService, PlatformSettingsService>();
 
+// Action log (журнал дій)
+builder.Services.AddScoped<IActionLogRepository, ActionLogRepository>();
+builder.Services.AddScoped<IActionLogService, ActionLogService>();
+builder.Services.AddHostedService<FamilyClub.WebAPI.BackgroundServices.ActionLogRetentionHostedService>();
+
 // Customize Identity cookie
 //builder.Services.ConfigureApplicationCookie(
 //    options => {
@@ -205,6 +210,7 @@ builder.Services.AddAutoMapper(cfg =>
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddMemoryCache();
+builder.Services.AddHttpContextAccessor();
 
 builder.Services.Configure<ForwardedHeadersOptions>(options =>
 {
