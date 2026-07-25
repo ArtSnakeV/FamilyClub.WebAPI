@@ -35,7 +35,7 @@ spec:
       terminationGracePeriodSeconds: 60
       containers:
       - name: frontend
-        image: metra638/test1@sha256:0b37efd3a24e0c1fff5450aa13d6c32a754ad01903c08f8d5375c1efb807f871   # заменяется pipeline
+        image: metra638/test1@sha256:03e4311633f0809bac6a61d1af7534db3e649a1df53e28a6256d6bf624e51c66   # заменяется pipeline
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 3000
