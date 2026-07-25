@@ -91,7 +91,7 @@ steps:
   - script: |
       echo "Restoring dependencies"
       dotnet restore
-      echo "Building project with code analyzers enabled..."
+      echo "Building project with code analyzers enabled"
       dotnet build --no-restore -c Release /p:RunAnalyzers=true /p:EnforceCodeStyleInBuild=true
     displayName: 'Run backend build with analyzers'
 
