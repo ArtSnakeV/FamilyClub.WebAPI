@@ -35,7 +35,7 @@ spec:
       terminationGracePeriodSeconds: 60
       containers:
       - name: backend
-        image: metra638/test1@sha256:1ba0bc85b2eb2d3828772ea1460abe60c0508e42fe9d25d948dee35ac42a721f
+        image: metra638/test1@sha256:bd6e199e1b6a3568348c8d46a4d5619bade6536ec5fb4a012bbe47bb85389753
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8080
