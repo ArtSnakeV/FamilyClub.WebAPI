@@ -1,6 +1,5 @@
 "use client";
 
-import type { ReactNode } from "react";
 import type {
     AuthorDTO,
     ClubMemberReadDto,
@@ -14,13 +13,14 @@ import {
     formatOrderNumber,
     getAuthorNameForProduct,
     getOrderExtras,
-    getOrderStatusMeta,
     getProductCover,
 } from "../utilsR/OrderDisplay";
 import Image from "next/image";
 import userImg from "@/public/images/ordersAdminPage/userImg.png"
 import shopingCart from "@/public/images/ordersAdminPage/shopingCart.png"
-import { InfoRowInline, InfoRowStacked } from "./InfoRow";
+import { InfoRowInline, InfoRowStacked } from "../sectionR/InfoRow";
+import StatusBadge from "../sectionR/StatusBadge";
+
 
 type Props = {
     order: OrderDTO | null;
@@ -38,7 +38,8 @@ export default function OrderDetail({
     if (!order) {
         return (
             <div
-                className="w-[500px] max-w-[600px] shadow-[0px_0px_15px_0px_#00000040] items-center flex flex-col bg-[var(--color-white)] rounded-[20px] ml-3 px-6 py-4"
+                className="w-[500px] max-w-[500px] shadow-[0px_0px_15px_0px_#00000040] 
+                items-center flex flex-col bg-[var(--color-white)] rounded-[20px] px-6 py-4"
                 style={{ height: 760 }}
             >
                 <p className="text-[14px] text-[#888]">
@@ -48,7 +49,6 @@ export default function OrderDetail({
         );
     }
 
-    const status = getOrderStatusMeta(order.status);
     const extras = getOrderExtras(order);
     const items = order.orderItems ?? [];
     const visibleItems = items.slice(0, 4);
@@ -59,9 +59,9 @@ export default function OrderDetail({
 
     return (
         <div
-            className="rounded-[20px] w-[500px] max-w-[600px] bg-[var(--color-white)] shadow-[0px_0px_15px_0px_#00000040] px-5 py-5 
+            className="rounded-[20px] w-[500px] max-w-[500px] bg-[var(--color-white)] shadow-[0px_0px_15px_0px_#00000040] px-5 py-5 
         shadow-[0_0_15px_rgba(0,0,0,0.08)] flex flex-col gap-4 min-h-0"
-            style={{ height: 760 }}
+            style={{ height: 820 }}
         >
             {/* Header */}
             <div className="flex flex-row items-center justify-between gap-4 shrink-0">
@@ -82,10 +82,8 @@ export default function OrderDetail({
             <section className="rounded-[9px] bg-[var(--color-white)] shadow-[0_0_10px_0_#00000040] text-[13px]
             flex flex-row gap-6 px-5 py-4 shrink-0">
                 <div className="flex flex-col gap-3 flex-1 min-w-0">
-                    <InfoRowInline label="Статус">
-                        <span className="font-semibold" style={{ color: status.color }}>
-                            {status.badgeLabel}
-                        </span>
+                     <InfoRowInline label="Статус">
+                        <StatusBadge status={order.status ?? ""} />
                     </InfoRowInline>
 
                     <InfoRowInline label="ТТН">
