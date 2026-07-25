@@ -96,7 +96,10 @@ namespace FamilyClub.BLL.Services
 			{
 				Id = order.Id,
 				UserId = order.UserId,
-				OrderDate = order.OrderDate,
+                UserName = order.ClubMember != null
+            ? $"{order.ClubMember.Name} {order.ClubMember.Surname}".Trim()
+            : order.UserId,
+                OrderDate = order.OrderDate,
 				Status = order.Status,
 				TotalPrice = order.TotalPrice,
 				OrderItems = order.OrderItems.Select(oi => new OrderItemDTO

@@ -47,7 +47,7 @@ export default function OrderDetailsPanel({
     };
 
     return (
-        <div className="rounded-[12px] bg-white/80 px-5 py-5 shadow-[0_0_15px_rgba(0,0,0,0.08)] flex flex-col gap-4 h-full min-h-0">
+        <div className="rounded-[12px] bg-[var(--color-white)] px-5 py-5 shadow-[0_0_15px_rgba(0,0,0,0.08)] flex flex-col gap-4 h-full min-h-0">
             <div className="flex items-start justify-between gap-3">
                 <h2 className="text-[18px] font-bold text-[#1F1F1F] leading-tight">
                     Деталі замовлення {formatOrderNumber(order.id)}
