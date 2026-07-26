@@ -52,11 +52,11 @@ export default function LeftFilterBlock({ onApply, onReset }: LeftFilterBlockPro
     } = useOrdersFilterForm({ onApply, onReset });
 
     return (
-        <div className="w-[330px] max-w-[400px] flex flex-col -mt-4">
+        <div className="w-[330px] max-w-[400px] flex flex-col -mt-2 gap-10">
             <img
                 src="/images/ordersAdminPage/Rectangle 705.png"
                 className="absolute"
-                style={{ width: "330px", height: "570px", maxHeight: "600px" }}
+                style={{ width: "330px", height: "610px", maxHeight: "630px" }}
                 alt=""
             />
 
@@ -64,7 +64,7 @@ export default function LeftFilterBlock({ onApply, onReset }: LeftFilterBlockPro
                 Фільтри
             </p>
 
-            <div className="relative flex flex-col items-center gap-2 px-7 pb-2">
+            <div className="relative flex flex-col items-center gap-3 px-7 -mt-7 pb-2">
                 <SearchOrders
                     searchPlaceholder="№ замовлення, ім’я, email..."
                     searchValue={values.search}
@@ -109,7 +109,7 @@ export default function LeftFilterBlock({ onApply, onReset }: LeftFilterBlockPro
                         />
                     </div>
                 </div>
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-col gap-2 mt-2">
                     <button
                         type="button"
                         onClick={handleApply}
