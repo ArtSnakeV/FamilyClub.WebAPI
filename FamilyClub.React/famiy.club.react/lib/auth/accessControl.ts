@@ -31,10 +31,12 @@ export const ALL_PERMISSION_IDS: PermissionId[] =
 /**
  * Відповідність шляхів адмінки до рядків матриці.
  * `null` — доступ завжди (напр. особисті налаштування).
+ * `adminOnly: true` — лише роль Admin (не через матрицю).
  */
 const ROUTE_PERMISSION_RULES: Array<{
     prefix: string;
     permission: PermissionId | null;
+    adminOnly?: boolean;
 }> = [
     { prefix: "/admin/desktop", permission: "dashboard" },
     { prefix: "/admin/books", permission: "books" },
@@ -48,9 +50,35 @@ const ROUTE_PERMISSION_RULES: Array<{
     { prefix: "/admin/platform-settings", permission: "platform-settings" },
     { prefix: "/admin/system", permission: "platform-settings" },
     { prefix: "/admin/roles", permission: "platform-settings" },
+    { prefix: "/admin/claims", permission: null, adminOnly: true },
     { prefix: "/admin/logs", permission: "action-log" },
     { prefix: "/admin/my-settings", permission: null },
 ];
+
+export function isAdminRole(userRoles: string[] | null | undefined): boolean {
+    return (userRoles ?? []).some(
+        (r) => normalizeRoleKey(r).toLowerCase() === "admin"
+    );
+}
+
+function findRouteRule(pathname: string) {
+    if (!pathname.startsWith("/admin")) return undefined;
+
+    const sorted = [...ROUTE_PERMISSION_RULES].sort(
+        (a, b) => b.prefix.length - a.prefix.length
+    );
+
+    for (const rule of sorted) {
+        if (
+            pathname === rule.prefix ||
+            pathname.startsWith(`${rule.prefix}/`)
+        ) {
+            return rule;
+        }
+    }
+
+    return null;
+}
 
 export function buildDefaultAccessMatrix(): AccessMatrixMap {
     const matrix: AccessMatrixMap = {};
@@ -165,26 +193,15 @@ export function getRequiredPermissionForPath(
     // undefined = шлях не з адмінки / не відомий
     if (!pathname.startsWith("/admin")) return undefined;
 
-    // Точніші (довші) префікси першими
-    const sorted = [...ROUTE_PERMISSION_RULES].sort(
-        (a, b) => b.prefix.length - a.prefix.length
-    );
-
-    for (const rule of sorted) {
-        if (
-            pathname === rule.prefix ||
-            pathname.startsWith(`${rule.prefix}/`)
-        ) {
-            return rule.permission;
+    const rule = findRouteRule(pathname);
+    if (rule === undefined) return undefined;
+    if (rule === null) {
+        if (pathname === "/admin" || pathname === "/admin/") {
+            return "dashboard";
         }
-    }
-
-    // /admin без підшляху або невідомий розділ — потрібен хоча б dashboard
-    if (pathname === "/admin" || pathname === "/admin/") {
         return "dashboard";
     }
-
-    return "dashboard";
+    return rule.permission;
 }
 
 export function canAccessPath(
@@ -192,10 +209,17 @@ export function canAccessPath(
     userRoles: string[] | null | undefined,
     matrix?: AccessMatrixMap
 ): boolean {
-    const required = getRequiredPermissionForPath(pathname);
-    if (required === undefined) return true;
-    if (required === null) return true;
-    return hasPermission(userRoles, required, matrix ?? loadAccessMatrix());
+    const rule = findRouteRule(pathname);
+    if (rule === undefined) return true;
+    if (rule === null) {
+        // невідомий /admin/* — потрібен dashboard
+        return hasPermission(userRoles, "dashboard", matrix ?? loadAccessMatrix());
+    }
+    if (rule.adminOnly) {
+        return isAdminRole(userRoles);
+    }
+    if (rule.permission === null) return true;
+    return hasPermission(userRoles, rule.permission, matrix ?? loadAccessMatrix());
 }
 
 export function getFirstAllowedAdminPath(
@@ -226,6 +250,7 @@ export const SIDEBAR_ITEMS: Array<{
     label: string;
     icon: string;
     permission: SidebarNavPermission;
+    adminOnly?: boolean;
     match: (pathname: string) => boolean;
 }> = [
     {
@@ -256,6 +281,14 @@ export const SIDEBAR_ITEMS: Array<{
         icon: "/images/admin_manager_layout/roles.svg",
         permission: "platform-settings",
         match: (p) => p === "/admin/roles" || p.startsWith("/admin/roles/"),
+    },
+    {
+        href: "/admin/claims",
+        label: "Claims",
+        icon: "/images/admin_manager_layout/claims.svg",
+        permission: null,
+        adminOnly: true,
+        match: (p) => p === "/admin/claims" || p.startsWith("/admin/claims/"),
     },
     {
         href: "/admin/analytics",
