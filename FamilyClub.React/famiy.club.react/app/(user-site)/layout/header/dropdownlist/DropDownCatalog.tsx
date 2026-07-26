@@ -1,14 +1,14 @@
 "use client";
 
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { useState } from "react";
 
 export default function DropDownCatalog() {
-  const router = useRouter();
   const [open, setOpen] = useState(false);
+
   return (
-    <div className="relative w-[150px] z-10">
+    <div className="relative w-[150px] z-10 pointer-events-auto">
       <div
         className={`
     relative w-[150px] h-[340px]
@@ -17,7 +17,6 @@ export default function DropDownCatalog() {
     ${open ? "translate-y-[6px]" : "translate-y-0"}
   `}
       >
-        {/* BG */}
         <Image
           src="/images/header/Rectangle 144.svg"
           alt="bg"
@@ -25,15 +24,9 @@ export default function DropDownCatalog() {
           className="object-contain pointer-events-none"
         />
 
-        {/* BUTTON */}
-        <button
-          onClick={() => {
-            setOpen(true);
-
-            setTimeout(() => {
-              window.location.href = "/products";
-            }, 200);
-          }}
+        <Link
+          href="/products"
+          onClick={() => setOpen(true)}
           className="pointer-events-auto
             absolute inset-0
             flex justify-center items-end
@@ -43,7 +36,7 @@ export default function DropDownCatalog() {
           "
         >
           <span className="text-[var(--color-white)]">Каталог</span>
-        </button>
+        </Link>
       </div>
     </div>
   );

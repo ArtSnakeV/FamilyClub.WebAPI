@@ -1,3 +1,4 @@
+import Link from "next/link";
 import BookCard from "./BookCard";
 
 type Book = {
@@ -15,13 +16,13 @@ type BookSectionProps = {
     title: string;
     books: Book[];
     showMore?: boolean;
+    showMoreHref?: string;
     pillWidth?: number;
     isFav?: (id?: number) => boolean;
     onToggleFavorite?: (productId: number) => void;
 };
 
-export default function BookSection({ title, books, showMore = false, pillWidth, isFav, onToggleFavorite }: BookSectionProps) {
-    const titleNoWrapClass = title === "Книжкові комплекти" ? "whitespace-nowrap" : "";
+export default function BookSection({ title, books, showMore = false, showMoreHref = "/pick-book", pillWidth, isFav, onToggleFavorite }: BookSectionProps) {
     return (
         <section
             className="relative w-full overflow-hidden pt-0 pb-0"
@@ -44,19 +45,20 @@ export default function BookSection({ title, books, showMore = false, pillWidth,
                 {/* Hanging Title Pill & Show More Button */}
                 <div className="absolute top-0 left-0 right-0 z-30 flex flex-wrap items-start justify-between gap-4 pointer-events-none px-4 lg:px-0">
                     <div
-                        className="pointer-events-auto flex h-[57px] items-center justify-center rounded-t-none rounded-b-[30px] bg-[#f5f3ee] px-6 shadow-[0px_8px_8.5px_0px_rgba(0,0,0,0.5)]"
-                        style={pillWidth ? { width: `${pillWidth}px` } : undefined}
+                        className="pointer-events-auto flex h-[57px] max-w-full items-center justify-center rounded-t-none rounded-b-[30px] bg-[#f5f3ee] px-6 md:px-8 shadow-[0px_8px_8.5px_0px_rgba(0,0,0,0.5)] w-fit"
+                        style={pillWidth ? { minWidth: `${pillWidth}px` } : undefined}
                     >
-                        <h2
-                            className={`font-serif text-[32px] font-bold text-[#242424] md:text-[40px] ${titleNoWrapClass}`}
-                        >
+                        <h2 className="font-serif text-[28px] sm:text-[32px] md:text-[40px] font-bold text-[#242424] whitespace-nowrap leading-none">
                             {title}
                         </h2>
                     </div>
                     {showMore && (
-                        <button className="pointer-events-auto h-[55px] w-[150px] rounded-t-none rounded-b-[25px] bg-[#f5f3ee] text-[24px] font-medium text-[#242424] shadow-[0px_6px_8px_0px_rgba(0,0,0,0.3)] transition-transform hover:scale-105">
+                        <Link
+                            href={showMoreHref}
+                            className="pointer-events-auto h-[55px] w-[150px] rounded-t-none rounded-b-[25px] bg-[#f5f3ee] text-[24px] font-medium text-[#242424] shadow-[0px_6px_8px_0px_rgba(0,0,0,0.3)] transition-transform hover:scale-105 flex items-center justify-center"
+                        >
                             Більше
-                        </button>
+                        </Link>
                     )}
                 </div>
 
