@@ -6,6 +6,7 @@ import {
     AccessMatrixMap,
     canAccessPath,
     hasPermission,
+    isAdminRole,
     loadAccessMatrix,
     PermissionId,
     SIDEBAR_ITEMS,
@@ -42,11 +43,13 @@ export function useAccessControl() {
 
     const allowedSidebarItems = useMemo(
         () =>
-            SIDEBAR_ITEMS.filter(
-                (item) =>
+            SIDEBAR_ITEMS.filter((item) => {
+                if (item.adminOnly) return isAdminRole(roles);
+                return (
                     item.permission === null ||
                     hasPermission(roles, item.permission, matrix)
-            ),
+                );
+            }),
         [roles, matrix]
     );
 
@@ -58,5 +61,6 @@ export function useAccessControl() {
         can,
         canPath,
         allowedSidebarItems,
+        isAdmin: isAdminRole(roles),
     };
 }

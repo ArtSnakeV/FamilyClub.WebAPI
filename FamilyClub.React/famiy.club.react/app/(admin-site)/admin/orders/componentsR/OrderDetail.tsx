@@ -40,7 +40,7 @@ export default function OrderDetail({
             <div
                 className="w-[500px] max-w-[500px] shadow-[0px_0px_15px_0px_#00000040] 
                 items-center flex flex-col bg-[var(--color-white)] rounded-[20px] px-6 py-4"
-                style={{ height: 760 }}
+                style={{ height: 880 }}
             >
                 <p className="text-[14px] text-[#888]">
                     Оберіть замовлення зі списку
@@ -61,7 +61,7 @@ export default function OrderDetail({
         <div
             className="rounded-[20px] w-[500px] max-w-[500px] bg-[var(--color-white)] shadow-[0px_0px_15px_0px_#00000040] px-5 py-5 
         shadow-[0_0_15px_rgba(0,0,0,0.08)] flex flex-col gap-4 min-h-0"
-            style={{ height: 820 }}
+            style={{ height: 880 }}
         >
             {/* Header */}
             <div className="flex flex-row items-center justify-between gap-4 shrink-0">
