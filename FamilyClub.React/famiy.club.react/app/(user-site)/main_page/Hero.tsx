@@ -80,7 +80,7 @@ export default function Hero() {
                 </p>
 
                 <Link
-                    href="/categories"
+                    href="/pick-book"
                     className="absolute left-[1062px] top-[500px] flex h-[60px] items-center gap-3 rounded-full bg-[#005B33] px-8 text-[20px] font-semibold text-[#f5f3ee] shadow-[0px_4px_12px_rgba(0,0,0,0.4)] transition-transform hover:scale-105"
                 >
                     Підібрати книгу
@@ -145,7 +145,7 @@ export default function Hero() {
                 </p>
 
                 <Link
-                    href="/categories"
+                    href="/pick-book"
                     className="absolute bottom-[120px] right-[40px] flex h-[50px] items-center gap-2 rounded-full bg-[#005B33] px-6 text-[16px] font-semibold text-[#f5f3ee] shadow-[0px_4px_12px_rgba(0,0,0,0.4)] transition-transform hover:scale-105 md:bottom-[140px] md:right-[60px] md:h-[60px] md:px-8 md:text-[20px]"
                 >
                     Підібрати книгу

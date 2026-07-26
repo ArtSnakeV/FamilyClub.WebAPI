@@ -52,7 +52,7 @@ export default function MobileHome({
         title="Нові"
         books={newBooks}
         showShelf={true}
-        href="/categories?sort=new"
+        href="/pick-book"
       />
 
       {/* 5. Announcements / "Анонси" (Figma Node 2199:3275) */}
