@@ -6,23 +6,33 @@ import { normalizeOrderStatusGroup } from "@/lib/constants/orderStatusGroups";
 import { displayMemberName, getOrderExtras } from "../utilsR/OrderDisplay";
 import type { OrderTabKey } from "../types";
 import type { OrdersFiltersValue } from "./useOrdersFilterForm";
+import type { CancellationRequest } from "./useCancellationRequests";
 
 /**
  * Фільтрує список замовлень за табом статусу зверху + панеллю фільтрів зліва.
  * Статус з панелі фільтрів має пріоритет над табом, якщо він обраний.
+ *
+ * Таб "pendingCancellation" — особливий: він не відповідає жодному
+ * реальному OrderDTO.status, а фільтрує за окремим (мок) станом
+ * cancellationRequests, тому обробляється до/замість normalizeOrderStatusGroup.
  */
 export function useFilteredOrders(
     orders: OrderDTO[],
     tabStatus: OrderTabKey,
     filters: OrdersFiltersValue,
-    members: Map<string, ClubMemberReadDto>
+    members: Map<string, ClubMemberReadDto>,
+    cancellationRequests?: Record<number, CancellationRequest>
 ) {
     return useMemo(() => {
         const search = filters.search.trim().toLowerCase();
 
         return orders.filter((o) => {
             const effectiveStatus = filters.status || tabStatus;
-            if (
+
+            if (effectiveStatus === "pendingCancellation") {
+                const request = o.id != null ? cancellationRequests?.[o.id] : undefined;
+                if (!request || request.status !== "pending") return false;
+            } else if (
                 effectiveStatus !== "all" &&
                 normalizeOrderStatusGroup(o.status) !== effectiveStatus
             ) {
@@ -41,7 +51,7 @@ export function useFilteredOrders(
                 if (!haystack.includes(search)) return false;
             }
 
-            // ⚠️ paymentMethod/deliveryMethod у getOrderExtras — синтетичні
+            // paymentMethod/deliveryMethod у getOrderExtras — синтетичні
             // (порахувані з id), бо в OrderDTO реальних полів ще нема.
             if (filters.payment || filters.delivery) {
                 const extras = getOrderExtras(o);
@@ -68,5 +78,5 @@ export function useFilteredOrders(
 
             return true;
         });
-    }, [orders, tabStatus, filters, members]);
+    }, [orders, tabStatus, filters, members, cancellationRequests]);
 }
