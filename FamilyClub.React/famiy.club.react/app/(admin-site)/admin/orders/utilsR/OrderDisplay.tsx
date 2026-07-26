@@ -149,8 +149,7 @@ export function getProductCover(
     );
 }
 //  ProductDto зберігає лише authorIds (масив id), тож для імені
-//   потрібен довідник авторів { id -> AuthorDTO } — той самий Map,
-//   що вже використовується в BookGrid/AddProductPage тощо.
+//   потрібен довідник авторів { id -> AuthorDTO } робимо Map,
  
 export function getAuthorName(
     product?: ProductDto | null,

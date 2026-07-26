@@ -1,3 +1,3 @@
 import type { OrderStatusGroupId } from "@/lib/constants/orderStatusGroups";
 
-export type OrderTabKey = "all" | OrderStatusGroupId;
+export type OrderTabKey = "all" | OrderStatusGroupId | "pendingCancellation";
