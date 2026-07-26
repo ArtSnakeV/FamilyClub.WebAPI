@@ -45,6 +45,7 @@ export function useSubmitProduct({ form, images, router, clearDraft }: Props) {
         quantityInStock: form.quantityInStock,
         iSBN: form.isbn,
         productImageFiles,
+        promotionId: form.promotionId,
       });
 
       clearDraft();

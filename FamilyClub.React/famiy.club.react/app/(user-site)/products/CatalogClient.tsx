@@ -5,55 +5,78 @@ import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import BookCard from "@/app/(user-site)/main_page/BookCard";
 import { ProductDto } from "@/lib/api/generated";
+import { productService } from "@/lib/api/services";
 
 interface CatalogClientProps {
-  initialProducts: ProductDto[];
+  initialProducts?: ProductDto[];
 }
 
 const PRODUCTS_PER_PAGE = 12; // 4 columns × 3 rows
 
-export default function CatalogClient({ initialProducts }: CatalogClientProps) {
+export default function CatalogClient({ initialProducts = [] }: CatalogClientProps) {
   const searchParams = useSearchParams();
   const [currentPage, setCurrentPage] = useState(1);
+  const [allProducts, setAllProducts] = useState<ProductDto[]>(initialProducts);
   const [filteredProducts, setFilteredProducts] = useState<ProductDto[]>(initialProducts);
+  const [loading, setLoading] = useState(initialProducts.length === 0);
+  const [loadError, setLoadError] = useState(false);
 
-  // Apply filters when search params change
   useEffect(() => {
-    let products = [...initialProducts];
+    let mounted = true;
+
+    const load = async () => {
+      try {
+        setLoading(true);
+        setLoadError(false);
+        const products = (await productService.apiProductsGet().catch(() => [])) ?? [];
+        if (!mounted) return;
+        setAllProducts(products);
+      } catch {
+        if (mounted) setLoadError(true);
+      } finally {
+        if (mounted) setLoading(false);
+      }
+    };
+
+    load();
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
+  // Apply filters when search params or catalog data change
+  useEffect(() => {
+    let products = [...allProducts];
 
     // Filter by category
-    const categoryId = searchParams.get("categoryId");
-    if (categoryId) {
-      const catId = parseInt(categoryId);
+    const categoryIds = searchParams.getAll("categoryId").flatMap(v => v.split(',')).map(id => parseInt(id)).filter(id => !isNaN(id));
+    if (categoryIds.length > 0) {
       products = products.filter(
-        (p) => p.categoryIds?.includes(catId)
+        (p) => p.categoryIds?.some(id => categoryIds.includes(id))
       );
     }
 
     // Filter by author
-    const authorId = searchParams.get("authorId");
-    if (authorId) {
-      const authId = parseInt(authorId);
+    const authorIds = searchParams.getAll("authorId").flatMap(v => v.split(',')).map(id => parseInt(id)).filter(id => !isNaN(id));
+    if (authorIds.length > 0) {
       products = products.filter(
-        (p) => p.authorIds?.includes(authId)
+        (p) => p.authorIds?.some(id => authorIds.includes(id))
       );
     }
 
     // Filter by language
-    const languageId = searchParams.get("languageId");
-    if (languageId) {
-      const langId = parseInt(languageId);
+    const languageIds = searchParams.getAll("languageId").flatMap(v => v.split(',')).map(id => parseInt(id)).filter(id => !isNaN(id));
+    if (languageIds.length > 0) {
       products = products.filter(
-        (p) => p.languageIds?.includes(langId)
+        (p) => p.languageIds?.some(id => languageIds.includes(id))
       );
     }
 
     // Filter by format
-    const formatId = searchParams.get("formatId");
-    if (formatId) {
-      const fmtId = parseInt(formatId);
+    const formatIds = searchParams.getAll("formatId").flatMap(v => v.split(',')).map(id => parseInt(id)).filter(id => !isNaN(id));
+    if (formatIds.length > 0) {
       products = products.filter(
-        (p) => p.formatIds?.includes(fmtId)
+        (p) => p.formatIds?.some(id => formatIds.includes(id))
       );
     }
 
@@ -70,11 +93,10 @@ export default function CatalogClient({ initialProducts }: CatalogClientProps) {
     }
 
     // Filter by age restriction
-    const ageRestrictionId = searchParams.get("ageRestrictionId");
-    if (ageRestrictionId) {
-      const ageId = parseInt(ageRestrictionId);
+    const ageRestrictionIds = searchParams.getAll("ageRestrictionId").flatMap(v => v.split(',')).map(id => parseInt(id)).filter(id => !isNaN(id));
+    if (ageRestrictionIds.length > 0) {
       products = products.filter(
-        (p) => p.ageRestrictionIds?.includes(ageId)
+        (p) => p.ageRestrictionIds?.some(id => ageRestrictionIds.includes(id))
       );
     }
 
@@ -110,7 +132,7 @@ export default function CatalogClient({ initialProducts }: CatalogClientProps) {
 
     setFilteredProducts(products);
     setCurrentPage(1);
-  }, [searchParams, initialProducts]);
+  }, [searchParams, allProducts]);
 
   // Calculate pagination
   const totalProducts = filteredProducts.length;
@@ -234,7 +256,9 @@ export default function CatalogClient({ initialProducts }: CatalogClientProps) {
 
             {/* Results Count */}
             <div className="text-[#242424] font-mono font-semibold text-[24px] md:text-[32px] text-right tracking-[-0.352px] leading-[1.5]">
-              Знайдено {totalProducts.toLocaleString("uk-UA")} збігів
+              {loading
+                ? "Завантаження…"
+                : `Знайдено ${totalProducts.toLocaleString("uk-UA")} збігів`}
             </div>
           </div>
 
@@ -318,7 +342,20 @@ export default function CatalogClient({ initialProducts }: CatalogClientProps) {
         </div>
 
         <div className="max-w-[1220px] mx-auto px-[16px] lg:px-0 pt-[180px] pb-[100px] relative z-20">
-          {paginatedProducts.length > 0 ? (
+          {loading ? (
+            <div className="text-center py-[100px] relative z-20">
+              <p className="text-[18px] text-gray-600 font-mono">Завантаження книг…</p>
+            </div>
+          ) : loadError ? (
+            <div className="text-center py-[100px] relative z-20">
+              <h2 className="text-[24px] font-bold text-[var(--color-black)] mb-[16px]">
+                Не вдалося завантажити каталог
+              </h2>
+              <p className="text-[16px] text-gray-600">
+                Перевір, що API запущений, і онови сторінку.
+              </p>
+            </div>
+          ) : paginatedProducts.length > 0 ? (
             <>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-[60px] gap-y-[205px] mb-[60px]">
                 {paginatedProducts.map((product) => (

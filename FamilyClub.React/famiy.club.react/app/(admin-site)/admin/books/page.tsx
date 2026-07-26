@@ -148,12 +148,41 @@
 "use client";
 
 import BooksNav from './booksNav';
-import { ProductDto } from '@/lib/api/generated';
-import { productService } from '@/lib/api/services';
+import { AuthorDTO, ProductDto } from '@/lib/api/generated';
+import { authorService, productService } from '@/lib/api/services';
 import ItemActions from "@/app/(admin-site)/common_elements/item_actions";
 import { useEffect, useState } from "react";
 import EntitiesSearchSorting from "@/app/(admin-site)/common_elements/entities_search_sorting";
-import Pagination from "@/app/(admin-site)/common_elements/entities_pagination"; // Імпортуємо наш компонент пагінації
+import Pagination from "@/app/(admin-site)/common_elements/entities_pagination";
+import {
+  getProductAuthorName,
+  getProductCoverSrc,
+  getProductPriceAmount,
+} from "./utils/productDisplayUtils";
+
+function BookCover({
+  src,
+  title,
+}: {
+  src: string | null;
+  title: string;
+}) {
+  if (src) {
+    return (
+      <img
+        src={src}
+        alt={title}
+        className="w-full h-full object-cover"
+      />
+    );
+  }
+
+  return (
+    <div className="w-full h-full flex items-center justify-center text-[11px] text-[#888] text-center px-1">
+      Немає фото
+    </div>
+  );
+}
 
 // Опції сортування для книг
 const BOOK_SORT_OPTIONS = [
@@ -165,12 +194,9 @@ const BOOK_SORT_OPTIONS = [
 
 const ITEMS_PER_PAGE = 10;
 
-if (process.env.NODE_ENV === 'development') {
-    process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
-}
-
 export default function AllBooks() {
     const [products, setProducts] = useState<ProductDto[]>([]);
+    const [authors, setAuthors] = useState<AuthorDTO[]>([]);
     const [search, setSearch] = useState("");
     const [sortOrder, setSortOrder] = useState("asc");
     const [currentPage, setCurrentPage] = useState(1); // Додаємо відстеження поточної сторінки
@@ -178,9 +204,13 @@ export default function AllBooks() {
     const [error, setError] = useState<unknown>(null);
 
     useEffect(() => {
-        productService.apiProductsGet()
-            .then((data) => {
-                setProducts(data);
+        Promise.all([
+            productService.apiProductsGet(),
+            authorService.apiAuthorsGet().catch(() => [] as AuthorDTO[]),
+        ])
+            .then(([productsData, authorsData]) => {
+                setProducts(productsData);
+                setAuthors(authorsData);
                 setIsLoading(false);
             })
             .catch((err) => {
@@ -226,7 +256,12 @@ export default function AllBooks() {
     const currentPaginatedItems = filteredAndSorted.slice(indexOfFirstItem, indexOfLastItem);
 
     if (error) {
-        return <div className="p-[35px]">Failed to load products.</div>;
+        return (
+            <div className="p-[35px]">
+                Не вдалося завантажити книги. Перевірте, чи запущено API (
+                {process.env.NEXT_PUBLIC_API_URL ?? "https://localhost:7069"}).
+            </div>
+        );
     }
 
     return (
@@ -269,7 +304,7 @@ export default function AllBooks() {
                             <EntitiesSearchSorting
                                 searchPlaceholder="Введіть будь ласка назву книги для пошуку..."
                                 searchValue={search}
-                                onSearchChange={setSearch}
+                                onSearchChange={handleSearchChange}
                                 addButtonText="Додати книгу"
                                 addButtonHref="/products/addProduct" // Ваш оригінальний шлях з форми
                                 sortValue={sortOrder}
@@ -279,45 +314,104 @@ export default function AllBooks() {
 
                             {/* Table Section */}
                             <div className="mt-8 px-[20px] w-full text-left">
-                                {/* Table Header */}
-                                <div className="flex border-none pb-4 font-bold text-lg">
-                                    <div className="flex-1 padding-10">Товари</div>
-                                    <div className="w-[338px] text-center">Дії</div>
+                                <div className="flex border-none pb-4">
+                                    <div className="flex-1 font-['Source_Sans_Pro'] font-semibold text-[20px] leading-[150%] tracking-[-0.011em] text-[#242424]">
+                                        Товари
+                                    </div>
+                                    <div className="w-[338px] text-center font-['Source_Sans_Pro'] font-semibold text-[20px] leading-[150%] tracking-[-0.011em] text-[#242424]">
+                                        Дії
+                                    </div>
                                 </div>
 
                                 {/* Список усіх наявних продуктів */}
                                 <div className="grid gap-4">
                                     {isLoading ? (
                                         <div className="text-[20px] opacity-60">Завантаження...</div>
-                                    ) : filteredAndSorted.length > 0 ? (
-                                        filteredAndSorted.map((product) => (
+                                    ) : currentPaginatedItems.length > 0 ? (
+                                        currentPaginatedItems.map((product) => {
+                                            const title =
+                                                product.productName || "Unknown name";
+                                            const authorName = getProductAuthorName(
+                                                product,
+                                                authors
+                                            );
+                                            const coverSrc = getProductCoverSrc(product);
+
+                                            return (
                                             <div
                                                 key={product.id}
-                                                className="max-w-[1464px] w-full h-[50px] bg-[#F5F3EE] rounded-[9px] shadow-[0_0_10px_0_rgba(0,0,0,0.25)] px-[24px] flex items-center justify-between"
+                                                className="max-w-[1464px] w-full bg-[#F5F3EE] rounded-[9px] shadow-[0_0_10px_0_rgba(0,0,0,0.25)] px-[24px] py-4 flex items-center justify-between gap-4"
                                             >
-                                                {/* Left side: product name */}
-                                                <p className="font-sanspro font-semibold text-[20px] leading-[150%] tracking-[-0.011em] align-middle">
-                                                    {product.productName || "Unknown name"}
-                                                </p>
+                                                <div className="flex items-center gap-5 min-w-0 flex-1">
+                                                    <div className="w-[72px] h-[100px] flex-shrink-0 rounded-[6px] overflow-hidden bg-[#E8E4DC]">
+                                                        <BookCover src={coverSrc} title={title} />
+                                                    </div>
 
-                                                {/* Right side: buttons */}
-                                                <div className="flex items-center gap-[20px]">
+                                                    <div className="flex flex-col min-h-[100px] min-w-0 flex-1 py-0.5">
+                                                        <p className="font-['Source_Sans_Pro'] font-bold text-[18px] leading-[140%] tracking-[-0.01em] text-[#1F1F1F] truncate">
+                                                            {title}
+                                                        </p>
+                                                        {authorName && (
+                                                            <p className="font-['Source_Sans_Pro'] font-normal text-[15px] leading-[140%] text-[#767676] mt-1.5 truncate">
+                                                                {authorName}
+                                                            </p>
+                                                        )}
+                                                        <p className="font-['Source_Sans_Pro'] text-[15px] leading-[140%] mt-auto pt-5">
+                                                            <span className="font-normal text-[#767676]">
+                                                                Ціна:{" "}
+                                                            </span>
+                                                            <span className="font-semibold text-[#1F1F1F]">
+                                                                {getProductPriceAmount(product)} грн
+                                                            </span>
+                                                        </p>
+                                                    </div>
+                                                </div>
+
+                                                <div className="flex items-center gap-[20px] flex-shrink-0">
                                                     <ItemActions
                                                         id={product.id}
                                                         type="product"
                                                         onDeleteSuccess={(deletedId) => {
-                                                            // Миттєве видалення зі стейту без перезавантаження
-                                                            setProducts((prev) => prev.filter((p) => p.id !== deletedId));
+                                                            setProducts((prev) => {
+                                                                const updated = prev.filter(
+                                                                    (p) => p.id !== deletedId
+                                                                );
+
+                                                                const totalFilteredAfterDelete =
+                                                                    updated.filter((p) =>
+                                                                        (p.productName ?? "")
+                                                                            .toLowerCase()
+                                                                            .includes(search.toLowerCase())
+                                                                    ).length;
+
+                                                                const maxPages = Math.ceil(
+                                                                    totalFilteredAfterDelete / ITEMS_PER_PAGE
+                                                                );
+
+                                                                if (currentPage > maxPages && maxPages >= 1) {
+                                                                    setCurrentPage(maxPages);
+                                                                }
+
+                                                                return updated;
+                                                            });
                                                         }}
                                                     />
                                                 </div>
                                             </div>
-                                        ))
+                                            );
+                                        })
                                     ) : (
                                         <div className="text-[20px] opacity-60">Книг не знайдено</div>
                                     )}
                                 </div>
                             </div>
+
+                            <Pagination
+                                totalItems={filteredAndSorted.length}
+                                itemsPerPage={ITEMS_PER_PAGE}
+                                currentPage={currentPage}
+                                onPageChange={setCurrentPage}
+                            />
 
                         </div>
                     </div>

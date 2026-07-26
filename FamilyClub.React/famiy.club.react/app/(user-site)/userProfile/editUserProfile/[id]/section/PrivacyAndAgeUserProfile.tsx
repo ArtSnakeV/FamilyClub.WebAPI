@@ -1,6 +1,5 @@
 "use client";
 
-import { UpdateClubMemberDto } from "@/lib/api/generated";
 import { useState, useEffect, useRef } from "react";
 
 interface DateOfBirth {

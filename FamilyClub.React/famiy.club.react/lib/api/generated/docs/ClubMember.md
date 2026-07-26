@@ -30,6 +30,12 @@ Name | Type
 `avatarData` | string
 `favoriteProducts` | [Array&lt;Product&gt;](Product.md)
 `favoriteCategories` | [Array&lt;Category&gt;](Category.md)
+`blockReasonId` | number
+`lockoutComment` | string
+`blockReason` | [BlockReason](BlockReason.md)
+`lockedAt` | Date
+`lockedById` | string
+`lockedBy` | [ClubMember](ClubMember.md)
 
 ## Example
 
@@ -62,6 +68,12 @@ const example = {
   "avatarData": null,
   "favoriteProducts": null,
   "favoriteCategories": null,
+  "blockReasonId": null,
+  "lockoutComment": null,
+  "blockReason": null,
+  "lockedAt": null,
+  "lockedById": null,
+  "lockedBy": null,
 } satisfies ClubMember
 
 console.log(example)

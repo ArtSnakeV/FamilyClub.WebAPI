@@ -4,6 +4,7 @@ export type ProductDto = {
   productName: string;
   price?: number;
   discountPrice?: number;
+  promotionId?: number;
   description?: string;
   publisherId?: number;
   pageCount?: number;

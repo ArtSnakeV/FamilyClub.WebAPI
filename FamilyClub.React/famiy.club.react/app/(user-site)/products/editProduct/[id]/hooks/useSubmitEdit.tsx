@@ -30,6 +30,7 @@ export default function useSubmitEdit({ id, form, images, router }: Props) {
         description: form.description,
         price: form.price,
         discountPrice: form.discountPrice,
+        promotionId: form.promotionId,
         pageCount: form.pageCount,
         publishingDate: publishingDate as unknown as Date,
         weightGrams: form.weightGrams,

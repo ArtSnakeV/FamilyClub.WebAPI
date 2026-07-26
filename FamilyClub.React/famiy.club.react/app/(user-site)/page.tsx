@@ -44,6 +44,7 @@ import {
     categoriesService,
     clubMemberService,
     formatService,
+    orderService,
     productService,
     reviewService,
 } from "@/lib/api/services";
@@ -53,40 +54,19 @@ import type {
     CategoryDto,
     ClubMemberReadDto,
     FormatDto,
+    OrderDTO,
     ProductDto,
     ReviewDto,
 } from "@/lib/api/generated";
-
-const formatPrice = (value?: number | null) => {
-    if (value == null) return "";
-    return `${new Intl.NumberFormat("uk-UA").format(value)} грн`;
-};
-
-const getImageSrc = (product: ProductDto) => {
-    const image = product.productImages?.[0];
-    if (!image?.imageData) return null;
-    const normalizedData = image.imageData.trim();
-    if (normalizedData.startsWith("data:") || normalizedData.startsWith("http://") || normalizedData.startsWith("https://") || normalizedData.startsWith("/")) {
-        return normalizedData;
-    }
-
-    const mimeType = (() => {
-        if (normalizedData.startsWith("UklGR")) return "image/webp";
-        if (normalizedData.startsWith("/9j/")) return "image/jpeg";
-        if (normalizedData.startsWith("iVBORw0KGgo")) return "image/png";
-        if (normalizedData.startsWith("R0lGOD")) return "image/gif";
-
-        const extension = image.imageName?.split(".").pop()?.toLowerCase();
-        switch (extension) {
-            case "webp": return "image/webp";
-            case "png": return "image/png";
-            case "gif": return "image/gif";
-            default: return "image/jpeg";
-        }
-    })();
-
-    return `data:${mimeType};base64,${normalizedData}`;
-};
+import { useFavorites } from "@/lib/hooks/useFavorites";
+import { useCurrentUser } from "@/app/(user-site)/userProfile/hooks/useCurrentUser";
+import { pickRecommendedBooks, getNewBooks } from "@/lib/recommendations/pickBooks";
+import {
+    formatBookPrice,
+    getAuthorLabel as buildAuthorLabel,
+    getFormatTags as buildFormatTags,
+    getProductImageSrc,
+} from "@/lib/recommendations/mapProductToBook";
 
 const getAvatarSrc = (avatarData?: string | null) => {
     if (!avatarData) return null;
@@ -117,11 +97,12 @@ const mapProductToBook = (
     author: string | null,
     formatTags: Array<"paper" | "ebook" | "audio">,
 ) => ({
+    productId: product.id,
     href: product.id ? `/products/${product.id}` : undefined,
     title: product.productName ?? "",
     author,
-    price: formatPrice(product.discountPrice ?? product.price),
-    image: getImageSrc(product),
+    price: formatBookPrice(product.discountPrice ?? product.price),
+    image: getProductImageSrc(product),
     rating,
     formatTags,
 });
@@ -133,6 +114,10 @@ export default function Home() {
     const [authors, setAuthors] = useState<AuthorDTO[]>([]);
     const [clubMembers, setClubMembers] = useState<ClubMemberReadDto[]>([]);
     const [formats, setFormats] = useState<FormatDto[]>([]);
+    const [orders, setOrders] = useState<OrderDTO[]>([]);
+    const { user } = useCurrentUser();
+    const { favorites, toggleFavorite } = useFavorites(user?.id);
+    const isFav = (id?: number) => !!id && favorites.some((f) => f.id === id);
 
     useEffect(() => {
         let isMounted = true;
@@ -173,6 +158,27 @@ export default function Home() {
             isMounted = false;
         };
     }, []);
+
+    useEffect(() => {
+        let isMounted = true;
+
+        const loadOrders = async () => {
+            if (!user?.id) {
+                if (isMounted) setOrders([]);
+                return;
+            }
+            const userOrders =
+                (await orderService
+                    .apiOrdersByUserUserIdGet({ userId: user.id })
+                    .catch(() => [])) ?? [];
+            if (isMounted) setOrders(userOrders);
+        };
+
+        loadOrders();
+        return () => {
+            isMounted = false;
+        };
+    }, [user?.id]);
 
     const ratingByProductId = useMemo(() => {
         const map = new Map<number, { sum: number; count: number }>();
@@ -247,31 +253,11 @@ export default function Home() {
         return map;
     }, [clubMembers]);
 
-    const getAuthorLabel = (authorIds?: Array<number> | null) => {
-        const names = (authorIds ?? [])
-            .map((id) => authorById.get(id)?.authorName)
-            .filter((name): name is string => Boolean(name));
-        return names.length ? names.join(", ") : null;
-    };
+    const getAuthorLabel = (authorIds?: Array<number> | null) =>
+        buildAuthorLabel(authorIds, authorById);
 
-    const getFormatTags = (formatIds?: Array<number> | null) => {
-        const tags = new Set<"paper" | "ebook" | "audio">();
-        for (const formatId of formatIds ?? []) {
-            const format = formatById.get(formatId);
-            const label = `${format?.name ?? ""} ${format?.code ?? ""}`.toLowerCase();
-            if (!label) continue;
-            if (label.includes("audio") || label.includes("аудіо")) {
-                tags.add("audio");
-            }
-            if (label.includes("ebook") || label.includes("e-book") || label.includes("електрон")) {
-                tags.add("ebook");
-            }
-            if (label.includes("paper") || label.includes("print") || label.includes("папер")) {
-                tags.add("paper");
-            }
-        }
-        return Array.from(tags);
-    };
+    const getFormatTags = (formatIds?: Array<number> | null) =>
+        buildFormatTags(formatIds, formatById);
 
     const resolveCategoryId = (name: string) => {
         const normalized = name.trim().toLowerCase();
@@ -293,35 +279,52 @@ export default function Home() {
             );
         });
 
-    const sortedByRating = [...products].sort(
-        (a, b) => getRatingForProduct(b.id) - getRatingForProduct(a.id),
+    const favoriteProductIds = useMemo(
+        () => favorites.map((f) => f.id).filter((id): id is number => id != null),
+        [favorites],
     );
-    const recommendationBooks = mapProductsToBooks(sortedByRating).slice(0, 4);
 
-    const romanceCategoryId = resolveCategoryId("Роман");
+    const pickResult = useMemo(
+        () =>
+            pickRecommendedBooks({
+                products,
+                orders,
+                favoriteProductIds,
+                getRating: getRatingForProduct,
+                take: 4,
+            }),
+        [products, orders, favoriteProductIds, ratingByProductId],
+    );
+
+    const recommendationBooks = mapProductsToBooks(pickResult.recommended);
+    const recommendationTitle = pickResult.basedOnPreferences
+        ? "Рекомендації для тебе"
+        : "Новинки для тебе";
+
+    const romanceCategoryId = resolveCategoryId("Романи") ?? resolveCategoryId("Роман");
     const thrillerCategoryId = resolveCategoryId("Триллери");
     const scienceCategoryId = resolveCategoryId("Наукові");
     const fantasyCategoryId = resolveCategoryId("Фантастика");
 
     const romanceBooks = romanceCategoryId
         ? mapProductsToBooks(
-              products.filter((product) => product.categoryIds?.includes(romanceCategoryId)),
-          ).slice(0, 4)
+            products.filter((product) => product.categoryIds?.includes(romanceCategoryId)),
+        ).slice(0, 4)
         : [];
     const thrillerBooks = thrillerCategoryId
         ? mapProductsToBooks(
-              products.filter((product) => product.categoryIds?.includes(thrillerCategoryId)),
-          ).slice(0, 4)
+            products.filter((product) => product.categoryIds?.includes(thrillerCategoryId)),
+        ).slice(0, 4)
         : [];
     const scienceBooks = scienceCategoryId
         ? mapProductsToBooks(
-              products.filter((product) => product.categoryIds?.includes(scienceCategoryId)),
-          ).slice(0, 4)
+            products.filter((product) => product.categoryIds?.includes(scienceCategoryId)),
+        ).slice(0, 4)
         : [];
     const fantasyBooks = fantasyCategoryId
         ? mapProductsToBooks(
-              products.filter((product) => product.categoryIds?.includes(fantasyCategoryId)),
-          ).slice(0, 4)
+            products.filter((product) => product.categoryIds?.includes(fantasyCategoryId)),
+        ).slice(0, 4)
         : [];
 
     const hitsBooks = mapProductsToBooks(
@@ -330,13 +333,7 @@ export default function Home() {
         ),
     ).slice(0, 4);
 
-    const newBooks = mapProductsToBooks(
-        [...products].sort((a, b) => {
-            const aTime = a.publishingDate ? new Date(a.publishingDate).getTime() : 0;
-            const bTime = b.publishingDate ? new Date(b.publishingDate).getTime() : 0;
-            return bTime - aTime;
-        }),
-    ).slice(0, 4);
+    const newBooks = mapProductsToBooks(getNewBooks(products, 4));
 
     const setBooks = mapProductsToBooks(
         products.filter((product) => (product.itemsInSet ?? 0) > 1),
@@ -362,7 +359,7 @@ export default function Home() {
                     text: review.comment ?? "",
                     timeLabel: formatReviewDate(review.createdAt),
                     avatar: getAvatarSrc(member?.avatarData),
-                    bookImage: product ? getImageSrc(product) : null,
+                    bookImage: product ? getProductImageSrc(product) : null,
                     rating: review.rating,
                 };
             });
@@ -389,7 +386,7 @@ export default function Home() {
             <div className="block md:hidden">
                 <MobileHome
                     recommendations={recommendationBooks}
-                    newBooks={newBooks}
+                    newBooks={pickResult.basedOnPreferences ? newBooks : mapProductsToBooks(getNewBooks(products, 8).slice(4))}
                     announcements={announcementBooks}
                     hitsBooks={hitsBooks}
                     otherBooks={allBooks}
@@ -402,7 +399,9 @@ export default function Home() {
                 <Hero />
 
                 {recommendationBooks.length > 0 ? (
-                    <BookSection title="Рекомендації для тебе" books={recommendationBooks} showMore pillWidth={631} />
+
+                    <BookSection title={recommendationTitle} books={recommendationBooks} showMore pillWidth={631} 
+                    isFav={isFav} onToggleFavorite={toggleFavorite}/>
                 ) : null}
 
                 <InkSection />
@@ -415,28 +414,30 @@ export default function Home() {
 
                 <FormatSection />
 
-                {romanceBooks.length > 0 ? <BookSection title="Роман" books={romanceBooks} pillWidth={206} /> : null}
+                {romanceBooks.length > 0 ? <BookSection title="Роман" books={romanceBooks} pillWidth={206} isFav={isFav} onToggleFavorite={toggleFavorite} /> : null}
                 {thrillerBooks.length > 0 ? (
-                    <BookSection title="Триллери" books={thrillerBooks} pillWidth={253} />
+                    <BookSection title="Триллери" books={thrillerBooks} pillWidth={253} isFav={isFav} onToggleFavorite={toggleFavorite} />
                 ) : null}
                 {scienceBooks.length > 0 ? (
-                    <BookSection title="Наукові" books={scienceBooks} pillWidth={211} />
+                    <BookSection title="Наукові" books={scienceBooks} pillWidth={211} isFav={isFav} onToggleFavorite={toggleFavorite}/>
                 ) : null}
                 {fantasyBooks.length > 0 ? (
-                    <BookSection title="Фантастика" books={fantasyBooks} pillWidth={292} />
+                    <BookSection title="Фантастика" books={fantasyBooks} pillWidth={292} isFav={isFav} onToggleFavorite={toggleFavorite}/>
                 ) : null}
 
                 <PromoBanner />
 
                 {hitsBooks.length > 0 ? (
-                    <BookSection title="Хіти продажу" books={hitsBooks} pillWidth={355} />
+                    <BookSection title="Хіти продажу" books={hitsBooks} pillWidth={355} isFav={isFav} onToggleFavorite={toggleFavorite}/>
                 ) : null}
-                {newBooks.length > 0 ? <BookSection title="Новинки" books={newBooks} pillWidth={237} /> : null}
+                {newBooks.length > 0 && pickResult.basedOnPreferences ? (
+                    <BookSection title="Новинки" books={newBooks} pillWidth={237} isFav={isFav} onToggleFavorite={toggleFavorite}/>
+                ) : null}
                 {setBooks.length > 0 ? (
-                    <BookSection title="Книжкові комплекти" books={setBooks} pillWidth={472} />
+                    <BookSection title="Книжкові комплекти" books={setBooks} pillWidth={472} isFav={isFav} onToggleFavorite={toggleFavorite}/>
                 ) : null}
                 {announcementBooks.length > 0 ? (
-                    <BookSection title="Анонси" books={announcementBooks} pillWidth={204} />
+                    <BookSection title="Анонси" books={announcementBooks} pillWidth={204} isFav={isFav} onToggleFavorite={toggleFavorite}/>
                 ) : null}
             </div>
         </main>

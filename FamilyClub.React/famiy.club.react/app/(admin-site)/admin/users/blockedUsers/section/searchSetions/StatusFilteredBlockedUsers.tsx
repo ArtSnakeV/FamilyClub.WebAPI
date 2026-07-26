@@ -1,0 +1,57 @@
+"use client";
+
+import Image from "next/image";
+
+interface Props {
+    status: string;
+    onChange: (value: string) => void;
+}
+
+export default function StatusFilteredBlockedUsers({
+    status,
+    onChange,
+}: Props) {
+    return (
+        <div className="relative w-[220px] ml-6">
+            <label className="block font-source-sans text-[18px] font-semibold leading-[150%] tracking-[-0.011em] text-[var(--color-black)]">
+                Статус
+            </label>
+
+            <div className="relative">
+                <select
+                    value={status}
+                    onChange={(e) => onChange(e.target.value)}
+                    className="
+                        w-full
+                        h-[50px]
+                        rounded-[9px]
+                        border
+                        border-[var(--color-black)]
+                        bg-white
+                        px-4
+                        pr-10
+                        text-[15px]
+                        text-[var(--color-black)]
+                        outline-none
+                        appearance-none
+                        cursor-pointer
+                    "
+                >
+                    <option value="all">Всі статуси</option>
+                    <option value="temporary">Тимчасово заблоковані</option>
+                    <option value="permanent">Заблоковані назавжди</option>
+                    <option value="expiring">Закінчуються скоро</option>
+                    <option value="active">Активні користувачі</option>
+                </select>
+
+                <Image
+                    src="/images/blockedUsersPageAdmin/angle-down-solid-full (10) 1.png"
+                    alt=""
+                    width={20}
+                    height={20}
+                    className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2"
+                />
+            </div >
+        </div >
+    );
+}

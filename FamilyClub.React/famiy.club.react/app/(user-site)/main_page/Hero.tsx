@@ -1,13 +1,22 @@
+"use client";
+
 import Link from "next/link";
+import { usePlatformSettingsOptional } from "@/lib/platformSettings/PlatformSettingsContext";
+import { mediaSrc } from "@/lib/platformSettings/platformSettingsApi";
 
 export default function Hero() {
+    const { settings } = usePlatformSettingsOptional();
+    const bannerSrc =
+        mediaSrc(settings.bannerData, settings.bannerContentType) ??
+        "/images/main_page/hero/hero-background.png";
+
     return (
         <section className="relative bg-[#f5f3ee]">
             <div className="relative mx-auto hidden h-[659px] max-w-[1920px] min-[1600px]:block">
                 <img
                     alt=""
                     className="absolute left-[-20px] top-[74px] h-[510px] w-[1960px] object-cover blur-[2.5px]"
-                    src="/images/main_page/hero/hero-background.png"
+                    src={bannerSrc}
                 />
                 <div className="absolute left-[350px] top-0 h-[659px] w-[1220px] bg-[rgba(36,36,36,0.5)] blur-[50px]" />
 
@@ -71,7 +80,7 @@ export default function Hero() {
                 </p>
 
                 <Link
-                    href="/categories"
+                    href="/pick-book"
                     className="absolute left-[1062px] top-[500px] flex h-[60px] items-center gap-3 rounded-full bg-[#005B33] px-8 text-[20px] font-semibold text-[#f5f3ee] shadow-[0px_4px_12px_rgba(0,0,0,0.4)] transition-transform hover:scale-105"
                 >
                     Підібрати книгу
@@ -83,7 +92,7 @@ export default function Hero() {
                 <img
                     alt=""
                     className="absolute left-1/2 top-[40px] h-[510px] w-[min(1960px,100vw)] -translate-x-1/2 object-cover blur-[2.5px]"
-                    src="/images/main_page/hero/hero-background.png"
+                    src={bannerSrc}
                 />
                 <div className="absolute inset-0 bg-[rgba(36,36,36,0.5)] blur-[50px]" />
 
@@ -136,7 +145,7 @@ export default function Hero() {
                 </p>
 
                 <Link
-                    href="/categories"
+                    href="/pick-book"
                     className="absolute bottom-[120px] right-[40px] flex h-[50px] items-center gap-2 rounded-full bg-[#005B33] px-6 text-[16px] font-semibold text-[#f5f3ee] shadow-[0px_4px_12px_rgba(0,0,0,0.4)] transition-transform hover:scale-105 md:bottom-[140px] md:right-[60px] md:h-[60px] md:px-8 md:text-[20px]"
                 >
                     Підібрати книгу

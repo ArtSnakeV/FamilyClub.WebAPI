@@ -14,6 +14,10 @@ Name | Type
 `surname` | string
 `dateOfBirth` | Date
 `lockoutEnd` | Date
+`lockedAt` | Date
+`lockedBy` | string
+`lockoutReason` | string
+`lockoutReasonDetail` | string
 `roles` | Array&lt;string&gt;
 
 ## Example
@@ -31,6 +35,10 @@ const example = {
   "surname": null,
   "dateOfBirth": null,
   "lockoutEnd": null,
+  "lockedAt": null,
+  "lockedBy": null,
+  "lockoutReason": null,
+  "lockoutReasonDetail": null,
   "roles": null,
 } satisfies ClubMemberReadDto
 

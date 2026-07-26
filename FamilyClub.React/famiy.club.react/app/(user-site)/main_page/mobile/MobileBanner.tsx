@@ -49,8 +49,8 @@ export default function MobileBanner() {
 
       {/* 4. Hanging Yellow Ball / Bell hanging down */}
       <Link
-        href="/categories"
-        aria-label="Дзвіночок Ink — перейти до каталогу"
+        href="/pick-book"
+        aria-label="Дзвіночок Ink — підібрати книгу"
         className="absolute top-[65px] right-[65px] sm:right-[85px] z-30 block w-[44px] h-[132px] cursor-pointer transition-transform duration-300 hover:scale-105"
       >
         <img

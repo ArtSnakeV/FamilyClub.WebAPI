@@ -2,6 +2,7 @@
 
 import BookCard from "@/app/(user-site)/main_page/BookCard";
 import MobileProductDetails from "./MobileProductDetails";
+import ReviewPagination from "./ReviewPagination";
 
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
@@ -18,6 +19,7 @@ import {
   publisherService,
   reviewService,
 } from "@/lib/api/services";
+import { getAuthToken } from "@/lib/auth/tokenStorage";
 import {
   AuthorDTO,
   BookSizeDto,
@@ -258,9 +260,12 @@ export default function ProductDetailsClient({ id }: { id: string }) {
   const [newComment, setNewComment] = useState("");
   const [isSubmittingComment, setIsSubmittingComment] = useState(false);
 
+  const [currentReviewPage, setCurrentReviewPage] = useState(1);
+  const reviewsPerPage = 6;
+
   const handleCommentSubmit = async () => {
     if (!newComment.trim()) return;
-    const token = localStorage.getItem("token");
+    const token = getAuthToken();
     if (!token) {
       alert("Потрібно увійти в акаунт, щоб залишити коментар");
       return;
@@ -284,6 +289,7 @@ export default function ProductDetailsClient({ id }: { id: string }) {
       setNewComment("");
       const updatedReviews = await reviewService.apiReviewsGet().catch(() => []);
       setReviews(updatedReviews ?? []);
+      setCurrentReviewPage(1);
     } catch (e) {
       console.error("Помилка при відправці коментаря:", e);
       alert("Помилка при відправці коментаря");
@@ -293,7 +299,7 @@ export default function ProductDetailsClient({ id }: { id: string }) {
   };
 
   const toggleFavorite = async () => {
-  const token = localStorage.getItem("token");
+  const token = getAuthToken();
   if (!token) {
     alert("Потрібно увійти в акаунт");
     return;
@@ -305,14 +311,12 @@ export default function ProductDetailsClient({ id }: { id: string }) {
         { productId: pid },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      console.log("видалено з улюблених");
       setIsFavorite(false);
     } else {
       await favoriteService.apiFavoritesProductIdPost(
         { productId: pid },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      console.log("додано в улюблені");
       setIsFavorite(true);
     }
   } catch (e) {
@@ -362,7 +366,7 @@ export default function ProductDetailsClient({ id }: { id: string }) {
         setBookSizes(bookSizesResult ?? []);
         setClubMembers(membersResult ?? []);
 
-        const token = localStorage.getItem("token");
+        const token = getAuthToken();
         if (token) {
           try {
             const fav = await favoriteService.apiFavoritesProductIdIsFavoriteGet(
@@ -576,6 +580,12 @@ export default function ProductDetailsClient({ id }: { id: string }) {
       };
     });
 
+  const totalReviewPages = Math.ceil(reviewCards.length / reviewsPerPage);
+  const paginatedReviewCards = reviewCards.slice(
+    (currentReviewPage - 1) * reviewsPerPage,
+    currentReviewPage * reviewsPerPage
+  );
+
   const authorIdSet = new Set(currentProduct?.authorIds ?? []);
   const categoryIdSet = new Set(currentProduct?.categoryIds ?? []);
   const booksByAuthor = products
@@ -586,6 +596,7 @@ export default function ProductDetailsClient({ id }: { id: string }) {
     .filter((item) => item.categoryIds?.some((id) => categoryIdSet.has(id)));
 
   const booksByAuthorCards = booksByAuthor.slice(0, 4).map((item) => ({
+    id: item.id,
     href: item.id ? `/products/${item.id}` : undefined,
     title: item.productName ?? "",
     author: (item.authorIds ?? [])
@@ -601,6 +612,7 @@ export default function ProductDetailsClient({ id }: { id: string }) {
     formatTags: getFormatTags(item.formatIds),
   }));
   const similarBookCards = similarByCategory.slice(0, 4).map((item) => ({
+    id: item.id,
     href: item.id ? `/products/${item.id}` : undefined,
     title: item.productName ?? "",
     author: (item.authorIds ?? [])
@@ -656,7 +668,10 @@ export default function ProductDetailsClient({ id }: { id: string }) {
           priceText={priceText}
           rating={rating}
           ratingCount={ratingCount}
-          reviews={reviewCards}
+          reviews={paginatedReviewCards}
+          currentReviewPage={currentReviewPage}
+          totalReviewPages={totalReviewPages}
+          onReviewPageChange={setCurrentReviewPage}
           booksByAuthorCards={booksByAuthorCards}
           similarBookCards={similarBookCards}
           isFavorite={isFavorite}
@@ -993,20 +1008,27 @@ export default function ProductDetailsClient({ id }: { id: string }) {
 
           <div>
             {reviewCards.length > 0 ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {reviewCards.map((rev) => (
-                  <ReviewCard
-                    key={rev.id}
-                    id={rev.id}
-                    author={rev.author}
-                    text={rev.text}
-                    timeLabel={rev.timeLabel}
-                    avatar={rev.avatar}
-                    bookImage={rev.bookImage}
-                    likesCount={rev.likesCount}
-                  />
-                ))}
-              </div>
+              <>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {paginatedReviewCards.map((rev) => (
+                    <ReviewCard
+                      key={rev.id}
+                      id={rev.id}
+                      author={rev.author}
+                      text={rev.text}
+                      timeLabel={rev.timeLabel}
+                      avatar={rev.avatar}
+                      bookImage={rev.bookImage}
+                      likesCount={rev.likesCount}
+                    />
+                  ))}
+                </div>
+                <ReviewPagination
+                  currentPage={currentReviewPage}
+                  totalPages={totalReviewPages}
+                  onPageChange={setCurrentReviewPage}
+                />
+              </>
             ) : (
               <div className="rounded-[20px] border border-dashed border-[#242424]/30 p-10 text-center">
                 <p className="text-[16px] text-[#242424]/60">
@@ -1014,12 +1036,6 @@ export default function ProductDetailsClient({ id }: { id: string }) {
                 </p>
               </div>
             )}
-          </div>
-
-          <div className="mt-12 flex justify-center">
-            <div className="h-[6px] w-[300px] rounded-full bg-[#242424]/10 overflow-hidden">
-              <div className="h-full w-1/3 rounded-full bg-[#0e503f]" />
-            </div>
           </div>
         </div>
 

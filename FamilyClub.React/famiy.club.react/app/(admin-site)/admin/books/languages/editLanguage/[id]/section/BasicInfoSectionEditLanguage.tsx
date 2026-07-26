@@ -37,7 +37,7 @@ export function BasicInfoSectionEditLanguage({ form, setField, loading, handleDe
               disabled={loading}
               className="w-full h-[40px] rounded-[55px] bg-[var(--color-green)] text-[var(--color-white)] text-[20px] font-medium transition-all duration-200 hover:opacity-90 hover:shadow-[0px_0px_20px_0px_#00000080] active:scale-[0.98] disabled:opacity-50"
             >
-              {loading ? "Збереження..." : "зберегти зміни"}
+              {loading ? "Збереження..." : "Зберегти зміни"}
             </button>
             <button
               type="button"

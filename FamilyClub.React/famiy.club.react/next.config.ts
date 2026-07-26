@@ -2,6 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   //allowedDevOrigins: ['26.15.231.182'],
+   reactStrictMode: false,
   images: {
     unoptimized: true,
   },
@@ -10,6 +11,11 @@ const nextConfig: NextConfig = {
       {
         source: "/api/:path*",
         destination: "https://localhost:7069/api/:path*",
+      },
+      //створити .env і видалити цей блок для фото //
+      {
+        source: "/images/:path*",
+        destination: "https://localhost:7069/images/:path*",
       },
     ];
   },

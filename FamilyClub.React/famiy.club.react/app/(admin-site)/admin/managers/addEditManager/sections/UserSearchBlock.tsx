@@ -123,7 +123,7 @@ export default function UserSearchBlock({
             <label className="font-semibold text-sm text-[var(--color-black)]">
                 Пошук користувача за email
             </label>
-            <div className="flex gap-2 relative">
+            <div className="flex flex-row gap-2 relative">
                 <input
                     type="email"
                     value={searchEmail}
@@ -134,7 +134,7 @@ export default function UserSearchBlock({
                     onFocus={() => setShowSuggestions(true)}
                     placeholder="Введіть email для пошуку..."
                     autoComplete="off"
-                    className="flex-1 rounded-[10px] bg-[#F0EDE7] px-5 py-3 text-sm outline-none 
+                    className="flex-1 h-[40px] rounded-[10px] bg-[#F0EDE7] px-5 py-3 text-sm outline-none 
                     shadow-[0_0_10px_0_#00000040]
                     focus:ring-2 focus:ring-[var(--color-green)]"
                 />
@@ -142,7 +142,7 @@ export default function UserSearchBlock({
                     type="button"
                     onClick={onSearch}
                     disabled={searching}
-                    className="px-5 rounded-full bg-[var(--color-green)] text-white text-sm font-medium hover:opacity-90 transition disabled:opacity-50"
+                    className="px-5 h-[40px] rounded-[9px] bg-[var(--color-green)] text-[var(--color-white)]  text-sm font-medium hover:opacity-90 transition disabled:opacity-50"
                 >
                     {searching ? "Пошук..." : "Знайти"}
                 </button>

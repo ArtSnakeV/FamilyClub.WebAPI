@@ -12,6 +12,7 @@ import type { ProductDto, AuthorDTO, FormatDto } from "@/lib/api/generated";
 import { Availability } from "@/lib/api/generated";
 import CartItemCard from "./CartItemCard";
 import CartSummary from "./CartSummary";
+import MobileCartView from "./MobileCartView";
 import styles from "./cart.module.css";
 
 // ─── Helpers ───
@@ -195,101 +196,117 @@ export default function CartPage() {
 
   const hasItems = cartItems.length > 0;
 
-  if (loading) {
-    return (
-      <div className={styles.cartPage}>
-        <div className={styles.cartHeader}>
-          <h1 className={styles.cartTitle}>Мій кошик</h1>
-        </div>
-        <div className={styles.emptyCart}>
-          <span className={styles.emptyCartIcon}>⏳</span>
-          Завантаження...
-        </div>
-      </div>
-    );
-  }
-
-  if (fetchError && products.length === 0) {
-    return (
-      <div className={styles.cartPage}>
-        <div className={styles.cartHeader}>
-          <button
-            className={styles.backButton}
-            onClick={() => router.back()}
-            aria-label="Назад"
-            id="cart-back-btn"
-          >
-            <BackArrow />
-          </button>
-          <h1 className={styles.cartTitle}>Мій кошик</h1>
-        </div>
-        <div className={styles.emptyCart}>
-          <span className={styles.emptyCartIcon}>⚠️</span>
-          Не вдалося завантажити дані. Перевірте з&apos;єднання з сервером.
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <div className={styles.cartPage}>
-      {/* Header */}
-      <div className={styles.cartHeader}>
-        <button
-          className={styles.backButton}
-          onClick={() => router.back()}
-          aria-label="Назад"
-          id="cart-back-btn"
-        >
-          <BackArrow />
-        </button>
-        <h1 className={styles.cartTitle}>Мій кошик</h1>
+    <>
+      {/* Мобільна версія кошика (Figma Node 2784:6060) */}
+      <div className="block md:hidden">
+        <MobileCartView
+          cartItems={cartItems}
+          productById={productById}
+          authorById={authorById}
+          formatById={formatById}
+          subtotal={subtotal}
+          discount={discount}
+          deliveryCost={DELIVERY_COST}
+          updateFormatQuantity={updateFormatQuantity}
+          removeFromCart={removeFromCart}
+          loading={loading}
+          fetchError={fetchError}
+        />
       </div>
 
-      {!hasItems ? (
-        <div className={styles.emptyCart}>
-          <span className={styles.emptyCartIcon}>🛒</span>
-          Ваш кошик порожній
-        </div>
-      ) : (
-        <div className={styles.cartContent}>
-          {/* Cart items */}
-          <div className={styles.cartItems}>
-            {cartItems.map((item) => {
-              const product = productById.get(item.productId);
-              if (!product) return null;
-
-              const isAvailable =
-                product.availability !== Availability.NUMBER_2 &&
-                (product.quantityInStock ?? 0) > 0;
-
-              return (
-                <CartItemCard
-                  key={item.productId}
-                  productId={item.productId}
-                  title={product.productName ?? "Без назви"}
-                  author={getAuthorLabel(product.authorIds)}
-                  imageSrc={getImageSrc(product)}
-                  isAvailable={isAvailable}
-                  price={product.price ?? 0}
-                  discountPrice={product.discountPrice ?? null}
-                  formats={getFormatTypes(product.formatIds, formatById)}
-                  formatQuantities={item.formatQuantities}
-                  onQuantityChange={updateFormatQuantity}
-                  onRemove={removeFromCart}
-                />
-              );
-            })}
+      {/* Десктопна версія кошика */}
+      <div className="hidden md:block">
+        {loading ? (
+          <div className={styles.cartPage}>
+            <div className={styles.cartHeader}>
+              <h1 className={styles.cartTitle}>Мій кошик</h1>
+            </div>
+            <div className={styles.emptyCart}>
+              <span className={styles.emptyCartIcon}>⏳</span>
+              Завантаження...
+            </div>
           </div>
+        ) : fetchError && products.length === 0 ? (
+          <div className={styles.cartPage}>
+            <div className={styles.cartHeader}>
+              <button
+                className={styles.backButton}
+                onClick={() => router.back()}
+                aria-label="Назад"
+                id="cart-back-btn"
+              >
+                <BackArrow />
+              </button>
+              <h1 className={styles.cartTitle}>Мій кошик</h1>
+            </div>
+            <div className={styles.emptyCart}>
+              <span className={styles.emptyCartIcon}>⚠️</span>
+              Не вдалося завантажити дані. Перевірте з&apos;єднання з сервером.
+            </div>
+          </div>
+        ) : (
+          <div className={styles.cartPage}>
+            {/* Header */}
+            <div className={styles.cartHeader}>
+              <button
+                className={styles.backButton}
+                onClick={() => router.back()}
+                aria-label="Назад"
+                id="cart-back-btn"
+              >
+                <BackArrow />
+              </button>
+              <h1 className={styles.cartTitle}>Мій кошик</h1>
+            </div>
 
-          {/* Summary sidebar */}
-          <CartSummary
-            subtotal={subtotal}
-            discount={discount}
-            deliveryCost={DELIVERY_COST}
-          />
-        </div>
-      )}
-    </div>
+            {!hasItems ? (
+              <div className={styles.emptyCart}>
+                <span className={styles.emptyCartIcon}>🛒</span>
+                Ваш кошик порожній
+              </div>
+            ) : (
+              <div className={styles.cartContent}>
+                {/* Cart items */}
+                <div className={styles.cartItems}>
+                  {cartItems.map((item) => {
+                    const product = productById.get(item.productId);
+                    if (!product) return null;
+
+                    const isAvailable =
+                      product.availability !== Availability.NUMBER_2 &&
+                      (product.quantityInStock ?? 0) > 0;
+
+                    return (
+                      <CartItemCard
+                        key={item.productId}
+                        productId={item.productId}
+                        title={product.productName ?? "Без назви"}
+                        author={getAuthorLabel(product.authorIds)}
+                        imageSrc={getImageSrc(product)}
+                        isAvailable={isAvailable}
+                        price={product.price ?? 0}
+                        discountPrice={product.discountPrice ?? null}
+                        formats={getFormatTypes(product.formatIds, formatById)}
+                        formatQuantities={item.formatQuantities}
+                        onQuantityChange={updateFormatQuantity}
+                        onRemove={removeFromCart}
+                      />
+                    );
+                  })}
+                </div>
+
+                {/* Summary sidebar */}
+                <CartSummary
+                  subtotal={subtotal}
+                  discount={discount}
+                  deliveryCost={DELIVERY_COST}
+                />
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+    </>
   );
 }

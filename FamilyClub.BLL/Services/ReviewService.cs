@@ -86,16 +86,54 @@ public class ReviewService : IReviewService
     }
     private static ReviewDto MapToDto(Review review)
     {
+        string nameToShow = "Анонім";
+
+        if (review.ClubMember != null)
+        {
+            var fullName = $"{review.ClubMember.Name} {review.ClubMember.Surname}".Trim();
+
+            if (!string.IsNullOrWhiteSpace(fullName) && fullName.ToLower() != "string")
+            {
+                nameToShow = fullName;
+            }
+            else if (!string.IsNullOrWhiteSpace(review.ClubMember.Name) && review.ClubMember.Name.ToLower() != "string")
+            {
+                nameToShow = review.ClubMember.Name;
+            }
+            else if (!string.IsNullOrWhiteSpace(review.ClubMember.UserName) && review.ClubMember.UserName.ToLower() != "string")
+            {
+                nameToShow = review.ClubMember.UserName;
+            }
+            else if (!string.IsNullOrWhiteSpace(review.ClubMember.Email))
+            {
+                nameToShow = review.ClubMember.Email;
+            }
+        }
+
         return new ReviewDto
         {
             Id = review.Id,
             ProductId = review.ProductId,
             ProductName = review.Product?.ProductName,
             UserId = review.UserId,
+            UserName = nameToShow,
             Rating = review.Rating,
             Comment = review.Comment,
             CreatedAt = review.CreatedAt,
-            Approved = review.Approved
+            Approved = review.Approved,
+            Authors = review.Product?.Authors != null
+    ? string.Join(", ", review.Product.Authors.Select(a => a.AuthorName))
+    : null,
+            ProductImages = review.Product?.ProductImages?.Select(img => new ProductImageDto
+            {
+                Id = img.Id,
+                ImageData = img.ImageData, // Передаємо byte[], JSON серіалізує його в Base64
+                ImageName = img.ImageName
+            }).ToList()
+
+
         };
+
     }
+
 }

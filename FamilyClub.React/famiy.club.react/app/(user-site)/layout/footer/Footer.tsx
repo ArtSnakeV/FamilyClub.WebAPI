@@ -94,11 +94,12 @@ const Footer = () => {
                         <div className="flex flex-col items-start w-full md:w-[295px] gap-[25px]">
                             <h2 className="footer-title">Питання</h2>
                             <nav className="flex flex-col items-start gap-[15px]">
-                                <Link className="footer-text" href="#">Оплата і доставка</Link>
-                                <Link className="footer-text" href="#">Захист персональних даних</Link>
-                                <Link className="footer-text" href="#">Умови користування</Link>
-                                <Link className="footer-text" href="#">Повернення товару</Link>
-                                <Link className="footer-text" href="#">Політика публікації товару</Link>
+                                <Link className="footer-text" href="/payment-delivery">Оплата і доставка</Link>
+                                <Link className="footer-text" href="/personal-data-protection">Захист персональних даних</Link>
+                                <Link className="footer-text" href="/terms-of-use">Умови користування</Link>
+                                <Link className="footer-text" href="/product-return">Повернення товару</Link>
+                                <Link className="footer-text" href="/product-publication-policy">Політика публікації товару</Link>
+                                <Link className="footer-text" href="/complaints">Поскаржитись</Link>
                             </nav>
                         </div>
 

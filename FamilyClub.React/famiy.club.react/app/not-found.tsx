@@ -4,6 +4,9 @@ import { Source_Sans_3, Roboto_Mono } from "next/font/google";
 import UpNavigation from "@/app/(user-site)/layout/header/UpNavigation";
 import DropDownList from "@/app/(user-site)/layout/header/dropdownlist/DropDownList";
 import Footer from "@/app/(user-site)/layout/footer/Footer";
+import MobileHeader from "@/app/(user-site)/layout/header/MobileHeader";
+import MobileBottomNav from "@/app/(user-site)/layout/header/MobileBottomNav";
+import MobileNotFoundView from "./MobileNotFoundView";
 
 const sourceSans = Source_Sans_3({
   subsets: ["cyrillic", "latin"],
@@ -28,17 +31,25 @@ export default function NotFound() {
   return (
     <html lang="uk" className={`${sourceSans.variable} ${robotoMono.variable}`}>
       <body className="antialiased bg-[#F5F3EE] text-foreground font-sans m-0 p-0 flex flex-col min-h-screen">
-        <header className="bg-[var(--background-main)] w-full flex flex-row overflow-x-0 fixed z-30 h-[62px] shadow-[0px_0px_15px_0px_#24242499]">
+        <MobileHeader />
+        <header className="bg-[var(--background-main)] w-full hidden md:flex flex-row overflow-x-0 fixed z-30 h-[62px] shadow-[0px_0px_15px_0px_#24242499]">
           <div className="max-w-[1220px] mx-auto flex items-center lg:px-0">
             <UpNavigation />
           </div>
         </header>
-        <div className="fixed flex flex-row ml-[27%] items-center justify-between z-20 max-w-[900px] mx-auto gap-2 mt-[20px] px-4 lg:px-0">
+        <div className="fixed hidden md:flex flex-row ml-[27%] items-center justify-between z-20 max-w-[900px] mx-auto gap-2 mt-[20px] px-4 lg:px-0">
           <DropDownList />
         </div>
 
-        <main className="flex-1 flex flex-col pt-[62px]">
-          <div className="relative w-full flex-1 overflow-hidden" style={{ background: "#F5F3EE" }}>
+        <main className="flex-1 flex flex-col">
+          {/* Мобільна версія (до md) */}
+          <div className="block md:hidden flex-1 w-full">
+            <MobileNotFoundView />
+          </div>
+
+          {/* Десктопна версія (від md) */}
+          <div className="hidden md:flex flex-1 flex-col pt-[62px] w-full">
+            <div className="relative w-full flex-1 overflow-hidden" style={{ background: "#F5F3EE" }}>
             {/* ── Background blur layer ── */}
             <div
               className="absolute top-0 left-0 w-full h-full pointer-events-none"
@@ -235,9 +246,13 @@ export default function NotFound() {
               </div>
             </div>
           </div>
+          </div>
         </main>
 
-        <Footer />
+        <div className="hidden md:block">
+          <Footer />
+        </div>
+        <MobileBottomNav />
       </body>
     </html>
   );
