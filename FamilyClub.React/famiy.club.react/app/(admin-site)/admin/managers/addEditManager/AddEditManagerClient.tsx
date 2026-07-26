@@ -54,8 +54,17 @@ export default function AddEditManagerClient() {
                                 onSearch={handleSearch}
                             />
 
-                            <ManagerInfoFields form={form} updateField={updateField} disabled={userFound} />
-
+                            <ManagerInfoFields
+                                form={form}
+                                updateField={updateField}
+                                disabled={submitting || searching}
+                                emailDisabled={userFound}
+                                searchEmail={searchEmail}
+                                setSearchEmail={setSearchEmail}
+                                searching={searching}
+                                userFound={userFound}
+                                handleSearch={handleSearch}
+                            />
                             {!userFound && (
                                 <ManagerPasswordFields form={form} updateField={updateField} />
                             )}
