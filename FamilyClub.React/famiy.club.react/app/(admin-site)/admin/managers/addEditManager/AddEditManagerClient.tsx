@@ -1,7 +1,6 @@
 "use client";
 
 import ButtonReturn from "./ui/ButtonReturn";
-import UserSearchBlock from "./sections/UserSearchBlock";
 import ManagerInfoFields from "./sections/ManagerInfoFields";
 import ManagerPasswordFields from "./sections/ManagerPasswordFields";
 import RolesInfoCard from "./ui/RolesInfoCard";
@@ -19,6 +18,7 @@ export default function AddEditManagerClient() {
         userFound,
         handleSearch,
         handleSubmit,
+        roleOptions,
     } = useAddManagerForm();
 
     return (
@@ -46,14 +46,6 @@ export default function AddEditManagerClient() {
                                 Основна інформація
                             </h2>
 
-                            <UserSearchBlock
-                                searchEmail={searchEmail}
-                                onSearchEmailChange={setSearchEmail}
-                                searching={searching}
-                                userFound={userFound}
-                                onSearch={handleSearch}
-                            />
-
                             <ManagerInfoFields
                                 form={form}
                                 updateField={updateField}
@@ -64,7 +56,9 @@ export default function AddEditManagerClient() {
                                 searching={searching}
                                 userFound={userFound}
                                 handleSearch={handleSearch}
+                                roleOptions={roleOptions}
                             />
+
                             {!userFound && (
                                 <ManagerPasswordFields form={form} updateField={updateField} />
                             )}
