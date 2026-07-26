@@ -2,10 +2,8 @@
 using FamilyClub.BLL.Interfaces;
 using FamilyClubLibrary;
 using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
-using System.Text;
 
 namespace FamilyClub.BLL.Services;
 
@@ -17,32 +15,52 @@ public class ClaimsClubMemberService : IClaimsClubMemberService
     {
         _userManager = userManager;
     }
+
+    public async Task<IEnumerable<ClaimWithMemberDto>> GetAllClaimsAsync(CancellationToken cancellationToken = default)
+    {
+        var users = await _userManager.Users
+            .AsNoTracking()
+            .ToListAsync(cancellationToken);
+
+        var result = new List<ClaimWithMemberDto>();
+
+        foreach (var user in users)
+        {
+            var claims = await _userManager.GetClaimsAsync(user);
+            foreach (var claim in claims)
+            {
+                result.Add(new ClaimWithMemberDto
+                {
+                    MemberId = user.Id,
+                    Email = user.Email,
+                    UserName = user.UserName,
+                    PhoneNumber = user.PhoneNumber,
+                    ClaimType = claim.Type,
+                    ClaimValue = claim.Value,
+                });
+            }
+        }
+
+        return result;
+    }
+
     public async Task<bool> AddClaimAsync(AddClaimClubMemberDto dto, CancellationToken cancellationToken = default)
     {
-        // Using FindByIdAsync to search for the user by their ID
         var user = await _userManager.FindByIdAsync(dto.MemberId);
         if (user == null) return false;
 
-        // Creating a new claim based on the provided DTO
         var newClaim = new Claim(dto.ClaimType, dto.ClaimValue);
-
-        // Adding the claim to the user and checking if the operation succeeded
         var result = await _userManager.AddClaimAsync(user, newClaim);
 
         return result.Succeeded;
-
     }
 
     public async Task<IEnumerable<ClaimsClubMemberDto>> GetClaimsAsync(string memberId, CancellationToken cancellationToken = default)
     {
-        // User search
         var user = await _userManager.FindByIdAsync(memberId);
         if (user == null) return Enumerable.Empty<ClaimsClubMemberDto>();
 
-        // Getting list of claims for the user
         var claims = await _userManager.GetClaimsAsync(user);
-
-        // Mapping claims to DTOs
         return claims.Select(MapToReadDto);
     }
 
@@ -51,7 +69,6 @@ public class ClaimsClubMemberService : IClaimsClubMemberService
         var user = await _userManager.FindByIdAsync(dto.MemberId);
         if (user == null) return false;
 
-        // Searching for the existing claim to remove
         var claims = await _userManager.GetClaimsAsync(user);
         var claimToRemove = claims.FirstOrDefault(c =>
             c.Type == dto.ClaimType &&
@@ -71,7 +88,6 @@ public class ClaimsClubMemberService : IClaimsClubMemberService
 
         var claims = await _userManager.GetClaimsAsync(user);
 
-        // Find the old claim
         var oldClaim = claims.FirstOrDefault(c =>
             c.Type == dto.OldClaimType &&
             c.Value == dto.OldClaimValue);
@@ -79,12 +95,10 @@ public class ClaimsClubMemberService : IClaimsClubMemberService
         if (oldClaim == null)
             return false;
 
-        // Remove old claim
         var removeResult = await _userManager.RemoveClaimAsync(user, oldClaim);
         if (!removeResult.Succeeded)
             return false;
 
-        // Add new claim
         var newClaim = new Claim(dto.NewClaimType, dto.NewClaimValue);
         var addResult = await _userManager.AddClaimAsync(user, newClaim);
 
@@ -100,5 +114,3 @@ public class ClaimsClubMemberService : IClaimsClubMemberService
         };
     }
 }
-
-

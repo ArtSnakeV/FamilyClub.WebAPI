@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FamilyClub.WebAPI.Controllers;
 
-
+[Authorize(Roles = "Admin")]
 [Route("api/[controller]")]
 [ApiController]
 public class ClaimsClubMemberController : ControllerBase
@@ -15,6 +15,14 @@ public class ClaimsClubMemberController : ControllerBase
     public ClaimsClubMemberController(IClaimsClubMemberService claimsService)
     {
         _claimsService = claimsService;
+    }
+
+    // GET: api/ClaimsClubMember
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<ClaimWithMemberDto>>> GetAllClaims(CancellationToken cancellationToken)
+    {
+        var claims = await _claimsService.GetAllClaimsAsync(cancellationToken);
+        return Ok(claims);
     }
 
     // GET: api/ClaimsClubMember/{memberId}
@@ -69,12 +77,12 @@ public class ClaimsClubMemberController : ControllerBase
         return Ok("Claim removed successfully.");
     }
 
-    // UPDATE: api/ClaimsClubMember/{memberId}/update
+    // PUT: api/ClaimsClubMember/{memberId}/update
     [HttpPut("{memberId}/update")]
     public async Task<IActionResult> UpdateClaim(
-    [FromRoute] string memberId,
-    [FromBody] UpdateClaimClubMemberDto dto,
-    CancellationToken cancellationToken)
+        [FromRoute] string memberId,
+        [FromBody] UpdateClaimClubMemberDto dto,
+        CancellationToken cancellationToken)
     {
         dto.MemberId = memberId;
 
