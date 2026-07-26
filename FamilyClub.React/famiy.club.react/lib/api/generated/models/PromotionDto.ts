@@ -27,6 +27,12 @@ export interface PromotionDto {
     id?: number;
     /**
      * 
+     * @type {string}
+     * @memberof PromotionDto
+     */
+    name?: string | null;
+    /**
+     * 
      * @type {number}
      * @memberof PromotionDto
      */
@@ -63,6 +69,7 @@ export function PromotionDtoFromJSONTyped(json: any, ignoreDiscriminator: boolea
     return {
         
         'id': json['id'] == null ? undefined : json['id'],
+        'name': json['name'] == null ? undefined : json['name'],
         'discountPercent': json['discountPercent'] == null ? undefined : json['discountPercent'],
         'startDate': json['startDate'] == null ? undefined : (new Date(json['startDate'])),
         'endDate': json['endDate'] == null ? undefined : (new Date(json['endDate'])),
@@ -81,6 +88,7 @@ export function PromotionDtoToJSONTyped(value?: PromotionDto | null, ignoreDiscr
     return {
         
         'id': value['id'],
+        'name': value['name'],
         'discountPercent': value['discountPercent'],
         'startDate': value['startDate'] == null ? value['startDate'] : value['startDate'].toISOString(),
         'endDate': value['endDate'] == null ? value['endDate'] : value['endDate'].toISOString(),

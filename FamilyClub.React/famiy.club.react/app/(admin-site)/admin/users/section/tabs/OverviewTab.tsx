@@ -148,7 +148,7 @@ export default function OverviewTab({ user, ordersCount, spentAmount, reviewsCou
                     </button>
                     <button
                         type="button"
-                        onClick={() => onAddManager(user.id)}
+                         onClick={handleLockoutEnd}
                         className="flex-1 min-w-[160px] h-[40px] rounded-[9px] bg-transparent text-[var(--color-green)] border-2 
                         border-[#005B3380] text-[#005B33] text-[20px] font-medium transition-all
                          duration-200 hover:opacity-90 hover:shadow-[0px_0px_20px_0px_#00000080] 

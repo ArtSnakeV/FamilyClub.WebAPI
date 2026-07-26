@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { apiBasePath } from "@/lib/api/services";
+import { getAuthToken } from "@/lib/auth/tokenStorage";
 
 
 export interface ClubMemberReadDto {
@@ -14,7 +15,7 @@ export function useUsersTotal() {
     useEffect(() => {
         const fetchTotal = async () => {
             try {
-                const token = localStorage.getItem("token");
+                const token = getAuthToken();
                 const res = await fetch(`${apiBasePath}/api/ClubMember`, {
                     headers: { Authorization: `Bearer ${token}` },
                 });

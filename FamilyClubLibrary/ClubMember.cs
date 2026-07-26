@@ -24,5 +24,14 @@ namespace FamilyClubLibrary
         public byte[]? AvatarData { get; set; }
         public List<Product> FavoriteProducts { get; set; } = new();
         public List<Category> FavoriteCategories { get; set; } = new();
+        // --- Блокування ---
+        public int? BlockReasonId { get; set; }
+        public string? LockoutComment { get; set; } // коментар адміна щодо конкретного блокування
+        public BlockReason? BlockReason { get; set; }
+
+        public DateTimeOffset? LockedAt { get; set; }
+
+        public string? LockedById { get; set; }
+        public ClubMember? LockedBy { get; set; }
     }
 }

@@ -23,6 +23,7 @@ const emptyDto: ProductDto = {
   discountPrice: undefined,
   isbn: undefined,
   publishingYear: undefined,
+  promotionId: undefined,
 };
 
 export default function useEditForm(id: number) {
@@ -56,6 +57,7 @@ export default function useEditForm(id: number) {
           ageRestrictionIds: product.ageRestrictionIds ?? [],
           price: product.price ?? undefined,
           discountPrice: product.discountPrice ?? undefined,
+          promotionId: product.promotionId ?? undefined,
           isbn: product.productCode ?? undefined,
           publishingYear: year,
           weightGrams: product.weightGrams ?? undefined,

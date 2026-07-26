@@ -1,464 +1,227 @@
 "use client";
 
-import React from "react";
+import React, { useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { authService } from "@/lib/api/services";
+import AuthBrandLogo from "../components/AuthBrandLogo";
+import MobileResetPasswordView from "../MobileResetPasswordView";
 
+export default function ResetPasswordPage() {
+  const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [code, setCode] = useState(["", "", "", "", ""]);
+  const [codeSent, setCodeSent] = useState(false);
+  const [loadingSend, setLoadingSend] = useState(false);
+  const [loadingConfirm, setLoadingConfirm] = useState(false);
+  const [error, setError] = useState("");
+  const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
-export default function ResetPassword() {
-//   const router = useRouter();
+  const handleSendCode = async () => {
+    if (!email || !email.includes("@")) {
+      setError("Будь ласка, введіть коректну електронну пошту");
+      return;
+    }
+    setLoadingSend(true);
+    setError("");
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 800));
+      setCodeSent(true);
+      setTimeout(() => inputRefs.current[0]?.focus(), 50);
+    } catch {
+      setError("Помилка відправки коду");
+    } finally {
+      setLoadingSend(false);
+    }
+  };
 
-//   // Creating form
-//   const [formData, setFormData] = useState({ email: "", code: "" });
-//   const [loading, setLoading] = useState(false);
-//   const [error, setError] = useState("");
-//   // For password `eye` images
-//   const [isHovered, setIsHovered] = useState(false);
+  const handleCodeChange = (index: number, value: string) => {
+    const cleaned = value.replace(/\D/g, "").slice(-1);
+    const next = [...code];
+    next[index] = cleaned;
+    setCode(next);
+    setError("");
+    if (cleaned && index < 4) {
+      inputRefs.current[index + 1]?.focus();
+    }
+  };
 
-//   const handleLogin = async () => {
-//     if (!formData.email || !formData.code) {
-//       setError("Please fill in all fields");
-//       return;
-//     }
-//     setLoading(true);
-//     try {
-//       const response = await authService.apiAuthClubMemberLoginPost({
-//         loginClubMemberDto: {
-//           username: formData.email,
-//           password: formData.code
-//         }
-//       });
+  const handleKeyDown = (
+    index: number,
+    e: React.KeyboardEvent<HTMLInputElement>
+  ) => {
+    if (e.key === "Backspace" && !code[index] && index > 0) {
+      inputRefs.current[index - 1]?.focus();
+    }
+  };
 
-//       // If we succeed
-//       console.log("Login successful:", response);
-//       router.push("/"); // Redirect to dashboard or home page after login
-//     } catch (err) {
-//       setError("Invalid email or code");
-//     } finally {
-//       setLoading(false);
-//     }
-//   };
-  
-//   return (
+  const handlePaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    const pasted = e.clipboardData
+      .getData("text")
+      .replace(/\D/g, "")
+      .slice(0, 5);
+    if (!pasted) return;
+    const next = ["", "", "", "", ""];
+    for (let i = 0; i < pasted.length; i++) next[i] = pasted[i];
+    setCode(next);
+    inputRefs.current[Math.min(pasted.length, 4)]?.focus();
+  };
 
-//     // <div className="fixed inset-0 z-[100] flex justify-end backdrop-blur-sm">
-//     <div className="fixed inset-0 z-[100] flex justify-end">
-//       {/* LEFT SIDE: Background Image */}
-      
-//       <div
-//         style={{
-//           width: '50%',
-//           minWidth: '600px',
-//           background: 'linear-gradient(193.17deg, #C7A381 0%, #E0C3A9 54.33%, #B7895E 82.69%, #BF8D5D 100%)'
-//         }}
-//         className="relative h-screen shadow-[-20px_0_30px_rgba(0,0,0,0.3)] rounded-tl-[150px]"
-//       >
-//         {/* Back Button:
-//           - Top: 70px
-//           - Left: 65px (Calculated from Figma 668px - Panel Start 603px)
-//         */}
-//         <button
-//           onClick={() => router.back()}
-//           className="absolute w-[50px] h-[50px] rounded-full flex items-center justify-center text-[24px] transition-all hover:bg-[#F5F3EE] active:scale-95"
-//           style={{
-//             top: '70px',
-//             left: '65px',
-//             backgroundColor: '#F5F3EE80',
-//             color: 'var(--color-black)',
-//             opacity: 0.5,
-//           }}
-//         >
-//           ←
-//         </button>
-//         {/* Main Content Area Container */}
-//         <div
-//           style={{
-//             position: 'absolute',
-//             top: '125px', // Start exactly where Libria starts -30px to account for the gap
-//             left: '50%',
-//             transform: 'translateX(-50%)',
-//             width: '505px',
-//           }}
-//           className="flex flex-col items-center"
-//         >
+  const handleConfirm = async () => {
+    const full = code.join("");
+    if (full.length < 5) {
+      setError("Будь ласка, введіть 5-значний код");
+      return;
+    }
+    setLoadingConfirm(true);
+    setError("");
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 800));
+      router.push("/login");
+    } catch {
+      setError("Невірний код");
+    } finally {
+      setLoadingConfirm(false);
+    }
+  };
 
-//           {/* 1. Libria Name Block */}
-//           <h1
-//             style={{
-//               width: '233px',
-//               height: '144px',
-//               fontFamily: 'var(--font-sans)',
-//               fontWeight: 600,
-//               fontSize: '96px',
-//               lineHeight: '150%',
-//               letterSpacing: '-0.011em',
-//               color: 'var(--color-black)',
-//               display: 'flex',
-//               alignItems: 'center',
-//               justifyContent: 'center',
-//             }}
-//           >
-//             Libria
-//           </h1>
+  return (
+    <>
+      <div className="block md:hidden">
+        <MobileResetPasswordView />
+      </div>
 
-//           {/* 2. Login Block 
-//       - Positioned directly below Libria
-//       - Centered horizontally in the same middle-axis as Libria
-//   */}
-//           <div
-//             style={{
-//               width: '505px',
-//               height: '521px',
-//               display: 'flex',
-//               flexDirection: 'column',
-//               gap: '30px', // Exact gap from Figma
-//               marginTop: '0px', // Since 185 + 144 = 329, they touch exactly at the 329px mark
-//             }}
-//             className="items-center" // Ensures internal elements are also centered
-//           >
-//             {/* Login Input Group (Label + Input) */}
-//             <div
-//               style={{
-//                 width: '505px',
-//                 height: '111px',
-//                 display: 'flex',
-//                 flexDirection: 'column',
-//                 gap: '15px', // Figma gap between label and input
-//               }}
-//             >
-//               {/* Label: Логін */}
-//               <label
-//                 style={{
-//                   width: '505px',
-//                   height: '40px',
-//                   fontFamily: 'var(--font-sans)',
-//                   fontWeight: 600,
-//                   fontSize: '32px',
-//                   lineHeight: '100%',
-//                   letterSpacing: '0%',
-//                   color: 'var(--color-black)',
-//                   display: 'flex',
-//                   alignItems: 'center', // vertical-align: middle
-//                 }}
-//               >
-//                 Логін
-//               </label>
+      <div className="hidden md:flex fixed inset-0 z-[100] justify-end">
+        <div
+          className="absolute inset-0 z-[-1]"
+          style={{
+            backgroundImage: 'url("/images/login register/background.png")',
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+          }}
+        />
 
-//               {/* Input Field */}
-//               <input
-//                 type="text"
-//                 value={formData.email}
-//                 onChange={(e) => setFormData({ ...formData, email: e.target.value })} // entering our email into state
-//                 placeholder="Введіть email"
-//                 className="outline-none transition-shadow focus:shadow-md"
-//                 style={{
-//                   width: '505px',
-//                   height: '56px',
-//                   borderRadius: '9px',
-//                   padding: '10px 20px', // padding top/bottom 10, left/right 20
-//                   backgroundColor: '#F5F3EE',
-//                   boxShadow: '0px 0px 10px 0px #00000040',
+        <div
+          style={{
+            width: "50%",
+            minWidth: "600px",
+            background:
+              "linear-gradient(193.17deg, #C7A381 0%, #E0C3A9 54.33%, #B7895E 82.69%, #BF8D5D 100%)",
+            borderTopLeftRadius: "150px",
+          }}
+          className="relative h-screen shadow-[-20px_0_30px_rgba(0,0,0,0.3)] overflow-y-auto flex flex-col items-center px-8 py-12"
+        >
+          <button
+            type="button"
+            onClick={() => router.back()}
+            className="absolute z-10 w-[44px] h-[44px] rounded-full flex items-center justify-center text-[20px] transition-all hover:bg-[#F5F3EE] active:scale-95"
+            style={{
+              top: "70px",
+              left: "65px",
+              backgroundColor: "#F5F3EE80",
+              color: "var(--color-black)",
+              opacity: 0.5,
+            }}
+            aria-label="Назад"
+          >
+            ←
+          </button>
 
-//                   // Text inside input specs while no value entered
-//                   fontFamily: 'var(--font-sans)',
-//                   fontWeight: 400,
-//                   fontSize: '24px',
-//                   lineHeight: '150%',
-//                   letterSpacing: '-0.011em', // -1.1%
-//                   color: 'var(--color-black)', // Actual typed text color
-//                 }}
-//               />
+          <div className="flex flex-col items-center w-full max-w-[460px] my-auto gap-6">
+            <AuthBrandLogo widthClassName="w-[180px]" />
 
-//               {/* CSS to target the placeholder specifically for that 50% opacity */}
-//               <style jsx>{`
-//                 input::placeholder {
-//                   color: #24242480;
-//                   opacity: 1; /* Browser default override */
-//                 }
-//               `}</style>
-//             </div>
-//             <div
-//               style={{
-//                 width: '505px',
-//                 height: '111px',
-//                 display: 'flex',
-//                 flexDirection: 'column',
-//                 gap: '15px',
-//               }}
-//             >
-//               {/* Label Row */}
-//               <div className="flex justify-between items-center w-full">
-//                 <label style={{ fontSize: '32px', fontWeight: 600, color: 'var(--color-black)' }}>
-//                   Пароль
-//                 </label>
-//                 <Link href="/forgot-password" style={{ fontSize: '24px', color: 'var(--color-black)', cursor: 'pointer' }}>
-//                   Забули пароль?
-//                 </Link>
-//               </div>
+            {error && (
+              <div className="bg-red-500/20 border border-red-500/50 rounded-[9px] px-4 py-2.5 text-center text-[#242424] font-medium text-[16px] w-full">
+                {error}
+              </div>
+            )}
 
-//               {/* Input Wrapper */}
-//               <div className="relative" style={{ width: '505px', height: '56px' }}>
-//                 <input
-//                   type={isPasswordVisible ? "text" : "password"}
-//                   placeholder="Введіть пароль"
-//                   value={formData.password}
-//                   onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-//                   className="outline-none"
-//                   style={{
-//                     width: '100%',
-//                     height: '100%',
-//                     borderRadius: '9px',
-//                     padding: '10px 60px 10px 20px', // Extra right padding (60px) so text doesn't hit the eye
-//                     backgroundColor: '#F5F3EE',
-//                     boxShadow: '0px 0px 10px 0px #00000040',
-//                     fontFamily: 'var(--font-sans)',
-//                     fontSize: '24px',
-//                     color: 'var(--color-black)',
-//                   }}
-//                 />
+            <div className="flex flex-col gap-2 w-full">
+              <label className="text-[24px] font-semibold text-[#242424]">
+                Email
+              </label>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                  setError("");
+                }}
+                placeholder="Введіть свою пошту"
+                className="bg-white h-[52px] w-full rounded-[9px] px-5 shadow-[0px_0px_10px_0px_rgba(0,0,0,0.2)] outline-none text-[18px] text-[#242424] placeholder:text-[#242424]/50"
+              />
+            </div>
 
-//                 {/* Eye Button Container */}
-//                 <button
-//                   type="button"
-//                   disabled={loading}
-//                   className="absolute flex items-center justify-center transition-opacity"
-//                   onMouseEnter={() => setIsHovered(true)}
-//                   onMouseLeave={() => setIsHovered(false)}
-//                   style={{
-//                     top: '50%',
-//                     right: '15px',
-//                     transform: 'translateY(-50%)',
-//                     width: '30px',
-//                     height: '30px',
-//                     background: 'transparent',
-//                     border: 'none',
-//                     cursor: 'pointer',
-//                   }}
-//                 >
-                  
-//                   {loading ? "..." : ""}                </button>
-//               </div>
-//               <style jsx>{`
-//               input::placeholder {
-//                 color: var(--color-black);
-//                 opacity: 0.5;
-//               }
-//             `}</style>
+            <button
+              type="button"
+              onClick={handleSendCode}
+              disabled={loadingSend || !email.trim()}
+              className="bg-[#005B33] h-[52px] w-full rounded-[9px] shadow-[0px_0px_10px_0px_rgba(0,0,0,0.25)] text-[20px] text-white transition-all hover:brightness-110 active:scale-[0.98] disabled:opacity-70"
+            >
+              {loadingSend
+                ? "Надсилання..."
+                : codeSent
+                  ? "Надіслати ще раз"
+                  : "Надіслати код"}
+            </button>
 
-//             </div>
-//             <button
-//               type="submit"
-//               onClick={handleLogin}
-//               style={{
-//                 width: '505px',
-//                 height: '56px',
-//                 borderRadius: '57px',
-//                 padding: '10px 20px',
-//                 gap: '15px',
-//                 backgroundColor: 'var(--color-green)',
-//                 boxShadow: '0px 0px 10px 0px #00000040',
-//                 display: 'flex',
-//                 alignItems: 'center',
-//                 justifyContent: 'center',
-//                 border: 'none',
-//                 cursor: 'pointer',
-//                 transition: 'all 0.2s ease',
-//               }}
-//               className="hover:brightness-110 active:scale-[0.98]"
-//             >
-//               <span
-//                 style={{
-//                   width: '67px',
-//                   height: '36px',
-//                   fontFamily: 'var(--font-geist-sans)',
-//                   fontWeight: 400,
-//                   fontSize: '24px',
-//                   lineHeight: '150%',
-//                   letterSpacing: '-0.011em', // -1.1%
-//                   color: '#FFFFFF',
-//                   display: 'flex',
-//                   alignItems: 'center',
-//                   justifyContent: 'center',
-//                 }}
-//               >
-//                 Увійти
-//               </span>
-//             </button>
+            <div className="flex flex-col items-center gap-4 w-full mt-2">
+              <label className="text-[24px] font-semibold text-[#242424]">
+                Введіть код
+              </label>
+              <div className="flex items-center justify-between gap-3 w-full max-w-[400px]">
+                {code.map((digit, idx) => (
+                  <input
+                    key={idx}
+                    ref={(el) => {
+                      inputRefs.current[idx] = el;
+                    }}
+                    type="text"
+                    inputMode="numeric"
+                    maxLength={1}
+                    value={digit}
+                    onChange={(e) => handleCodeChange(idx, e.target.value)}
+                    onKeyDown={(e) => handleKeyDown(idx, e)}
+                    onPaste={handlePaste}
+                    className="bg-white h-[72px] w-full max-w-[64px] rounded-[9px] shadow-[0px_0px_10px_0px_rgba(0,0,0,0.2)] text-center text-[28px] font-semibold text-[#242424] outline-none focus:ring-2 focus:ring-[#005b33]"
+                  />
+                ))}
+              </div>
+            </div>
 
-//             {/* 3. Divider: Line - or - Line */}
-//             <div
-//               style={{
-//                 display: 'flex',
-//                 alignItems: 'center',
-//                 justifyContent: 'center',
-//                 width: '505px',
-//                 height: '36px',
-//                 padding: '13px 0',
-//                 gap: '25px', // Gap between lines and text
-//               }}
-//             >
-//               {/* Left Line */}
-//               <div
-//                 style={{
-//                   flex: 1, // Let it fill the space based on the container width
-//                   height: '0px',
-//                   borderTop: '1px solid #242424',
-//                   opacity: 1,
-//                 }}
-//               />
+            <div className="flex flex-col gap-3 w-full mt-1">
+              <button
+                type="button"
+                onClick={handleConfirm}
+                disabled={loadingConfirm}
+                className="bg-[#005B33] h-[52px] w-full rounded-[9px] shadow-[0px_0px_10px_0px_rgba(0,0,0,0.25)] text-[20px] text-white transition-all hover:brightness-110 active:scale-[0.98] disabled:opacity-70"
+              >
+                {loadingConfirm ? "Перевірка..." : "Підтвердити"}
+              </button>
 
-//               {/* Text "or" */}
-//               <span
-//                 style={{
-//                   fontFamily: 'var(--font-geist-sans)',
-//                   fontWeight: 400,
-//                   fontSize: '24px',
-//                   lineHeight: '150%',
-//                   letterSpacing: '-0.011em',
-//                   color: '#242424',
-//                   textAlign: 'center',
-//                   whiteSpace: 'nowrap',
-//                 }}
-//               >
-//                 або
-//               </span>
+              <button
+                type="button"
+                onClick={() => router.push("/login")}
+                disabled={loadingConfirm}
+                className="border-2 border-[#005B33] bg-transparent h-[52px] w-full rounded-[9px] shadow-[0px_0px_10px_0px_rgba(0,0,0,0.2)] text-[20px] text-[#005B33] transition-all hover:bg-[#005B33]/10 active:scale-[0.98] disabled:opacity-70"
+              >
+                Скасувати
+              </button>
+            </div>
 
-//               {/* Right Line */}
-//               <div
-//                 style={{
-//                   flex: 1,
-//                   height: '0px',
-//                   borderTop: '1px solid #242424',
-//                   opacity: 1,
-//                 }}
-//               />
-//             </div>
-
-
-//             {/* 4. Google Login Button */}
-//             <button
-//               type="button"
-//               onClick={() => { /* Handle Google Login */ }}
-//               style={{
-//                 width: '505px',
-//                 height: '56px',
-//                 backgroundColor: '#F5F3EE',
-//                 borderRadius: '9px',
-//                 padding: '10px 20px',
-//                 display: 'flex',
-//                 alignItems: 'center',
-//                 justifyContent: 'center',
-//                 gap: '15px',
-//                 boxShadow: '0px 0px 10px 0px #00000040',
-//                 border: 'none',
-//                 cursor: 'pointer',
-//                 transition: 'all 0.2s ease',
-//               }}
-//               className="hover:brightness-95 active:scale-[0.98]"
-//             >
-//               {/* Left Side Symbol "G" */}
-//               <div
-//                 style={{
-//                   width: '25.92px',
-//                   height: '26.35px',
-//                   display: 'flex',
-//                   alignItems: 'center',
-//                   justifyContent: 'center',
-//                   position: 'relative',
-//                 }}
-//               >
-//                 {/* Google brand icon */}
-//                 <img
-//                   src="/images/Layout/Footer/GoogleBrandIcon.svg"
-//                   alt="Google"
-//                   style={{
-//                     width: '100%',
-//                     height: '100%',
-//                     objectFit: 'contain'
-//                   }}
-//                 />
-//               </div>
-
-//               {/* Right Side Text */}
-//               <span
-//                 style={{
-//                   width: '270px',
-//                   height: '36px',
-//                   fontFamily: 'var(--font-sans)',
-//                   fontWeight: 400,
-//                   fontSize: '24px',
-//                   lineHeight: '150%',
-//                   letterSpacing: '-0.011em',
-//                   color: '#242424',
-//                   display: 'flex',
-//                   alignItems: 'center',
-//                   justifyContent: 'center',
-//                   textAlign: 'center',
-//                 }}
-//               >
-//                 Продовжити через Google
-//               </span>
-//             </button>
-
-//             {/* 5. Registration Link */}
-//             <span
-//               style={{
-//                 width: '346px',
-//                 height: '36px',
-//                 marginTop: '30px', // Matches the gap between other elements
-//                 // display: 'flex',
-//                 // gap: '8px', // Gap between text and link
-//                 alignItems: 'center',
-//                 justifyContent: 'center',
-//                 fontFamily: 'var(--font-sans)',
-//                 fontWeight: 450,
-//                 fontSize: '24px',
-//                 lineHeight: '150%',
-//                 letterSpacing: '-0.011em',
-//                 color: '#242424',
-//                 display: 'inline-flex',
-//                 whiteSpace: 'nowrap',
-//                 gap: '8px',
-//               }}
-//             >
-//               Немає акаунту? {' '}
-//               <Link
-//                 href="/register"
-//                 style={{
-//                   color: 'var(--color-brand-green)',
-//                   textDecoration: 'none',
-//                   fontWeight: 500 // Optional: slightly bolder to make it look like a link
-//                 }}
-//                 className="hover:underline"
-//               >
-//                 Зареєструватися.
-//               </Link>
-//             </span>
-
-//           </div>
-
-//         </div>
-
-//       </div>
-//       {/* Right Panel:
-       
-//       */}
-//       <div
-//         className="absolute inset-0 z-[-1]" // flex-grow takes remaining space
-//         style={{
-//           backgroundImage: 'url("images/login register/background.png")', // Replace with your path
-//           backgroundSize: 'cover',
-//           backgroundPosition: 'center',
-//           backgroundRepeat: 'no-repeat'
-//         }}
-//       />
-
-      
-//     </div>
-//   );
-return (
-    <div>Password reset page</div>
-);
+            <p className="text-[#242424] text-[18px] mt-4 text-center">
+              Згадали пароль?{" "}
+              <Link
+                href="/login"
+                className="text-[#005B33] font-semibold hover:underline"
+              >
+                Увійти
+              </Link>
+            </p>
+          </div>
+        </div>
+      </div>
+    </>
+  );
 }

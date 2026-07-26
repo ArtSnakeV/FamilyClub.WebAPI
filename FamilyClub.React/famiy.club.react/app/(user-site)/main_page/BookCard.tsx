@@ -8,6 +8,9 @@ type BookCardProps = {
     rating?: number | null;
     href?: string;
     formatTags?: Array<"paper" | "ebook" | "audio">;
+    productId?: number;
+    isFavorite?: boolean;
+    onToggleFavorite?: (productId: number) => void;
 };
 
 const clampRating = (value: number) => Math.max(0, Math.min(5, value));
@@ -27,7 +30,7 @@ const formatIconMap = {
     },
 };
 
-export default function BookCard({ title, author, price, image, rating, href, formatTags }: BookCardProps) {
+export default function BookCard({ title, author, price, image, rating, href, formatTags, isFavorite, onToggleFavorite, productId }: BookCardProps) {
     const roundedRating = clampRating(Math.round(rating ?? 0));
     const activeFormatTags = formatTags?.length ? formatTags : [];
 
@@ -55,11 +58,33 @@ export default function BookCard({ title, author, price, image, rating, href, fo
                 </div>
             ) : null}
 
-            <img
+            {/* <img
                 alt="Улюблене"
                 className="absolute right-[18px] top-[20px] z-10 h-[30px] w-[30px] cursor-pointer"
                 src="/images/main_page/icons/rec-icon-favorite.svg"
-            />
+            /> */}
+            <button
+                type="button"
+                onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    if (!productId || !onToggleFavorite) return;
+                    onToggleFavorite(productId);
+                }}
+                className="absolute right-[18px] top-[20px] z-10 h-[30px] w-[30px] cursor-pointer"
+                aria-label="Улюблене"
+            >
+                <img
+                    alt="Улюблене"
+                    className="h-full w-full"
+                    src={
+                        isFavorite
+                            ? "/images/userProfile/heart-filled.svg"
+                            : "/images/main_page/icons/rec-icon-favorite.svg"
+                    }
+                />
+            </button>
+
 
             {image ? (
                 <img

@@ -1,15 +1,18 @@
 const formats = [
     {
+        label: "Паперові книги",
         title: "Класичне читання — сторінки, які хочеться перегортати",
         background: "/images/main_page/format/format-bg-book.svg",
         image: "/images/main_page/format/format-book.png",
     },
     {
+        label: "eBook",
         title: "Читай будь-де — усі книги в одному пристрої",
         background: "/images/main_page/format/format-bg-tablet.svg",
         image: "/images/main_page/format/format-tablet.png",
     },
     {
+        label: "Аудіокниги",
         title: "Слухай історії в дорозі, під час прогулянок або відпочинку",
         background: "/images/main_page/format/format-bg-headphones.svg",
         image: "/images/main_page/format/format-headphones.png",
@@ -18,19 +21,29 @@ const formats = [
 
 export default function FormatSection() {
     return (
-        <section className="relative w-full overflow-hidden pb-4 pt-12">
+        <section className="relative w-full overflow-hidden pt-10 pb-0">
             <div className="mx-auto max-w-[1220px] px-4 lg:px-0">
-                <h2 className="text-center font-mono text-[48px] font-bold text-[#242424] lg:text-[64px]">
+                {/* Top Category Labels row matching Figma y=4002 */}
+                <div className="flex flex-wrap justify-around text-center font-sans text-[20px] font-semibold text-[#242424] mb-12">
+                    <span className="w-[260px]">{formats[0].label}</span>
+                    <span className="w-[260px]">{formats[1].label}</span>
+                    <span className="w-[260px]">{formats[2].label}</span>
+                </div>
+
+                {/* Heading matching Figma y=4667 */}
+                <h2 className="text-center font-mono text-[40px] font-bold text-[#242424] md:text-[56px] mb-8">
                     Формат, який зручний саме тобі
                 </h2>
 
-                <div className="mt-6 flex flex-wrap justify-around text-center text-[15px] font-semibold text-[#242424] gap-4">
-                    <p className="max-w-[280px]">Класичне читання — сторінки, які хочеться перегортати</p>
-                    <p className="max-w-[280px]">Читай будь-де — усі книги в одному пристрої</p>
-                    <p className="max-w-[280px]">Слухай історії в дорозі, під час прогулянок або відпочинку</p>
+                {/* Descriptions row matching Figma y=4767 */}
+                <div className="flex flex-wrap justify-around text-center font-sans text-[16px] font-medium text-[#242424] mb-8 gap-4">
+                    <p className="w-[260px]">{formats[0].title}</p>
+                    <p className="w-[260px]">{formats[1].title}</p>
+                    <p className="w-[260px]">{formats[2].title}</p>
                 </div>
 
-                <div className="mt-10 flex flex-wrap items-end justify-around gap-8 pb-4">
+                {/* Device Images sitting on the shelf */}
+                <div className="flex flex-wrap items-end justify-around gap-8 pb-4">
                     <div className="relative h-[266px] w-[190px] transition-transform hover:scale-105">
                         <img
                             alt=""
@@ -70,8 +83,15 @@ export default function FormatSection() {
                 </div>
             </div>
 
-            {/* Bottom Wooden Bookshelf Bar */}
-            <div className="relative z-20 h-[50px] w-full bg-gradient-to-b from-[#9A6028] via-[#7E4D1E] to-[#5C3613] shadow-[0px_8px_15px_rgba(0,0,0,0.5)] border-t-[3px] border-[#B87838] border-b-[4px] border-[#3E220A]" />
+            {/* Bottom Wooden Bookshelf Bar matching site design system */}
+            <div className="relative z-20 h-[80px] w-full shadow-[0px_4px_8px_0px_rgba(0,0,0,0.35)] bg-[#7e4d1e]">
+                <img src="/images/catalog/shelf_tex1.png" className="absolute inset-0 w-full h-full object-cover mix-blend-multiply opacity-50 pointer-events-none" alt="" />
+                <div className="absolute inset-0 bg-[rgba(0,0,0,0.27)] pointer-events-none" />
+                <div className="absolute left-0 right-0 bottom-0 h-[60px]">
+                    <img src="/images/catalog/shelf_tex2.png" className="absolute inset-0 w-full h-full object-cover mix-blend-multiply pointer-events-none" alt="" />
+                    <img src="/images/catalog/shelf_tex3.png" className="absolute inset-0 w-full h-full object-cover pointer-events-none" alt="" />
+                </div>
+            </div>
         </section>
     );
 }

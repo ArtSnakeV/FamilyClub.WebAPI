@@ -13,6 +13,14 @@
  */
 
 import { mapValues } from '../runtime';
+import type { ProductImageDto } from './ProductImageDto';
+import {
+    ProductImageDtoFromJSON,
+    ProductImageDtoFromJSONTyped,
+    ProductImageDtoToJSON,
+    ProductImageDtoToJSONTyped,
+} from './ProductImageDto';
+
 /**
  * 
  * @export
@@ -42,7 +50,19 @@ export interface ReviewDto {
      * @type {string}
      * @memberof ReviewDto
      */
+    authors?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReviewDto
+     */
     userId?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReviewDto
+     */
+    userName?: string | null;
     /**
      * 
      * @type {number}
@@ -67,6 +87,12 @@ export interface ReviewDto {
      * @memberof ReviewDto
      */
     approved?: boolean;
+    /**
+     * 
+     * @type {Array<ProductImageDto>}
+     * @memberof ReviewDto
+     */
+    productImages?: Array<ProductImageDto> | null;
 }
 
 /**
@@ -89,11 +115,14 @@ export function ReviewDtoFromJSONTyped(json: any, ignoreDiscriminator: boolean):
         'id': json['id'] == null ? undefined : json['id'],
         'productId': json['productId'] == null ? undefined : json['productId'],
         'productName': json['productName'] == null ? undefined : json['productName'],
+        'authors': json['authors'] == null ? undefined : json['authors'],
         'userId': json['userId'] == null ? undefined : json['userId'],
+        'userName': json['userName'] == null ? undefined : json['userName'],
         'rating': json['rating'] == null ? undefined : json['rating'],
         'comment': json['comment'] == null ? undefined : json['comment'],
         'createdAt': json['createdAt'] == null ? undefined : (new Date(json['createdAt'])),
         'approved': json['approved'] == null ? undefined : json['approved'],
+        'productImages': json['productImages'] == null ? undefined : ((json['productImages'] as Array<any>).map(ProductImageDtoFromJSON)),
     };
 }
 
@@ -111,11 +140,14 @@ export function ReviewDtoToJSONTyped(value?: ReviewDto | null, ignoreDiscriminat
         'id': value['id'],
         'productId': value['productId'],
         'productName': value['productName'],
+        'authors': value['authors'],
         'userId': value['userId'],
+        'userName': value['userName'],
         'rating': value['rating'],
         'comment': value['comment'],
         'createdAt': value['createdAt'] == null ? value['createdAt'] : value['createdAt'].toISOString(),
         'approved': value['approved'],
+        'productImages': value['productImages'] == null ? undefined : ((value['productImages'] as Array<any>).map(ProductImageDtoToJSON)),
     };
 }
 

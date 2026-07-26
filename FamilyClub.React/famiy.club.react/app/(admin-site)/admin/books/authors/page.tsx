@@ -1,70 +1,84 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import BooksNav from "../booksNav";
 import { AuthorDTO } from "@/lib/api/generated";
 import { authorService, apiBasePath } from "@/lib/api/services";
-import Image from "next/image";
-import { useRouter } from "next/navigation";
+import ItemActions from "@/app/(admin-site)/common_elements/item_actions";
+import EntitiesSearchSorting from "@/app/(admin-site)/common_elements/entities_search_sorting";
+import Pagination from "@/app/(admin-site)/common_elements/entities_pagination";
+
+const AUTHOR_SORT_OPTIONS = [
+  { value: "id_asc", label: "Старі на початку" },
+  { value: "id_desc", label: "Нові на початку" },
+  { value: "asc", label: "За алфавітом (А→Я)" },
+  { value: "desc", label: "За алфавітом (Я→А)" },
+];
+
+const ITEMS_PER_PAGE = 10;
 
 export default function ManagerAuthorPage() {
-  const [search, setSearch] = useState("");
-  const containerRef = useRef<HTMLDivElement>(null);
   const [authors, setAuthors] = useState<AuthorDTO[]>([]);
-  const [sortOrder, setSortOrder] = useState("name-new");
-  const router = useRouter();
+  const [search, setSearch] = useState("");
+  const [sortOrder, setSortOrder] = useState("id_desc");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<unknown>(null);
 
   useEffect(() => {
-    authorService.apiAuthorsGet().then(setAuthors).catch(console.error);
+    authorService
+      .apiAuthorsGet()
+      .then((data) => {
+        setAuthors(data);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.error(err);
+        setError(err);
+        setIsLoading(false);
+      });
   }, []);
 
-  useEffect(() => {
-    function handleClickOutside(e: MouseEvent) {
-      if (
-        containerRef.current &&
-        !containerRef.current.contains(e.target as Node)
-      ) {
-        setSearch("");
+  const handleSearchChange = (value: string) => {
+    setSearch(value);
+    setCurrentPage(1);
+  };
+
+  const filteredAndSorted = authors
+    .filter((a) =>
+      (a.authorName ?? "").toLowerCase().includes(search.toLowerCase())
+    )
+    .sort((a, b) => {
+      if (sortOrder === "asc") {
+        return (a.authorName ?? "").localeCompare(b.authorName ?? "");
       }
-    }
-    document.addEventListener("click", handleClickOutside);
-    return () => document.removeEventListener("click", handleClickOutside);
-  }, []);
+      if (sortOrder === "desc") {
+        return (b.authorName ?? "").localeCompare(a.authorName ?? "");
+      }
 
-  const q = search.toLowerCase();
+      const idA = Number(a.id ?? 0);
+      const idB = Number(b.id ?? 0);
 
-  const filteredAuthors =
-    search.trim() === ""
-      ? authors
-      : authors.filter((a) => a.authorName?.toLowerCase().includes(q));
+      if (sortOrder === "id_asc") return idA - idB;
+      if (sortOrder === "id_desc") return idB - idA;
 
-  const hasResults = filteredAuthors.length > 0;
+      return 0;
+    });
 
-  const sortedAuthors = [...filteredAuthors].sort((a, b) => {
-    if (sortOrder === "name-new") return (b.id ?? 0) - (a.id ?? 0);
-    if (sortOrder === "name-old") return (a.id ?? 0) - (b.id ?? 0);
-    if (sortOrder === "name-asc")
-      return (a.authorName ?? "").localeCompare(b.authorName ?? "");
-    if (sortOrder === "name-desc")
-      return (b.authorName ?? "").localeCompare(a.authorName ?? "");
-    return 0;
-  });
+  const indexOfLastItem = currentPage * ITEMS_PER_PAGE;
+  const indexOfFirstItem = indexOfLastItem - ITEMS_PER_PAGE;
+  const currentPaginatedItems = filteredAndSorted.slice(
+    indexOfFirstItem,
+    indexOfLastItem
+  );
+
+  if (error) {
+    return <div className="p-[35px]">Failed to load authors.</div>;
+  }
 
   return (
-    <div
-      className="w-full min-h-screen overflow-hidden relative m-0 p-0"
-      // style={{
-      //   backgroundImage: "url('/images/authorPageAdmin/Rectangle 326.png')",
-      //   backgroundSize: "100% 100%",
-      // }}
-    >
+    <div className="w-full min-h-screen overflow-hidden relative m-0 p-0">
       <div className="w-[100vw] min-h-screen relative">
-        {/* <img
-  src="/images/authorPageAdmin/Rectangle 675.png"
-  className="fixed"
-  style={{ width: "100vw", height: "auto", top: "0px", left: "0px", zIndex: 0 }}
-  alt=""
-/> */}
         <img
           src="/images/authorPageAdmin/Rectangle 675.png"
           className="absolute"
@@ -73,10 +87,6 @@ export default function ManagerAuthorPage() {
         />
 
         <div className="flex w-full flex-col">
-          {/* <div
-            className="relative z-20"
-            style={{ top: "50px", left: "-190px", right: "0", height: "60px" }}
-          > */}
           <div
             className="relative z-20 md:left-[-190px]"
             style={{ top: "50px", height: "60px" }}
@@ -84,14 +94,6 @@ export default function ManagerAuthorPage() {
             <BooksNav />
           </div>
 
-          {/* <div
-            className="relative self-center mt-[80px] ml-0 w-[90%] max-w-[1500px]"
-            style={{
-              width: "1480px",
-              marginLeft: "-420px",
-              minHeight: "800px",
-            }}
-          > */}
           <div
             className="relative self-center mt-[90px]"
             style={{
@@ -105,107 +107,33 @@ export default function ManagerAuthorPage() {
               alt=""
               className="absolute top-0 left-0 w-full h-full object-fill"
             />
-            {/* Рядок: пошук + кнопка + сортування */}
-            <div className="relative flex flex-row items-center gap-4 top-[36px] pt-[10px] px-[32px]">
-              {/* Пошук */}
-              <div className="relative w-[400px] ml-[38px]">
-                <input
-                  type="text"
-                  value={search}
-                  onChange={(e) => setSearch(e.target.value)}
-                  onClick={(e) => e.stopPropagation()}
-                  placeholder="Пошук автора"
-                  className="w-full pl-4 pr-10 h-[36px] bg-[var(--color-white)] rounded-[9px] text-[15px] px-2 text-[#272727] outline-none border-[1px]"
-                />
-                <button
-                  onClick={(e) => e.stopPropagation()}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 w-[22px] h-[22px] flex items-center justify-center"
-                >
-                  <Image
-                    src="/images/header/zoom_out_24px.png"
-                    alt="search"
-                    width={22}
-                    height={22}
-                    className="object-contain"
-                    priority
-                  />
-                </button>
-              </div>
 
-              {/* Кнопка додати */}
-              <button
-                type="button"
-                className="transition-all duration-200 hover:opacity-90 hover:shadow-[0px_0px_20px_0px_#00000080] active:scale-[0.98] w-[150px] cursor-pointer h-[36px] rounded-[9px] bg-[var(--color-green)] text-[var(--color-white)] flex items-center justify-around text-[14px]"
-                onClick={() => router.push(`/admin/books/authors/addAuthor`)}
-              >
-                <img
-                  src="/images/authorPageAdmin/pen-to-square-solid-full 1.svg"
-                  alt="add"
-                  width={18}
-                  height={18}
-                  className="object-contain"
-                />
-                Додати автора
-              </button>
+            <div className="absolute inset-[25px] overflow-auto p-[10px]">
+              <EntitiesSearchSorting
+                searchPlaceholder="Пошук автора"
+                searchValue={search}
+                onSearchChange={handleSearchChange}
+                addButtonText="Додати автора"
+                addButtonHref="/admin/books/authors/addAuthor"
+                sortValue={sortOrder}
+                onSortChange={setSortOrder}
+                sortOptions={AUTHOR_SORT_OPTIONS}
+              />
 
-              {/* Сортування — справа */}
-              <div className="flex flex-row items-center gap-2 absolute right-[70px]">
-                <p className="text-[14px] text-[var(--color-black)]">
-                  Сортування:
-                </p>
-                <select
-                  value={sortOrder}
-                  onChange={(e) => setSortOrder(e.target.value)}
-                  className="h-[30px] bg-[var(--color-white)] rounded-[9px] text-[14px] px-2 text-[var(--color-black)] outline-none border-[1px]"
-                >
-                  <option value="name-new">Нові спочатку</option>
-                  <option value="name-old">Старі спочатку</option>
-                  <option value="name-asc">За алфавітом (А→Я)</option>
-                  <option value="name-desc">За алфавітом (Я→А)</option>
-                </select>
-              </div>
-            </div>
-            <div className="mt-4 relative top-[40px] ">
-              <h1 className="text-[28px] relative w-[100px] ml-[70px] font-bold text-[var(--color-black)]">
+              <p className="font-[Source_Sans_Pro] font-semibold text-[36px] leading-[150%] tracking-[-0.011em] align-middle mt-4">
                 Автори:
-              </h1>
-            </div>
-            {/* Список авторів */}
-            <div
-              className="relative flex flex-col"
-              ref={containerRef}
-              style={{
-                width: "calc(100% - 66px)",
-                marginLeft: "33px",
-                top: "40px",
-              }}
-            >
-              {hasResults ? (
-                <div>
-                  {sortedAuthors.map((author) => {
-                    const handleDelete = async () => {
-                      const confirmDelete = confirm(
-                        "Ви точно хочете видалити автора?",
-                      );
-                      if (!confirmDelete) return;
-                      try {
-                        await authorService.apiAuthorsIdDelete({
-                          id: Number(author.id),
-                        });
-                        setAuthors((prev) =>
-                          prev.filter((a) => a.id !== author.id),
-                        );
-                      } catch (e) {
-                        console.error(e);
-                        alert("Помилка при видаленні");
-                      }
-                    };
+              </p>
 
-                    return (
-                      <div
-                        className="flex flex-row items-center p-4 mt-2 mb-3 mx-[40px] gap-4 rounded-[9px] bg-[var(--color-white)] px-4 py-3 shadow-[0px_0px_10px_0px_#00000040]"
-                        key={author.id}
-                      >
+              <div className="grid gap-4 mt-4">
+                {isLoading ? (
+                  <div className="text-[20px] opacity-60">Завантаження...</div>
+                ) : currentPaginatedItems.length > 0 ? (
+                  currentPaginatedItems.map((author) => (
+                    <div
+                      key={author.id}
+                      className="max-w-[1464px] w-full bg-[#F5F3EE] rounded-[9px] shadow-[0_0_10px_0_rgba(0,0,0,0.25)] px-[24px] py-3 flex items-center justify-between gap-4"
+                    >
+                      <div className="flex items-center gap-4 min-w-0 flex-1">
                         <div className="w-[80px] h-[80px] flex-shrink-0 rounded-[8px] overflow-hidden bg-gray-100">
                           {author.photoUrl ? (
                             <img
@@ -220,54 +148,63 @@ export default function ManagerAuthorPage() {
                           )}
                         </div>
 
-                        <div className="flex flex-col flex-1 gap-1 min-w-0">
-                          <p className="text-[16px] font-bold text-[var(--color-black)] truncate">
+                        <div className="flex flex-col gap-1 min-w-0">
+                          <p className="font-sanspro font-semibold text-[20px] leading-[150%] tracking-[-0.011em] text-[var(--color-black)] truncate">
                             {author.authorName}
                           </p>
-                          <p className="text-[13px] text-[var(--color-black)] line-clamp-3 opacity-70">
-                            {author.biography}
-                          </p>
-                        </div>
-
-                        <div className="flex flex-col gap-2 flex-shrink-0">
-                          <button
-                            type="button"
-                            className="transition-all duration-200 hover:opacity-90 hover:shadow-[0px_0px_20px_0px_#00000080] active:scale-[0.98] w-[100px] cursor-pointer h-[30px] rounded-[9px] bg-[var(--color-green)] text-[var(--color-white)] flex items-center justify-center gap-2 text-[10px]"
-                            onClick={() => router.push(`/admin/books/authors/editAuthor/${author.id}`)}
-                          >
-                            <img
-                              src="/images/authorPageAdmin/pen-to-square-solid-full 1.svg"
-                              alt="add"
-                              width={18}
-                              height={18}
-                              className="object-contain"
-                            />
-                            Редагувати
-                          </button>
-                          <button
-                            type="button"
-                            onClick={handleDelete}
-                            className="border-2 w-[100px] border-[#005B3380] text-[#005B33] bg-transparent transition-all duration-200 hover:bg-[#005B3310] active:scale-[0.98] h-[30px] rounded-[9px] flex items-center justify-center gap-4 text-[10px]"
-                          >
-                            <img
-                              src="/images/authorPageAdmin/trash.svg"
-                              alt="del"
-                              width={18}
-                              height={18}
-                              className="object-contain"
-                            />
-                            Видалити
-                          </button>
+                          {author.biography && (
+                            <p className="text-[13px] text-[var(--color-black)] line-clamp-2 opacity-70">
+                              {author.biography}
+                            </p>
+                          )}
                         </div>
                       </div>
-                    );
-                  })}
-                </div>
-              ) : (
-                <div className="ml-[76px] mt-4 text-[var(--color-black)] opacity-60">
-                  Авторів не знайдено
-                </div>
-              )}
+
+                      <div className="flex items-center gap-[20px] flex-shrink-0">
+                        <ItemActions
+                          id={author.id}
+                          type="author"
+                          onDeleteSuccess={(deletedId) => {
+                            setAuthors((prev) => {
+                              const updated = prev.filter(
+                                (a) => a.id !== deletedId
+                              );
+
+                              const totalFilteredAfterDelete = updated.filter(
+                                (a) =>
+                                  (a.authorName ?? "")
+                                    .toLowerCase()
+                                    .includes(search.toLowerCase())
+                              ).length;
+
+                              const maxPages = Math.ceil(
+                                totalFilteredAfterDelete / ITEMS_PER_PAGE
+                              );
+
+                              if (currentPage > maxPages && maxPages >= 1) {
+                                setCurrentPage(maxPages);
+                              }
+
+                              return updated;
+                            });
+                          }}
+                        />
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <div className="text-[20px] opacity-60">
+                    Авторів не знайдено
+                  </div>
+                )}
+              </div>
+
+              <Pagination
+                totalItems={filteredAndSorted.length}
+                itemsPerPage={ITEMS_PER_PAGE}
+                currentPage={currentPage}
+                onPageChange={setCurrentPage}
+              />
             </div>
           </div>
         </div>

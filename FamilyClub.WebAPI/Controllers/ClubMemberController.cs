@@ -1,5 +1,6 @@
 ﻿using FamilyClub.BLL.DTOs.ClubMember;
 using FamilyClub.BLL.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FamilyClub.WebAPI.Controllers;
@@ -117,15 +118,14 @@ public class ClubMemberController : ControllerBase
     }
 
     [HttpPut("{id}/lock")]
-    public async Task<IActionResult> LockUser(string id, CancellationToken cancellationToken)
+    public async Task<IActionResult> LockUser(string id, LockUserDto dto, CancellationToken cancellationToken)
     {
-        var result = await _clubMemberService.LockUserAsync(id, cancellationToken);
+        var adminId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value; // null, поки немає авторизації
 
-        if (!result)
-            return NotFound();
-
-        return NoContent();
+        var success = await _clubMemberService.LockUserAsync(id, dto, adminId, cancellationToken);
+        return success ? NoContent() : NotFound();
     }
+
     [HttpPut("{id}/unlock")]
     public async Task<IActionResult> UnlockUser(string id, CancellationToken cancellationToken)
     {

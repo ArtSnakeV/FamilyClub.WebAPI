@@ -7,6 +7,7 @@
 Name | Type
 ------------ | -------------
 `id` | number
+`name` | string
 `discountPercent` | number
 `startDate` | Date
 `endDate` | Date
@@ -20,6 +21,7 @@ import type { Promotion } from ''
 // TODO: Update the object below with actual values
 const example = {
   "id": null,
+  "name": null,
   "discountPercent": null,
   "startDate": null,
   "endDate": null,

@@ -1,4 +1,5 @@
-﻿using FamilyClub.BLL.DTOs.ClubMember;
+﻿using FamilyClub.BLL.DTOs.ActionLog;
+using FamilyClub.BLL.DTOs.ClubMember;
 using FamilyClub.BLL.DTOs.Product;
 using FamilyClub.BLL.Interfaces;
 using FamilyClub.BLL.Mapping;
@@ -8,7 +9,6 @@ using FamilyClubLibrary;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using System.Xml.Linq;
 
 namespace FamilyClub.BLL.Services;
 
@@ -20,18 +20,29 @@ public class ClubMemberService : IClubMemberService
     private readonly IUnitOfWork _unitOfWork; // We do not use it now, but it can be used later if we decide to update some other entities together with ClubMember
     private readonly UserManager<ClubMember> _userManager;
     private readonly RoleManager<IdentityRole> _roleManager;
+    private readonly IActionLogService _actionLog;
 
-    public ClubMemberService(IUnitOfWork unitOfWork, UserManager<ClubMember> userManager, RoleManager<IdentityRole> roleManager, FamilyClubContext context)
+    public ClubMemberService(
+        IUnitOfWork unitOfWork,
+        UserManager<ClubMember> userManager,
+        RoleManager<IdentityRole> roleManager,
+        FamilyClubContext context,
+        IActionLogService actionLog)
     {
         _unitOfWork = unitOfWork;
         _userManager = userManager;
         _roleManager = roleManager;
         _context = context;
+        _actionLog = actionLog;
     }
 
     public async Task<IEnumerable<ClubMemberReadDto>> GetAllAsync(CancellationToken cancellationToken = default)
     {
-        var members = await _userManager.Users.ToListAsync(cancellationToken);
+        //var members = await _userManager.Users.ToListAsync(cancellationToken);
+        var members = await _userManager.Users
+        .Include(m => m.BlockReason)
+        .Include(m => m.LockedBy)
+        .ToListAsync(cancellationToken);
         var dtos = new List<ClubMemberReadDto>();
 
         foreach (var member in members)
@@ -47,7 +58,12 @@ public class ClubMemberService : IClubMemberService
     {
         cancellationToken.ThrowIfCancellationRequested(); // Checking for cancellation before starting the operation
 
-        var clubMember = await _userManager.FindByIdAsync(id);
+        //var clubMember = await _userManager.FindByIdAsync(id);
+        var clubMember = await _userManager.Users
+        .Include(m => m.BlockReason)
+        .Include(m => m.LockedBy)
+        .FirstOrDefaultAsync(m => m.Id == id, cancellationToken);
+
         if (clubMember == null) return null;
 
         var roles = await _userManager.GetRolesAsync(clubMember);
@@ -100,6 +116,12 @@ public class ClubMemberService : IClubMemberService
         //}
 
         var roles = await _userManager.GetRolesAsync(clubMember);
+        await SafeLogAsync(
+            ActionLogCodes.Actions.Created,
+            ActionLogCodes.Modules.Users,
+            $"Створено користувача {clubMember.Email}, Id={clubMember.Id}",
+            ActionLogCodes.Levels.Success,
+            cancellationToken);
         return ClubMemberMapper.MapToReadDto(clubMember, roles);
     }
 
@@ -146,7 +168,15 @@ public class ClubMemberService : IClubMemberService
             return false;
         }
 
+        var email = clubMember.Email;
         await _userManager.DeleteAsync(clubMember);
+
+        await SafeLogAsync(
+            ActionLogCodes.Actions.Deleted,
+            ActionLogCodes.Modules.Users,
+            $"Видалено користувача {email}, Id={id}",
+            ActionLogCodes.Levels.Warning,
+            cancellationToken);
 
         return true;
     }
@@ -205,18 +235,32 @@ public class ClubMemberService : IClubMemberService
         return result.Succeeded;
     }
 
-    public async Task<bool> LockUserAsync(string id, CancellationToken cancellationToken = default)
+    public async Task<bool> LockUserAsync(string id, LockUserDto dto, string? lockedByUserId, CancellationToken cancellationToken = default)
     {
         var user = await _userManager.FindByIdAsync(id);
         if (user == null) return false;
 
         await _userManager.SetLockoutEnabledAsync(user, true);
 
-        await _userManager.SetLockoutEndDateAsync(
-            user,
-            DateTimeOffset.UtcNow.AddYears(100));
+        // Identity вимагає конкретну дату,
+        // для постійного бану ставимо далеко в майбутнє
+        var lockoutEnd = dto.LockoutEnd ?? DateTimeOffset.UtcNow.AddYears(100);
+        await _userManager.SetLockoutEndDateAsync(user, lockoutEnd);
 
+        user.BlockReasonId = dto.BlockReasonId;
+        user.LockoutComment = dto.Comment;
+        user.LockedAt = DateTimeOffset.UtcNow;
+        user.LockedById = lockedByUserId;
+
+        await _userManager.UpdateAsync(user);
         await _userManager.UpdateSecurityStampAsync(user);
+
+        await SafeLogAsync(
+            ActionLogCodes.Actions.Blocked,
+            ActionLogCodes.Modules.Users,
+            $"Заблоковано користувача {user.Email}, Id={id}",
+            ActionLogCodes.Levels.Warning,
+            cancellationToken);
 
         return true;
     }
@@ -231,7 +275,38 @@ public class ClubMemberService : IClubMemberService
         // очищаємо лічильник спроб
         await _userManager.ResetAccessFailedCountAsync(user);
 
+        // очищаємо інформацію про причину/автора блокування
+        user.BlockReasonId = null;
+        user.LockoutComment = null;
+        user.LockedAt = null;
+        user.LockedById = null;
+
+        await _userManager.UpdateAsync(user);
+
+        await SafeLogAsync(
+            ActionLogCodes.Actions.Unblocked,
+            ActionLogCodes.Modules.Users,
+            $"Розблоковано користувача {user.Email}, Id={id}",
+            ActionLogCodes.Levels.Success,
+            cancellationToken);
+
         return true;
+    }
+
+    private async Task SafeLogAsync(
+        string action,
+        string module,
+        string details,
+        string level,
+        CancellationToken cancellationToken)
+    {
+        try
+        {
+            await _actionLog.LogAsync(action, module, details, level, cancellationToken: cancellationToken);
+        }
+        catch
+        {
+        }
     }
 
     // We always return ReadMapToReadDto to ensure consistent output format

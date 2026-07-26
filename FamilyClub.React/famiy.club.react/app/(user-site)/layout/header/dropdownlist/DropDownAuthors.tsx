@@ -4,25 +4,20 @@ import { AuthorDTO } from "@/lib/api/generated";
 import { authorService } from "@/lib/api/services";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 const ITEMS_PER_PAGE = 3;
 
 export default function DropDownAuthors() {
+  const router = useRouter();
   const [authors, setAuthors] = useState<AuthorDTO[]>([]);
   const [search, setSearch] = useState("");
   const [open, setOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
   const visibleAuthors = authors.slice(0, ITEMS_PER_PAGE);
-  // useEffect(() => {
-  //   const config = new Configuration({
-  //     basePath: "https://localhost:7069",
-  //   });
-  //   const api = new AuthorsApi(config);
 
-  //   api.apiAuthorsGet().then(setAuthors).catch(console.error);
-  // }, []);
   useEffect(() => {
     authorService.apiAuthorsGet().then(setAuthors).catch(console.error);
   }, []);
@@ -77,11 +72,28 @@ export default function DropDownAuthors() {
           fill
           className="object-contain"
         />
-
+        {/* 
         <button
           onClick={(e) => {
             e.stopPropagation();
             setOpen((v) => !v);
+            setSearch("");
+          }}
+          
+          className="absolute pointer-events-auto inset-0 flex justify-center items-end mb-[56px] z-10 focus:outline-none"
+        >
+          <span className="text-[#F5F3EE]">Автори</span>
+        </button> */}
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+
+            if (open) {
+              router.push("/authors");
+              return;
+            }
+
+            setOpen(true);
             setSearch("");
           }}
           className="absolute pointer-events-auto inset-0 flex justify-center items-end mb-[56px] z-10 focus:outline-none"
@@ -134,7 +146,7 @@ export default function DropDownAuthors() {
                 displayedAuthors.map((a) => (
                   <Link
                     key={a.id}
-                    href={`/products?authorId=${a.id}`}
+                    href={`/authors/${a.id}`}
                     onClick={() => setOpen(false)}
                     className={`
     flex

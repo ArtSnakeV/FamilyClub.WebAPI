@@ -15,7 +15,7 @@ import FilterDropdown from "./FilterDropdown";
 import ebookIcon from "@/public/images/userProfile/mobile-button-solid-full 1.png";
 import audioIcon from "@/public/images/userProfile/volume-solid-full 1.png";
 import printIcon from "@/public/images/userProfile/Паперова.svg";
-import { useFavorites } from "../hooks/useFavorites";
+import { useFavorites } from "../../../../lib/hooks/useFavorites";
 import { useMyBooks } from "../hooks/useMyBooks";
 
 type Props = {
@@ -102,7 +102,7 @@ export default function UserSideBArProfile({
   // return (
   const sidebar = (
     <div
-      className="flex fixed flex-col"
+      className="hidden md:flex fixed flex-col"
       style={{
         width: "370px", height: "900px",
         position: "fixed",

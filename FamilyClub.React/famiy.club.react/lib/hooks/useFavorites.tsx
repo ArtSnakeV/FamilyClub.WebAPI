@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { favoriteService } from "@/lib/api/services";
+import { getAuthToken } from "@/lib/auth/tokenStorage";
 
 export type FavoriteBook = {
     id: number;
@@ -16,7 +17,7 @@ export function useFavorites(userId: string | undefined) {
     useEffect(() => {
         if (!userId) return;
 
-        const token = localStorage.getItem("token");
+        const token = getAuthToken();
         if (!token) return;
 
         setLoadingFavorites(true);
@@ -38,18 +39,16 @@ export function useFavorites(userId: string | undefined) {
             .finally(() => setLoadingFavorites(false));
     }, [userId]);
     const toggleFavorite = useCallback(async (productId: number) => {
-        const token = localStorage.getItem("token");
+        const token = getAuthToken();
         if (!token) return;
 
-        // Читаємо актуальний стан, не з closure
-        let wasAlreadyFav = false;
+        const wasAlreadyFav = favorites.some((f) => f.id === productId);
 
-        setFavorites((prev) => {
-            wasAlreadyFav = prev.some((f) => f.id === productId);
-            return wasAlreadyFav
+        setFavorites((prev) =>
+            wasAlreadyFav
                 ? prev.filter((f) => f.id !== productId)
-                : [...prev, { id: productId, productName: null, formatIds: [] }];
-        });
+                : [...prev, { id: productId, productName: null, formatIds: [] }]
+        );
 
         try {
             if (wasAlreadyFav) {
@@ -65,14 +64,13 @@ export function useFavorites(userId: string | undefined) {
             }
         } catch (e) {
             console.error(e);
-            // rollback
             setFavorites((prev) =>
                 wasAlreadyFav
                     ? [...prev, { id: productId, productName: null, formatIds: [] }]
                     : prev.filter((f) => f.id !== productId)
             );
         }
-    }, []); // favorites не потрібен в deps
+    }, [favorites]); 
 
     return { favorites, loadingFavorites, toggleFavorite };
 }

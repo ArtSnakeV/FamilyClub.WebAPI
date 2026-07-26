@@ -136,6 +136,97 @@ namespace FamilyClub.DAL.Migrations
                     b.ToTable("MemberFavoriteProducts", (string)null);
                 });
 
+            modelBuilder.Entity("FamilyClubLibrary.ActionLog", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Action")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("action");
+
+                    b.Property<string>("ClubMemberId")
+                        .HasMaxLength(450)
+                        .HasColumnType("character varying(450)")
+                        .HasColumnName("club_member_id");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<string>("Details")
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)")
+                        .HasColumnName("details");
+
+                    b.Property<string>("IpAddress")
+                        .HasMaxLength(45)
+                        .HasColumnType("character varying(45)")
+                        .HasColumnName("ip_address");
+
+                    b.Property<string>("Level")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)")
+                        .HasColumnName("level");
+
+                    b.Property<string>("Module")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("module");
+
+                    b.HasKey("Id")
+                        .HasName("pk_action_logs");
+
+                    b.HasIndex("ClubMemberId")
+                        .HasDatabaseName("ix_action_logs_club_member_id");
+
+                    b.ToTable("action_logs", (string)null);
+                });
+
+            modelBuilder.Entity("FamilyClubLibrary.ActionLogArchive", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<string>("PayloadJson")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("payload_json");
+
+                    b.Property<DateTime>("PeriodFromUtc")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("period_from_utc");
+
+                    b.Property<DateTime>("PeriodToUtc")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("period_to_utc");
+
+                    b.Property<int>("RecordCount")
+                        .HasColumnType("integer")
+                        .HasColumnName("record_count");
+
+                    b.HasKey("Id")
+                        .HasName("pk_action_log_archives");
+
+                    b.ToTable("action_log_archives", (string)null);
+                });
+
             modelBuilder.Entity("FamilyClubLibrary.AgeRestriction", b =>
                 {
                     b.Property<int>("Id")
@@ -187,6 +278,61 @@ namespace FamilyClub.DAL.Migrations
                         .HasName("pk_authors");
 
                     b.ToTable("authors", (string)null);
+                });
+
+            modelBuilder.Entity("FamilyClubLibrary.BlockReason", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .HasColumnType("text")
+                        .HasColumnName("description");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("name");
+
+                    b.HasKey("Id")
+                        .HasName("pk_block_reasons");
+
+                    b.ToTable("block_reasons", (string)null);
+                });
+
+            modelBuilder.Entity("FamilyClubLibrary.BlockedIp", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<string>("IpAddress")
+                        .IsRequired()
+                        .HasMaxLength(45)
+                        .HasColumnType("character varying(45)")
+                        .HasColumnName("ip_address");
+
+                    b.Property<string>("Reason")
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)")
+                        .HasColumnName("reason");
+
+                    b.HasKey("Id")
+                        .HasName("pk_blocked_ips");
+
+                    b.ToTable("blocked_ips", (string)null);
                 });
 
             modelBuilder.Entity("FamilyClubLibrary.BookSize", b =>
@@ -310,6 +456,10 @@ namespace FamilyClub.DAL.Migrations
                         .HasColumnType("bytea")
                         .HasColumnName("avatar_data");
 
+                    b.Property<int?>("BlockReasonId")
+                        .HasColumnType("integer")
+                        .HasColumnName("block_reason_id");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("text")
@@ -327,6 +477,18 @@ namespace FamilyClub.DAL.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("boolean")
                         .HasColumnName("email_confirmed");
+
+                    b.Property<DateTimeOffset?>("LockedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("locked_at");
+
+                    b.Property<string>("LockedById")
+                        .HasColumnType("text")
+                        .HasColumnName("locked_by_id");
+
+                    b.Property<string>("LockoutComment")
+                        .HasColumnType("text")
+                        .HasColumnName("lockout_comment");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("boolean")
@@ -381,6 +543,12 @@ namespace FamilyClub.DAL.Migrations
 
                     b.HasKey("Id")
                         .HasName("pk_asp_net_users");
+
+                    b.HasIndex("BlockReasonId")
+                        .HasDatabaseName("ix_asp_net_users_block_reason_id");
+
+                    b.HasIndex("LockedById")
+                        .HasDatabaseName("ix_asp_net_users_locked_by_id");
 
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
@@ -642,6 +810,108 @@ namespace FamilyClub.DAL.Migrations
                     b.ToTable("order_items", (string)null);
                 });
 
+            modelBuilder.Entity("FamilyClubLibrary.PlatformSettings", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("AllowedFileFormats")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)")
+                        .HasColumnName("allowed_file_formats");
+
+                    b.Property<string>("BannerContentType")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("banner_content_type");
+
+                    b.Property<string>("BannerData")
+                        .HasColumnType("text")
+                        .HasColumnName("banner_data");
+
+                    b.Property<int>("BooksPerPage")
+                        .HasColumnType("integer")
+                        .HasColumnName("books_per_page");
+
+                    b.Property<string>("CompanyAddress")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)")
+                        .HasColumnName("company_address");
+
+                    b.Property<string>("CompanyName")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)")
+                        .HasColumnName("company_name");
+
+                    b.Property<string>("IconContentType")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("icon_content_type");
+
+                    b.Property<string>("IconData")
+                        .HasColumnType("text")
+                        .HasColumnName("icon_data");
+
+                    b.Property<string>("ImageResizeMode")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("image_resize_mode");
+
+                    b.Property<string>("LogoContentType")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("logo_content_type");
+
+                    b.Property<string>("LogoData")
+                        .HasColumnType("text")
+                        .HasColumnName("logo_data");
+
+                    b.Property<string>("MaintenanceMessage")
+                        .IsRequired()
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)")
+                        .HasColumnName("maintenance_message");
+
+                    b.Property<bool>("MaintenanceMode")
+                        .HasColumnType("boolean")
+                        .HasColumnName("maintenance_mode");
+
+                    b.Property<int>("MaxFileSizeMb")
+                        .HasColumnType("integer")
+                        .HasColumnName("max_file_size_mb");
+
+                    b.Property<string>("Slogan")
+                        .HasMaxLength(300)
+                        .HasColumnType("character varying(300)")
+                        .HasColumnName("slogan");
+
+                    b.Property<string>("SupportEmail")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)")
+                        .HasColumnName("support_email");
+
+                    b.Property<string>("SupportPhone")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("support_phone");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("updated_at");
+
+                    b.HasKey("Id")
+                        .HasName("pk_platform_settings");
+
+                    b.ToTable("platform_settings", (string)null);
+                });
+
             modelBuilder.Entity("FamilyClubLibrary.Product", b =>
                 {
                     b.Property<int>("Id")
@@ -785,6 +1055,10 @@ namespace FamilyClub.DAL.Migrations
                     b.Property<DateTime?>("EndDate")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("end_date");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text")
+                        .HasColumnName("name");
 
                     b.Property<DateTime?>("StartDate")
                         .HasColumnType("timestamp with time zone")
@@ -1248,6 +1522,16 @@ namespace FamilyClub.DAL.Migrations
                         .HasConstraintName("fk_member_favorite_products_asp_net_users_favorited_by_id");
                 });
 
+            modelBuilder.Entity("FamilyClubLibrary.ActionLog", b =>
+                {
+                    b.HasOne("FamilyClubLibrary.ClubMember", "ClubMember")
+                        .WithMany()
+                        .HasForeignKey("ClubMemberId")
+                        .HasConstraintName("fk_action_logs_users_club_member_id");
+
+                    b.Navigation("ClubMember");
+                });
+
             modelBuilder.Entity("FamilyClubLibrary.CartItem", b =>
                 {
                     b.HasOne("FamilyClubLibrary.Cart", "Cart")
@@ -1267,6 +1551,25 @@ namespace FamilyClub.DAL.Migrations
                     b.Navigation("Cart");
 
                     b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("FamilyClubLibrary.ClubMember", b =>
+                {
+                    b.HasOne("FamilyClubLibrary.BlockReason", "BlockReason")
+                        .WithMany("ClubMembers")
+                        .HasForeignKey("BlockReasonId")
+                        .OnDelete(DeleteBehavior.SetNull)
+                        .HasConstraintName("fk_asp_net_users_block_reasons_block_reason_id");
+
+                    b.HasOne("FamilyClubLibrary.ClubMember", "LockedBy")
+                        .WithMany()
+                        .HasForeignKey("LockedById")
+                        .OnDelete(DeleteBehavior.SetNull)
+                        .HasConstraintName("fk_asp_net_users_asp_net_users_locked_by_id");
+
+                    b.Navigation("BlockReason");
+
+                    b.Navigation("LockedBy");
                 });
 
             modelBuilder.Entity("FamilyClubLibrary.Complaint", b =>
@@ -1517,6 +1820,11 @@ namespace FamilyClub.DAL.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_product_translators_translator_translators_id");
+                });
+
+            modelBuilder.Entity("FamilyClubLibrary.BlockReason", b =>
+                {
+                    b.Navigation("ClubMembers");
                 });
 
             modelBuilder.Entity("FamilyClubLibrary.Cart", b =>

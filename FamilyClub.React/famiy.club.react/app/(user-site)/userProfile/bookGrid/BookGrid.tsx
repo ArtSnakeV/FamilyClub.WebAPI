@@ -6,7 +6,7 @@ import { useEffect, useMemo, useState } from "react";
 import { authorService, reviewService } from "@/lib/api/services";
 import { useRouter } from "next/navigation";
 import { useCart } from "@/lib/hooks/useCart";
-import { FavoriteBook } from "../hooks/useFavorites";
+import { FavoriteBook } from "@/lib/hooks/useFavorites";
 import FormatBadge from "../section/FormatBadge";
 
 type Props = {

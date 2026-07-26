@@ -1,3 +1,4 @@
+using FamilyClub.BLL.DTOs.ActionLog;
 using FamilyClub.BLL.DTOs.Product;
 using FamilyClub.BLL.Interfaces;
 using FamilyClub.DAL.EF;
@@ -13,11 +14,18 @@ public class ProductService : IProductService
     private readonly IProductRepository _productRepository;
     private readonly IUnitOfWork _unitOfWork;
 	private readonly FamilyClubContext _context;
-	public ProductService(IProductRepository productRepository, IUnitOfWork unitOfWork, FamilyClubContext context)
+	private readonly IActionLogService _actionLog;
+
+	public ProductService(
+		IProductRepository productRepository,
+		IUnitOfWork unitOfWork,
+		FamilyClubContext context,
+		IActionLogService actionLog)
     {
         _productRepository = productRepository;
         _unitOfWork = unitOfWork;
 		_context = context;
+		_actionLog = actionLog;
     }
 
     public async Task<IEnumerable<ProductDto>> GetAllAsync(CancellationToken cancellationToken = default)
@@ -151,6 +159,13 @@ public class ProductService : IProductService
 
 		await _productRepository.AddAsync(product, cancellationToken);
 		await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+		await SafeLogAsync(
+			ActionLogCodes.Actions.Created,
+			ActionLogCodes.Modules.Books,
+			$"Створено книгу «{product.ProductName}», Id={product.Id}",
+			ActionLogCodes.Levels.Success,
+			cancellationToken);
 
 		return MapToDto(product);
 	}
@@ -290,10 +305,36 @@ public class ProductService : IProductService
             return false;
         }
 
+		var title = product.ProductName;
         _productRepository.Delete(product);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+		await SafeLogAsync(
+			ActionLogCodes.Actions.Deleted,
+			ActionLogCodes.Modules.Books,
+			$"Видалено книгу «{title}», Id={id}",
+			ActionLogCodes.Levels.Warning,
+			cancellationToken);
+
         return true;
     }
+
+	private async Task SafeLogAsync(
+		string action,
+		string module,
+		string details,
+		string level,
+		CancellationToken cancellationToken)
+	{
+		try
+		{
+			await _actionLog.LogAsync(action, module, details, level, cancellationToken: cancellationToken);
+		}
+		catch
+		{
+			// Журнал не повинен ламати основну операцію
+		}
+	}
 
     private async Task<ProductDto?> UploadImagesAsync(ProductDto? productDto, List<IFormFile> imageFiles)
     {

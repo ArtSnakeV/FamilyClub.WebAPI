@@ -642,7 +642,7 @@ No authorization required
 
 ## apiClubMemberIdLockPut
 
-> apiClubMemberIdLockPut(id)
+> apiClubMemberIdLockPut(id, lockUserDto)
 
 
 
@@ -662,6 +662,8 @@ async function example() {
   const body = {
     // string
     id: id_example,
+    // LockUserDto (optional)
+    lockUserDto: ...,
   } satisfies ApiClubMemberIdLockPutRequest;
 
   try {
@@ -682,6 +684,7 @@ example().catch(console.error);
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **id** | `string` |  | [Defaults to `undefined`] |
+| **lockUserDto** | [LockUserDto](LockUserDto.md) |  | [Optional] |
 
 ### Return type
 
@@ -693,7 +696,7 @@ No authorization required
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: `application/json`, `text/json`, `application/*+json`
 - **Accept**: Not defined
 
 

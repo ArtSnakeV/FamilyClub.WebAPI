@@ -3,6 +3,7 @@
 export * from './AgeRestrictionsApi';
 export * from './AuthClubMemberApi';
 export * from './AuthorsApi';
+export * from './BlockReasonsApi';
 export * from './BookSizesApi';
 export * from './CartsApi';
 export * from './CategoriesApi';

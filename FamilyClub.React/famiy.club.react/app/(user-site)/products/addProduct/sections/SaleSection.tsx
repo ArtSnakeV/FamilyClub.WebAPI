@@ -2,6 +2,8 @@ import { ProductDto } from "@/app/(user-site)/products/addProduct/types";
 import { NumberInput } from "@/app/(user-site)/products/addProduct/ui/NumberInput";
 import AvailabilitySelector from "@/app/(user-site)/products/addProduct/AvailabilitySelector";
 import ButtonSubmitAddProduct from "@/app/(user-site)/products/addProduct/ButtonSubmitAddProduct";
+import { usePromotions } from "../hooks/usePromotions";
+import PromotionSelectForm from "../PromotionSelectForm";
 
 type Props = {
   form: ProductDto;
@@ -20,58 +22,88 @@ export function SaleSection({
   onSaveDraft,
   onCancel,
 }: Props) {
+
+  const { promotions } = usePromotions();
+
   return (
-    <div className="w-full h-[480px] flex relative -mt-[30px] text-[var(--color-white)]">
-      <div
-        className="w-full h-full bg-cover bg-center"
-        style={{
-          backgroundImage: "url('/images/addProducts/Rectangle 315.svg')",
-        }}
-      >
-        <div className="w-full h-full flex flex-col items-center -ml-[2px] mt-[38px]">
-          <div className="relative w-[260px] h-[116px] -ml-[40px]">
-            <img
-              src="/images/addProducts/Rectangle 304.svg"
-              alt=""
-              className="w-full h-full"
-              style={{ objectFit: "fill" }}
-            />
-            <div className="absolute inset-0 -mt-[14px] flex items-center ml-[40px] justify-start">
-              <p className="font-['Roboto_Mono'] font-semibold text-[20px] leading-[100%] tracking-[-0.011em]">
-                Продаж та наявність
-              </p>
+    <div className="w-full h-[600px] flex relative -mt-[110px] text-[var(--color-white)]">
+      <div className="w-full h-[600px] relative">
+        <img src="/images/addProducts/Rectangle 315.png"
+          alt=""
+          aria-hidden
+          className="absolute inset-0 w-full h-[600px] pointer-events-none"
+          style={{ objectFit: "fill" }}
+        />
+        <div className="relative z-10 w-full h-full flex flex-col items-center -ml-[2px] mt-[38px]">
+          <div className="w-full h-full flex flex-col items-center -ml-[2px] mt-[6px]">
+            <div className="relative w-[260px] h-[116px] -ml-[40px]">
+              <img
+                src="/images/addProducts/Rectangle 304.svg"
+                alt=""
+                className="w-full h-full"
+                style={{ objectFit: "fill" }}
+              />
+              <div className="absolute inset-0 -mt-[14px] flex items-center ml-[40px] justify-start">
+                <p className="font-['Roboto_Mono'] font-semibold text-[20px] leading-[100%] tracking-[-0.011em]">
+                  Продаж та наявність
+                </p>
+              </div>
             </div>
-          </div>
 
-          <NumberInput
-            label="Ціна *"
-            value={form.price}
-            onChange={(v) => setField("price", v)}
-            className="w-[200px] text-[var(--color-black)]"
-          />
+            <NumberInput
+              label="Ціна *"
+              value={form.price}
+              onChange={(v) => setField("price", v)}
+              className="w-[200px] text-[var(--color-black)]"
+            />
 
-          <NumberInput
-            label="Знижка *"
+            {/* <NumberInput
+            label="Ціна зі знижкою *"
             placeholder="0"
             value={form.discountPrice}
             onChange={(v) => setField("discountPrice", v)}
             className="w-[200px] mt-4"
-          />
+          /> */}
+            <div className="flex flex-col items-center w-[200px] mt-4">
+              <NumberInput
+                label="Ціна зі знижкою *"
+                placeholder="0"
+                value={form.discountPrice}
+                onChange={(v) => setField("discountPrice", v)}
+                className="w-[200px] mt-4  text-[var(--color-black)]"
+              />
+              {form.discountPrice != null &&
+                form.price != null &&
+                form.discountPrice >= form.price && (
+                  <p className="text-red-400 text-xs mt-1">
+                    Ціна зі знижкою має бути меншою за звичайну ціну
+                  </p>
+                )}
+            </div>
+            <div className="flex flex-col items-center w-[200px] mt-4">
+              <PromotionSelectForm
+                promotions={promotions}
+                value={form.promotionId}
+                price={form.price}
+                onChange={(id) => setField("promotionId", id)}
+                onDiscountPriceChange={(price) => setField("discountPrice", price)}
+              />
+            </div>
+            <div className="flex flex-col items-center w-[200px] mt-0">
+              <AvailabilitySelector
+                value={form.availability}
+                onChange={(value) => setField("availability", value)}
+              />
+            </div>
 
-          <div className="flex flex-col items-center w-[200px] mt-0">
-            <AvailabilitySelector
-              value={form.availability}
-              onChange={(value) => setField("availability", value)}
-            />
-          </div>
-
-          <div className="relative flex flex-col items-center mt-[120px]">
-            <ButtonSubmitAddProduct
-              loading={loading}
-              onPublish={onPublish}
-              onSaveDraft={onSaveDraft}
-              onCancel={onCancel}
-            />
+            <div className="relative flex flex-col items-center mt-[70px]">
+              <ButtonSubmitAddProduct
+                loading={loading}
+                onPublish={onPublish}
+                onSaveDraft={onSaveDraft}
+                onCancel={onCancel}
+              />
+            </div>
           </div>
         </div>
       </div>

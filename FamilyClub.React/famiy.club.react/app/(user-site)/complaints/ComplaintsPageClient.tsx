@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { useCurrentUser } from "@/app/(user-site)/userProfile/hooks/useCurrentUser";
+import { getAuthUserId } from "@/lib/auth/tokenStorage";
 import { useComplaintForm } from "./hooks/useComplaintForm";
 import { useComplaintImages } from "./hooks/useComplaintImages";
 import { useOrderContext } from "./hooks/useOrderContext";
@@ -37,7 +38,7 @@ export default function ComplaintsPageClient() {
 
     const clubMemberId =
       user?.id ??
-      (typeof window !== "undefined" ? localStorage.getItem("userId") : null);
+      (typeof window !== "undefined" ? getAuthUserId() : null);
 
     if (!clubMemberId) {
       alert("Увійдіть у систему, щоб подати скаргу.");

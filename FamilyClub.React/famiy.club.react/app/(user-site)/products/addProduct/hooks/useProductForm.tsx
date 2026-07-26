@@ -21,6 +21,7 @@ const initialDto: ProductDto = {
   ageRestrictionIds: [],
   price: undefined,
   discountPrice: undefined,
+  promotionId: undefined,
   isbn: undefined,
   publishingYear: undefined,
 };

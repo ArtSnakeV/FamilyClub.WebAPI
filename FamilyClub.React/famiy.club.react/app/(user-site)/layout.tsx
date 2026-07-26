@@ -7,6 +7,7 @@ import Footer from "@/app/(user-site)/layout/footer/Footer";
 import PresenceHeartbeatMount from "../(admin-site)/admin/users/section/PresenceHeartbeatMount";
 import MobileHeader from "./layout/header/MobileHeader";
 import MobileBottomNav from "./layout/header/MobileBottomNav";
+import UserSiteProviders from "./layout/UserSiteProviders";
 
 // import "flag-icons/css/flag-icons.min.css";
 const sourceSans = Source_Sans_3({
@@ -42,6 +43,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html lang="uk" className={`${sourceSans.variable} ${robotoMono.variable} ${lora.variable} ${inter.variable}`} suppressHydrationWarning>
       <body className="antialiased bg-background text-foreground font-sans overflow-x-hidden flex flex-col min-h-screen">
+        <UserSiteProviders>
         <PresenceHeartbeatMount />
         <MobileHeader />
         <header className="bg-[var(--background-main)] w-full hidden md:flex flex-row overflow-x-0 fixed z-30 h-[62px] shadow-[0px_0px_15px_0px_#24242499]">
@@ -61,6 +63,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <Footer />
         </div>
         <MobileBottomNav />
+        </UserSiteProviders>
       </body>
     </html>
   );

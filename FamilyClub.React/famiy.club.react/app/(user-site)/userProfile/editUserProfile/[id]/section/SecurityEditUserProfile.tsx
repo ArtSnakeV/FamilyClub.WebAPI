@@ -1,7 +1,8 @@
 "use client";
 
-import { useRef, useState } from "react";
-import { apiBasePath } from "@/lib/api/services";
+import { useState } from "react";
+import { usePasswordChange } from "@/lib/hooks/usePasswordChange";
+import PasswordToggleButton from "../ui/PasswordToggleButton";
 
 type Props = {
     userId: string;
@@ -9,47 +10,21 @@ type Props = {
 };
 
 export default function SecurityEditUserProfile({ userId, userEmail }: Props) {
-    const [currentPassword, setCurrentPassword] = useState("");
-    const [newPassword, setNewPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("");
+    const {
+        currentPassword,
+        setCurrentPassword,
+        newPassword,
+        setNewPassword,
+        confirmPassword,
+        setConfirmPassword,
+        submitting,
+        error,
+        handleChangePassword,
+    } = usePasswordChange(userId);
 
-    const handleChangePassword = async () => {
-        if (newPassword !== confirmPassword) {
-            alert("Паролі не співпадають");
-            return;
-        }
-        if (!newPassword || !currentPassword) {
-            alert("Заповніть всі поля");
-            return;
-        }
-
-        const token = localStorage.getItem("token");
-        // const res = await fetch(`https://localhost:7069/api/ClubMember/${userId}/change-password`, {
-        //     method: "PUT",
-        //     headers: {
-        //         "Content-Type": "application/json",
-        //         Authorization: `Bearer ${token}`,
-        //     },
-        //     body: JSON.stringify({ currentPassword, newPassword }),
-        // });
-        const res = await fetch(`${apiBasePath}/api/ClubMember/${userId}/change-password`, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify({ currentPassword, newPassword }),
-        });
-
-        if (res.ok) {
-            alert("Пароль змінено успішно");
-            setCurrentPassword("");
-            setNewPassword("");
-            setConfirmPassword("");
-        } else {
-            alert("Помилка — перевірте поточний пароль");
-        }
-    };
+    const [showCurrentPassword, setShowCurrentPassword] = useState(false);
+    const [showNewPassword, setShowNewPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
     const inputClass = "w-full h-[52px] px-4 rounded-[8px] border border-gray-200 bg-[#f5f5f5] text-[15px] outline-none focus:border-[#005B33]";
     const inputStyle = { boxShadow: "0px 0px 10px 0px #00000040" };
@@ -85,37 +60,55 @@ export default function SecurityEditUserProfile({ userId, userEmail }: Props) {
 
                 <div className="flex flex-col gap-1">
                     <label className="text-[20px] font-medium">Поточний пароль</label>
-                    <input
-                        type="password"
-                        value={currentPassword}
-                        onChange={(e) => setCurrentPassword(e.target.value)}
-                        className={inputClass}
-                        style={inputStyle}
-                    />
+                    <div className="relative">
+                        <input
+                            type={showCurrentPassword ? "text" : "password"}
+                            value={currentPassword}
+                            onChange={(e) => setCurrentPassword(e.target.value)}
+                            className={inputClass}
+                            style={inputStyle}
+                        />
+                        <PasswordToggleButton
+                            show={showCurrentPassword}
+                            onToggle={() => setShowCurrentPassword((p) => !p)}
+                        />
+                    </div>
                 </div>
 
                 <hr className="border-black-300 mt-6" />
 
                 <div className="flex flex-col gap-1 mt-8">
                     <label className="text-[20px] font-medium">Новий пароль</label>
-                    <input
-                        type="password"
-                        value={newPassword}
-                        onChange={(e) => setNewPassword(e.target.value)}
-                        className={inputClass}
-                        style={inputStyle}
-                    />
+                    <div className="relative">
+                        <input
+                            type={showNewPassword ? "text" : "password"}
+                            value={newPassword}
+                            onChange={(e) => setNewPassword(e.target.value)}
+                            className={inputClass}
+                            style={inputStyle}
+                        />
+                        <PasswordToggleButton
+                            show={showNewPassword}
+                            onToggle={() => setShowNewPassword((p) => !p)}
+                        />
+                    </div>
                 </div>
 
                 <div className="flex flex-col gap-1">
                     <label className="text-[20px] font-medium">Підтвердити пароль</label>
-                    <input
-                        type="password"
-                        value={confirmPassword}
-                        onChange={(e) => setConfirmPassword(e.target.value)}
-                        className={inputClass}
-                        style={inputStyle}
-                    />
+                    <div className="relative">
+                        <input
+                            type={showConfirmPassword ? "text" : "password"}
+                            value={confirmPassword}
+                            onChange={(e) => setConfirmPassword(e.target.value)}
+                            className={inputClass}
+                            style={inputStyle}
+                        />
+                        <PasswordToggleButton
+                            show={showConfirmPassword}
+                            onToggle={() => setShowConfirmPassword((p) => !p)}
+                        />
+                    </div>
                 </div>
 
                 {/* Кнопки */}
@@ -129,14 +122,14 @@ export default function SecurityEditUserProfile({ userId, userEmail }: Props) {
                         alt="ic"
                         className="w-[20px] h-[20px] object-contain"
                     />
-                    Змінити пароль
+                    {submitting ? "Зміна..." : "Змінити пароль"}
                 </button>
 
                 <button
                     type="button"
                     className="flex items-center justify-center w-full h-[52px] border-2 border-[#005B33] text-[#005B33] text-[20px] font-semibold rounded-[8px] hover:bg-[#f0f9f4] transition-colors"
                 >
-                    Двофакторна автентифікаціяа
+                    Двофакторна автентифікація
                 </button>
             </div>
         </div>

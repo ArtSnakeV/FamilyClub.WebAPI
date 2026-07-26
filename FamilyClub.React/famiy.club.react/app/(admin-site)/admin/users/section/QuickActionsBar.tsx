@@ -1,21 +1,24 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 interface Props {
     onAddManager?: () => void;
-    onToggleBlockedFilter?: () => void;
+    // onToggleBlockedFilter?: () => void;
     onExportReport?: () => void;
-    isBlockedFilterActive?: boolean;
+    // isBlockedFilterActive?: boolean;
 }
 
 export default function QuickActionsBar({
     onAddManager,
-    onToggleBlockedFilter,
+    // onToggleBlockedFilter,
     onExportReport,
-    isBlockedFilterActive,
+    // isBlockedFilterActive,
 }: Props) {
     const [isOpen, setIsOpen] = useState(true);
+    const router = useRouter();
+
 
     return (
         <div className="fixed bottom-0 left-10 w-full flex flex-col items-center z-10 pointer-events-none">
@@ -68,7 +71,7 @@ export default function QuickActionsBar({
                         <button
                             type="button"
                             onClick={onAddManager}
-                            className="flex items-center gap-2 text-[var(--color-green)] h-[50px] w-[245px] px-4 rounded-[9px] border border-[var(--color-green)]
+                            className="flex flex-row items-center justify-around gap-2 text-[var(--color-green)] h-[50px] w-[302px] px-4 rounded-[9px] border border-[var(--color-green)]
                             text-[20px]  font-medium hover:bg-gray-50 transition"
                         >
                             <img
@@ -76,10 +79,10 @@ export default function QuickActionsBar({
                                 alt=""
                                 className="w-7 h-7 object-contain"
                             />
-                            Додати менеджера
+                            Додати користувача
                         </button>
 
-                        <button
+                        {/* <button
                             type="button"
                             onClick={onToggleBlockedFilter}
                             className={`flex items-center gap-2 h-[50px] text-[var(--color-green)] w-[302px] px-4 rounded-[9px] border text-[20px] font-medium
@@ -87,6 +90,18 @@ export default function QuickActionsBar({
                                     ? "border-[var(--color-green)] bg-[var(--color-green)]/10 text-[var(--color-green)]"
                                     : "border-[var(--color-green)] hover:bg-gray-50"
                                 }`}
+                        >
+                            <img
+                                src="/images/usersPageAdmin/ban-solid-full.png"
+                                alt=""
+                                className="w-7 h-8 object-contain"
+                            />
+                            Заблоковані користувачі
+                        </button> */}
+                        <button
+                            type="button"
+                            onClick={() => router.push("/admin/users/blockedUsers")}
+                            className="flex items-center gap-2 h-[50px] text-[var(--color-green)] w-[302px] px-4 rounded-[9px] border border-[var(--color-green)] text-[20px] font-medium hover:bg-gray-50 transition"
                         >
                             <img
                                 src="/images/usersPageAdmin/ban-solid-full.png"
