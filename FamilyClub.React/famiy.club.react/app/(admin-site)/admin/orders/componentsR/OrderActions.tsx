@@ -27,7 +27,7 @@ export default function OrderActions({ order, onAction }: OrderActionsProps) {
     const disabled = !order;
 
     return (
-        <div className="relative w-[330px] items-center max-w-[400px] flex flex-col">
+        <div className="relative w-[330px] items-center max-w-[400px] mt-4 flex flex-col">
             <img
                 src="/images/ordersAdminPage/Rectangle 705.png"
                 className="absolute"

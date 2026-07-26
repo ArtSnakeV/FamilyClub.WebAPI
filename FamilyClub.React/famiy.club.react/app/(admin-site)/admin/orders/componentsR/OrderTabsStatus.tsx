@@ -18,7 +18,7 @@ export default function OrderTabsStatus<T extends string>({
     onChange,
 }: OrderTabsStatusProps<T>) {
     return (
-        <div className="w-[1200px] max-w-full h-[73px] mt-[8vh] overflow-hidden flex items-center flex-row justify-left gap-2"
+        <div className="w-[1300px] max-w-full h-[73px] mt-[8vh] overflow-hidden flex items-center flex-row justify-left gap-2"
             style={{
                 backgroundImage: "url('/images/blockedUsersPageAdmin/Rectangle 56.png')",
                 backgroundSize: "100% 100%",
