@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { CategoryDto } from "@/lib/api/generated";
 import { useState } from "react";
+import { useSearchParams } from "next/navigation";
 
 type Props = {
   categories: CategoryDto[];
@@ -19,6 +20,7 @@ export default function FilterDropdown({
   categories, ebookSelected, audioSelected, onClose,
 }: Props) {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const visibleCategories = categories.slice(0, ITEMS_PER_PAGE);
 
   const currentIds = typeof window !== "undefined"
@@ -27,7 +29,7 @@ export default function FilterDropdown({
     : [];
 
   const handleCategoryToggle = (id: number) => {
-    const params = new URLSearchParams(window.location.search);
+    const params = new URLSearchParams(searchParams.toString());
     const updated = currentIds.includes(id)
       ? currentIds.filter((x) => x !== id)
       : [...currentIds, id];

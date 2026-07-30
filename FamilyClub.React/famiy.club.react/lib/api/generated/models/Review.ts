@@ -57,7 +57,7 @@ export interface Review {
      * @type {string}
      * @memberof Review
      */
-    userId: string | null;
+    userId?: string | null;
     /**
      * 
      * @type {ClubMember}
@@ -94,7 +94,6 @@ export interface Review {
  * Check if a given object implements the Review interface.
  */
 export function instanceOfReview(value: object): value is Review {
-    if (!('userId' in value) || value['userId'] === undefined) return false;
     return true;
 }
 
@@ -111,7 +110,7 @@ export function ReviewFromJSONTyped(json: any, ignoreDiscriminator: boolean): Re
         'id': json['id'] == null ? undefined : json['id'],
         'productId': json['productId'] == null ? undefined : json['productId'],
         'product': json['product'] == null ? undefined : ProductFromJSON(json['product']),
-        'userId': json['userId'],
+        'userId': json['userId'] == null ? undefined : json['userId'],
         'clubMember': json['clubMember'] == null ? undefined : ClubMemberFromJSON(json['clubMember']),
         'rating': json['rating'] == null ? undefined : json['rating'],
         'comment': json['comment'] == null ? undefined : json['comment'],
