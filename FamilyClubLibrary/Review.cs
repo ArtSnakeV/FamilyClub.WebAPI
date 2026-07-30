@@ -13,10 +13,12 @@ namespace FamilyClubLibrary
         public int ProductId { get; set; } // Foreign key to Product
         public Product Product { get; set; } = default!; // Added naviagation
 
-        public required string UserId { get; set; }
+        //public required string UserId { get; set; }
+        public string? UserId { get; set; }   // nullable в БД — переживає видалення юзера
 
         [ForeignKey(nameof(UserId))]
-        public ClubMember ClubMember { get; set; } = default!; // Added navigation
+        //public ClubMember ClubMember { get; set; } = default!; // Added navigation
+        public ClubMember? ClubMember { get; set; }
 
         [Range(0, 5)]
         public double Rating { get; set; } = 5; // Maximum by default

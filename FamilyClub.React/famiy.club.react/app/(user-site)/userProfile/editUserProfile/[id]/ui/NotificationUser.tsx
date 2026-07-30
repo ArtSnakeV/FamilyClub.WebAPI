@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+
 type NotificationState = {
     comments: boolean;
     likes: boolean;
@@ -29,7 +31,7 @@ export default function NotificationUser({ notifications, setNotifications }: Pr
             {ITEMS.map(({ key, name, icon }) => (
                 <div key={key} className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                        <img src={icon} alt={name} className="w-[30px] h-[30px] object-contain" />
+                        <Image src={icon} alt={name} width={30} height={30} className="object-contain" />
                         <span className="text-[18px]">{name}</span>
                     </div>
                     <button

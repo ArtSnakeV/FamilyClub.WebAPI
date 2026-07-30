@@ -152,6 +152,5 @@ export default function EditUserClient({ id }: { id: string }) {
                 </div>
             </div>
         </div>
-        //</div>
     )
 }

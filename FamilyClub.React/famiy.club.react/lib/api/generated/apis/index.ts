@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+export * from './ActionLogsApi';
 export * from './AgeRestrictionsApi';
 export * from './AuthClubMemberApi';
 export * from './AuthorsApi';
@@ -17,6 +18,7 @@ export * from './LanguagesApi';
 export * from './NotificationsApi';
 export * from './OrderItemsApi';
 export * from './OrdersApi';
+export * from './PlatformSettingsApi';
 export * from './PresenceApi';
 export * from './ProductsApi';
 export * from './PromotionsApi';

@@ -1,3 +1,4 @@
+apis/ActionLogsApi.ts
 apis/AgeRestrictionsApi.ts
 apis/AuthClubMemberApi.ts
 apis/AuthorsApi.ts
@@ -15,6 +16,7 @@ apis/LanguagesApi.ts
 apis/NotificationsApi.ts
 apis/OrderItemsApi.ts
 apis/OrdersApi.ts
+apis/PlatformSettingsApi.ts
 apis/PresenceApi.ts
 apis/ProductsApi.ts
 apis/PromotionsApi.ts
@@ -24,6 +26,12 @@ apis/RolesClubMemberApi.ts
 apis/SeriesApi.ts
 apis/TranslatorsApi.ts
 apis/index.ts
+docs/ActionLogArchiveInfoDto.md
+docs/ActionLogArchiveResultDto.md
+docs/ActionLogDto.md
+docs/ActionLogPagedDto.md
+docs/ActionLogStatsDto.md
+docs/ActionLogsApi.md
 docs/AgeRestriction.md
 docs/AgeRestrictionDto.md
 docs/AgeRestrictionsApi.md
@@ -79,6 +87,8 @@ docs/OrderItem.md
 docs/OrderItemDTO.md
 docs/OrderItemsApi.md
 docs/OrdersApi.md
+docs/PlatformSettingsApi.md
+docs/PlatformSettingsDto.md
 docs/PresenceApi.md
 docs/Product.md
 docs/ProductDto.md
@@ -105,6 +115,11 @@ docs/TranslatorsApi.md
 docs/UpdateClaimClubMemberDto.md
 docs/UpdateClubMemberDto.md
 index.ts
+models/ActionLogArchiveInfoDto.ts
+models/ActionLogArchiveResultDto.ts
+models/ActionLogDto.ts
+models/ActionLogPagedDto.ts
+models/ActionLogStatsDto.ts
 models/AgeRestriction.ts
 models/AgeRestrictionDto.ts
 models/AssignRolesDto.ts
@@ -143,6 +158,7 @@ models/Order.ts
 models/OrderDTO.ts
 models/OrderItem.ts
 models/OrderItemDTO.ts
+models/PlatformSettingsDto.ts
 models/Product.ts
 models/ProductDto.ts
 models/ProductImage.ts

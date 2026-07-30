@@ -71,13 +71,11 @@ export default function PromotionsPage() {
     const books = useMemo(
         () =>
             allProducts.filter(
-                // (p) => p.promotionId != null && activePromotionIds.has(p.promotionId)
                 (p) =>
                     p.promotionId != null &&
                     activePromotionIds.has(p.promotionId) &&
                     (selectedPromotionId === null || p.promotionId === selectedPromotionId)
             ),
-        // [allProducts, activePromotionIds]
         [allProducts, activePromotionIds, selectedPromotionId]
     );
     //pagin
@@ -132,17 +130,6 @@ export default function PromotionsPage() {
         );
     }
 
-    // const rows: ProductDto[][] = [];
-    // if (books.length === 0) {
-    //     rows.push([], []); // порожні полиці, якщо товарів немає
-    // } else {
-    //     // for (let i = 0; i < books.length; i += 3) {
-    //     //     rows.push(books.slice(i, i + 3));
-    //     // }
-    //     for (let i = 0; i < paginatedBooks.length; i += 3) {
-    //         rows.push(paginatedBooks.slice(i, i + 3));
-    //     }
-    // }
     const rows: ProductDto[][] = [];
     for (let i = 0; i < paginatedBooks.length; i += 3) {
         rows.push(paginatedBooks.slice(i, i + 3));
@@ -154,13 +141,10 @@ export default function PromotionsPage() {
 
 
     return (
-        // <div
-        //     className="w-full mt-40 min-h-screen relative"
-        // >
         <div
             ref={shelfRef}
             key={currentPage}
-            className="transition-opacity duration-300 ease-in-out animate-[fadeIn_0.3s_ease-in-out]"
+            className="transition-opacity mt-40 duration-300 ease-in-out animate-[fadeIn_0.3s_ease-in-out]"
         >
             {activePromotionsList.length > 0 && (
                 <div
@@ -178,7 +162,6 @@ export default function PromotionsPage() {
                 >
                     <button
                         type="button"
-                        // onClick={() => setSelectedPromotionId(null)}
                         onClick={() => {
                             setSelectedPromotionId(null);
                             setCurrentPage(1);
@@ -201,7 +184,6 @@ export default function PromotionsPage() {
                         <button
                             key={p.id}
                             type="button"
-                            // onClick={() => setSelectedPromotionId(p.id!)}
                             onClick={() => {
                                 setSelectedPromotionId(p.id!);
                                 setCurrentPage(1);

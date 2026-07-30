@@ -163,6 +163,7 @@ function UserProfileContent() {
         <div className="w-[calc(100%-700px)] h-[200px] items-center ml-[400px] mt-[160px] flex absolute" >
           <InfoUserSection member={user} userId={user?.id} />
         </div>
+        
         <div className="flex relative items-start gap-0">
           <UserSideBArProfile
             categories={categories}
@@ -184,7 +185,6 @@ function UserProfileContent() {
         </div>
 
         <div className="relative w-full -mb-2 gap-0 items-center" style={{ marginTop: "360px", }}>
-          {/* <BookGrid books={shouldShowGrid ? sortedBooks : []} /> */}
           <BookGrid books={activeTab === "favorite" && loadingFavorites ? [] : getBooksForTab()}
             userId={user?.id}
             favorites={favorites}

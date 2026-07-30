@@ -17,6 +17,7 @@ import audioIcon from "@/public/images/userProfile/volume-solid-full 1.png";
 import printIcon from "@/public/images/userProfile/Паперова.svg";
 import { useFavorites } from "../../../../lib/hooks/useFavorites";
 import { useMyBooks } from "../hooks/useMyBooks";
+import Paws from "../../paws/Paws";
 
 type Props = {
   onLibrary?: () => void;
@@ -48,7 +49,6 @@ export default function UserSideBArProfile({
   const [clickBtn, setClickBtn] = useState(false);
   const { myBooks, setLoadingMyBooks } = useMyBooks(userId);
   const visibleBooks = myBooks.slice(0, 8);
-  //const visibleBooks = favorites.slice(0, 8);
   const containerRef = useRef<HTMLDivElement>(null);
   const hasEbook = (book: ProductDto) =>
     book.formatIds?.includes(1) ?? false;
@@ -99,7 +99,6 @@ export default function UserSideBArProfile({
     action?.();
   };
 
-  // return (
   const sidebar = (
     <div
       className="hidden md:flex fixed flex-col"
@@ -113,10 +112,12 @@ export default function UserSideBArProfile({
         backgroundSize: "100% 100%", backgroundPosition: "center",
       }}
     >
-
+      <Link href="/paws" className="w-[240px] h-[40px] relative ml-12 mt-14">
+        <Paws />
+      </Link>
       {/* Верхній блок */}
       <div
-        className="w-[248px] left-0 relative"
+        className="w-[248px] left-0 -mt-20 relative"
         style={{
           top: "90px", width: "340px", height: "250px",
           backgroundImage: "url('/images/userProfile/Rectangle 313.png')",

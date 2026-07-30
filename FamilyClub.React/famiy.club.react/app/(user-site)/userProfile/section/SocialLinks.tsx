@@ -3,6 +3,7 @@
 import { createPortal } from "react-dom";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 
 const SOCIALS = [
     { name: "telegram", href: "https://t.me", icon: `/images/userProfile/Vector1.png` },
@@ -63,7 +64,13 @@ export default function SocialLinks({ userId }: Props) {
         <div className="flex items-center gap-4">
             {SOCIALS.map(({ name, href, icon }) => (
                 <a key={name} href={href} target="_blank" rel="noopener noreferrer">
-                    <img src={icon} alt={name} className="w-[36px] h-[36px] object-contain cursor-pointer hover:opacity-80 transition-opacity duration-200" />
+                    <Image
+                        src={icon}
+                        alt={name}
+                        width={36}
+                        height={36}
+                        className="object-contain cursor-pointer hover:opacity-80 transition-opacity duration-200"
+                    />
                 </a>
             ))}
 
