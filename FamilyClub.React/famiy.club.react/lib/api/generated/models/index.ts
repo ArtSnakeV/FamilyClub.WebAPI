@@ -1,5 +1,10 @@
 /* tslint:disable */
 /* eslint-disable */
+export * from './ActionLogArchiveInfoDto';
+export * from './ActionLogArchiveResultDto';
+export * from './ActionLogDto';
+export * from './ActionLogPagedDto';
+export * from './ActionLogStatsDto';
 export * from './AgeRestriction';
 export * from './AgeRestrictionDto';
 export * from './AssignRolesDto';
@@ -38,6 +43,7 @@ export * from './Order';
 export * from './OrderDTO';
 export * from './OrderItem';
 export * from './OrderItemDTO';
+export * from './PlatformSettingsDto';
 export * from './Product';
 export * from './ProductDto';
 export * from './ProductImage';

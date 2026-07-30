@@ -25,9 +25,6 @@ export function useUserReviews(userId: string | undefined) {
         const token = getAuthToken();
         setLoading(true);
 
-        // fetch(`https://localhost:7069/api/Reviews/by-user/${userId}`, {
-        //     headers: { Authorization: `Bearer ${token}` },
-        // })
         fetch(`${apiBasePath}/api/Reviews/by-user/${userId}`, {
             headers: { Authorization: `Bearer ${token}` },
         })

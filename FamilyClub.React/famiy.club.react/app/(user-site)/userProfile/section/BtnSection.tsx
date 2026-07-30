@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { TabType } from "../page";
 
@@ -10,13 +9,8 @@ type Props = {
 };
 
 export default function BtnSection({ activeTab, onTabChange }: Props) {
-    // const [selected, setSelected] = useState<string | null>(null);
     const router = useRouter();
-    // const buttons = [
-    //     { label: "Мої книги", href: "/userProfile/myBooks" },
-    //     { label: "Улюблене", href: "/userProfile/favorite" },
-    //     { label: "Моя газета", href: "/userProfile/myPosts" },
-    // ];
+  
     const buttons: { label: string; tab: TabType }[] = [
         { label: "Мої книги", tab: "myBooks" },
         { label: "Улюблене", tab: "favorite" },
@@ -26,16 +20,11 @@ export default function BtnSection({ activeTab, onTabChange }: Props) {
     return (
         <div className="flex flex-row -mt-[26px] w-[1300px] h-[150px] p-0 m-0">
             {buttons.map(({ label, tab }) => {
-                //const isSelected = selected === label;
                 const isSelected = activeTab === tab;
                 return (
                     <button
                         key={label}
-                        // onClick={() => {
-                        //     //setSelected(selected === label ? null : label)
-                        //     // router.push(href);
-                        //     onTabChange(tab)
-                        // }}
+                      
                         onClick={() => {
                             if (activeTab === tab) {
                                 onTabChange(null);
