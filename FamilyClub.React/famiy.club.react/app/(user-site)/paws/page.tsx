@@ -7,36 +7,51 @@ import HowToEarnBlock from "./components/HowToEarnBlock";
 import PawsHistoryBlock from "./components/PawsHistoryBlock";
 import { usePaws } from "./hooks/usePaws";
 import ButtonReturn from "../userProfile/editUserProfile/[id]/ui/ButtonReturn";
+import { useEffect } from "react";
+import { useCurrentUser } from "../userProfile/hooks/useCurrentUser";
 
 export default function MyPawsPage() {
-  const { paws, history, discountInUah } = usePaws();
+  const { user } = useCurrentUser();
+  const { paws, history, discountInUah } = usePaws(user?.id);
+  useEffect(() => {
+    document.body.style.backgroundImage = "url('/images/authorsUserPage/Rectangle 326.png')";
+    document.body.style.backgroundSize = "cover";
+    document.body.style.backgroundAttachment = "fixed";
+    document.body.style.backgroundPosition = "center";
+    document.body.style.backgroundRepeat = "no-repeat";
 
+    return () => {
+      document.body.style.backgroundImage = "";
+      document.body.style.backgroundSize = "";
+      document.body.style.backgroundAttachment = "";
+      document.body.style.backgroundPosition = "";
+      document.body.style.backgroundRepeat = "";
+    };
+  }, []);
   return (
-    <div className="min-h-screen px-10 py-8" style={{ backgroundColor: "#B98F6A" }}>
-      <div className="flex items-center justify-between mb-8">
+    <div className="min-h-screen w-[1000px] items-center ml-[24vw] px-10 py-8" style={{ backgroundColor: "#B98F6A" }}>
+      <div className="flex items-center justify-between mt-22 mb-8">
         <div className="flex items-center gap-4">
           <Link href="/" className="w-10 h-10 flex items-center justify-center">
             <ButtonReturn />
           </Link>
           <div>
-            <h1 className="text-[26px] font-bold text-black">Мої лапки</h1>
-            <p className="text-[13px] text-black/70">
-              Отримуй та використовуй лапки для вигідних покупок
+            <h1 className="text-[48px] font-bold text-[var(--color-black)]">Мої лапки</h1>
+            <p className="text-[15px] text-[#000000]">
+              Отримуй та використовуй лапок для вигідних покупок
             </p>
           </div>
         </div>
-        <Link
-          href="/catalog"
-          className="px-5 py-2 rounded-full text-white text-[14px] font-semibold"
-          style={{ backgroundColor: "#1F3D2B" }}
-        >
-          Каталог
-        </Link>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="flex flex-col md:flex-row gap-5 items-start">
         <YourPawsBlock paws={paws} discountInUah={discountInUah} />
-        <NextLevelBlock paws={paws} />
+        <div className="flex-1 min-w-0">
+          <NextLevelBlock paws={paws} />
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mt-6 pb-4">
         <HowToEarnBlock />
         <PawsHistoryBlock history={history} />
       </div>

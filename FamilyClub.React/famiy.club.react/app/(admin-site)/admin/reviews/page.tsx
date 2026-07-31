@@ -9,15 +9,14 @@ import ReviewDetail from "./section/ReviewDetail";
 import { Review } from "./types";
 
 export default function Page() {
-  const { reviews, loadingReviews, refetch } = useReviews();
-console.log("REVIEWS FROM API:", reviews);
+    const { reviews, loadingReviews, refetch } = useReviews();
     const shelfRef = useRef<HTMLDivElement>(null);
 
     // тільки підсвітка
     const [selectedId, setSelectedId] = useState<number | null>(null);
 
     // відгук, який відкритий справа
-    const [openedReview, setOpenedReview] = useState<Review | null>(null);
+    // const [openedReview, setOpenedReview] = useState<Review | null>(null);
 
     const [search, setSearch] = useState("");
     const [book, setBook] = useState("all");
@@ -59,15 +58,20 @@ console.log("REVIEWS FROM API:", reviews);
         });
     }, [reviews, search, book, rating]);
 
-    // Якщо відкритого відгуку немає або він зник після фільтрації
-    useEffect(() => {
-        if (
-            !openedReview ||
-            !filtered.some((r) => r.id === openedReview.id)
-        ) {
-            setOpenedReview(filtered[0] ?? null);
-        }
-    }, [filtered]);
+    const openedReview = useMemo(() => {
+        if (selectedId == null) return filtered[0] ?? null;
+        return filtered.find((r) => r.id === selectedId) ?? filtered[0] ?? null;
+    }, [filtered, selectedId]);
+
+    // // Якщо відкритого відгуку немає або він зник після фільтрації
+    // useEffect(() => {
+    //     if (
+    //         !openedReview ||
+    //         !filtered.some((r) => r.id === openedReview.id)
+    //     ) {
+    //         setOpenedReview(filtered[0] ?? null);
+    //     }
+    // }, [filtered]);
 
     const handleToggleApprove = async () => {
         if (!openedReview) return;
@@ -90,11 +94,11 @@ console.log("REVIEWS FROM API:", reviews);
         await refetch();
     };
 
-  const resetFilters = () => {
-    setSearch("");
-    setBook("all");
-    setRating("all");
-  };
+    const resetFilters = () => {
+        setSearch("");
+        setBook("all");
+        setRating("all");
+    };
 
     const getImageSrc = (review: Review) => {
         const firstImage = review.productImages?.[0];
@@ -150,7 +154,7 @@ console.log("REVIEWS FROM API:", reviews);
                                         return;
                                     }
 
-                                    setOpenedReview(r);
+                                    // setOpenedReview(r);
                                     setSelectedId(r.id);
                                 }}
                             />

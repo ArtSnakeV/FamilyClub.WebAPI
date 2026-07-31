@@ -13,8 +13,7 @@ const PAWS_PERCENT_OF_ORDER = 5; // +5% від суми покупки → ла�
 const PAWS_TO_UAH_RATE = 10; // 100 лапок = 10 грн
 
 // Статуси, за яких замовлення вважається "здійсненою покупкою"
-const COMPLETED_STATUSES = ["completed", "delivered"]; // ← перевір реальні значення status у твоєму enum'і
-
+const COMPLETED_STATUSES = ["completed", "delivered"]; 
 export function usePaws(userId?: string) {
   const [orders, setOrders] = useState<OrderDTO[]>([]);
   const [loading, setLoading] = useState(true);
@@ -28,21 +27,21 @@ export function usePaws(userId?: string) {
     setLoading(true);
     orderService
       .apiOrdersByUserUserIdGet({ userId })
-      
       .then(setOrders)
       .catch(console.error)
       .finally(() => setLoading(false));
+      
   }, [userId]);
 
   const history: PawsHistoryItem[] = orders
-    // .filter((o) => o.status != null && COMPLETED_STATUSES.includes(o.status))
     .filter((o) => o.status != null && COMPLETED_STATUSES.includes(o.status.toLowerCase()))
     .map((o) => {
       const total = o.totalPrice ?? 0;
       const earned = Math.round((total * PAWS_PERCENT_OF_ORDER) / 100);
       return {
         id: `order-${o.id}`,
-        title: `Покупка замовлення №${o.id}`,
+        // title: `Покупка замовлення №${o.id}`,
+        title: `Покупка замовлення`,
         date: o.orderDate
           ? o.orderDate.toLocaleDateString("uk-UA")
           : "",
