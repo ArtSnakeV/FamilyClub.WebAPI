@@ -113,7 +113,7 @@ export default function UserSideBArProfile({
       }}
     >
       <Link href="/paws" className="w-[240px] h-[40px] relative ml-12 mt-14">
-        <Paws />
+        <Paws userId={userId}/>
       </Link>
       {/* Верхній блок */}
       <div
