@@ -130,7 +130,7 @@ export default function ReviewDetail({
                 </div>
 
                 {/* Кнопки дій */}
-                <div className="flex items-center gap-3 w-full">
+                {/* <div className="flex items-center gap-3 w-full">
                     <button
                         type="button"
                         onClick={onToggleApprove}
@@ -148,6 +148,31 @@ export default function ReviewDetail({
                         className="flex-1 h-[40px] rounded-lg font-medium text-sm border border-[#005B33] text-[#005B33] hover:bg-red-50 hover:border-red-600 hover:text-red-600 flex items-center justify-center gap-2 transition-colors bg-transparent"
                     >
                         Відхилити
+                    </button>
+                </div> */}
+                {/* Кнопки дій */}
+                <div className="flex items-center gap-3 w-full">
+                    <button
+                        type="button"
+                        onClick={onToggleApprove}
+                        className={`flex-1 h-[40px] rounded-lg font-medium text-sm flex items-center justify-center gap-2 transition-colors ${review.approved
+                            ? "bg-amber-600 hover:bg-amber-700 text-white"
+                            : "bg-[#005B33] hover:bg-[#004728] text-white"
+                            }`}
+                    >
+                        {review.approved ? "Зняти з публікації" : "Погодити"}
+                    </button>
+
+                    <button
+                        type="button"
+                        onClick={() => {
+                            if (confirm("Видалити цей відгук назавжди? Дію не можна скасувати.")) {
+                                onDelete();
+                            }
+                        }}
+                        className="flex-1 h-[40px] rounded-lg font-medium text-sm border border-red-600 text-red-600 hover:bg-red-50 flex items-center justify-center gap-2 transition-colors bg-transparent"
+                    >
+                        Видалити
                     </button>
                 </div>
             </div>

@@ -8,15 +8,16 @@ type Props = {
 
 export default function HowToEarnItem({ icon, title, desc }: Props) {
   return (
-    <li className="flex items-center gap-3">
-      <span className="w-9 h-9 rounded-full bg-white/70 flex items-center justify-center">
-        <Image src={icon} width={18} height={18} alt={title} />
+    <li className="flex items-center gap-2 h-[62px]">
+      <span className="w-20 h-20 flex items-center justify-center">
+        <Image src={icon} width={60} height={60} alt={title} />
       </span>
-      <span className="text-[13px] text-black">
-        {title}
-        <br />
-        <span className="text-[11px] text-black/60">{desc}</span>
-      </span>
+      <div className="flex flex-col items-left">
+        <span className="text-[24px] text-[var(--color-white)]">
+          {title}
+        </span>
+        <span className="text-[12px] text-[var(--color-white)]">{desc}</span>
+      </div>
     </li>
   );
 }
