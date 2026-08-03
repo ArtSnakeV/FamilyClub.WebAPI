@@ -20,36 +20,50 @@ public class ProductRepository : Repository<Product>, IProductRepository
 
     public new async Task<IEnumerable<Product>> GetAllAsync(CancellationToken cancellationToken = default)
     {
-		return await _context.Products
-		.AsNoTracking()
-		.Include(p => p.ProductImages)
-		.Include(p => p.Authors)
-		.Include(p => p.Languages)
-		.Include(p => p.Categories)
-		.Include(p => p.Series)
-		.Include(p => p.Translators)
-		.Include(p => p.Formats)
-		.Include(p => p.BookSizes)
-		.Include(p => p.AgeRestrictions)
-		.AsSplitQuery()
-		.ToListAsync(cancellationToken);
-	}
+        try
+        {
+            return await _context.Products
+                .AsNoTracking()
+                .Include(p => p.ProductImages)
+                .Include(p => p.Authors)
+                .Include(p => p.Languages)
+                .Include(p => p.Categories)
+                .Include(p => p.Series)
+                .Include(p => p.Translators)
+                .Include(p => p.Formats)
+                .Include(p => p.BookSizes)
+                .Include(p => p.AgeRestrictions)
+                .AsSplitQuery()
+                .ToListAsync(cancellationToken);
+        }
+        catch (OperationCanceledException)
+        {
+            return Array.Empty<Product>();
+        }
+    }
 
     public new async Task<Product?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
     {
-		return await _context.Products
-		.Include(p => p.ProductImages)
-		.Include(p => p.Authors)
-		.Include(p => p.Languages)
-		.Include(p => p.Categories)
-		.Include(p => p.Series)
-		.Include(p => p.Translators)
-		.Include(p => p.Formats)
-		.Include(p => p.BookSizes)
-		.Include(p => p.AgeRestrictions)
-		.AsSplitQuery()
-		.FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
-	}
+        try
+        {
+            return await _context.Products
+                .Include(p => p.ProductImages)
+                .Include(p => p.Authors)
+                .Include(p => p.Languages)
+                .Include(p => p.Categories)
+                .Include(p => p.Series)
+                .Include(p => p.Translators)
+                .Include(p => p.Formats)
+                .Include(p => p.BookSizes)
+                .Include(p => p.AgeRestrictions)
+                .AsSplitQuery()
+                .FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
+        }
+        catch (OperationCanceledException)
+        {
+            return null;
+        }
+    }
 
     public async Task<IEnumerable<Product>> GetAllWithImagesAsync(CancellationToken cancellationToken = default) => await GetAllAsync(cancellationToken);
     public async Task<Product?> GetByIdWithImagesAsync(int id, CancellationToken cancellationToken = default) => await GetByIdAsync(id, cancellationToken);
