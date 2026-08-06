@@ -1124,7 +1124,6 @@ namespace FamilyClub.DAL.Migrations
                         .HasColumnName("rating");
 
                     b.Property<string>("UserId")
-                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("user_id");
 
@@ -1136,6 +1135,9 @@ namespace FamilyClub.DAL.Migrations
 
                     b.HasIndex("ProductId")
                         .HasDatabaseName("ix_reviews_product_id");
+
+                    b.HasIndex("UserId")
+                        .HasDatabaseName("ix_reviews_user_id");
 
                     b.ToTable("reviews", (string)null);
                 });
@@ -1680,10 +1682,10 @@ namespace FamilyClub.DAL.Migrations
 
             modelBuilder.Entity("FamilyClubLibrary.Review", b =>
                 {
-                    b.HasOne("FamilyClubLibrary.ClubMember", "ClubMember")
+                    b.HasOne("FamilyClubLibrary.ClubMember", null)
                         .WithMany("Reviews")
                         .HasForeignKey("ClubMemberId")
-                        .HasConstraintName("fk_reviews_users_club_member_id");
+                        .HasConstraintName("fk_reviews_asp_net_users_club_member_id");
 
                     b.HasOne("FamilyClubLibrary.Product", "Product")
                         .WithMany("Reviews")
@@ -1691,6 +1693,12 @@ namespace FamilyClub.DAL.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_reviews_products_product_id");
+
+                    b.HasOne("FamilyClubLibrary.ClubMember", "ClubMember")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.SetNull)
+                        .HasConstraintName("fk_reviews_users_user_id");
 
                     b.Navigation("ClubMember");
 

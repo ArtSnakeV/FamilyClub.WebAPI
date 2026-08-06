@@ -7,6 +7,7 @@ import { authorService, apiBasePath } from "@/lib/api/services";
 import ItemActions from "@/app/(admin-site)/common_elements/item_actions";
 import EntitiesSearchSorting from "@/app/(admin-site)/common_elements/entities_search_sorting";
 import Pagination from "@/app/(admin-site)/common_elements/entities_pagination";
+import Link from "next/link";
 
 const AUTHOR_SORT_OPTIONS = [
   { value: "id_asc", label: "Старі на початку" },
@@ -133,7 +134,7 @@ export default function ManagerAuthorPage() {
                       key={author.id}
                       className="max-w-[1464px] w-full bg-[#F5F3EE] rounded-[9px] shadow-[0_0_10px_0_rgba(0,0,0,0.25)] px-[24px] py-3 flex items-center justify-between gap-4"
                     >
-                      <div className="flex items-center gap-4 min-w-0 flex-1">
+                      {/* <div className="flex items-center gap-4 min-w-0 flex-1">
                         <div className="w-[80px] h-[80px] flex-shrink-0 rounded-[8px] overflow-hidden bg-gray-100">
                           {author.photoUrl ? (
                             <img
@@ -158,7 +159,37 @@ export default function ManagerAuthorPage() {
                             </p>
                           )}
                         </div>
-                      </div>
+                      </div> */}
+                      <Link
+                        href={`/authors/${author.id}`}
+                        className="flex items-center gap-4 min-w-0 flex-1 hover:opacity-80 transition-opacity"
+                      >
+                        <div className="w-[80px] h-[80px] flex-shrink-0 rounded-[8px] overflow-hidden bg-gray-100">
+                          {author.photoUrl ? (
+                            <img
+                              src={`${apiBasePath}${author.photoUrl}`}
+                              alt={author.authorName ?? ""}
+                              className="w-full h-full object-cover"
+                            />
+                          ) : (
+                            <div className="w-full h-full flex items-center justify-center text-gray-400 text-[12px]">
+                              Немає фото
+                            </div>
+                          )}
+                        </div>
+
+                        <div className="flex flex-col gap-1 min-w-0">
+                          <p className="font-sanspro font-semibold text-[20px] leading-[150%] tracking-[-0.011em] text-[var(--color-black)] truncate">
+                            {author.authorName}
+                          </p>
+
+                          {author.biography && (
+                            <p className="text-[13px] text-[var(--color-black)] line-clamp-2 opacity-70">
+                              {author.biography}
+                            </p>
+                          )}
+                        </div>
+                      </Link>
 
                       <div className="flex items-center gap-[20px] flex-shrink-0">
                         <ItemActions

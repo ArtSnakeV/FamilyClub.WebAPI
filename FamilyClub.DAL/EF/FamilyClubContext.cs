@@ -174,7 +174,12 @@ public class FamilyClubContext : IdentityDbContext<ClubMember>
         //    .HasOne(r => r.ClubMember)
         //    .WithMany()
         //    .HasForeignKey(r => r.UserId);
-
+        builder.Entity<Review>()
+         .HasOne(r => r.ClubMember)
+         .WithMany()
+         .HasForeignKey(r => r.UserId)
+         .IsRequired(false)
+         .OnDelete(DeleteBehavior.SetNull);
 
         // For PROMOTIONS if we deside to change them to Many-to-Many
         // For the moment one product can have only one assigned promotion to avoid problems with pricing due to unexpected price reduce with multiple promotions summarizing.

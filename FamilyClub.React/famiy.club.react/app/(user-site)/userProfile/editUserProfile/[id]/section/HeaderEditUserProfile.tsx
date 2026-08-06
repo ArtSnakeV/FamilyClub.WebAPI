@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import { UpdateClubMemberDto } from "@/lib/api/generated";
 import iconDeleteAvatar from "@/public/images/userProfile/editUserProfile/trash-can-solid-full (1) 1.png"
+import Image from "next/image";
 
 type Props = {
     form: UpdateClubMemberDto;
@@ -65,10 +66,12 @@ export default function HeaderEditUserProfile({ form, setField, avatarData, setA
                         onClick={() => setAvatarData(null)}
                         className="flex relative items-center w-full h-[36px] gap-2 text-center text-[20px] text-[var(--color-black)] hover:text-red-500 transition-colors"
                     >
-                        <img
+                        <Image
                             src={iconDeleteAvatar.src}
+                            width={22}
+                            height={22}
                             alt="del"
-                            className="w-[22px] h-[22px] object-contain"
+                            className="object-contain"
                         /> Видалити аватар
                     </button>
                 </div>

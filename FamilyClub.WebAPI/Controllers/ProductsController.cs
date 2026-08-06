@@ -18,20 +18,34 @@ public class ProductsController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<ProductDto>>> GetAll(CancellationToken cancellationToken)
     {
-        var products = await _productService.GetAllAsync(cancellationToken);
-        return Ok(products);
+        try
+        {
+            var products = await _productService.GetAllAsync(cancellationToken);
+            return Ok(products);
+        }
+        catch (OperationCanceledException)
+        {
+            return Ok(Array.Empty<ProductDto>());
+        }
     }
 
     [HttpGet("{id:int}")]
     public async Task<ActionResult<ProductDto>> GetById(int id, CancellationToken cancellationToken)
     {
-        var product = await _productService.GetByIdAsync(id, cancellationToken);
-        if (product is null)
+        try
+        {
+            var product = await _productService.GetByIdAsync(id, cancellationToken);
+            if (product is null)
+            {
+                return NotFound();
+            }
+
+            return Ok(product);
+        }
+        catch (OperationCanceledException)
         {
             return NotFound();
         }
-
-        return Ok(product);
     }
 
     [HttpPost]

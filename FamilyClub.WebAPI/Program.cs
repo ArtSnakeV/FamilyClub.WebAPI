@@ -239,6 +239,7 @@ using (IServiceScope scope = app.Services.CreateScope())
 	await DbInitializer.Initialize(services, app.Configuration);
 }
 
+app.UseMiddleware<GlobalExceptionMiddleware>(); // Catch client cancellation & internal errors
 app.UseForwardedHeaders(); // Must be early in pipeline to resolve real IP
 app.UseCors("AllowReact"); // Allowing to use React
 
