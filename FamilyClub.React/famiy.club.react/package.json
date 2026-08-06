@@ -11,14 +11,17 @@
   },
   "dependencies": {
     "@headlessui/react": "^2.2.10",
-    "axios": "^1.15.2",
+    "axios": "^1.19.0",
     "bootstrap": "^5.3.8",
     "cross-env": "^10.1.0",
     "flag-icons": "^7.5.0",
+    "form-data": "^4.0.6",
     "libphonenumber-js": "^1.13.2",
-    "next": "^16.2.4",
+    "next": "^16.2.11",
+    "postcss": "^8.5.26",
     "react": "19.2.4",
-    "react-dom": "19.2.4"
+    "react-dom": "19.2.4",
+    "sharp": "^0.35.3"
   },
   "devDependencies": {
     "@openapitools/openapi-generator-cli": "^2.31.1",
@@ -27,7 +30,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
-    "eslint-config-next": "16.2.1",
+    "eslint-config-next": "^16.2.11",
     "tailwindcss": "^4",
     "typescript": "^5"
   }
