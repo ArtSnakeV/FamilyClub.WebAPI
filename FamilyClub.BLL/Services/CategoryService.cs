@@ -1,4 +1,4 @@
-﻿using FamilyClub.BLL.DTOs.Category;
+using FamilyClub.BLL.DTOs.Category;
 using FamilyClub.BLL.Interfaces;
 using FamilyClub.DAL.Interfaces;
 using FamilyClubLibrary;
