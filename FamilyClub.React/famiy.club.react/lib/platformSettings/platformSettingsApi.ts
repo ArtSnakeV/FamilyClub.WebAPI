@@ -54,12 +54,37 @@ export function mediaSrc(
     if (
         trimmed.startsWith("data:") ||
         trimmed.startsWith("http://") ||
-        trimmed.startsWith("https://") ||
-        trimmed.startsWith("/")
+        trimmed.startsWith("https://")
     ) {
         return trimmed;
     }
-    const mime = contentType || "image/png";
+
+    const isRelativeUrl =
+        trimmed.startsWith("/") &&
+        !trimmed.startsWith("/9j/") &&
+        (trimmed.startsWith("/images/") ||
+            trimmed.startsWith("/static/") ||
+            trimmed.startsWith("/assets/") ||
+            trimmed.startsWith("/uploads/") ||
+            trimmed.startsWith("/_next/") ||
+            /\.(jpg|jpeg|png|webp|svg|gif|ico)$/i.test(trimmed));
+
+    if (isRelativeUrl) {
+        return trimmed;
+    }
+
+    const mime =
+        contentType ||
+        (trimmed.startsWith("/9j/") || trimmed.startsWith("9j/")
+            ? "image/jpeg"
+            : trimmed.startsWith("iVBORw0KGgo")
+            ? "image/png"
+            : trimmed.startsWith("UklGR")
+            ? "image/webp"
+            : trimmed.startsWith("R0lGOD")
+            ? "image/gif"
+            : "image/png");
+
     return `data:${mime};base64,${trimmed}`;
 }
 

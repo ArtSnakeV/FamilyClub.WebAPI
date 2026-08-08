@@ -11,19 +11,30 @@ public class PlatformSettingsService : IPlatformSettingsService
     private readonly IPlatformSettingsRepository _repository;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IActionLogService _actionLog;
+    private readonly ICacheService _cacheService;
+
+    private const string SettingsCacheKey = "platform_settings_singleton";
 
     public PlatformSettingsService(
         IPlatformSettingsRepository repository,
         IUnitOfWork unitOfWork,
-        IActionLogService actionLog)
+        IActionLogService actionLog,
+        ICacheService cacheService)
     {
         _repository = repository;
         _unitOfWork = unitOfWork;
         _actionLog = actionLog;
+        _cacheService = cacheService;
     }
 
     public async Task<PlatformSettingsDto> GetAsync(CancellationToken cancellationToken = default)
     {
+        var cachedSettings = await _cacheService.GetAsync<PlatformSettingsDto>(SettingsCacheKey, cancellationToken);
+        if (cachedSettings is not null)
+        {
+            return cachedSettings;
+        }
+
         var entity = await _repository.GetSingletonAsync(cancellationToken);
         if (entity is null)
         {
@@ -32,7 +43,10 @@ public class PlatformSettingsService : IPlatformSettingsService
             await _unitOfWork.SaveChangesAsync(cancellationToken);
         }
 
-        return Map(entity);
+        var dto = Map(entity);
+        await _cacheService.SetAsync(SettingsCacheKey, dto, TimeSpan.FromHours(1), cancellationToken);
+
+        return dto;
     }
 
     public async Task<PlatformSettingsDto> UpdateAsync(
@@ -92,6 +106,7 @@ public class PlatformSettingsService : IPlatformSettingsService
 
         _repository.Update(entity);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
+        await _cacheService.RemoveAsync(SettingsCacheKey, cancellationToken);
 
         if (previousMaintenance != entity.MaintenanceMode)
         {
