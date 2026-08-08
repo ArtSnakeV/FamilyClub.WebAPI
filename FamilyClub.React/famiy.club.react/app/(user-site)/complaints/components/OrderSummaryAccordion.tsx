@@ -12,16 +12,25 @@ function resolveProductImage(prod: { productImages?: { imageData?: string | null
   }
 
   const rawData = prod.productImages[0].imageData.trim();
-  if (
-    rawData.startsWith("data:") ||
-    rawData.startsWith("http") ||
-    rawData.startsWith("/")
-  ) {
+  if (rawData.startsWith("data:") || rawData.startsWith("http://") || rawData.startsWith("https://")) {
     return rawData;
   }
 
+  const isRelativeUrl =
+    rawData.startsWith("/") &&
+    !rawData.startsWith("/9j/") &&
+    (rawData.startsWith("/images/") ||
+      rawData.startsWith("/static/") ||
+      rawData.startsWith("/assets/") ||
+      rawData.startsWith("/uploads/") ||
+      rawData.startsWith("/_next/") ||
+      /\.(jpg|jpeg|png|webp|svg|gif|ico)$/i.test(rawData));
+
+  if (isRelativeUrl) return rawData;
+
   let mimeType = "image/jpeg";
   if (rawData.startsWith("UklGR")) mimeType = "image/webp";
+  else if (rawData.startsWith("/9j/") || rawData.startsWith("9j/")) mimeType = "image/jpeg";
   else if (rawData.startsWith("iVBORw0KGgo")) mimeType = "image/png";
 
   return `data:${mimeType};base64,${rawData}`;

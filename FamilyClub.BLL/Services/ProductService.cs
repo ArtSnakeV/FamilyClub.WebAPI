@@ -15,34 +15,60 @@ public class ProductService : IProductService
     private readonly IUnitOfWork _unitOfWork;
 	private readonly FamilyClubContext _context;
 	private readonly IActionLogService _actionLog;
+	private readonly ICacheService _cacheService;
+
+	private const string AllProductsCacheKey = "products_all";
+	private static string GetProductCacheKey(int id) => $"products_item_{id}";
 
 	public ProductService(
 		IProductRepository productRepository,
 		IUnitOfWork unitOfWork,
 		FamilyClubContext context,
-		IActionLogService actionLog)
+		IActionLogService actionLog,
+		ICacheService cacheService)
     {
         _productRepository = productRepository;
         _unitOfWork = unitOfWork;
 		_context = context;
 		_actionLog = actionLog;
+		_cacheService = cacheService;
     }
 
     public async Task<IEnumerable<ProductDto>> GetAllAsync(CancellationToken cancellationToken = default)
     {
+        var cachedProducts = await _cacheService.GetAsync<List<ProductDto>>(AllProductsCacheKey, cancellationToken);
+        if (cachedProducts is not null)
+        {
+            return cachedProducts;
+        }
+
         var products = await _productRepository.GetAllAsync(cancellationToken);
-        return products.Select(MapToDto);
+        var dtos = products.Select(MapToDto).ToList();
+
+        await _cacheService.SetAsync(AllProductsCacheKey, dtos, TimeSpan.FromMinutes(15), cancellationToken);
+
+        return dtos;
     }
 
     public async Task<ProductDto?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
     {
+        var cacheKey = GetProductCacheKey(id);
+        var cachedProduct = await _cacheService.GetAsync<ProductDto>(cacheKey, cancellationToken);
+        if (cachedProduct is not null)
+        {
+            return cachedProduct;
+        }
+
         var product = await _productRepository.GetByIdAsync(id, cancellationToken);
         if (product is null)
         {
             return null;
         }
 
-        return MapToDto(product);
+        var dto = MapToDto(product);
+        await _cacheService.SetAsync(cacheKey, dto, TimeSpan.FromMinutes(15), cancellationToken);
+
+        return dto;
     }
 
 	//public async Task<ProductDto> CreateAsync(ProductDto? dto, List<IFormFile> productImageFiles, CancellationToken cancellationToken = default)
@@ -160,6 +186,8 @@ public class ProductService : IProductService
 		await _productRepository.AddAsync(product, cancellationToken);
 		await _unitOfWork.SaveChangesAsync(cancellationToken);
 
+		await InvalidateCacheAsync(cancellationToken);
+
 		await SafeLogAsync(
 			ActionLogCodes.Actions.Created,
 			ActionLogCodes.Modules.Books,
@@ -242,6 +270,8 @@ public class ProductService : IProductService
 
 		_productRepository.Update(existingProduct);
 		await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+		await InvalidateCacheAsync(cancellationToken, id);
 
 		return true;
 	}
@@ -438,5 +468,15 @@ public class ProductService : IProductService
 			BookSizeIds = product.BookSizes?.Select(f => f.Id).ToList(),
 			AgeRestrictionIds = product.AgeRestrictions?.Select(a => a.Id).ToList(),
 		};
+	}
+
+	private async Task InvalidateCacheAsync(CancellationToken cancellationToken, int? id = null)
+	{
+		await _cacheService.RemoveAsync(AllProductsCacheKey, cancellationToken);
+		if (id.HasValue)
+		{
+			await _cacheService.RemoveAsync(GetProductCacheKey(id.Value), cancellationToken);
+		}
+		await _cacheService.RemoveByPrefixAsync("products_", cancellationToken);
 	}
 }
