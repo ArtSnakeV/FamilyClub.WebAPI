@@ -210,6 +210,30 @@ builder.Services.AddAutoMapper(cfg =>
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddMemoryCache();
+builder.Services.AddResponseCaching();
+builder.Services.AddOutputCache();
+
+var redisConnStr = builder.Configuration["CacheSettings:RedisConnectionString"]
+    ?? builder.Configuration.GetConnectionString("Redis")
+    ?? "localhost:6379,abortConnect=false,connectTimeout=1000";
+
+try
+{
+    var multiplexer = StackExchange.Redis.ConnectionMultiplexer.Connect(redisConnStr);
+    builder.Services.AddSingleton<StackExchange.Redis.IConnectionMultiplexer>(multiplexer);
+    builder.Services.AddStackExchangeRedisCache(options =>
+    {
+        options.Configuration = redisConnStr;
+        options.InstanceName = builder.Configuration["CacheSettings:InstanceName"] ?? "FamilyClubCache_";
+    });
+}
+catch
+{
+    // Робастний фолбек до вбудованого пам'ятного кешу, якщо сервер Redis тимчасово недоступний
+    builder.Services.AddDistributedMemoryCache();
+}
+
+builder.Services.AddSingleton<ICacheService, RedisCacheService>();
 builder.Services.AddHttpContextAccessor();
 
 builder.Services.Configure<ForwardedHeadersOptions>(options =>
@@ -260,6 +284,9 @@ app.UseDefaultFiles(); // Serve default files like index.html
 
 app.UseRateLimiter(); // Apply Rate Limiter before Auth and Controllers
 app.UseMiddleware<IpBlockingMiddleware>(); // Block bad IPs before Auth
+
+app.UseResponseCaching();
+app.UseOutputCache();
 
 app.UseAuthentication();
 app.UseAuthorization();

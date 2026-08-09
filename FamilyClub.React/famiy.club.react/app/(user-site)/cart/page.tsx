@@ -20,11 +20,25 @@ function getImageSrc(product: ProductDto): string | null {
   const image = product.productImages?.[0];
   if (!image?.imageData) return null;
   const normalizedData = image.imageData.trim();
-  if (normalizedData.startsWith("data:") || normalizedData.startsWith("http://") || normalizedData.startsWith("https://") || normalizedData.startsWith("/")) return normalizedData;
+  if (normalizedData.startsWith("data:") || normalizedData.startsWith("http://") || normalizedData.startsWith("https://")) return normalizedData;
+
+  const isRelativeUrl =
+    normalizedData.startsWith("/") &&
+    !normalizedData.startsWith("/9j/") &&
+    (normalizedData.startsWith("/images/") ||
+      normalizedData.startsWith("/static/") ||
+      normalizedData.startsWith("/assets/") ||
+      normalizedData.startsWith("/uploads/") ||
+      normalizedData.startsWith("/_next/") ||
+      /\.(jpg|jpeg|png|webp|svg|gif|ico)$/i.test(normalizedData));
+
+  if (isRelativeUrl) return normalizedData;
 
   const extension = image.imageName?.split(".").pop()?.toLowerCase();
   const mimeType =
-    extension === "png"
+    normalizedData.startsWith("/9j/") || normalizedData.startsWith("9j/")
+      ? "image/jpeg"
+      : extension === "png"
       ? "image/png"
       : extension === "webp"
         ? "image/webp"
