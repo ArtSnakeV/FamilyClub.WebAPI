@@ -1,0 +1,4002 @@
+{
+  "generatedAt": "2026-08-08T08:21:22Z",
+  "bookCount": 150,
+  "authorCount": 91,
+  "authors": [
+    {
+      "authorName": "Percival L. Everett",
+      "biography": "Персіваль Еверетт — американський письменник і професор. Його проза смілива, іронічна й часто переосмислює класичні сюжети американської літератури.",
+      "photoFile": "authors_photos/percival-l-everett.jpg"
+    },
+    {
+      "authorName": "Rebecca Yarros",
+      "biography": "Ребекка Яррос — американська письменниця, відома фентезійними та романтичними бестселерами. Її цикли здобули величезну популярність серед читачів усього світу.",
+      "photoFile": "authors_photos/rebecca-yarros.jpg"
+    },
+    {
+      "authorName": "C. J. Box",
+      "biography": "C. J. Box — відомий сучасний автор/авторка, чиї твори здобули широку популярність серед читачів у 2020-х роках. Пише захопливі історії, що поєднують сильну інтригу, яскравих персонажів і емоційну глибину.",
+      "photoFile": "authors_photos/c-j-box.jpg"
+    },
+    {
+      "authorName": "John Sandford",
+      "biography": "John Sandford — відомий сучасний автор/авторка, чиї твори здобули широку популярність серед читачів у 2020-х роках. Пише захопливі історії, що поєднують сильну інтригу, яскравих персонажів і емоційну глибину.",
+      "photoFile": "authors_photos/john-sandford.jpg"
+    },
+    {
+      "authorName": "Abby Jimenez",
+      "biography": "Abby Jimenez — відомий сучасний автор/авторка, чиї твори здобули широку популярність серед читачів у 2020-х роках. Пише захопливі історії, що поєднують сильну інтригу, яскравих персонажів і емоційну глибину.",
+      "photoFile": "authors_photos/abby-jimenez.jpg"
+    },
+    {
+      "authorName": "Kaylie Smith",
+      "biography": "Kaylie Smith — відомий сучасний автор/авторка, чиї твори здобули широку популярність серед читачів у 2020-х роках. Пише захопливі історії, що поєднують сильну інтригу, яскравих персонажів і емоційну глибину.",
+      "photoFile": "authors_photos/kaylie-smith.jpg"
+    },
+    {
+      "authorName": "Jeneva Rose",
+      "biography": "Jeneva Rose — відомий сучасний автор/авторка, чиї твори здобули широку популярність серед читачів у 2020-х роках. Пише захопливі історії, що поєднують сильну інтригу, яскравих персонажів і емоційну глибину.",
+      "photoFile": "authors_photos/jeneva-rose.jpg"
+    },
+    {
+      "authorName": "Emily Henry",
+      "biography": "Емілі Генрі — американська авторка сучасних любовних романів. Її книги вирізняються дотепними діалогами, теплим гумором і щирими емоціями.",
+      "photoFile": "authors_photos/emily-henry.jpg"
+    },
+    {
+      "authorName": "James Patterson",
+      "biography": "Джеймс Паттерсон — один із найпопулярніших сучасних авторів трилерів. Відомий динамічними сюжетами та численними детективними серіями.",
+      "photoFile": "authors_photos/james-patterson.jpg"
+    },
+    {
+      "authorName": "Maxine Paetro",
+      "biography": "Maxine Paetro — відомий сучасний автор/авторка, чиї твори здобули широку популярність серед читачів у 2020-х роках. Пише захопливі історії, що поєднують сильну інтригу, яскравих персонажів і емоційну глибину.",
+      "photoFile": "authors_photos/maxine-paetro.jpg"
+    },
+    {
+      "authorName": "Freida McFadden",
+      "biography": "Фрейда Макфадден — американська письменниця й лікарка, авторка психологічних трилерів із несподіваними сюжетними поворотами.",
+      "photoFile": "authors_photos/freida-mcfadden.jpg"
+    },
+    {
+      "authorName": "Danielle L. Jensen",
+      "biography": "Danielle L. Jensen — відомий сучасний автор/авторка, чиї твори здобули широку популярність серед читачів у 2020-х роках. Пише захопливі історії, що поєднують сильну інтригу, яскравих персонажів і емоційну глибину.",
+      "photoFile": "authors_photos/danielle-l-jensen.jpg"
+    },
+    {
+      "authorName": "Michael Connelly",
+      "biography": "Майкл Коннеллі — американський майстер поліцейського детективу. Автор культових серій про Гаррі Боша й Міккі Голлера.",
+      "photoFile": "authors_photos/michael-connelly.jpg"
+    },
+    {
+      "authorName": "Stephen King",
+      "biography": "Стівен Кінг — американський письменник, майстер жахів і трилерів. Автор десятків світових бестселерів, що досліджують страх, малі міста Америки та темні куточки людської психіки.",
+      "photoFile": "authors_photos/stephen-king.jpg"
+    },
+    {
+      "authorName": "Taylor Jenkins Reid",
+      "biography": "Тейлор Дженкінс Рід — американська письменниця сучасних романів про славу, кохання й складні жіночі долі. Її історії часто стають книжковими й екранними хітами.",
+      "photoFile": "authors_photos/taylor-jenkins-reid.jpg"
+    },
+    {
+      "authorName": "Navessa Allen",
+      "biography": "Navessa Allen — відомий сучасний автор/авторка, чиї твори здобули широку популярність серед читачів у 2020-х роках. Пише захопливі історії, що поєднують сильну інтригу, яскравих персонажів і емоційну глибину.",
+      "photoFile": "authors_photos/navessa-allen.jpg"
+    },
+    {
+      "authorName": "Lisa Jewell",
+      "biography": "Lisa Jewell — відомий сучасний автор/авторка, чиї твори здобули широку популярність серед читачів у 2020-х роках. Пише захопливі історії, що поєднують сильну інтригу, яскравих персонажів і емоційну глибину.",
+      "photoFile": "authors_photos/lisa-jewell.jpg"
+    },
+    {
+      "authorName": "Brad Thor",
+      "biography": "Brad Thor — відомий сучасний автор/авторка, чиї твори здобули широку популярність серед читачів у 2020-х роках. Пише захопливі історії, що поєднують сильну інтригу, яскравих персонажів і емоційну глибину.",
+      "photoFile": "authors_photos/brad-thor.jpg"
+    },
+    {
+      "authorName": "Julie Soto",
+      "biography": "Julie Soto — відомий сучасний автор/авторка, чиї твори здобули широку популярність серед читачів у 2020-х роках. Пише захопливі історії, що поєднують сильну інтригу, яскравих персонажів і емоційну глибину.",
+      "photoFile": "authors_photos/julie-soto.jpg"
+    },
+    {
+      "authorName": "Daniel Silva",
+      "biography": "Daniel Silva — відомий сучасний автор/авторка, чиї твори здобули широку популярність серед читачів у 2020-х роках. Пише захопливі історії, що поєднують сильну інтригу, яскравих персонажів і емоційну глибину.",
+      "photoFile": "authors_photos/daniel-silva.jpg"
+    },
+    {
+      "authorName": "Mike Lupica",
+      "biography": "Mike Lupica — відомий сучасний автор/авторка, чиї твори здобули широку популярність серед читачів у 2020-х роках. Пише захопливі історії, що поєднують сильну інтригу, яскравих персонажів і емоційну глибину.",
+      "photoFile": "authors_photos/mike-lupica.jpg"
+    },
+    {
+      "authorName": "Fredrik Backman",
+      "biography": "Фредрік Бакман — шведський письменник. Відомий теплими й водночас гострими романами про самотність, спільноту й людяність.",
+      "photoFile": "authors_photos/fredrik-backman.jpg"
+    },
+    {
+      "authorName": "Hannah Nicole Maehrer",
+      "biography": "Hannah Nicole Maehrer — відомий сучасний автор/авторка, чиї твори здобули широку популярність серед читачів у 2020-х роках. Пише захопливі історії, що поєднують сильну інтригу, яскравих персонажів і емоційну глибину.",
+      "photoFile": "authors_photos/hannah-nicole-maehrer.jpg"
+    },
+    {
+      "authorName": "Karin Slaughter",
+      "biography": "Karin Slaughter — відомий сучасний автор/авторка, чиї твори здобули широку популярність серед читачів у 2020-х роках. Пише захопливі історії, що поєднують сильну інтригу, яскравих персонажів і емоційну глибину.",
+      "photoFile": "authors_photos/karin-slaughter.jpg"
+    },
+    {
+      "authorName": "Callie Hart",
+      "biography": "Callie Hart — відомий сучасний автор/авторка, чиї твори здобули широку популярність серед читачів у 2020-х роках. Пише захопливі історії, що поєднують сильну інтригу, яскравих персонажів і емоційну глибину.",
+      "photoFile": "authors_photos/callie-hart.jpg"
+    },
+    {
+      "authorName": "R. F. Kuang",
+      "biography": "Р. Ф. Куанг — американська письменниця китайського походження. Пише гостре фентезі й літературну прозу про владу, історію та ідентичність.",
+      "photoFile": "authors_photos/r-f-kuang.jpg"
+    },
+    {
+      "authorName": "J. D. Robb",
+      "biography": "Дж. Д. Робб (Нора Робертс) — авторка футуристичних детективів про Еву Даллас. Поєднує кримінальну інтригу з елементами наукової фантастики.",
+      "photoFile": "authors_photos/j-d-robb.jpg"
+    },
+    {
+      "authorName": "Dan Brown",
+      "biography": "Ден Браун — американський автор інтелектуальних трилерів. Його романи поєднують загадки історії, мистецтва й таємних товариств.",
+      "photoFile": "authors_photos/dan-brown.jpg"
+    },
+    {
+      "authorName": "SenLinYu",
+      "biography": "SenLinYu — відомий сучасний автор/авторка, чиї твори здобули широку популярність серед читачів у 2020-х роках. Пише захопливі історії, що поєднують сильну інтригу, яскравих персонажів і емоційну глибину.",
+      "photoFile": "authors_photos/senlinyu.jpg"
+    },
+    {
+      "authorName": "Richard Osman",
+      "biography": "Річард Осман — британський письменник і телеведучий, автор затишних детективів про клуб пенсіонерів-розслідувачів.",
+      "photoFile": "authors_photos/richard-osman.jpg"
+    },
+    {
+      "authorName": "Ali Hazelwood",
+      "biography": "Алі Гейзелвуд — авторка романтичних комедій про науковий світ. Її героїні — сильні жінки в STEM, а сюжети сповнені гумору й тепла.",
+      "photoFile": "authors_photos/ali-hazelwood.jpg"
+    },
+    {
+      "authorName": "Reese Witherspoon",
+      "biography": "Reese Witherspoon — відомий сучасний автор/авторка, чиї твори здобули широку популярність серед читачів у 2020-х роках. Пише захопливі історії, що поєднують сильну інтригу, яскравих персонажів і емоційну глибину.",
+      "photoFile": "authors_photos/reese-witherspoon.jpg"
+    },
+    {
+      "authorName": "Harlan Coben",
+      "biography": "Harlan Coben — відомий сучасний автор/авторка, чиї твори здобули широку популярність серед читачів у 2020-х роках. Пише захопливі історії, що поєднують сильну інтригу, яскравих персонажів і емоційну глибину.",
+      "photoFile": "authors_photos/harlan-coben.jpg"
+    },
+    {
+      "authorName": "John Grisham",
+      "biography": "Джон Грішем — американський письменник юридичних трилерів. Колишній адвокат, який перетворив знання права на напружені бестселери.",
+      "photoFile": "authors_photos/john-grisham.jpg"
+    },
+    {
+      "authorName": "Louise Penny",
+      "biography": "Louise Penny — відомий сучасний автор/авторка, чиї твори здобули широку популярність серед читачів у 2020-х роках. Пише захопливі історії, що поєднують сильну інтригу, яскравих персонажів і емоційну глибину.",
+      "photoFile": "authors_photos/louise-penny.jpg"
+    },
+    {
+      "authorName": "Lee Child",
+      "biography": "Лі Чайлд — британський автор трилерів, творець образу Джека Річера — одинокого захисника справедливості.",
+      "photoFile": "authors_photos/lee-child.jpg"
+    },
+    {
+      "authorName": "Andrew Grant",
+      "biography": "Andrew Grant — відомий сучасний автор/авторка, чиї твори здобули широку популярність серед читачів у 2020-х роках. Пише захопливі історії, що поєднують сильну інтригу, яскравих персонажів і емоційну глибину.",
+      "photoFile": "authors_photos/andrew-grant.jpg"
+    },
+    {
+      "authorName": "Allen Levi",
+      "biography": "Allen Levi — відомий сучасний автор/авторка, чиї твори здобули широку популярність серед читачів у 2020-х роках. Пише захопливі історії, що поєднують сильну інтригу, яскравих персонажів і емоційну глибину.",
+      "photoFile": "authors_photos/allen-levi.jpg"
+    },
+    {
+      "authorName": "Virginia Evans",
+      "biography": "Virginia Evans — відомий сучасний автор/авторка, чиї твори здобули широку популярність серед читачів у 2020-х роках. Пише захопливі історії, що поєднують сильну інтригу, яскравих персонажів і емоційну глибину.",
+      "photoFile": "authors_photos/virginia-evans.jpg"
+    },
+    {
+      "authorName": "Jim Butcher",
+      "biography": "Jim Butcher — відомий сучасний автор/авторка, чиї твори здобули широку популярність серед читачів у 2020-х роках. Пише захопливі історії, що поєднують сильну інтригу, яскравих персонажів і емоційну глибину.",
+      "photoFile": "authors_photos/jim-butcher.jpg"
+    },
+    {
+      "authorName": "Andy Weir",
+      "biography": "Енді Вір — американський письменник наукової фантастики. Відомий точними технологічними деталями й історіями про виживання людини в екстремальних умовах.",
+      "photoFile": "authors_photos/andy-weir.jpg"
+    },
+    {
+      "authorName": "Devney Perry",
+      "biography": "Devney Perry — відомий сучасний автор/авторка, чиї твори здобули широку популярність серед читачів у 2020-х роках. Пише захопливі історії, що поєднують сильну інтригу, яскравих персонажів і емоційну глибину.",
+      "photoFile": "authors_photos/devney-perry.jpg"
+    },
+    {
+      "authorName": "David Baldacci",
+      "biography": "David Baldacci — відомий сучасний автор/авторка, чиї твори здобули широку популярність серед читачів у 2020-х роках. Пише захопливі історії, що поєднують сильну інтригу, яскравих персонажів і емоційну глибину.",
+      "photoFile": "authors_photos/david-baldacci.jpg"
+    },
+    {
+      "authorName": "Matt Dinniman",
+      "biography": "Метт Дінніман — американський автор фантастики в жанрі «літРПГ». Популярний завдяки серії про Данжен Кролер Карла з чорним гумором і динамікою гри на виживання.",
+      "photoFile": "authors_photos/matt-dinniman.jpg"
+    },
+    {
+      "authorName": "Sarah A. Parker",
+      "biography": "Sarah A. Parker — відомий сучасний автор/авторка, чиї твори здобули широку популярність серед читачів у 2020-х роках. Пише захопливі історії, що поєднують сильну інтригу, яскравих персонажів і емоційну глибину.",
+      "photoFile": "authors_photos/sarah-a-parker.jpg"
+    },
+    {
+      "authorName": "Ann Patchett",
+      "biography": "Енн Патчетт — американська письменниця літературної прози. Її романи вирізняються тонким психологізмом і увагою до людських стосунків.",
+      "photoFile": "authors_photos/ann-patchett.jpg"
+    },
+    {
+      "authorName": "Therese Anne Fowler",
+      "biography": "Therese Anne Fowler — відомий сучасний автор/авторка, чиї твори здобули широку популярність серед читачів у 2020-х роках. Пише захопливі історії, що поєднують сильну інтригу, яскравих персонажів і емоційну глибину.",
+      "photoFile": "authors_photos/therese-anne-fowler.jpg"
+    },
+    {
+      "authorName": "Karen Dionne",
+      "biography": "Karen Dionne — відомий сучасний автор/авторка, чиї твори здобули широку популярність серед читачів у 2020-х роках. Пише захопливі історії, що поєднують сильну інтригу, яскравих персонажів і емоційну глибину.",
+      "photoFile": "authors_photos/karen-dionne.jpg"
+    },
+    {
+      "authorName": "Shelby Van Pelt",
+      "biography": "Shelby Van Pelt — відомий сучасний автор/авторка, чиї твори здобули широку популярність серед читачів у 2020-х роках. Пише захопливі історії, що поєднують сильну інтригу, яскравих персонажів і емоційну глибину.",
+      "photoFile": "authors_photos/shelby-van-pelt.jpg"
+    },
+    {
+      "authorName": "Rachel Reid",
+      "biography": "Rachel Reid — відомий сучасний автор/авторка, чиї твори здобули широку популярність серед читачів у 2020-х роках. Пише захопливі історії, що поєднують сильну інтригу, яскравих персонажів і емоційну глибину.",
+      "photoFile": "authors_photos/rachel-reid.jpg"
+    },
+    {
+      "authorName": "Elena ARMAS",
+      "biography": "Elena ARMAS — відомий сучасний автор/авторка, чиї твори здобули широку популярність серед читачів у 2020-х роках. Пише захопливі історії, що поєднують сильну інтригу, яскравих персонажів і емоційну глибину.",
+      "photoFile": "authors_photos/elena-armas.jpg"
+    },
+    {
+      "authorName": "Elle Kennedy",
+      "biography": "Elle Kennedy — відомий сучасний автор/авторка, чиї твори здобули широку популярність серед читачів у 2020-х роках. Пише захопливі історії, що поєднують сильну інтригу, яскравих персонажів і емоційну глибину.",
+      "photoFile": "authors_photos/elle-kennedy.jpg"
+    },
+    {
+      "authorName": "Kristin Hannah",
+      "biography": "Крістін Ганна — американська письменниця історичної та жіночої прози. Відома глибокими родинами історіями про війну, сестринство й стійкість.",
+      "photoFile": "authors_photos/kristin-hannah.jpg"
+    },
+    {
+      "authorName": "Bonnie Garmus",
+      "biography": "Bonnie Garmus — відомий сучасний автор/авторка, чиї твори здобули широку популярність серед читачів у 2020-х роках. Пише захопливі історії, що поєднують сильну інтригу, яскравих персонажів і емоційну глибину.",
+      "photoFile": "authors_photos/bonnie-garmus.jpg"
+    },
+    {
+      "authorName": "Barbara Kingsolver",
+      "biography": "Barbara Kingsolver — відомий сучасний автор/авторка, чиї твори здобули широку популярність серед читачів у 2020-х роках. Пише захопливі історії, що поєднують сильну інтригу, яскравих персонажів і емоційну глибину.",
+      "photoFile": "authors_photos/barbara-kingsolver.jpg"
+    },
+    {
+      "authorName": "Gabrielle Zevin",
+      "biography": "Gabrielle Zevin — відомий сучасний автор/авторка, чиї твори здобули широку популярність серед читачів у 2020-х роках. Пише захопливі історії, що поєднують сильну інтригу, яскравих персонажів і емоційну глибину.",
+      "photoFile": "authors_photos/gabrielle-zevin.jpg"
+    },
+    {
+      "authorName": "James McBride",
+      "biography": "James McBride — відомий сучасний автор/авторка, чиї твори здобули широку популярність серед читачів у 2020-х роках. Пише захопливі історії, що поєднують сильну інтригу, яскравих персонажів і емоційну глибину.",
+      "photoFile": "authors_photos/james-mcbride.jpg"
+    },
+    {
+      "authorName": "Hernán Díaz",
+      "biography": "Hernán Díaz — відомий сучасний автор/авторка, чиї твори здобули широку популярність серед читачів у 2020-х роках. Пише захопливі історії, що поєднують сильну інтригу, яскравих персонажів і емоційну глибину.",
+      "photoFile": "authors_photos/hern-n-d-az.jpg"
+    },
+    {
+      "authorName": "Eleanor Catton",
+      "biography": "Eleanor Catton — відомий сучасний автор/авторка, чиї твори здобули широку популярність серед читачів у 2020-х роках. Пише захопливі історії, що поєднують сильну інтригу, яскравих персонажів і емоційну глибину.",
+      "photoFile": "authors_photos/eleanor-catton.jpg"
+    },
+    {
+      "authorName": "Elizabeth O'Connor",
+      "biography": "Elizabeth O'Connor — відомий сучасний автор/авторка, чиї твори здобули широку популярність серед читачів у 2020-х роках. Пише захопливі історії, що поєднують сильну інтригу, яскравих персонажів і емоційну глибину.",
+      "photoFile": "authors_photos/elizabeth-o-connor.jpg"
+    },
+    {
+      "authorName": "Sally Rooney",
+      "biography": "Sally Rooney — відомий сучасний автор/авторка, чиї твори здобули широку популярність серед читачів у 2020-х роках. Пише захопливі історії, що поєднують сильну інтригу, яскравих персонажів і емоційну глибину.",
+      "photoFile": "authors_photos/sally-rooney.jpg"
+    },
+    {
+      "authorName": "Anthony Doerr",
+      "biography": "Anthony Doerr — відомий сучасний автор/авторка, чиї твори здобули широку популярність серед читачів у 2020-х роках. Пише захопливі історії, що поєднують сильну інтригу, яскравих персонажів і емоційну глибину.",
+      "photoFile": "authors_photos/anthony-doerr.jpg"
+    },
+    {
+      "authorName": "Matt Haig",
+      "biography": "Matt Haig — відомий сучасний автор/авторка, чиї твори здобули широку популярність серед читачів у 2020-х роках. Пише захопливі історії, що поєднують сильну інтригу, яскравих персонажів і емоційну глибину.",
+      "photoFile": "authors_photos/matt-haig.jpg"
+    },
+    {
+      "authorName": "Madeline Miller",
+      "biography": "Меделін Міллер — американська письменниця, що переосмислює античні міфи. Її романи поєднують ліризм, драму й сучасний погляд на героїв давньої Греції.",
+      "photoFile": "authors_photos/madeline-miller.jpg"
+    },
+    {
+      "authorName": "Sarah J. Maas",
+      "biography": "Сара Дж. Маас — американська авторка епічного фентезі. Створила культові світи з сильною героїнею, політичними інтригами та романтичними лініями.",
+      "photoFile": "authors_photos/sarah-j-maas.jpg"
+    },
+    {
+      "authorName": "Alex Michaelides",
+      "biography": "Alex Michaelides — відомий сучасний автор/авторка, чиї твори здобули широку популярність серед читачів у 2020-х роках. Пише захопливі історії, що поєднують сильну інтригу, яскравих персонажів і емоційну глибину.",
+      "photoFile": "authors_photos/alex-michaelides.jpg"
+    },
+    {
+      "authorName": "Nita Prose",
+      "biography": "Nita Prose — відомий сучасний автор/авторка, чиї твори здобули широку популярність серед читачів у 2020-х роках. Пише захопливі історії, що поєднують сильну інтригу, яскравих персонажів і емоційну глибину.",
+      "photoFile": "authors_photos/nita-prose.jpg"
+    },
+    {
+      "authorName": "Colleen Hoover",
+      "biography": "Колін Гувер — американська письменниця романів про складні стосунки й емоційні випробування. Її книги стали явищем книжкового ринку 2020-х.",
+      "photoFile": "authors_photos/colleen-hoover.jpg"
+    },
+    {
+      "authorName": "Ron Chernow",
+      "biography": "Ron Chernow — відомий сучасний автор/авторка, чиї твори здобули широку популярність серед читачів у 2020-х роках. Пише захопливі історії, що поєднують сильну інтригу, яскравих персонажів і емоційну глибину.",
+      "photoFile": "authors_photos/ron-chernow.jpg"
+    },
+    {
+      "authorName": "Rick Atkinson",
+      "biography": "Rick Atkinson — відомий сучасний автор/авторка, чиї твори здобули широку популярність серед читачів у 2020-х роках. Пише захопливі історії, що поєднують сильну інтригу, яскравих персонажів і емоційну глибину.",
+      "photoFile": "authors_photos/rick-atkinson.jpg"
+    },
+    {
+      "authorName": "Daniel Kahneman",
+      "biography": "Daniel Kahneman — відомий сучасний автор/авторка, чиї твори здобули широку популярність серед читачів у 2020-х роках. Пише захопливі історії, що поєднують сильну інтригу, яскравих персонажів і емоційну глибину.",
+      "photoFile": "authors_photos/daniel-kahneman.jpg"
+    },
+    {
+      "authorName": "Matthew McConaughey",
+      "biography": "Matthew McConaughey — відомий сучасний автор/авторка, чиї твори здобули широку популярність серед читачів у 2020-х роках. Пише захопливі історії, що поєднують сильну інтригу, яскравих персонажів і емоційну глибину.",
+      "photoFile": "authors_photos/matthew-mcconaughey.jpg"
+    },
+    {
+      "authorName": "Jeffery Deaver",
+      "biography": "Jeffery Deaver — відомий сучасний автор/авторка, чиї твори здобули широку популярність серед читачів у 2020-х роках. Пише захопливі історії, що поєднують сильну інтригу, яскравих персонажів і емоційну глибину.",
+      "photoFile": "authors_photos/jeffery-deaver.jpg"
+    },
+    {
+      "authorName": "Wanda M. Morris",
+      "biography": "Wanda M. Morris — відомий сучасний автор/авторка, чиї твори здобули широку популярність серед читачів у 2020-х роках. Пише захопливі історії, що поєднують сильну інтригу, яскравих персонажів і емоційну глибину.",
+      "photoFile": "authors_photos/wanda-m-morris.jpg"
+    },
+    {
+      "authorName": "Nick Cutter",
+      "biography": "Nick Cutter — відомий сучасний автор/авторка, чиї твори здобули широку популярність серед читачів у 2020-х роках. Пише захопливі історії, що поєднують сильну інтригу, яскравих персонажів і емоційну глибину.",
+      "photoFile": "authors_photos/nick-cutter.jpg"
+    },
+    {
+      "authorName": "Katee Robert",
+      "biography": "Katee Robert — відомий сучасний автор/авторка, чиї твори здобули широку популярність серед читачів у 2020-х роках. Пише захопливі історії, що поєднують сильну інтригу, яскравих персонажів і емоційну глибину.",
+      "photoFile": "authors_photos/katee-robert.jpg"
+    },
+    {
+      "authorName": "Макс Кідрук",
+      "biography": "Макс Кідрук — український письменник і популяризатор науки, автор бестселерів у жанрах технотрилеру та наукової фантастики.",
+      "photoFile": "authors_photos/maks-kidruk.jpg"
+    },
+    {
+      "authorName": "Ілларіон Павлюк",
+      "biography": "Ілларіон Павлюк — український письменник і сценарист, автор психологічних трилерів.",
+      "photoFile": "authors_photos/illarion-pavlyuk.jpg"
+    },
+    {
+      "authorName": "Дара Корній",
+      "biography": "Дара Корній — українська письменниця сучасного фентезі на основі слов’янської міфології.",
+      "photoFile": "authors_photos/dara-korniy.jpg"
+    },
+    {
+      "authorName": "Наталія Матолінець",
+      "biography": "Наталія Матолінець — українська авторка міського фентезі.",
+      "photoFile": "authors_photos/nataliya-matolinets.jpg"
+    },
+    {
+      "authorName": "Світлана Тараторіна",
+      "biography": "Світлана Тараторіна — українська письменниця фантастики й альтернативної історії.",
+      "photoFile": "authors_photos/svitlana-taratorina.jpg"
+    },
+    {
+      "authorName": "Володимир Арєнєв",
+      "biography": "Володимир Арєнєв — український фантаст і казкар.",
+      "photoFile": "authors_photos/volodymyr-aryenyev.jpg"
+    },
+    {
+      "authorName": "Марина та Сергій Дяченки",
+      "biography": "Марина та Сергій Дяченки — культовий український дует фантастів.",
+      "photoFile": "authors_photos/maryna-ta-serhiy-dyachenky.jpg"
+    },
+    {
+      "authorName": "Любко Дереш",
+      "biography": "Любко Дереш — український письменник містичної та іронічної прози.",
+      "photoFile": "authors_photos/lyubko-deresh.jpg"
+    },
+    {
+      "authorName": "Андрій Валентинов",
+      "biography": "Андрій Валентинов — український письменник-фантаст.",
+      "photoFile": "authors_photos/andriy-valentynov.jpg"
+    },
+    {
+      "authorName": "Юрій Винничук",
+      "biography": "Юрій Винничук — український прозаїк, майстер химерної прози.",
+      "photoFile": "authors_photos/yuriy-vynnychuk.jpg"
+    },
+    {
+      "authorName": "Галина Пагутяк",
+      "biography": "Галина Пагутяк — українська письменниця готичної та містичної прози.",
+      "photoFile": "authors_photos/halyna-pahutyak.jpg"
+    },
+    {
+      "authorName": "Оксана Забужко",
+      "biography": "Оксана Забужко — українська письменниця й інтелектуалка.",
+      "photoFile": "authors_photos/oksana-zabuzhko.jpg"
+    },
+    {
+      "authorName": "Сергій Жадан",
+      "biography": "Сергій Жадан — український письменник і поет, голос сучасного українського досвіду.",
+      "photoFile": "authors_photos/serhiy-zhadan.jpg"
+    },
+    {
+      "authorName": "Ліна Костенко",
+      "biography": "Ліна Костенко — класик української літератури, поетка й прозаїк.",
+      "photoFile": "authors_photos/lina-kostenko.jpg"
+    },
+    {
+      "authorName": "Василь Шкляр",
+      "biography": "Василь Шкляр — український письменник, автор історичних і сучасних бестселерів.",
+      "photoFile": "authors_photos/vasyl-shklyar.jpg"
+    }
+  ],
+  "books": [
+    {
+      "slug": "001-james",
+      "productName": "James",
+      "originalTitle": "James",
+      "description": "«James» — популярна книга Percival L. Everett, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Percival L. Everett"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Художня література"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2024,
+      "language": "Українська",
+      "imageFiles": [
+        "books/001-james/cover_1.jpg",
+        "books/001-james/cover_2.jpg",
+        "books/001-james/cover_3.jpg",
+        "books/001-james/cover_4.jpg",
+        "books/001-james/cover_5.jpg"
+      ],
+      "price": 12.99
+    },
+    {
+      "slug": "002-onyx-storm",
+      "productName": "Onyx Storm",
+      "originalTitle": "Onyx Storm",
+      "description": "«Onyx Storm» — популярна книга Rebecca Yarros, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Rebecca Yarros"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Фентезі"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2025,
+      "language": "Українська",
+      "imageFiles": [
+        "books/002-onyx-storm/cover_1.jpg",
+        "books/002-onyx-storm/cover_2.jpg",
+        "books/002-onyx-storm/cover_3.jpg",
+        "books/002-onyx-storm/cover_4.jpg",
+        "books/002-onyx-storm/cover_5.jpg"
+      ],
+      "price": 13.49
+    },
+    {
+      "slug": "003-fourth-wing",
+      "productName": "Fourth Wing",
+      "originalTitle": "Fourth Wing",
+      "description": "«Fourth Wing» — популярна книга Rebecca Yarros, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Rebecca Yarros"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Фентезі"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2023,
+      "language": "Українська",
+      "imageFiles": [
+        "books/003-fourth-wing/cover_1.jpg",
+        "books/003-fourth-wing/cover_2.jpg",
+        "books/003-fourth-wing/cover_3.jpg",
+        "books/003-fourth-wing/cover_4.jpg",
+        "books/003-fourth-wing/cover_5.jpg"
+      ],
+      "price": 13.99
+    },
+    {
+      "slug": "004-iron-flame",
+      "productName": "Iron Flame",
+      "originalTitle": "Iron Flame",
+      "description": "«Iron Flame» — популярна книга Rebecca Yarros, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Rebecca Yarros"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Фентезі"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2023,
+      "language": "Українська",
+      "imageFiles": [
+        "books/004-iron-flame/cover_1.jpg",
+        "books/004-iron-flame/cover_2.jpg",
+        "books/004-iron-flame/cover_3.jpg",
+        "books/004-iron-flame/cover_4.jpg",
+        "books/004-iron-flame/cover_5.jpg"
+      ],
+      "price": 14.49
+    },
+    {
+      "slug": "005-battle-mountain",
+      "productName": "Battle Mountain",
+      "originalTitle": "Battle Mountain",
+      "description": "«Battle Mountain» — популярна книга C. J. Box, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "C. J. Box"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Трилер"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2025,
+      "language": "Українська",
+      "imageFiles": [
+        "books/005-battle-mountain/cover_1.jpg",
+        "books/005-battle-mountain/cover_2.jpg",
+        "books/005-battle-mountain/cover_3.jpg"
+      ],
+      "price": 14.99
+    },
+    {
+      "slug": "006-lethal-prey",
+      "productName": "Lethal Prey",
+      "originalTitle": "Lethal Prey",
+      "description": "«Lethal Prey» — популярна книга John Sandford, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "John Sandford"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Трилер"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2025,
+      "language": "Українська",
+      "imageFiles": [
+        "books/006-lethal-prey/cover_1.jpg",
+        "books/006-lethal-prey/cover_2.jpg",
+        "books/006-lethal-prey/cover_3.jpg"
+      ],
+      "price": 15.49
+    },
+    {
+      "slug": "007-say-you-ll-remember-me",
+      "productName": "Say You'll Remember Me",
+      "originalTitle": "Say You'll Remember Me",
+      "description": "«Say You'll Remember Me» — популярна книга Abby Jimenez, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Abby Jimenez"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Романтика"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2025,
+      "language": "Українська",
+      "imageFiles": [
+        "books/007-say-you-ll-remember-me/cover_1.jpg",
+        "books/007-say-you-ll-remember-me/cover_2.jpg",
+        "books/007-say-you-ll-remember-me/cover_3.jpg",
+        "books/007-say-you-ll-remember-me/cover_4.jpg"
+      ],
+      "price": 15.99
+    },
+    {
+      "slug": "008-enchantra",
+      "productName": "Enchantra",
+      "originalTitle": "Enchantra",
+      "description": "«Enchantra» — популярна книга Kaylie Smith, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Kaylie Smith"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Фентезі"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2025,
+      "language": "Українська",
+      "imageFiles": [
+        "books/008-enchantra/cover_1.jpg",
+        "books/008-enchantra/cover_2.jpg"
+      ],
+      "price": 16.49
+    },
+    {
+      "slug": "009-perfect-divorce",
+      "productName": "Perfect Divorce",
+      "originalTitle": "Perfect Divorce",
+      "description": "«Perfect Divorce» — популярна книга Jeneva Rose, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Jeneva Rose"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Трилер"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2025,
+      "language": "Українська",
+      "imageFiles": [
+        "books/009-perfect-divorce/cover_1.jpg",
+        "books/009-perfect-divorce/cover_2.jpg"
+      ],
+      "price": 16.99
+    },
+    {
+      "slug": "010-great-big-beautiful-life",
+      "productName": "Great Big Beautiful Life",
+      "originalTitle": "Great Big Beautiful Life",
+      "description": "«Great Big Beautiful Life» — популярна книга Emily Henry, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Emily Henry"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Романтика"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2025,
+      "language": "Українська",
+      "imageFiles": [
+        "books/010-great-big-beautiful-life/cover_1.jpg",
+        "books/010-great-big-beautiful-life/cover_2.jpg",
+        "books/010-great-big-beautiful-life/cover_3.jpg",
+        "books/010-great-big-beautiful-life/cover_4.jpg",
+        "books/010-great-big-beautiful-life/cover_5.jpg"
+      ],
+      "price": 17.49
+    },
+    {
+      "slug": "011-25-alive",
+      "productName": "25 Alive",
+      "originalTitle": "25 Alive",
+      "description": "«25 Alive» — популярна книга James Patterson, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "James Patterson",
+        "Maxine Paetro"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Трилер"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2025,
+      "language": "Українська",
+      "imageFiles": [
+        "books/011-25-alive/cover_1.jpg",
+        "books/011-25-alive/cover_2.jpg"
+      ],
+      "price": 17.99
+    },
+    {
+      "slug": "012-the-tenant",
+      "productName": "The Tenant",
+      "originalTitle": "The Tenant",
+      "description": "«The Tenant» — популярна книга Freida McFadden, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Freida McFadden"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Трилер"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2025,
+      "language": "Українська",
+      "imageFiles": [
+        "books/012-the-tenant/cover_1.jpg",
+        "books/012-the-tenant/cover_2.jpg",
+        "books/012-the-tenant/cover_3.jpg"
+      ],
+      "price": 18.49
+    },
+    {
+      "slug": "013-a-curse-carved-in-bone",
+      "productName": "A Curse Carved in Bone",
+      "originalTitle": "A Curse Carved in Bone",
+      "description": "«A Curse Carved in Bone» — популярна книга Danielle L. Jensen, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Danielle L. Jensen"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Фентезі"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2026,
+      "language": "Українська",
+      "imageFiles": [
+        "books/013-a-curse-carved-in-bone/cover_1.jpg",
+        "books/013-a-curse-carved-in-bone/cover_2.jpg",
+        "books/013-a-curse-carved-in-bone/cover_3.jpg"
+      ],
+      "price": 18.99
+    },
+    {
+      "slug": "014-nightshade",
+      "productName": "Nightshade",
+      "originalTitle": "Nightshade",
+      "description": "«Nightshade» — популярна книга Michael Connelly, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Michael Connelly"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Трилер"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2025,
+      "language": "Українська",
+      "imageFiles": [
+        "books/014-nightshade/cover_1.jpg",
+        "books/014-nightshade/cover_2.jpg",
+        "books/014-nightshade/cover_3.jpg"
+      ],
+      "price": 19.49
+    },
+    {
+      "slug": "015-never-flinch",
+      "productName": "Never Flinch",
+      "originalTitle": "Never Flinch",
+      "description": "«Never Flinch» — популярна книга Stephen King, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Stephen King"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Трилер"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2025,
+      "language": "Українська",
+      "imageFiles": [
+        "books/015-never-flinch/cover_1.jpg",
+        "books/015-never-flinch/cover_2.jpg"
+      ],
+      "price": 19.99
+    },
+    {
+      "slug": "016-atmosphere",
+      "productName": "Atmosphere",
+      "originalTitle": "Atmosphere",
+      "description": "«Atmosphere» — популярна книга Taylor Jenkins Reid, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Taylor Jenkins Reid"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Художня література"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2025,
+      "language": "Українська",
+      "imageFiles": [
+        "books/016-atmosphere/cover_1.jpg",
+        "books/016-atmosphere/cover_2.jpg",
+        "books/016-atmosphere/cover_3.jpg",
+        "books/016-atmosphere/cover_4.jpg",
+        "books/016-atmosphere/cover_5.jpg"
+      ],
+      "price": 20.49
+    },
+    {
+      "slug": "017-caught-up",
+      "productName": "Caught Up",
+      "originalTitle": "Caught Up",
+      "description": "«Caught Up» — популярна книга Navessa Allen, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Navessa Allen"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Романтика"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2025,
+      "language": "Українська",
+      "imageFiles": [
+        "books/017-caught-up/cover_1.jpg",
+        "books/017-caught-up/cover_2.jpg",
+        "books/017-caught-up/cover_3.jpg",
+        "books/017-caught-up/cover_4.jpg",
+        "books/017-caught-up/cover_5.jpg"
+      ],
+      "price": 20.99
+    },
+    {
+      "slug": "018-don-t-let-him-in",
+      "productName": "Don't Let Him In",
+      "originalTitle": "Don't Let Him In",
+      "description": "«Don't Let Him In» — популярна книга Lisa Jewell, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Lisa Jewell"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Трилер"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2025,
+      "language": "Українська",
+      "imageFiles": [
+        "books/018-don-t-let-him-in/cover_1.jpg",
+        "books/018-don-t-let-him-in/cover_2.jpg",
+        "books/018-don-t-let-him-in/cover_3.jpg",
+        "books/018-don-t-let-him-in/cover_4.jpg",
+        "books/018-don-t-let-him-in/cover_5.jpg"
+      ],
+      "price": 21.49
+    },
+    {
+      "slug": "019-edge-of-honor",
+      "productName": "Edge of honor",
+      "originalTitle": "Edge of honor",
+      "description": "«Edge of honor» — популярна книга Brad Thor, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Brad Thor"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Трилер"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2025,
+      "language": "Українська",
+      "imageFiles": [
+        "books/019-edge-of-honor/cover_1.jpg",
+        "books/019-edge-of-honor/cover_2.jpg",
+        "books/019-edge-of-honor/cover_3.jpg",
+        "books/019-edge-of-honor/cover_4.jpg"
+      ],
+      "price": 21.99
+    },
+    {
+      "slug": "020-rose-in-chains",
+      "productName": "Rose in Chains",
+      "originalTitle": "Rose in Chains",
+      "description": "«Rose in Chains» — популярна книга Julie Soto, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Julie Soto"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Фентезі"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2025,
+      "language": "Українська",
+      "imageFiles": [
+        "books/020-rose-in-chains/cover_1.jpg",
+        "books/020-rose-in-chains/cover_2.jpg",
+        "books/020-rose-in-chains/cover_3.jpg"
+      ],
+      "price": 22.49
+    },
+    {
+      "slug": "021-an-inside-job",
+      "productName": "An Inside Job",
+      "originalTitle": "An Inside Job",
+      "description": "«An Inside Job» — популярна книга Daniel Silva, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Daniel Silva"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Трилер"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2025,
+      "language": "Українська",
+      "imageFiles": [
+        "books/021-an-inside-job/cover_1.jpg",
+        "books/021-an-inside-job/cover_2.jpg",
+        "books/021-an-inside-job/cover_3.jpg"
+      ],
+      "price": 22.99
+    },
+    {
+      "slug": "022-never-say-die",
+      "productName": "Never Say Die",
+      "originalTitle": "Never Say Die",
+      "description": "«Never Say Die» — популярна книга James Patterson, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "James Patterson",
+        "Mike Lupica"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Трилер"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2025,
+      "language": "Українська",
+      "imageFiles": [
+        "books/022-never-say-die/cover_1.jpg",
+        "books/022-never-say-die/cover_2.jpg"
+      ],
+      "price": 23.49
+    },
+    {
+      "slug": "023-mina-v-nner",
+      "productName": "Mina vänner",
+      "originalTitle": "Mina vänner",
+      "description": "«Mina vänner» — популярна книга Fredrik Backman, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Fredrik Backman"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Художня література"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2025,
+      "language": "Українська",
+      "imageFiles": [
+        "books/023-mina-v-nner/cover_1.jpg",
+        "books/023-mina-v-nner/cover_2.jpg",
+        "books/023-mina-v-nner/cover_3.jpg"
+      ],
+      "price": 23.99
+    },
+    {
+      "slug": "024-accomplice-to-the-villain",
+      "productName": "Accomplice to the Villain",
+      "originalTitle": "Accomplice to the Villain",
+      "description": "«Accomplice to the Villain» — популярна книга Hannah Nicole Maehrer, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Hannah Nicole Maehrer"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Фентезі"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2025,
+      "language": "Українська",
+      "imageFiles": [
+        "books/024-accomplice-to-the-villain/cover_1.jpg",
+        "books/024-accomplice-to-the-villain/cover_2.jpg",
+        "books/024-accomplice-to-the-villain/cover_3.jpg",
+        "books/024-accomplice-to-the-villain/cover_4.jpg"
+      ],
+      "price": 24.49
+    },
+    {
+      "slug": "025-we-are-all-guilty-here",
+      "productName": "We Are All Guilty Here",
+      "originalTitle": "We Are All Guilty Here",
+      "description": "«We Are All Guilty Here» — популярна книга Karin Slaughter, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Karin Slaughter"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Трилер"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2025,
+      "language": "Українська",
+      "imageFiles": [
+        "books/025-we-are-all-guilty-here/cover_1.jpg",
+        "books/025-we-are-all-guilty-here/cover_2.jpg",
+        "books/025-we-are-all-guilty-here/cover_3.jpg",
+        "books/025-we-are-all-guilty-here/cover_4.jpg",
+        "books/025-we-are-all-guilty-here/cover_5.jpg"
+      ],
+      "price": 24.99
+    },
+    {
+      "slug": "026-quicksilver",
+      "productName": "Quicksilver",
+      "originalTitle": "Quicksilver",
+      "description": "«Quicksilver» — популярна книга Callie Hart, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Callie Hart"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Романтика"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2024,
+      "language": "Українська",
+      "imageFiles": [
+        "books/026-quicksilver/cover_1.jpg",
+        "books/026-quicksilver/cover_2.jpg",
+        "books/026-quicksilver/cover_3.jpg",
+        "books/026-quicksilver/cover_4.jpg",
+        "books/026-quicksilver/cover_5.jpg"
+      ],
+      "price": 25.49
+    },
+    {
+      "slug": "027-brimstone",
+      "productName": "Brimstone",
+      "originalTitle": "Brimstone",
+      "description": "«Brimstone» — популярна книга Callie Hart, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Callie Hart"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Романтика"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2025,
+      "language": "Українська",
+      "imageFiles": [
+        "books/027-brimstone/cover_1.jpg",
+        "books/027-brimstone/cover_2.jpg",
+        "books/027-brimstone/cover_3.jpg"
+      ],
+      "price": 25.99
+    },
+    {
+      "slug": "028-katabasis",
+      "productName": "Katabasis",
+      "originalTitle": "Katabasis",
+      "description": "«Katabasis» — популярна книга R. F. Kuang, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "R. F. Kuang"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Фентезі"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2025,
+      "language": "Українська",
+      "imageFiles": [
+        "books/028-katabasis/cover_1.jpg",
+        "books/028-katabasis/cover_2.jpg",
+        "books/028-katabasis/cover_3.jpg",
+        "books/028-katabasis/cover_4.jpg",
+        "books/028-katabasis/cover_5.jpg"
+      ],
+      "price": 26.49
+    },
+    {
+      "slug": "029-framed-in-death",
+      "productName": "Framed in Death",
+      "originalTitle": "Framed in Death",
+      "description": "«Framed in Death» — популярна книга J. D. Robb, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "J. D. Robb"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Трилер"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2026,
+      "language": "Українська",
+      "imageFiles": [
+        "books/029-framed-in-death/cover_1.jpg",
+        "books/029-framed-in-death/cover_2.jpg",
+        "books/029-framed-in-death/cover_3.jpg"
+      ],
+      "price": 26.99
+    },
+    {
+      "slug": "030-the-secret-of-secrets",
+      "productName": "The Secret of Secrets",
+      "originalTitle": "The Secret of Secrets",
+      "description": "«The Secret of Secrets» — популярна книга Dan Brown, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Dan Brown"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Трилер"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2025,
+      "language": "Українська",
+      "imageFiles": [
+        "books/030-the-secret-of-secrets/cover_1.jpg",
+        "books/030-the-secret-of-secrets/cover_2.jpg",
+        "books/030-the-secret-of-secrets/cover_3.jpg",
+        "books/030-the-secret-of-secrets/cover_4.jpg",
+        "books/030-the-secret-of-secrets/cover_5.jpg"
+      ],
+      "price": 27.49
+    },
+    {
+      "slug": "031-alchemised",
+      "productName": "Alchemised",
+      "originalTitle": "Alchemised",
+      "description": "«Alchemised» — популярна книга SenLinYu, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "SenLinYu"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Фентезі"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2025,
+      "language": "Українська",
+      "imageFiles": [
+        "books/031-alchemised/cover_1.jpg",
+        "books/031-alchemised/cover_2.jpg",
+        "books/031-alchemised/cover_3.jpg",
+        "books/031-alchemised/cover_4.jpg",
+        "books/031-alchemised/cover_5.jpg"
+      ],
+      "price": 27.99
+    },
+    {
+      "slug": "032-the-impossible-fortune",
+      "productName": "The Impossible Fortune",
+      "originalTitle": "The Impossible Fortune",
+      "description": "«The Impossible Fortune» — популярна книга Richard Osman, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Richard Osman"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Детектив"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2025,
+      "language": "Українська",
+      "imageFiles": [
+        "books/032-the-impossible-fortune/cover_1.jpg",
+        "books/032-the-impossible-fortune/cover_2.jpg",
+        "books/032-the-impossible-fortune/cover_3.jpg"
+      ],
+      "price": 28.49
+    },
+    {
+      "slug": "033-check-mate",
+      "productName": "Check & Mate",
+      "originalTitle": "Check & Mate",
+      "description": "«Check & Mate» — популярна книга Ali Hazelwood, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Ali Hazelwood"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Романтика"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2023,
+      "language": "Українська",
+      "imageFiles": [
+        "books/033-check-mate/cover_1.jpg",
+        "books/033-check-mate/cover_2.jpg",
+        "books/033-check-mate/cover_3.jpg",
+        "books/033-check-mate/cover_4.jpg"
+      ],
+      "price": 28.99
+    },
+    {
+      "slug": "034-reese-witherspoon-harlan-coben-novel",
+      "productName": "Reese Witherspoon Harlan Coben Novel",
+      "originalTitle": "Reese Witherspoon Harlan Coben Novel",
+      "description": "«Reese Witherspoon Harlan Coben Novel» — популярна книга Reese Witherspoon, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Reese Witherspoon",
+        "Harlan Coben"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Трилер"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2025,
+      "language": "Українська",
+      "imageFiles": [
+        "books/034-reese-witherspoon-harlan-coben-novel/cover_1.jpg",
+        "books/034-reese-witherspoon-harlan-coben-novel/cover_2.jpg"
+      ],
+      "price": 29.49
+    },
+    {
+      "slug": "035-the-widow",
+      "productName": "The Widow",
+      "originalTitle": "The Widow",
+      "description": "«The Widow» — популярна книга John Grisham, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "John Grisham"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Трилер"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2025,
+      "language": "Українська",
+      "imageFiles": [
+        "books/035-the-widow/cover_1.jpg",
+        "books/035-the-widow/cover_2.jpg",
+        "books/035-the-widow/cover_3.jpg"
+      ],
+      "price": 29.99
+    },
+    {
+      "slug": "036-black-wolf",
+      "productName": "Black Wolf",
+      "originalTitle": "Black Wolf",
+      "description": "«Black Wolf» — популярна книга Louise Penny, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Louise Penny"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Детектив"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2025,
+      "language": "Українська",
+      "imageFiles": [
+        "books/036-black-wolf/cover_1.jpg",
+        "books/036-black-wolf/cover_2.jpg",
+        "books/036-black-wolf/cover_3.jpg"
+      ],
+      "price": 30.49
+    },
+    {
+      "slug": "037-reacher-30",
+      "productName": "Reacher 30",
+      "originalTitle": "Reacher 30",
+      "description": "«Reacher 30» — популярна книга Lee Child, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Lee Child",
+        "Andrew Grant"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Трилер"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2025,
+      "language": "Українська",
+      "imageFiles": [
+        "books/037-reacher-30/cover_1.jpg",
+        "books/037-reacher-30/cover_2.jpg",
+        "books/037-reacher-30/cover_3.jpg"
+      ],
+      "price": 30.99
+    },
+    {
+      "slug": "038-the-housemaid",
+      "productName": "The Housemaid",
+      "originalTitle": "The Housemaid",
+      "description": "«The Housemaid» — популярна книга Freida McFadden, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Freida McFadden"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Трилер"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2022,
+      "language": "Українська",
+      "imageFiles": [
+        "books/038-the-housemaid/cover_1.jpg",
+        "books/038-the-housemaid/cover_2.jpg",
+        "books/038-the-housemaid/cover_3.jpg",
+        "books/038-the-housemaid/cover_4.jpg",
+        "books/038-the-housemaid/cover_5.jpg"
+      ],
+      "price": 31.49
+    },
+    {
+      "slug": "039-dear-debbie",
+      "productName": "Dear Debbie",
+      "originalTitle": "Dear Debbie",
+      "description": "«Dear Debbie» — популярна книга Freida McFadden, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Freida McFadden"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Трилер"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2026,
+      "language": "Українська",
+      "imageFiles": [
+        "books/039-dear-debbie/cover_1.jpg",
+        "books/039-dear-debbie/cover_2.jpg",
+        "books/039-dear-debbie/cover_3.jpg"
+      ],
+      "price": 31.99
+    },
+    {
+      "slug": "040-the-divorce",
+      "productName": "The Divorce",
+      "originalTitle": "The Divorce",
+      "description": "«The Divorce» — популярна книга Freida McFadden, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Freida McFadden"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Трилер"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2026,
+      "language": "Українська",
+      "imageFiles": [
+        "books/040-the-divorce/cover_1.jpg",
+        "books/040-the-divorce/cover_2.jpg",
+        "books/040-the-divorce/cover_3.jpg",
+        "books/040-the-divorce/cover_4.jpg"
+      ],
+      "price": 32.49
+    },
+    {
+      "slug": "041-theo-of-golden",
+      "productName": "Theo of Golden",
+      "originalTitle": "Theo of Golden",
+      "description": "«Theo of Golden» — популярна книга Allen Levi, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Allen Levi"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Художня література"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2023,
+      "language": "Українська",
+      "imageFiles": [
+        "books/041-theo-of-golden/cover_1.jpg",
+        "books/041-theo-of-golden/cover_2.jpg",
+        "books/041-theo-of-golden/cover_3.jpg"
+      ],
+      "price": 12.99
+    },
+    {
+      "slug": "042-the-correspondent",
+      "productName": "The Correspondent",
+      "originalTitle": "The Correspondent",
+      "description": "«The Correspondent» — популярна книга Virginia Evans, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Virginia Evans"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Художня література"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2025,
+      "language": "Українська",
+      "imageFiles": [
+        "books/042-the-correspondent/cover_1.jpg",
+        "books/042-the-correspondent/cover_2.jpg",
+        "books/042-the-correspondent/cover_3.jpg"
+      ],
+      "price": 13.49
+    },
+    {
+      "slug": "043-twelve-months",
+      "productName": "Twelve Months",
+      "originalTitle": "Twelve Months",
+      "description": "«Twelve Months» — популярна книга Jim Butcher, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Jim Butcher"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Фентезі"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2026,
+      "language": "Українська",
+      "imageFiles": [
+        "books/043-twelve-months/cover_1.jpg",
+        "books/043-twelve-months/cover_2.jpg"
+      ],
+      "price": 13.99
+    },
+    {
+      "slug": "044-stolen-in-death",
+      "productName": "Stolen in Death",
+      "originalTitle": "Stolen in Death",
+      "description": "«Stolen in Death» — популярна книга J. D. Robb, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "J. D. Robb"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Трилер"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2025,
+      "language": "Українська",
+      "imageFiles": [
+        "books/044-stolen-in-death/cover_1.jpg",
+        "books/044-stolen-in-death/cover_2.jpg",
+        "books/044-stolen-in-death/cover_3.jpg"
+      ],
+      "price": 14.49
+    },
+    {
+      "slug": "045-the-crossroads",
+      "productName": "The Crossroads",
+      "originalTitle": "The Crossroads",
+      "description": "«The Crossroads» — популярна книга C. J. Box, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "C. J. Box"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Трилер"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2026,
+      "language": "Українська",
+      "imageFiles": [
+        "books/045-the-crossroads/cover_1.jpg",
+        "books/045-the-crossroads/cover_2.jpg",
+        "books/045-the-crossroads/cover_3.jpg"
+      ],
+      "price": 14.99
+    },
+    {
+      "slug": "046-judge-stone",
+      "productName": "Judge Stone",
+      "originalTitle": "Judge Stone",
+      "description": "«Judge Stone» — популярна книга James Patterson, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "James Patterson"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Трилер"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2026,
+      "language": "Українська",
+      "imageFiles": [
+        "books/046-judge-stone/cover_1.jpg",
+        "books/046-judge-stone/cover_2.jpg",
+        "books/046-judge-stone/cover_3.jpg"
+      ],
+      "price": 15.49
+    },
+    {
+      "slug": "047-project-hail-mary",
+      "productName": "Project Hail Mary",
+      "originalTitle": "Project Hail Mary",
+      "description": "«Project Hail Mary» — популярна книга Andy Weir, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Andy Weir"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Наукова фантастика"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2021,
+      "language": "Українська",
+      "imageFiles": [
+        "books/047-project-hail-mary/cover_1.jpg",
+        "books/047-project-hail-mary/cover_2.jpg",
+        "books/047-project-hail-mary/cover_3.jpg",
+        "books/047-project-hail-mary/cover_4.jpg",
+        "books/047-project-hail-mary/cover_5.jpg"
+      ],
+      "price": 15.99
+    },
+    {
+      "slug": "048-game-on",
+      "productName": "Game On",
+      "originalTitle": "Game On",
+      "description": "«Game On» — популярна книга Navessa Allen, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Navessa Allen"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Романтика"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2026,
+      "language": "Українська",
+      "imageFiles": [
+        "books/048-game-on/cover_1.jpg",
+        "books/048-game-on/cover_2.jpg",
+        "books/048-game-on/cover_3.jpg"
+      ],
+      "price": 16.49
+    },
+    {
+      "slug": "049-rites-of-the-starling",
+      "productName": "Rites of the Starling",
+      "originalTitle": "Rites of the Starling",
+      "description": "«Rites of the Starling» — популярна книга Devney Perry, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Devney Perry"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Фентезі"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2026,
+      "language": "Українська",
+      "imageFiles": [
+        "books/049-rites-of-the-starling/cover_1.jpg",
+        "books/049-rites-of-the-starling/cover_2.jpg",
+        "books/049-rites-of-the-starling/cover_3.jpg"
+      ],
+      "price": 16.99
+    },
+    {
+      "slug": "050-hope-rises",
+      "productName": "Hope Rises",
+      "originalTitle": "Hope Rises",
+      "description": "«Hope Rises» — популярна книга David Baldacci, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "David Baldacci"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Трилер"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2025,
+      "language": "Українська",
+      "imageFiles": [
+        "books/050-hope-rises/cover_1.jpg",
+        "books/050-hope-rises/cover_2.jpg",
+        "books/050-hope-rises/cover_3.jpg"
+      ],
+      "price": 17.49
+    },
+    {
+      "slug": "051-a-parade-of-horribles",
+      "productName": "A Parade of Horribles",
+      "originalTitle": "A Parade of Horribles",
+      "description": "«A Parade of Horribles» — популярна книга Matt Dinniman, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Matt Dinniman"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Фентезі"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2026,
+      "language": "Українська",
+      "imageFiles": [
+        "books/051-a-parade-of-horribles/cover_1.jpg",
+        "books/051-a-parade-of-horribles/cover_2.jpg",
+        "books/051-a-parade-of-horribles/cover_3.jpg",
+        "books/051-a-parade-of-horribles/cover_4.jpg"
+      ],
+      "price": 17.99
+    },
+    {
+      "slug": "052-dungeon-crawler-carl",
+      "productName": "Dungeon Crawler Carl",
+      "originalTitle": "Dungeon Crawler Carl",
+      "description": "«Dungeon Crawler Carl» — популярна книга Matt Dinniman, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Matt Dinniman"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Фентезі"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2020,
+      "language": "Українська",
+      "imageFiles": [
+        "books/052-dungeon-crawler-carl/cover_1.jpg",
+        "books/052-dungeon-crawler-carl/cover_2.jpg",
+        "books/052-dungeon-crawler-carl/cover_3.jpg",
+        "books/052-dungeon-crawler-carl/cover_4.jpg",
+        "books/052-dungeon-crawler-carl/cover_5.jpg"
+      ],
+      "price": 18.49
+    },
+    {
+      "slug": "053-the-ballad-of-falling-dragons",
+      "productName": "The Ballad of Falling Dragons",
+      "originalTitle": "The Ballad of Falling Dragons",
+      "description": "«The Ballad of Falling Dragons» — популярна книга Sarah A. Parker, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Sarah A. Parker"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Фентезі"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2025,
+      "language": "Українська",
+      "imageFiles": [
+        "books/053-the-ballad-of-falling-dragons/cover_1.jpg",
+        "books/053-the-ballad-of-falling-dragons/cover_2.jpg"
+      ],
+      "price": 18.99
+    },
+    {
+      "slug": "054-whistler",
+      "productName": "Whistler",
+      "originalTitle": "Whistler",
+      "description": "«Whistler» — популярна книга Ann Patchett, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Ann Patchett"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Художня література"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2025,
+      "language": "Українська",
+      "imageFiles": [
+        "books/054-whistler/cover_1.jpg",
+        "books/054-whistler/cover_2.jpg"
+      ],
+      "price": 19.49
+    },
+    {
+      "slug": "055-yesteryear",
+      "productName": "Yesteryear",
+      "originalTitle": "Yesteryear",
+      "description": "«Yesteryear» — популярна книга Therese Anne Fowler, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Therese Anne Fowler"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Художня література"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2025,
+      "language": "Українська",
+      "imageFiles": [
+        "books/055-yesteryear/cover_1.jpg",
+        "books/055-yesteryear/cover_2.jpg",
+        "books/055-yesteryear/cover_3.jpg"
+      ],
+      "price": 19.99
+    },
+    {
+      "slug": "056-the-calamity-club",
+      "productName": "The Calamity Club",
+      "originalTitle": "The Calamity Club",
+      "description": "«The Calamity Club» — популярна книга Karen Dionne, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Karen Dionne"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Художня література"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2025,
+      "language": "Українська",
+      "imageFiles": [
+        "books/056-the-calamity-club/cover_1.jpg",
+        "books/056-the-calamity-club/cover_2.jpg",
+        "books/056-the-calamity-club/cover_3.jpg"
+      ],
+      "price": 20.49
+    },
+    {
+      "slug": "057-remarkably-bright-creatures",
+      "productName": "Remarkably Bright Creatures",
+      "originalTitle": "Remarkably Bright Creatures",
+      "description": "«Remarkably Bright Creatures» — популярна книга Shelby Van Pelt, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Shelby Van Pelt"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Художня література"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2022,
+      "language": "Українська",
+      "imageFiles": [
+        "books/057-remarkably-bright-creatures/cover_1.jpg",
+        "books/057-remarkably-bright-creatures/cover_2.jpg",
+        "books/057-remarkably-bright-creatures/cover_3.jpg",
+        "books/057-remarkably-bright-creatures/cover_4.jpg",
+        "books/057-remarkably-bright-creatures/cover_5.jpg"
+      ],
+      "price": 20.99
+    },
+    {
+      "slug": "058-heated-rivalry",
+      "productName": "Heated Rivalry",
+      "originalTitle": "Heated Rivalry",
+      "description": "«Heated Rivalry» — популярна книга Rachel Reid, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Rachel Reid"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Романтика"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2019,
+      "language": "Українська",
+      "imageFiles": [
+        "books/058-heated-rivalry/cover_1.jpg",
+        "books/058-heated-rivalry/cover_2.jpg",
+        "books/058-heated-rivalry/cover_3.jpg",
+        "books/058-heated-rivalry/cover_4.jpg",
+        "books/058-heated-rivalry/cover_5.jpg"
+      ],
+      "price": 21.49
+    },
+    {
+      "slug": "059-amor-en-juego-the-long-game",
+      "productName": "Amor en Juego / the Long Game",
+      "originalTitle": "Amor en Juego / the Long Game",
+      "description": "«Amor en Juego / the Long Game» — популярна книга Elena ARMAS, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Elena ARMAS"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Романтика"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2023,
+      "language": "Українська",
+      "imageFiles": [
+        "books/059-amor-en-juego-the-long-game/cover_1.jpg"
+      ],
+      "price": 21.99
+    },
+    {
+      "slug": "060-the-deal",
+      "productName": "The Deal",
+      "originalTitle": "The Deal",
+      "description": "«The Deal» — популярна книга Elle Kennedy, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Elle Kennedy"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Романтика"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2000,
+      "language": "Українська",
+      "imageFiles": [
+        "books/060-the-deal/cover_1.jpg",
+        "books/060-the-deal/cover_2.jpg",
+        "books/060-the-deal/cover_3.jpg",
+        "books/060-the-deal/cover_4.jpg",
+        "books/060-the-deal/cover_5.jpg"
+      ],
+      "price": 22.49
+    },
+    {
+      "slug": "061-the-mistake",
+      "productName": "The Mistake",
+      "originalTitle": "The Mistake",
+      "description": "«The Mistake» — популярна книга Elle Kennedy, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Elle Kennedy"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Романтика"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2015,
+      "language": "Українська",
+      "imageFiles": [
+        "books/061-the-mistake/cover_1.jpg",
+        "books/061-the-mistake/cover_2.jpg",
+        "books/061-the-mistake/cover_3.jpg",
+        "books/061-the-mistake/cover_4.jpg",
+        "books/061-the-mistake/cover_5.jpg"
+      ],
+      "price": 22.99
+    },
+    {
+      "slug": "062-the-score",
+      "productName": "The Score",
+      "originalTitle": "The Score",
+      "description": "«The Score» — популярна книга Elle Kennedy, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Elle Kennedy"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Романтика"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2016,
+      "language": "Українська",
+      "imageFiles": [
+        "books/062-the-score/cover_1.jpg",
+        "books/062-the-score/cover_2.jpg",
+        "books/062-the-score/cover_3.jpg",
+        "books/062-the-score/cover_4.jpg",
+        "books/062-the-score/cover_5.jpg"
+      ],
+      "price": 23.49
+    },
+    {
+      "slug": "063-funny-story",
+      "productName": "Funny Story",
+      "originalTitle": "Funny Story",
+      "description": "«Funny Story» — популярна книга Emily Henry, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Emily Henry"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Романтика"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2024,
+      "language": "Українська",
+      "imageFiles": [
+        "books/063-funny-story/cover_1.jpg",
+        "books/063-funny-story/cover_2.jpg",
+        "books/063-funny-story/cover_3.jpg",
+        "books/063-funny-story/cover_4.jpg",
+        "books/063-funny-story/cover_5.jpg"
+      ],
+      "price": 23.99
+    },
+    {
+      "slug": "064-book-lovers",
+      "productName": "Book Lovers",
+      "originalTitle": "Book Lovers",
+      "description": "«Book Lovers» — популярна книга Emily Henry, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Emily Henry"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Романтика"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2022,
+      "language": "Українська",
+      "imageFiles": [
+        "books/064-book-lovers/cover_1.jpg",
+        "books/064-book-lovers/cover_2.jpg",
+        "books/064-book-lovers/cover_3.jpg",
+        "books/064-book-lovers/cover_4.jpg",
+        "books/064-book-lovers/cover_5.jpg"
+      ],
+      "price": 24.49
+    },
+    {
+      "slug": "065-beach-read",
+      "productName": "Beach Read",
+      "originalTitle": "Beach Read",
+      "description": "«Beach Read» — популярна книга Emily Henry, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Emily Henry"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Романтика"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2020,
+      "language": "Українська",
+      "imageFiles": [
+        "books/065-beach-read/cover_1.jpg",
+        "books/065-beach-read/cover_2.jpg",
+        "books/065-beach-read/cover_3.jpg",
+        "books/065-beach-read/cover_4.jpg",
+        "books/065-beach-read/cover_5.jpg"
+      ],
+      "price": 24.99
+    },
+    {
+      "slug": "066-happy-place",
+      "productName": "Happy Place",
+      "originalTitle": "Happy Place",
+      "description": "«Happy Place» — популярна книга Emily Henry, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Emily Henry"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Романтика"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2023,
+      "language": "Українська",
+      "imageFiles": [
+        "books/066-happy-place/cover_1.jpg",
+        "books/066-happy-place/cover_2.jpg",
+        "books/066-happy-place/cover_3.jpg",
+        "books/066-happy-place/cover_4.jpg",
+        "books/066-happy-place/cover_5.jpg"
+      ],
+      "price": 25.49
+    },
+    {
+      "slug": "067-people-we-meet-on-vacation",
+      "productName": "People We Meet On Vacation",
+      "originalTitle": "People We Meet On Vacation",
+      "description": "«People We Meet On Vacation» — популярна книга Emily Henry, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Emily Henry"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Романтика"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2021,
+      "language": "Українська",
+      "imageFiles": [
+        "books/067-people-we-meet-on-vacation/cover_1.jpg",
+        "books/067-people-we-meet-on-vacation/cover_2.jpg",
+        "books/067-people-we-meet-on-vacation/cover_3.jpg",
+        "books/067-people-we-meet-on-vacation/cover_4.jpg",
+        "books/067-people-we-meet-on-vacation/cover_5.jpg"
+      ],
+      "price": 25.99
+    },
+    {
+      "slug": "068-the-women",
+      "productName": "The Women",
+      "originalTitle": "The Women",
+      "description": "«The Women» — популярна книга Kristin Hannah, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Kristin Hannah"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Художня література"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2024,
+      "language": "Українська",
+      "imageFiles": [
+        "books/068-the-women/cover_1.jpg",
+        "books/068-the-women/cover_2.jpg",
+        "books/068-the-women/cover_3.jpg",
+        "books/068-the-women/cover_4.jpg",
+        "books/068-the-women/cover_5.jpg"
+      ],
+      "price": 26.49
+    },
+    {
+      "slug": "069-the-nightingale",
+      "productName": "The Nightingale",
+      "originalTitle": "The Nightingale",
+      "description": "«The Nightingale» — популярна книга Kristin Hannah, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Kristin Hannah"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Художня література"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2000,
+      "language": "Українська",
+      "imageFiles": [
+        "books/069-the-nightingale/cover_1.jpg",
+        "books/069-the-nightingale/cover_2.jpg",
+        "books/069-the-nightingale/cover_3.jpg",
+        "books/069-the-nightingale/cover_4.jpg",
+        "books/069-the-nightingale/cover_5.jpg"
+      ],
+      "price": 26.99
+    },
+    {
+      "slug": "070-lessons-in-chemistry",
+      "productName": "Lessons in Chemistry",
+      "originalTitle": "Lessons in Chemistry",
+      "description": "«Lessons in Chemistry» — популярна книга Bonnie Garmus, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Bonnie Garmus"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Художня література"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2022,
+      "language": "Українська",
+      "imageFiles": [
+        "books/070-lessons-in-chemistry/cover_1.jpg",
+        "books/070-lessons-in-chemistry/cover_2.jpg",
+        "books/070-lessons-in-chemistry/cover_3.jpg",
+        "books/070-lessons-in-chemistry/cover_4.jpg",
+        "books/070-lessons-in-chemistry/cover_5.jpg"
+      ],
+      "price": 27.49
+    },
+    {
+      "slug": "071-demon-copperhead",
+      "productName": "Demon Copperhead",
+      "originalTitle": "Demon Copperhead",
+      "description": "«Demon Copperhead» — популярна книга Barbara Kingsolver, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Barbara Kingsolver"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Художня література"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2022,
+      "language": "Українська",
+      "imageFiles": [
+        "books/071-demon-copperhead/cover_1.jpg",
+        "books/071-demon-copperhead/cover_2.jpg",
+        "books/071-demon-copperhead/cover_3.jpg",
+        "books/071-demon-copperhead/cover_4.jpg",
+        "books/071-demon-copperhead/cover_5.jpg"
+      ],
+      "price": 27.99
+    },
+    {
+      "slug": "072-tomorrow-and-tomorrow-and-tomorrow",
+      "productName": "Tomorrow, and Tomorrow, and Tomorrow",
+      "originalTitle": "Tomorrow, and Tomorrow, and Tomorrow",
+      "description": "«Tomorrow, and Tomorrow, and Tomorrow» — популярна книга Gabrielle Zevin, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Gabrielle Zevin"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Художня література"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2022,
+      "language": "Українська",
+      "imageFiles": [
+        "books/072-tomorrow-and-tomorrow-and-tomorrow/cover_1.jpg",
+        "books/072-tomorrow-and-tomorrow-and-tomorrow/cover_2.jpg",
+        "books/072-tomorrow-and-tomorrow-and-tomorrow/cover_3.jpg",
+        "books/072-tomorrow-and-tomorrow-and-tomorrow/cover_4.jpg",
+        "books/072-tomorrow-and-tomorrow-and-tomorrow/cover_5.jpg"
+      ],
+      "price": 28.49
+    },
+    {
+      "slug": "073-yellowface",
+      "productName": "Yellowface",
+      "originalTitle": "Yellowface",
+      "description": "«Yellowface» — популярна книга R. F. Kuang, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "R. F. Kuang"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Художня література"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2023,
+      "language": "Українська",
+      "imageFiles": [
+        "books/073-yellowface/cover_1.jpg",
+        "books/073-yellowface/cover_2.jpg",
+        "books/073-yellowface/cover_3.jpg",
+        "books/073-yellowface/cover_4.jpg",
+        "books/073-yellowface/cover_5.jpg"
+      ],
+      "price": 28.99
+    },
+    {
+      "slug": "074-babel",
+      "productName": "Babel",
+      "originalTitle": "Babel",
+      "description": "«Babel» — популярна книга R. F. Kuang, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "R. F. Kuang"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Фентезі"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2022,
+      "language": "Українська",
+      "imageFiles": [
+        "books/074-babel/cover_1.jpg",
+        "books/074-babel/cover_2.jpg",
+        "books/074-babel/cover_3.jpg",
+        "books/074-babel/cover_4.jpg",
+        "books/074-babel/cover_5.jpg"
+      ],
+      "price": 29.49
+    },
+    {
+      "slug": "075-the-heaven-earth-grocery-store",
+      "productName": "The Heaven & Earth Grocery Store",
+      "originalTitle": "The Heaven & Earth Grocery Store",
+      "description": "«The Heaven & Earth Grocery Store» — популярна книга James McBride, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "James McBride"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Художня література"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2023,
+      "language": "Українська",
+      "imageFiles": [
+        "books/075-the-heaven-earth-grocery-store/cover_1.jpg",
+        "books/075-the-heaven-earth-grocery-store/cover_2.jpg",
+        "books/075-the-heaven-earth-grocery-store/cover_3.jpg",
+        "books/075-the-heaven-earth-grocery-store/cover_4.jpg",
+        "books/075-the-heaven-earth-grocery-store/cover_5.jpg"
+      ],
+      "price": 29.99
+    },
+    {
+      "slug": "076-trust",
+      "productName": "Trust",
+      "originalTitle": "Trust",
+      "description": "«Trust» — популярна книга Hernán Díaz, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Hernán Díaz"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Художня література"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2022,
+      "language": "Українська",
+      "imageFiles": [
+        "books/076-trust/cover_1.jpg",
+        "books/076-trust/cover_2.jpg",
+        "books/076-trust/cover_3.jpg",
+        "books/076-trust/cover_4.jpg",
+        "books/076-trust/cover_5.jpg"
+      ],
+      "price": 30.49
+    },
+    {
+      "slug": "077-birnam-wood",
+      "productName": "Birnam Wood",
+      "originalTitle": "Birnam Wood",
+      "description": "«Birnam Wood» — популярна книга Eleanor Catton, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Eleanor Catton"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Художня література"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2023,
+      "language": "Українська",
+      "imageFiles": [
+        "books/077-birnam-wood/cover_1.jpg",
+        "books/077-birnam-wood/cover_2.jpg",
+        "books/077-birnam-wood/cover_3.jpg",
+        "books/077-birnam-wood/cover_4.jpg"
+      ],
+      "price": 30.99
+    },
+    {
+      "slug": "078-whale-fall",
+      "productName": "Whale Fall",
+      "originalTitle": "Whale Fall",
+      "description": "«Whale Fall» — популярна книга Elizabeth O'Connor, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Elizabeth O'Connor"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Художня література"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2024,
+      "language": "Українська",
+      "imageFiles": [
+        "books/078-whale-fall/cover_1.jpg",
+        "books/078-whale-fall/cover_2.jpg",
+        "books/078-whale-fall/cover_3.jpg"
+      ],
+      "price": 31.49
+    },
+    {
+      "slug": "079-intermezzo",
+      "productName": "Intermezzo",
+      "originalTitle": "Intermezzo",
+      "description": "«Intermezzo» — популярна книга Sally Rooney, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Sally Rooney"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Художня література"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2024,
+      "language": "Українська",
+      "imageFiles": [
+        "books/079-intermezzo/cover_1.jpg",
+        "books/079-intermezzo/cover_2.jpg",
+        "books/079-intermezzo/cover_3.jpg",
+        "books/079-intermezzo/cover_4.jpg"
+      ],
+      "price": 31.99
+    },
+    {
+      "slug": "080-normal-people",
+      "productName": "Normal People",
+      "originalTitle": "Normal People",
+      "description": "«Normal People» — популярна книга Sally Rooney, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Sally Rooney"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Художня література"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2018,
+      "language": "Українська",
+      "imageFiles": [
+        "books/080-normal-people/cover_1.jpg",
+        "books/080-normal-people/cover_2.jpg",
+        "books/080-normal-people/cover_3.jpg",
+        "books/080-normal-people/cover_4.jpg",
+        "books/080-normal-people/cover_5.jpg"
+      ],
+      "price": 32.49
+    },
+    {
+      "slug": "081-all-the-light-we-cannot-see",
+      "productName": "All the Light We Cannot See",
+      "originalTitle": "All the Light We Cannot See",
+      "description": "«All the Light We Cannot See» — популярна книга Anthony Doerr, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Anthony Doerr"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Художня література"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2014,
+      "language": "Українська",
+      "imageFiles": [
+        "books/081-all-the-light-we-cannot-see/cover_1.jpg",
+        "books/081-all-the-light-we-cannot-see/cover_2.jpg",
+        "books/081-all-the-light-we-cannot-see/cover_3.jpg",
+        "books/081-all-the-light-we-cannot-see/cover_4.jpg",
+        "books/081-all-the-light-we-cannot-see/cover_5.jpg"
+      ],
+      "price": 12.99
+    },
+    {
+      "slug": "082-cloud-cuckoo-land",
+      "productName": "Cloud Cuckoo Land",
+      "originalTitle": "Cloud Cuckoo Land",
+      "description": "«Cloud Cuckoo Land» — популярна книга Anthony Doerr, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Anthony Doerr"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Художня література"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2021,
+      "language": "Українська",
+      "imageFiles": [
+        "books/082-cloud-cuckoo-land/cover_1.jpg",
+        "books/082-cloud-cuckoo-land/cover_2.jpg",
+        "books/082-cloud-cuckoo-land/cover_3.jpg",
+        "books/082-cloud-cuckoo-land/cover_4.jpg",
+        "books/082-cloud-cuckoo-land/cover_5.jpg"
+      ],
+      "price": 13.49
+    },
+    {
+      "slug": "083-the-midnight-library",
+      "productName": "The Midnight Library",
+      "originalTitle": "The Midnight Library",
+      "description": "«The Midnight Library» — популярна книга Matt Haig, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Matt Haig"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Художня література"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2020,
+      "language": "Українська",
+      "imageFiles": [
+        "books/083-the-midnight-library/cover_1.jpg",
+        "books/083-the-midnight-library/cover_2.jpg",
+        "books/083-the-midnight-library/cover_3.jpg",
+        "books/083-the-midnight-library/cover_4.jpg",
+        "books/083-the-midnight-library/cover_5.jpg"
+      ],
+      "price": 13.99
+    },
+    {
+      "slug": "084-circe",
+      "productName": "Circe",
+      "originalTitle": "Circe",
+      "description": "«Circe» — популярна книга Madeline Miller, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Madeline Miller"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Фентезі"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2018,
+      "language": "Українська",
+      "imageFiles": [
+        "books/084-circe/cover_1.jpg",
+        "books/084-circe/cover_2.jpg",
+        "books/084-circe/cover_3.jpg",
+        "books/084-circe/cover_4.jpg",
+        "books/084-circe/cover_5.jpg"
+      ],
+      "price": 14.49
+    },
+    {
+      "slug": "085-the-song-of-achilles",
+      "productName": "The Song of Achilles",
+      "originalTitle": "The Song of Achilles",
+      "description": "«The Song of Achilles» — популярна книга Madeline Miller, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Madeline Miller"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Фентезі"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2011,
+      "language": "Українська",
+      "imageFiles": [
+        "books/085-the-song-of-achilles/cover_1.jpg",
+        "books/085-the-song-of-achilles/cover_2.jpg",
+        "books/085-the-song-of-achilles/cover_3.jpg",
+        "books/085-the-song-of-achilles/cover_4.jpg",
+        "books/085-the-song-of-achilles/cover_5.jpg"
+      ],
+      "price": 14.99
+    },
+    {
+      "slug": "086-a-court-of-thorns-and-roses",
+      "productName": "A Court of Thorns and Roses",
+      "originalTitle": "A Court of Thorns and Roses",
+      "description": "«A Court of Thorns and Roses» — популярна книга Sarah J. Maas, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Sarah J. Maas"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Фентезі"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2013,
+      "language": "Українська",
+      "imageFiles": [
+        "books/086-a-court-of-thorns-and-roses/cover_1.jpg",
+        "books/086-a-court-of-thorns-and-roses/cover_2.jpg",
+        "books/086-a-court-of-thorns-and-roses/cover_3.jpg",
+        "books/086-a-court-of-thorns-and-roses/cover_4.jpg",
+        "books/086-a-court-of-thorns-and-roses/cover_5.jpg"
+      ],
+      "price": 15.49
+    },
+    {
+      "slug": "087-una-corte-de-niebla-y-furia",
+      "productName": "Una corte de niebla y furia",
+      "originalTitle": "Una corte de niebla y furia",
+      "description": "«Una corte de niebla y furia» — популярна книга Sarah J. Maas, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Sarah J. Maas"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Фентезі"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2014,
+      "language": "Українська",
+      "imageFiles": [
+        "books/087-una-corte-de-niebla-y-furia/cover_1.jpg",
+        "books/087-una-corte-de-niebla-y-furia/cover_2.jpg",
+        "books/087-una-corte-de-niebla-y-furia/cover_3.jpg",
+        "books/087-una-corte-de-niebla-y-furia/cover_4.jpg",
+        "books/087-una-corte-de-niebla-y-furia/cover_5.jpg"
+      ],
+      "price": 15.99
+    },
+    {
+      "slug": "088-house-of-earth-and-blood",
+      "productName": "House of Earth and Blood",
+      "originalTitle": "House of Earth and Blood",
+      "description": "«House of Earth and Blood» — популярна книга Sarah J. Maas, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Sarah J. Maas"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Фентезі"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2019,
+      "language": "Українська",
+      "imageFiles": [
+        "books/088-house-of-earth-and-blood/cover_1.jpg",
+        "books/088-house-of-earth-and-blood/cover_2.jpg",
+        "books/088-house-of-earth-and-blood/cover_3.jpg",
+        "books/088-house-of-earth-and-blood/cover_4.jpg",
+        "books/088-house-of-earth-and-blood/cover_5.jpg"
+      ],
+      "price": 16.49
+    },
+    {
+      "slug": "089-throne-of-glass",
+      "productName": "Throne of Glass",
+      "originalTitle": "Throne of Glass",
+      "description": "«Throne of Glass» — популярна книга Sarah J. Maas, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Sarah J. Maas"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Фентезі"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2012,
+      "language": "Українська",
+      "imageFiles": [
+        "books/089-throne-of-glass/cover_1.jpg",
+        "books/089-throne-of-glass/cover_2.jpg",
+        "books/089-throne-of-glass/cover_3.jpg",
+        "books/089-throne-of-glass/cover_4.jpg",
+        "books/089-throne-of-glass/cover_5.jpg"
+      ],
+      "price": 16.99
+    },
+    {
+      "slug": "090-the-silent-patient",
+      "productName": "The Silent Patient",
+      "originalTitle": "The Silent Patient",
+      "description": "«The Silent Patient» — популярна книга Alex Michaelides, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Alex Michaelides"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Трилер"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2018,
+      "language": "Українська",
+      "imageFiles": [
+        "books/090-the-silent-patient/cover_1.jpg",
+        "books/090-the-silent-patient/cover_2.jpg",
+        "books/090-the-silent-patient/cover_3.jpg",
+        "books/090-the-silent-patient/cover_4.jpg",
+        "books/090-the-silent-patient/cover_5.jpg"
+      ],
+      "price": 17.49
+    },
+    {
+      "slug": "091-the-maid",
+      "productName": "The Maid",
+      "originalTitle": "The Maid",
+      "description": "«The Maid» — популярна книга Nita Prose, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Nita Prose"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Детектив"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2019,
+      "language": "Українська",
+      "imageFiles": [
+        "books/091-the-maid/cover_1.jpg",
+        "books/091-the-maid/cover_2.jpg",
+        "books/091-the-maid/cover_3.jpg",
+        "books/091-the-maid/cover_4.jpg",
+        "books/091-the-maid/cover_5.jpg"
+      ],
+      "price": 17.99
+    },
+    {
+      "slug": "092-verity",
+      "productName": "Verity",
+      "originalTitle": "Verity",
+      "description": "«Verity» — популярна книга Colleen Hoover, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Colleen Hoover"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Трилер"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2018,
+      "language": "Українська",
+      "imageFiles": [
+        "books/092-verity/cover_1.jpg",
+        "books/092-verity/cover_2.jpg",
+        "books/092-verity/cover_3.jpg",
+        "books/092-verity/cover_4.jpg",
+        "books/092-verity/cover_5.jpg"
+      ],
+      "price": 18.49
+    },
+    {
+      "slug": "093-it-ends-with-us",
+      "productName": "It Ends With Us",
+      "originalTitle": "It Ends With Us",
+      "description": "«It Ends With Us» — популярна книга Colleen Hoover, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Colleen Hoover"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Романтика"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2012,
+      "language": "Українська",
+      "imageFiles": [
+        "books/093-it-ends-with-us/cover_1.jpg",
+        "books/093-it-ends-with-us/cover_2.jpg",
+        "books/093-it-ends-with-us/cover_3.jpg",
+        "books/093-it-ends-with-us/cover_4.jpg",
+        "books/093-it-ends-with-us/cover_5.jpg"
+      ],
+      "price": 18.99
+    },
+    {
+      "slug": "094-it-starts-with-us",
+      "productName": "It Starts with Us",
+      "originalTitle": "It Starts with Us",
+      "description": "«It Starts with Us» — популярна книга Colleen Hoover, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Colleen Hoover"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Романтика"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2022,
+      "language": "Українська",
+      "imageFiles": [
+        "books/094-it-starts-with-us/cover_1.jpg",
+        "books/094-it-starts-with-us/cover_2.jpg",
+        "books/094-it-starts-with-us/cover_3.jpg",
+        "books/094-it-starts-with-us/cover_4.jpg",
+        "books/094-it-starts-with-us/cover_5.jpg"
+      ],
+      "price": 19.49
+    },
+    {
+      "slug": "095-ugly-love",
+      "productName": "Ugly Love",
+      "originalTitle": "Ugly Love",
+      "description": "«Ugly Love» — популярна книга Colleen Hoover, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Colleen Hoover"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Романтика"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2014,
+      "language": "Українська",
+      "imageFiles": [
+        "books/095-ugly-love/cover_1.jpg",
+        "books/095-ugly-love/cover_2.jpg",
+        "books/095-ugly-love/cover_3.jpg",
+        "books/095-ugly-love/cover_4.jpg",
+        "books/095-ugly-love/cover_5.jpg"
+      ],
+      "price": 19.99
+    },
+    {
+      "slug": "096-the-love-hypothesis",
+      "productName": "The Love Hypothesis",
+      "originalTitle": "The Love Hypothesis",
+      "description": "«The Love Hypothesis» — популярна книга Ali Hazelwood, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Ali Hazelwood"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Романтика"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2021,
+      "language": "Українська",
+      "imageFiles": [
+        "books/096-the-love-hypothesis/cover_1.jpg",
+        "books/096-the-love-hypothesis/cover_2.jpg",
+        "books/096-the-love-hypothesis/cover_3.jpg",
+        "books/096-the-love-hypothesis/cover_4.jpg",
+        "books/096-the-love-hypothesis/cover_5.jpg"
+      ],
+      "price": 20.49
+    },
+    {
+      "slug": "097-love-theoretically",
+      "productName": "Love Theoretically",
+      "originalTitle": "Love Theoretically",
+      "description": "«Love Theoretically» — популярна книга Ali Hazelwood, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Ali Hazelwood"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Романтика"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2023,
+      "language": "Українська",
+      "imageFiles": [
+        "books/097-love-theoretically/cover_1.jpg",
+        "books/097-love-theoretically/cover_2.jpg",
+        "books/097-love-theoretically/cover_3.jpg",
+        "books/097-love-theoretically/cover_4.jpg",
+        "books/097-love-theoretically/cover_5.jpg"
+      ],
+      "price": 20.99
+    },
+    {
+      "slug": "098-check-mate",
+      "productName": "Check & Mate",
+      "originalTitle": "Check & Mate",
+      "description": "«Check & Mate» — популярна книга Ali Hazelwood, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Ali Hazelwood"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Романтика"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2023,
+      "language": "Українська",
+      "imageFiles": [
+        "books/098-check-mate/cover_1.jpg",
+        "books/098-check-mate/cover_2.jpg",
+        "books/098-check-mate/cover_3.jpg",
+        "books/098-check-mate/cover_4.jpg"
+      ],
+      "price": 21.49
+    },
+    {
+      "slug": "099-the-housemaid-s-secret",
+      "productName": "The Housemaid's Secret",
+      "originalTitle": "The Housemaid's Secret",
+      "description": "«The Housemaid's Secret» — популярна книга Freida McFadden, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Freida McFadden"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Трилер"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2023,
+      "language": "Українська",
+      "imageFiles": [
+        "books/099-the-housemaid-s-secret/cover_1.jpg",
+        "books/099-the-housemaid-s-secret/cover_2.jpg",
+        "books/099-the-housemaid-s-secret/cover_3.jpg",
+        "books/099-the-housemaid-s-secret/cover_4.jpg",
+        "books/099-the-housemaid-s-secret/cover_5.jpg"
+      ],
+      "price": 21.99
+    },
+    {
+      "slug": "100-the-coworker",
+      "productName": "The Coworker",
+      "originalTitle": "The Coworker",
+      "description": "«The Coworker» — популярна книга Freida McFadden, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Freida McFadden"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Трилер"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2023,
+      "language": "Українська",
+      "imageFiles": [
+        "books/100-the-coworker/cover_1.jpg",
+        "books/100-the-coworker/cover_2.jpg",
+        "books/100-the-coworker/cover_3.jpg",
+        "books/100-the-coworker/cover_4.jpg",
+        "books/100-the-coworker/cover_5.jpg"
+      ],
+      "price": 22.49
+    },
+    {
+      "slug": "101-never-lie",
+      "productName": "Never Lie",
+      "originalTitle": "Never Lie",
+      "description": "«Never Lie» — популярна книга Freida McFadden, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Freida McFadden"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Трилер"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2022,
+      "language": "Українська",
+      "imageFiles": [
+        "books/101-never-lie/cover_1.jpg",
+        "books/101-never-lie/cover_2.jpg",
+        "books/101-never-lie/cover_3.jpg",
+        "books/101-never-lie/cover_4.jpg",
+        "books/101-never-lie/cover_5.jpg"
+      ],
+      "price": 22.99
+    },
+    {
+      "slug": "102-the-crash",
+      "productName": "The Crash",
+      "originalTitle": "The Crash",
+      "description": "«The Crash» — популярна книга Freida McFadden, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Freida McFadden"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Трилер"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2025,
+      "language": "Українська",
+      "imageFiles": [
+        "books/102-the-crash/cover_1.jpg",
+        "books/102-the-crash/cover_2.jpg"
+      ],
+      "price": 23.49
+    },
+    {
+      "slug": "108-mark-twain",
+      "productName": "Mark Twain",
+      "originalTitle": "Mark Twain",
+      "description": "«Mark Twain» — популярна книга Ron Chernow, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Ron Chernow"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Нон-фікшн"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2025,
+      "language": "Українська",
+      "imageFiles": [
+        "books/108-mark-twain/cover_1.jpg",
+        "books/108-mark-twain/cover_2.jpg"
+      ],
+      "price": 26.49
+    },
+    {
+      "slug": "110-fate-of-the-day",
+      "productName": "Fate of the Day",
+      "originalTitle": "Fate of the Day",
+      "description": "«Fate of the Day» — популярна книга Rick Atkinson, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Rick Atkinson"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Нон-фікшн"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2025,
+      "language": "Українська",
+      "imageFiles": [
+        "books/110-fate-of-the-day/cover_1.jpg",
+        "books/110-fate-of-the-day/cover_2.jpg"
+      ],
+      "price": 27.49
+    },
+    {
+      "slug": "121-thinking-fast-and-slow",
+      "productName": "Thinking, fast and slow",
+      "originalTitle": "Thinking, fast and slow",
+      "description": "«Thinking, fast and slow» — популярна книга Daniel Kahneman, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Daniel Kahneman",
+        "Daniel Kahneman"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Нон-фікшн"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2011,
+      "language": "Українська",
+      "imageFiles": [
+        "books/121-thinking-fast-and-slow/cover_1.jpg",
+        "books/121-thinking-fast-and-slow/cover_2.jpg",
+        "books/121-thinking-fast-and-slow/cover_3.jpg",
+        "books/121-thinking-fast-and-slow/cover_4.jpg",
+        "books/121-thinking-fast-and-slow/cover_5.jpg"
+      ],
+      "price": 12.99
+    },
+    {
+      "slug": "126-poems-and-prayers",
+      "productName": "Poems and Prayers",
+      "originalTitle": "Poems and Prayers",
+      "description": "«Poems and Prayers» — популярна книга Matthew McConaughey, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Matthew McConaughey"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Нон-фікшн"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2025,
+      "language": "Українська",
+      "imageFiles": [
+        "books/126-poems-and-prayers/cover_1.jpg",
+        "books/126-poems-and-prayers/cover_2.jpg",
+        "books/126-poems-and-prayers/cover_3.jpg"
+      ],
+      "price": 15.49
+    },
+    {
+      "slug": "146-cool-machine",
+      "productName": "Cool Machine",
+      "originalTitle": "Cool Machine",
+      "description": "«Cool Machine» — популярна книга Jeffery Deaver, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Jeffery Deaver"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Трилер"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2025,
+      "language": "Українська",
+      "imageFiles": [
+        "books/146-cool-machine/cover_1.jpg",
+        "books/146-cool-machine/cover_2.jpg",
+        "books/146-cool-machine/cover_3.jpg"
+      ],
+      "price": 25.49
+    },
+    {
+      "slug": "147-the-country-road-murders",
+      "productName": "The Country Road Murders",
+      "originalTitle": "The Country Road Murders",
+      "description": "«The Country Road Murders» — популярна книга Wanda M. Morris, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Wanda M. Morris"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Детектив"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2025,
+      "language": "Українська",
+      "imageFiles": [
+        "books/147-the-country-road-murders/cover_1.jpg",
+        "books/147-the-country-road-murders/cover_2.jpg",
+        "books/147-the-country-road-murders/cover_3.jpg"
+      ],
+      "price": 25.99
+    },
+    {
+      "slug": "148-harvest-season",
+      "productName": "Harvest Season",
+      "originalTitle": "Harvest Season",
+      "description": "«Harvest Season» — популярна книга Nick Cutter, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Nick Cutter"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Жахи"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2025,
+      "language": "Українська",
+      "imageFiles": [
+        "books/148-harvest-season/cover_1.jpg",
+        "books/148-harvest-season/cover_2.jpg",
+        "books/148-harvest-season/cover_3.jpg"
+      ],
+      "price": 26.49
+    },
+    {
+      "slug": "149-light-wielder",
+      "productName": "Light Wielder",
+      "originalTitle": "Light Wielder",
+      "description": "«Light Wielder» — популярна книга Sarah J. Maas, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Sarah J. Maas"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Фентезі"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2025,
+      "language": "Українська",
+      "imageFiles": [
+        "books/149-light-wielder/cover_1.jpg",
+        "books/149-light-wielder/cover_2.jpg",
+        "books/149-light-wielder/cover_3.jpg"
+      ],
+      "price": 26.99
+    },
+    {
+      "slug": "150-tempting-venom",
+      "productName": "Tempting Venom",
+      "originalTitle": "Tempting Venom",
+      "description": "«Tempting Venom» — популярна книга Katee Robert, що активно обговорювалась читачами у 2025–2026 роках. Яскравий сюжет, сучасні теми та сильна емоційна напруга.",
+      "authors": [
+        "Katee Robert"
+      ],
+      "publisher": "Unknown Publisher",
+      "categories": [
+        "Романтика"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2025,
+      "language": "Українська",
+      "imageFiles": [
+        "books/150-tempting-venom/cover_1.jpg",
+        "books/150-tempting-venom/cover_2.jpg",
+        "books/150-tempting-venom/cover_3.jpg"
+      ],
+      "price": 27.49
+    },
+    {
+      "slug": "book-bot",
+      "productName": "Бот",
+      "originalTitle": "Бот",
+      "description": "Культовий український технотрилер про штучний інтелект, корпорації та межі людської свободи у цифровому світі.",
+      "authors": [
+        "Макс Кідрук"
+      ],
+      "publisher": "Клуб Сімейного Дозвілля",
+      "categories": [
+        "Наукова фантастика"
+      ],
+      "isbn": null,
+      "pageCount": 432,
+      "publishingYear": 2012,
+      "language": "Українська",
+      "imageFiles": [
+        "books/book-bot/cover_1.jpg"
+      ],
+      "price": 349.0
+    },
+    {
+      "slug": "book-ne-ozyraysya-i-movchy",
+      "productName": "Не озирайся і мовчи",
+      "originalTitle": "Не озирайся і мовчи",
+      "description": "Напружений роман Кідрука про травму, пам’ять і небезпечні експерименти, що змінюють уявлення про реальність.",
+      "authors": [
+        "Макс Кідрук"
+      ],
+      "publisher": "Клуб Сімейного Дозвілля",
+      "categories": [
+        "Трилер",
+        "Наукова фантастика"
+      ],
+      "isbn": "9786171238657",
+      "pageCount": 480,
+      "publishingYear": 2017,
+      "language": "Українська",
+      "imageFiles": [
+        "books\\135-не-озирайся-і-мовчи\\cover_1.jpg",
+        "books/135-не-озирайся-і-мовчи/cover_2.jpg"
+      ],
+      "price": 379.0
+    },
+    {
+      "slug": "book-doky-svitlo-ne-zhasne-nazavzhdy",
+      "productName": "Доки світло не згасне назавжди",
+      "originalTitle": "Доки світло не згасне назавжди",
+      "description": "Масштабна історія про колонізацію, технології майбутнього та ціну виживання далеко від Землі.",
+      "authors": [
+        "Макс Кідрук"
+      ],
+      "publisher": "Клуб Сімейного Дозвілля",
+      "categories": [
+        "Наукова фантастика"
+      ],
+      "isbn": "9786171271371",
+      "pageCount": 560,
+      "publishingYear": 2019,
+      "language": "Українська",
+      "imageFiles": [
+        "books/136-доки-світло-не-згасне-назавжди/cover_1.jpg",
+        "books/136-доки-світло-не-згасне-назавжди/cover_2.jpg",
+        "books/136-доки-світло-не-згасне-назавжди/cover_3.jpg"
+      ],
+      "price": 399.0
+    },
+    {
+      "slug": "book-ya-bachu-vas-tsikavyt-pitma",
+      "productName": "Я бачу, вас цікавить пітьма",
+      "originalTitle": "Я бачу, вас цікавить пітьма",
+      "description": "Гіпнотичний український трилер про війну, провину й темряву людської психіки, що не відпускає до останньої сторінки.",
+      "authors": [
+        "Ілларіон Павлюк"
+      ],
+      "publisher": "Видавництво Старого Лева",
+      "categories": [
+        "Трилер",
+        "Жахи"
+      ],
+      "isbn": "9786171500570",
+      "pageCount": 632,
+      "publishingYear": 2020,
+      "language": "Українська",
+      "imageFiles": [
+        "books/137-я-бачу-вас-цікавить-пітьма/cover_1.jpg",
+        "books/137-я-бачу-вас-цікавить-пітьма/cover_2.jpg"
+      ],
+      "price": 429.0
+    },
+    {
+      "slug": "book-tanets-nedoumka",
+      "productName": "Танець недоумка",
+      "originalTitle": "Танець недоумка",
+      "description": "Психологічний роман-лабіринт про пошук істини, де реальність і марення зливаються в небезпечний танець.",
+      "authors": [
+        "Ілларіон Павлюк"
+      ],
+      "publisher": "Видавництво Старого Лева",
+      "categories": [
+        "Трилер"
+      ],
+      "isbn": "9786171297146",
+      "pageCount": 480,
+      "publishingYear": 2019,
+      "language": "Українська",
+      "imageFiles": [
+        "books/138-танець-недоумка/cover_1.jpg",
+        "books/138-танець-недоумка/cover_2.jpg"
+      ],
+      "price": 389.0
+    },
+    {
+      "slug": "book-honykhmarnyk",
+      "productName": "Гонихмарник",
+      "originalTitle": "Гонихмарник",
+      "description": "Сучасне українське фентезі, де міські легенди, магія й родинні таємниці переплітаються у світі поруч із нашим.",
+      "authors": [
+        "Дара Корній"
+      ],
+      "publisher": "Клуб Сімейного Дозвілля",
+      "categories": [
+        "Фентезі"
+      ],
+      "isbn": "9786176793472",
+      "pageCount": 320,
+      "publishingYear": 2010,
+      "language": "Українська",
+      "imageFiles": [
+        "books/139-гонихмарник/cover_1.jpg",
+        "books/139-гонихмарник/cover_2.jpg"
+      ],
+      "price": 299.0
+    },
+    {
+      "slug": "book-zvorotnyy-bik",
+      "productName": "Зворотний бік",
+      "originalTitle": "Зворотний бік",
+      "description": "Фентезійна історія про межі світів і силу вибору, написана в фірмовому міфологічному стилі Дари Корній.",
+      "authors": [
+        "Дара Корній"
+      ],
+      "publisher": "Клуб Сімейного Дозвілля",
+      "categories": [
+        "Фентезі"
+      ],
+      "isbn": null,
+      "pageCount": 352,
+      "publishingYear": 2016,
+      "language": "Українська",
+      "imageFiles": [
+        "books/140-зворотний-бік/cover_1.jpg",
+        "books/140-зворотний-бік/cover_2.jpg"
+      ],
+      "price": 319.0
+    },
+    {
+      "slug": "book-varta-u-hri",
+      "productName": "Варта у грі",
+      "originalTitle": "Варта у грі",
+      "description": "Динамічне міське фентезі про Львів, магічні гільдії та дівчину, якій доводиться грати за правилами Варти.",
+      "authors": [
+        "Наталія Матолінець"
+      ],
+      "publisher": "Видавництво Старого Лева",
+      "categories": [
+        "Фентезі"
+      ],
+      "isbn": "9786176798514",
+      "pageCount": 416,
+      "publishingYear": 2018,
+      "language": "Українська",
+      "imageFiles": [
+        "books/141-варта-у-грі/cover_1.jpg",
+        "books/141-варта-у-грі/cover_2.jpg"
+      ],
+      "price": 359.0
+    },
+    {
+      "slug": "book-korol-ruyin",
+      "productName": "Король руїн",
+      "originalTitle": "Король руїн",
+      "description": "Темне фентезі про владу, руїни старих світів і ціну магічного спадку в сучасному українському місті.",
+      "authors": [
+        "Наталія Матолінець"
+      ],
+      "publisher": "Видавництво Старого Лева",
+      "categories": [
+        "Фентезі"
+      ],
+      "isbn": "9786176799993",
+      "pageCount": 448,
+      "publishingYear": 2021,
+      "language": "Українська",
+      "imageFiles": [
+        "books/142-король-руїн/cover_1.jpg",
+        "books\\142-король-руїн\\cover_1.jpg",
+        "books/142-король-руїн/cover_2.jpg"
+      ],
+      "price": 369.0
+    },
+    {
+      "slug": "book-lazarus",
+      "productName": "Лазарус",
+      "originalTitle": "Лазарус",
+      "description": "Альтернативний Київ із номерами, алхімією й детективною інтригою — візитівка української стімпанк-фантастики.",
+      "authors": [
+        "Світлана Тараторіна"
+      ],
+      "publisher": "Видавництво Старого Лева",
+      "categories": [
+        "Наукова фантастика",
+        "Фентезі"
+      ],
+      "isbn": "9786176797463",
+      "pageCount": 384,
+      "publishingYear": 2018,
+      "language": "Українська",
+      "imageFiles": [
+        "books\\143-лазарус\\cover_1.jpg",
+        "books/143-лазарус/cover_2.jpg"
+      ],
+      "price": 349.0
+    },
+    {
+      "slug": "book-tsementove-sertse",
+      "productName": "Цементове серце",
+      "originalTitle": "Цементове серце",
+      "description": "Роман про місто, технології й людяність у світі, де бетон і магія дихають в одному ритмі.",
+      "authors": [
+        "Світлана Тараторіна"
+      ],
+      "publisher": "Видавництво Старого Лева",
+      "categories": [
+        "Наукова фантастика"
+      ],
+      "isbn": "9786176798637",
+      "pageCount": 400,
+      "publishingYear": 2020,
+      "language": "Українська",
+      "imageFiles": [
+        "books/144-цементове-серце/cover_1.jpg",
+        "books/144-цементове-серце/cover_2.jpg"
+      ],
+      "price": 359.0
+    },
+    {
+      "slug": "book-dushnytsya",
+      "productName": "Душниця",
+      "originalTitle": "Душниця",
+      "description": "Атмосферне фентезі Арєнєва про духів, межі між світами та непрості стосунки людини з невидимим.",
+      "authors": [
+        "Володимир Арєнєв"
+      ],
+      "publisher": "А-БА-БА-ГА-ЛА-МА-ГА",
+      "categories": [
+        "Фентезі"
+      ],
+      "isbn": null,
+      "pageCount": 288,
+      "publishingYear": 2017,
+      "language": "Українська",
+      "imageFiles": [
+        "books/145-душниця/cover_1.jpg",
+        "books/145-душниця/cover_2.jpg"
+      ],
+      "price": 289.0
+    },
+    {
+      "slug": "book-zaklyatyy-mech-abo-holos-krovi",
+      "productName": "Заклятий меч, або Голос крові",
+      "originalTitle": "Заклятий меч, або Голос крові",
+      "description": "Пригодницьке фентезі з українським колоритом про прокляту зброю, честь і дорослішання героя.",
+      "authors": [
+        "Володимир Арєнєв"
+      ],
+      "publisher": "А-БА-БА-ГА-ЛА-МА-ГА",
+      "categories": [
+        "Фентезі"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2016,
+      "language": "Українська",
+      "imageFiles": [
+        "books/146-заклятий-меч-або-голос-крові/cover_1.jpg",
+        "books/146-заклятий-меч-або-голос-крові/cover_2.jpg",
+        "books/146-заклятий-меч-або-голос-крові/cover_3.jpg"
+      ],
+      "price": 279.0
+    },
+    {
+      "slug": "book-rytual",
+      "productName": "Ритуал",
+      "originalTitle": "Ритуал",
+      "description": "Класика слов’янського фентезі від Дяченків: казка для дорослих про красу, страх і силу справжнього імені.",
+      "authors": [
+        "Марина та Сергій Дяченки"
+      ],
+      "publisher": "Фоліо",
+      "categories": [
+        "Фентезі"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 1996,
+      "language": "Українська",
+      "imageFiles": [
+        "books/147-ритуал/cover_2.jpg"
+      ],
+      "price": 299.0
+    },
+    {
+      "slug": "book-vidmyn-vik",
+      "productName": "Відьмин вік",
+      "originalTitle": "Відьмин вік",
+      "description": "Філософське фентезі про час, долю й магію, що змінює закони звичного світу.",
+      "authors": [
+        "Марина та Сергій Дяченки"
+      ],
+      "publisher": "Фоліо",
+      "categories": [
+        "Фентезі"
+      ],
+      "isbn": null,
+      "pageCount": 352,
+      "publishingYear": 2000,
+      "language": "Українська",
+      "imageFiles": [
+        "books/148-відьмин-вік/cover_2.jpg"
+      ],
+      "price": 309.0
+    },
+    {
+      "slug": "book-kult",
+      "productName": "Культ",
+      "originalTitle": "Культ",
+      "description": "Культовий дебют Дереша — містичний роман про молодь, секту й межі сприйняття реальності.",
+      "authors": [
+        "Любко Дереш"
+      ],
+      "publisher": "Кальварія",
+      "categories": [
+        "Фентезі",
+        "Жахи"
+      ],
+      "isbn": null,
+      "pageCount": 240,
+      "publishingYear": 2001,
+      "language": "Українська",
+      "imageFiles": [
+        "books/book-kult/cover_1.jpg"
+      ],
+      "price": 259.0
+    },
+    {
+      "slug": "book-pokloninnya-yashchirtsi",
+      "productName": "Поклоніння ящірці",
+      "originalTitle": "Поклоніння ящірці",
+      "description": "Іронічне й химерне фентезі про провінційне містечко, де диво виглядає підозріло буденним.",
+      "authors": [
+        "Любко Дереш"
+      ],
+      "publisher": "КСД",
+      "categories": [
+        "Фентезі"
+      ],
+      "isbn": null,
+      "pageCount": 288,
+      "publishingYear": 2006,
+      "language": "Українська",
+      "imageFiles": [
+        "books/150-поклоніння-ящірці/cover_1.jpg",
+        "books/150-поклоніння-ящірці/cover_2.jpg"
+      ],
+      "price": 269.0
+    },
+    {
+      "slug": "book-smittyar",
+      "productName": "Сміттяр",
+      "originalTitle": "Сміттяр",
+      "description": "Масштабна фантастика Валентинова про паралельні шари реальності, історію й тіні влади.",
+      "authors": [
+        "Андрій Валентинов"
+      ],
+      "publisher": "Фоліо",
+      "categories": [
+        "Фентезі",
+        "Наукова фантастика"
+      ],
+      "isbn": null,
+      "pageCount": 416,
+      "publishingYear": 2001,
+      "language": "Українська",
+      "imageFiles": [
+        "books/129-сміттяр/cover_1.jpg",
+        "books/129-сміттяр/cover_2.jpg"
+      ],
+      "price": 329.0
+    },
+    {
+      "slug": "book-overnskyy-markhraf",
+      "productName": "Овернський маркграф",
+      "originalTitle": "Овернський маркграф",
+      "description": "Історико-фентезійна сага про лицарство, інтриги й альтернативні шляхи європейської історії.",
+      "authors": [
+        "Андрій Валентинов"
+      ],
+      "publisher": "Фоліо",
+      "categories": [
+        "Фентезі"
+      ],
+      "isbn": null,
+      "pageCount": 480,
+      "publishingYear": 2005,
+      "language": "Українська",
+      "imageFiles": [
+        "books/130-овернський-маркграф/cover_1.jpg",
+        "books/130-овернський-маркграф/cover_2.jpg"
+      ],
+      "price": 339.0
+    },
+    {
+      "slug": "book-radio-nich",
+      "productName": "Радіо Ніч",
+      "originalTitle": "Радіо Ніч",
+      "description": "Химерна проза Винничука, де львівський міф, гумор і містика звучать на одній хвилі.",
+      "authors": [
+        "Юрій Винничук"
+      ],
+      "publisher": "Піраміда",
+      "categories": [
+        "Художня література",
+        "Фентезі"
+      ],
+      "isbn": "9786176795353",
+      "pageCount": 320,
+      "publishingYear": 2019,
+      "language": "Українська",
+      "imageFiles": [
+        "books/131-радіо-ніч/cover_1.jpg",
+        "books/131-радіо-ніч/cover_2.jpg"
+      ],
+      "price": 299.0
+    },
+    {
+      "slug": "book-tanho-smerti",
+      "productName": "Танго смерті",
+      "originalTitle": "Танго смерті",
+      "description": "Багатошаровий роман про Львів різних епох, пам’ять міста й людей, що не вкладаються в прості схеми.",
+      "authors": [
+        "Юрій Винничук"
+      ],
+      "publisher": "Піраміда",
+      "categories": [
+        "Художня література"
+      ],
+      "isbn": "9786171255043",
+      "pageCount": 400,
+      "publishingYear": 2012,
+      "language": "Українська",
+      "imageFiles": [
+        "books/132-танго-смерті/cover_1.jpg",
+        "books/132-танго-смерті/cover_2.jpg"
+      ],
+      "price": 319.0
+    },
+    {
+      "slug": "book-sluha-z-dobromylya",
+      "productName": "Слуга з Добромиля",
+      "originalTitle": "Слуга з Добромиля",
+      "description": "Готичне українське фентезі Пагутяк про служіння, прокляття й тіні родинної історії.",
+      "authors": [
+        "Галина Пагутяк"
+      ],
+      "publisher": "Піраміда",
+      "categories": [
+        "Фентезі"
+      ],
+      "isbn": null,
+      "pageCount": 256,
+      "publishingYear": 2006,
+      "language": "Українська",
+      "imageFiles": [
+        "books/133-слуга-з-добромиля/cover_1.jpg",
+        "books/133-слуга-з-добромиля/cover_2.jpg"
+      ],
+      "price": 249.0
+    },
+    {
+      "slug": "book-zakhid-sontsya-v-urozhi",
+      "productName": "Захід сонця в Урожі",
+      "originalTitle": "Захід сонця в Урожі",
+      "description": "Містична проза про порубіжжя світів, де буденність і чудо існують поруч.",
+      "authors": [
+        "Галина Пагутяк"
+      ],
+      "publisher": "Піраміда",
+      "categories": [
+        "Фентезі"
+      ],
+      "isbn": null,
+      "pageCount": 288,
+      "publishingYear": 2007,
+      "language": "Українська",
+      "imageFiles": [
+        "books/134-захід-сонця-в-урожі/cover_1.jpg",
+        "books\\134-захід-сонця-в-урожі\\cover_1.jpg",
+        "books/134-захід-сонця-в-урожі/cover_2.jpg"
+      ],
+      "price": 259.0
+    },
+    {
+      "slug": "book-muzey-pokynutykh-sekretiv",
+      "productName": "Музей покинутих секретів",
+      "originalTitle": "Музей покинутих секретів",
+      "description": "Епічний роман про пам’ять поколінь, мистецтво й ціну правди в українській історії ХХ століття.",
+      "authors": [
+        "Оксана Забужко"
+      ],
+      "publisher": "Факт",
+      "categories": [
+        "Художня література"
+      ],
+      "isbn": "9789662909395",
+      "pageCount": 832,
+      "publishingYear": 2009,
+      "language": "Українська",
+      "imageFiles": [
+        "books/135-музей-покинутих-секретів/cover_1.jpg",
+        "books/135-музей-покинутих-секретів/cover_2.jpg"
+      ],
+      "price": 449.0
+    },
+    {
+      "slug": "book-novi-temni-viky-koloniya",
+      "productName": "Нові темні віки. Колонія",
+      "originalTitle": "Нові темні віки. Колонія",
+      "description": "Продовження техносаги Кідрука про колонії, владу корпорацій і крихкість людської цивілізації.",
+      "authors": [
+        "Макс Кідрук"
+      ],
+      "publisher": "КСД",
+      "categories": [
+        "Наукова фантастика"
+      ],
+      "isbn": "9786171502345",
+      "pageCount": 560,
+      "publishingYear": 2022,
+      "language": "Українська",
+      "imageFiles": [
+        "books\\136-нові-темні-віки-колонія\\cover_1.jpg",
+        "books/136-нові-темні-віки-колонія/cover_2.jpg"
+      ],
+      "price": 419.0
+    },
+    {
+      "slug": "book-zazyrny-v-moyi-sny",
+      "productName": "Зазирни в мої сни",
+      "originalTitle": "Зазирни в мої сни",
+      "description": "Психологічний трилер про сни, нав’язливі образи й межі між правдою та маренням.",
+      "authors": [
+        "Ілларіон Павлюк"
+      ],
+      "publisher": "ВСЛ",
+      "categories": [
+        "Трилер"
+      ],
+      "isbn": "9786171292882",
+      "pageCount": 480,
+      "publishingYear": 2022,
+      "language": "Українська",
+      "imageFiles": [
+        "books/137-зазирни-в-мої-сни/cover_1.jpg",
+        "books/137-зазирни-в-мої-сни/cover_2.jpg"
+      ],
+      "price": 399.0
+    },
+    {
+      "slug": "book-charivni-istoty-ukrayinskoho-mifu-dukhy-strakhittya",
+      "productName": "Чарівні істоти українського міфу. Духи-страхіття",
+      "originalTitle": "Чарівні істоти українського міфу. Духи-страхіття",
+      "description": "Авторське переосмислення українських міфічних істот у захопливому художньому форматі.",
+      "authors": [
+        "Дара Корній"
+      ],
+      "publisher": "КСД",
+      "categories": [
+        "Фентезі"
+      ],
+      "isbn": null,
+      "pageCount": 240,
+      "publishingYear": 2021,
+      "language": "Українська",
+      "imageFiles": [
+        "books/138-чарівні-істоти-українського-міфу-духи-страхіття/cover_1.jpg",
+        "books/138-чарівні-істоти-українського-міфу-духи-страхіття/cover_2.jpg",
+        "books/138-чарівні-істоти-українського-міфу-духи-страхіття/cover_3.jpg"
+      ],
+      "price": 279.0
+    },
+    {
+      "slug": "book-varta-yednosti",
+      "productName": "Варта єдності",
+      "originalTitle": "Варта єдності",
+      "description": "Продовження львівського міського фентезі про магічні альянси, зради й ціну сили.",
+      "authors": [
+        "Наталія Матолінець"
+      ],
+      "publisher": "ВСЛ",
+      "categories": [
+        "Фентезі"
+      ],
+      "isbn": "9786176797005",
+      "pageCount": 432,
+      "publishingYear": 2020,
+      "language": "Українська",
+      "imageFiles": [
+        "books\\139-варта-єдності\\cover_1.jpg",
+        "books/139-варта-єдності/cover_2.jpg"
+      ],
+      "price": 369.0
+    },
+    {
+      "slug": "book-dim-soli",
+      "productName": "Дім солі",
+      "originalTitle": "Дім солі",
+      "description": "Фантастика про пам’ять, дім і світ, де минуле можна торкнутися руками.",
+      "authors": [
+        "Світлана Тараторіна"
+      ],
+      "publisher": "ВСЛ",
+      "categories": [
+        "Наукова фантастика"
+      ],
+      "isbn": null,
+      "pageCount": 384,
+      "publishingYear": 2022,
+      "language": "Українська",
+      "imageFiles": [
+        "books/book-dim-soli/cover_1.jpg"
+      ],
+      "price": 359.0
+    },
+    {
+      "slug": "book-sapiyensy",
+      "productName": "Сапієнси",
+      "originalTitle": "Сапієнси",
+      "description": "Пригодницьке фентезі Арєнєва з філософським підтекстом і яскравими образами.",
+      "authors": [
+        "Володимир Арєнєв"
+      ],
+      "publisher": "А-БА-БА-ГА-ЛА-МА-ГА",
+      "categories": [
+        "Фентезі"
+      ],
+      "isbn": null,
+      "pageCount": 304,
+      "publishingYear": 2019,
+      "language": "Українська",
+      "imageFiles": [
+        "books/141-сапієнси/cover_1.jpg",
+        "books\\141-сапієнси\\cover_1.jpg",
+        "books/141-сапієнси/cover_2.jpg"
+      ],
+      "price": 289.0
+    },
+    {
+      "slug": "book-dyka-enerhiya-lana",
+      "productName": "Дика енергія. Лана",
+      "originalTitle": "Дика енергія. Лана",
+      "description": "Фентезійна історія про енергію життя, свободу вибору і ціну дива.",
+      "authors": [
+        "Марина та Сергій Дяченки"
+      ],
+      "publisher": "Фоліо",
+      "categories": [
+        "Фентезі"
+      ],
+      "isbn": null,
+      "pageCount": 320,
+      "publishingYear": 2006,
+      "language": "Українська",
+      "imageFiles": [
+        "books/142-дика-енергія-лана/cover_2.jpg"
+      ],
+      "price": 299.0
+    },
+    {
+      "slug": "book-trokhy-pitmy",
+      "productName": "Трохи пітьми",
+      "originalTitle": "Трохи пітьми",
+      "description": "Містична проза Дереша про підліткові страхи, місто й темряву всередині людини.",
+      "authors": [
+        "Любко Дереш"
+      ],
+      "publisher": "КСД",
+      "categories": [
+        "Фентезі",
+        "Жахи"
+      ],
+      "isbn": null,
+      "pageCount": 256,
+      "publishingYear": 2007,
+      "language": "Українська",
+      "imageFiles": [
+        "books/143-трохи-пітьми/cover_1.jpg",
+        "books/143-трохи-пітьми/cover_2.jpg"
+      ],
+      "price": 259.0
+    },
+    {
+      "slug": "book-kapitan-fylypyuk",
+      "productName": "Капітан Филипюк",
+      "originalTitle": "Капітан Филипюк",
+      "description": "Авантюрно-фентезійна історія Валентинова з історичним колоритом і гострим сюжетом.",
+      "authors": [
+        "Андрій Валентинов"
+      ],
+      "publisher": "Фоліо",
+      "categories": [
+        "Фентезі"
+      ],
+      "isbn": null,
+      "pageCount": 400,
+      "publishingYear": 2002,
+      "language": "Українська",
+      "imageFiles": [
+        "books/144-капітан-филипюк/cover_1.jpg",
+        "books/144-капітан-филипюк/cover_2.jpg"
+      ],
+      "price": 319.0
+    },
+    {
+      "slug": "book-vesnyani-ihry-v-osinnikh-sadakh",
+      "productName": "Весняні ігри в осінніх садах",
+      "originalTitle": "Весняні ігри в осінніх садах",
+      "description": "Іронічна й чуттєва проза Винничука про бажання, пам’ять і міські лабіринти.",
+      "authors": [
+        "Юрій Винничук"
+      ],
+      "publisher": "Піраміда",
+      "categories": [
+        "Художня література"
+      ],
+      "isbn": null,
+      "pageCount": 288,
+      "publishingYear": 2015,
+      "language": "Українська",
+      "imageFiles": [
+        "books/145-весняні-ігри-в-осінніх-садах/cover_1.jpg",
+        "books/145-весняні-ігри-в-осінніх-садах/cover_2.jpg"
+      ],
+      "price": 279.0
+    },
+    {
+      "slug": "book-smitnyk-hospoda-nashoho",
+      "productName": "Смітник Господа нашого",
+      "originalTitle": "Смітник Господа нашого",
+      "description": "Містична проза про межі святості й пороку в химерному українському світі.",
+      "authors": [
+        "Галина Пагутяк"
+      ],
+      "publisher": "Піраміда",
+      "categories": [
+        "Фентезі"
+      ],
+      "isbn": null,
+      "pageCount": 272,
+      "publishingYear": 2010,
+      "language": "Українська",
+      "imageFiles": [
+        "books/146-смітник-господа-нашого/cover_1.jpg",
+        "books\\146-смітник-господа-нашого\\cover_1.jpg",
+        "books/146-смітник-господа-нашого/cover_2.jpg"
+      ],
+      "price": 249.0
+    },
+    {
+      "slug": "book-polovi-doslidzhennya-z-ukrayinskoho-seksu",
+      "productName": "Польові дослідження з українського сексу",
+      "originalTitle": "Польові дослідження з українського сексу",
+      "description": "Знаковий роман Забужко про тіло, мову, владу й жіночий досвід у час суспільних зламів.",
+      "authors": [
+        "Оксана Забужко"
+      ],
+      "publisher": "Факт",
+      "categories": [
+        "Художня література"
+      ],
+      "isbn": "9789662909098",
+      "pageCount": 320,
+      "publishingYear": 1996,
+      "language": "Українська",
+      "imageFiles": [
+        "books/147-польові-дослідження-з-українського-сексу/cover_1.jpg",
+        "books/147-польові-дослідження-з-українського-сексу/cover_2.jpg",
+        "books/147-польові-дослідження-з-українського-сексу/cover_3.jpg"
+      ],
+      "price": 299.0
+    },
+    {
+      "slug": "book-internat",
+      "productName": "Інтернат",
+      "originalTitle": "Інтернат",
+      "description": "Сильний роман про дорогу через війну, відповідальність і збереження людяності.",
+      "authors": [
+        "Сергій Жадан"
+      ],
+      "publisher": "Меридіан Черновіц",
+      "categories": [
+        "Художня література"
+      ],
+      "isbn": "9786176795469",
+      "pageCount": 336,
+      "publishingYear": 2017,
+      "language": "Українська",
+      "imageFiles": [
+        "books/148-інтернат/cover_1.jpg",
+        "books/148-інтернат/cover_2.jpg"
+      ],
+      "price": 319.0
+    },
+    {
+      "slug": "book-zapysky-ukrayinskoho-samashedshoho",
+      "productName": "Записки українського самашедшого",
+      "originalTitle": "Записки українського самашедшого",
+      "description": "Інтелектуальна проза Ліни Костенко про час, культуру й внутрішній опір абсурду.",
+      "authors": [
+        "Ліна Костенко"
+      ],
+      "publisher": "А-БА-БА-ГА-ЛА-МА-ГА",
+      "categories": [
+        "Художня література"
+      ],
+      "isbn": "9789662909098",
+      "pageCount": 416,
+      "publishingYear": 2010,
+      "language": "Українська",
+      "imageFiles": [
+        "books/149-записки-українського-самашедшого/cover_1.jpg",
+        "books/149-записки-українського-самашедшого/cover_2.jpg",
+        "books/149-записки-українського-самашедшого/cover_3.jpg"
+      ],
+      "price": 339.0
+    },
+    {
+      "slug": "book-halyavyna",
+      "productName": "Заячий костел",
+      "originalTitle": "Заячий костел",
+      "description": "Напружена проза Шкляра про землю, пам’ять і конфлікт, що не відпускає героїв.",
+      "authors": [
+        "Василь Шкляр"
+      ],
+      "publisher": "Ярославів Вал",
+      "categories": [
+        "Художня література",
+        "Трилер"
+      ],
+      "isbn": "9786171250789",
+      "pageCount": 320,
+      "publishingYear": 2021,
+      "language": "Українська",
+      "imageFiles": [
+        "books/150-галявина/cover_1.jpg",
+        "books/150-галявина/cover_2.jpg"
+      ],
+      "price": 309.0
+    }
+  ],
+  "locale": "uk-UA",
+  "notes": "Localized: UA genres/bios; political authors/books replaced with Ukrainian fantasy."
+}

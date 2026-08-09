@@ -15,6 +15,11 @@ interface AdminHeaderControlsProps {
   
   addButtonText: string;
   addButtonHref: string;
+
+  /** Optional temporary/admin action next to Add button */
+  secondaryButtonText?: string;
+  onSecondaryButtonClick?: () => void;
+  secondaryButtonDisabled?: boolean;
   
   sortValue: string;
   onSortChange: (value: string) => void;
@@ -27,6 +32,9 @@ export default function EntitiesSearchSorting({
   onSearchChange,
   addButtonText,
   addButtonHref,
+  secondaryButtonText,
+  onSecondaryButtonClick,
+  secondaryButtonDisabled,
   sortValue,
   onSortChange,
   sortOptions,
@@ -72,6 +80,18 @@ export default function EntitiesSearchSorting({
         />
         {addButtonText}
       </button>
+
+      {secondaryButtonText && onSecondaryButtonClick ? (
+        <button
+          type="button"
+          disabled={secondaryButtonDisabled}
+          className="transition-all duration-200 hover:brightness-110 hover:shadow-[0px_0px_18px_0px_#FA833880] active:scale-[0.98] px-4 cursor-pointer h-[36px] rounded-[9px] bg-[#FA8338] text-white font-semibold flex items-center gap-2 text-[14px] flex-shrink-0 disabled:opacity-60 disabled:cursor-wait border border-[#E56F1F]"
+          onClick={onSecondaryButtonClick}
+          title="Тимчасова кнопка: додає відсутні книги з каталогу без очищення БД"
+        >
+          {secondaryButtonText}
+        </button>
+      ) : null}
 
       {/* 3. Dynamic Sorting Dropdown */}
       <div className="flex flex-row items-center gap-2 ml-auto">

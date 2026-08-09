@@ -150,10 +150,12 @@
 import BooksNav from './booksNav';
 import { AuthorDTO, ProductDto } from '@/lib/api/generated';
 import { authorService, productService } from '@/lib/api/services';
+import { seedCatalogBooks } from '@/lib/api/seedCatalogApi';
 import ItemActions from "@/app/(admin-site)/common_elements/item_actions";
 import { useEffect, useState } from "react";
 import EntitiesSearchSorting from "@/app/(admin-site)/common_elements/entities_search_sorting";
 import Pagination from "@/app/(admin-site)/common_elements/entities_pagination";
+import { useAccessControl } from "@/lib/auth/useAccessControl";
 import {
   getProductAuthorName,
   getProductCoverSrc,
@@ -195,6 +197,7 @@ const BOOK_SORT_OPTIONS = [
 const ITEMS_PER_PAGE = 10;
 
 export default function AllBooks() {
+    const { loading: accessLoading } = useAccessControl();
     const [products, setProducts] = useState<ProductDto[]>([]);
     const [authors, setAuthors] = useState<AuthorDTO[]>([]);
     const [search, setSearch] = useState("");
@@ -202,23 +205,51 @@ export default function AllBooks() {
     const [currentPage, setCurrentPage] = useState(1); // Додаємо відстеження поточної сторінки
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<unknown>(null);
+    const [seeding, setSeeding] = useState(false);
 
-    useEffect(() => {
+    const reloadBooks = () =>
         Promise.all([
             productService.apiProductsGet(),
             authorService.apiAuthorsGet().catch(() => [] as AuthorDTO[]),
-        ])
-            .then(([productsData, authorsData]) => {
-                setProducts(productsData);
-                setAuthors(authorsData);
-                setIsLoading(false);
-            })
+        ]).then(([productsData, authorsData]) => {
+            setProducts(productsData);
+            setAuthors(authorsData);
+        });
+
+    useEffect(() => {
+        reloadBooks()
+            .then(() => setIsLoading(false))
             .catch((err) => {
                 console.error("API ERROR FULL:", err);
                 setError(err);
                 setIsLoading(false);
             });
     }, []);
+
+    const handleSeedCatalog = async () => {
+        if (seeding) return;
+        const ok = window.confirm(
+            "Заповнити базу відсутніми книгами з каталогу?\n\nІснуючі записи не будуть видалені чи продубльовані."
+        );
+        if (!ok) return;
+
+        setSeeding(true);
+        try {
+            const result = await seedCatalogBooks();
+            alert(result.message);
+            await reloadBooks();
+        } catch (err) {
+            console.error(err);
+            const msg = err instanceof Error ? err.message : "Не вдалося заповнити базу даних";
+            if (msg.includes("401") || msg.includes("403") || msg.toLowerCase().includes("unauthorized") || msg.toLowerCase().includes("forbidden")) {
+                alert("Немає прав Admin для цієї дії. Увійдіть як admin@familyclub.com.");
+            } else {
+                alert(msg);
+            }
+        } finally {
+            setSeeding(false);
+        }
+    };
 
     // Скидаємо сторінку на 1 при зміні пошукового запиту
     const handleSearchChange = (value: string) => {
@@ -306,7 +337,12 @@ export default function AllBooks() {
                                 searchValue={search}
                                 onSearchChange={handleSearchChange}
                                 addButtonText="Додати книгу"
-                                addButtonHref="/products/addProduct" // Ваш оригінальний шлях з форми
+                                addButtonHref="/products/addProduct"
+                                secondaryButtonText={
+                                    seeding ? "Заповнення..." : "Заповнити базу даних"
+                                }
+                                onSecondaryButtonClick={handleSeedCatalog}
+                                secondaryButtonDisabled={seeding || accessLoading}
                                 sortValue={sortOrder}
                                 onSortChange={setSortOrder}
                                 sortOptions={BOOK_SORT_OPTIONS}
