@@ -18,6 +18,7 @@ namespace FamilyClub.DAL.EF.DB
 		public int CategoriesAdded { get; set; }
 		public int ProductsAdded { get; set; }
 		public int ProductsSkipped { get; set; }
+		public int ProductsImagesUpdated { get; set; }
 	}
 
 	public class DbInitializer
@@ -170,9 +171,11 @@ namespace FamilyClub.DAL.EF.DB
 						changed = true;
 					}
 
-					if (string.IsNullOrWhiteSpace(author.PhotoUrl) && !string.IsNullOrWhiteSpace(seedAuthor.PhotoFile))
+					if (!string.IsNullOrWhiteSpace(seedAuthor.PhotoFile))
 					{
-						author.PhotoUrl = $"/images/product_images/{seedAuthor.PhotoFile.Replace('\\', '/')}";
+						var photoUrl = $"/images/product_images/{seedAuthor.PhotoFile.Replace('\\', '/')}";
+						// Re-apply on every seed so DB points at current on-disk author photos.
+						author.PhotoUrl = photoUrl;
 						changed = true;
 					}
 
@@ -192,9 +195,16 @@ namespace FamilyClub.DAL.EF.DB
 				.ToDictionary(c => c.CategoryName, c => c, StringComparer.OrdinalIgnoreCase);
 
 			var existingProducts = await context.Products
-				.AsNoTracking()
-				.Select(p => new { p.ProductName, p.ISBN })
+				.Include(p => p.ProductImages)
 				.ToListAsync();
+
+			var existingByName = existingProducts
+				.GroupBy(p => p.ProductName, StringComparer.OrdinalIgnoreCase)
+				.ToDictionary(g => g.Key, g => g.First(), StringComparer.OrdinalIgnoreCase);
+			var existingByIsbn = existingProducts
+				.Where(p => !string.IsNullOrWhiteSpace(p.ISBN))
+				.GroupBy(p => p.ISBN!.Trim(), StringComparer.OrdinalIgnoreCase)
+				.ToDictionary(g => g.Key, g => g.First(), StringComparer.OrdinalIgnoreCase);
 
 			var existingNames = new HashSet<string>(
 				existingProducts.Select(p => p.ProductName),
@@ -216,13 +226,27 @@ namespace FamilyClub.DAL.EF.DB
 				var productName = book.ProductName.Trim();
 				var isbn = string.IsNullOrWhiteSpace(book.Isbn) ? null : book.Isbn.Trim();
 
-				var alreadyExists =
-					(isbn is not null && existingIsbns.Contains(isbn))
-					|| existingNames.Contains(productName);
-
-				if (alreadyExists)
+				Product? existingProduct = null;
+				if (isbn is not null)
 				{
-					result.ProductsSkipped++;
+					existingByIsbn.TryGetValue(isbn, out existingProduct);
+				}
+				if (existingProduct is null)
+				{
+					existingByName.TryGetValue(productName, out existingProduct);
+				}
+
+				if (existingProduct is not null)
+				{
+					var refreshed = await TryRefreshProductImagesAsync(existingProduct, book.ImageFiles, imagesRoot);
+					if (refreshed)
+					{
+						result.ProductsImagesUpdated++;
+					}
+					else
+					{
+						result.ProductsSkipped++;
+					}
 					continue;
 				}
 
@@ -344,11 +368,76 @@ namespace FamilyClub.DAL.EF.DB
 			result.ProductsAdded = productsToAdd.Count;
 			result.Success = true;
 			result.Message =
-				$"Готово. Додано книг: {result.ProductsAdded}, пропущено (вже є): {result.ProductsSkipped}, " +
+				$"Готово. Додано книг: {result.ProductsAdded}, оновлено обкладинок: {result.ProductsImagesUpdated}, " +
+				$"без змін (вже є): {result.ProductsSkipped}, " +
 				$"авторів додано: {result.AuthorsAdded}, оновлено: {result.AuthorsUpdated}, " +
 				$"видавнив: {result.PublishersAdded}, категорій: {result.CategoriesAdded}.";
 
 			return result;
+		}
+
+		private static async Task<bool> TryRefreshProductImagesAsync(
+			Product product,
+			List<string>? imageFiles,
+			string imagesRoot)
+		{
+			if (imageFiles is null || imageFiles.Count == 0)
+			{
+				return false;
+			}
+
+			var loaded = new List<(string Name, byte[] Data)>();
+			foreach (var relative in imageFiles.Take(5))
+			{
+				var fullPath = Path.Combine(imagesRoot, relative.Replace('/', Path.DirectorySeparatorChar));
+				if (!File.Exists(fullPath))
+				{
+					continue;
+				}
+
+				var bytes = await File.ReadAllBytesAsync(fullPath);
+				if (bytes.Length < 1500)
+				{
+					continue;
+				}
+
+				loaded.Add((Path.GetFileName(fullPath), bytes));
+			}
+
+			if (loaded.Count == 0)
+			{
+				return false;
+			}
+
+			var existing = product.ProductImages ?? new List<ProductImage>();
+			var existingFingerprint = string.Join(
+				"|",
+				existing
+					.OrderBy(i => i.ImageName)
+					.Select(i => $"{i.ImageName}:{i.ImageData?.LongLength ?? 0}"));
+			var newFingerprint = string.Join(
+				"|",
+				loaded
+					.OrderBy(i => i.Name)
+					.Select(i => $"{i.Name}:{i.Data.LongLength}"));
+
+			if (string.Equals(existingFingerprint, newFingerprint, StringComparison.Ordinal))
+			{
+				return false;
+			}
+
+			existing.Clear();
+			foreach (var (name, data) in loaded)
+			{
+				existing.Add(new ProductImage
+				{
+					ImageName = name,
+					ImageData = data
+				});
+			}
+
+			product.ProductImages = existing;
+			return true;
 		}
 
 		private static async Task NormalizeUkrainianTaxonomyAsync(FamilyClubContext context)
