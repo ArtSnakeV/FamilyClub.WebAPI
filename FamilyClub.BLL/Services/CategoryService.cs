@@ -9,23 +9,56 @@ public class CategoryService : ICategoryService
 {
     private readonly ICategoryRepository _categoryRepository;
     private readonly IUnitOfWork _unitOfWork;
+    private readonly ICacheService _cacheService;
 
-    public CategoryService(ICategoryRepository categoryRepository, IUnitOfWork unitOfWork)
+    private const string AllCategoriesCacheKey = "categories_all";
+    private static string GetCategoryCacheKey(int id) => $"categories_item_{id}";
+
+    public CategoryService(
+        ICategoryRepository categoryRepository,
+        IUnitOfWork unitOfWork,
+        ICacheService cacheService)
     {
         _categoryRepository = categoryRepository;
         _unitOfWork = unitOfWork;
+        _cacheService = cacheService;
     }
 
     public async Task<IEnumerable<CategoryDto>> GetAllAsync(CancellationToken cancellationToken = default)
     {
+        var cachedCategories = await _cacheService.GetAsync<List<CategoryDto>>(AllCategoriesCacheKey, cancellationToken);
+        if (cachedCategories is not null)
+        {
+            return cachedCategories;
+        }
+
         var categories = await _categoryRepository.GetAllAsync(cancellationToken);
-        return categories.Select(MapToReadDto);
+        var dtos = categories.Select(MapToReadDto).ToList();
+
+        await _cacheService.SetAsync(AllCategoriesCacheKey, dtos, TimeSpan.FromMinutes(30), cancellationToken);
+
+        return dtos;
     }
 
     public async Task<CategoryDto?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
     {
+        var cacheKey = GetCategoryCacheKey(id);
+        var cachedCategory = await _cacheService.GetAsync<CategoryDto>(cacheKey, cancellationToken);
+        if (cachedCategory is not null)
+        {
+            return cachedCategory;
+        }
+
         var category = await _categoryRepository.GetByIdAsync(id, cancellationToken);
-        return category is null ? null : MapToReadDto(category);
+        if (category is null)
+        {
+            return null;
+        }
+
+        var dto = MapToReadDto(category);
+        await _cacheService.SetAsync(cacheKey, dto, TimeSpan.FromMinutes(30), cancellationToken);
+
+        return dto;
     }
 
     public async Task<CategoryDto> CreateAsync(CategoryDto dto, CancellationToken cancellationToken = default)
@@ -37,6 +70,8 @@ public class CategoryService : ICategoryService
 
         await _categoryRepository.AddAsync(category, cancellationToken);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+        await InvalidateCacheAsync(cancellationToken);
 
         return MapToReadDto(category);
     }
@@ -53,6 +88,8 @@ public class CategoryService : ICategoryService
         _categoryRepository.Update(category);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
+        await InvalidateCacheAsync(cancellationToken, id);
+
         return true;
     }
 
@@ -67,7 +104,19 @@ public class CategoryService : ICategoryService
         _categoryRepository.Delete(category);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
+        await InvalidateCacheAsync(cancellationToken, id);
+
         return true;
+    }
+
+    private async Task InvalidateCacheAsync(CancellationToken cancellationToken, int? id = null)
+    {
+        await _cacheService.RemoveAsync(AllCategoriesCacheKey, cancellationToken);
+        if (id.HasValue)
+        {
+            await _cacheService.RemoveAsync(GetCategoryCacheKey(id.Value), cancellationToken);
+        }
+        await _cacheService.RemoveByPrefixAsync("categories_", cancellationToken);
     }
 
     private static CategoryDto MapToReadDto(Category category)
@@ -79,3 +128,4 @@ public class CategoryService : ICategoryService
         };
     }
 }
+

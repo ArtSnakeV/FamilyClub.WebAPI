@@ -428,8 +428,14 @@ export default function SystemSecurityPanel() {
                 <span className="h-2 w-2 rounded-full bg-[var(--color-green)]" />
               </div>
             </SecurityRow>
-            <SecurityRow label="Кешування чорного списку (IMemoryCache)">
-              <span className="text-[13px] text-[#555]">Active (10 хв TTL)</span>
+            <SecurityRow label="Розподілене кешування (Redis / Memcached)">
+              <div className="flex items-center gap-2">
+                <span className="text-[12px] font-medium text-[var(--color-green)]">Active (Redis / Fallback MemoryCache)</span>
+                <span className="h-2 w-2 rounded-full bg-[var(--color-green)]" />
+              </div>
+            </SecurityRow>
+            <SecurityRow label="HTTP Response & Output Caching">
+              <span className="text-[13px] text-[#555]">Active (15-30 хв TTL з Auto-Invalidation)</span>
             </SecurityRow>
             <SecurityRow label="Rate Limiter (Обмеження частоти запитів)">
               <span className="text-[13px] text-[#555]">100 запитів / хв</span>
