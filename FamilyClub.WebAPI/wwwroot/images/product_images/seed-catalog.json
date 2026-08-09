@@ -483,7 +483,7 @@
         "books/001-james/cover_4.jpg",
         "books/001-james/cover_5.jpg"
       ],
-      "price": 12.99
+      "price": 580.0
     },
     {
       "slug": "002-onyx-storm",
@@ -508,7 +508,7 @@
         "books/002-onyx-storm/cover_4.jpg",
         "books/002-onyx-storm/cover_5.jpg"
       ],
-      "price": 13.49
+      "price": 600.0
     },
     {
       "slug": "003-fourth-wing",
@@ -533,7 +533,7 @@
         "books/003-fourth-wing/cover_4.jpg",
         "books/003-fourth-wing/cover_5.jpg"
       ],
-      "price": 13.99
+      "price": 630.0
     },
     {
       "slug": "004-iron-flame",
@@ -558,7 +558,7 @@
         "books/004-iron-flame/cover_4.jpg",
         "books/004-iron-flame/cover_5.jpg"
       ],
-      "price": 14.49
+      "price": 650.0
     },
     {
       "slug": "005-battle-mountain",
@@ -581,7 +581,7 @@
         "books/005-battle-mountain/cover_2.jpg",
         "books/005-battle-mountain/cover_3.jpg"
       ],
-      "price": 14.99
+      "price": 670.0
     },
     {
       "slug": "006-lethal-prey",
@@ -604,7 +604,7 @@
         "books/006-lethal-prey/cover_2.jpg",
         "books/006-lethal-prey/cover_3.jpg"
       ],
-      "price": 15.49
+      "price": 690.0
     },
     {
       "slug": "007-say-you-ll-remember-me",
@@ -628,7 +628,7 @@
         "books/007-say-you-ll-remember-me/cover_3.jpg",
         "books/007-say-you-ll-remember-me/cover_4.jpg"
       ],
-      "price": 15.99
+      "price": 720.0
     },
     {
       "slug": "008-enchantra",
@@ -650,7 +650,7 @@
         "books/008-enchantra/cover_1.jpg",
         "books/008-enchantra/cover_2.jpg"
       ],
-      "price": 16.49
+      "price": 740.0
     },
     {
       "slug": "009-perfect-divorce",
@@ -672,7 +672,7 @@
         "books/009-perfect-divorce/cover_1.jpg",
         "books/009-perfect-divorce/cover_2.jpg"
       ],
-      "price": 16.99
+      "price": 760.0
     },
     {
       "slug": "010-great-big-beautiful-life",
@@ -697,7 +697,7 @@
         "books/010-great-big-beautiful-life/cover_4.jpg",
         "books/010-great-big-beautiful-life/cover_5.jpg"
       ],
-      "price": 17.49
+      "price": 780.0
     },
     {
       "slug": "011-25-alive",
@@ -720,7 +720,7 @@
         "books/011-25-alive/cover_1.jpg",
         "books/011-25-alive/cover_2.jpg"
       ],
-      "price": 17.99
+      "price": 810.0
     },
     {
       "slug": "012-the-tenant",
@@ -743,7 +743,7 @@
         "books/012-the-tenant/cover_2.jpg",
         "books/012-the-tenant/cover_3.jpg"
       ],
-      "price": 18.49
+      "price": 830.0
     },
     {
       "slug": "013-a-curse-carved-in-bone",
@@ -766,7 +766,7 @@
         "books/013-a-curse-carved-in-bone/cover_2.jpg",
         "books/013-a-curse-carved-in-bone/cover_3.jpg"
       ],
-      "price": 18.99
+      "price": 850.0
     },
     {
       "slug": "014-nightshade",
@@ -789,7 +789,7 @@
         "books/014-nightshade/cover_2.jpg",
         "books/014-nightshade/cover_3.jpg"
       ],
-      "price": 19.49
+      "price": 870.0
     },
     {
       "slug": "015-never-flinch",
@@ -811,7 +811,7 @@
         "books/015-never-flinch/cover_1.jpg",
         "books/015-never-flinch/cover_2.jpg"
       ],
-      "price": 19.99
+      "price": 890.0
     },
     {
       "slug": "016-atmosphere",
@@ -836,7 +836,7 @@
         "books/016-atmosphere/cover_4.jpg",
         "books/016-atmosphere/cover_5.jpg"
       ],
-      "price": 20.49
+      "price": 920.0
     },
     {
       "slug": "017-caught-up",
@@ -861,7 +861,7 @@
         "books/017-caught-up/cover_4.jpg",
         "books/017-caught-up/cover_5.jpg"
       ],
-      "price": 20.99
+      "price": 940.0
     },
     {
       "slug": "018-don-t-let-him-in",
@@ -886,7 +886,7 @@
         "books/018-don-t-let-him-in/cover_4.jpg",
         "books/018-don-t-let-him-in/cover_5.jpg"
       ],
-      "price": 21.49
+      "price": 960.0
     },
     {
       "slug": "019-edge-of-honor",
@@ -910,7 +910,7 @@
         "books/019-edge-of-honor/cover_3.jpg",
         "books/019-edge-of-honor/cover_4.jpg"
       ],
-      "price": 21.99
+      "price": 980.0
     },
     {
       "slug": "020-rose-in-chains",
@@ -933,7 +933,7 @@
         "books/020-rose-in-chains/cover_2.jpg",
         "books/020-rose-in-chains/cover_3.jpg"
       ],
-      "price": 22.49
+      "price": 1010.0
     },
     {
       "slug": "021-an-inside-job",
@@ -956,7 +956,7 @@
         "books/021-an-inside-job/cover_2.jpg",
         "books/021-an-inside-job/cover_3.jpg"
       ],
-      "price": 22.99
+      "price": 1030.0
     },
     {
       "slug": "022-never-say-die",
@@ -979,7 +979,7 @@
         "books/022-never-say-die/cover_1.jpg",
         "books/022-never-say-die/cover_2.jpg"
       ],
-      "price": 23.49
+      "price": 1050.0
     },
     {
       "slug": "023-mina-v-nner",
@@ -1002,7 +1002,7 @@
         "books/023-mina-v-nner/cover_2.jpg",
         "books/023-mina-v-nner/cover_3.jpg"
       ],
-      "price": 23.99
+      "price": 1070.0
     },
     {
       "slug": "024-accomplice-to-the-villain",
@@ -1026,7 +1026,7 @@
         "books/024-accomplice-to-the-villain/cover_3.jpg",
         "books/024-accomplice-to-the-villain/cover_4.jpg"
       ],
-      "price": 24.49
+      "price": 1100.0
     },
     {
       "slug": "025-we-are-all-guilty-here",
@@ -1051,7 +1051,7 @@
         "books/025-we-are-all-guilty-here/cover_4.jpg",
         "books/025-we-are-all-guilty-here/cover_5.jpg"
       ],
-      "price": 24.99
+      "price": 1120.0
     },
     {
       "slug": "026-quicksilver",
@@ -1076,7 +1076,7 @@
         "books/026-quicksilver/cover_4.jpg",
         "books/026-quicksilver/cover_5.jpg"
       ],
-      "price": 25.49
+      "price": 1140.0
     },
     {
       "slug": "027-brimstone",
@@ -1099,7 +1099,7 @@
         "books/027-brimstone/cover_2.jpg",
         "books/027-brimstone/cover_3.jpg"
       ],
-      "price": 25.99
+      "price": 1160.0
     },
     {
       "slug": "028-katabasis",
@@ -1124,7 +1124,7 @@
         "books/028-katabasis/cover_4.jpg",
         "books/028-katabasis/cover_5.jpg"
       ],
-      "price": 26.49
+      "price": 1190.0
     },
     {
       "slug": "029-framed-in-death",
@@ -1147,7 +1147,7 @@
         "books/029-framed-in-death/cover_2.jpg",
         "books/029-framed-in-death/cover_3.jpg"
       ],
-      "price": 26.99
+      "price": 1210.0
     },
     {
       "slug": "030-the-secret-of-secrets",
@@ -1172,7 +1172,7 @@
         "books/030-the-secret-of-secrets/cover_4.jpg",
         "books/030-the-secret-of-secrets/cover_5.jpg"
       ],
-      "price": 27.49
+      "price": 1230.0
     },
     {
       "slug": "031-alchemised",
@@ -1197,7 +1197,7 @@
         "books/031-alchemised/cover_4.jpg",
         "books/031-alchemised/cover_5.jpg"
       ],
-      "price": 27.99
+      "price": 1250.0
     },
     {
       "slug": "032-the-impossible-fortune",
@@ -1220,7 +1220,7 @@
         "books/032-the-impossible-fortune/cover_2.jpg",
         "books/032-the-impossible-fortune/cover_3.jpg"
       ],
-      "price": 28.49
+      "price": 1280.0
     },
     {
       "slug": "033-check-mate",
@@ -1244,7 +1244,7 @@
         "books/033-check-mate/cover_3.jpg",
         "books/033-check-mate/cover_4.jpg"
       ],
-      "price": 28.99
+      "price": 1300.0
     },
     {
       "slug": "034-reese-witherspoon-harlan-coben-novel",
@@ -1267,7 +1267,7 @@
         "books/034-reese-witherspoon-harlan-coben-novel/cover_1.jpg",
         "books/034-reese-witherspoon-harlan-coben-novel/cover_2.jpg"
       ],
-      "price": 29.49
+      "price": 1320.0
     },
     {
       "slug": "035-the-widow",
@@ -1290,7 +1290,7 @@
         "books/035-the-widow/cover_2.jpg",
         "books/035-the-widow/cover_3.jpg"
       ],
-      "price": 29.99
+      "price": 1340.0
     },
     {
       "slug": "036-black-wolf",
@@ -1313,7 +1313,7 @@
         "books/036-black-wolf/cover_2.jpg",
         "books/036-black-wolf/cover_3.jpg"
       ],
-      "price": 30.49
+      "price": 1360.0
     },
     {
       "slug": "037-reacher-30",
@@ -1337,7 +1337,7 @@
         "books/037-reacher-30/cover_2.jpg",
         "books/037-reacher-30/cover_3.jpg"
       ],
-      "price": 30.99
+      "price": 1390.0
     },
     {
       "slug": "038-the-housemaid",
@@ -1362,7 +1362,7 @@
         "books/038-the-housemaid/cover_4.jpg",
         "books/038-the-housemaid/cover_5.jpg"
       ],
-      "price": 31.49
+      "price": 1410.0
     },
     {
       "slug": "039-dear-debbie",
@@ -1385,7 +1385,7 @@
         "books/039-dear-debbie/cover_2.jpg",
         "books/039-dear-debbie/cover_3.jpg"
       ],
-      "price": 31.99
+      "price": 1430.0
     },
     {
       "slug": "040-the-divorce",
@@ -1409,7 +1409,7 @@
         "books/040-the-divorce/cover_3.jpg",
         "books/040-the-divorce/cover_4.jpg"
       ],
-      "price": 32.49
+      "price": 1450.0
     },
     {
       "slug": "041-theo-of-golden",
@@ -1432,7 +1432,7 @@
         "books/041-theo-of-golden/cover_2.jpg",
         "books/041-theo-of-golden/cover_3.jpg"
       ],
-      "price": 12.99
+      "price": 580.0
     },
     {
       "slug": "042-the-correspondent",
@@ -1455,7 +1455,7 @@
         "books/042-the-correspondent/cover_2.jpg",
         "books/042-the-correspondent/cover_3.jpg"
       ],
-      "price": 13.49
+      "price": 600.0
     },
     {
       "slug": "043-twelve-months",
@@ -1477,7 +1477,7 @@
         "books/043-twelve-months/cover_1.jpg",
         "books/043-twelve-months/cover_2.jpg"
       ],
-      "price": 13.99
+      "price": 630.0
     },
     {
       "slug": "044-stolen-in-death",
@@ -1500,7 +1500,7 @@
         "books/044-stolen-in-death/cover_2.jpg",
         "books/044-stolen-in-death/cover_3.jpg"
       ],
-      "price": 14.49
+      "price": 650.0
     },
     {
       "slug": "045-the-crossroads",
@@ -1523,7 +1523,7 @@
         "books/045-the-crossroads/cover_2.jpg",
         "books/045-the-crossroads/cover_3.jpg"
       ],
-      "price": 14.99
+      "price": 670.0
     },
     {
       "slug": "046-judge-stone",
@@ -1546,7 +1546,7 @@
         "books/046-judge-stone/cover_2.jpg",
         "books/046-judge-stone/cover_3.jpg"
       ],
-      "price": 15.49
+      "price": 690.0
     },
     {
       "slug": "047-project-hail-mary",
@@ -1571,7 +1571,7 @@
         "books/047-project-hail-mary/cover_4.jpg",
         "books/047-project-hail-mary/cover_5.jpg"
       ],
-      "price": 15.99
+      "price": 720.0
     },
     {
       "slug": "048-game-on",
@@ -1594,7 +1594,7 @@
         "books/048-game-on/cover_2.jpg",
         "books/048-game-on/cover_3.jpg"
       ],
-      "price": 16.49
+      "price": 740.0
     },
     {
       "slug": "049-rites-of-the-starling",
@@ -1617,7 +1617,7 @@
         "books/049-rites-of-the-starling/cover_2.jpg",
         "books/049-rites-of-the-starling/cover_3.jpg"
       ],
-      "price": 16.99
+      "price": 760.0
     },
     {
       "slug": "050-hope-rises",
@@ -1640,7 +1640,7 @@
         "books/050-hope-rises/cover_2.jpg",
         "books/050-hope-rises/cover_3.jpg"
       ],
-      "price": 17.49
+      "price": 780.0
     },
     {
       "slug": "051-a-parade-of-horribles",
@@ -1664,7 +1664,7 @@
         "books/051-a-parade-of-horribles/cover_3.jpg",
         "books/051-a-parade-of-horribles/cover_4.jpg"
       ],
-      "price": 17.99
+      "price": 810.0
     },
     {
       "slug": "052-dungeon-crawler-carl",
@@ -1689,7 +1689,7 @@
         "books/052-dungeon-crawler-carl/cover_4.jpg",
         "books/052-dungeon-crawler-carl/cover_5.jpg"
       ],
-      "price": 18.49
+      "price": 830.0
     },
     {
       "slug": "053-the-ballad-of-falling-dragons",
@@ -1711,7 +1711,7 @@
         "books/053-the-ballad-of-falling-dragons/cover_1.jpg",
         "books/053-the-ballad-of-falling-dragons/cover_2.jpg"
       ],
-      "price": 18.99
+      "price": 850.0
     },
     {
       "slug": "054-whistler",
@@ -1733,7 +1733,7 @@
         "books/054-whistler/cover_1.jpg",
         "books/054-whistler/cover_2.jpg"
       ],
-      "price": 19.49
+      "price": 870.0
     },
     {
       "slug": "055-it-all-comes-down-to-this",
@@ -1756,7 +1756,7 @@
         "books/055-it-all-comes-down-to-this/cover_2.jpg",
         "books/055-it-all-comes-down-to-this/cover_3.jpg"
       ],
-      "price": 19.99
+      "price": 890.0
     },
     {
       "slug": "056-the-calamity-club",
@@ -1779,7 +1779,7 @@
         "books/056-the-calamity-club/cover_2.jpg",
         "books/056-the-calamity-club/cover_3.jpg"
       ],
-      "price": 20.49
+      "price": 920.0
     },
     {
       "slug": "057-remarkably-bright-creatures",
@@ -1804,7 +1804,7 @@
         "books/057-remarkably-bright-creatures/cover_4.jpg",
         "books/057-remarkably-bright-creatures/cover_5.jpg"
       ],
-      "price": 20.99
+      "price": 940.0
     },
     {
       "slug": "058-heated-rivalry",
@@ -1829,7 +1829,7 @@
         "books/058-heated-rivalry/cover_4.jpg",
         "books/058-heated-rivalry/cover_5.jpg"
       ],
-      "price": 21.49
+      "price": 960.0
     },
     {
       "slug": "059-amor-en-juego-the-long-game",
@@ -1850,7 +1850,7 @@
       "imageFiles": [
         "books/059-amor-en-juego-the-long-game/cover_1.jpg"
       ],
-      "price": 21.99
+      "price": 980.0
     },
     {
       "slug": "060-the-deal",
@@ -1875,7 +1875,7 @@
         "books/060-the-deal/cover_4.jpg",
         "books/060-the-deal/cover_5.jpg"
       ],
-      "price": 22.49
+      "price": 1010.0
     },
     {
       "slug": "061-the-mistake",
@@ -1900,7 +1900,7 @@
         "books/061-the-mistake/cover_4.jpg",
         "books/061-the-mistake/cover_5.jpg"
       ],
-      "price": 22.99
+      "price": 1030.0
     },
     {
       "slug": "062-the-score",
@@ -1925,7 +1925,7 @@
         "books/062-the-score/cover_4.jpg",
         "books/062-the-score/cover_5.jpg"
       ],
-      "price": 23.49
+      "price": 1050.0
     },
     {
       "slug": "063-funny-story",
@@ -1950,7 +1950,7 @@
         "books/063-funny-story/cover_4.jpg",
         "books/063-funny-story/cover_5.jpg"
       ],
-      "price": 23.99
+      "price": 1070.0
     },
     {
       "slug": "064-book-lovers",
@@ -1975,7 +1975,7 @@
         "books/064-book-lovers/cover_4.jpg",
         "books/064-book-lovers/cover_5.jpg"
       ],
-      "price": 24.49
+      "price": 1100.0
     },
     {
       "slug": "065-beach-read",
@@ -2000,7 +2000,7 @@
         "books/065-beach-read/cover_4.jpg",
         "books/065-beach-read/cover_5.jpg"
       ],
-      "price": 24.99
+      "price": 1120.0
     },
     {
       "slug": "066-happy-place",
@@ -2025,7 +2025,7 @@
         "books/066-happy-place/cover_4.jpg",
         "books/066-happy-place/cover_5.jpg"
       ],
-      "price": 25.49
+      "price": 1140.0
     },
     {
       "slug": "067-people-we-meet-on-vacation",
@@ -2050,7 +2050,7 @@
         "books/067-people-we-meet-on-vacation/cover_4.jpg",
         "books/067-people-we-meet-on-vacation/cover_5.jpg"
       ],
-      "price": 25.99
+      "price": 1160.0
     },
     {
       "slug": "068-the-women",
@@ -2075,7 +2075,7 @@
         "books/068-the-women/cover_4.jpg",
         "books/068-the-women/cover_5.jpg"
       ],
-      "price": 26.49
+      "price": 1190.0
     },
     {
       "slug": "069-the-nightingale",
@@ -2100,7 +2100,7 @@
         "books/069-the-nightingale/cover_4.jpg",
         "books/069-the-nightingale/cover_5.jpg"
       ],
-      "price": 26.99
+      "price": 1210.0
     },
     {
       "slug": "070-lessons-in-chemistry",
@@ -2125,7 +2125,7 @@
         "books/070-lessons-in-chemistry/cover_4.jpg",
         "books/070-lessons-in-chemistry/cover_5.jpg"
       ],
-      "price": 27.49
+      "price": 1230.0
     },
     {
       "slug": "071-demon-copperhead",
@@ -2150,7 +2150,7 @@
         "books/071-demon-copperhead/cover_4.jpg",
         "books/071-demon-copperhead/cover_5.jpg"
       ],
-      "price": 27.99
+      "price": 1250.0
     },
     {
       "slug": "072-tomorrow-and-tomorrow-and-tomorrow",
@@ -2175,7 +2175,7 @@
         "books/072-tomorrow-and-tomorrow-and-tomorrow/cover_4.jpg",
         "books/072-tomorrow-and-tomorrow-and-tomorrow/cover_5.jpg"
       ],
-      "price": 28.49
+      "price": 1280.0
     },
     {
       "slug": "073-yellowface",
@@ -2200,7 +2200,7 @@
         "books/073-yellowface/cover_4.jpg",
         "books/073-yellowface/cover_5.jpg"
       ],
-      "price": 28.99
+      "price": 1300.0
     },
     {
       "slug": "074-babel",
@@ -2225,7 +2225,7 @@
         "books/074-babel/cover_4.jpg",
         "books/074-babel/cover_5.jpg"
       ],
-      "price": 29.49
+      "price": 1320.0
     },
     {
       "slug": "075-the-heaven-earth-grocery-store",
@@ -2250,7 +2250,7 @@
         "books/075-the-heaven-earth-grocery-store/cover_4.jpg",
         "books/075-the-heaven-earth-grocery-store/cover_5.jpg"
       ],
-      "price": 29.99
+      "price": 1340.0
     },
     {
       "slug": "076-trust",
@@ -2275,7 +2275,7 @@
         "books/076-trust/cover_4.jpg",
         "books/076-trust/cover_5.jpg"
       ],
-      "price": 30.49
+      "price": 1360.0
     },
     {
       "slug": "077-birnam-wood",
@@ -2299,7 +2299,7 @@
         "books/077-birnam-wood/cover_3.jpg",
         "books/077-birnam-wood/cover_4.jpg"
       ],
-      "price": 30.99
+      "price": 1390.0
     },
     {
       "slug": "078-whale-fall",
@@ -2322,7 +2322,7 @@
         "books/078-whale-fall/cover_2.jpg",
         "books/078-whale-fall/cover_3.jpg"
       ],
-      "price": 31.49
+      "price": 1410.0
     },
     {
       "slug": "079-intermezzo",
@@ -2346,7 +2346,7 @@
         "books/079-intermezzo/cover_3.jpg",
         "books/079-intermezzo/cover_4.jpg"
       ],
-      "price": 31.99
+      "price": 1430.0
     },
     {
       "slug": "080-normal-people",
@@ -2371,7 +2371,7 @@
         "books/080-normal-people/cover_4.jpg",
         "books/080-normal-people/cover_5.jpg"
       ],
-      "price": 32.49
+      "price": 1450.0
     },
     {
       "slug": "081-all-the-light-we-cannot-see",
@@ -2396,7 +2396,7 @@
         "books/081-all-the-light-we-cannot-see/cover_4.jpg",
         "books/081-all-the-light-we-cannot-see/cover_5.jpg"
       ],
-      "price": 12.99
+      "price": 580.0
     },
     {
       "slug": "082-cloud-cuckoo-land",
@@ -2421,7 +2421,7 @@
         "books/082-cloud-cuckoo-land/cover_4.jpg",
         "books/082-cloud-cuckoo-land/cover_5.jpg"
       ],
-      "price": 13.49
+      "price": 600.0
     },
     {
       "slug": "083-the-midnight-library",
@@ -2446,7 +2446,7 @@
         "books/083-the-midnight-library/cover_4.jpg",
         "books/083-the-midnight-library/cover_5.jpg"
       ],
-      "price": 13.99
+      "price": 630.0
     },
     {
       "slug": "084-circe",
@@ -2471,7 +2471,7 @@
         "books/084-circe/cover_4.jpg",
         "books/084-circe/cover_5.jpg"
       ],
-      "price": 14.49
+      "price": 650.0
     },
     {
       "slug": "085-the-song-of-achilles",
@@ -2496,7 +2496,7 @@
         "books/085-the-song-of-achilles/cover_4.jpg",
         "books/085-the-song-of-achilles/cover_5.jpg"
       ],
-      "price": 14.99
+      "price": 670.0
     },
     {
       "slug": "086-a-court-of-thorns-and-roses",
@@ -2521,7 +2521,7 @@
         "books/086-a-court-of-thorns-and-roses/cover_4.jpg",
         "books/086-a-court-of-thorns-and-roses/cover_5.jpg"
       ],
-      "price": 15.49
+      "price": 690.0
     },
     {
       "slug": "087-una-corte-de-niebla-y-furia",
@@ -2546,7 +2546,7 @@
         "books/087-una-corte-de-niebla-y-furia/cover_4.jpg",
         "books/087-una-corte-de-niebla-y-furia/cover_5.jpg"
       ],
-      "price": 15.99
+      "price": 720.0
     },
     {
       "slug": "088-house-of-earth-and-blood",
@@ -2571,7 +2571,7 @@
         "books/088-house-of-earth-and-blood/cover_4.jpg",
         "books/088-house-of-earth-and-blood/cover_5.jpg"
       ],
-      "price": 16.49
+      "price": 740.0
     },
     {
       "slug": "089-throne-of-glass",
@@ -2596,7 +2596,7 @@
         "books/089-throne-of-glass/cover_4.jpg",
         "books/089-throne-of-glass/cover_5.jpg"
       ],
-      "price": 16.99
+      "price": 760.0
     },
     {
       "slug": "090-the-silent-patient",
@@ -2621,7 +2621,7 @@
         "books/090-the-silent-patient/cover_4.jpg",
         "books/090-the-silent-patient/cover_5.jpg"
       ],
-      "price": 17.49
+      "price": 780.0
     },
     {
       "slug": "091-the-maid",
@@ -2646,7 +2646,7 @@
         "books/091-the-maid/cover_4.jpg",
         "books/091-the-maid/cover_5.jpg"
       ],
-      "price": 17.99
+      "price": 810.0
     },
     {
       "slug": "092-verity",
@@ -2671,7 +2671,7 @@
         "books/092-verity/cover_4.jpg",
         "books/092-verity/cover_5.jpg"
       ],
-      "price": 18.49
+      "price": 830.0
     },
     {
       "slug": "093-it-ends-with-us",
@@ -2696,7 +2696,7 @@
         "books/093-it-ends-with-us/cover_4.jpg",
         "books/093-it-ends-with-us/cover_5.jpg"
       ],
-      "price": 18.99
+      "price": 850.0
     },
     {
       "slug": "094-it-starts-with-us",
@@ -2721,7 +2721,7 @@
         "books/094-it-starts-with-us/cover_4.jpg",
         "books/094-it-starts-with-us/cover_5.jpg"
       ],
-      "price": 19.49
+      "price": 870.0
     },
     {
       "slug": "095-ugly-love",
@@ -2746,7 +2746,7 @@
         "books/095-ugly-love/cover_4.jpg",
         "books/095-ugly-love/cover_5.jpg"
       ],
-      "price": 19.99
+      "price": 890.0
     },
     {
       "slug": "096-the-love-hypothesis",
@@ -2771,7 +2771,7 @@
         "books/096-the-love-hypothesis/cover_4.jpg",
         "books/096-the-love-hypothesis/cover_5.jpg"
       ],
-      "price": 20.49
+      "price": 920.0
     },
     {
       "slug": "097-love-theoretically",
@@ -2796,7 +2796,7 @@
         "books/097-love-theoretically/cover_4.jpg",
         "books/097-love-theoretically/cover_5.jpg"
       ],
-      "price": 20.99
+      "price": 940.0
     },
     {
       "slug": "098-check-mate",
@@ -2820,7 +2820,7 @@
         "books/098-check-mate/cover_3.jpg",
         "books/098-check-mate/cover_4.jpg"
       ],
-      "price": 21.49
+      "price": 960.0
     },
     {
       "slug": "099-the-housemaid-s-secret",
@@ -2845,7 +2845,7 @@
         "books/099-the-housemaid-s-secret/cover_4.jpg",
         "books/099-the-housemaid-s-secret/cover_5.jpg"
       ],
-      "price": 21.99
+      "price": 980.0
     },
     {
       "slug": "100-the-coworker",
@@ -2870,7 +2870,7 @@
         "books/100-the-coworker/cover_4.jpg",
         "books/100-the-coworker/cover_5.jpg"
       ],
-      "price": 22.49
+      "price": 1010.0
     },
     {
       "slug": "101-never-lie",
@@ -2895,7 +2895,7 @@
         "books/101-never-lie/cover_4.jpg",
         "books/101-never-lie/cover_5.jpg"
       ],
-      "price": 22.99
+      "price": 1030.0
     },
     {
       "slug": "102-the-crash",
@@ -2917,7 +2917,7 @@
         "books/102-the-crash/cover_1.jpg",
         "books/102-the-crash/cover_2.jpg"
       ],
-      "price": 23.49
+      "price": 1050.0
     },
     {
       "slug": "108-mark-twain",
@@ -2939,7 +2939,7 @@
         "books/108-mark-twain/cover_1.jpg",
         "books/108-mark-twain/cover_2.jpg"
       ],
-      "price": 26.49
+      "price": 1190.0
     },
     {
       "slug": "110-fate-of-the-day",
@@ -2961,7 +2961,7 @@
         "books/110-fate-of-the-day/cover_1.jpg",
         "books/110-fate-of-the-day/cover_2.jpg"
       ],
-      "price": 27.49
+      "price": 1230.0
     },
     {
       "slug": "121-thinking-fast-and-slow",
@@ -2987,7 +2987,7 @@
         "books/121-thinking-fast-and-slow/cover_4.jpg",
         "books/121-thinking-fast-and-slow/cover_5.jpg"
       ],
-      "price": 12.99
+      "price": 580.0
     },
     {
       "slug": "126-poems-and-prayers",
@@ -3010,7 +3010,7 @@
         "books/126-poems-and-prayers/cover_2.jpg",
         "books/126-poems-and-prayers/cover_3.jpg"
       ],
-      "price": 15.49
+      "price": 690.0
     },
     {
       "slug": "146-cool-machine",
@@ -3033,7 +3033,7 @@
         "books/146-cool-machine/cover_2.jpg",
         "books/146-cool-machine/cover_3.jpg"
       ],
-      "price": 25.49
+      "price": 1140.0
     },
     {
       "slug": "147-the-country-road-murders",
@@ -3056,7 +3056,7 @@
         "books/147-the-country-road-murders/cover_2.jpg",
         "books/147-the-country-road-murders/cover_3.jpg"
       ],
-      "price": 25.99
+      "price": 1160.0
     },
     {
       "slug": "148-harvest-season",
@@ -3079,7 +3079,7 @@
         "books/148-harvest-season/cover_2.jpg",
         "books/148-harvest-season/cover_3.jpg"
       ],
-      "price": 26.49
+      "price": 1190.0
     },
     {
       "slug": "149-light-wielder",
@@ -3102,7 +3102,7 @@
         "books/149-light-wielder/cover_2.jpg",
         "books/149-light-wielder/cover_3.jpg"
       ],
-      "price": 26.99
+      "price": 1210.0
     },
     {
       "slug": "150-tempting-venom",
@@ -3125,7 +3125,7 @@
         "books/150-tempting-venom/cover_2.jpg",
         "books/150-tempting-venom/cover_3.jpg"
       ],
-      "price": 27.49
+      "price": 1230.0
     },
     {
       "slug": "book-bot",
