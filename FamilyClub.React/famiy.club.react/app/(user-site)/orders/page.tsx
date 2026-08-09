@@ -101,11 +101,23 @@ export default function OrdersPage() {
           let imageSrc = "/images/catalog/hunger_games.png";
           if (prod?.productImages && prod.productImages.length > 0 && prod.productImages[0].imageData) {
             const rawData = prod.productImages[0].imageData.trim();
-            if (rawData.startsWith("data:") || rawData.startsWith("http://") || rawData.startsWith("https://") || rawData.startsWith("/")) {
+            if (rawData.startsWith("data:") || rawData.startsWith("http://") || rawData.startsWith("https://")) {
+              imageSrc = rawData;
+            } else if (
+              rawData.startsWith("/") &&
+              !rawData.startsWith("/9j/") &&
+              (rawData.startsWith("/images/") ||
+                rawData.startsWith("/static/") ||
+                rawData.startsWith("/assets/") ||
+                rawData.startsWith("/uploads/") ||
+                rawData.startsWith("/_next/") ||
+                /\.(jpg|jpeg|png|webp|svg|gif|ico)$/i.test(rawData))
+            ) {
               imageSrc = rawData;
             } else {
               let mimeType = "image/jpeg";
               if (rawData.startsWith("UklGR")) mimeType = "image/webp";
+              else if (rawData.startsWith("/9j/") || rawData.startsWith("9j/")) mimeType = "image/jpeg";
               else if (rawData.startsWith("iVBORw0KGgo")) mimeType = "image/png";
               else if (rawData.startsWith("R0lGOD")) mimeType = "image/gif";
               imageSrc = `data:${mimeType};base64,${rawData}`;

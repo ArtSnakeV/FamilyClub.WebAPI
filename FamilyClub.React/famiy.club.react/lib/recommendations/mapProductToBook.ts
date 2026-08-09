@@ -23,15 +23,28 @@ export function getProductImageSrc(product: ProductDto) {
   if (
     normalizedData.startsWith("data:") ||
     normalizedData.startsWith("http://") ||
-    normalizedData.startsWith("https://") ||
-    normalizedData.startsWith("/")
+    normalizedData.startsWith("https://")
   ) {
+    return normalizedData;
+  }
+
+  const isRelativeUrl =
+    normalizedData.startsWith("/") &&
+    !normalizedData.startsWith("/9j/") &&
+    (normalizedData.startsWith("/images/") ||
+      normalizedData.startsWith("/static/") ||
+      normalizedData.startsWith("/assets/") ||
+      normalizedData.startsWith("/uploads/") ||
+      normalizedData.startsWith("/_next/") ||
+      /\.(jpg|jpeg|png|webp|svg|gif|ico)$/i.test(normalizedData));
+
+  if (isRelativeUrl) {
     return normalizedData;
   }
 
   const mimeType = (() => {
     if (normalizedData.startsWith("UklGR")) return "image/webp";
-    if (normalizedData.startsWith("/9j/")) return "image/jpeg";
+    if (normalizedData.startsWith("/9j/") || normalizedData.startsWith("9j/")) return "image/jpeg";
     if (normalizedData.startsWith("iVBORw0KGgo")) return "image/png";
     if (normalizedData.startsWith("R0lGOD")) return "image/gif";
 
