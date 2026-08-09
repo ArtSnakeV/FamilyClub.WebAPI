@@ -26,7 +26,7 @@ export default function Pagination({
             <button
                 onClick={() => onPageChange(currentPage - 1)}
                 disabled={currentPage === 1}
-                className="px-3 py-1.5 rounded-[6px] border border-gray-300 bg-[#F5F3EE] text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100 transition-colors"
+                className="px-3 py-1.5 rounded-[6px] border border-gray-300 bg-[#F5F3EE] text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:border-[#005B33] hover:bg-[#E8F5EF] hover:text-[#005B33] hover:scale-105 transition-all duration-200"
             >
                 Назад
             </button>
@@ -38,8 +38,8 @@ export default function Pagination({
                     onClick={() => onPageChange(page)}
                     className={`w-9 h-9 rounded-[6px] text-sm font-semibold transition-all duration-200 ${
                         currentPage === page
-                            ? "bg-[#005B33] text-white shadow-md border border-gray-300 hover:bg-gray-100"
-                            : "bg-[#F5F3EE] text-[var(--foreground-primary)]"
+                            ? "bg-[#005B33] text-white shadow-md hover:bg-[#003d22] hover:shadow-lg hover:scale-110"
+                            : "bg-[#F5F3EE] text-[var(--foreground-primary)] border border-gray-300 hover:border-[#005B33] hover:bg-[#E8F5EF] hover:text-[#005B33] hover:scale-110"
                     }`}
                 >
                     {page}
@@ -50,7 +50,7 @@ export default function Pagination({
             <button
                 onClick={() => onPageChange(currentPage + 1)}
                 disabled={currentPage === totalPages}
-                className="px-3 py-1.5 rounded-[6px] border border-gray-300 bg-[#F5F3EE] text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100 transition-colors"
+                className="px-3 py-1.5 rounded-[6px] border border-gray-300 bg-[#F5F3EE] text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:border-[#005B33] hover:bg-[#E8F5EF] hover:text-[#005B33] hover:scale-105 transition-all duration-200"
             >
                 Вперед
             </button>
