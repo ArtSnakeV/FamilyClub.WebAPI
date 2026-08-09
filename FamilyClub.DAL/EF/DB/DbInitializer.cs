@@ -134,8 +134,13 @@ namespace FamilyClub.DAL.EF.DB
 			var bookSize = await EnsureBookSizeAsync(context, "Стандарт", "standard");
 			var ageAll = await EnsureAgeRestrictionAsync(context, "0+", "age0");
 
+			// Deduplicate first: localization / repeated seeds can leave same AuthorName twice,
+			// and ToDictionary would throw ArgumentException.
+			await DeduplicateAuthorsByNameAsync(context);
+
 			var authorsByName = (await context.Authors.ToListAsync())
-				.ToDictionary(a => a.AuthorName, a => a, StringComparer.OrdinalIgnoreCase);
+				.GroupBy(a => a.AuthorName, StringComparer.OrdinalIgnoreCase)
+				.ToDictionary(g => g.Key, g => g.OrderBy(a => a.Id).First(), StringComparer.OrdinalIgnoreCase);
 
 			foreach (var seedAuthor in catalog.Authors ?? [])
 			{
@@ -189,10 +194,12 @@ namespace FamilyClub.DAL.EF.DB
 			await context.SaveChangesAsync();
 
 			var publishersByName = (await context.Publishers.ToListAsync())
-				.ToDictionary(p => p.PublisherName, p => p, StringComparer.OrdinalIgnoreCase);
+				.GroupBy(p => p.PublisherName, StringComparer.OrdinalIgnoreCase)
+				.ToDictionary(g => g.Key, g => g.OrderBy(p => p.Id).First(), StringComparer.OrdinalIgnoreCase);
 
 			var categoriesByName = (await context.Categories.ToListAsync())
-				.ToDictionary(c => c.CategoryName, c => c, StringComparer.OrdinalIgnoreCase);
+				.GroupBy(c => c.CategoryName, StringComparer.OrdinalIgnoreCase)
+				.ToDictionary(g => g.Key, g => g.OrderBy(c => c.Id).First(), StringComparer.OrdinalIgnoreCase);
 
 			var existingProducts = await context.Products
 				.Include(p => p.ProductImages)
@@ -331,7 +338,7 @@ namespace FamilyClub.DAL.EF.DB
 					ProductName = productName,
 					OriginalTitle = book.OriginalTitle ?? productName,
 					Description = book.Description,
-					Price = book.Price > 0 ? book.Price : 14.99m,
+					Price = book.Price > 0 ? book.Price : 399m,
 					PageCount = book.PageCount is > 0 ? book.PageCount : 320,
 					ISBN = isbn,
 					PublishingDate = new DateOnly(year, 1, 1),
@@ -374,6 +381,60 @@ namespace FamilyClub.DAL.EF.DB
 				$"видавнив: {result.PublishersAdded}, категорій: {result.CategoriesAdded}.";
 
 			return result;
+		}
+
+		/// <summary>
+		/// After renaming authors (e.g. EN→UA) the DB can contain multiple rows with the same name.
+		/// Keep the oldest Id, move product links, delete the rest.
+		/// </summary>
+		private static async Task DeduplicateAuthorsByNameAsync(FamilyClubContext context)
+		{
+			var authors = await context.Authors
+				.Include(a => a.Products)
+				.ToListAsync();
+
+			var duplicateGroups = authors
+				.Where(a => !string.IsNullOrWhiteSpace(a.AuthorName))
+				.GroupBy(a => a.AuthorName.Trim(), StringComparer.OrdinalIgnoreCase)
+				.Where(g => g.Count() > 1)
+				.ToList();
+
+			if (duplicateGroups.Count == 0)
+			{
+				return;
+			}
+
+			foreach (var group in duplicateGroups)
+			{
+				var ordered = group.OrderBy(a => a.Id).ToList();
+				var keep = ordered[0];
+				foreach (var dupe in ordered.Skip(1))
+				{
+					foreach (var product in dupe.Products.ToList())
+					{
+						if (!keep.Products.Any(p => p.Id == product.Id))
+						{
+							keep.Products.Add(product);
+						}
+
+						dupe.Products.Remove(product);
+					}
+
+					if (string.IsNullOrWhiteSpace(keep.Biography) && !string.IsNullOrWhiteSpace(dupe.Biography))
+					{
+						keep.Biography = dupe.Biography;
+					}
+
+					if (string.IsNullOrWhiteSpace(keep.PhotoUrl) && !string.IsNullOrWhiteSpace(dupe.PhotoUrl))
+					{
+						keep.PhotoUrl = dupe.PhotoUrl;
+					}
+
+					context.Authors.Remove(dupe);
+				}
+			}
+
+			await context.SaveChangesAsync();
 		}
 
 		private static async Task<bool> TryRefreshProductImagesAsync(
