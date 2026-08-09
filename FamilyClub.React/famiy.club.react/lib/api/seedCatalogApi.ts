@@ -10,6 +10,7 @@ export type SeedCatalogResult = {
   categoriesAdded: number;
   productsAdded: number;
   productsSkipped: number;
+  productsImagesUpdated?: number;
 };
 
 export async function seedCatalogBooks(): Promise<SeedCatalogResult> {
@@ -40,5 +41,6 @@ export async function seedCatalogBooks(): Promise<SeedCatalogResult> {
     categoriesAdded: 0,
     productsAdded: 0,
     productsSkipped: 0,
+    productsImagesUpdated: 0,
   };
 }

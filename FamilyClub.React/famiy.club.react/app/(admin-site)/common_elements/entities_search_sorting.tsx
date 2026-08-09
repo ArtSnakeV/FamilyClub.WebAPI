@@ -85,7 +85,7 @@ export default function EntitiesSearchSorting({
         <button
           type="button"
           disabled={secondaryButtonDisabled}
-          className="transition-all duration-200 hover:brightness-110 hover:shadow-[0px_0px_18px_0px_#FA833880] active:scale-[0.98] px-4 cursor-pointer h-[36px] rounded-[9px] bg-[#FA8338] text-white font-semibold flex items-center gap-2 text-[14px] flex-shrink-0 disabled:opacity-60 disabled:cursor-wait border border-[#E56F1F]"
+          className="transition-all duration-200 hover:bg-[#B88968] active:scale-[0.98] px-4 cursor-pointer h-[36px] rounded-[9px] bg-[#C9A07A] text-[#3D3229] font-medium flex items-center gap-2 text-[14px] flex-shrink-0 disabled:opacity-60 disabled:cursor-wait border border-[#B89574]"
           onClick={onSecondaryButtonClick}
           title="Тимчасова кнопка: додає відсутні книги з каталогу без очищення БД"
         >
