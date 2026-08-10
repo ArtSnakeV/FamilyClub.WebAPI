@@ -20,6 +20,7 @@ import {
   RolesClubMemberApi,
   PromotionsApi,
   BlockReasonsApi,
+  NotificationsApi,
 } from "./generated";
 
 // Configuration tells the client where your backend is
@@ -51,3 +52,4 @@ export const complaintsService = new ComplaintsApi(apiConfig);
 export const roleClubMemberService = new RolesClubMemberApi(apiConfig);
 export const promotionService = new PromotionsApi(apiConfig);
 export const blockReasonsService = new BlockReasonsApi(apiConfig);
+export const notificationService = new NotificationsApi(apiConfig);
