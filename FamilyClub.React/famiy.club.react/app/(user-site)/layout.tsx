@@ -8,6 +8,7 @@ import PresenceHeartbeatMount from "../(admin-site)/admin/users/section/Presence
 import MobileHeader from "./layout/header/MobileHeader";
 import MobileBottomNav from "./layout/header/MobileBottomNav";
 import UserSiteProviders from "./layout/UserSiteProviders";
+import InkAssistant from "./components/ink-assistant/InkAssistant";
 
 // import "flag-icons/css/flag-icons.min.css";
 const sourceSans = Source_Sans_3({
@@ -63,6 +64,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <Footer />
         </div>
         <MobileBottomNav />
+        <InkAssistant />
         </UserSiteProviders>
       </body>
     </html>
