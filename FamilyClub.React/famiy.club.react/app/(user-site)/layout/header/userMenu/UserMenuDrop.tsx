@@ -11,6 +11,7 @@ import {
 import Image from "next/image";
 import { Fragment } from "react";
 
+
 type Member = {
   fullName?: string;
   email?: string;
