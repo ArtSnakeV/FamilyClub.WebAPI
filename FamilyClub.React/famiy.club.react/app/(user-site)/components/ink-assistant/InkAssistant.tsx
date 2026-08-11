@@ -141,11 +141,14 @@ export default function InkAssistant() {
               reducedMotion={reducedMotion}
             />
 
-            {phase === "idle" && (
-              <p className="mt-1 max-w-[160px] text-center font-serif text-[11px] leading-tight text-[#005B33]/80">
-                Натисни на дзвіночок або на котика
-              </p>
-            )}
+            <p
+              className={`mt-1 max-w-[160px] text-center font-serif text-[11px] leading-tight text-[#005B33]/80 ${
+                phase === "idle" ? "" : "invisible"
+              }`}
+              aria-hidden={phase !== "idle"}
+            >
+              Натисни на дзвіночок або на котика
+            </p>
           </div>
         </div>
       </div>
