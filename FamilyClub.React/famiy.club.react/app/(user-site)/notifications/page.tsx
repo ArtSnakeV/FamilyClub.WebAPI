@@ -2,13 +2,13 @@
 
 import { useEffect, useMemo, useState } from "react";
 import LeftBlock from "./components/LeftBlock";
-import NotificationCard from "./components/NotificationCard";
 import NotificationThreadCard from "./components/NotificationThreadCard";
 import NotificationThread from "./components/NotificationThread";
 import useReviews from "../../(admin-site)/admin/reviews/hooks/useReviews";
 import useNotifications from "./hooks/useNotifications";
 import { useCurrentUser } from "../userProfile/hooks/useCurrentUser";
 import Image from "next/image";
+import ReviewCard from "./components/ReviewCard";
 
 const TABS = [
     { label: "Усі" },
@@ -33,7 +33,11 @@ export default function NotificationsPage() {
 
     const { user } = useCurrentUser();
     const { reviews, loadingReviews } = useReviews();
-    const { notifications, loadingNotifications, markAllAsRead } = useNotifications(user?.id);
+    const {
+        notifications,
+        loadingNotifications,
+        markAllAsRead,
+        sendMessage } = useNotifications(user?.id);
 
     useEffect(() => {
         document.body.style.backgroundImage = "url('/images/authorsUserPage/Rectangle 326.png')";
@@ -55,15 +59,27 @@ export default function NotificationsPage() {
 
     const reviewItems = useMemo(
         () =>
-            reviews.map((r: any, i: number) => ({
-                key: `review-${r.id ?? i}`,
-                title: r.bookTitle ?? r.title ?? "Відгук",
-                time: r.createdAt ?? r.date ?? "",
-                text: r.text ?? r.content ?? "",
-                avatarSrc: r.userAvatar ?? undefined,
-                coverSrc: r.bookCover ?? undefined,
-                actionLabel: "переглянути відгук",
-            })),
+            reviews.map((r) => {
+                const coverImage = r.productImages?.[0]?.imageData;
+                return {
+                    key: `review-${r.id}`,
+                    reviewerName: r.userName ?? "Користувач",
+                    reviewerAvatarSrc: r.userAvatarData
+                        ? r.userAvatarData.startsWith("data:")
+                            ? r.userAvatarData
+                            : `data:image/jpeg;base64,${r.userAvatarData}`
+                        : undefined,
+                    time: formatDate(new Date(r.createdAt)),
+                    text: r.comment ?? "",
+                    coverSrc: coverImage
+                        ? coverImage.startsWith("data:")
+                            ? coverImage
+                            : `data:image/jpeg;base64,${coverImage}`
+                        : undefined,
+                    bookTitle: r.productName ?? undefined,
+                    actionLabel: "переглянути відгук",
+                };
+            }),
         [reviews]
     );
 
@@ -75,7 +91,9 @@ export default function NotificationsPage() {
 
     const avatarFallback = !avatarSrc ? (user?.name?.[0] ?? "👤") : undefined;
 
-    const unreadCount = notifications.filter((n) => !n.isRead).length;
+    const unreadCount = notifications.filter(
+        (n) => !n.isRead && n.senderId !== user?.id
+    ).length;
 
     // останнє за часом повідомлення для прев'ю на картці
     const lastNotification = useMemo(() => {
@@ -120,13 +138,49 @@ export default function NotificationsPage() {
                     ))}
                 </div>
 
-                <div className="flex-1 flex flex-row items-center justify-center gap-4">
+                <div className="flex-1 ml-14">
                     {isLoading ? (
                         <div className="text-center py-8 text-black/60">
                             Завантаження...
                         </div>
+                    ) : activeTab === "Усі" ? (
+                        <div className="grid grid-cols-2 gap-0 items-start">
+                            {/* ПОВІДОМЛЕННЯ */}
+                            <div className="flex flex-col gap-4">
+                                {showThreadCard && lastNotification && (
+                                    <NotificationThreadCard
+                                        avatarSrc={avatarSrc}
+                                        avatarFallback={avatarFallback}
+                                        lastMessageText={lastNotification.text ?? ""}
+                                        lastMessageTime={formatDate(lastNotification.createdAt)}
+                                        unreadCount={unreadCount}
+                                        onClick={handleOpenThread}
+                                    />
+                                )}
+
+                                {!showThreadCard && (
+                                    <div className="text-center py-8 text-black/60">
+                                        Тут поки що порожньо
+                                    </div>
+                                )}
+                            </div>
+
+                            {/* ВІДГУКИ */}
+                            <div className="flex flex-col gap-4">
+                                {reviewItems.map(({ key, ...item }) => (
+                                    <ReviewCard key={key} {...item} />
+                                ))}
+
+                                {reviewItems.length === 0 && (
+                                    <div className="text-center py-8 text-black/60">
+                                        Тут поки що порожньо
+                                    </div>
+                                )}
+                            </div>
+                        </div>
                     ) : (
-                        <>
+                        /* Вкладки "Відгуки" / "Повідомлення" */
+                        <div className="flex flex-col gap-4 ml-4">
                             {showThreadCard && lastNotification && (
                                 <NotificationThreadCard
                                     avatarSrc={avatarSrc}
@@ -139,7 +193,7 @@ export default function NotificationsPage() {
                             )}
 
                             {visibleItems.map(({ key, ...item }) => (
-                                <NotificationCard key={key} {...item} />
+                                <ReviewCard key={key} {...item} />
                             ))}
 
                             {!showThreadCard && visibleItems.length === 0 && (
@@ -147,7 +201,7 @@ export default function NotificationsPage() {
                                     Тут поки що порожньо
                                 </div>
                             )}
-                        </>
+                        </div>
                     )}
                 </div>
             </div>
@@ -156,9 +210,12 @@ export default function NotificationsPage() {
                 open={threadOpen}
                 onClose={() => setThreadOpen(false)}
                 messages={notifications}
+                currentUserId={user?.id}
+                threadOwnerId={user?.id}
                 avatarSrc={avatarSrc}
                 avatarFallback={avatarFallback}
                 formatDate={formatDate}
+                onSend={(text) => sendMessage(text, user?.id ?? "", user?.id ?? "")}
             />
         </div>
     );

@@ -15,10 +15,13 @@
 
 import * as runtime from '../runtime';
 import type {
+  ClaimWithMemberDto,
   ClaimsClubMemberDto,
   UpdateClaimClubMemberDto,
 } from '../models/index';
 import {
+    ClaimWithMemberDtoFromJSON,
+    ClaimWithMemberDtoToJSON,
     ClaimsClubMemberDtoFromJSON,
     ClaimsClubMemberDtoToJSON,
     UpdateClaimClubMemberDtoFromJSON,
@@ -48,6 +51,41 @@ export interface ApiClaimsClubMemberMemberIdUpdatePutRequest {
  * 
  */
 export class ClaimsClubMemberApi extends runtime.BaseAPI {
+
+    /**
+     * Creates request options for apiClaimsClubMemberGet without sending the request
+     */
+    async apiClaimsClubMemberGetRequestOpts(): Promise<runtime.RequestOpts> {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+
+        let urlPath = `/api/ClaimsClubMember`;
+
+        return {
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     */
+    async apiClaimsClubMemberGetRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<ClaimWithMemberDto>>> {
+        const requestOptions = await this.apiClaimsClubMemberGetRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(ClaimWithMemberDtoFromJSON));
+    }
+
+    /**
+     */
+    async apiClaimsClubMemberGet(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<ClaimWithMemberDto>> {
+        const response = await this.apiClaimsClubMemberGetRaw(initOverrides);
+        return await response.value();
+    }
 
     /**
      * Creates request options for apiClaimsClubMemberMemberIdAddPost without sending the request

@@ -106,10 +106,22 @@ public class ReviewRepository : Repository<Review>, IReviewRepository
 
     public async Task<IEnumerable<Review>> GetByUserIdAsync(string userId, CancellationToken cancellationToken = default)
     {
+        //return await _context.Reviews
+        //    .Include(p => p.Product)
+        //    .Where(r => r.UserId == userId)
+        //    .ToListAsync(cancellationToken);
         return await _context.Reviews
-            .Include(p => p.Product)
-            .Where(r => r.UserId == userId)
-            .ToListAsync(cancellationToken);
+        .Include(r => r.ClubMember)
+
+        .Include(r => r.Product)
+            .ThenInclude(p => p.Authors)
+
+        .Include(r => r.Product)
+            .ThenInclude(p => p.ProductImages)
+
+        .Where(r => r.UserId == userId)
+        .AsSplitQuery()
+        .ToListAsync(cancellationToken);
     }
 }
 public class SeriesRepository(FamilyClubContext context) : Repository<Series>(context), ISeriesRepository;
@@ -167,9 +179,11 @@ public class NotificationRepository : Repository<Notification>, INotificationRep
 
 	public Task<int> GetUnreadCountAsync(string clubMemberId, CancellationToken cancellationToken = default)
 	{
-		return _context.Notifications
-			.CountAsync(n => n.ClubMemberId == clubMemberId && !n.IsRead, cancellationToken);
-	}
+        return _context.Notifications
+       .CountAsync(n => n.ClubMemberId == clubMemberId
+                      && !n.IsRead
+                      && n.SenderId != clubMemberId, cancellationToken);
+    }
 }
 public class BlockReasonRepository(FamilyClubContext context) : Repository<BlockReason>(context), IBlockReasonRepository;
 public class FormatRepository(FamilyClubContext context) : Repository<Format>(context), IFormatRepository;

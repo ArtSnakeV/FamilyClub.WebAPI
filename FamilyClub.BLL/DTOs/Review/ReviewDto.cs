@@ -8,6 +8,7 @@ public class ReviewDto
     public string? ProductName { get; set; }
     public string? Authors { get; set; }
     public string? UserId { get; set; }
+    public string? UserAvatarData { get; set; }
     public string? UserName { get; set; }
     public double Rating { get; set; }
     public string? Comment { get; set; }
