@@ -8,6 +8,7 @@ Name | Type
 ------------ | -------------
 `text` | string
 `clubMemberId` | string
+`senderId` | string
 
 ## Example
 
@@ -18,6 +19,7 @@ import type { CreateNotificationDTO } from ''
 const example = {
   "text": null,
   "clubMemberId": null,
+  "senderId": null,
 } satisfies CreateNotificationDTO
 
 console.log(example)

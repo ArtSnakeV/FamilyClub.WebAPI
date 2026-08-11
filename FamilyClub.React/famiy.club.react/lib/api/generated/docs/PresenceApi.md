@@ -5,6 +5,7 @@ All URIs are relative to *http://localhost*
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
 | [**apiPresenceActiveCountGet**](PresenceApi.md#apipresenceactivecountget) | **GET** /api/Presence/active-count |  |
+| [**apiPresenceActiveUsersGet**](PresenceApi.md#apipresenceactiveusersget) | **GET** /api/Presence/active-users |  |
 | [**apiPresenceHeartbeatPost**](PresenceApi.md#apipresenceheartbeatpost) | **POST** /api/Presence/heartbeat |  |
 
 
@@ -30,6 +31,63 @@ async function example() {
 
   try {
     const data = await api.apiPresenceActiveCountGet();
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+`void` (Empty response body)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: Not defined
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | OK |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## apiPresenceActiveUsersGet
+
+> apiPresenceActiveUsersGet()
+
+
+
+### Example
+
+```ts
+import {
+  Configuration,
+  PresenceApi,
+} from '';
+import type { ApiPresenceActiveUsersGetRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const api = new PresenceApi();
+
+  try {
+    const data = await api.apiPresenceActiveUsersGet();
     console.log(data);
   } catch (error) {
     console.error(error);

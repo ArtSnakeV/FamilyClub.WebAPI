@@ -4,11 +4,69 @@ All URIs are relative to *http://localhost*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
+| [**apiClaimsClubMemberGet**](ClaimsClubMemberApi.md#apiclaimsclubmemberget) | **GET** /api/ClaimsClubMember |  |
 | [**apiClaimsClubMemberMemberIdAddPost**](ClaimsClubMemberApi.md#apiclaimsclubmembermemberidaddpost) | **POST** /api/ClaimsClubMember/{memberId}/add |  |
 | [**apiClaimsClubMemberMemberIdGet**](ClaimsClubMemberApi.md#apiclaimsclubmembermemberidget) | **GET** /api/ClaimsClubMember/{memberId} |  |
 | [**apiClaimsClubMemberMemberIdRemoveDelete**](ClaimsClubMemberApi.md#apiclaimsclubmembermemberidremovedelete) | **DELETE** /api/ClaimsClubMember/{memberId}/remove |  |
 | [**apiClaimsClubMemberMemberIdUpdatePut**](ClaimsClubMemberApi.md#apiclaimsclubmembermemberidupdateput) | **PUT** /api/ClaimsClubMember/{memberId}/update |  |
 
+
+
+## apiClaimsClubMemberGet
+
+> Array&lt;ClaimWithMemberDto&gt; apiClaimsClubMemberGet()
+
+
+
+### Example
+
+```ts
+import {
+  Configuration,
+  ClaimsClubMemberApi,
+} from '';
+import type { ApiClaimsClubMemberGetRequest } from '';
+
+async function example() {
+  console.log("🚀 Testing  SDK...");
+  const api = new ClaimsClubMemberApi();
+
+  try {
+    const data = await api.apiClaimsClubMemberGet();
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+[**Array&lt;ClaimWithMemberDto&gt;**](ClaimWithMemberDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `text/plain`, `application/json`, `text/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | OK |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
 ## apiClaimsClubMemberMemberIdAddPost

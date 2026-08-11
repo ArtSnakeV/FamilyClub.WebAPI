@@ -49,6 +49,12 @@ export interface NotificationDTO {
      * @memberof NotificationDTO
      */
     clubMemberId?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof NotificationDTO
+     */
+    senderId?: string | null;
 }
 
 /**
@@ -73,6 +79,7 @@ export function NotificationDTOFromJSONTyped(json: any, ignoreDiscriminator: boo
         'isRead': json['isRead'] == null ? undefined : json['isRead'],
         'createdAt': json['createdAt'] == null ? undefined : (new Date(json['createdAt'])),
         'clubMemberId': json['clubMemberId'] == null ? undefined : json['clubMemberId'],
+        'senderId': json['senderId'] == null ? undefined : json['senderId'],
     };
 }
 
@@ -92,6 +99,7 @@ export function NotificationDTOToJSONTyped(value?: NotificationDTO | null, ignor
         'isRead': value['isRead'],
         'createdAt': value['createdAt'] == null ? value['createdAt'] : value['createdAt'].toISOString(),
         'clubMemberId': value['clubMemberId'],
+        'senderId': value['senderId'],
     };
 }
 

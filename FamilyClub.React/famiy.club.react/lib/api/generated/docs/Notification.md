@@ -12,6 +12,8 @@ Name | Type
 `createdAt` | Date
 `clubMemberId` | string
 `clubMember` | [ClubMember](ClubMember.md)
+`senderId` | string
+`sender` | [ClubMember](ClubMember.md)
 
 ## Example
 
@@ -26,6 +28,8 @@ const example = {
   "createdAt": null,
   "clubMemberId": null,
   "clubMember": null,
+  "senderId": null,
+  "sender": null,
 } satisfies Notification
 
 console.log(example)

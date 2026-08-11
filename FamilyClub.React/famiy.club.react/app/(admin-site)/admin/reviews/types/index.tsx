@@ -13,6 +13,7 @@ export interface Review {
     productImages: ProductImage[] | null;
     authors: string | null;
     userId: string | null;
+    userAvatarData: string | null;
     userName: string | null;
     rating: number;
     comment: string | null;

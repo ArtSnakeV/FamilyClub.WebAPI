@@ -63,6 +63,18 @@ export interface Notification {
      * @memberof Notification
      */
     clubMember?: ClubMember;
+    /**
+     * 
+     * @type {string}
+     * @memberof Notification
+     */
+    senderId?: string | null;
+    /**
+     * 
+     * @type {ClubMember}
+     * @memberof Notification
+     */
+    sender?: ClubMember;
 }
 
 /**
@@ -88,6 +100,8 @@ export function NotificationFromJSONTyped(json: any, ignoreDiscriminator: boolea
         'createdAt': json['createdAt'] == null ? undefined : (new Date(json['createdAt'])),
         'clubMemberId': json['clubMemberId'] == null ? undefined : json['clubMemberId'],
         'clubMember': json['clubMember'] == null ? undefined : ClubMemberFromJSON(json['clubMember']),
+        'senderId': json['senderId'] == null ? undefined : json['senderId'],
+        'sender': json['sender'] == null ? undefined : ClubMemberFromJSON(json['sender']),
     };
 }
 
@@ -108,6 +122,8 @@ export function NotificationToJSONTyped(value?: Notification | null, ignoreDiscr
         'createdAt': value['createdAt'] == null ? value['createdAt'] : value['createdAt'].toISOString(),
         'clubMemberId': value['clubMemberId'],
         'clubMember': ClubMemberToJSON(value['clubMember']),
+        'senderId': value['senderId'],
+        'sender': ClubMemberToJSON(value['sender']),
     };
 }
 

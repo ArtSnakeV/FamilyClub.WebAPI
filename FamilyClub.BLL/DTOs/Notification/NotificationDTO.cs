@@ -10,6 +10,7 @@ namespace FamilyClub.BLL.DTOs.Notification
 		public string? Text { get; set; }
 		public bool IsRead { get; set; }
 		public DateTime CreatedAt { get; set; }
-		public string ClubMemberId { get; set; }
+		public string? ClubMemberId { get; set; }
+		public string? SenderId { get; set; }
 	}
 }
