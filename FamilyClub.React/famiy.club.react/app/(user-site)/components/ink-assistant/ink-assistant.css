@@ -68,11 +68,26 @@
   animation: ink-panel-in 0.4s ease-out both;
 }
 
+@keyframes ink-cat-prepare {
+  0%,
+  100% {
+    filter: brightness(1);
+  }
+  50% {
+    filter: brightness(1.08);
+  }
+}
+
+.ink-cat-prepare {
+  animation: ink-cat-prepare 0.28s ease-in-out infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .ink-glow-pulse,
   .ink-bell-shake,
   .ink-cat-in,
-  .ink-panel-in {
+  .ink-panel-in,
+  .ink-cat-prepare {
     animation: none;
   }
 }
