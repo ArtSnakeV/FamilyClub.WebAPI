@@ -718,18 +718,25 @@ namespace FamilyClub.DAL.Migrations
                         .HasColumnType("boolean")
                         .HasColumnName("is_read");
 
+                    b.Property<string>("SenderId")
+                        .HasColumnType("text")
+                        .HasColumnName("sender_id");
+
                     b.Property<string>("Text")
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("text");
 
                     b.HasKey("Id")
-                        .HasName("pk_notification");
+                        .HasName("pk_notifications");
 
                     b.HasIndex("ClubMemberId")
-                        .HasDatabaseName("ix_notification_club_member_id");
+                        .HasDatabaseName("ix_notifications_club_member_id");
 
-                    b.ToTable("notification", (string)null);
+                    b.HasIndex("SenderId")
+                        .HasDatabaseName("ix_notifications_sender_id");
+
+                    b.ToTable("notifications", (string)null);
                 });
 
             modelBuilder.Entity("FamilyClubLibrary.Order", b =>
@@ -1603,11 +1610,19 @@ namespace FamilyClub.DAL.Migrations
                     b.HasOne("FamilyClubLibrary.ClubMember", "ClubMember")
                         .WithMany("Notifications")
                         .HasForeignKey("ClubMemberId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
-                        .HasConstraintName("fk_notification_asp_net_users_club_member_id");
+                        .HasConstraintName("fk_notifications_asp_net_users_club_member_id");
+
+                    b.HasOne("FamilyClubLibrary.ClubMember", "Sender")
+                        .WithMany()
+                        .HasForeignKey("SenderId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .HasConstraintName("fk_notifications_asp_net_users_sender_id");
 
                     b.Navigation("ClubMember");
+
+                    b.Navigation("Sender");
                 });
 
             modelBuilder.Entity("FamilyClubLibrary.Order", b =>

@@ -29,7 +29,7 @@ export default function MyPawsPage() {
     };
   }, []);
   return (
-    <div className="min-h-screen w-[1000px] items-center ml-[24vw] px-10 py-8" style={{ backgroundColor: "#B98F6A" }}>
+    <div className="min-h-screen w-[1000px] flex flex-col ml-[24vw] px-10 py-8" style={{ backgroundColor: "#C7A381" }}>
       <div className="flex items-center justify-between mt-22 mb-8">
         <div className="flex items-center gap-4">
           <Link href="/" className="w-10 h-10 flex items-center justify-center">
