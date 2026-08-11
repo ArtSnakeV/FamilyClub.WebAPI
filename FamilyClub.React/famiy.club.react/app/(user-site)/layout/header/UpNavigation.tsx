@@ -14,7 +14,7 @@ import UserLoginButton from "./UserLoginButton";
 import { useRouter } from "next/navigation";
 import { apiBasePath } from "@/lib/api/services";
 import { clearAuthSession, getAuthToken } from "@/lib/auth/tokenStorage";
-
+import { useUnreadNotificationsCount } from "@/lib/hooks/useUnreadNotificationsCount";
 
 type User = {
   id: string;
@@ -30,39 +30,11 @@ type User = {
 export default function UpNavigation() {
   const [member, setMember] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
-  const [notificationCount, setNotificationCount] = useState(0);
   const router = useRouter();
 
-  const fetchNotifications = async (memberId: string) => {
-    const token = getAuthToken();
-    if (!token) return;
-
-    try {
-      // const res = await fetch(
-      //   `https://localhost:7069/api/Notifications/unread-count/${memberId}`,
-      //   {
-      //     headers: {
-      //       Authorization: `Bearer ${token}`,
-      //     },
-      //   },
-      // );
-      const res = await fetch(
-        `${apiBasePath}/api/Notifications/unread-count/${memberId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        },
-      );
-
-      if (!res.ok) return;
-
-      const data = await res.json();
-      setNotificationCount(data);
-    } catch (e) {
-      console.log(e);
-    }
-  };
+  // єдине джерело правди для лічильника непрочитаних —
+  // хук сам перезапитує кількість при події "notifications-updated"
+  const notificationCount = useUnreadNotificationsCount(member?.id);
 
   const fetchUser = async () => {
     const token = getAuthToken();
@@ -74,11 +46,6 @@ export default function UpNavigation() {
     }
 
     try {
-      // const res = await fetch("https://localhost:7069/api/AuthClubMember/me", {
-      //   headers: {
-      //     Authorization: `Bearer ${token}`,
-      //   },
-      // });
       const res = await fetch(`${apiBasePath}/api/AuthClubMember/me`, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -92,7 +59,6 @@ export default function UpNavigation() {
 
       const data: User = await res.json();
       setMember(data);
-      await fetchNotifications(data.id);
     } catch (error) {
       console.log(error);
       setMember(null);
@@ -124,7 +90,6 @@ export default function UpNavigation() {
   const handleLogout = () => {
     clearAuthSession();
     setMember(null);
-    setNotificationCount(0);
     router.push("/");
   };
   return (
@@ -153,7 +118,7 @@ export default function UpNavigation() {
                 </Link>
               </div>
               <div className=" relative w-[40px] h-[40px] ">
-                <Link  href="/userProfile?tab=favorite">
+                <Link href="/userProfile?tab=favorite">
                   <FavoriteButton />
                 </Link>
               </div>

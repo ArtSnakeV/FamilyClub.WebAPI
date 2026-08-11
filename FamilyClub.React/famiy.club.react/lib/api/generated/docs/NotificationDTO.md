@@ -11,6 +11,7 @@ Name | Type
 `isRead` | boolean
 `createdAt` | Date
 `clubMemberId` | string
+`senderId` | string
 
 ## Example
 
@@ -24,6 +25,7 @@ const example = {
   "isRead": null,
   "createdAt": null,
   "clubMemberId": null,
+  "senderId": null,
 } satisfies NotificationDTO
 
 console.log(example)
