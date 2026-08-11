@@ -13,8 +13,12 @@ namespace FamilyClubLibrary
 		public bool IsRead { get; set; } = false;
 
 		public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-
-		public string ClubMemberId { get; set; } = string.Empty;
+        // Власник треду (з ким листується адмін)
+        public string ClubMemberId { get; set; } = string.Empty;
 		public ClubMember ClubMember { get; set; } = null!;
-	}
+        // Хто фактично написав це повідомлення (може дорівнювати ClubMemberId,
+        // якщо написав сам користувач, або бути іншим Id, якщо написав адмін)
+        public string? SenderId { get; set; } = string.Empty;
+        public ClubMember? Sender { get; set; } = null!;
+    }
 }

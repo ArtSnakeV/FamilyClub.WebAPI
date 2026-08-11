@@ -38,7 +38,8 @@ namespace FamilyClub.BLL.Services
 			{
 				Text = dto.Text,
 				ClubMemberId = dto.ClubMemberId,
-				IsRead = false,
+                SenderId = dto.SenderId,
+                IsRead = false,
 				CreatedAt = DateTime.UtcNow
 			};
 
@@ -96,8 +97,9 @@ namespace FamilyClub.BLL.Services
 				Text = notification.Text,
 				IsRead = notification.IsRead,
 				CreatedAt = notification.CreatedAt,
-				ClubMemberId = notification.ClubMemberId
-			};
+				ClubMemberId = notification.ClubMemberId,
+                SenderId = notification.SenderId
+            };
 		}
 	}
 }

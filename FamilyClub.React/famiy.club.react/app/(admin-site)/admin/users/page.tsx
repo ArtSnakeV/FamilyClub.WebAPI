@@ -153,11 +153,15 @@ import { useRouter } from "next/navigation";
 import { useLockUserFlow } from "./hooks/useLockUserFlow";
 import LockUserModal from "./blockedUsers/ui/LockUserModal";
 import { usePagination } from "./hooks/usePagination";
+import useNotifications from "@/app/(user-site)/notifications/hooks/useNotifications";
+import NotificationThread from "@/app/(user-site)/notifications/components/NotificationThread";
+import { useCurrentUser } from "@/app/(user-site)/userProfile/hooks/useCurrentUser";
 
 export default function Page() {
+    const { user: admin } = useCurrentUser();
     const router = useRouter();
     const { usersInfo, loadingUsersInfo, refetch } = useAllUsersInfo();
-
+    const [messageUser, setMessageUser] = useState<UserInfo | null>(null);
 
     const [localUsers, setLocalUsers] = useState<UserInfo[]>([]);
     const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
@@ -182,7 +186,7 @@ export default function Page() {
             setSelectedUserId(localUsers[0].id);
         }
     }, [localUsers, selectedUserId]);
-   
+
     useEffect(() => {
         document.body.style.backgroundImage =
             "url('/images/usersPageAdmin/Rectangle326.png')";
@@ -200,45 +204,6 @@ export default function Page() {
         };
     }, []);
 
-    // const handleLockToggle = async (user: UserInfo) => {
-    //     const blocked =
-    //         !!user.lockoutEnd && new Date(user.lockoutEnd).getTime() > Date.now();
-
-    //     const nextLockoutEnd = new Date(
-    //         Date.now() + 1000 * 60 * 60 * 24 * 365 * 100
-    //     ).toISOString();
-
-    //     try {
-    //         if (blocked) {
-    //             await unlockUser(user.id);
-    //         } else {
-    //             await lockUser(user.id, {
-    //                 blockReasonId: 1,
-    //                 comment: "Заблоковано адміністратором",
-    //                 lockoutEnd: nextLockoutEnd,
-    //             });
-    //         }
-
-    //         setLocalUsers((prev) =>
-    //             prev.map((u) =>
-    //                 u.id === user.id
-    //                     ? {
-    //                           ...u,
-    //                           lockoutEnd: blocked ? null : nextLockoutEnd,
-    //                       }
-    //                     : u
-    //             )
-    //         );
-    //     } catch (error) {
-    //         console.error(error);
-    //         alert(
-    //             error instanceof Error
-    //                 ? error.message
-    //                 : "Не вдалося змінити статус користувача"
-    //         );
-    //     }
-    // };
-
     const handleDeleteUser = async (user: UserInfo) => {
         await deleteUser(user.id);
 
@@ -250,7 +215,11 @@ export default function Page() {
     };
 
     const selectedUser = localUsers.find((u) => u.id === selectedUserId) ?? null;
-
+    const {
+        notifications,
+        loadingNotifications,
+        sendMessage,
+    } = useNotifications(messageUser?.id);
     return (
         <div className="w-full min-h-screen overflow-hidden relative m-0 p-0">
             <div className="w-[100vw] min-h-screen relative">
@@ -277,6 +246,7 @@ export default function Page() {
                             selectedUserId={selectedUser?.id}
                             onLockToggle={handleLockToggle}
                             onDelete={handleDeleteUser}
+                            onMessage={(user) => setMessageUser(user)}
                         />
                     )}
 
@@ -297,6 +267,46 @@ export default function Page() {
                         user={userToLock}
                         onConfirm={handleConfirmLock}
                         onCancel={() => setUserToLock(null)}
+                    />
+                )}
+
+
+                {messageUser && (
+                    <NotificationThread
+                        open={true}
+                        onClose={() => setMessageUser(null)}
+                        messages={notifications}
+                        currentUserId={admin?.id}
+                        threadOwnerId={messageUser.id}
+                        title={`Повідомлення — ${messageUser.name ?? ""} ${messageUser.surname ?? ""}`}
+                        avatarSrc={
+                            messageUser.avatarData
+                                ? messageUser.avatarData.startsWith("data:")
+                                    ? messageUser.avatarData
+                                    : `data:image/jpeg;base64,${messageUser.avatarData}`
+                                : undefined
+                        }
+                        avatarFallback={
+                            messageUser.name?.[0] ?? "👤"
+                        }
+                        formatDate={(date?: Date) => {
+                            if (!date) return "";
+
+                            return new Date(date).toLocaleString("uk-UA", {
+                                day: "2-digit",
+                                month: "2-digit",
+                                year: "numeric",
+                                hour: "2-digit",
+                                minute: "2-digit",
+                            });
+                        }}
+                        onSend={(text) =>
+                            sendMessage(
+                                text,
+                                messageUser.id,
+                                admin?.id ?? ""
+                            )
+                        }
                     />
                 )}
             </div>
