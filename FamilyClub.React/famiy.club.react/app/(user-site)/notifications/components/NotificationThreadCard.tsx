@@ -21,14 +21,14 @@ export default function NotificationThreadCard({
         <button
             type="button"
             onClick={onClick}
-            className="w-[500px] h-[190px] p-5 text-left"
+            className="w-[500px] h-[200px] p-5 text-left"
             style={{
                 backgroundImage: "url('/images/notifications/Rectangle 431.png')",
                 backgroundSize: "contain",
                 backgroundRepeat: "no-repeat",
             }}
         >
-            <div className="flex items-start justify-between gap-2 mb-2">
+            <div className="flex items-start justify-between gap-2 -mt-8 mb-2">
                 <div className="flex items-center gap-2 min-w-0">
                     <div className="relative shrink-0">
                         {avatarSrc ? (

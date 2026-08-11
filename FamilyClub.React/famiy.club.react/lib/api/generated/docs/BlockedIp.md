@@ -1,5 +1,5 @@
 
-# NotificationDTO
+# BlockedIp
 
 
 ## Properties
@@ -7,26 +7,22 @@
 Name | Type
 ------------ | -------------
 `id` | number
-`text` | string
-`isRead` | boolean
+`ipAddress` | string
+`reason` | string
 `createdAt` | Date
-`clubMemberId` | string
-`senderId` | string
 
 ## Example
 
 ```typescript
-import type { NotificationDTO } from ''
+import type { BlockedIp } from ''
 
 // TODO: Update the object below with actual values
 const example = {
   "id": null,
-  "text": null,
-  "isRead": null,
+  "ipAddress": null,
+  "reason": null,
   "createdAt": null,
-  "clubMemberId": null,
-  "senderId": null,
-} satisfies NotificationDTO
+} satisfies BlockedIp
 
 console.log(example)
 
@@ -35,7 +31,7 @@ const exampleJSON: string = JSON.stringify(example)
 console.log(exampleJSON)
 
 // Parse the JSON string back to an object
-const exampleParsed = JSON.parse(exampleJSON) as NotificationDTO
+const exampleParsed = JSON.parse(exampleJSON) as BlockedIp
 console.log(exampleParsed)
 ```
 
