@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 
 type ChatMessage = {
   id: string;
@@ -108,6 +108,13 @@ export default function InkChatPanel({ onClose, onPlayGame }: InkChatPanelProps)
     },
   ]);
   const [draft, setDraft] = useState("");
+  const listRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = listRef.current;
+    if (!el) return;
+    el.scrollTo({ top: el.scrollHeight, behavior: "smooth" });
+  }, [messages]);
 
   const pushInk = (text: string) => {
     setMessages((prev) => [
@@ -163,7 +170,10 @@ export default function InkChatPanel({ onClose, onPlayGame }: InkChatPanelProps)
         </button>
       </div>
 
-      <div className="flex max-h-[220px] flex-col gap-2 overflow-y-auto px-3 py-3">
+      <div
+        ref={listRef}
+        className="flex max-h-[220px] flex-col gap-2 overflow-y-auto px-3 py-3"
+      >
         {messages.map((m) => (
           <div
             key={m.id}
