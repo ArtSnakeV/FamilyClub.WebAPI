@@ -31,6 +31,12 @@ export interface CreateNotificationDTO {
      * @memberof CreateNotificationDTO
      */
     clubMemberId?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateNotificationDTO
+     */
+    senderId?: string | null;
 }
 
 /**
@@ -52,6 +58,7 @@ export function CreateNotificationDTOFromJSONTyped(json: any, ignoreDiscriminato
         
         'text': json['text'] == null ? undefined : json['text'],
         'clubMemberId': json['clubMemberId'] == null ? undefined : json['clubMemberId'],
+        'senderId': json['senderId'] == null ? undefined : json['senderId'],
     };
 }
 
@@ -68,6 +75,7 @@ export function CreateNotificationDTOToJSONTyped(value?: CreateNotificationDTO |
         
         'text': value['text'],
         'clubMemberId': value['clubMemberId'],
+        'senderId': value['senderId'],
     };
 }
 

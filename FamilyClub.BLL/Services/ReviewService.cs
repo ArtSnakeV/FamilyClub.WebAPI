@@ -116,6 +116,9 @@ public class ReviewService : IReviewService
             ProductId = review.ProductId,
             ProductName = review.Product?.ProductName,
             UserId = review.UserId,
+            UserAvatarData = review.ClubMember?.AvatarData != null
+    ? Convert.ToBase64String(review.ClubMember.AvatarData)
+    : null,
             UserName = nameToShow,
             Rating = review.Rating,
             Comment = review.Comment,

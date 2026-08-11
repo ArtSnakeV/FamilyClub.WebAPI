@@ -11,6 +11,7 @@ Name | Type
 `productName` | string
 `authors` | string
 `userId` | string
+`userAvatarData` | string
 `userName` | string
 `rating` | number
 `comment` | string
@@ -30,6 +31,7 @@ const example = {
   "productName": null,
   "authors": null,
   "userId": null,
+  "userAvatarData": null,
   "userName": null,
   "rating": null,
   "comment": null,

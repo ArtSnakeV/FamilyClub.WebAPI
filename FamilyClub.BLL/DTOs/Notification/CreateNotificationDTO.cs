@@ -8,5 +8,6 @@ namespace FamilyClub.BLL.DTOs.Notification
 	{
 		public string Text { get; set; } = string.Empty;
 		public string ClubMemberId { get; set; } = string.Empty;
-	}
+        public string SenderId { get; set; } = string.Empty;
+    }
 }

@@ -142,11 +142,22 @@ public class FamilyClubContext : IdentityDbContext<ClubMember>
             .HasForeignKey(pi => pi.ProductId)
             .OnDelete(DeleteBehavior.Cascade);
 
-		builder.Entity<Notification>()
-		.ToTable("notification");
+        //builder.Entity<Notification>()
+        //.ToTable("notification");
+        builder.Entity<Notification>()
+               .HasOne(n => n.ClubMember)
+               .WithMany(m => m.Notifications)
+               .HasForeignKey(n => n.ClubMemberId)
+               .OnDelete(DeleteBehavior.Restrict);
 
-		// Cart: one cart per ClubMember (or SessionId/GuestId)
-		builder.Entity<Cart>()
+        builder.Entity<Notification>()
+            .HasOne(n => n.Sender)
+            .WithMany()
+            .HasForeignKey(n => n.SenderId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        // Cart: one cart per ClubMember (or SessionId/GuestId)
+        builder.Entity<Cart>()
 			.HasIndex(c => c.ClubMemberId)
 			.IsUnique();
 
