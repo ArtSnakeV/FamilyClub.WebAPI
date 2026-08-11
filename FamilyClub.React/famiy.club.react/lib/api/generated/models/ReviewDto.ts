@@ -62,6 +62,12 @@ export interface ReviewDto {
      * @type {string}
      * @memberof ReviewDto
      */
+    userAvatarData?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReviewDto
+     */
     userName?: string | null;
     /**
      * 
@@ -117,6 +123,7 @@ export function ReviewDtoFromJSONTyped(json: any, ignoreDiscriminator: boolean):
         'productName': json['productName'] == null ? undefined : json['productName'],
         'authors': json['authors'] == null ? undefined : json['authors'],
         'userId': json['userId'] == null ? undefined : json['userId'],
+        'userAvatarData': json['userAvatarData'] == null ? undefined : json['userAvatarData'],
         'userName': json['userName'] == null ? undefined : json['userName'],
         'rating': json['rating'] == null ? undefined : json['rating'],
         'comment': json['comment'] == null ? undefined : json['comment'],
@@ -142,6 +149,7 @@ export function ReviewDtoToJSONTyped(value?: ReviewDto | null, ignoreDiscriminat
         'productName': value['productName'],
         'authors': value['authors'],
         'userId': value['userId'],
+        'userAvatarData': value['userAvatarData'],
         'userName': value['userName'],
         'rating': value['rating'],
         'comment': value['comment'],

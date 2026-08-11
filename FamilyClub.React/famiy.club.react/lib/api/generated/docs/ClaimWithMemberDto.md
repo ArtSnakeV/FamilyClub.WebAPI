@@ -1,32 +1,32 @@
 
-# NotificationDTO
+# ClaimWithMemberDto
 
 
 ## Properties
 
 Name | Type
 ------------ | -------------
-`id` | number
-`text` | string
-`isRead` | boolean
-`createdAt` | Date
-`clubMemberId` | string
-`senderId` | string
+`memberId` | string
+`email` | string
+`userName` | string
+`phoneNumber` | string
+`claimType` | string
+`claimValue` | string
 
 ## Example
 
 ```typescript
-import type { NotificationDTO } from ''
+import type { ClaimWithMemberDto } from ''
 
 // TODO: Update the object below with actual values
 const example = {
-  "id": null,
-  "text": null,
-  "isRead": null,
-  "createdAt": null,
-  "clubMemberId": null,
-  "senderId": null,
-} satisfies NotificationDTO
+  "memberId": null,
+  "email": null,
+  "userName": null,
+  "phoneNumber": null,
+  "claimType": null,
+  "claimValue": null,
+} satisfies ClaimWithMemberDto
 
 console.log(example)
 
@@ -35,7 +35,7 @@ const exampleJSON: string = JSON.stringify(example)
 console.log(exampleJSON)
 
 // Parse the JSON string back to an object
-const exampleParsed = JSON.parse(exampleJSON) as NotificationDTO
+const exampleParsed = JSON.parse(exampleJSON) as ClaimWithMemberDto
 console.log(exampleParsed)
 ```
 

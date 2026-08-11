@@ -66,6 +66,40 @@ export class PresenceApi extends runtime.BaseAPI {
     }
 
     /**
+     * Creates request options for apiPresenceActiveUsersGet without sending the request
+     */
+    async apiPresenceActiveUsersGetRequestOpts(): Promise<runtime.RequestOpts> {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+
+        let urlPath = `/api/Presence/active-users`;
+
+        return {
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     */
+    async apiPresenceActiveUsersGetRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.apiPresenceActiveUsersGetRequestOpts();
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     */
+    async apiPresenceActiveUsersGet(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.apiPresenceActiveUsersGetRaw(initOverrides);
+    }
+
+    /**
      * Creates request options for apiPresenceHeartbeatPost without sending the request
      */
     async apiPresenceHeartbeatPostRequestOpts(requestParameters: ApiPresenceHeartbeatPostRequest): Promise<runtime.RequestOpts> {
