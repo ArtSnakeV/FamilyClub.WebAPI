@@ -23,9 +23,14 @@ import {
   NotificationsApi,
 } from "./generated";
 
-// Configuration tells the client where your backend is
-const defaultBasePath = typeof window !== "undefined" ? "" : "https://localhost:7069";
-export const apiBasePath = process.env.NEXT_PUBLIC_API_URL || defaultBasePath;
+// Browser: empty base → same-origin /api (Next rewrite).
+// Server (SSR): INTERNAL_API_URL → NEXT_PUBLIC_API_URL → local Kestrel.
+export const apiBasePath =
+  typeof window !== "undefined"
+    ? process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, "") || ""
+    : process.env.INTERNAL_API_URL?.replace(/\/$/, "") ||
+      process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, "") ||
+      "https://localhost:7069";
 
 
 export const apiConfig = new Configuration({
