@@ -10,6 +10,29 @@ type InkHouseProps = {
   reducedMotion: boolean;
 };
 
+/** Intrinsic size of InkInHouse.png */
+const IMG_W = 342;
+const IMG_H = 460;
+/** Widget box (matches Tailwind w/h on wrapper) */
+const BOX_W = 210;
+const BOX_H = 280;
+
+const DISP_SCALE = Math.min(BOX_W / IMG_W, BOX_H / IMG_H);
+const DISP_W = IMG_W * DISP_SCALE;
+const DISP_H = IMG_H * DISP_SCALE;
+
+/**
+ * Cat opening circle in source-image pixels (measured from cream hole + rim).
+ * Overlay is positioned in the displayed image box, so it tracks object-contain.
+ */
+const HOLE_CX = 243.5;
+const HOLE_CY = 78.5;
+const HOLE_R = 44;
+
+const HOLE_LEFT = ((HOLE_CX - HOLE_R) / IMG_W) * 100;
+const HOLE_TOP = ((HOLE_CY - HOLE_R) / IMG_H) * 100;
+const HOLE_SIZE = ((HOLE_R * 2) / IMG_W) * 100;
+
 export default function InkHouse({
   phase,
   onActivate,
@@ -18,6 +41,7 @@ export default function InkHouse({
 }: InkHouseProps) {
   const isOpen = phase === "open" || phase === "emerging";
   const isRinging = phase === "ringing";
+  const interactive = phase === "idle";
 
   const bellFrame = useSpriteAnimation({
     frames: INK_ASSETS.ringingBell,
@@ -33,67 +57,70 @@ export default function InkHouse({
       ? INK_ASSETS.inHouseRinging
       : INK_ASSETS.inHouse;
 
-  const interactive = phase === "idle";
-
   return (
-    <div className="relative h-[280px] w-[210px] select-none">
-      <img
-        src={houseSrc}
-        alt={isOpen ? "Будиночок Ink — порожній" : "Будиночок Ink з котом"}
-        className="pointer-events-none absolute inset-0 h-full w-full object-contain"
-        draggable={false}
-      />
+    <div
+      className="relative flex items-center justify-center select-none"
+      style={{ width: BOX_W, height: BOX_H }}
+    >
+      <div className="relative" style={{ width: DISP_W, height: DISP_H }}>
+        <img
+          src={houseSrc}
+          alt={isOpen ? "Будиночок Ink — порожній" : "Будиночок Ink з котом"}
+          className="pointer-events-none absolute inset-0 h-full w-full object-fill"
+          draggable={false}
+        />
 
-      {/* Click + hover target over the circular house opening */}
-      {interactive && (
+        {/* Perfect circle aligned to the cat opening; 5px dark ring, clear center */}
+        {interactive && (
+          <button
+            type="button"
+            aria-label="Покликати Ink — натисни на котика в кружечку"
+            onClick={onActivate}
+            className="group absolute z-10 cursor-pointer rounded-full border-0 bg-transparent p-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#005B33]"
+            style={{
+              left: `${HOLE_LEFT}%`,
+              top: `${HOLE_TOP}%`,
+              width: `${HOLE_SIZE}%`,
+              aspectRatio: "1 / 1",
+            }}
+          >
+            <span
+              aria-hidden
+              className="pointer-events-none absolute inset-0 rounded-full opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-focus-visible:opacity-100"
+              style={{
+                background:
+                  "radial-gradient(circle, transparent 0%, transparent calc(100% - 5px), rgba(42, 24, 10, 0.78) calc(100% - 5px), rgba(30, 16, 6, 0.92) 100%)",
+              }}
+            />
+          </button>
+        )}
+
         <button
           type="button"
-          aria-label="Покликати Ink — натисни на котика в кружечку"
-          onClick={onActivate}
-          className="group absolute left-[26%] top-[5%] z-10 h-[24%] w-[48%] rounded-full border-0 bg-transparent p-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#005B33]"
+          aria-label="Подзвонити в дзвіночок Ink"
+          disabled={!interactive && !isRinging}
+          onClick={interactive ? onActivate : undefined}
+          className={`absolute z-20 border-0 bg-transparent p-0 ${
+            interactive ? "cursor-pointer" : "cursor-default"
+          } ${isRinging ? "ink-bell-shake" : ""}`}
+          style={{
+            left: "55%",
+            top: "37.5%",
+            width: "22%",
+            height: "29%",
+          }}
         >
-          <span
-            aria-hidden
-            className="ink-glow-pulse pointer-events-none absolute inset-[-18%] rounded-full opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-focus-visible:opacity-100"
-            style={{
-              background:
-                "radial-gradient(circle, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.22) 45%, transparent 70%)",
-              boxShadow: "0 0 22px 8px rgba(255,255,255,0.55)",
-            }}
-          />
+          {isRinging && !reducedMotion && (
+            <img
+              src={bellFrame}
+              alt=""
+              aria-hidden
+              className="pointer-events-none absolute left-1/2 top-0 h-full w-auto max-w-none -translate-x-1/2 object-contain object-top"
+              draggable={false}
+            />
+          )}
         </button>
-      )}
-
-      {/*
-        Bell hit area — aligned to the hanging bell on InkInHouse.
-        During ringing we swap to InkInHouseRinging (no static bell)
-        and overlay RingingBell frames in the same spot.
-      */}
-      <button
-        type="button"
-        aria-label="Подзвонити в дзвіночок Ink"
-        disabled={!interactive && !isRinging}
-        onClick={interactive ? onActivate : undefined}
-        className={`absolute z-20 border-0 bg-transparent p-0 ${
-          interactive ? "cursor-pointer" : "cursor-default"
-        } ${isRinging ? "ink-bell-shake" : ""}`}
-        style={{
-          left: "55%",
-          top: "37.5%",
-          width: "22%",
-          height: "29%",
-        }}
-      >
-        {isRinging && !reducedMotion && (
-          <img
-            src={bellFrame}
-            alt=""
-            aria-hidden
-            className="pointer-events-none absolute left-1/2 top-0 h-full w-auto max-w-none -translate-x-1/2 object-contain object-top"
-            draggable={false}
-          />
-        )}
-      </button>
+      </div>
     </div>
   );
 }

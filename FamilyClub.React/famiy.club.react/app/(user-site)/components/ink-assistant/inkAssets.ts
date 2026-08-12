@@ -17,6 +17,23 @@ export const INK_ASSETS = {
     "/images/Ink/jump-down0003.png",
     "/images/Ink/jump-down0004.png",
   ],
+  walk: [
+    "/images/Ink/walk0000.png",
+    "/images/Ink/walk0001.png",
+    "/images/Ink/walk0002.png",
+    "/images/Ink/walk0003.png",
+  ],
+  game: {
+    mouse: "/images/Ink/game/ink-game-mouse.png",
+    catHappy: "/images/Ink/game/ink-game-cat-happy.png",
+    catWithMouse: "/images/Ink/game/ink-game-cat-with-mouse.png",
+    jump: [
+      "/images/Ink/game/ink-game-cat-jump-1.png",
+      "/images/Ink/game/ink-game-cat-jump-2.png",
+      "/images/Ink/game/ink-game-cat-jump-3.png",
+    ],
+  },
 } as const;
 
-export type InkPhase = "idle" | "ringing" | "emerging" | "open";
+export type InkPhase = "idle" | "ringing" | "emerging" | "open" | "playing";
+export type InkPreyKind = "laser" | "mouse";
