@@ -1,4 +1,20 @@
 import type { NextConfig } from "next";
+
+/**
+ * Browser calls same-origin /api/* and /images/*.
+ * Next rewrites those to the ASP.NET backend.
+ *
+ * Production (K8s/Docker): set INTERNAL_API_URL to the API Service from the Next pod, e.g.
+ *   INTERNAL_API_URL=http://familyclub-api:8080
+ * Leave NEXT_PUBLIC_API_URL empty so the client uses relative /api.
+ * Do not use localhost:7069 in cluster — API is in another pod.
+ *
+ * Local default matches typical HTTPS Kestrel port.
+ */
+const internalApi =
+  process.env.INTERNAL_API_URL?.replace(/\/$/, "") ||
+  "https://localhost:7069";
+
 const nextConfig: NextConfig = {
   allowedDevOrigins: ["26.15.231.182", "localhost", "127.0.0.1"],
   reactStrictMode: false,
@@ -40,40 +56,14 @@ const nextConfig: NextConfig = {
     return [
       {
         source: "/api/:path*",
-        destination: "https://localhost:7069/api/:path*",
+        destination: `${internalApi}/api/:path*`,
       },
-      //створити .env і видалити цей блок для фото //
       {
         source: "/images/:path*",
-        destination: "https://localhost:7069/images/:path*",
+        destination: `${internalApi}/images/:path*`,
       },
     ];
   },
 };
-export default nextConfig
 
-
-// import type { NextConfig } from "next";
-
-// const nextConfig: NextConfig = {
-//   allowedDevOrigins: ["26.15.231.182", "localhost", "127.0.0.1"],
-//   reactStrictMode: false,
-//   images: {
-//     unoptimized: true,
-//   },
-//   async rewrites() {
-//     return [
-//       {
-//         source: "/api/:path*",
-//         destination: "https://localhost:7069/api/:path*",
-//       },
-//       //створити .env і видалити цей блок для фото //
-//       {
-//         source: "/images/:path*",
-//         destination: "https://localhost:7069/images/:path*",
-//       },
-//     ];
-//   },
-// };
-
-// export default nextConfig;
+export default nextConfig;
