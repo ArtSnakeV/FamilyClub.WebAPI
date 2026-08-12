@@ -5,6 +5,7 @@ import "./ink-assistant.css";
 import { INK_ASSETS, type InkPhase } from "./inkAssets";
 import InkChatPanel from "./InkChatPanel";
 import InkHouse from "./InkHouse";
+import InkPlayGame from "./game/InkPlayGame";
 import { playBellSound } from "./playBellSound";
 import { useSpriteAnimation } from "./useSpriteAnimation";
 
@@ -25,6 +26,7 @@ function usePrefersReducedMotion() {
 export default function InkAssistant() {
   const reducedMotion = usePrefersReducedMotion();
   const [phase, setPhase] = useState<InkPhase>("idle");
+  const [gameKey, setGameKey] = useState(0);
 
   const handleActivate = useCallback(() => {
     if (phase !== "idle") return;
@@ -72,6 +74,20 @@ export default function InkAssistant() {
     setPhase("idle");
   }, []);
 
+  const handlePlayGame = useCallback(() => {
+    setGameKey((k) => k + 1);
+    setPhase("playing");
+  }, []);
+
+  const handleExitGame = useCallback(() => {
+    setPhase("open");
+  }, []);
+
+  const handlePlayAgain = useCallback(() => {
+    setGameKey((k) => k + 1);
+    setPhase("playing");
+  }, []);
+
   useEffect(() => {
     if (phase !== "open") return;
     const onKey = (e: KeyboardEvent) => {
@@ -86,39 +102,56 @@ export default function InkAssistant() {
     phase === "emerging" && !reducedMotion ? jumpFrame : INK_ASSETS.lying;
 
   return (
-    <div
-      className="pointer-events-none fixed bottom-6 right-2 z-40 hidden md:block lg:right-6"
-      aria-live="polite"
-    >
-      <div className="pointer-events-auto flex items-end gap-2 lg:gap-3">
-        {phase === "open" && <InkChatPanel onClose={handleClose} />}
+    <>
+      {phase === "playing" && (
+        <InkPlayGame
+          key={gameKey}
+          onExit={handleExitGame}
+          onPlayAgain={handlePlayAgain}
+        />
+      )}
 
-        {showCat && (
-          <div className="ink-cat-in mb-10 h-[130px] w-[200px] shrink-0">
-            <img
-              src={catSrc}
-              alt="Ink сидить поруч"
-              className="h-full w-full object-contain object-bottom drop-shadow-md"
-              draggable={false}
+      <div
+        className={`pointer-events-none fixed bottom-6 right-2 z-40 hidden md:block lg:right-6 ${
+          phase === "playing" ? "invisible" : ""
+        }`}
+        aria-live="polite"
+      >
+        <div className="pointer-events-auto flex items-end gap-2 lg:gap-3">
+          {phase === "open" && (
+            <InkChatPanel onClose={handleClose} onPlayGame={handlePlayGame} />
+          )}
+
+          {showCat && (
+            <div className="ink-cat-in mb-10 h-[130px] w-[200px] shrink-0">
+              <img
+                src={catSrc}
+                alt="Ink сидить поруч"
+                className="h-full w-full object-contain object-bottom drop-shadow-md"
+                draggable={false}
+              />
+            </div>
+          )}
+
+          <div className="relative flex flex-col items-center">
+            <InkHouse
+              phase={phase === "playing" ? "open" : phase}
+              onActivate={handleActivate}
+              onBellComplete={handleBellComplete}
+              reducedMotion={reducedMotion}
             />
-          </div>
-        )}
 
-        <div className="relative flex flex-col items-center">
-          <InkHouse
-            phase={phase}
-            onActivate={handleActivate}
-            onBellComplete={handleBellComplete}
-            reducedMotion={reducedMotion}
-          />
-
-          {phase === "idle" && (
-            <p className="mt-1 max-w-[160px] text-center font-serif text-[11px] leading-tight text-[#005B33]/80">
+            <p
+              className={`mt-1 max-w-[160px] text-center font-serif text-[11px] leading-tight text-[#005B33]/80 ${
+                phase === "idle" ? "" : "invisible"
+              }`}
+              aria-hidden={phase !== "idle"}
+            >
               Натисни на дзвіночок або на котика
             </p>
-          )}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

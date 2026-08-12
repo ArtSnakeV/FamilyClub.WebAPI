@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 
 type ChatMessage = {
   id: string;
@@ -11,9 +11,20 @@ type ChatMessage = {
 
 type InkChatPanelProps = {
   onClose: () => void;
+  onPlayGame?: () => void;
 };
 
-const QUICK_REPLIES: { label: string; reply: string; href?: string }[] = [
+const QUICK_REPLIES: {
+  label: string;
+  reply: string;
+  href?: string;
+  action?: "play";
+}[] = [
+  {
+    label: "Пограти",
+    reply: "Мурр! Водимо лазер або мишку — я ловлю. Готовий?",
+    action: "play",
+  },
   {
     label: "Порекомендувати книгу",
     reply: "Мурр… Підберу історію під настрій. Ходімо до підбору книг.",
@@ -55,6 +66,9 @@ const QUICK_REPLIES: { label: string; reply: string; href?: string }[] = [
 function matchReply(input: string): string {
   const q = input.toLowerCase().trim();
   if (!q) return "Мур… Напиши щось, або обери підказку нижче.";
+  if (/(гра|пограт|полюван|лазер|мишк|play)/i.test(q)) {
+    return "Хочеш пограти? Натисни «Пограти» — побігаємо за лазером або мишкою.";
+  }
   if (/(привіт|вітаю|hello|hi|здраст)/i.test(q)) {
     return "Привіт! Я поруч. Можу порекомендувати книгу, відкрити каталог або зв’язати зі службою підтримки.";
   }
@@ -85,7 +99,7 @@ function matchReply(input: string): string {
   return "Я ще вчуся розуміти складні питання. Спробуй швидкі дії нижче — підтримка, рекомендація книги, акції…";
 }
 
-export default function InkChatPanel({ onClose }: InkChatPanelProps) {
+export default function InkChatPanel({ onClose, onPlayGame }: InkChatPanelProps) {
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       id: "welcome",
@@ -94,6 +108,13 @@ export default function InkChatPanel({ onClose }: InkChatPanelProps) {
     },
   ]);
   const [draft, setDraft] = useState("");
+  const listRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = listRef.current;
+    if (!el) return;
+    el.scrollTo({ top: el.scrollHeight, behavior: "smooth" });
+  }, [messages]);
 
   const pushInk = (text: string) => {
     setMessages((prev) => [
@@ -111,7 +132,12 @@ export default function InkChatPanel({ onClose }: InkChatPanelProps) {
 
   const handleQuick = (item: (typeof QUICK_REPLIES)[number]) => {
     pushUser(item.label);
-    window.setTimeout(() => pushInk(item.reply), 280);
+    window.setTimeout(() => {
+      pushInk(item.reply);
+      if (item.action === "play") {
+        window.setTimeout(() => onPlayGame?.(), 500);
+      }
+    }, 280);
   };
 
   const handleSubmit = (e: FormEvent) => {
@@ -144,7 +170,10 @@ export default function InkChatPanel({ onClose }: InkChatPanelProps) {
         </button>
       </div>
 
-      <div className="flex max-h-[220px] flex-col gap-2 overflow-y-auto px-3 py-3">
+      <div
+        ref={listRef}
+        className="flex max-h-[220px] flex-col gap-2 overflow-y-auto px-3 py-3"
+      >
         {messages.map((m) => (
           <div
             key={m.id}
