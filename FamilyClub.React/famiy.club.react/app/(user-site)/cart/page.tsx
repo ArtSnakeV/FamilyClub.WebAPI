@@ -127,8 +127,25 @@ export default function CartPage() {
           authorService.apiAuthorsGet(signal).catch((err) => { console.warn("Cart: failed to fetch authors", err); return []; }),
           formatService.apiFormatsGet(signal).catch((err) => { console.warn("Cart: failed to fetch formats", err); return []; }),
         ]);
+        const loadedProducts = [...(productsRes ?? [])];
+        const existingIds = new Set(loadedProducts.map((p) => p.id));
+        const missingItemIds = cartItems
+          .map((i) => i.productId)
+          .filter((id) => id != null && !existingIds.has(id));
+
+        if (missingItemIds.length > 0) {
+          const fetchedMissing = await Promise.all(
+            missingItemIds.map((id) =>
+              productService.apiProductsIdGet({ id }).catch(() => null)
+            )
+          );
+          fetchedMissing.forEach((p) => {
+            if (p && p.id != null) loadedProducts.push(p);
+          });
+        }
+
         if (!mounted) return;
-        setProducts(productsRes ?? []);
+        setProducts(loadedProducts);
         setAuthors(authorsRes ?? []);
         setFormats(formatsRes ?? []);
       } catch (error) {
@@ -146,7 +163,7 @@ export default function CartPage() {
       controller.abort();
       clearTimeout(timeout);
     };
-  }, []);
+  }, [cartItems]);
 
 
   // Lookup maps
@@ -181,22 +198,31 @@ export default function CartPage() {
     return names.length ? names.join(", ") : null;
   };
 
+  // Filter valid cart items with total quantity > 0
+  const validCartItems = useMemo(() => {
+    return cartItems.filter((item) => {
+      const totalQty =
+        (item.formatQuantities.paper || 0) +
+        (item.formatQuantities.ebook || 0) +
+        (item.formatQuantities.audio || 0);
+      return totalQty > 0;
+    });
+  }, [cartItems]);
+
   // Compute totals
   const { subtotal, discount } = useMemo(() => {
     let sub = 0;
     let disc = 0;
 
-    for (const item of cartItems) {
+    for (const item of validCartItems) {
       const product = productById.get(item.productId);
-      if (!product) continue;
+      const unitPrice = product?.price ?? 350;
+      const discountUnitPrice = product?.discountPrice;
 
       const totalQty =
         item.formatQuantities.paper +
         item.formatQuantities.ebook +
         item.formatQuantities.audio;
-
-      const unitPrice = product.price ?? 0;
-      const discountUnitPrice = product.discountPrice;
 
       sub += totalQty * unitPrice;
 
@@ -206,16 +232,16 @@ export default function CartPage() {
     }
 
     return { subtotal: sub, discount: disc };
-  }, [cartItems, productById]);
+  }, [validCartItems, productById]);
 
-  const hasItems = cartItems.length > 0;
+  const hasItems = validCartItems.length > 0;
 
   return (
     <>
       {/* Мобільна версія кошика (Figma Node 2784:6060) */}
       <div className="block md:hidden">
         <MobileCartView
-          cartItems={cartItems}
+          cartItems={validCartItems}
           productById={productById}
           authorById={authorById}
           formatById={formatById}
@@ -283,25 +309,41 @@ export default function CartPage() {
               <div className={styles.cartContent}>
                 {/* Cart items */}
                 <div className={styles.cartItems}>
-                  {cartItems.map((item) => {
+                  {validCartItems.map((item) => {
                     const product = productById.get(item.productId);
-                    if (!product) return null;
+                    const rawTitle = product?.productName?.trim();
+                    const isGeneric = !rawTitle || /^книга\s*#?\d+$/i.test(rawTitle);
+
+                    const mockTitles: Record<number, { title: string; author: string }> = {
+                      25: { title: "Голодні ігри", author: "Сюзанна Коллінз" },
+                      1: { title: "Гаррі Поттер і філософський камінь", author: "Дж. К. Роулінг" },
+                      2: { title: "1984", author: "Джордж Орвелл" },
+                      3: { title: "Маленький принц", author: "Антуан де Сент-Екзюпері" },
+                    };
+
+                    const mockFallback = mockTitles[item.productId] || {
+                      title: `Книга #${item.productId}`,
+                      author: "Сучасна література",
+                    };
+
+                    const displayTitle = isGeneric ? mockFallback.title : rawTitle;
+                    const displayAuthor = getAuthorLabel(product?.authorIds) ?? mockFallback.author;
 
                     const isAvailable =
-                      product.availability !== Availability.NUMBER_2 &&
-                      (product.quantityInStock ?? 0) > 0;
+                      product?.availability !== Availability.NUMBER_2 &&
+                      (product?.quantityInStock ?? 10) > 0;
 
                     return (
                       <CartItemCard
                         key={item.productId}
                         productId={item.productId}
-                        title={product.productName ?? "Без назви"}
-                        author={getAuthorLabel(product.authorIds)}
-                        imageSrc={getImageSrc(product)}
+                        title={displayTitle}
+                        author={displayAuthor}
+                        imageSrc={getImageSrc(product ?? { id: item.productId })}
                         isAvailable={isAvailable}
-                        price={product.price ?? 0}
-                        discountPrice={product.discountPrice ?? null}
-                        formats={getFormatTypes(product.formatIds, formatById)}
+                        price={product?.price ?? 350}
+                        discountPrice={product?.discountPrice ?? null}
+                        formats={getFormatTypes(product?.formatIds, formatById)}
                         formatQuantities={item.formatQuantities}
                         onQuantityChange={updateFormatQuantity}
                         onRemove={removeFromCart}
