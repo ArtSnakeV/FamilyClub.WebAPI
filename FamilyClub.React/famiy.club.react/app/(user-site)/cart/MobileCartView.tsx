@@ -182,11 +182,12 @@ export default function MobileCartView({
 
   const pawsDiscountAmount = Math.min(Math.round(pawsBalance * 0.1), Math.max(0, subtotal - discount));
   const totalDiscount = discount + (pawsApplied ? pawsDiscountAmount : 0);
-  const totalToPay = Math.max(0, subtotal - totalDiscount + deliveryCost);
+  const effectiveDelivery = subtotal > 0 ? deliveryCost : 0;
+  const totalToPay = subtotal > 0 ? Math.max(0, subtotal - totalDiscount + effectiveDelivery) : 0;
   const hasItems = cartItems.length > 0;
 
   return (
-    <div className="w-full min-h-screen bg-[#c7a381] pt-[85px] pb-10 select-none font-['Source_Sans_3',sans-serif] text-[#242424] overflow-x-hidden">
+    <div className="w-full min-h-screen bg-[#c7a381] pt-[110px] pb-10 select-none font-['Source_Sans_3',sans-serif] text-[#242424] overflow-x-hidden">
       {/* Заголовок */}
       <h1 className="font-['Lora',serif] font-semibold text-[24px] sm:text-[26px] text-[#242424] text-center tracking-[-0.264px] mb-6 px-4">
         Кошик
@@ -250,14 +251,14 @@ export default function MobileCartView({
                     href={`/products/${item.productId}`}
                     className="relative w-[85px] sm:w-[95px] h-[130px] sm:h-[145px] shrink-0 rounded-[6px] overflow-hidden bg-white shadow-sm flex items-center justify-center block"
                   >
-                    {imageSrc ? (
-                      <img src={imageSrc} alt={title} className="w-full h-full object-cover" />
-                    ) : (
-                      <div className="flex flex-col items-center justify-center text-gray-400 text-center p-2">
-                        <span className="text-3xl mb-1">📖</span>
-                        <span className="text-[10px] font-serif">Немає фото</span>
-                      </div>
-                    )}
+                    <img
+                      src={imageSrc || "/images/catalog/hunger_games.png"}
+                      alt={title}
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).src = "/images/catalog/hunger_games.png";
+                      }}
+                    />
                   </Link>
 
                   {/* Інформація про книгу */}

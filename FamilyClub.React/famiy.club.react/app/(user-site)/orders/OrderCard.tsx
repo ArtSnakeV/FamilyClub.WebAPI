@@ -41,12 +41,24 @@ export default function OrderCard({ item, activeTab, onAction }: OrderCardProps)
       {/* Card Top Header */}
       <div className="flex flex-col md:flex-row md:items-start justify-between gap-2 mb-3">
         <div>
-          <h3
-            className="text-xl md:text-2xl font-bold tracking-tight"
-            style={{ color: item.statusColor }}
-          >
-            {item.statusText}
-          </h3>
+          <div className="flex items-center gap-3">
+            <h3
+              onClick={() => item.dbOrderId && router.push(`/orders/${item.dbOrderId}`)}
+              className="text-xl md:text-2xl font-bold tracking-tight cursor-pointer hover:underline"
+              style={{ color: item.statusColor }}
+              title="Переглянути деталі замовлення"
+            >
+              {item.statusText}
+            </h3>
+            {item.dbOrderId && (
+              <button
+                onClick={() => router.push(`/orders/${item.dbOrderId}`)}
+                className="text-xs font-bold text-[#005b33] bg-[#E2F0D9] hover:bg-[#D4EACC] px-2.5 py-1 rounded-lg border border-[#B8E0A4] transition"
+              >
+                Детальніше →
+              </button>
+            )}
+          </div>
           <div className="flex items-center gap-2 mt-1">
             <span className="text-sm font-semibold text-[#242424]">{item.orderNumber}</span>
             <button
@@ -100,18 +112,55 @@ export default function OrderCard({ item, activeTab, onAction }: OrderCardProps)
             />
           </div>
 
-          {/* Book Title & Qty */}
-          <div className="flex flex-col">
+          {/* Book Title, Qty & Formats */}
+          <div className="flex flex-col gap-1">
             <h4 className="text-lg md:text-xl font-bold text-[#242424] leading-snug">
               {item.bookTitle}
             </h4>
-            <span className="text-sm text-[#777777] mt-0.5">{item.quantity} шт.</span>
+
+            <div className="flex items-center gap-2 flex-wrap mt-0.5">
+              <span className="text-xs font-semibold text-[#555555] bg-[#EBE7DD] px-2.5 py-0.5 rounded-full border border-[#D5CFCE]">
+                {item.quantity} шт.
+              </span>
+
+              {item.formats && item.formats.map((fmt, idx) => {
+                const f = String(fmt).toLowerCase();
+                let label = "Паперова";
+                let icon = "📖";
+                let badgeStyle = "bg-[#E2F0D9] text-[#005b33] border-[#B8E0A4]";
+
+                if (f === "ebook" || f.includes("елек")) {
+                  label = "Електронна";
+                  icon = "📱";
+                  badgeStyle = "bg-[#E3F2FD] text-[#0277BD] border-[#B3E5FC]";
+                } else if (f === "audio" || f.includes("аудіо")) {
+                  label = "Аудіокнига";
+                  icon = "🎧";
+                  badgeStyle = "bg-[#F3E5F5] text-[#7B1FA2] border-[#E1BEE7]";
+                } else if (f === "print" || f.includes("папер") || f === "paper") {
+                  label = "Паперова";
+                  icon = "📖";
+                  badgeStyle = "bg-[#E2F0D9] text-[#005b33] border-[#B8E0A4]";
+                } else {
+                  label = fmt;
+                }
+
+                return (
+                  <span
+                    key={idx}
+                    className={`text-xs font-semibold px-2.5 py-0.5 rounded-full border flex items-center gap-1 shadow-2xs ${badgeStyle}`}
+                  >
+                    <span>{icon}</span> {label}
+                  </span>
+                );
+              })}
+            </div>
 
             {/* Optional Confirm Receipt Button inside Book Card */}
             {item.showConfirmReceiptBtn && (
               <button
                 onClick={() => onAction && onAction("confirm_receipt", item.id, item.dbOrderId)}
-                className="mt-3 px-4 py-1.5 rounded-full border-2 border-[#005b33] text-[#005b33] font-semibold hover:bg-[#005b33] hover:text-white transition text-xs sm:text-sm w-fit shadow-sm"
+                className="mt-2.5 px-4 py-1.5 rounded-full border-2 border-[#005b33] text-[#005b33] font-semibold hover:bg-[#005b33] hover:text-white transition text-xs sm:text-sm w-fit shadow-sm"
               >
                 Підтвердити отримання товару
               </button>
@@ -127,8 +176,14 @@ export default function OrderCard({ item, activeTab, onAction }: OrderCardProps)
 
       {/* Card Action Buttons Row */}
       <div className="flex flex-wrap items-center gap-3 mt-4 pt-1">
-        {(activeTab === "waiting_payment" || activeTab === "waiting_dispatch" || activeTab === "order_sent") && (
+        {activeTab === "waiting_payment" && (
           <>
+            <button
+              onClick={() => onAction && onAction("pay_order", item.id, item.dbOrderId)}
+              className="bg-[#005b33] hover:bg-[#004727] text-white px-6 py-2.5 rounded-xl font-bold transition text-sm shadow-md"
+            >
+              💳 Оплатити замовлення
+            </button>
             <button
               onClick={() => onAction && onAction("cancel", item.id, item.dbOrderId)}
               className="bg-[#524B42] hover:bg-[#3D3730] text-white px-5 py-2.5 rounded-xl font-medium transition text-sm shadow-sm"
@@ -147,11 +202,28 @@ export default function OrderCard({ item, activeTab, onAction }: OrderCardProps)
             >
               Поскаржитися
             </button>
+          </>
+        )}
+
+        {(activeTab === "waiting_dispatch" || activeTab === "order_sent") && (
+          <>
             <button
-              onClick={() => onAction && onAction("seller_profile", item.id, item.dbOrderId)}
-              className="bg-[#005b33] hover:bg-[#004727] text-white px-5 py-2.5 rounded-xl font-medium transition text-sm shadow-sm ml-auto"
+              onClick={() => onAction && onAction("cancel", item.id, item.dbOrderId)}
+              className="bg-[#524B42] hover:bg-[#3D3730] text-white px-5 py-2.5 rounded-xl font-medium transition text-sm shadow-sm"
             >
-              Перейти на профіль продавця
+              Скасувати замовлення
+            </button>
+            <button
+              onClick={() => {
+                if (item.dbOrderId) {
+                  router.push(`/complaints?orderId=${item.dbOrderId}`);
+                } else {
+                  onAction && onAction("complain", item.id, item.dbOrderId);
+                }
+              }}
+              className="bg-[#E5E0D5] hover:bg-[#D8D2C5] border border-[#C8C2B4] text-[#777777] hover:text-black px-5 py-2.5 rounded-xl font-medium transition text-sm shadow-sm"
+            >
+              Поскаржитися
             </button>
           </>
         )}
@@ -176,12 +248,6 @@ export default function OrderCard({ item, activeTab, onAction }: OrderCardProps)
             >
               Поскаржитися
             </button>
-            <button
-              onClick={() => onAction && onAction("seller_profile", item.id, item.dbOrderId)}
-              className="bg-[#005b33] hover:bg-[#004727] text-white px-5 py-2.5 rounded-xl font-medium transition text-sm shadow-sm ml-auto"
-            >
-              Перейти на профіль продавця
-            </button>
           </>
         )}
 
@@ -205,21 +271,21 @@ export default function OrderCard({ item, activeTab, onAction }: OrderCardProps)
             >
               Поскаржитися
             </button>
-            <button
-              onClick={() => onAction && onAction("seller_profile", item.id, item.dbOrderId)}
-              className="bg-[#005b33] hover:bg-[#004727] text-white px-5 py-2.5 rounded-xl font-medium transition text-sm shadow-sm ml-auto"
-            >
-              Перейти на профіль продавця
-            </button>
           </>
         )}
 
         {activeTab === "history" && (
           <button
-            onClick={() => onAction && onAction("seller_profile", item.id, item.dbOrderId)}
-            className="bg-[#005b33] hover:bg-[#004727] text-white px-6 py-2.5 rounded-xl font-medium transition text-sm shadow-sm"
+            onClick={() => {
+              if (item.dbOrderId) {
+                router.push(`/complaints?orderId=${item.dbOrderId}`);
+              } else {
+                onAction && onAction("complain", item.id, item.dbOrderId);
+              }
+            }}
+            className="bg-[#E5E0D5] hover:bg-[#D8D2C5] border border-[#C8C2B4] text-[#777777] hover:text-black px-5 py-2.5 rounded-xl font-medium transition text-sm shadow-sm"
           >
-            Перейти на профіль продавця
+            Поскаржитися
           </button>
         )}
       </div>

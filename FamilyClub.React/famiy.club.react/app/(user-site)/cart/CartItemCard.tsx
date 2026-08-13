@@ -120,11 +120,14 @@ export default function CartItemCard({
     <div className={styles.cartCard} id={`cart-item-${productId}`}>
       {/* Book cover */}
       <div className={styles.cardImageWrap}>
-        {imageSrc ? (
-          <img src={imageSrc} alt={title} className={styles.cardImage} />
-        ) : (
-          <div className={styles.cardImagePlaceholder}>📖</div>
-        )}
+        <img
+          src={imageSrc || "/images/catalog/hunger_games.png"}
+          alt={title}
+          className={styles.cardImage}
+          onError={(e) => {
+            (e.target as HTMLImageElement).src = "/images/catalog/hunger_games.png";
+          }}
+        />
       </div>
 
       {/* Info + format rows */}
