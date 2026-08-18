@@ -195,12 +195,19 @@ export default function MobileCheckoutView({
             Замовлення оформлено!
           </h2>
           <p className="text-[#242424]/80 text-[18px] leading-relaxed">
-            Дякуємо за замовлення! Ми зв&apos;яжемось з вами найближчим часом.
+            Дякуємо за замовлення! Товар додано у розділ «Мої замовлення».
           </p>
           <button
             type="button"
+            onClick={() => router.push("/orders")}
+            className="bg-[#005b33] text-white font-semibold w-full py-3.5 rounded-[9px] text-[18px] shadow hover:bg-[#004828] active:scale-95 transition-all mt-2"
+          >
+            Перейти в Мої замовлення
+          </button>
+          <button
+            type="button"
             onClick={() => router.push("/")}
-            className="bg-[#005b33] text-white font-semibold w-full py-4 rounded-[9px] text-[20px] shadow hover:bg-[#004828] active:scale-95 transition-all mt-4"
+            className="bg-[#E5E0D5] text-[#242424] font-semibold w-full py-3.5 rounded-[9px] text-[18px] hover:bg-[#D8D2C5] active:scale-95 transition-all"
           >
             На головну
           </button>
@@ -210,7 +217,7 @@ export default function MobileCheckoutView({
   }
 
   return (
-    <div className="min-h-screen bg-[#c7a381] py-6 px-3 sm:px-4 pb-[140px] font-['Source_Sans_Pro',sans-serif] flex flex-col items-center text-[#242424]">
+    <div className="min-h-screen bg-[#c7a381] pt-[110px] pb-[140px] px-3 sm:px-4 font-['Source_Sans_Pro',sans-serif] flex flex-col items-center text-[#242424]">
       {/* Title */}
       <h1 className="font-['Lora',serif] font-semibold text-[#242424] text-[24px] text-center mb-6 mt-2">
         Оформлення замовлення

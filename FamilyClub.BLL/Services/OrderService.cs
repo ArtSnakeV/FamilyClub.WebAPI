@@ -1,4 +1,4 @@
-﻿using FamilyClub.BLL.DTOs.Order;
+using FamilyClub.BLL.DTOs.Order;
 using FamilyClub.BLL.DTOs.OrderItem;
 using FamilyClub.BLL.Interfaces;
 using FamilyClub.DAL.Interfaces;
@@ -62,9 +62,18 @@ namespace FamilyClub.BLL.Services
 				return false;
 			}
 
-			order.UserId = dto.UserId;
-			order.Status = dto.Status;
-			order.TotalPrice = dto.TotalPrice;
+			if (!string.IsNullOrEmpty(dto.UserId))
+			{
+				order.UserId = dto.UserId;
+			}
+			if (!string.IsNullOrEmpty(dto.Status))
+			{
+				order.Status = dto.Status;
+			}
+			if (dto.TotalPrice > 0)
+			{
+				order.TotalPrice = dto.TotalPrice;
+			}
 
 			_orderRepository.Update(order);
 			await _unitOfWork.SaveChangesAsync(cancellationToken);

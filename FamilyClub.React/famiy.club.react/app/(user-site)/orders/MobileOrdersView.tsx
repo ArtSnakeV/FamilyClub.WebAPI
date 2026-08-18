@@ -101,7 +101,7 @@ export default function MobileOrdersView({
   };
 
   return (
-    <div className="block md:hidden min-h-screen bg-[#c7a381] pt-[65px] pb-[85px] px-3 font-['Source_Sans_Pro',sans-serif]">
+    <div className="block md:hidden min-h-screen bg-[#c7a381] pt-[110px] pb-[85px] px-3 font-['Source_Sans_Pro',sans-serif]">
       {/* Mobile Page Title & Back & Balance */}
       <div className="flex items-center justify-between py-3 px-1 w-full max-w-[392px] mx-auto">
         <div className="flex items-center gap-3">
@@ -284,9 +284,42 @@ export default function MobileOrdersView({
                       <h4 className="text-[17px] sm:text-[19px] font-normal text-[#242424] leading-tight tracking-[-0.22px] line-clamp-2">
                         {item.bookTitle}
                       </h4>
-                      <span className="block text-[13px] sm:text-[14px] text-[rgba(36,36,36,0.5)] tracking-[-0.154px] mt-1">
-                        {item.quantity} шт.
-                      </span>
+                      <div className="flex items-center gap-1.5 flex-wrap mt-1">
+                        <span className="text-[12px] font-semibold text-[#555555] bg-[#EBE7DD] px-2 py-0.5 rounded-full border border-[#D5CFCE]">
+                          {item.quantity} шт.
+                        </span>
+                        {item.formats && item.formats.map((fmt, idx) => {
+                          const f = String(fmt).toLowerCase();
+                          let label = "Паперова";
+                          let icon = "📖";
+                          let badgeStyle = "bg-[#E2F0D9] text-[#005b33] border-[#B8E0A4]";
+
+                          if (f === "ebook" || f.includes("елек")) {
+                            label = "Електронна";
+                            icon = "📱";
+                            badgeStyle = "bg-[#E3F2FD] text-[#0277BD] border-[#B3E5FC]";
+                          } else if (f === "audio" || f.includes("аудіо")) {
+                            label = "Аудіокнига";
+                            icon = "🎧";
+                            badgeStyle = "bg-[#F3E5F5] text-[#7B1FA2] border-[#E1BEE7]";
+                          } else if (f === "print" || f.includes("папер") || f === "paper") {
+                            label = "Паперова";
+                            icon = "📖";
+                            badgeStyle = "bg-[#E2F0D9] text-[#005b33] border-[#B8E0A4]";
+                          } else {
+                            label = fmt;
+                          }
+
+                          return (
+                            <span
+                              key={idx}
+                              className={`text-[11px] font-semibold px-2 py-0.5 rounded-full border flex items-center gap-0.5 ${badgeStyle}`}
+                            >
+                              <span>{icon}</span> {label}
+                            </span>
+                          );
+                        })}
+                      </div>
 
                       {item.showConfirmReceiptBtn && (
                         <button
@@ -309,9 +342,39 @@ export default function MobileOrdersView({
 
                 {/* Card Action Buttons Row */}
                 <div className="flex flex-wrap items-center justify-end gap-2 mt-3 pt-2 border-t border-[#242424]/10">
-                  {(activeTab === "waiting_payment" ||
-                    activeTab === "waiting_dispatch" ||
-                    activeTab === "order_sent") && (
+                  {activeTab === "waiting_payment" && (
+                    <>
+                      <button
+                        type="button"
+                        onClick={() => onAction("pay_order", item.id, item.dbOrderId)}
+                        className="bg-[#005b33] hover:bg-[#004727] text-white px-3.5 py-2 rounded-xl font-bold transition text-xs sm:text-sm shadow-md active:scale-95"
+                      >
+                        💳 Оплатити
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => onAction("cancel", item.id, item.dbOrderId)}
+                        className="bg-[#524B42] hover:bg-[#3D3730] text-white px-3.5 py-2 rounded-xl font-medium transition text-xs sm:text-sm shadow-sm active:scale-95"
+                      >
+                        Скасувати
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          if (item.dbOrderId) {
+                            router.push(`/complaints?orderId=${item.dbOrderId}`);
+                          } else {
+                            onAction("complain", item.id, item.dbOrderId);
+                          }
+                        }}
+                        className="bg-[#f5f3ee] hover:bg-[#E5E0D5] border border-[#C8C2B4] text-[#242424] px-3 py-2 rounded-xl font-medium transition text-xs shadow-sm active:scale-95"
+                      >
+                        Поскаржитися
+                      </button>
+                    </>
+                  )}
+
+                  {(activeTab === "waiting_dispatch" || activeTab === "order_sent") && (
                     <>
                       <button
                         type="button"
@@ -332,15 +395,6 @@ export default function MobileOrdersView({
                         className="bg-[#f5f3ee] hover:bg-[#E5E0D5] border border-[#C8C2B4] text-[#242424] px-3.5 py-2 rounded-xl font-medium transition text-xs sm:text-sm shadow-sm active:scale-95"
                       >
                         Поскаржитися
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() =>
-                          onAction("seller_profile", item.id, item.dbOrderId)
-                        }
-                        className="bg-[#005b33] hover:bg-[#004727] text-white px-3.5 py-2 rounded-xl font-medium transition text-xs sm:text-sm shadow-sm active:scale-95 ml-auto"
-                      >
-                        Профіль продавця
                       </button>
                     </>
                   )}
@@ -369,15 +423,6 @@ export default function MobileOrdersView({
                       >
                         Поскаржитися
                       </button>
-                      <button
-                        type="button"
-                        onClick={() =>
-                          onAction("seller_profile", item.id, item.dbOrderId)
-                        }
-                        className="bg-[#005b33] hover:bg-[#004727] text-white px-3.5 py-2 rounded-xl font-medium transition text-xs sm:text-sm shadow-sm active:scale-95 ml-auto"
-                      >
-                        Профіль продавця
-                      </button>
                     </>
                   )}
 
@@ -403,27 +448,22 @@ export default function MobileOrdersView({
                       >
                         Поскаржитися
                       </button>
-                      <button
-                        type="button"
-                        onClick={() =>
-                          onAction("seller_profile", item.id, item.dbOrderId)
-                        }
-                        className="bg-[#005b33] hover:bg-[#004727] text-white px-3.5 py-2 rounded-xl font-medium transition text-xs sm:text-sm shadow-sm active:scale-95 ml-auto"
-                      >
-                        Профіль продавця
-                      </button>
                     </>
                   )}
 
                   {activeTab === "history" && (
                     <button
                       type="button"
-                      onClick={() =>
-                        onAction("seller_profile", item.id, item.dbOrderId)
-                      }
-                      className="bg-[#005b33] hover:bg-[#004727] text-white px-4 py-2 rounded-xl font-medium transition text-xs sm:text-sm shadow-sm active:scale-95"
+                      onClick={() => {
+                        if (item.dbOrderId) {
+                          router.push(`/complaints?orderId=${item.dbOrderId}`);
+                        } else {
+                          onAction("complain", item.id, item.dbOrderId);
+                        }
+                      }}
+                      className="bg-[#f5f3ee] hover:bg-[#E5E0D5] border border-[#C8C2B4] text-[#242424] px-3.5 py-2 rounded-xl font-medium transition text-xs sm:text-sm shadow-sm active:scale-95"
                     >
-                      Перейти на профіль продавця
+                      Поскаржитися
                     </button>
                   )}
                 </div>

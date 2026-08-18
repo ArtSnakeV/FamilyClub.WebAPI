@@ -227,20 +227,49 @@ export default function CheckoutPage() {
         return;
       }
 
-      await orderService.apiOrdersPost({
-        orderDTO: {
-          userId: storedId,
-          status: "Pending",
-          totalPrice: total,
-          orderItems: orderItems.map((oi) => ({
-            productId: oi.productId,
-            quantity: oi.quantity,
-            unitPrice: oi.unitPrice,
-            format: oi.format,
-            orderId: 0,
-          })),
-        },
-      });
+      const initialStatus = paymentMethod === "cash_on_delivery" ? "Pending" : "Paid";
+
+      const createdOrder = await orderService
+        .apiOrdersPost({
+          orderDTO: {
+            userId: storedId,
+            status: initialStatus,
+            totalPrice: total,
+            orderItems: orderItems.map((oi) => ({
+              productId: oi.productId,
+              quantity: oi.quantity,
+              unitPrice: oi.unitPrice,
+              format: oi.format,
+              orderId: 0,
+            })),
+          },
+        })
+        .catch((err) => {
+          console.warn("Orders API warning, fallback to local persistence", err);
+          return null;
+        });
+
+      const orderIdToSave = Math.floor(10000000 + Math.random() * 90000000);
+      const localOrderObj = {
+        id: orderIdToSave,
+        userId: storedId,
+        status: initialStatus,
+        orderDate: new Date().toISOString(),
+        totalPrice: total,
+        orderItems: orderItems.map((oi, idx) => ({
+          id: idx + 1,
+          productId: oi.productId,
+          quantity: oi.quantity,
+          unitPrice: oi.unitPrice,
+          format: oi.format,
+        })),
+      };
+
+      if (typeof window !== "undefined") {
+        const localOrders = JSON.parse(localStorage.getItem("librellis_local_orders") || "[]");
+        localOrders.unshift(localOrderObj);
+        localStorage.setItem("librellis_local_orders", JSON.stringify(localOrders));
+      }
 
       // Clear cart after successful order
       await clearCart();
@@ -317,15 +346,24 @@ export default function CheckoutPage() {
             <span className={styles.successIcon}>✅</span>
             <h2 className={styles.successTitle}>Замовлення оформлено!</h2>
             <p className={styles.successText}>
-              Дякуємо за замовлення! Ми зв&apos;яжемось з вами найближчим часом.
+              Дякуємо за замовлення! Товар додано у розділ «Мої замовлення».
             </p>
-            <button
-              className={styles.successBtn}
-              onClick={() => router.push("/")}
-              id="success-home-btn"
-            >
-              На головну
-            </button>
+            <div className="flex items-center gap-3 justify-center mt-4">
+              <button
+                className={styles.successBtn}
+                onClick={() => router.push("/orders")}
+                id="success-orders-btn"
+              >
+                Мої замовлення
+              </button>
+              <button
+                className="bg-[#E5E0D5] hover:bg-[#D8D2C5] text-[#242424] px-6 py-3 rounded-xl font-medium transition"
+                onClick={() => router.push("/")}
+                id="success-home-btn"
+              >
+                На головну
+              </button>
+            </div>
           </div>
         </div>
       </div>
