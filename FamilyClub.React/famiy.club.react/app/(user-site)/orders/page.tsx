@@ -1,21 +1,29 @@
 "use client";
 
 import React, { useEffect, useState, useMemo } from "react";
+import { useRouter } from "next/navigation";
 import OrdersHeader from "./OrdersHeader";
 import OrdersTabs from "./OrdersTabs";
 import OrderCard from "./OrderCard";
 import MobileOrdersView from "./MobileOrdersView";
 import OrdersPagination from "./OrdersPagination";
+import WriteReviewModal from "./WriteReviewModal";
+import ReturnOrderModal from "./ReturnOrderModal";
 import { EMPTY_ORDERS_BY_TAB, MockOrderItem, OrderTabId } from "./mockData";
 import { orderService, productService } from "@/lib/api/services";
 import { getAuthUserId } from "@/lib/auth/tokenStorage";
 import { OrderDTO, ProductDto } from "@/lib/api/generated";
 
 export default function OrdersPage() {
+  const router = useRouter();
   const [activeTab, setActiveTab] = useState<OrderTabId>("waiting_payment");
   const [ordersByTab, setOrdersByTab] = useState<Record<OrderTabId, MockOrderItem[]>>(EMPTY_ORDERS_BY_TAB);
   const [loading, setLoading] = useState<boolean>(true);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+
+  // Modal States
+  const [selectedItemForReview, setSelectedItemForReview] = useState<MockOrderItem | null>(null);
+  const [selectedItemForReturn, setSelectedItemForReturn] = useState<MockOrderItem | null>(null);
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
@@ -46,8 +54,24 @@ export default function OrdersPage() {
       let dbOrders: OrderDTO[] = [];
       if (userId) {
         dbOrders = (await orderService.apiOrdersByUserUserIdGet({ userId }).catch(() => [])) || [];
-      } else {
+      }
+      if (dbOrders.length === 0) {
         dbOrders = (await orderService.apiOrdersGet().catch(() => [])) || [];
+      }
+
+      // Об'єднуємо з локально збереженими замовленнями з localStorage
+      if (typeof window !== "undefined") {
+        try {
+          const localOrders: any[] = JSON.parse(localStorage.getItem("librellis_local_orders") || "[]");
+          const existingIds = new Set(dbOrders.map((o) => o.id));
+          for (const lo of localOrders) {
+            if (lo.id && !existingIds.has(lo.id)) {
+              dbOrders.unshift(lo);
+            }
+          }
+        } catch (e) {
+          console.warn("Failed to read local orders backup", e);
+        }
       }
 
       const mapped: Record<OrderTabId, MockOrderItem[]> = {
@@ -124,6 +148,21 @@ export default function OrdersPage() {
             }
           }
 
+          const fmtStr = (item.format || "").toLowerCase();
+          const itemFormats: ("ebook" | "audio" | "print" | string)[] = [];
+          if (fmtStr.includes("paper") || fmtStr.includes("print") || fmtStr.includes("папер")) {
+            itemFormats.push("print");
+          }
+          if (fmtStr.includes("ebook") || fmtStr.includes("елек")) {
+            itemFormats.push("ebook");
+          }
+          if (fmtStr.includes("audio") || fmtStr.includes("аудіо")) {
+            itemFormats.push("audio");
+          }
+          if (itemFormats.length === 0) {
+            itemFormats.push(item.format || "print");
+          }
+
           const cardItem: MockOrderItem = {
             id: `${order.id}-${item.id || Math.random()}`,
             dbOrderId: order.id,
@@ -131,11 +170,11 @@ export default function OrdersPage() {
             statusText,
             statusColor,
             lastStatusDate: orderDateStr,
-            bookTitle: prod?.productName || "Замовлення #" + order.id,
+            bookTitle: prod?.productName || "Книга #" + (item.productId || order.id),
             bookImage: imageSrc,
             quantity: item.quantity || 1,
             price: item.unitPrice || prod?.price || order.totalPrice || 0,
-            formats: ["print"],
+            formats: itemFormats,
             showConfirmReceiptBtn: showConfirmBtn,
           };
 
@@ -144,6 +183,13 @@ export default function OrdersPage() {
       }
 
       setOrdersByTab(mapped);
+
+      // Якщо в поточній активній вкладці 0 замовлень, автоперемикаємо на першу вкладку із замовленнями
+      const tabsOrder: OrderTabId[] = ["waiting_dispatch", "waiting_payment", "order_sent", "add_review", "returns", "history"];
+      const tabWithItems = tabsOrder.find((t) => mapped[t].length > 0);
+      if (tabWithItems && mapped[activeTab].length === 0) {
+        setActiveTab(tabWithItems);
+      }
     } catch (err) {
       console.error("Помилка завантаження замовлень з Бази Даних:", err);
       setOrdersByTab(EMPTY_ORDERS_BY_TAB);
@@ -157,12 +203,38 @@ export default function OrdersPage() {
   }, []);
 
   const handleAction = async (actionName: string, itemId: string, dbOrderId?: number) => {
-    if (actionName === "cancel") {
+    const userId = typeof window !== "undefined" ? getAuthUserId() : null;
+    const foundItem = allItems.find((i) => i.id === itemId);
+
+    if (actionName === "pay_order") {
       if (dbOrderId) {
         try {
           await orderService.apiOrdersIdPut({
             id: dbOrderId,
-            orderDTO: { id: dbOrderId, status: "Cancelled" },
+            orderDTO: {
+              id: dbOrderId,
+              status: "Paid",
+              userId: userId ?? undefined,
+              totalPrice: foundItem ? foundItem.price * foundItem.quantity : undefined,
+            },
+          });
+        } catch (e) {
+          console.error("Failed to pay order in DB", e);
+        }
+      }
+      showToast("Оплату отримано! Замовлення переміщено в «Очікування відправки»");
+      await loadDatabaseOrders();
+    } else if (actionName === "cancel") {
+      if (dbOrderId) {
+        try {
+          await orderService.apiOrdersIdPut({
+            id: dbOrderId,
+            orderDTO: {
+              id: dbOrderId,
+              status: "Cancelled",
+              userId: userId ?? undefined,
+              totalPrice: foundItem ? foundItem.price * foundItem.quantity : undefined,
+            },
           });
         } catch (e) {
           console.error("Failed to cancel order in DB", e);
@@ -175,7 +247,12 @@ export default function OrdersPage() {
         try {
           await orderService.apiOrdersIdPut({
             id: dbOrderId,
-            orderDTO: { id: dbOrderId, status: "Delivered" },
+            orderDTO: {
+              id: dbOrderId,
+              status: "Delivered",
+              userId: userId ?? undefined,
+              totalPrice: foundItem ? foundItem.price * foundItem.quantity : undefined,
+            },
           });
         } catch (e) {
           console.error("Failed to confirm receipt in DB", e);
@@ -184,24 +261,35 @@ export default function OrdersPage() {
       showToast("Отримання підтверджено! Товар переміщено в «Додати відгук»");
       await loadDatabaseOrders();
     } else if (actionName === "return") {
-      if (dbOrderId) {
-        try {
-          await orderService.apiOrdersIdPut({
-            id: dbOrderId,
-            orderDTO: { id: dbOrderId, status: "ReturnRequested" },
-          });
-        } catch (e) {
-          console.error("Failed to return order in DB", e);
+      if (foundItem) {
+        setSelectedItemForReturn(foundItem);
+      } else {
+        if (dbOrderId) {
+          try {
+            await orderService.apiOrdersIdPut({
+              id: dbOrderId,
+              orderDTO: {
+                id: dbOrderId,
+                status: "ReturnRequested",
+                userId: userId ?? undefined,
+              },
+            });
+          } catch (e) {
+            console.error("Failed to return order in DB", e);
+          }
         }
+        showToast("Заявку на повернення надіслано в Базу Даних");
+        await loadDatabaseOrders();
       }
-      showToast("Заявку на повернення надіслано в Базу Даних");
-      await loadDatabaseOrders();
     } else if (actionName === "complain") {
       showToast("Скаргу зареєстровано в системі");
-    } else if (actionName === "seller_profile") {
-      showToast("Перехід на профіль продавця...");
     } else if (actionName === "write_review") {
-      showToast("Відкриття форми написання відгуку...");
+      const foundItem = allItems.find((i) => i.id === itemId);
+      if (foundItem) {
+        setSelectedItemForReview(foundItem);
+      } else {
+        showToast("Відкриття форми написання відгуку...");
+      }
     }
   };
 
@@ -238,6 +326,28 @@ export default function OrdersPage() {
         </div>
       )}
 
+      {/* Write Review Modal */}
+      <WriteReviewModal
+        isOpen={Boolean(selectedItemForReview)}
+        onClose={() => setSelectedItemForReview(null)}
+        item={selectedItemForReview}
+        onSubmitSuccess={(msg) => {
+          showToast(msg);
+          loadDatabaseOrders();
+        }}
+      />
+
+      {/* Return Modal */}
+      <ReturnOrderModal
+        isOpen={Boolean(selectedItemForReturn)}
+        onClose={() => setSelectedItemForReturn(null)}
+        item={selectedItemForReturn}
+        onSubmitSuccess={(msg) => {
+          showToast(msg);
+          loadDatabaseOrders();
+        }}
+      />
+
       {/* Мобільна версія (Figma Node 2544:5283 "Мої замовлення") */}
       <div className="block md:hidden">
         <MobileOrdersView
@@ -259,7 +369,7 @@ export default function OrdersPage() {
       {/* Десктопна версія */}
       <div className="hidden md:block">
         <div
-          className="relative min-h-screen pt-[80px] pb-20 font-sans"
+          className="relative min-h-screen pt-[160px] md:pt-[210px] pb-20 font-sans"
           style={{
             backgroundImage: "url('/images/userProfile/Rectangle 326.png')",
             backgroundSize: "cover",
@@ -269,7 +379,10 @@ export default function OrdersPage() {
         >
           <div className="max-w-[1100px] mx-auto px-4 sm:px-6 lg:px-8">
             {/* Header Block */}
-            <OrdersHeader paws={paws} discount={discount} />
+            <OrdersHeader
+              paws={paws}
+              discount={discount}
+            />
 
             {/* Brown Background Board Container under cards */}
             <div
@@ -299,10 +412,16 @@ export default function OrdersPage() {
                     <div className="w-10 h-10 border-4 border-[#005b33] border-t-transparent rounded-full animate-spin"></div>
                   </div>
                 ) : currentItems.length === 0 ? (
-                  <div className="bg-[#D8D3C8]/90 backdrop-blur-sm rounded-3xl p-12 text-center border border-[#C8C2B4] shadow-md my-6 max-w-xl mx-auto">
-                    <span className="text-4xl block mb-3">📦</span>
-                    <h3 className="text-xl font-bold text-[#242424] mb-1">Тут наразі пусто</h3>
-                    <p className="text-sm text-[#555555]">Тут з&apos;являтимуться ваші реальні замовлення після оформлення</p>
+                  <div className="bg-[#D8D3C8]/90 backdrop-blur-sm rounded-3xl p-12 text-center border border-[#C8C2B4] shadow-md my-6 max-w-xl mx-auto flex flex-col items-center gap-3">
+                    <span className="text-4xl block mb-1">📦</span>
+                    <h3 className="text-xl font-bold text-[#242424]">На цій вкладці замовлень немає</h3>
+                    <p className="text-sm text-[#555555]">Ваші реальні замовлення після оформлення з кошика з&apos;являтимуться тут</p>
+                    <button
+                      onClick={() => router.push("/categories")}
+                      className="mt-2 bg-[#005b33] hover:bg-[#004727] text-white px-6 py-2.5 rounded-xl font-semibold text-sm transition shadow-sm"
+                    >
+                      Перейти до каталогу
+                    </button>
                   </div>
                 ) : (
                   <>
@@ -329,3 +448,4 @@ export default function OrdersPage() {
     </>
   );
 }
+

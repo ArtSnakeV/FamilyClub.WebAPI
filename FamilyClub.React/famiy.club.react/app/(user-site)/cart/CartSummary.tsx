@@ -19,7 +19,8 @@ export default function CartSummary({ subtotal, discount, deliveryCost }: CartSu
   const [agreed, setAgreed] = useState(false);
   const [promoCode, setPromoCode] = useState("");
 
-  const total = subtotal - discount + deliveryCost;
+  const effectiveDelivery = subtotal > 0 ? deliveryCost : 0;
+  const total = subtotal > 0 ? Math.max(0, subtotal - discount + deliveryCost) : 0;
 
   return (
     <aside className={styles.summaryPanel} id="cart-summary">
@@ -42,12 +43,12 @@ export default function CartSummary({ subtotal, discount, deliveryCost }: CartSu
         </div>
         <div className={styles.summaryRow}>
           <span className={styles.summaryLabel}>Вартість доставки:</span>
-          <span className={styles.summaryValue}>{formatPrice(deliveryCost)}</span>
+          <span className={styles.summaryValue}>{formatPrice(effectiveDelivery)}</span>
         </div>
         <div className={styles.summaryRow}>
           <span className={styles.summaryLabel}>Сума до сплати:</span>
           <span className={`${styles.summaryValue} ${styles.totalValue}`}>
-            {formatPrice(Math.max(0, total))}
+            {formatPrice(total)}
           </span>
         </div>
       </div>

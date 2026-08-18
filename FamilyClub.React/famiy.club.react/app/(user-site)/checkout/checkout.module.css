@@ -8,6 +8,7 @@
 .checkoutPage {
   background-color: var(--background-main, #f5f3ee);
   min-height: 100vh;
+  padding-top: 180px;
   padding-bottom: 60px;
 }
 
