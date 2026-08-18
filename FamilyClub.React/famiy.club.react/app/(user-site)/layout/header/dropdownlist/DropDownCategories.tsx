@@ -16,14 +16,7 @@ export default function DropDownCategories() {
     null,
   );
   const visibleCategories = categories.slice(0, ITEMS_PER_PAGE);
-  // useEffect(() => {
-  //   const config = new Configuration({
-  //     basePath: "https://localhost:7069",
-  //   });
-  //   const api = new CategoriesApi(config);
-
-  //   api.apiCategoriesGet().then(setCategories).catch(console.error);
-  // }, []);
+ 
   useEffect(() => {
     categoriesService.apiCategoriesGet().then(setCategories).catch(console.error);
   }, []);
