@@ -7,7 +7,10 @@ interface OrdersHeaderProps {
   discount?: number;
 }
 
-export default function OrdersHeader({ paws = 0, discount = 0 }: OrdersHeaderProps) {
+export default function OrdersHeader({
+  paws = 0,
+  discount = 0,
+}: OrdersHeaderProps) {
   const router = useRouter();
 
   return (
@@ -26,7 +29,7 @@ export default function OrdersHeader({ paws = 0, discount = 0 }: OrdersHeaderPro
         </h1>
       </div>
 
-      {/* Balance & Discount Widget */}
+      {/* Right Group: Balance & Discount Widget */}
       <div className="flex items-center gap-3 bg-[#ECE8DE] px-4 py-2 rounded-full border border-[#DCD7CC] shadow-sm">
         <div className="flex items-center gap-1.5 border-r border-[#C8C2B4] pr-3">
           <span className="text-lg">🐾</span>
