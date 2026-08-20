@@ -212,6 +212,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddMemoryCache();
 builder.Services.AddResponseCaching();
 builder.Services.AddOutputCache();
+builder.Services.AddHealthChecks();
 
 var redisConnStr = builder.Configuration["CacheSettings:RedisConnectionString"]
     ?? builder.Configuration.GetConnectionString("Redis")
@@ -265,6 +266,8 @@ using (IServiceScope scope = app.Services.CreateScope())
 
 app.UseMiddleware<GlobalExceptionMiddleware>(); // Catch client cancellation & internal errors
 app.UseForwardedHeaders(); // Must be early in pipeline to resolve real IP
+// Liveness for K8s/Docker — before HTTPS redirect, rate limit, and IP block
+app.UseHealthChecks("/health");
 app.UseCors("AllowReact"); // Allowing to use React
 
 // Configure the HTTP request pipeline.
