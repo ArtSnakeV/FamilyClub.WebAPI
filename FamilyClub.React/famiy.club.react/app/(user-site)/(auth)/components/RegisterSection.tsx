@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { AsYouType } from "libphonenumber-js";
+import { authService } from "@/lib/api/services";
 
 type RegisterSectionProps = {
   onGoToLogin: () => void;
@@ -72,10 +73,23 @@ export default function RegisterSection({ onGoToLogin }: RegisterSectionProps) {
       return;
     }
     setLoading(true);
-    try {
-      console.log("Registering:", formData);
+    // try {
+    //   console.log("Registering:", formData);
+    //   onGoToLogin();
+    // } 
+     try {
+      await authService.apiAuthClubMemberRegisterPost({
+        registerClubMemberDto: {
+          email: formData.email,
+          password: formData.password,
+          name: formData.firstName,
+          surname: formData.lastName,
+          phoneNumber: phone,
+        },
+      });
       onGoToLogin();
-    } catch {
+    }
+    catch {
       setError("Registration failed.");
     } finally {
       setLoading(false);
