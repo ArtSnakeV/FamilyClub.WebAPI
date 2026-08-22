@@ -40,6 +40,11 @@ export default function RegisterSection({ onGoToLogin }: RegisterSectionProps) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
+  const handleExternalLogin = (provider: "Google" | "Facebook") => {
+    const apiBase = process.env.NEXT_PUBLIC_API_URL || "";
+    window.location.href = `${apiBase}/api/AuthClubMember/external-login?provider=${provider}`;
+  };
+
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const input = e.target.value;
     const allowedChars = /^[0-9+\-().\s]*$/;
@@ -577,6 +582,46 @@ export default function RegisterSection({ onGoToLogin }: RegisterSectionProps) {
           }}
         >
           {loading ? "Завантаження..." : "Зареєструватися"}
+        </span>
+      </button>
+
+      <div className="flex items-center justify-center w-full py-1 gap-5 my-2" style={{ width: "460px" }}>
+        <div className="flex-1 border-t border-[#242424]" />
+        <span className="font-sans text-[18px] text-[#242424] whitespace-nowrap">
+          або
+        </span>
+        <div className="flex-1 border-t border-[#242424]" />
+      </div>
+
+      <button
+        type="button"
+        onClick={() => handleExternalLogin("Google")}
+        className="w-full rounded-[9px] bg-white shadow-[0px_0px_10px_0px_#00000033] flex items-center justify-center gap-3 border-0 cursor-pointer hover:brightness-95 active:scale-[0.98] transition"
+        style={{ width: "460px", height: INPUT_HEIGHT, marginBottom: "8px" }}
+      >
+        <img
+          src="/images/Layout/Footer/GoogleBrandIcon.svg"
+          alt="Google"
+          className="w-[22px] h-[22px] object-contain"
+        />
+        <span className="font-sans text-[18px] text-[#242424]">
+          Продовжити через Google
+        </span>
+      </button>
+
+      <button
+        type="button"
+        onClick={() => handleExternalLogin("Facebook")}
+        className="w-full rounded-[9px] bg-[#1877F2] text-white shadow-[0px_0px_10px_0px_#00000033] flex items-center justify-center gap-3 border-0 cursor-pointer hover:brightness-110 active:scale-[0.98] transition"
+        style={{ width: "460px", height: INPUT_HEIGHT, marginBottom: "8px" }}
+      >
+        <img
+          src="/images/Layout/Footer/FacebookIcon.svg"
+          alt="Facebook"
+          className="w-[22px] h-[22px] object-contain brightness-0 invert"
+        />
+        <span className="font-sans text-[18px] text-white font-medium">
+          Продовжити через Facebook
         </span>
       </button>
 

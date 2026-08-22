@@ -164,6 +164,12 @@ builder.Services.AddHostedService<FamilyClub.WebAPI.BackgroundServices.ActionLog
 //        options.AccessDeniedPath = "/Account/AccessDenied";
 //    });
 
+builder.Services.ConfigureExternalCookie(options =>
+{
+    options.Cookie.Name = "FamilyClub.External";
+    options.Cookie.SameSite = SameSiteMode.Lax;
+});
+
 // JWT authentification
 var jwtSettings = builder.Configuration.GetSection("Jwt");
 var secretKey = jwtSettings["Key"]
@@ -174,6 +180,18 @@ builder.Services.AddAuthentication(options =>
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 })
+    .AddGoogle(options =>
+    {
+        options.ClientId = builder.Configuration["Authentication:Google:ClientId"] ?? "dummy-google-client-id";
+        options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"] ?? "dummy-google-client-secret";
+        options.SignInScheme = IdentityConstants.ExternalScheme;
+    })
+    .AddFacebook(options =>
+    {
+        options.AppId = builder.Configuration["Authentication:Facebook:AppId"] ?? "dummy-facebook-app-id";
+        options.AppSecret = builder.Configuration["Authentication:Facebook:AppSecret"] ?? "dummy-facebook-app-secret";
+        options.SignInScheme = IdentityConstants.ExternalScheme;
+    })
     .AddJwtBearer(options =>
     {
         options.TokenValidationParameters = new TokenValidationParameters

@@ -1,4 +1,4 @@
-﻿using FamilyClub.BLL.DTOs.ClubMember;
+using FamilyClub.BLL.DTOs.ClubMember;
 using FamilyClub.BLL.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -69,4 +69,47 @@ public class AuthClubMemberController : ControllerBase
 
 		return Ok(result);
 	}
+
+    [HttpGet("external-login")]
+    public IActionResult ExternalLogin([FromQuery] string provider, [FromQuery] string? returnUrl = null)
+    {
+        var redirectUrl = Url.Action(nameof(ExternalLoginCallback), "AuthClubMember", new { returnUrl });
+        var properties = _authService.GetExternalLoginProperties(provider, redirectUrl!);
+        return Challenge(properties, provider);
+    }
+
+    [HttpGet("external-login-callback")]
+    public async Task<IActionResult> ExternalLoginCallback([FromQuery] string? returnUrl = null, CancellationToken cancellationToken = default)
+    {
+        var clientReturnUrl = returnUrl ?? "/auth/callback";
+        try
+        {
+            var authResponse = await _authService.ExternalLoginCallbackAsync(cancellationToken);
+            var redirectTarget = $"{clientReturnUrl}?token={Uri.EscapeDataString(authResponse.Token)}&userId={Uri.EscapeDataString(authResponse.ClubMember.Id)}";
+            return Redirect(redirectTarget);
+        }
+        catch (Exception ex)
+        {
+            var errorTarget = $"{clientReturnUrl}?error={Uri.EscapeDataString(ex.Message)}";
+            return Redirect(errorTarget);
+        }
+    }
+
+    [HttpPost("external-login-token")]
+    public async Task<ActionResult<AuthResponseClubMemberDTO>> ExternalTokenLogin([FromBody] ExternalLoginRequestDto dto, CancellationToken cancellationToken)
+    {
+        try
+        {
+            var authResponse = await _authService.ExternalTokenLoginAsync(dto, cancellationToken);
+            return Ok(authResponse);
+        }
+        catch (UnauthorizedAccessException ex)
+        {
+            return Unauthorized(new { error = ex.Message });
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(new { error = ex.Message });
+        }
+    }
 }
