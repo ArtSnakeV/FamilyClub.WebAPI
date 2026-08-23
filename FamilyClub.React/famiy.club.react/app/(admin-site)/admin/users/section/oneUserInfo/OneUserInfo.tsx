@@ -143,7 +143,11 @@ export default function OneUserInfo({ user, onLockToggle }: Props) {
             </div>
             <div className="w-[490px] max-w-full h-[2px] bg-[#D2D2D2] -mt-[2px] ml-7 mb-4" />
 
-            <div className="px-9 overflow-y-hidden overflow-x-hidden w-[520px] ml-5 max-w-full" style={{ maxHeight: "800px" }}>
+            {/* <div className="px-9 overflow-y-hidden overflow-x-hidden w-[520px] ml-5 max-w-full" style={{ maxHeight: "800px" }}> */}
+            <div
+                className="px-9 custom-scrollbar overflow-y-auto overflow-x-hidden w-[520px] ml-5 max-w-full pr-8"
+                style={{ maxHeight: "580px" }}
+            >
                 {activeTab === "overview" &&
                     <OverviewTab
                         user={user}

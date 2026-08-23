@@ -27,6 +27,7 @@ type Props = {
     member?: ClubMemberReadDto | null;
     products: Map<number, ProductDto>;
     authors: Map<number, AuthorDTO>;
+    onStatusChange?: (newStatus: string) => void;
 };
 
 export default function OrderDetail({
@@ -34,6 +35,7 @@ export default function OrderDetail({
     member,
     products,
     authors,
+    onStatusChange,
 }: Props) {
     if (!order) {
         return (
@@ -83,7 +85,19 @@ export default function OrderDetail({
             flex flex-row gap-6 px-5 py-4 shrink-0">
                 <div className="flex flex-col gap-3 flex-1 min-w-0">
                      <InfoRowInline label="Статус">
-                        <StatusBadge status={order.status ?? ""} />
+                        <select
+                            value={order.status ?? "Pending"}
+                            onChange={(e) => onStatusChange?.(e.target.value)}
+                            className="bg-[#F5F3EE] border border-[#C8C2B4] rounded-[6px] px-2 py-0.5 text-[13px] font-bold text-[#005b33] outline-none cursor-pointer hover:border-[#005B33] transition"
+                        >
+                            <option value="Pending">Нове (Pending)</option>
+                            <option value="Paid">Прийнято (Paid)</option>
+                            <option value="Processing">Комплектується (Processing)</option>
+                            <option value="Shipped">Відправлено (Shipped)</option>
+                            <option value="Delivered">Доставлено (Delivered)</option>
+                            <option value="Cancelled">Скасовано (Cancelled)</option>
+                            <option value="ReturnRequested">На повернення (Return)</option>
+                        </select>
                     </InfoRowInline>
 
                     <InfoRowInline label="ТТН">

@@ -66,17 +66,17 @@ export default function OrderDetailPage() {
     loadData();
   }, [orderId]);
 
-  const rawStatus = (dbOrder?.status || "Delivered").toLowerCase();
+  const rawStatus = (dbOrder?.status || "Pending").toLowerCase();
 
   // Status index: 0: Нове, 1: Прийнято, 2: Комплектується, 3: Відправлено, 4: Отримано
-  let activeStepIndex = 4;
-  let statusBadgeText = "Отримано";
+  let activeStepIndex = 0;
+  let statusBadgeText = "Нове";
   let statusBadgeColor = "#005b33";
 
   if (rawStatus.includes("new") || rawStatus.includes("pending") || rawStatus.includes("оформл")) {
     activeStepIndex = 0;
     statusBadgeText = "Нове";
-  } else if (rawStatus.includes("accept") || rawStatus.includes("прийнят")) {
+  } else if (rawStatus.includes("paid") || rawStatus.includes("accept") || rawStatus.includes("прийнят") || rawStatus.includes("очікув")) {
     activeStepIndex = 1;
     statusBadgeText = "Прийнято";
   } else if (rawStatus.includes("process") || rawStatus.includes("pack") || rawStatus.includes("комплек")) {
@@ -85,7 +85,7 @@ export default function OrderDetailPage() {
   } else if (rawStatus.includes("sent") || rawStatus.includes("shipp") || rawStatus.includes("відправл")) {
     activeStepIndex = 3;
     statusBadgeText = "Відправлено";
-  } else if (rawStatus.includes("deliver") || rawStatus.includes("receiv") || rawStatus.includes("отримал") || rawStatus.includes("доставл")) {
+  } else if (rawStatus.includes("deliver") || rawStatus.includes("receiv") || rawStatus.includes("отримал") || rawStatus.includes("доставл") || rawStatus.includes("complet")) {
     activeStepIndex = 4;
     statusBadgeText = "Отримано";
   } else if (rawStatus.includes("cancel") || rawStatus.includes("скасов")) {
@@ -127,6 +127,18 @@ export default function OrderDetailPage() {
       }
     }
 
+    const rawFormat = (item.format || "").toString().toLowerCase();
+    const rawName = (prod?.productName || item.productName || "").toString().toLowerCase();
+    const combinedStr = `${rawFormat} ${rawName}`;
+
+    const isEbook = combinedStr.includes("ebook") || combinedStr.includes("елек") || combinedStr.includes("pdf") || combinedStr.includes("epub");
+    const isAudio = combinedStr.includes("audio") || combinedStr.includes("аудіо") || combinedStr.includes("mp3");
+
+    const itemFormats: string[] = [];
+    if (isEbook) itemFormats.push("ebook");
+    if (isAudio) itemFormats.push("audio");
+    if (itemFormats.length === 0) itemFormats.push("print");
+
     return {
       id: `item-${dbOrder?.id || idx}-${idx}`,
       dbOrderId: dbOrder?.id || orderId || 0,
@@ -137,7 +149,7 @@ export default function OrderDetailPage() {
       bookTitle: prod?.productName || `Книга #${item.productId || idx + 1}`,
       bookImage: imageSrc,
       quantity: item.quantity || 1,
-      formats: [item.format || "print"],
+      formats: itemFormats,
       price: item.unitPrice || (dbOrder?.totalPrice ? Math.round(dbOrder.totalPrice) : 350),
     };
   };
