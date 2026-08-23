@@ -202,8 +202,8 @@ export default function AuthPageClient() {
 
               <section
                 id="register"
-                className="flex flex-col items-center h-screen px-4 box-border"
-                style={{ paddingTop: "60px", paddingBottom: "32px" }}
+                className="flex flex-col items-center justify-center min-h-screen px-4 box-border overflow-y-auto"
+                style={{ paddingTop: "15px", paddingBottom: "15px" }}
               >
                 <RegisterSection onGoToLogin={() => goToSection("login")} />
               </section>

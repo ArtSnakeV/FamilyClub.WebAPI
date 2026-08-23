@@ -45,6 +45,7 @@ namespace FamilyClub.BLL.Services
 					ProductId = item.ProductId, // FK
 					Quantity = item.Quantity,
 					UnitPrice = item.UnitPrice,
+					Format = item.Format,
 				}).ToList()
 			};
 

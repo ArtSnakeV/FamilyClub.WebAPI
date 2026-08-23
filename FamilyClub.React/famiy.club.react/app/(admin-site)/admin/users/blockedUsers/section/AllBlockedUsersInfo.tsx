@@ -148,8 +148,8 @@ export default function AllBlockedUsersInfo({
                                 </div>
 
                                 {/* BLOCK REASON */}
-                                <div className="min-w-0 text-sm">
-                                    <p className="font-medium truncate">{user.lockoutReason ?? "-"}</p>
+                                <div className="min-w-0 text-sm ml-7">
+                                    <p className="font-medium truncate">{user.lockoutReason ?? ""}</p>
                                     {user.lockoutReasonDetail && (
                                         <p className="opacity-60 truncate">{user.lockoutReasonDetail}</p>
                                     )}
@@ -157,7 +157,7 @@ export default function AllBlockedUsersInfo({
 
                                 {/* BLOCKED BY / AT */}
                                 <div className="min-w-0 text-sm">
-                                    <p className="font-medium truncate">{user.lockedBy ?? "-"}</p>
+                                    <p className="font-medium truncate">{user.lockedBy ?? ""}</p>
                                     <p className="opacity-60 truncate">{formatDate(user.lockedAt)}</p>
                                 </div>
 
@@ -165,7 +165,7 @@ export default function AllBlockedUsersInfo({
                                 <div className="min-w-0 text-sm">
                                     <p className="font-medium truncate">
                                         {status.permanent
-                                            ? "-"
+                                            ? ""
                                             : formatDate(user.lockoutEnd)}
                                     </p>
                                     <p className="opacity-60 truncate">
@@ -173,7 +173,7 @@ export default function AllBlockedUsersInfo({
                                             ? "Назавжди"
                                             : left !== null
                                                 ? `Залишилося ${left} днів`
-                                                : "-"}
+                                                : ""}
                                     </p>
                                 </div>
 

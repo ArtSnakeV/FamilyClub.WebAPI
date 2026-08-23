@@ -8,8 +8,17 @@ export function useLockUserFlow(refetch: () => Promise<void>) {
 
     const handleLockToggle = async (user: UserInfo) => {
         if (isBlocked(user.lockoutEnd)) {
-            await unlockUser(user.id);
-            await refetch();
+            try {
+                await unlockUser(user.id);
+                await refetch();
+            } catch (e) {
+                console.error(e);
+                alert(
+                    e instanceof Error
+                        ? e.message
+                        : "Не вдалося розблокувати користувача"
+                );
+            }
         } else {
             setUserToLock(user);
         }
@@ -22,10 +31,19 @@ export function useLockUserFlow(refetch: () => Promise<void>) {
     ) => {
         if (!userToLock) return;
 
-        await lockUser(userToLock.id, { blockReasonId, comment, lockoutEnd });
-        await refetch();
-
-        setUserToLock(null);
+        try {
+            await lockUser(userToLock.id, { blockReasonId, comment, lockoutEnd });
+            await refetch();
+        } catch (e) {
+            console.error(e);
+            alert(
+                e instanceof Error
+                    ? e.message
+                    : "Не вдалося заблокувати користувача"
+            );
+        } finally {
+            setUserToLock(null);
+        }
     };
 
     return { userToLock, setUserToLock, handleLockToggle, handleConfirmLock };

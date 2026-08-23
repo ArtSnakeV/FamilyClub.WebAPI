@@ -202,6 +202,13 @@ export default function OrderCard({ item, activeTab, onAction }: OrderCardProps)
             >
               Поскаржитися
             </button>
+            <button
+              onClick={() => onAction && onAction("delete", item.id, item.dbOrderId)}
+              className="bg-[#C0392B] hover:bg-[#A93226] text-white px-5 py-2.5 rounded-xl font-medium transition text-sm shadow-sm"
+              title="Видалити замовлення"
+            >
+              🗑️ Видалити
+            </button>
           </>
         )}
 
@@ -224,6 +231,13 @@ export default function OrderCard({ item, activeTab, onAction }: OrderCardProps)
               className="bg-[#E5E0D5] hover:bg-[#D8D2C5] border border-[#C8C2B4] text-[#777777] hover:text-black px-5 py-2.5 rounded-xl font-medium transition text-sm shadow-sm"
             >
               Поскаржитися
+            </button>
+            <button
+              onClick={() => onAction && onAction("delete", item.id, item.dbOrderId)}
+              className="bg-[#C0392B] hover:bg-[#A93226] text-white px-5 py-2.5 rounded-xl font-medium transition text-sm shadow-sm"
+              title="Видалити замовлення"
+            >
+              🗑️ Видалити
             </button>
           </>
         )}
@@ -248,6 +262,13 @@ export default function OrderCard({ item, activeTab, onAction }: OrderCardProps)
             >
               Поскаржитися
             </button>
+            <button
+              onClick={() => onAction && onAction("delete", item.id, item.dbOrderId)}
+              className="bg-[#C0392B] hover:bg-[#A93226] text-white px-5 py-2.5 rounded-xl font-medium transition text-sm shadow-sm"
+              title="Видалити замовлення"
+            >
+              🗑️ Видалити
+            </button>
           </>
         )}
 
@@ -271,22 +292,38 @@ export default function OrderCard({ item, activeTab, onAction }: OrderCardProps)
             >
               Поскаржитися
             </button>
+            <button
+              onClick={() => onAction && onAction("delete", item.id, item.dbOrderId)}
+              className="bg-[#C0392B] hover:bg-[#A93226] text-white px-5 py-2.5 rounded-xl font-medium transition text-sm shadow-sm"
+              title="Видалити замовлення"
+            >
+              🗑️ Видалити
+            </button>
           </>
         )}
 
         {activeTab === "history" && (
-          <button
-            onClick={() => {
-              if (item.dbOrderId) {
-                router.push(`/complaints?orderId=${item.dbOrderId}`);
-              } else {
-                onAction && onAction("complain", item.id, item.dbOrderId);
-              }
-            }}
-            className="bg-[#E5E0D5] hover:bg-[#D8D2C5] border border-[#C8C2B4] text-[#777777] hover:text-black px-5 py-2.5 rounded-xl font-medium transition text-sm shadow-sm"
-          >
-            Поскаржитися
-          </button>
+          <>
+            <button
+              onClick={() => {
+                if (item.dbOrderId) {
+                  router.push(`/complaints?orderId=${item.dbOrderId}`);
+                } else {
+                  onAction && onAction("complain", item.id, item.dbOrderId);
+                }
+              }}
+              className="bg-[#E5E0D5] hover:bg-[#D8D2C5] border border-[#C8C2B4] text-[#777777] hover:text-black px-5 py-2.5 rounded-xl font-medium transition text-sm shadow-sm"
+            >
+              Поскаржитися
+            </button>
+            <button
+              onClick={() => onAction && onAction("delete", item.id, item.dbOrderId)}
+              className="bg-[#C0392B] hover:bg-[#A93226] text-white px-5 py-2.5 rounded-xl font-medium transition text-sm shadow-sm"
+              title="Видалити замовлення"
+            >
+              🗑️ Видалити
+            </button>
+          </>
         )}
       </div>
     </div>
