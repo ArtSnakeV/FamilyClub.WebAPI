@@ -26,9 +26,9 @@ export interface UserInfo {
 }
 
 function resolvePrimaryRole(roles?: string[] | null): string {
-    if (roles?.includes("Admin")) return "Admin";
-    if (roles?.includes("Manager")) return "Manager";
-    return roles?.[0] ?? "Manager";
+    if (roles?.includes("admin")) return "Admin";
+    if (roles?.includes("manager")) return "Manager";
+    return roles?.[0] ?? "manager";
 }
 
 async function fetchUsersByRole(roleName: string, token: string | null) {
