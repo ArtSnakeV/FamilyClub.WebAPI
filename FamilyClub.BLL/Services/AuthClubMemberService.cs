@@ -20,6 +20,8 @@ namespace FamilyClub.BLL.Services;
 public class AuthClubMemberService : IAuthClubMemberService
 {
     private const string ResetCacheKeyPrefix = "pwd-reset:";
+    private const string ResetAttemptsKeyPrefix = "pwd-reset-attempts:";
+    private const int MaxResetAttempts = 5;
     private static readonly TimeSpan ResetCodeTtl = TimeSpan.FromMinutes(15);
 
     private readonly UserManager<ClubMember> _userManager;
@@ -32,21 +34,17 @@ public class AuthClubMemberService : IAuthClubMemberService
 
     public AuthClubMemberService(
         UserManager<ClubMember> userManager,
+        SignInManager<ClubMember> signInManager,
         IConfiguration configuration,
         RoleManager<IdentityRole> roleManager,
         IEmailSender emailSender,
         ICacheService cache,
         ILogger<AuthClubMemberService> logger)
-    public AuthClubMemberService(
-        UserManager<ClubMember> userManager,
-        SignInManager<ClubMember> signInManager,
-        IConfiguration configuration,
-        RoleManager<IdentityRole> roleManager)
     {
         _userManager = userManager;
         _signInManager = signInManager;
-        _roleManager = roleManager;
         _configuration = configuration;
+        _roleManager = roleManager;
         _emailSender = emailSender;
         _cache = cache;
         _logger = logger;
@@ -56,17 +54,18 @@ public class AuthClubMemberService : IAuthClubMemberService
     {
         var clubMember = new ClubMember { UserName = dto.Email, Email = dto.Email, PhoneNumber = dto.PhoneNumber, Name = dto.Name, Surname = dto.Surname, DateOfBirth = dto.DateOfBirth };
         var result = await _userManager.CreateAsync(clubMember, dto.Password);
-        if (!await _roleManager.RoleExistsAsync("User"))
-        {
-            await _roleManager.CreateAsync(new IdentityRole("User"));
-        }
-        await _userManager.AddToRoleAsync(clubMember, "User");
 
         if (!result.Succeeded)
         {
             var errors = string.Join(", ", result.Errors.Select(e => e.Description));
             throw new Exception($"User registration failed: {errors}");
         }
+
+        if (!await _roleManager.RoleExistsAsync("User"))
+        {
+            await _roleManager.CreateAsync(new IdentityRole("User"));
+        }
+        await _userManager.AddToRoleAsync(clubMember, "User");
 
         return ClubMemberMapper.MapToReadDto(clubMember);
     }
@@ -77,8 +76,20 @@ public class AuthClubMemberService : IAuthClubMemberService
 
         if (clubMember == null || !await _userManager.CheckPasswordAsync(clubMember, dto.Password))
         {
+            if (clubMember != null)
+            {
+                await _userManager.AccessFailedAsync(clubMember);
+            }
+
             throw new UnauthorizedAccessException("Wrong email or password!");
         }
+
+        if (await _userManager.IsLockedOutAsync(clubMember))
+        {
+            throw new UnauthorizedAccessException("Account is locked. Try again later.");
+        }
+
+        await _userManager.ResetAccessFailedCountAsync(clubMember);
 
         var response = await GenerateJwtTokenAsync(clubMember, dto.RememberMe);
         response.ReturnUrl = dto.ReturnUrl;
@@ -134,7 +145,7 @@ public class AuthClubMemberService : IAuthClubMemberService
         var user = await _userManager.FindByIdAsync(userId);
 
         if (user == null)
-            throw new Exception("User not found");
+            throw new UnauthorizedAccessException("User not found");
 
         var roles = await _userManager.GetRolesAsync(user);
 
@@ -204,11 +215,20 @@ public class AuthClubMemberService : IAuthClubMemberService
     {
         var email = dto.Email.Trim();
         var cacheKey = ResetCacheKeyPrefix + email.ToLowerInvariant();
+        var attemptsKey = ResetAttemptsKeyPrefix + email.ToLowerInvariant();
+
+        var attempts = await _cache.GetAsync<int?>(attemptsKey, cancellationToken) ?? 0;
+        if (attempts >= MaxResetAttempts)
+        {
+            throw new InvalidOperationException("Забагато спроб. Запросіть новий код.");
+        }
+
         var entry = await _cache.GetAsync<PasswordResetCacheEntry>(cacheKey, cancellationToken);
 
         if (entry is null ||
             !string.Equals(entry.Code, dto.Code.Trim(), StringComparison.Ordinal))
         {
+            await _cache.SetAsync(attemptsKey, attempts + 1, ResetCodeTtl, cancellationToken);
             throw new InvalidOperationException("Невірний або прострочений код.");
         }
 
@@ -228,26 +248,8 @@ public class AuthClubMemberService : IAuthClubMemberService
         }
 
         await _cache.RemoveAsync(cacheKey, cancellationToken);
+        await _cache.RemoveAsync(attemptsKey, cancellationToken);
     }
-
-    private sealed class PasswordResetCacheEntry
-    {
-        public string UserId { get; set; } = string.Empty;
-        public string Code { get; set; } = string.Empty;
-        public string IdentityToken { get; set; } = string.Empty;
-    }
-		return new ClubMemberReadDto
-		{
-			Id = user.Id,
-			Email = user.Email,
-			Name = user.Name,
-			Surname = user.Surname,
-			PhoneNumber = user.PhoneNumber,
-			AvatarData = user.AvatarData,
-			DateOfBirth = user.DateOfBirth,
-			Roles = roles.ToList()
-		};
-	}
 
     public AuthenticationProperties GetExternalLoginProperties(string provider, string redirectUrl)
     {
@@ -404,10 +406,22 @@ public class AuthClubMemberService : IAuthClubMemberService
             }
 
             var userLoginInfo = new UserLoginInfo(dto.Provider, providerKey, dto.Provider);
-            await _userManager.AddLoginAsync(clubMember, userLoginInfo);
+            var addLoginResult = await _userManager.AddLoginAsync(clubMember, userLoginInfo);
+            if (!addLoginResult.Succeeded)
+            {
+                var errors = string.Join(", ", addLoginResult.Errors.Select(e => e.Description));
+                throw new Exception($"Failed to link external login: {errors}");
+            }
         }
 
         return await GenerateJwtTokenAsync(clubMember, rememberMe: true);
+    }
+
+    private sealed class PasswordResetCacheEntry
+    {
+        public string UserId { get; set; } = string.Empty;
+        public string Code { get; set; } = string.Empty;
+        public string IdentityToken { get; set; } = string.Empty;
     }
 
     private class FacebookUserData
