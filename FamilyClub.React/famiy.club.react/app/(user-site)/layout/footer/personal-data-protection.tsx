@@ -93,10 +93,10 @@ export default function PersonalDataProtection() {
             <p>
               Контакт:{" "}
               <a
-                href="mailto:help@librellis.com"
+                href="mailto:LibrellisSupport@proton.me"
                 className="underline hover:opacity-70"
               >
-                help@librellis.com
+                LibrellisSupport@proton.me
               </a>
               ,{" "}
               <a href="tel:08005553535" className="underline hover:opacity-70">
@@ -177,10 +177,10 @@ export default function PersonalDataProtection() {
             <p className="pt-3 text-[14px] text-[#555]">
               Щоб скористатися правами, напишіть на{" "}
               <a
-                href="mailto:help@librellis.com"
+                href="mailto:LibrellisSupport@proton.me"
                 className="underline hover:opacity-70"
               >
-                help@librellis.com
+                LibrellisSupport@proton.me
               </a>{" "}
               або зверніться до служби підтримки.
             </p>
