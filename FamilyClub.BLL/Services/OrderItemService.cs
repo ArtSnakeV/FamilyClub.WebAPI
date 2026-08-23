@@ -1,4 +1,4 @@
-﻿using FamilyClub.BLL.DTOs.OrderItem;
+using FamilyClub.BLL.DTOs.OrderItem;
 using FamilyClub.BLL.Interfaces;
 using FamilyClub.DAL.Interfaces;
 using FamilyClubLibrary;
@@ -39,6 +39,7 @@ namespace FamilyClub.BLL.Services
 				UnitPrice = dto.UnitPrice,
 				ProductId = dto.ProductId,
 				OrderId = dto.OrderId,
+				Format = dto.Format,
 			};
 
 			try
@@ -65,6 +66,7 @@ namespace FamilyClub.BLL.Services
 			orderItem.UnitPrice = dto.UnitPrice;
 			orderItem.ProductId = dto.ProductId;
 			orderItem.OrderId = dto.OrderId;
+			orderItem.Format = dto.Format;
 
 			_orderItemRepository.Update(orderItem);
 			await _unitOfWork.SaveChangesAsync(cancellationToken);

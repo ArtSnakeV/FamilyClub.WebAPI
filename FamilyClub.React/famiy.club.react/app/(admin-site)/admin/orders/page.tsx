@@ -221,6 +221,7 @@ export default function Page() {
                                     member={selectedMember}
                                     products={products}
                                     authors={authors}
+                                    onStatusChange={applyRealStatusChange}
                                 />
                             </div>
                         )}

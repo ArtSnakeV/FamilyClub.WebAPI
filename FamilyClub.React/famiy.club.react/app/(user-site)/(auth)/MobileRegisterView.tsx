@@ -436,20 +436,20 @@ export default function MobileRegisterView() {
             Продовжити через Facebook
           </span>
         </button>
-      </form>
 
-      {/* Bottom Navigation */}
-      <div className="w-full max-w-[392px] text-center mt-6 mb-4">
-        <p className="text-[#242424] text-[17px] leading-normal font-normal">
-          Вже маєте акаунт?{" "}
-          <Link
-            href="/login"
-            className="text-[#005b33] font-semibold hover:underline"
-          >
-            Увійти
-          </Link>
-        </p>
-      </div>
+        {/* Bottom Navigation */}
+        <div className="w-full text-center mt-3 mb-4">
+          <p className="text-[#242424] text-[18px] leading-normal font-normal">
+            Вже маєте акаунт?{" "}
+            <Link
+              href="/login"
+              className="text-[#005b33] font-bold underline hover:opacity-80"
+            >
+              Увійти
+            </Link>
+          </p>
+        </div>
+      </form>
     </div>
   );
 }
