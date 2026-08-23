@@ -162,10 +162,10 @@ export default function ProductPublicationPolicy() {
             Якщо у вас є запитання щодо публікації товарів або цієї Політики,
             напишіть нам на{" "}
             <a
-              href="mailto:help@librellis.ua"
+              href="mailto:LibrellisSupport@proton.me"
               className="underline hover:opacity-70"
             >
-              help@librellis.ua
+              LibrellisSupport@proton.me
             </a>
             .
           </p>

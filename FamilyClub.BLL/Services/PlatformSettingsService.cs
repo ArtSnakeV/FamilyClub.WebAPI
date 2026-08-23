@@ -136,7 +136,7 @@ public class PlatformSettingsService : IPlatformSettingsService
         Id = 1,
         CompanyName = "Ink & Echo",
         Slogan = "Книгарня з характером",
-        SupportEmail = "support@inkandecho.com",
+        SupportEmail = "LibrellisSupport@proton.me",
         SupportPhone = "+380 00 000 00 00",
         CompanyAddress = "Україна",
         BooksPerPage = 12,

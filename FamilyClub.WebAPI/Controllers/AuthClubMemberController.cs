@@ -69,4 +69,50 @@ public class AuthClubMemberController : ControllerBase
 
 		return Ok(result);
 	}
+
+    [HttpPost("forgot-password")]
+    [AllowAnonymous]
+    public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordDto dto, CancellationToken cancellationToken)
+    {
+        try
+        {
+            await _authService.ForgotPasswordAsync(dto, cancellationToken);
+            return Ok(new
+            {
+                message = "Якщо акаунт із цією поштою існує, ми надіслали код відновлення."
+            });
+        }
+        catch (InvalidOperationException ex)
+        {
+            return BadRequest(new { error = ex.Message });
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(new { error = ex.Message });
+        }
+    }
+
+    [HttpPost("reset-password")]
+    [AllowAnonymous]
+    public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDto dto, CancellationToken cancellationToken)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
+        try
+        {
+            await _authService.ResetPasswordAsync(dto, cancellationToken);
+            return Ok(new { message = "Пароль успішно змінено. Увійдіть з новим паролем." });
+        }
+        catch (InvalidOperationException ex)
+        {
+            return BadRequest(new { error = ex.Message });
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(new { error = ex.Message });
+        }
+    }
 }
