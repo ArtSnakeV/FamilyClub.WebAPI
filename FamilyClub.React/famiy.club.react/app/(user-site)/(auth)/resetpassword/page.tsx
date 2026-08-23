@@ -5,15 +5,22 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import AuthBrandLogo from "../components/AuthBrandLogo";
 import MobileResetPasswordView from "../MobileResetPasswordView";
+import {
+  confirmPasswordReset,
+  requestPasswordResetCode,
+} from "@/lib/api/passwordReset";
 
 export default function ResetPasswordPage() {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [code, setCode] = useState(["", "", "", "", ""]);
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [codeSent, setCodeSent] = useState(false);
   const [loadingSend, setLoadingSend] = useState(false);
   const [loadingConfirm, setLoadingConfirm] = useState(false);
   const [error, setError] = useState("");
+  const [info, setInfo] = useState("");
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
   const handleSendCode = async () => {
@@ -23,12 +30,14 @@ export default function ResetPasswordPage() {
     }
     setLoadingSend(true);
     setError("");
+    setInfo("");
     try {
-      await new Promise((resolve) => setTimeout(resolve, 800));
+      await requestPasswordResetCode(email.trim());
       setCodeSent(true);
+      setInfo("Якщо акаунт існує, код надіслано на пошту (діє 15 хв).");
       setTimeout(() => inputRefs.current[0]?.focus(), 50);
-    } catch {
-      setError("Помилка відправки коду");
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Помилка відправки коду");
     } finally {
       setLoadingSend(false);
     }
@@ -73,13 +82,26 @@ export default function ResetPasswordPage() {
       setError("Будь ласка, введіть 5-значний код");
       return;
     }
+    if (newPassword.length < 6) {
+      setError("Пароль має містити щонайменше 6 символів");
+      return;
+    }
+    if (newPassword !== confirmPassword) {
+      setError("Паролі не збігаються");
+      return;
+    }
     setLoadingConfirm(true);
     setError("");
     try {
-      await new Promise((resolve) => setTimeout(resolve, 800));
+      await confirmPasswordReset({
+        email: email.trim(),
+        code: full,
+        newPassword,
+        confirmPassword,
+      });
       router.push("/login");
-    } catch {
-      setError("Невірний код");
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Невірний код");
     } finally {
       setLoadingConfirm(false);
     }
@@ -136,6 +158,11 @@ export default function ResetPasswordPage() {
                 {error}
               </div>
             )}
+            {info && !error && (
+              <div className="bg-[#005B33]/15 border border-[#005B33]/40 rounded-[9px] px-4 py-2.5 text-center text-[#242424] font-medium text-[16px] w-full">
+                {info}
+              </div>
+            )}
 
             <div className="flex flex-col gap-2 w-full">
               <label className="text-[24px] font-semibold text-[#242424]">
@@ -190,6 +217,38 @@ export default function ResetPasswordPage() {
               </div>
             </div>
 
+            <div className="flex flex-col gap-2 w-full">
+              <label className="text-[24px] font-semibold text-[#242424]">
+                Новий пароль
+              </label>
+              <input
+                type="password"
+                value={newPassword}
+                onChange={(e) => {
+                  setNewPassword(e.target.value);
+                  setError("");
+                }}
+                placeholder="Мінімум 6 символів"
+                className="bg-white h-[52px] w-full rounded-[9px] px-5 shadow-[0px_0px_10px_0px_rgba(0,0,0,0.2)] outline-none text-[18px] text-[#242424] placeholder:text-[#242424]/50"
+              />
+            </div>
+
+            <div className="flex flex-col gap-2 w-full">
+              <label className="text-[24px] font-semibold text-[#242424]">
+                Підтвердіть пароль
+              </label>
+              <input
+                type="password"
+                value={confirmPassword}
+                onChange={(e) => {
+                  setConfirmPassword(e.target.value);
+                  setError("");
+                }}
+                placeholder="Повторіть пароль"
+                className="bg-white h-[52px] w-full rounded-[9px] px-5 shadow-[0px_0px_10px_0px_rgba(0,0,0,0.2)] outline-none text-[18px] text-[#242424] placeholder:text-[#242424]/50"
+              />
+            </div>
+
             <div className="flex flex-col gap-3 w-full mt-1">
               <button
                 type="button"
@@ -197,7 +256,7 @@ export default function ResetPasswordPage() {
                 disabled={loadingConfirm}
                 className="bg-[#005B33] h-[52px] w-full rounded-[9px] shadow-[0px_0px_10px_0px_rgba(0,0,0,0.25)] text-[20px] text-white transition-all hover:brightness-110 active:scale-[0.98] disabled:opacity-70"
               >
-                {loadingConfirm ? "Перевірка..." : "Підтвердити"}
+                {loadingConfirm ? "Збереження..." : "Змінити пароль"}
               </button>
 
               <button

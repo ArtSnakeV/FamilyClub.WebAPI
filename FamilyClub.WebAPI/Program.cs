@@ -105,6 +105,24 @@ builder.Services.AddScoped<IRoleClubMemberService, RoleClubMemberService>();
 // ClaimsClubMember
 builder.Services.AddScoped<IClaimsClubMemberService, ClaimsClubMemberService>();
 
+builder.Services.Configure<FamilyClub.BLL.Options.SmtpOptions>(
+    builder.Configuration.GetSection(FamilyClub.BLL.Options.SmtpOptions.SectionName));
+builder.Services.Configure<FamilyClub.BLL.Options.AzureCommunicationServicesOptions>(
+    builder.Configuration.GetSection(FamilyClub.BLL.Options.AzureCommunicationServicesOptions.SectionName));
+
+var azureEmailOptions = builder.Configuration
+    .GetSection(FamilyClub.BLL.Options.AzureCommunicationServicesOptions.SectionName)
+    .Get<FamilyClub.BLL.Options.AzureCommunicationServicesOptions>();
+
+if (!string.IsNullOrWhiteSpace(azureEmailOptions?.ConnectionString))
+{
+    builder.Services.AddScoped<IEmailSender, FamilyClub.WebAPI.Services.AzureEmailSender>();
+}
+else
+{
+    builder.Services.AddScoped<IEmailSender, FamilyClub.WebAPI.Services.SmtpEmailSender>();
+}
+
 //Review
 builder.Services.AddScoped<IReviewRepository, ReviewRepository>();
 builder.Services.AddScoped<IReviewService, ReviewService>();
