@@ -150,8 +150,8 @@ const Footer = () => {
                                             alt="Email"
                                         />
                                     </div>
-                                    <a href="mailto:help@libria.com" className="footer-text h-[27px] flex items-center hover:opacity-70 transition-opacity">
-                                        help@libria.com
+                                    <a href="mailto:LibrellisSupport@proton.me" className="footer-text h-[27px] flex items-center hover:opacity-70 transition-opacity">
+                                        LibrellisSupport@proton.me
                                     </a>
                                 </div>
 

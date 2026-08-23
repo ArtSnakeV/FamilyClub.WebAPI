@@ -7,5 +7,7 @@ public interface IAuthClubMemberService
     Task<AuthResponseClubMemberDTO> LoginAsync(LoginClubMemberDto dto, CancellationToken cancellationToken = default);
     Task<ClubMemberReadDto> RegisterAsync(RegisterClubMemberDto dto, CancellationToken cancellationToken = default);
     Task LogoutAsync(CancellationToken cancellationToken = default);
-	Task<ClubMemberReadDto> GetCurrentUserAsync(string userId, CancellationToken cancellationToken = default);
+    Task<ClubMemberReadDto> GetCurrentUserAsync(string userId, CancellationToken cancellationToken = default);
+    Task ForgotPasswordAsync(ForgotPasswordDto dto, CancellationToken cancellationToken = default);
+    Task ResetPasswordAsync(ResetPasswordDto dto, CancellationToken cancellationToken = default);
 }

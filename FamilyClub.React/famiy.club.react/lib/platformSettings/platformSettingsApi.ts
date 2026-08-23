@@ -27,7 +27,7 @@ export const DEFAULT_PLATFORM_SETTINGS: PlatformSettings = {
     id: 1,
     companyName: "Ink & Echo",
     slogan: "Книгарня з характером",
-    supportEmail: "support@inkandecho.com",
+    supportEmail: "LibrellisSupport@proton.me",
     supportPhone: "+380 00 000 00 00",
     companyAddress: "Україна",
     booksPerPage: 12,
