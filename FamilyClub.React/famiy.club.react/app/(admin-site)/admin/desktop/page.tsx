@@ -47,7 +47,10 @@ export default function Desktop() {
 
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<unknown>(null);
-
+  const managerMembers = useMemo(
+    () => members.filter((m) => m.roles?.some((r) => ["Manager", "Admin"].includes(r))),
+    [members]
+  );
   useEffect(() => {
     let cancelled = false;
 
@@ -207,11 +210,11 @@ export default function Desktop() {
                 <section className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-5 gap-4">
                   <StatCard
                     title="Менеджери"
-                    items={products}
+                    items={ managerMembers }
                     isLoading={isLoading}
                     icon="/images/admin_manager/desktop/user-tie-solid-full 1.svg"
-                    getDate={(book) => book.publishingDate}
-                    href="/admin/books"
+                    getDate={(member) => member.id || ""}
+                    href="/admin/managers"
                   />
                   <StatCard
                     title="Продажі"

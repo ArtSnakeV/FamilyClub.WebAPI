@@ -18,6 +18,11 @@ interface Props {
 }
 
 const GRID_COLS = "grid-cols-[minmax(180px,2fr)_minmax(90px,1fr)_minmax(90px,1fr)_minmax(60px,auto)]";
+const ROLE_LABELS: Record<string, string> = {
+    admin: "адмін",
+    manager: "менеджер",
+    user: "користувач",
+};
 
 export default function AllUsersInfo({
     users, onSelectUser, onLockToggle, selectedUserId, onDelete, onMessage
@@ -32,8 +37,14 @@ export default function AllUsersInfo({
         return users.filter((user) => {
             const fullName = `${user.name ?? ""} ${user.surname ?? ""}`.toLowerCase();
             const email = (user.email ?? "").toLowerCase();
-            const role = (user.role ?? "User").toLowerCase();
-            return fullName.includes(query) || email.includes(query) || role.includes(query);
+            const roleKey = (user.role && user.role.trim() !== "" ? user.role : "User").toLowerCase();
+            const translatedRole = ROLE_LABELS[roleKey] ?? "";
+            return (
+                fullName.includes(query) ||
+                email.includes(query) ||
+                roleKey.includes(query) ||
+                translatedRole.includes(query)
+            );
         });
     }, [users, search]);
 
@@ -42,7 +53,7 @@ export default function AllUsersInfo({
         totalPages,
         paginatedItems: paginatedUsers,
         setCurrentPage,
-    } = usePagination(filteredUsers, 3);
+    } = usePagination(filteredUsers, 4);
 
     const isBlocked = (user: UserInfo) =>
         !!user.lockoutEnd && new Date(user.lockoutEnd).getTime() > Date.now();
@@ -140,7 +151,7 @@ export default function AllUsersInfo({
                                     <button
                                         className="w-full px-4 py-2 text-left hover:bg-gray-100 whitespace-nowrap"
                                         onClick={() => {
-                                            onMessage(user); 
+                                            onMessage(user);
                                             setOpenMenuId(null);
                                         }}
                                     >
