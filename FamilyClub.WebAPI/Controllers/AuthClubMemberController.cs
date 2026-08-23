@@ -65,9 +65,15 @@ public class AuthClubMemberController : ControllerBase
 		if (string.IsNullOrEmpty(userId))
 			return Unauthorized();
 
-		var result = await _authService.GetCurrentUserAsync(userId, cancellationToken);
-
-		return Ok(result);
+		try
+		{
+			var result = await _authService.GetCurrentUserAsync(userId, cancellationToken);
+			return Ok(result);
+		}
+		catch (UnauthorizedAccessException)
+		{
+			return Unauthorized();
+		}
 	}
 
     [HttpPost("forgot-password")]
