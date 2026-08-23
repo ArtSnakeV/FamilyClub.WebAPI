@@ -110,15 +110,15 @@ export default function RegisterSection({ onGoToLogin }: RegisterSectionProps) {
           width: "460px",
           display: "flex",
           flexDirection: "column",
-          gap: "10px",
-          marginTop: "8px",
+          gap: "4px",
+          marginTop: "4px",
         }}
       >
         <label
           style={{
             fontFamily: "var(--font-sans)",
             fontWeight: 600,
-            fontSize: "20px",
+            fontSize: "17px",
             lineHeight: "100%",
             color: "var(--color-black)",
           }}
@@ -133,16 +133,16 @@ export default function RegisterSection({ onGoToLogin }: RegisterSectionProps) {
           className="register-input"
           style={{
             width: "460px",
-            height: "48px",
+            height: "44px",
             borderRadius: "9px",
-            padding: "10px 20px",
+            padding: "8px 16px",
             backgroundColor: "var(--color-white)",
             boxShadow: "0px 0px 10px 0px #00000040",
             outline: "none",
             border: "none",
             fontFamily: "var(--font-sans)",
             fontWeight: 400,
-            fontSize: "20px",
+            fontSize: "18px",
             lineHeight: "150%",
             letterSpacing: "-0.011em",
             color: "var(--color-black)",
@@ -155,15 +155,15 @@ export default function RegisterSection({ onGoToLogin }: RegisterSectionProps) {
           width: "460px",
           display: "flex",
           flexDirection: "column",
-          gap: "10px",
-          marginTop: "8px",
+          gap: "4px",
+          marginTop: "4px",
         }}
       >
         <label
           style={{
             fontFamily: "var(--font-sans)",
             fontWeight: 600,
-            fontSize: "20px",
+            fontSize: "17px",
             lineHeight: "100%",
             color: "var(--color-black)",
           }}
@@ -179,16 +179,16 @@ export default function RegisterSection({ onGoToLogin }: RegisterSectionProps) {
           className="register-input"
           style={{
             width: "460px",
-            height: "48px",
+            height: "44px",
             borderRadius: "9px",
-            padding: "10px 20px",
+            padding: "8px 16px",
             backgroundColor: "var(--color-white)",
             boxShadow: "0px 0px 10px 0px #00000040",
             outline: "none",
             border: "none",
             fontFamily: "var(--font-sans)",
             fontWeight: 400,
-            fontSize: "20px",
+            fontSize: "18px",
             lineHeight: "150%",
             letterSpacing: "-0.011em",
             color: "var(--color-black)",
@@ -201,16 +201,16 @@ export default function RegisterSection({ onGoToLogin }: RegisterSectionProps) {
           width: "460px",
           display: "flex",
           flexDirection: "column",
-          gap: "10px",
+          gap: "4px",
           position: "relative",
-          marginTop: "8px",
+          marginTop: "4px",
         }}
       >
         <label
           style={{
             fontFamily: "var(--font-sans)",
             fontWeight: 600,
-            fontSize: "20px",
+            fontSize: "17px",
             lineHeight: "100%",
             color: "var(--color-black)",
           }}
@@ -218,12 +218,12 @@ export default function RegisterSection({ onGoToLogin }: RegisterSectionProps) {
           Номер телефону *
         </label>
 
-        <div style={{ display: "flex", width: "460px", height: "48px", position: "relative" }}>
+        <div style={{ display: "flex", width: "460px", height: "44px", position: "relative" }}>
           <div
             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
             style={{
               width: "118px",
-              height: "48px",
+              height: "44px",
               borderTopLeftRadius: "9px",
               borderBottomLeftRadius: isDropdownOpen ? "0px" : "9px",
               background: "#F5F3EE",
@@ -261,14 +261,14 @@ export default function RegisterSection({ onGoToLogin }: RegisterSectionProps) {
             placeholder="+380"
             style={{
               width: "342px",
-              height: "48px",
+              height: "44px",
               borderTopRightRadius: "9px",
               borderBottomRightRadius: "9px",
               background: "#F5F3EE",
               boxShadow: "0px 0px 10px 0px #00000040",
-              padding: "10px 17px",
+              padding: "8px 16px",
               fontFamily: "var(--font-sans)",
-              fontSize: "20px",
+              fontSize: "18px",
               border: "none",
               outline: "none",
             }}
@@ -284,7 +284,7 @@ export default function RegisterSection({ onGoToLogin }: RegisterSectionProps) {
             <div
               style={{
                 position: "absolute",
-                top: "48px",
+                top: "44px",
                 left: 0,
                 width: "118px",
                 backgroundColor: "#F5F3EE",
@@ -305,7 +305,7 @@ export default function RegisterSection({ onGoToLogin }: RegisterSectionProps) {
                     setIsDropdownOpen(false);
                   }}
                   style={{
-                    height: "48px",
+                    height: "40px",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
@@ -328,15 +328,15 @@ export default function RegisterSection({ onGoToLogin }: RegisterSectionProps) {
           width: "460px",
           display: "flex",
           flexDirection: "column",
-          gap: "10px",
-          marginTop: "8px",
+          gap: "4px",
+          marginTop: "4px",
         }}
       >
         <label
           style={{
             fontFamily: "var(--font-sans)",
             fontWeight: 600,
-            fontSize: "20px",
+            fontSize: "17px",
             lineHeight: "100%",
             color: "var(--color-black)",
           }}
@@ -352,16 +352,16 @@ export default function RegisterSection({ onGoToLogin }: RegisterSectionProps) {
           className="register-input"
           style={{
             width: "460px",
-            height: "48px",
+            height: "44px",
             borderRadius: "9px",
-            padding: "10px 20px",
+            padding: "8px 16px",
             backgroundColor: "#F5F3EE",
             boxShadow: "0px 0px 10px 0px #00000040",
             outline: "none",
             border: "none",
             fontFamily: "var(--font-sans)",
             fontWeight: 400,
-            fontSize: "20px",
+            fontSize: "18px",
             lineHeight: "150%",
             letterSpacing: "-0.011em",
             color: "var(--color-black)",
@@ -369,45 +369,45 @@ export default function RegisterSection({ onGoToLogin }: RegisterSectionProps) {
         />
       </div>
 
-      <div className="flex flex-col mt-4" style={{ width: "460px" }}>
+      <div className="flex flex-col mt-2" style={{ width: "460px" }}>
         <label
           style={{
-            height: "30px",
+            height: "22px",
             fontWeight: 600,
-            fontSize: "20px",
+            fontSize: "17px",
             lineHeight: "100%",
             color: "#242424",
           }}
         >
-          Password
+          Пароль *
         </label>
         <span
           style={{
             fontWeight: 400,
-            fontSize: "16px",
-            lineHeight: "100%",
+            fontSize: "13px",
+            lineHeight: "120%",
             color: "#242424",
-            marginTop: "4px",
+            marginTop: "2px",
           }}
         >
           Не менше восьми знаків без урахування пробілів на початку та в кінці
         </span>
 
-        <div className="flex flex-col gap-[10px] w-[460px] mt-2">
-          <div className="relative w-[460px] h-[48px]">
+        <div className="flex flex-col gap-[6px] w-[460px] mt-1.5">
+          <div className="relative w-[460px] h-[44px]">
             <input
               type={isPasswordVisible ? "text" : "password"}
               placeholder="Введіть пароль"
               value={formData.password}
               onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-              className="w-full h-full rounded-[9px] px-5 py-[10px] pr-[60px] bg-[#F5F3EE] shadow-[0px_0px_10px_0px_#00000040] outline-none text-[20px] leading-[150%] tracking-[-0.011em]"
+              className="w-full h-full rounded-[9px] px-4 py-[8px] pr-[50px] bg-[#F5F3EE] shadow-[0px_0px_10px_0px_#00000040] outline-none text-[18px] leading-[150%] tracking-[-0.011em]"
             />
             <button
               type="button"
               onClick={togglePasswordVisibility}
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
-              className="absolute right-5 top-1/2 -translate-y-1/2 w-[30px] h-[30px] flex items-center justify-center"
+              className="absolute right-4 top-1/2 -translate-y-1/2 w-[28px] h-[28px] flex items-center justify-center"
             >
               <img
                 src={
@@ -420,12 +420,12 @@ export default function RegisterSection({ onGoToLogin }: RegisterSectionProps) {
                       : "/images/login register/eye-open-default.svg"
                 }
                 alt="toggle visibility"
-                style={{ width: "27.007px", height: "21px" }}
+                style={{ width: "24px", height: "19px" }}
               />
             </button>
           </div>
 
-          <div className="relative w-[460px] h-[48px]">
+          <div className="relative w-[460px] h-[44px]">
             <input
               type={isPasswordVisible ? "text" : "password"}
               placeholder="Підтвердження паролю"
@@ -433,12 +433,12 @@ export default function RegisterSection({ onGoToLogin }: RegisterSectionProps) {
               onChange={(e) =>
                 setFormData({ ...formData, confirmPassword: e.target.value })
               }
-              className="w-full h-full rounded-[9px] px-5 py-[10px] pr-[60px] bg-[#F5F3EE] shadow-[0px_0px_10px_0px_#00000040] outline-none text-[20px] leading-[150%] tracking-[-0.011em]"
+              className="w-full h-full rounded-[9px] px-4 py-[8px] pr-[50px] bg-[#F5F3EE] shadow-[0px_0px_10px_0px_#00000040] outline-none text-[18px] leading-[150%] tracking-[-0.011em]"
             />
             <button
               type="button"
               onClick={togglePasswordVisibility}
-              className="absolute right-5 top-1/2 -translate-y-1/2 w-[30px] h-[30px] flex items-center justify-center"
+              className="absolute right-4 top-1/2 -translate-y-1/2 w-[28px] h-[28px] flex items-center justify-center"
             >
               <img
                 src={
@@ -451,7 +451,7 @@ export default function RegisterSection({ onGoToLogin }: RegisterSectionProps) {
                       : "/images/login register/eye-open-default.svg"
                 }
                 alt="toggle"
-                style={{ width: "27.007px", height: "21px" }}
+                style={{ width: "24px", height: "19px" }}
               />
             </button>
           </div>
@@ -463,15 +463,15 @@ export default function RegisterSection({ onGoToLogin }: RegisterSectionProps) {
           display: "flex",
           alignItems: "center",
           width: "460px",
-          marginTop: "10px",
-          gap: "15px",
+          marginTop: "6px",
+          gap: "12px",
         }}
       >
         <div
           onClick={() => setFormData({ ...formData, agreeToTerms: !formData.agreeToTerms })}
           style={{
-            width: "30px",
-            height: "30px",
+            width: "24px",
+            height: "24px",
             position: "relative",
             cursor: "pointer",
             display: "flex",
@@ -481,10 +481,10 @@ export default function RegisterSection({ onGoToLogin }: RegisterSectionProps) {
         >
           <div
             style={{
-              width: "20px",
-              height: "20px",
+              width: "18px",
+              height: "18px",
               borderRadius: "50%",
-              border: "3px solid #242424",
+              border: "2.5px solid #242424",
               backgroundColor: "transparent",
               display: "flex",
               alignItems: "center",
@@ -496,13 +496,13 @@ export default function RegisterSection({ onGoToLogin }: RegisterSectionProps) {
               <div
                 style={{
                   position: "absolute",
-                  width: "10px",
-                  height: "20px",
+                  width: "8px",
+                  height: "16px",
                   border: "solid #242424",
-                  borderWidth: "0 3.5px 3.5px 0",
+                  borderWidth: "0 3px 3px 0",
                   transform: "rotate(45deg)",
                   top: "0px",
-                  left: "14px",
+                  left: "11px",
                   animation: "tickPop 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275)",
                 }}
               />
@@ -514,8 +514,8 @@ export default function RegisterSection({ onGoToLogin }: RegisterSectionProps) {
           style={{
             fontFamily: "Source Sans Pro",
             fontWeight: 400,
-            fontSize: "20px",
-            lineHeight: "150%",
+            fontSize: "17px",
+            lineHeight: "140%",
             letterSpacing: "-0.011em",
             color: "#242424",
             cursor: "pointer",
@@ -530,12 +530,13 @@ export default function RegisterSection({ onGoToLogin }: RegisterSectionProps) {
       <div
         style={{
           width: "460px",
-          marginTop: "10px",
+          marginTop: "4px",
           fontFamily: "Source Sans Pro",
           fontWeight: 400,
-          fontSize: "14px",
-          lineHeight: "130%",
+          fontSize: "13px",
+          lineHeight: "125%",
           color: "#242424",
+          opacity: 0.85,
         }}
       >
         Реєструючись, ви погоджуєтеся на зберігання і використання компанією “Libria” наданих вами
@@ -544,7 +545,7 @@ export default function RegisterSection({ onGoToLogin }: RegisterSectionProps) {
       </div>
 
       {error && (
-        <p style={{ color: "#8b0000", fontSize: "18px", width: "460px", marginTop: "10px" }}>
+        <p style={{ color: "#8b0000", fontSize: "16px", width: "460px", marginTop: "6px" }}>
           {error}
         </p>
       )}
@@ -555,11 +556,11 @@ export default function RegisterSection({ onGoToLogin }: RegisterSectionProps) {
         disabled={loading}
         style={{
           width: "460px",
-          height: "48px",
-          marginTop: "10px",
+          height: "44px",
+          marginTop: "8px",
           backgroundColor: "#005B33",
           borderRadius: "50px",
-          padding: "10px 20px",
+          padding: "8px 20px",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
@@ -574,8 +575,8 @@ export default function RegisterSection({ onGoToLogin }: RegisterSectionProps) {
         <span
           style={{
             fontFamily: "Source Sans Pro",
-            fontWeight: 400,
-            fontSize: "20px",
+            fontWeight: 600,
+            fontSize: "19px",
             lineHeight: "150%",
             letterSpacing: "-0.011em",
             color: "#F5F3EE",
@@ -585,26 +586,26 @@ export default function RegisterSection({ onGoToLogin }: RegisterSectionProps) {
         </span>
       </button>
 
-      <div className="flex items-center justify-center w-full py-1 gap-5 my-2" style={{ width: "460px" }}>
-        <div className="flex-1 border-t border-[#242424]" />
-        <span className="font-sans text-[18px] text-[#242424] whitespace-nowrap">
+      <div className="flex items-center justify-center w-full py-0.5 gap-4 my-1.5" style={{ width: "460px" }}>
+        <div className="flex-1 border-t border-[#242424]/40" />
+        <span className="font-sans text-[16px] text-[#242424] whitespace-nowrap">
           або
         </span>
-        <div className="flex-1 border-t border-[#242424]" />
+        <div className="flex-1 border-t border-[#242424]/40" />
       </div>
 
       <button
         type="button"
         onClick={() => handleExternalLogin("Google")}
         className="w-full rounded-[9px] bg-white shadow-[0px_0px_10px_0px_#00000033] flex items-center justify-center gap-3 border-0 cursor-pointer hover:brightness-95 active:scale-[0.98] transition"
-        style={{ width: "460px", height: INPUT_HEIGHT, marginBottom: "8px" }}
+        style={{ width: "460px", height: "42px", marginBottom: "6px" }}
       >
         <img
           src="/images/Layout/Footer/GoogleBrandIcon.svg"
           alt="Google"
-          className="w-[22px] h-[22px] object-contain"
+          className="w-[20px] h-[20px] object-contain"
         />
-        <span className="font-sans text-[18px] text-[#242424]">
+        <span className="font-sans text-[17px] text-[#242424]">
           Продовжити через Google
         </span>
       </button>
@@ -613,14 +614,14 @@ export default function RegisterSection({ onGoToLogin }: RegisterSectionProps) {
         type="button"
         onClick={() => handleExternalLogin("Facebook")}
         className="w-full rounded-[9px] bg-[#1877F2] text-white shadow-[0px_0px_10px_0px_#00000033] flex items-center justify-center gap-3 border-0 cursor-pointer hover:brightness-110 active:scale-[0.98] transition"
-        style={{ width: "460px", height: INPUT_HEIGHT, marginBottom: "8px" }}
+        style={{ width: "460px", height: "42px", marginBottom: "6px" }}
       >
         <img
           src="/images/Layout/Footer/FacebookIcon.svg"
           alt="Facebook"
-          className="w-[22px] h-[22px] object-contain brightness-0 invert"
+          className="w-[20px] h-[20px] object-contain brightness-0 invert"
         />
-        <span className="font-sans text-[18px] text-white font-medium">
+        <span className="font-sans text-[17px] text-white font-medium">
           Продовжити через Facebook
         </span>
       </button>
@@ -629,6 +630,7 @@ export default function RegisterSection({ onGoToLogin }: RegisterSectionProps) {
         style={{
           width: "460px",
           marginTop: "10px",
+          paddingBottom: "10px",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
@@ -638,7 +640,7 @@ export default function RegisterSection({ onGoToLogin }: RegisterSectionProps) {
           style={{
             fontFamily: "Source Sans Pro, sans-serif",
             fontWeight: 400,
-            fontSize: "20px",
+            fontSize: "18px",
             lineHeight: "150%",
             letterSpacing: "-0.011em",
             textAlign: "center",
@@ -652,13 +654,15 @@ export default function RegisterSection({ onGoToLogin }: RegisterSectionProps) {
             onClick={onGoToLogin}
             style={{
               cursor: "pointer",
-              color: "var(--color-green)",
+              color: "#005B33",
+              fontWeight: 700,
               background: "none",
               border: "none",
               padding: 0,
               fontFamily: "inherit",
               fontSize: "inherit",
               lineHeight: "inherit",
+              textDecoration: "underline",
             }}
           >
             Увійти
