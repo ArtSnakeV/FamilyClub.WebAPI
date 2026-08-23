@@ -371,6 +371,13 @@ export default function MobileOrdersView({
                       >
                         Поскаржитися
                       </button>
+                      <button
+                        type="button"
+                        onClick={() => onAction("delete", item.id, item.dbOrderId)}
+                        className="bg-[#C0392B] hover:bg-[#A93226] text-white px-3.5 py-2 rounded-xl font-medium transition text-xs sm:text-sm shadow-sm active:scale-95"
+                      >
+                        🗑️ Видалити
+                      </button>
                     </>
                   )}
 
@@ -395,6 +402,13 @@ export default function MobileOrdersView({
                         className="bg-[#f5f3ee] hover:bg-[#E5E0D5] border border-[#C8C2B4] text-[#242424] px-3.5 py-2 rounded-xl font-medium transition text-xs sm:text-sm shadow-sm active:scale-95"
                       >
                         Поскаржитися
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => onAction("delete", item.id, item.dbOrderId)}
+                        className="bg-[#C0392B] hover:bg-[#A93226] text-white px-3.5 py-2 rounded-xl font-medium transition text-xs sm:text-sm shadow-sm active:scale-95"
+                      >
+                        🗑️ Видалити
                       </button>
                     </>
                   )}
@@ -423,6 +437,13 @@ export default function MobileOrdersView({
                       >
                         Поскаржитися
                       </button>
+                      <button
+                        type="button"
+                        onClick={() => onAction("delete", item.id, item.dbOrderId)}
+                        className="bg-[#C0392B] hover:bg-[#A93226] text-white px-3.5 py-2 rounded-xl font-medium transition text-xs sm:text-sm shadow-sm active:scale-95"
+                      >
+                        🗑️ Видалити
+                      </button>
                     </>
                   )}
 
@@ -448,23 +469,39 @@ export default function MobileOrdersView({
                       >
                         Поскаржитися
                       </button>
+                      <button
+                        type="button"
+                        onClick={() => onAction("delete", item.id, item.dbOrderId)}
+                        className="bg-[#C0392B] hover:bg-[#A93226] text-white px-3.5 py-2 rounded-xl font-medium transition text-xs sm:text-sm shadow-sm active:scale-95"
+                      >
+                        🗑️ Видалити
+                      </button>
                     </>
                   )}
 
                   {activeTab === "history" && (
-                    <button
-                      type="button"
-                      onClick={() => {
-                        if (item.dbOrderId) {
-                          router.push(`/complaints?orderId=${item.dbOrderId}`);
-                        } else {
-                          onAction("complain", item.id, item.dbOrderId);
-                        }
-                      }}
-                      className="bg-[#f5f3ee] hover:bg-[#E5E0D5] border border-[#C8C2B4] text-[#242424] px-3.5 py-2 rounded-xl font-medium transition text-xs sm:text-sm shadow-sm active:scale-95"
-                    >
-                      Поскаржитися
-                    </button>
+                    <>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          if (item.dbOrderId) {
+                            router.push(`/complaints?orderId=${item.dbOrderId}`);
+                          } else {
+                            onAction("complain", item.id, item.dbOrderId);
+                          }
+                        }}
+                        className="bg-[#f5f3ee] hover:bg-[#E5E0D5] border border-[#C8C2B4] text-[#242424] px-3.5 py-2 rounded-xl font-medium transition text-xs sm:text-sm shadow-sm active:scale-95"
+                      >
+                        Поскаржитися
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => onAction("delete", item.id, item.dbOrderId)}
+                        className="bg-[#C0392B] hover:bg-[#A93226] text-white px-3.5 py-2 rounded-xl font-medium transition text-xs sm:text-sm shadow-sm active:scale-95"
+                      >
+                        🗑️ Видалити
+                      </button>
+                    </>
                   )}
                 </div>
               </div>

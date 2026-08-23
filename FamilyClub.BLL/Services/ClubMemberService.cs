@@ -169,6 +169,14 @@ public class ClubMemberService : IClubMemberService
         }
 
         var email = clubMember.Email;
+
+        var relatedNotifications = await _context.Notifications
+       .Where(n => n.ClubMemberId == id || n.SenderId == id)
+       .ToListAsync(cancellationToken);
+
+        _context.Notifications.RemoveRange(relatedNotifications);
+        await _context.SaveChangesAsync(cancellationToken);
+
         await _userManager.DeleteAsync(clubMember);
 
         await SafeLogAsync(

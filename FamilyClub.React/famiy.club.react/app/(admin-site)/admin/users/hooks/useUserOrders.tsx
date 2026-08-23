@@ -26,31 +26,25 @@ export function useUserOrders(userId: string) {
     const [orders, setOrders] = useState<Order[]>([]);
     const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
+    const fetchOrders = async () => {
         if (!userId) return;
-
-        let cancelled = false;
         setLoading(true);
+        try {
+            const res = await fetch(`${apiBasePath}/api/Orders/by-user/${userId}`);
+            if (!res.ok) throw new Error("Failed to fetch orders");
+            const data: Order[] = await res.json();
+            setOrders(data);
+        } catch (error) {
+            console.error("Не вдалося завантажити замовлення користувача:", error);
+            setOrders([]);
+        } finally {
+            setLoading(false);
+        }
+    };
 
-        const fetchOrders = async () => {
-            try {
-                const res = await fetch(`${apiBasePath}/api/Orders/by-user/${userId}`);
-                if (!res.ok) throw new Error("Failed to fetch orders");
-                const data: Order[] = await res.json();
-                if (!cancelled) setOrders(data);
-            } catch (error) {
-                console.error("Не вдалося завантажити замовлення користувача:", error);
-                if (!cancelled) setOrders([]);
-            } finally {
-                if (!cancelled) setLoading(false);
-            }
-        };
-
+    useEffect(() => {
         fetchOrders();
-        return () => {
-            cancelled = true;
-        };
     }, [userId]);
 
-    return { orders, loading };
+    return { orders, loading, refetch: fetchOrders };
 }

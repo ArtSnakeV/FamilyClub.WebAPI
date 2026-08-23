@@ -148,37 +148,67 @@ export default function OrdersPage() {
             }
           }
 
-          const fmtStr = (item.format || "").toLowerCase();
+          const rawFormat = (item.format || "").toString().toLowerCase();
+          const rawName = (prod?.productName || item.productName || "").toString().toLowerCase();
+          const combinedStr = `${rawFormat} ${rawName}`;
+
+          const isEbook = combinedStr.includes("ebook") || combinedStr.includes("елек") || combinedStr.includes("pdf") || combinedStr.includes("epub");
+          const isAudio = combinedStr.includes("audio") || combinedStr.includes("аудіо") || combinedStr.includes("mp3");
+          const isPaper = combinedStr.includes("paper") || combinedStr.includes("print") || combinedStr.includes("папер") || combinedStr.includes("тверд") || combinedStr.includes("м'як");
+
           const itemFormats: ("ebook" | "audio" | "print" | string)[] = [];
-          if (fmtStr.includes("paper") || fmtStr.includes("print") || fmtStr.includes("папер")) {
-            itemFormats.push("print");
+          if (isEbook) itemFormats.push("ebook");
+          if (isAudio) itemFormats.push("audio");
+          if (isPaper || itemFormats.length === 0) {
+            if (!isEbook && !isAudio) {
+              itemFormats.push("print");
+            }
           }
-          if (fmtStr.includes("ebook") || fmtStr.includes("елек")) {
-            itemFormats.push("ebook");
+
+          const isDigital = isEbook || isAudio;
+
+          let itemTargetTab = targetTab;
+          let itemStatusText = statusText;
+          let itemStatusColor = statusColor;
+          let itemShowConfirmBtn = showConfirmBtn;
+
+          // Цифрові товари (електронні та аудіокниги) не потребують фізичної відправки.
+          // Вони НІКОЛИ не потрапляють у "Очікувана відправка" (waiting_dispatch) чи "Відправлено" (order_sent).
+          // Якщо замовлення оплачено/прийнято/в обробці, вони одразу відображаються у "Доставлено" ("add_review").
+          if (isDigital && (targetTab === "waiting_dispatch" || targetTab === "order_sent")) {
+            itemTargetTab = "add_review";
+            itemStatusText = "Доставлено";
+            itemStatusColor = "#005b33";
+            itemShowConfirmBtn = false;
           }
-          if (fmtStr.includes("audio") || fmtStr.includes("аудіо")) {
-            itemFormats.push("audio");
+
+          const qty = item.quantity || 1;
+          let unitPrice = 0;
+          if (item.unitPrice && item.unitPrice > 0) {
+            unitPrice = item.unitPrice;
+          } else if (prod?.price && prod.price > 0) {
+            unitPrice = prod.price;
+          } else if (order.totalPrice && order.totalPrice > 0) {
+            unitPrice = Math.round(order.totalPrice / qty);
           }
-          if (itemFormats.length === 0) {
-            itemFormats.push(item.format || "print");
-          }
+          const linePrice = Math.round(unitPrice * qty);
 
           const cardItem: MockOrderItem = {
             id: `${order.id}-${item.id || Math.random()}`,
             dbOrderId: order.id,
             orderNumber: `№${String(order.id).padStart(12, "0")}`,
-            statusText,
-            statusColor,
+            statusText: itemStatusText,
+            statusColor: itemStatusColor,
             lastStatusDate: orderDateStr,
             bookTitle: prod?.productName || "Книга #" + (item.productId || order.id),
             bookImage: imageSrc,
-            quantity: item.quantity || 1,
-            price: item.unitPrice || prod?.price || order.totalPrice || 0,
+            quantity: qty,
+            price: linePrice,
             formats: itemFormats,
-            showConfirmReceiptBtn: showConfirmBtn,
+            showConfirmReceiptBtn: itemShowConfirmBtn,
           };
 
-          mapped[targetTab].push(cardItem);
+          mapped[itemTargetTab].push(cardItem);
         }
       }
 
@@ -202,11 +232,37 @@ export default function OrdersPage() {
     loadDatabaseOrders();
   }, []);
 
+  const removeLocalOrder = (targetDbOrderId?: number, targetItemId?: string) => {
+    if (typeof window === "undefined") return;
+    try {
+      const localOrders: any[] = JSON.parse(localStorage.getItem("librellis_local_orders") || "[]");
+      const updated = localOrders.filter((lo) => {
+        if (targetDbOrderId && lo.id === targetDbOrderId) return false;
+        if (targetItemId && targetItemId.includes(String(lo.id))) return false;
+        return true;
+      });
+      localStorage.setItem("librellis_local_orders", JSON.stringify(updated));
+    } catch (e) {
+      console.warn("Failed to remove local order", e);
+    }
+  };
+
   const handleAction = async (actionName: string, itemId: string, dbOrderId?: number) => {
     const userId = typeof window !== "undefined" ? getAuthUserId() : null;
     const foundItem = allItems.find((i) => i.id === itemId);
 
-    if (actionName === "pay_order") {
+    if (actionName === "delete") {
+      if (dbOrderId) {
+        try {
+          await orderService.apiOrdersIdDelete({ id: dbOrderId });
+        } catch (e) {
+          console.warn("Failed to delete order from DB", e);
+        }
+      }
+      removeLocalOrder(dbOrderId, itemId);
+      showToast("Замовлення успішно видалено");
+      await loadDatabaseOrders();
+    } else if (actionName === "pay_order") {
       if (dbOrderId) {
         try {
           await orderService.apiOrdersIdPut({
@@ -215,7 +271,7 @@ export default function OrdersPage() {
               id: dbOrderId,
               status: "Paid",
               userId: userId ?? undefined,
-              totalPrice: foundItem ? foundItem.price * foundItem.quantity : undefined,
+              totalPrice: foundItem ? foundItem.price : undefined,
             },
           });
         } catch (e) {
@@ -233,13 +289,14 @@ export default function OrdersPage() {
               id: dbOrderId,
               status: "Cancelled",
               userId: userId ?? undefined,
-              totalPrice: foundItem ? foundItem.price * foundItem.quantity : undefined,
+              totalPrice: foundItem ? foundItem.price : undefined,
             },
           });
         } catch (e) {
           console.error("Failed to cancel order in DB", e);
         }
       }
+      removeLocalOrder(dbOrderId, itemId);
       showToast("Замовлення скасовано та переміщено в Історію");
       await loadDatabaseOrders();
     } else if (actionName === "confirm_receipt") {
@@ -251,7 +308,7 @@ export default function OrdersPage() {
               id: dbOrderId,
               status: "Delivered",
               userId: userId ?? undefined,
-              totalPrice: foundItem ? foundItem.price * foundItem.quantity : undefined,
+              totalPrice: foundItem ? foundItem.price : undefined,
             },
           });
         } catch (e) {
@@ -307,7 +364,7 @@ export default function OrdersPage() {
   // Розрахунок реальних бонусних лапок зі здійснених замовлень у Базі Даних
   const { paws, discount } = useMemo(() => {
     const allCompleted = [...ordersByTab.add_review, ...ordersByTab.history.filter(i => i.statusText !== "Скасовано")];
-    const totalSpent = allCompleted.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    const totalSpent = allCompleted.reduce((sum, item) => sum + item.price, 0);
     const calculatedPaws = Math.floor(totalSpent / 10);
     return { paws: calculatedPaws, discount: Math.floor(calculatedPaws / 10) };
   }, [ordersByTab]);

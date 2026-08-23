@@ -1,22 +1,38 @@
 "use client";
 
+import { useState } from "react";
 import { UserInfo } from "../../hooks/useAllUsersInfo";
 import { useUserOrders } from "../../hooks/useUserOrders";
+import { orderService } from "@/lib/api/services";
+import type { OrderDTO } from "@/lib/api/generated";
 
 interface Props {
     user: UserInfo;
 }
 
-const STATUS_LABELS: Record<string, { label: string; color: string }> = {
-    Pending: { label: "Очікує обробки", color: "text-yellow-600" },
-    Processing: { label: "В обробці", color: "text-yellow-600" },
-    Completed: { label: "Виконано", color: "text-[var(--color-green)]" },
-    Delivered: { label: "Доставлено", color: "text-[var(--color-green)]" },
-    Cancelled: { label: "Скасовано", color: "text-[#981717]" },
-};
-
 export default function OrdersTab({ user }: Props) {
-    const { orders, loading } = useUserOrders(user.id);
+    const { orders, loading, refetch } = useUserOrders(user.id);
+    const [updatingId, setUpdatingId] = useState<number | null>(null);
+
+    const handleStatusChange = async (order: any, newStatus: string) => {
+        if (!order.id) return;
+        setUpdatingId(order.id);
+        try {
+            await orderService.apiOrdersIdPut({
+                id: order.id,
+                orderDTO: {
+                    ...order,
+                    status: newStatus,
+                    orderDate: order.orderDate ? new Date(order.orderDate) : new Date(),
+                } as any,
+            });
+            if (refetch) await refetch();
+        } catch (err) {
+            console.error("Не вдалося оновити статус замовлення:", err);
+        } finally {
+            setUpdatingId(null);
+        }
+    };
 
     if (loading) {
         return <p className="text-sm text-[var(--color-black)]">Завантаження...</p>;
@@ -38,11 +54,6 @@ export default function OrdersTab({ user }: Props) {
     return (
         <div className="flex flex-col gap-4 max-w-full">
             {orders.map((order) => {
-                const status = STATUS_LABELS[order.status] ?? {
-                    label: order.status,
-                    color: "text-gray-500",
-                };
-
                 return (
                     <div
                         key={order.id}
@@ -52,9 +63,23 @@ export default function OrdersTab({ user }: Props) {
                             <span className="font-semibold text-[16px] text-[var(--color-black)] truncate">
                                 Замовлення №{order.id}
                             </span>
-                            <span className={`text-sm font-medium whitespace-nowrap ${status.color}`}>
-                                {status.label}
-                            </span>
+                            <div className="flex items-center gap-2">
+                                <span className="text-xs text-gray-500">Змінити статус:</span>
+                                <select
+                                    disabled={updatingId === order.id}
+                                    value={order.status ?? "Pending"}
+                                    onChange={(e) => handleStatusChange(order, e.target.value)}
+                                    className="bg-[#F5F3EE] border border-[#C8C2B4] rounded-[6px] px-2 py-1 text-xs font-semibold text-[#005b33] outline-none cursor-pointer hover:border-[#005B33] transition disabled:opacity-50"
+                                >
+                                    <option value="Pending">Нове (Pending)</option>
+                                    <option value="Paid">Прийнято (Paid)</option>
+                                    <option value="Processing">Комплектується (Processing)</option>
+                                    <option value="Shipped">Відправлено (Shipped)</option>
+                                    <option value="Delivered">Доставлено (Delivered)</option>
+                                    <option value="Cancelled">Скасовано (Cancelled)</option>
+                                    <option value="ReturnRequested">На повернення (Return)</option>
+                                </select>
+                            </div>
                         </div>
 
                         <div className="flex flex-wrap justify-between gap-x-4 gap-y-1 text-sm">

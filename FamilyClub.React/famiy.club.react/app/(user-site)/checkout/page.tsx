@@ -229,8 +229,9 @@ export default function CheckoutPage() {
 
       const initialStatus = paymentMethod === "cash_on_delivery" ? "Pending" : "Paid";
 
-      const createdOrder = await orderService
-        .apiOrdersPost({
+      let apiSuccess = false;
+      try {
+        await orderService.apiOrdersPost({
           orderDTO: {
             userId: storedId,
             status: initialStatus,
@@ -243,32 +244,34 @@ export default function CheckoutPage() {
               orderId: 0,
             })),
           },
-        })
-        .catch((err) => {
-          console.warn("Orders API warning, fallback to local persistence", err);
-          return null;
         });
+        apiSuccess = true;
+      } catch (err) {
+        console.warn("Orders API warning, fallback to local persistence", err);
+      }
 
-      const orderIdToSave = Math.floor(10000000 + Math.random() * 90000000);
-      const localOrderObj = {
-        id: orderIdToSave,
-        userId: storedId,
-        status: initialStatus,
-        orderDate: new Date().toISOString(),
-        totalPrice: total,
-        orderItems: orderItems.map((oi, idx) => ({
-          id: idx + 1,
-          productId: oi.productId,
-          quantity: oi.quantity,
-          unitPrice: oi.unitPrice,
-          format: oi.format,
-        })),
-      };
+      if (!apiSuccess) {
+        const orderIdToSave = Math.floor(10000000 + Math.random() * 90000000);
+        const localOrderObj = {
+          id: orderIdToSave,
+          userId: storedId,
+          status: initialStatus,
+          orderDate: new Date().toISOString(),
+          totalPrice: total,
+          orderItems: orderItems.map((oi, idx) => ({
+            id: idx + 1,
+            productId: oi.productId,
+            quantity: oi.quantity,
+            unitPrice: oi.unitPrice,
+            format: oi.format,
+          })),
+        };
 
-      if (typeof window !== "undefined") {
-        const localOrders = JSON.parse(localStorage.getItem("librellis_local_orders") || "[]");
-        localOrders.unshift(localOrderObj);
-        localStorage.setItem("librellis_local_orders", JSON.stringify(localOrders));
+        if (typeof window !== "undefined") {
+          const localOrders = JSON.parse(localStorage.getItem("librellis_local_orders") || "[]");
+          localOrders.unshift(localOrderObj);
+          localStorage.setItem("librellis_local_orders", JSON.stringify(localOrders));
+        }
       }
 
       // Clear cart after successful order
