@@ -15,7 +15,6 @@ export function useUserOrderStats(userId?: string) {
     orderService
       .apiOrdersByUserUserIdGet({ userId })
       .then((orders) => {
-        console.log("Orders:", orders);
         setOrdersCount(orders.length);
         const total = orders.reduce((sum, order) => sum + (order.totalPrice ?? 0), 0);
         setSpentAmount(total);
