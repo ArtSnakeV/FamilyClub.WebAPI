@@ -32,21 +32,17 @@ public class AuthClubMemberService : IAuthClubMemberService
 
     public AuthClubMemberService(
         UserManager<ClubMember> userManager,
+        SignInManager<ClubMember> signInManager,
         IConfiguration configuration,
         RoleManager<IdentityRole> roleManager,
         IEmailSender emailSender,
         ICacheService cache,
         ILogger<AuthClubMemberService> logger)
-    public AuthClubMemberService(
-        UserManager<ClubMember> userManager,
-        SignInManager<ClubMember> signInManager,
-        IConfiguration configuration,
-        RoleManager<IdentityRole> roleManager)
     {
         _userManager = userManager;
         _signInManager = signInManager;
-        _roleManager = roleManager;
         _configuration = configuration;
+        _roleManager = roleManager;
         _emailSender = emailSender;
         _cache = cache;
         _logger = logger;
@@ -56,17 +52,18 @@ public class AuthClubMemberService : IAuthClubMemberService
     {
         var clubMember = new ClubMember { UserName = dto.Email, Email = dto.Email, PhoneNumber = dto.PhoneNumber, Name = dto.Name, Surname = dto.Surname, DateOfBirth = dto.DateOfBirth };
         var result = await _userManager.CreateAsync(clubMember, dto.Password);
-        if (!await _roleManager.RoleExistsAsync("User"))
-        {
-            await _roleManager.CreateAsync(new IdentityRole("User"));
-        }
-        await _userManager.AddToRoleAsync(clubMember, "User");
 
         if (!result.Succeeded)
         {
             var errors = string.Join(", ", result.Errors.Select(e => e.Description));
             throw new Exception($"User registration failed: {errors}");
         }
+
+        if (!await _roleManager.RoleExistsAsync("User"))
+        {
+            await _roleManager.CreateAsync(new IdentityRole("User"));
+        }
+        await _userManager.AddToRoleAsync(clubMember, "User");
 
         return ClubMemberMapper.MapToReadDto(clubMember);
     }
@@ -230,25 +227,6 @@ public class AuthClubMemberService : IAuthClubMemberService
         await _cache.RemoveAsync(cacheKey, cancellationToken);
     }
 
-    private sealed class PasswordResetCacheEntry
-    {
-        public string UserId { get; set; } = string.Empty;
-        public string Code { get; set; } = string.Empty;
-        public string IdentityToken { get; set; } = string.Empty;
-    }
-		return new ClubMemberReadDto
-		{
-			Id = user.Id,
-			Email = user.Email,
-			Name = user.Name,
-			Surname = user.Surname,
-			PhoneNumber = user.PhoneNumber,
-			AvatarData = user.AvatarData,
-			DateOfBirth = user.DateOfBirth,
-			Roles = roles.ToList()
-		};
-	}
-
     public AuthenticationProperties GetExternalLoginProperties(string provider, string redirectUrl)
     {
         return _signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
@@ -408,6 +386,13 @@ public class AuthClubMemberService : IAuthClubMemberService
         }
 
         return await GenerateJwtTokenAsync(clubMember, rememberMe: true);
+    }
+
+    private sealed class PasswordResetCacheEntry
+    {
+        public string UserId { get; set; } = string.Empty;
+        public string Code { get; set; } = string.Empty;
+        public string IdentityToken { get; set; } = string.Empty;
     }
 
     private class FacebookUserData
