@@ -31,7 +31,9 @@ export default function InfoUserSection({ member, userId }: Props) {
                 {avatarSrc ? (
                     <img src={avatarSrc} alt="avatar" className="w-full h-full object-cover" />
                 ) : (
-                    <i className="ti ti-user-circle text-white text-[14px]" />
+                    <span className="text-white text-[56px] font-semibold select-none">
+                        {(member?.name?.[0] ?? member?.email?.[0] ?? "?").toUpperCase()}
+                    </span>
                 )}
             </div>
             <div className="flex flex-col -mt-[20px] text-left">
