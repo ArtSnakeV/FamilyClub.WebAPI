@@ -19,6 +19,8 @@ const nextConfig: NextConfig = {
   allowedDevOrigins: ["26.15.231.182", "localhost", "127.0.0.1"],
   reactStrictMode: false,
   poweredByHeader: false,
+  // Hide the Next.js route indicator (circle in the corner). To show again: { position: "bottom-left" }
+  devIndicators: false,
   images: {
     unoptimized: true,
   },

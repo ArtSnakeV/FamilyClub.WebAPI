@@ -9,7 +9,7 @@ namespace FamilyClub.WebAPI.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-//[Authorize(Roles = "Admin")] // Only admins have access
+[Authorize(Roles = "Admin")]
 public class RolesClubMemberController : ControllerBase
 {
     private readonly IRoleClubMemberService _roleService;

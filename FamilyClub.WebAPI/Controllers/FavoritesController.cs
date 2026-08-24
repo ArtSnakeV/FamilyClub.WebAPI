@@ -1,14 +1,14 @@
 ﻿using FamilyClub.BLL.DTOs.Product;
 using FamilyClub.BLL.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace FamilyClub.WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class FavoritesController : ControllerBase
     {
         private readonly IFavoriteService _favoriteService;
@@ -20,7 +20,7 @@ namespace FamilyClub.WebAPI.Controllers
 
         private string? GetCurrentUserId() =>
             User.FindFirstValue(ClaimTypes.NameIdentifier)
-    ?? User.FindFirstValue("sub");
+            ?? User.FindFirstValue("sub");
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ProductDto>>> GetFavorites(CancellationToken cancellationToken)

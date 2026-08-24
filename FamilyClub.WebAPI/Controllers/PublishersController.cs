@@ -1,5 +1,6 @@
 using FamilyClub.BLL.DTOs.Publisher;
 using FamilyClub.BLL.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FamilyClub.WebAPI.Controllers;
@@ -34,6 +35,7 @@ public class PublishersController : ControllerBase
         return Ok(publisher);
     }
 
+    [Authorize(Roles = "Admin,Manager")]
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] PublisherDto dto, CancellationToken cancellationToken)
     {
@@ -41,6 +43,7 @@ public class PublishersController : ControllerBase
         return CreatedAtAction(nameof(GetById), new { id = createdPublisher.Id }, createdPublisher);
     }
 
+    [Authorize(Roles = "Admin,Manager")]
     [HttpPut("{id:int}")]
     public async Task<IActionResult> Update(int id, [FromBody] PublisherDto dto, CancellationToken cancellationToken)
     {
@@ -53,6 +56,7 @@ public class PublishersController : ControllerBase
         return NoContent();
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> Delete(int id, CancellationToken cancellationToken)
     {

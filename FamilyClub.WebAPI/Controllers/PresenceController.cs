@@ -16,8 +16,13 @@ namespace FamilyClub.WebAPI.Controllers
         }
 
         [HttpPost("heartbeat")]
-        public IActionResult Heartbeat([FromBody] HeartbeatRequest request)
+        public IActionResult Heartbeat([FromBody] HeartbeatRequest? request)
         {
+            if (request == null || string.IsNullOrWhiteSpace(request.SessionId))
+            {
+                return BadRequest(new { error = "SessionId is required." });
+            }
+
             var ip = GetClientIp();
             var userAgent = Request.Headers["User-Agent"].ToString();
             

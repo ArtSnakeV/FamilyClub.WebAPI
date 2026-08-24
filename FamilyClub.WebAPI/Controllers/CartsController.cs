@@ -1,12 +1,14 @@
 using FamilyClub.BLL.DTOs.Cart;
 using FamilyClub.BLL.DTOs.CartItem;
 using FamilyClub.BLL.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FamilyClub.WebAPI.Controllers
 {
 	[Route("api/[controller]")]
 	[ApiController]
+	[Authorize]
 	public class CartsController : ControllerBase
 	{
 		private readonly ICartService _cartService;
@@ -16,7 +18,6 @@ namespace FamilyClub.WebAPI.Controllers
 			_cartService = cartService;
 		}
 
-		// GET api/Carts/{clubMemberId}
 		[HttpGet("{clubMemberId}")]
 		public async Task<ActionResult<CartDTO>> GetByMemberId(string clubMemberId, CancellationToken cancellationToken)
 		{
@@ -24,7 +25,6 @@ namespace FamilyClub.WebAPI.Controllers
 			return Ok(cart);
 		}
 
-		// POST api/Carts/{clubMemberId}/items
 		[HttpPost("{clubMemberId}/items")]
 		public async Task<IActionResult> AddItem(string clubMemberId, [FromBody] CartItemDTO dto, CancellationToken cancellationToken)
 		{
@@ -32,7 +32,6 @@ namespace FamilyClub.WebAPI.Controllers
 			return Ok(createdItem);
 		}
 
-		// PUT api/Carts/{clubMemberId}/items/{cartItemId}
 		[HttpPut("{clubMemberId}/items/{cartItemId:int}")]
 		public async Task<IActionResult> UpdateItemQuantity(string clubMemberId, int cartItemId, [FromBody] int quantity, CancellationToken cancellationToken)
 		{
@@ -45,7 +44,6 @@ namespace FamilyClub.WebAPI.Controllers
 			return NoContent();
 		}
 
-		// DELETE api/Carts/{clubMemberId}/items/{cartItemId}
 		[HttpDelete("{clubMemberId}/items/{cartItemId:int}")]
 		public async Task<IActionResult> RemoveItem(string clubMemberId, int cartItemId, CancellationToken cancellationToken)
 		{
@@ -58,7 +56,6 @@ namespace FamilyClub.WebAPI.Controllers
 			return NoContent();
 		}
 
-		// DELETE api/Carts/{clubMemberId}
 		[HttpDelete("{clubMemberId}")]
 		public async Task<IActionResult> ClearCart(string clubMemberId, CancellationToken cancellationToken)
 		{

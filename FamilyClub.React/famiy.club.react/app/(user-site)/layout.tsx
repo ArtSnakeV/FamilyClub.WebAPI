@@ -11,7 +11,7 @@ import UserSiteProviders from "./layout/UserSiteProviders";
 import InkAssistant from "./components/ink-assistant/InkAssistant";
 import HeaderDropDownSection from "./layout/header/dropdownlist/HeaderDropDownSection";
 
-// import "flag-icons/css/flag-icons.min.css";
+import "../../styles/register-flags.css";
 const sourceSans = Source_Sans_3({
   subsets: ['cyrillic', 'latin'],
   variable: '--font-source-sans',

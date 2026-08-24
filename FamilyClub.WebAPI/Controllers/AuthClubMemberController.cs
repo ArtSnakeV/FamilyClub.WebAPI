@@ -65,9 +65,15 @@ public class AuthClubMemberController : ControllerBase
 		if (string.IsNullOrEmpty(userId))
 			return Unauthorized();
 
-		var result = await _authService.GetCurrentUserAsync(userId, cancellationToken);
-
-		return Ok(result);
+		try
+		{
+			var result = await _authService.GetCurrentUserAsync(userId, cancellationToken);
+			return Ok(result);
+		}
+		catch (UnauthorizedAccessException)
+		{
+			return Unauthorized();
+		}
 	}
 
     [HttpPost("forgot-password")]
@@ -131,12 +137,14 @@ public class AuthClubMemberController : ControllerBase
         try
         {
             var authResponse = await _authService.ExternalLoginCallbackAsync(cancellationToken);
-            var redirectTarget = $"{clientReturnUrl}?token={Uri.EscapeDataString(authResponse.Token)}&userId={Uri.EscapeDataString(authResponse.ClubMember.Id)}";
+            // Hash fragment is not sent to servers / logs / Referer — safer than query string.
+            var redirectTarget =
+                $"{clientReturnUrl}#token={Uri.EscapeDataString(authResponse.Token)}&userId={Uri.EscapeDataString(authResponse.ClubMember.Id)}";
             return Redirect(redirectTarget);
         }
         catch (Exception ex)
         {
-            var errorTarget = $"{clientReturnUrl}?error={Uri.EscapeDataString(ex.Message)}";
+            var errorTarget = $"{clientReturnUrl}#error={Uri.EscapeDataString(ex.Message)}";
             return Redirect(errorTarget);
         }
     }

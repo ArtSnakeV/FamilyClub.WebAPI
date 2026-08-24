@@ -1,6 +1,7 @@
 ﻿using FamilyClub.BLL.DTOs.Author;
 using FamilyClub.BLL.Interfaces;
 using FamilyClub.BLL.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -40,6 +41,7 @@ namespace FamilyClub.WebAPI.Controllers
 		}
 
 		// POST api/<AuthorsController>
+		[Authorize(Roles = "Admin,Manager")]
 		[HttpPost]
 		[ProducesResponseType(typeof(AuthorDTO), StatusCodes.Status201Created)]
 		public async Task<IActionResult> Create([FromBody] AuthorDTO dto, CancellationToken cancellationToken)
@@ -49,6 +51,7 @@ namespace FamilyClub.WebAPI.Controllers
 		}
 
 		// PUT api/<AuthorsController>/5
+		[Authorize(Roles = "Admin,Manager")]
 		[HttpPut("{id:int}")]
 		public async Task<IActionResult> Update(int id, [FromBody] AuthorDTO dto, CancellationToken cancellationToken)
 		{
@@ -62,6 +65,7 @@ namespace FamilyClub.WebAPI.Controllers
 		}
 
 		// DELETE api/<AuthorsController>/5
+		[Authorize(Roles = "Admin")]
 		[HttpDelete("{id:int}")]
 		public async Task<IActionResult> Delete(int id, CancellationToken cancellationToken)
 		{
@@ -75,6 +79,7 @@ namespace FamilyClub.WebAPI.Controllers
 		}
 
 		// POST api/Authors/{id}/photo
+		[Authorize(Roles = "Admin,Manager")]
 		[HttpPost("{id:int}/photo")]
 		public async Task<IActionResult> UploadPhoto(int id, IFormFile photo, CancellationToken cancellationToken)
 		{
