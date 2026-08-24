@@ -38,6 +38,7 @@ namespace FamilyClub.WebAPI.Controllers
         }
 
         // POST: api/blockReasons
+        [Authorize(Roles = "Admin,Manager")]
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] BlockReasonDto dto, CancellationToken cancellationToken)
         {
@@ -45,6 +46,7 @@ namespace FamilyClub.WebAPI.Controllers
             return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
         }
 
+        [Authorize(Roles = "Admin,Manager")]
         [HttpPut("{id:int}")]
         public async Task<IActionResult> Update(int id, [FromBody] BlockReasonDto dto, CancellationToken cancellationToken)
         {
@@ -58,6 +60,7 @@ namespace FamilyClub.WebAPI.Controllers
         }
 
         // DELETE: api/blockReasons/5
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> Delete(int id, CancellationToken cancellationToken)
         {

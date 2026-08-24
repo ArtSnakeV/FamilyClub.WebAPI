@@ -1,9 +1,7 @@
 ﻿using FamilyClub.BLL.DTOs.Order;
 using FamilyClub.BLL.Interfaces;
-using FamilyClub.BLL.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace FamilyClub.WebAPI.Controllers
 {
@@ -18,16 +16,16 @@ namespace FamilyClub.WebAPI.Controllers
 			_orderService = orderService;
 		}
 
-		// GET: api/<OrdersController>
 		[HttpGet]
+		[Authorize(Roles = "Admin,Manager")]
 		public async Task<ActionResult<IEnumerable<OrderDTO>>> GetAll(CancellationToken cancellationToken)
 		{
 			var orders = await _orderService.GetAllAsync(cancellationToken);
 			return Ok(orders);
 		}
 
-		// GET api/<OrdersController>/5
 		[HttpGet("{id:int}")]
+		[Authorize]
 		public async Task<ActionResult<OrderDTO>> GetById(int id, CancellationToken cancellationToken)
 		{
 			var order = await _orderService.GetByIdAsync(id, cancellationToken);
@@ -39,16 +37,16 @@ namespace FamilyClub.WebAPI.Controllers
 			return Ok(order);
 		}
 
-		// POST api/<OrdersController>
 		[HttpPost]
+		[Authorize]
 		public async Task<IActionResult> Create([FromBody] OrderDTO dto, CancellationToken cancellationToken)
 		{
 			var createdOrder = await _orderService.CreateAsync(dto, cancellationToken);
 			return CreatedAtAction(nameof(GetById), new { id = createdOrder.Id }, createdOrder);
 		}
 
-		// PUT api/<OrdersController>/5
 		[HttpPut("{id:int}")]
+		[Authorize(Roles = "Admin,Manager")]
 		public async Task<IActionResult> Update(int id, [FromBody] OrderDTO dto, CancellationToken cancellationToken)
 		{
 			var updated = await _orderService.UpdateAsync(id, dto, cancellationToken);
@@ -60,8 +58,8 @@ namespace FamilyClub.WebAPI.Controllers
 			return NoContent();
 		}
 
-		// DELETE api/<OrdersController>/5
 		[HttpDelete("{id:int}")]
+		[Authorize(Roles = "Admin")]
 		public async Task<IActionResult> Delete(int id, CancellationToken cancellationToken)
 		{
 			var deleted = await _orderService.DeleteAsync(id, cancellationToken);
@@ -74,6 +72,7 @@ namespace FamilyClub.WebAPI.Controllers
 		}
 
         [HttpGet("by-user/{userId}")]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<OrderDTO>>> GetByUserId(string userId, CancellationToken cancellationToken)
         {
             var orders = await _orderService.GetByUserIdAsync(userId, cancellationToken);

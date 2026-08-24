@@ -10,7 +10,6 @@ public interface IAuthClubMemberService
     Task<ClubMemberReadDto> GetCurrentUserAsync(string userId, CancellationToken cancellationToken = default);
     Task ForgotPasswordAsync(ForgotPasswordDto dto, CancellationToken cancellationToken = default);
     Task ResetPasswordAsync(ResetPasswordDto dto, CancellationToken cancellationToken = default);
-    Task<ClubMemberReadDto> GetCurrentUserAsync(string userId, CancellationToken cancellationToken = default);
     Microsoft.AspNetCore.Authentication.AuthenticationProperties GetExternalLoginProperties(string provider, string redirectUrl);
     Task<AuthResponseClubMemberDTO> ExternalLoginCallbackAsync(CancellationToken cancellationToken = default);
     Task<AuthResponseClubMemberDTO> ExternalTokenLoginAsync(ExternalLoginRequestDto dto, CancellationToken cancellationToken = default);

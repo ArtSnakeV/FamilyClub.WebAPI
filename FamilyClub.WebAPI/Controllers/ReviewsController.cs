@@ -1,5 +1,6 @@
 using FamilyClub.BLL.DTOs.Review;
 using FamilyClub.BLL.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FamilyClub.WebAPI.Controllers;
@@ -16,6 +17,7 @@ public class ReviewsController : ControllerBase
     }
 
     [HttpGet]
+    [AllowAnonymous]
     public async Task<ActionResult<IEnumerable<ReviewDto>>> GetAll(CancellationToken cancellationToken)
     {
         var reviews = await _reviewService.GetAllAsync(cancellationToken);
@@ -23,6 +25,7 @@ public class ReviewsController : ControllerBase
     }
 
     [HttpGet("{id:int}")]
+    [AllowAnonymous]
     public async Task<ActionResult<ReviewDto>> GetById(int id, CancellationToken cancellationToken)
     {
         var review = await _reviewService.GetByIdAsync(id, cancellationToken);
@@ -35,6 +38,7 @@ public class ReviewsController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize]
     public async Task<IActionResult> Create([FromBody] ReviewDto dto, CancellationToken cancellationToken)
     {
         var createdReview = await _reviewService.CreateAsync(dto, cancellationToken);
@@ -42,6 +46,7 @@ public class ReviewsController : ControllerBase
     }
 
     [HttpPut("{id:int}")]
+    [Authorize]
     public async Task<IActionResult> Update(int id, [FromBody] ReviewDto dto, CancellationToken cancellationToken)
     {
         var updated = await _reviewService.UpdateAsync(id, dto, cancellationToken);
@@ -54,6 +59,7 @@ public class ReviewsController : ControllerBase
     }
 
     [HttpDelete("{id:int}")]
+    [Authorize]
     public async Task<IActionResult> Delete(int id, CancellationToken cancellationToken)
     {
         var deleted = await _reviewService.DeleteAsync(id, cancellationToken);
@@ -64,7 +70,9 @@ public class ReviewsController : ControllerBase
 
         return NoContent();
     }
+
     [HttpGet("by-user/{userId}")]
+    [Authorize]
     public async Task<ActionResult<IEnumerable<ReviewDto>>> GetByUser(string userId, CancellationToken cancellationToken)
     {
         var reviews = await _reviewService.GetByUserIdAsync(userId, cancellationToken);

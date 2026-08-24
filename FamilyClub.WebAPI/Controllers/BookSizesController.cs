@@ -1,6 +1,7 @@
 ﻿using FamilyClub.BLL.DTOs.BookSize;
 using FamilyClub.BLL.Interfaces;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FamilyClub.WebAPI.Controllers
@@ -37,6 +38,7 @@ namespace FamilyClub.WebAPI.Controllers
 		}
 
 		// POST: api/bookSizes
+		[Authorize(Roles = "Admin,Manager")]
 		[HttpPost]
 		public async Task<IActionResult> Create([FromBody] BookSizeDto dto, CancellationToken cancellationToken)
 		{
@@ -45,6 +47,7 @@ namespace FamilyClub.WebAPI.Controllers
 		}
 
 
+		[Authorize(Roles = "Admin,Manager")]
 		[HttpPut("{id:int}")]
 		public async Task<IActionResult> Update(int id, [FromBody] BookSizeDto dto, CancellationToken cancellationToken)
 		{
@@ -58,6 +61,7 @@ namespace FamilyClub.WebAPI.Controllers
 		}
 
 		// DELETE: api/formats/5
+		[Authorize(Roles = "Admin")]
 		[HttpDelete("{id:int}")]
 		public async Task<IActionResult> Delete(int id, CancellationToken cancellationToken)
 		{

@@ -54,6 +54,11 @@ public class RedisCacheService : ICacheService
             var cachedData = await _distributedCache.GetAsync(key, cancellationToken);
             if (cachedData is null || cachedData.Length == 0)
             {
+                if (_memoryCache.TryGetValue(key, out T? localVal))
+                {
+                    return localVal;
+                }
+
                 return default;
             }
 

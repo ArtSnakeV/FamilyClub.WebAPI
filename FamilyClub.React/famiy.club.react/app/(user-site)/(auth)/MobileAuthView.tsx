@@ -14,6 +14,7 @@ export default function MobileAuthView() {
   const [isHovered, setIsHovered] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [rememberMe, setRememberMe] = useState(true);
 
   const handleExternalLogin = (provider: "Google" | "Facebook") => {
     const apiBase = process.env.NEXT_PUBLIC_API_URL || "";
@@ -33,7 +34,7 @@ export default function MobileAuthView() {
         loginClubMemberDto: {
           username: formData.login,
           password: formData.password,
-          rememberMe: true,
+          rememberMe,
         },
       });
 
@@ -41,7 +42,7 @@ export default function MobileAuthView() {
         setAuthSession(
           response.token,
           response.clubMember?.id ?? undefined,
-          true
+          rememberMe
         );
         window.dispatchEvent(new Event("auth-change"));
       }
@@ -141,6 +142,16 @@ export default function MobileAuthView() {
             </button>
           </div>
         </div>
+
+        <label className="flex items-center gap-2 cursor-pointer select-none">
+          <input
+            type="checkbox"
+            checked={rememberMe}
+            onChange={(e) => setRememberMe(e.target.checked)}
+            className="w-4 h-4 accent-[#005b33]"
+          />
+          <span className="text-[15px] text-[#242424]">Запамʼятати мене</span>
+        </label>
 
         <button
           type="submit"

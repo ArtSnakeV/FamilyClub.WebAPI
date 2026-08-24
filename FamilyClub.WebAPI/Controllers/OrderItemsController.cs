@@ -1,5 +1,6 @@
 ﻿using FamilyClub.BLL.DTOs.OrderItem;
 using FamilyClub.BLL.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -39,6 +40,7 @@ namespace FamilyClub.WebAPI.Controllers
 		}
 
 		// POST api/<OrderItemsController>
+		[Authorize(Roles = "Admin,Manager")]
 		[HttpPost]
 		public async Task<IActionResult> Create([FromBody] OrderItemDTO dto, CancellationToken cancellationToken)
 		{
@@ -47,6 +49,7 @@ namespace FamilyClub.WebAPI.Controllers
 		}
 
 		// PUT api/<OrderItemsController>/5
+		[Authorize(Roles = "Admin,Manager")]
 		[HttpPut("{id:int}")]
 		public async Task<IActionResult> Update(int id, [FromBody] OrderItemDTO dto, CancellationToken cancellationToken)
 		{
@@ -60,6 +63,7 @@ namespace FamilyClub.WebAPI.Controllers
 		}
 
 		// DELETE api/<OrderItemsController>/5
+		[Authorize(Roles = "Admin")]
 		[HttpDelete("{id:int}")]
 		public async Task<IActionResult> Delete(int id, CancellationToken cancellationToken)
 		{

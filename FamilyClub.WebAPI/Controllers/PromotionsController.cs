@@ -1,5 +1,6 @@
 ﻿using FamilyClub.BLL.DTOs.Promotion;
 using FamilyClub.BLL.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FamilyClub.WebAPI.Controllers;
@@ -34,6 +35,7 @@ public class PromotionsController : ControllerBase
         return Ok(promotion);
     }
 
+    [Authorize(Roles = "Admin,Manager")]
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] PromotionDto dto, CancellationToken cancellationToken)
     {
@@ -41,6 +43,7 @@ public class PromotionsController : ControllerBase
         return CreatedAtAction(nameof(GetById), new { id = createdPromotion.Id }, createdPromotion);
     }
 
+    [Authorize(Roles = "Admin,Manager")]
     [HttpPut("{id:int}")]
     public async Task<IActionResult> Update(int id, [FromBody] PromotionDto dto, CancellationToken cancellationToken)
     {
@@ -53,6 +56,7 @@ public class PromotionsController : ControllerBase
         return NoContent();
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> Delete(int id, CancellationToken cancellationToken)
     {

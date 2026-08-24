@@ -1,5 +1,6 @@
 using FamilyClub.BLL.DTOs.Product;
 using FamilyClub.BLL.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FamilyClub.WebAPI.Controllers;
@@ -16,6 +17,7 @@ public class ProductsController : ControllerBase
     }
 
     [HttpGet]
+    [AllowAnonymous]
     public async Task<ActionResult<IEnumerable<ProductDto>>> GetAll(CancellationToken cancellationToken)
     {
         try
@@ -30,6 +32,7 @@ public class ProductsController : ControllerBase
     }
 
     [HttpGet("{id:int}")]
+    [AllowAnonymous]
     public async Task<ActionResult<ProductDto>> GetById(int id, CancellationToken cancellationToken)
     {
         try
@@ -49,16 +52,19 @@ public class ProductsController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Roles = "Admin,Manager")]
     public async Task<IActionResult> Create([FromForm] ProductDto dto, [FromForm] List<IFormFile> productImageFiles, CancellationToken cancellationToken)
     {
-        if (productImageFiles.Count > 5) { 
+        if (productImageFiles.Count > 5)
+        {
             return BadRequest("You can upload a maximum of 5 images.");
         }
-        var createdProduct = await _productService.CreateAsync(dto, productImageFiles , cancellationToken);
+        var createdProduct = await _productService.CreateAsync(dto, productImageFiles, cancellationToken);
         return CreatedAtAction(nameof(GetById), new { id = createdProduct.Id }, createdProduct);
     }
 
     [HttpPut("{id:int}")]
+    [Authorize(Roles = "Admin,Manager")]
     public async Task<IActionResult> Update(int id, [FromForm] ProductDto dto, [FromForm] List<IFormFile> productImageFiles, CancellationToken cancellationToken)
     {
         if (productImageFiles.Count > 5)
@@ -75,6 +81,7 @@ public class ProductsController : ControllerBase
     }
 
     [HttpDelete("{id:int}")]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Delete(int id, CancellationToken cancellationToken)
     {
         var deleted = await _productService.DeleteAsync(id, cancellationToken);
