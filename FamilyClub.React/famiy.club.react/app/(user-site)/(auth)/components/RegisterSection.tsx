@@ -90,6 +90,10 @@ export default function RegisterSection({ onGoToLogin }: RegisterSectionProps) {
       setError("Введіть коректний номер телефону.");
       return;
     }
+    if (!formData.agreeToTerms) {
+      setError("Потрібно погодитись з умовами використання.");
+      return;
+    }
     setLoading(true);
     setError("");
     try {
@@ -399,7 +403,7 @@ export default function RegisterSection({ onGoToLogin }: RegisterSectionProps) {
             marginTop: "2px",
           }}
         >
-          Не менше восьми знаків без урахування пробілів на початку та в кінці
+          Мінімум 6 символів: велика літера, мала літера та цифра
         </span>
 
         <div className="flex flex-col gap-[6px] w-[460px] mt-1.5">

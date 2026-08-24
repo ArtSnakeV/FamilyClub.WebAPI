@@ -53,6 +53,9 @@ export default function UpNavigation() {
       });
 
       if (!res.ok) {
+        if (res.status === 401) {
+          clearAuthSession(false);
+        }
         setMember(null);
         return;
       }

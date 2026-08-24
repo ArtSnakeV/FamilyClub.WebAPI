@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { apiBasePath } from "@/lib/api/services";
-import { getAuthToken } from "@/lib/auth/tokenStorage";
+import { clearAuthSession, getAuthToken } from "@/lib/auth/tokenStorage";
 
 type User = {
   id: string;
@@ -31,6 +31,9 @@ export default function MobileBottomNav() {
           },
         });
         if (!res.ok) {
+          if (res.status === 401) {
+            clearAuthSession(false);
+          }
           setMember(null);
           return;
         }
