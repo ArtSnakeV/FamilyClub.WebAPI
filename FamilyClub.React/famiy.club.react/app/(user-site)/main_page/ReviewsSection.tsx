@@ -90,7 +90,7 @@ export default function ReviewsSection({ reviews }: ReviewsSectionProps) {
                     <img
                         alt=""
                         className="absolute inset-0 h-full w-full object-cover opacity-20"
-                        src="/images/body/Rectangle%20287.png"
+                        src="/images/body/Rectangle%20287.webp"
                     />
                 </div>
                 {desktopLayout.map((layout, index) => (
@@ -108,7 +108,7 @@ export default function ReviewsSection({ reviews }: ReviewsSectionProps) {
                     <img
                         alt=""
                         className="absolute inset-0 h-full w-full object-cover opacity-20"
-                        src="/images/body/Rectangle%20287.png"
+                        src="/images/body/Rectangle%20287.webp"
                     />
                     <div className="relative grid gap-6 px-6 py-8 md:grid-cols-2">
                         {expandedReviews.map((review, index) => (

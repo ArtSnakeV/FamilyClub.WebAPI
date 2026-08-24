@@ -8,7 +8,7 @@ export default function InkSection() {
                             <img
                                 alt="Ink — це тихий помічник"
                                 className="h-[571px] w-[832px] object-cover"
-                                src="/images/body/cat.png"
+                                src="/images/body/cat.webp"
                             />
                         </div>
                     </div>
