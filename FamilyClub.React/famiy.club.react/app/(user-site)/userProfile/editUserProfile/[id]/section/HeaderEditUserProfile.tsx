@@ -26,9 +26,9 @@ export default function HeaderEditUserProfile({ form, setField, avatarData, setA
         reader.readAsDataURL(file);
     };
 
-    const avatarSrc = avatarData
+     const avatarSrc = avatarData
         ? `data:image/jpeg;base64,${avatarData}`
-        : "/images/userProfile/defaultAvatar.png";
+        : null;
 
     return (
         <div
@@ -41,11 +41,19 @@ export default function HeaderEditUserProfile({ form, setField, avatarData, setA
         >
             {/* Аватар */}
             <div className="flex w-[210px] flex-col items-center gap-3 flex-shrink-0">
-                <img
-                    src={avatarSrc}
-                    alt="Аватар"
-                    className="w-[200px] h-[200px] rounded-full object-cover"
-                />
+                {avatarSrc ? (
+                    <img
+                        src={avatarSrc}
+                        alt="Аватар"
+                        className="w-[200px] h-[200px] rounded-full object-cover"
+                    />
+                ) : (
+                    <div className="w-[200px] h-[200px] rounded-full bg-[#A87E52] flex items-center justify-center">
+                        <span className="text-white text-[80px] font-semibold select-none">
+                            {(form.name?.[0] ?? form.surname?.[0] ?? "?").toUpperCase()}
+                        </span>
+                    </div>
+                )}
                 <input
                     ref={fileRef}
                     type="file"
