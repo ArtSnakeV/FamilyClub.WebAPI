@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { AsYouType } from "libphonenumber-js";
 import { authService } from "@/lib/api/services";
+import { readApiErrorMessage } from "@/lib/api/readApiError";
 
 export default function MobileRegisterView() {
   const router = useRouter();
@@ -79,6 +80,18 @@ export default function MobileRegisterView() {
       setError("Паролі не співпадають");
       return;
     }
+    if (formData.password.length < 6) {
+      setError("Пароль має містити щонайменше 6 символів.");
+      return;
+    }
+    if (!/[A-ZА-ЯІЇЄҐ]/.test(formData.password) || !/[a-zа-яіїєґ]/.test(formData.password) || !/\d/.test(formData.password)) {
+      setError("Пароль має містити велику літеру, малу літеру та цифру.");
+      return;
+    }
+    if (!phone || phone.replace(/\D/g, "").length < 8) {
+      setError("Введіть коректний номер телефону.");
+      return;
+    }
     if (!formData.agreeToTerms) {
       setError("Необхідно погодитись з умовами використання");
       return;
@@ -88,16 +101,21 @@ export default function MobileRegisterView() {
     try {
       await authService.apiAuthClubMemberRegisterPost({
         registerClubMemberDto: {
-          name: formData.firstName,
-          surname: formData.lastName,
-          email: formData.email,
-          phoneNumber: phone,
+          name: formData.firstName.trim(),
+          surname: formData.lastName.trim(),
+          email: formData.email.trim(),
+          phoneNumber: phone.trim(),
           password: formData.password,
         },
       });
       router.push("/login");
     } catch (err) {
-      setError("Помилка під час реєстрації або користувач вже існує");
+      setError(
+        await readApiErrorMessage(
+          err,
+          "Помилка під час реєстрації або користувач вже існує"
+        )
+      );
     } finally {
       setLoading(false);
     }

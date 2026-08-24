@@ -63,7 +63,16 @@ builder.Services.AddDbContext<FamilyClubContext>(options => {
 });
 
 // Identity
-builder.Services.AddIdentity<ClubMember, IdentityRole>()
+builder.Services.AddIdentity<ClubMember, IdentityRole>(options =>
+{
+    // Align with registration UI (min 6 chars). Special characters optional for better UX.
+    options.Password.RequiredLength = 6;
+    options.Password.RequireDigit = true;
+    options.Password.RequireLowercase = true;
+    options.Password.RequireUppercase = true;
+    options.Password.RequireNonAlphanumeric = false;
+    options.User.RequireUniqueEmail = true;
+})
     .AddEntityFrameworkStores<FamilyClubContext>()
     .AddDefaultTokenProviders();
 
