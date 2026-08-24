@@ -1,0 +1,87 @@
+/* Librellis / Ink & Echo — SweetAlert2 theme */
+.swal2-popup.librellis-swal {
+  font-family: var(--font-sans, "Source Sans 3", sans-serif) !important;
+  background: #f5f3ee !important;
+  color: #242424 !important;
+  border-radius: 12px !important;
+  box-shadow: 0 0 20px rgba(36, 36, 36, 0.35) !important;
+  padding: 1.5rem 1.25rem 1.25rem !important;
+}
+
+.swal2-popup.librellis-swal .swal2-title {
+  font-size: 1.35rem !important;
+  font-weight: 600 !important;
+  color: #242424 !important;
+}
+
+.swal2-popup.librellis-swal .swal2-html-container {
+  font-size: 1rem !important;
+  line-height: 1.5 !important;
+  color: #242424 !important;
+}
+
+.swal2-popup.librellis-swal .swal2-input,
+.swal2-popup.librellis-swal .swal2-textarea {
+  border-radius: 9px !important;
+  border: 1px solid rgba(36, 36, 36, 0.2) !important;
+  background: #fff !important;
+  color: #242424 !important;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.08) !important;
+}
+
+.swal2-popup.librellis-swal .swal2-confirm {
+  background: #005b33 !important;
+  border-radius: 9px !important;
+  font-weight: 600 !important;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2) !important;
+  min-width: 100px;
+}
+
+.swal2-popup.librellis-swal .swal2-confirm:focus {
+  box-shadow: 0 0 0 3px rgba(0, 91, 51, 0.35) !important;
+}
+
+.swal2-popup.librellis-swal .swal2-cancel {
+  background: #7e4d1e !important;
+  border-radius: 9px !important;
+  font-weight: 600 !important;
+  color: #f5f3ee !important;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15) !important;
+  min-width: 100px;
+}
+
+.swal2-popup.librellis-swal .swal2-cancel:focus {
+  box-shadow: 0 0 0 3px rgba(126, 77, 30, 0.35) !important;
+}
+
+.swal2-popup.librellis-swal .swal2-icon.swal2-success {
+  border-color: #005b33 !important;
+  color: #005b33 !important;
+}
+
+.swal2-popup.librellis-swal .swal2-icon.swal2-success [class^="swal2-success-line"] {
+  background-color: #005b33 !important;
+}
+
+.swal2-popup.librellis-swal .swal2-icon.swal2-success .swal2-success-ring {
+  border-color: rgba(0, 91, 51, 0.3) !important;
+}
+
+.swal2-popup.librellis-swal .swal2-icon.swal2-error {
+  border-color: #b91c1c !important;
+  color: #b91c1c !important;
+}
+
+.swal2-popup.librellis-swal .swal2-icon.swal2-warning {
+  border-color: #7e4d1e !important;
+  color: #7e4d1e !important;
+}
+
+.swal2-popup.librellis-swal .swal2-icon.swal2-info {
+  border-color: #005b33 !important;
+  color: #005b33 !important;
+}
+
+.swal2-container {
+  z-index: 20000 !important;
+}

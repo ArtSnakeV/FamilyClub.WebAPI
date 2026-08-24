@@ -1,3 +1,4 @@
+import { alertError } from "@/lib/ui/sweetAlert";
 import { useState } from "react";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { ProductDto, ImageUploadState } from "@/app/(user-site)/products/addProduct/types";
@@ -57,7 +58,7 @@ export function useSubmitProduct({ form, images, router, clearDraft }: Props) {
         const text = await response?.text?.();
         console.error("SERVER RESPONSE:", text);
       }
-      alert("Помилка при створенні продукту");
+      await alertError("Помилка при створенні продукту");
     } finally {
       setLoading(false);
     }

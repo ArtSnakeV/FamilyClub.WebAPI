@@ -1,3 +1,4 @@
+import { alertSuccess } from "@/lib/ui/sweetAlert";
 import { useState, useEffect } from "react"; 
 import { CoverType } from "@/lib/api/generated";
 import { ProductDto } from "@/app/(user-site)/products/addProduct/types";
@@ -53,9 +54,9 @@ export function useProductForm() {
     setForm((prev) => ({ ...prev, [key]: value }));
 
   // Збереження чернетки (викликається користувачем через клік, тому тут localStorage безпечний)
-  const saveDraft = () => {
+  const saveDraft = async () => {
     localStorage.setItem(DRAFT_KEY, JSON.stringify(form));
-    alert("Чернетку збережено");
+    await alertSuccess("Чернетку збережено");
   };
 
   // Очищення чернетки та скидання форми до початкового стану

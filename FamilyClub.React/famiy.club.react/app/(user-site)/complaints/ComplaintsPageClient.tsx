@@ -1,5 +1,6 @@
 "use client";
 
+import { alertWarning } from "@/lib/ui/sweetAlert";
 import { useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useCurrentUser } from "@/app/(user-site)/userProfile/hooks/useCurrentUser";
@@ -43,7 +44,7 @@ export default function ComplaintsPageClient() {
       user?.id ?? (typeof window !== "undefined" ? getAuthUserId() : null);
 
     if (!clubMemberId) {
-      alert("Увійдіть у систему, щоб подати скаргу.");
+      await alertWarning("Увійдіть у систему, щоб подати скаргу.");
       return;
     }
 

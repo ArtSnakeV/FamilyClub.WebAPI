@@ -65,7 +65,7 @@ namespace FamilyClub.WebAPI.Controllers
 		}
 
 		// DELETE api/<AuthorsController>/5
-		[Authorize(Roles = "Admin")]
+		[Authorize(Roles = "Admin,Manager")]
 		[HttpDelete("{id:int}")]
 		public async Task<IActionResult> Delete(int id, CancellationToken cancellationToken)
 		{

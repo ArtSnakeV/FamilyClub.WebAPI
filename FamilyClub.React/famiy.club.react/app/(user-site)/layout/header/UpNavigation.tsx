@@ -14,6 +14,7 @@ import UserLoginButton from "./UserLoginButton";
 import { useRouter } from "next/navigation";
 import { apiBasePath } from "@/lib/api/services";
 import { clearAuthSession, getAuthToken } from "@/lib/auth/tokenStorage";
+import { canAccessPath } from "@/lib/auth/accessControl";
 import { useUnreadNotificationsCount } from "@/lib/hooks/useUnreadNotificationsCount";
 
 type User = {
@@ -85,6 +86,10 @@ export default function UpNavigation() {
   }, []);
 
   const isAuthenticated = !!member?.id;
+  const showAdminPanel = member?.roles
+    ? canAccessPath("/admin/desktop", member.roles) ||
+      canAccessPath("/admin/books", member.roles)
+    : false;
 
   if (loading) {
     return null;
@@ -144,6 +149,8 @@ export default function UpNavigation() {
                   onNotifications={() => router.push("/notifications")}
                   onOrders={() => router.push("/orders")}
                   onLibrary={() => router.push("/library")}
+                  showAdminPanel={showAdminPanel}
+                  onAdminPanel={() => router.push("/admin/desktop")}
                   onLogout={handleLogout}
                 />
               ) : (

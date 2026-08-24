@@ -1,3 +1,4 @@
+import { alertError, showConfirm } from "@/lib/ui/sweetAlert";
 import { useState } from "react";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { CategoryDto } from "@/app/(admin-site)/admin/books/categories/addCategory/types";
@@ -26,13 +27,13 @@ export default function useSubmitEditCategory({ id, form, router }: Props) {
       router.push("/admin/books/categories");
     } catch (e) {
       console.error(e);
-      alert("Помилка при редагуванні категорії");
+      await alertError("Помилка при редагуванні категорії");
     } finally {
       setLoading(false);
     }
   };
   const handleDelete = async () => {
-    const confirmDelete = confirm("Ви точно хочете видалити категорію?");
+    const confirmDelete = await showConfirm("Ви точно хочете видалити категорію?");
     if (!confirmDelete) return;
 
     try {
@@ -42,7 +43,7 @@ export default function useSubmitEditCategory({ id, form, router }: Props) {
       router.push("/admin/books/categories");
     } catch (e) {
       console.error(e);
-      alert("Помилка при видаленні категорії");
+      await alertError("Помилка при видаленні категорії");
     }
   };
   return { handleSubmit, loading, handleDelete };

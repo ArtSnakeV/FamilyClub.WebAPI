@@ -149,6 +149,7 @@
 // }
 "use client";
 
+import { alertError } from "@/lib/ui/sweetAlert";
 import { useEffect, useState } from "react";
 import BlockForUsersInfo from "./section/BlockForUsersInfo";
 import { useUsersStats } from "./hooks/useUsersStats";
@@ -244,7 +245,7 @@ export default function Page() {
             );
         } catch (error) {
             console.error(error);
-            alert(
+            await alertError(
                 error instanceof Error
                     ? error.message
                     : "Не вдалося змінити статус користувача"

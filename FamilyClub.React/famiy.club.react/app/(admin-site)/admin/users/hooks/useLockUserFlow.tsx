@@ -1,3 +1,4 @@
+import { alertError } from "@/lib/ui/sweetAlert";
 import { useState } from "react";
 import { UserInfo } from "./useAllUsersInfo";
 import { lockUser, unlockUser } from "../api/ActionUsers";
@@ -13,7 +14,7 @@ export function useLockUserFlow(refetch: () => Promise<void>) {
                 await refetch();
             } catch (e) {
                 console.error(e);
-                alert(
+                await alertError(
                     e instanceof Error
                         ? e.message
                         : "Не вдалося розблокувати користувача"
@@ -36,7 +37,7 @@ export function useLockUserFlow(refetch: () => Promise<void>) {
             await refetch();
         } catch (e) {
             console.error(e);
-            alert(
+            await alertError(
                 e instanceof Error
                     ? e.message
                     : "Не вдалося заблокувати користувача"

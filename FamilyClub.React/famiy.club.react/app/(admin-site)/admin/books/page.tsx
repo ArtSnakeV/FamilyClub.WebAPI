@@ -157,6 +157,12 @@ import EntitiesSearchSorting from "@/app/(admin-site)/common_elements/entities_s
 import Pagination from "@/app/(admin-site)/common_elements/entities_pagination";
 import { useAccessControl } from "@/lib/auth/useAccessControl";
 import {
+  alertError,
+  alertSuccess,
+  alertWarning,
+  showConfirm,
+} from "@/lib/ui/sweetAlert";
+import {
   getProductAuthorName,
   getProductCoverSrc,
   getProductPriceAmount,
@@ -228,7 +234,7 @@ export default function AllBooks() {
 
     const handleSeedCatalog = async () => {
         if (seeding) return;
-        const ok = window.confirm(
+        const ok = await showConfirm(
             "Заповнити базу відсутніми книгами з каталогу?\n\nІснуючі записи не будуть видалені чи продубльовані."
         );
         if (!ok) return;
@@ -236,15 +242,15 @@ export default function AllBooks() {
         setSeeding(true);
         try {
             const result = await seedCatalogBooks();
-            alert(result.message);
+            await alertSuccess(result.message);
             await reloadBooks();
         } catch (err) {
             console.error(err);
             const msg = err instanceof Error ? err.message : "Не вдалося заповнити базу даних";
             if (msg.includes("401") || msg.includes("403") || msg.toLowerCase().includes("unauthorized") || msg.toLowerCase().includes("forbidden")) {
-                alert("Немає прав Admin для цієї дії. Увійдіть як admin@familyclub.com.");
+                await alertWarning("Немає прав Admin для цієї дії. Увійдіть як admin@familyclub.com.");
             } else {
-                alert(msg);
+                await alertError(msg);
             }
         } finally {
             setSeeding(false);
