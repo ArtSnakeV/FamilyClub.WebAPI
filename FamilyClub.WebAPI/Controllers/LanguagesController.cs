@@ -1,5 +1,6 @@
 ﻿using FamilyClub.BLL.DTOs.Language;
 using FamilyClub.BLL.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -34,6 +35,7 @@ public class LanguagesController : ControllerBase
         return Ok(language);
     }
 
+    [Authorize(Roles = "Admin,Manager")]
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] LanguageDto dto, CancellationToken cancellationToken)
     {
@@ -41,6 +43,7 @@ public class LanguagesController : ControllerBase
         return CreatedAtAction(nameof(GetById), new { id = createdLanguage.Id }, createdLanguage);
     }
 
+    [Authorize(Roles = "Admin,Manager")]
     [HttpPut("{id:int}")]
     public async Task<IActionResult> Update(int id, [FromBody] LanguageDto dto, CancellationToken cancellationToken)
     {
@@ -52,6 +55,7 @@ public class LanguagesController : ControllerBase
         return NoContent();
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> Delete(int id, CancellationToken cancellationToken)
     {

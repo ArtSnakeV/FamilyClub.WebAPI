@@ -3,6 +3,7 @@ using FamilyClub.BLL.DTOs.Review;
 using FamilyClub.BLL.Interfaces;
 using FamilyClub.BLL.Services;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FamilyClub.WebAPI.Controllers
@@ -40,6 +41,7 @@ namespace FamilyClub.WebAPI.Controllers
 		}
 
 		// POST: api/formats
+		[Authorize(Roles = "Admin,Manager")]
 		[HttpPost]
 		public async Task<IActionResult> Create([FromBody] FormatDto dto, CancellationToken cancellationToken)
 		{
@@ -48,6 +50,7 @@ namespace FamilyClub.WebAPI.Controllers
 		}
 
 
+		[Authorize(Roles = "Admin,Manager")]
 		[HttpPut("{id:int}")]
 		public async Task<IActionResult> Update(int id, [FromBody] FormatDto dto, CancellationToken cancellationToken)
 		{
@@ -61,6 +64,7 @@ namespace FamilyClub.WebAPI.Controllers
 		}
 
 		// DELETE: api/formats/5
+		[Authorize(Roles = "Admin")]
 		[HttpDelete("{id:int}")]
 		public async Task<IActionResult> Delete(int id, CancellationToken cancellationToken)
 		{

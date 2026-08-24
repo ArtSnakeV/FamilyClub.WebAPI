@@ -6,7 +6,9 @@ import { useRouter } from "next/navigation";
 import type { FormatType } from "@/lib/hooks/useCart";
 import type { ProductDto, AuthorDTO, FormatDto } from "@/lib/api/generated";
 import { Availability } from "@/lib/api/generated";
-import { favoriteService, apiBasePath } from "@/lib/api/services";
+import { favoriteService } from "@/lib/api/services";
+import { getAuthToken, getAuthUserId } from "@/lib/auth/tokenStorage";
+import { usePaws } from "@/app/(user-site)/paws/hooks/usePaws";
 
 export interface MobileCartViewProps {
   cartItems: Array<{
@@ -111,28 +113,24 @@ export default function MobileCartView({
   const [agreed, setAgreed] = useState(false);
   const [promoCode, setPromoCode] = useState("");
   const [favorites, setFavorites] = useState<Set<number>>(new Set());
-  const [pawsBalance, setPawsBalance] = useState<number>(250);
   const [pawsApplied, setPawsApplied] = useState(false);
+  const userId =
+    typeof window !== "undefined" ? getAuthUserId() ?? undefined : undefined;
+  const { paws: pawsBalance, discountInUah: pawsDiscountFromHook } = usePaws(
+    userId
+  );
 
   useEffect(() => {
-    const fetchUserAndFavorites = async () => {
-      const token = localStorage.getItem("token");
+    const fetchFavorites = async () => {
+      const token = getAuthToken();
       if (!token) return;
 
       try {
-        // Отримуємо баланс користувача
-        const resUser = await fetch(`${apiBasePath}/api/AuthClubMember/me`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        if (resUser.ok) {
-          const userData = await resUser.json();
-          if (userData?.loyaltyPoints != null) {
-            setPawsBalance(userData.loyaltyPoints);
-          }
-        }
-
-        // Отримуємо улюблені товари
-        const resFav = await favoriteService.apiFavoritesGet().catch(() => null);
+        const resFav = await favoriteService
+          .apiFavoritesGet({
+            headers: { Authorization: `Bearer ${token}` },
+          })
+          .catch(() => null);
         if (Array.isArray(resFav)) {
           const favIds = new Set<number>();
           resFav.forEach((f: any) => {
@@ -142,15 +140,15 @@ export default function MobileCartView({
           setFavorites(favIds);
         }
       } catch (error) {
-        console.warn("MobileCart: failed to load user extra info", error);
+        console.warn("MobileCart: failed to load favorites", error);
       }
     };
 
-    fetchUserAndFavorites();
+    fetchFavorites();
   }, []);
 
   const handleToggleFavorite = async (productId: number) => {
-    const token = localStorage.getItem("token");
+    const token = getAuthToken();
     const isAlreadyFav = favorites.has(productId);
 
     try {
@@ -180,7 +178,10 @@ export default function MobileCartView({
     }
   };
 
-  const pawsDiscountAmount = Math.min(Math.round(pawsBalance * 0.1), Math.max(0, subtotal - discount));
+  const pawsDiscountAmount = Math.min(
+    pawsDiscountFromHook,
+    Math.max(0, subtotal - discount)
+  );
   const totalDiscount = discount + (pawsApplied ? pawsDiscountAmount : 0);
   const effectiveDelivery = subtotal > 0 ? deliveryCost : 0;
   const totalToPay = subtotal > 0 ? Math.max(0, subtotal - totalDiscount + effectiveDelivery) : 0;

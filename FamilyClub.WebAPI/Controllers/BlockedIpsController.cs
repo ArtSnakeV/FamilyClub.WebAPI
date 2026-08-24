@@ -8,6 +8,7 @@ namespace FamilyClub.WebAPI.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[Authorize(Roles = "Admin")]
 public class BlockedIpsController : ControllerBase
 {
     private readonly IBlockedIpService _blockedIpService;

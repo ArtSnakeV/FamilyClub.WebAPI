@@ -21,6 +21,7 @@ export default function LoginSection({ onGoToRegister }: LoginSectionProps) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [isHovered, setIsHovered] = useState(false);
+  const [rememberMe, setRememberMe] = useState(true);
 
   const handleLogin = async () => {
     if (!formData.login || !formData.password) {
@@ -34,7 +35,7 @@ export default function LoginSection({ onGoToRegister }: LoginSectionProps) {
         loginClubMemberDto: {
           username: formData.login,
           password: formData.password,
-          rememberMe: false,
+          rememberMe,
         },
       });
 
@@ -42,7 +43,7 @@ export default function LoginSection({ onGoToRegister }: LoginSectionProps) {
         setAuthSession(
           response.token,
           response.clubMember?.id ?? undefined,
-          false
+          rememberMe
         );
         window.dispatchEvent(new Event("auth-change"));
       }
@@ -141,6 +142,16 @@ export default function LoginSection({ onGoToRegister }: LoginSectionProps) {
         {error && (
           <p className="text-[#8b0000] text-[16px] w-full m-0">{error}</p>
         )}
+
+        <label className="w-full flex items-center gap-2 cursor-pointer select-none">
+          <input
+            type="checkbox"
+            checked={rememberMe}
+            onChange={(e) => setRememberMe(e.target.checked)}
+            className="w-4 h-4 accent-[var(--color-green)]"
+          />
+          <span className="text-[16px] text-[#242424]">Запамʼятати мене</span>
+        </label>
 
         <button
           type="button"

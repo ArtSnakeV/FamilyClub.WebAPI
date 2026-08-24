@@ -1,19 +1,21 @@
 "use client";
 
 import { useEffect, useState, Suspense } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { setAuthSession } from "@/lib/auth/tokenStorage";
 import Link from "next/link";
 
 function AuthCallbackContent() {
   const router = useRouter();
-  const searchParams = useSearchParams();
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const token = searchParams.get("token");
-    const userId = searchParams.get("userId") ?? undefined;
-    const err = searchParams.get("error");
+    // Token is in hash fragment (not query) so it is not logged by servers / proxies.
+    const hash = typeof window !== "undefined" ? window.location.hash.replace(/^#/, "") : "";
+    const params = new URLSearchParams(hash);
+    const token = params.get("token");
+    const userId = params.get("userId") ?? undefined;
+    const err = params.get("error");
 
     if (err) {
       setError(decodeURIComponent(err));
@@ -23,11 +25,15 @@ function AuthCallbackContent() {
     if (token) {
       setAuthSession(token, userId, true);
       window.dispatchEvent(new Event("auth-change"));
+      // Clear hash so token is not left in history bar longer than needed.
+      if (typeof window !== "undefined") {
+        window.history.replaceState(null, "", window.location.pathname);
+      }
       router.push("/");
     } else {
       setError("Помилка авторизації: Токен відсутній.");
     }
-  }, [searchParams, router]);
+  }, [router]);
 
   if (error) {
     return (
