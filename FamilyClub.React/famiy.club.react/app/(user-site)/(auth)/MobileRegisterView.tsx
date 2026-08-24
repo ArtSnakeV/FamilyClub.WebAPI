@@ -296,8 +296,7 @@ export default function MobileRegisterView() {
               Пароль *
             </label>
             <span className="text-[13px] text-[#242424]/80 leading-snug mt-[2px]">
-              Не менше восьми знаків без урахування пробілів на початку та в
-              кінці
+              Мінімум 6 символів: велика літера, мала літера та цифра
             </span>
           </div>
 

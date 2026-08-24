@@ -2,8 +2,9 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, type FormEvent } from "react";
 import { authService } from "@/lib/api/services";
+import { loginErrorMessage } from "@/lib/auth/loginErrorMessage";
 import { setAuthSession } from "@/lib/auth/tokenStorage";
 import AuthBrandLogo from "./AuthBrandLogo";
 
@@ -23,8 +24,10 @@ export default function LoginSection({ onGoToRegister }: LoginSectionProps) {
   const [isHovered, setIsHovered] = useState(false);
   const [rememberMe, setRememberMe] = useState(true);
 
-  const handleLogin = async () => {
-    if (!formData.login || !formData.password) {
+  const handleLogin = async (e?: FormEvent) => {
+    if (e) e.preventDefault();
+    const email = formData.login.trim();
+    if (!email || !formData.password) {
       setError("Будь ласка, заповніть усі поля");
       return;
     }
@@ -33,23 +36,26 @@ export default function LoginSection({ onGoToRegister }: LoginSectionProps) {
     try {
       const response = await authService.apiAuthClubMemberLoginPost({
         loginClubMemberDto: {
-          username: formData.login,
+          username: email,
           password: formData.password,
           rememberMe,
         },
       });
 
-      if (response.token) {
-        setAuthSession(
-          response.token,
-          response.clubMember?.id ?? undefined,
-          rememberMe
-        );
-        window.dispatchEvent(new Event("auth-change"));
+      if (!response.token) {
+        setError("Не вдалося отримати токен. Спробуйте ще раз.");
+        return;
       }
+
+      setAuthSession(
+        response.token,
+        response.clubMember?.id ?? undefined,
+        rememberMe
+      );
+      window.dispatchEvent(new Event("auth-change"));
       router.push("/");
-    } catch {
-      setError("Невірний логін або пароль");
+    } catch (err) {
+      setError(await loginErrorMessage(err));
     } finally {
       setLoading(false);
     }
@@ -67,21 +73,23 @@ export default function LoginSection({ onGoToRegister }: LoginSectionProps) {
     >
       <AuthBrandLogo className="mb-8" widthClassName="w-[160px] md:w-[180px]" />
 
-      <div
+      <form
+        onSubmit={handleLogin}
         style={{ width: CONTENT_WIDTH }}
         className="flex flex-col gap-5 items-center"
       >
         <div className="w-full flex flex-col gap-2.5">
           <label className="font-sans font-semibold text-[24px] text-[#242424]">
-            Логін
+            Email
           </label>
           <input
-            type="text"
+            type="email"
+            autoComplete="email"
             value={formData.login}
             onChange={(e) =>
               setFormData({ ...formData, login: e.target.value })
             }
-            placeholder="Введіть логін"
+            placeholder="Введіть email"
             className="outline-none transition-shadow focus:shadow-md w-full rounded-[9px] px-4 bg-white shadow-[0px_0px_10px_0px_#00000033] font-sans text-[18px] text-[#242424] placeholder:text-[#242424]/50"
             style={{ height: INPUT_HEIGHT }}
           />
@@ -154,8 +162,7 @@ export default function LoginSection({ onGoToRegister }: LoginSectionProps) {
         </label>
 
         <button
-          type="button"
-          onClick={handleLogin}
+          type="submit"
           disabled={loading}
           className="w-full rounded-[9px] bg-[var(--color-green)] shadow-[0px_0px_10px_0px_#00000040] flex items-center justify-center border-0 cursor-pointer hover:brightness-110 active:scale-[0.98] disabled:opacity-70 transition"
           style={{ height: INPUT_HEIGHT }}
@@ -215,7 +222,7 @@ export default function LoginSection({ onGoToRegister }: LoginSectionProps) {
             Зареєструватися.
           </button>
         </span>
-      </div>
+      </form>
     </div>
   );
 }

@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { authService } from "@/lib/api/services";
+import { loginErrorMessage } from "@/lib/auth/loginErrorMessage";
 import { setAuthSession } from "@/lib/auth/tokenStorage";
 import AuthBrandLogo from "./components/AuthBrandLogo";
 
@@ -23,7 +24,8 @@ export default function MobileAuthView() {
 
   const handleLogin = async (e?: React.FormEvent) => {
     if (e) e.preventDefault();
-    if (!formData.login || !formData.password) {
+    const email = formData.login.trim();
+    if (!email || !formData.password) {
       setError("Будь ласка, заповніть всі поля");
       return;
     }
@@ -32,23 +34,26 @@ export default function MobileAuthView() {
     try {
       const response = await authService.apiAuthClubMemberLoginPost({
         loginClubMemberDto: {
-          username: formData.login,
+          username: email,
           password: formData.password,
           rememberMe,
         },
       });
 
-      if (response && response.token) {
-        setAuthSession(
-          response.token,
-          response.clubMember?.id ?? undefined,
-          rememberMe
-        );
-        window.dispatchEvent(new Event("auth-change"));
+      if (!response?.token) {
+        setError("Не вдалося отримати токен. Спробуйте ще раз.");
+        return;
       }
+
+      setAuthSession(
+        response.token,
+        response.clubMember?.id ?? undefined,
+        rememberMe
+      );
+      window.dispatchEvent(new Event("auth-change"));
       router.push("/");
-    } catch {
-      setError("Невірний логін або пароль");
+    } catch (err) {
+      setError(await loginErrorMessage(err));
     } finally {
       setLoading(false);
     }
@@ -81,16 +86,17 @@ export default function MobileAuthView() {
 
         <div className="flex flex-col gap-[10px] w-full">
           <label className="text-[20px] font-semibold text-[#242424]">
-            Логін
+            Email
           </label>
           <div className="bg-white h-[50px] w-full rounded-[9px] px-[20px] drop-shadow-[0px_0px_5px_rgba(0,0,0,0.25)] flex items-center">
             <input
-              type="text"
+              type="email"
+              autoComplete="email"
               value={formData.login}
               onChange={(e) =>
                 setFormData({ ...formData, login: e.target.value })
               }
-              placeholder="Введіть логін"
+              placeholder="Введіть email"
               className="w-full bg-transparent outline-none text-[16px] text-[#242424] placeholder:text-[#242424]/50"
             />
           </div>

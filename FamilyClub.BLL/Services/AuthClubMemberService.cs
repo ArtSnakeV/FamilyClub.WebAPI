@@ -72,21 +72,25 @@ public class AuthClubMemberService : IAuthClubMemberService
 
     public async Task<AuthResponseClubMemberDTO> LoginAsync(LoginClubMemberDto dto, CancellationToken cancellationToken = default)
     {
-        var clubMember = await _userManager.FindByEmailAsync(dto.Username);
+        var email = (dto.Username ?? string.Empty).Trim();
+        var clubMember = string.IsNullOrEmpty(email)
+            ? null
+            : await _userManager.FindByEmailAsync(email);
 
-        if (clubMember == null || !await _userManager.CheckPasswordAsync(clubMember, dto.Password))
+        if (clubMember == null)
         {
-            if (clubMember != null)
-            {
-                await _userManager.AccessFailedAsync(clubMember);
-            }
-
             throw new UnauthorizedAccessException("Wrong email or password!");
         }
 
         if (await _userManager.IsLockedOutAsync(clubMember))
         {
             throw new UnauthorizedAccessException("Account is locked. Try again later.");
+        }
+
+        if (!await _userManager.CheckPasswordAsync(clubMember, dto.Password))
+        {
+            await _userManager.AccessFailedAsync(clubMember);
+            throw new UnauthorizedAccessException("Wrong email or password!");
         }
 
         await _userManager.ResetAccessFailedCountAsync(clubMember);

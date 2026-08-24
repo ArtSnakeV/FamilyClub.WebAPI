@@ -2,7 +2,8 @@ const TOKEN_KEY = "token";
 const USER_ID_KEY = "userId";
 const TOKEN_EXPIRY_KEY = "tokenExpiresAt";
 
-const FOURTEEN_DAYS_MS = 14 * 24 * 60 * 60 * 1000;
+/** Keep client session aligned with JWT when rememberMe is on (backend: 30 days). */
+const REMEMBER_ME_MS = 30 * 24 * 60 * 60 * 1000;
 
 function clearStorage(storage: Storage) {
   storage.removeItem(TOKEN_KEY);
@@ -25,7 +26,7 @@ export function setAuthSession(
   }
 
   if (rememberMe) {
-    localStorage.setItem(TOKEN_EXPIRY_KEY, String(Date.now() + FOURTEEN_DAYS_MS));
+    localStorage.setItem(TOKEN_EXPIRY_KEY, String(Date.now() + REMEMBER_ME_MS));
   }
 }
 
