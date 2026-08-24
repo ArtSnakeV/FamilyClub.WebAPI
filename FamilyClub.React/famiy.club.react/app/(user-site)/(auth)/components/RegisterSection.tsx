@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { AsYouType } from "libphonenumber-js";
 import { authService } from "@/lib/api/services";
+import { readApiErrorMessage } from "@/lib/api/readApiError";
 
 type RegisterSectionProps = {
   onGoToLogin: () => void;
@@ -74,28 +75,36 @@ export default function RegisterSection({ onGoToLogin }: RegisterSectionProps) {
       !formData.password ||
       formData.password !== formData.confirmPassword
     ) {
-      setError("Please check your input and ensure passwords match.");
+      setError("Перевірте поля та переконайтесь, що паролі збігаються.");
+      return;
+    }
+    if (formData.password.length < 6) {
+      setError("Пароль має містити щонайменше 6 символів.");
+      return;
+    }
+    if (!/[A-ZА-ЯІЇЄҐ]/.test(formData.password) || !/[a-zа-яіїєґ]/.test(formData.password) || !/\d/.test(formData.password)) {
+      setError("Пароль має містити велику літеру, малу літеру та цифру.");
+      return;
+    }
+    if (!phone || phone.replace(/\D/g, "").length < 8) {
+      setError("Введіть коректний номер телефону.");
       return;
     }
     setLoading(true);
-    // try {
-    //   console.log("Registering:", formData);
-    //   onGoToLogin();
-    // } 
-     try {
+    setError("");
+    try {
       await authService.apiAuthClubMemberRegisterPost({
         registerClubMemberDto: {
-          email: formData.email,
+          email: formData.email.trim(),
           password: formData.password,
-          name: formData.firstName,
-          surname: formData.lastName,
-          phoneNumber: phone,
+          name: formData.firstName.trim() || undefined,
+          surname: formData.lastName.trim() || undefined,
+          phoneNumber: phone.trim(),
         },
       });
       onGoToLogin();
-    }
-    catch {
-      setError("Registration failed.");
+    } catch (err) {
+      setError(await readApiErrorMessage(err, "Помилка реєстрації. Можливо, email уже зайнятий."));
     } finally {
       setLoading(false);
     }

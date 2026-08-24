@@ -1,0 +1,36 @@
+/* Only flags used on registration (avoids preloading 200+ SVGs). */
+.fi {
+  background-size: contain;
+  background-position: 50%;
+  background-repeat: no-repeat;
+  position: relative;
+  display: inline-block;
+  width: 1.333333em;
+  line-height: 1em;
+}
+
+.fi:before {
+  content: "\00a0";
+}
+
+.fi-ua {
+  background-image: url("/images/flags/ua.svg");
+}
+.fi-pl {
+  background-image: url("/images/flags/pl.svg");
+}
+.fi-es {
+  background-image: url("/images/flags/es.svg");
+}
+.fi-fr {
+  background-image: url("/images/flags/fr.svg");
+}
+.fi-cz {
+  background-image: url("/images/flags/cz.svg");
+}
+.fi-ie {
+  background-image: url("/images/flags/ie.svg");
+}
+.fi-gb {
+  background-image: url("/images/flags/gb.svg");
+}

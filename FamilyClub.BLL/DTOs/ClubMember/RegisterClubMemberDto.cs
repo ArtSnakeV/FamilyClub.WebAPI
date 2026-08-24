@@ -13,7 +13,7 @@ public class RegisterClubMemberDto
     public string Password { get; set; } = string.Empty;
 
     [Required(ErrorMessage = "Phone number is required")]
-    [Phone(ErrorMessage = "Invalid phone number format")]
+    [RegularExpression(@"^\+?[\d\s\-().]{7,20}$", ErrorMessage = "Invalid phone number format")]
     public string PhoneNumber { get; set; } = string.Empty;
 
     public List<string> SelectedRoles { get; set; } = new List<string>(); // Field to store 
