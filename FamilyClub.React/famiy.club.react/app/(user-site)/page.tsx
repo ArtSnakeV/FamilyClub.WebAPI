@@ -42,7 +42,6 @@ import MobileHome from "@/app/(user-site)/main_page/mobile/MobileHome";
 import {
     authorService,
     categoriesService,
-    clubMemberService,
     formatService,
     orderService,
     productService,
@@ -52,7 +51,6 @@ import { Availability } from "@/lib/api/generated";
 import type {
     AuthorDTO,
     CategoryDto,
-    ClubMemberReadDto,
     FormatDto,
     OrderDTO,
     ProductDto,
@@ -112,7 +110,6 @@ export default function Home() {
     const [reviews, setReviews] = useState<ReviewDto[]>([]);
     const [categories, setCategories] = useState<CategoryDto[]>([]);
     const [authors, setAuthors] = useState<AuthorDTO[]>([]);
-    const [clubMembers, setClubMembers] = useState<ClubMemberReadDto[]>([]);
     const [formats, setFormats] = useState<FormatDto[]>([]);
     const [orders, setOrders] = useState<OrderDTO[]>([]);
     const { user } = useCurrentUser();
@@ -129,14 +126,12 @@ export default function Home() {
                     reviewsResult,
                     categoriesResult,
                     authorsResult,
-                    membersResult,
                     formatsResult,
                 ] = await Promise.all([
                     productService.apiProductsGet().catch((err) => { console.warn("Failed to fetch products:", err); return []; }),
                     reviewService.apiReviewsGet().catch((err) => { console.warn("Failed to fetch reviews:", err); return []; }),
                     categoriesService.apiCategoriesGet().catch((err) => { console.warn("Failed to fetch categories:", err); return []; }),
                     authorService.apiAuthorsGet().catch((err) => { console.warn("Failed to fetch authors:", err); return []; }),
-                    clubMemberService.apiClubMemberGet().catch((err) => { console.warn("Failed to fetch club members:", err); return []; }),
                     formatService.apiFormatsGet().catch((err) => { console.warn("Failed to fetch formats:", err); return []; }),
                 ]);
 
@@ -145,7 +140,6 @@ export default function Home() {
                 setReviews(reviewsResult ?? []);
                 setCategories(categoriesResult ?? []);
                 setAuthors(authorsResult ?? []);
-                setClubMembers(membersResult ?? []);
                 setFormats(formatsResult ?? []);
             } catch (error) {
                 console.error("Home data fetch failed:", error);
@@ -244,14 +238,6 @@ export default function Home() {
         return map;
     }, [products]);
 
-    const memberById = useMemo(() => {
-        const map = new Map<string, ClubMemberReadDto>();
-        for (const member of clubMembers) {
-            if (!member.id) continue;
-            map.set(member.id, member);
-        }
-        return map;
-    }, [clubMembers]);
 
     const getAuthorLabel = (authorIds?: Array<number> | null) =>
         buildAuthorLabel(authorIds, authorById);
@@ -347,23 +333,19 @@ export default function Home() {
         return reviews
             .filter((review) => review.comment && review.approved !== false)
             .map((review, index) => {
-                const member = review.userId ? memberById.get(review.userId) : undefined;
-                const nameParts = [member?.name, member?.surname].filter(
-                    (part): part is string => Boolean(part),
-                );
-                const author = nameParts.join(" ") || member?.email || review.userId || "";
+                const author = review.userName || review.userId || "Анонім";
                 const product = review.productId ? productById.get(review.productId) : undefined;
                 return {
                     id: review.id ?? review.createdAt?.toString() ?? index,
                     author,
                     text: review.comment ?? "",
                     timeLabel: formatReviewDate(review.createdAt),
-                    avatar: getAvatarSrc(member?.avatarData),
+                    avatar: getAvatarSrc(review.userAvatarData),
                     bookImage: product ? getProductImageSrc(product) : null,
                     rating: review.rating,
                 };
             });
-    }, [reviews, memberById, productById]);
+    }, [reviews, productById]);
 
     const allBooks = mapProductsToBooks(products);
 
@@ -375,7 +357,7 @@ export default function Home() {
             tag: "#новини",
             title: r.text.slice(0, 30) || "",
             image: r.bookImage || null,
-            avatar: r.avatar || "/images/body/cat.png",
+            avatar: r.avatar || "/images/body/cat.webp",
             href: "/categories",
         }));
     }, [reviewCards]);

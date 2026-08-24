@@ -55,7 +55,7 @@ export default function UserSideBArProfile({
 
   const hasAudio = (book: ProductDto) =>
     book.formatIds?.includes(2) ?? false;
-  const hasPrented = (book: ProductDto) =>
+  const hasPrinted = (book: ProductDto) =>
     book.formatIds?.includes(3) ?? false;
 
   const colors = [
@@ -245,7 +245,7 @@ hover:translate-x-[8px]  hover:scale-x-[1.05] transform-gpu"
                   {hasEbook(book) && (
                     <Image src={ebookIcon} alt="ebook" width={24} height={28} />
                   )}
-                  {hasEbook(book) && (
+                  {hasPrinted(book) && (
                     <Image src={printIcon} alt="printbook" width={24} height={28} />
                   )}
                 </div>

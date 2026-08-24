@@ -11,7 +11,6 @@ import {
   authorService,
   bookSizeService,
   categoriesService,
-  clubMemberService,
   favoriteService,
   formatService,
   languageService,
@@ -24,7 +23,6 @@ import {
   AuthorDTO,
   BookSizeDto,
   CategoryDto,
-  ClubMemberReadDto,
   CoverType,
   FormatDto,
   LanguageDto,
@@ -254,7 +252,6 @@ export default function ProductDetailsClient({ id }: { id: string }) {
   const [categories, setCategories] = useState<CategoryDto[]>([]);
   const [formats, setFormats] = useState<FormatDto[]>([]);
   const [bookSizes, setBookSizes] = useState<BookSizeDto[]>([]);
-  const [clubMembers, setClubMembers] = useState<ClubMemberReadDto[]>([]);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [isFavorite, setIsFavorite] = useState(false);
   const [newComment, setNewComment] = useState("");
@@ -340,7 +337,6 @@ export default function ProductDetailsClient({ id }: { id: string }) {
           categoriesResult,
           formatsResult,
           bookSizesResult,
-          membersResult,
         ] = await Promise.all([
           productService.apiProductsIdGet({ id: productId }),
           productService.apiProductsGet().catch((err) => { console.warn("Failed to fetch products:", err); return []; }),
@@ -351,7 +347,6 @@ export default function ProductDetailsClient({ id }: { id: string }) {
           categoriesService.apiCategoriesGet().catch((err) => { console.warn("Failed to fetch categories:", err); return []; }),
           formatService.apiFormatsGet().catch((err) => { console.warn("Failed to fetch formats:", err); return []; }),
           bookSizeService.apiBookSizesGet().catch((err) => { console.warn("Failed to fetch book sizes:", err); return []; }),
-          clubMemberService.apiClubMemberGet().catch((err) => { console.warn("Failed to fetch club members:", err); return []; }),
         ]);
 
         if (!isMounted) return;
@@ -364,7 +359,6 @@ export default function ProductDetailsClient({ id }: { id: string }) {
         setCategories(categoriesResult ?? []);
         setFormats(formatsResult ?? []);
         setBookSizes(bookSizesResult ?? []);
-        setClubMembers(membersResult ?? []);
 
         const token = getAuthToken();
         if (token) {
@@ -527,15 +521,6 @@ export default function ProductDetailsClient({ id }: { id: string }) {
     return map;
   }, [reviews]);
 
-  const memberById = useMemo(() => {
-    const map = new Map<string, ClubMemberReadDto>();
-    for (const member of clubMembers) {
-      if (!member.id) continue;
-      map.set(member.id, member);
-    }
-    return map;
-  }, [clubMembers]);
-
   const getRatingForProduct = (productId?: number) => {
     if (!productId) return 0;
     const entry = ratingByProductId.get(productId);
@@ -559,12 +544,7 @@ export default function ProductDetailsClient({ id }: { id: string }) {
   const reviewCards: ReviewCardData[] = productReviews
     .filter((review) => Boolean(review.comment))
     .map((review, index) => {
-      const member = review.userId ? memberById.get(review.userId) : undefined;
-      const nameParts = [member?.name, member?.surname].filter(
-        (part): part is string => Boolean(part),
-      );
-      const authorLabel =
-        nameParts.join(" ") || member?.email || review.userId || "";
+      const authorLabel = review.userName || review.userId || "Анонім";
       return {
         id:
           review.id ??
@@ -574,7 +554,7 @@ export default function ProductDetailsClient({ id }: { id: string }) {
         author: authorLabel,
         text: review.comment ?? "",
         timeLabel: formatReviewDate(review.createdAt),
-        avatar: getAvatarSrc(member?.avatarData),
+        avatar: getAvatarSrc(review.userAvatarData),
         bookImage: primaryImage,
         likesCount: 0,
       };
@@ -689,7 +669,7 @@ export default function ProductDetailsClient({ id }: { id: string }) {
       <img
         alt=""
         className="absolute inset-0 h-full w-full object-cover opacity-25 pointer-events-none"
-        src="/images/body/Rectangle 287.png"
+        src="/images/body/Rectangle 287.webp"
       />
 
       {/* 1. ВЕРХНІЙ БЛОК: ДОШКА З ІНФОРМАЦІЄЮ ПРО КНИГУ (УСЕ ВЕРХНЄ В СЕРЕДИНІ БЕЖЕВОЇ ДОШКИ) */}
