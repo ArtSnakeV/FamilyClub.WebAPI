@@ -59,7 +59,9 @@ export default function NotificationsPage() {
 
     const reviewItems = useMemo(
         () =>
-            reviews.map((r) => {
+            reviews
+        .filter((r) => r.userId === user?.id)
+        .map((r) => {
                 const coverImage = r.productImages?.[0]?.imageData;
                 return {
                     key: `review-${r.id}`,
@@ -80,7 +82,7 @@ export default function NotificationsPage() {
                     actionLabel: "переглянути відгук",
                 };
             }),
-        [reviews]
+        [reviews, user?.id]
     );
 
     const avatarSrc = user?.avatarData
@@ -115,7 +117,7 @@ export default function NotificationsPage() {
     }, [activeTab, reviewItems]);
 
     const showThreadCard =
-        (activeTab === "Усі" || activeTab === "Повідомлення") && notifications.length > 0;
+        (activeTab === "Усі" || activeTab === "Повідомлення");
 
     return (
         <div className="relative h-[800px] w-[1700px] ml-0 flex flex-col">
@@ -146,8 +148,9 @@ export default function NotificationsPage() {
                     ) : activeTab === "Усі" ? (
                         <div className="grid grid-cols-2 gap-0 items-start">
                             {/* ПОВІДОМЛЕННЯ */}
+                            {/* ПОВІДОМЛЕННЯ */}
                             <div className="flex flex-col gap-4">
-                                {showThreadCard && lastNotification && (
+                                {lastNotification ? (
                                     <NotificationThreadCard
                                         avatarSrc={avatarSrc}
                                         avatarFallback={avatarFallback}
@@ -156,12 +159,14 @@ export default function NotificationsPage() {
                                         unreadCount={unreadCount}
                                         onClick={handleOpenThread}
                                     />
-                                )}
-
-                                {!showThreadCard && (
-                                    <div className="text-center py-8 text-black/60">
-                                        Тут поки що порожньо
-                                    </div>
+                                ) : (
+                                    <button
+                                        type="button"
+                                        onClick={handleOpenThread}
+                                        className="text-left w-[80%] p-4 rounded-2xl bg-white/70 hover:bg-white shadow-[0_0_20px_rgba(80,137,190,0.6)] transition text-black/70"
+                                    >
+                                        ✉️ Написати повідомлення адміну
+                                    </button>
                                 )}
                             </div>
 
@@ -181,15 +186,25 @@ export default function NotificationsPage() {
                     ) : (
                         /* Вкладки "Відгуки" / "Повідомлення" */
                         <div className="flex flex-col gap-4 ml-4">
-                            {showThreadCard && lastNotification && (
-                                <NotificationThreadCard
-                                    avatarSrc={avatarSrc}
-                                    avatarFallback={avatarFallback}
-                                    lastMessageText={lastNotification.text ?? ""}
-                                    lastMessageTime={formatDate(lastNotification.createdAt)}
-                                    unreadCount={unreadCount}
-                                    onClick={handleOpenThread}
-                                />
+                            {showThreadCard && (
+                                lastNotification ? (
+                                    <NotificationThreadCard
+                                        avatarSrc={avatarSrc}
+                                        avatarFallback={avatarFallback}
+                                        lastMessageText={lastNotification.text ?? ""}
+                                        lastMessageTime={formatDate(lastNotification.createdAt)}
+                                        unreadCount={unreadCount}
+                                        onClick={handleOpenThread}
+                                    />
+                                ) : (
+                                    <button
+                                        type="button"
+                                        onClick={handleOpenThread}
+                                        className="text-left w-[30%] p-4 rounded-2xl bg-white/70 hover:bg-white shadow-[0_0_20px_rgba(80,137,190,0.6)] transition text-black/70"
+                                    >
+                                        ✉️ Написати повідомлення адміну
+                                    </button>
+                                )
                             )}
 
                             {visibleItems.map(({ key, ...item }) => (
