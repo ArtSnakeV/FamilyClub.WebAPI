@@ -1,5 +1,6 @@
 "use client";
 
+import { alertWarning } from "@/lib/ui/sweetAlert";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import styles from "./cart.module.css";
@@ -83,9 +84,9 @@ export default function CartSummary({ subtotal, discount, deliveryCost }: CartSu
         disabled={subtotal === 0}
         type="button"
         id="checkout-btn"
-        onClick={() => {
+        onClick={async () => {
           if (!agreed) {
-            alert("Будь ласка, підтвердіть згоду з Політикою конфіденційності та Користувацькою угодою (поставте галочку)");
+            await alertWarning("Будь ласка, підтвердіть згоду з Політикою конфіденційності та Користувацькою угодою (поставте галочку)");
             return;
           }
           router.push("/checkout");

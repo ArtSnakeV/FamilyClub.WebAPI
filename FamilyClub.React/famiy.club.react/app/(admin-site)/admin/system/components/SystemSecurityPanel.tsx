@@ -1,5 +1,6 @@
 "use client";
 
+import { alertError, showConfirm } from "@/lib/ui/sweetAlert";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import {
@@ -178,12 +179,12 @@ export default function SystemSecurityPanel() {
   };
 
   const handleUnblock = async (ipAddress: string) => {
-    if (!confirm(`Розблокувати IP ${ipAddress}?`)) return;
+    if (!(await showConfirm(`Розблокувати IP ${ipAddress}?`))) return;
     try {
       await unblockIpAddress(ipAddress);
       await loadBlockedIps();
     } catch (err) {
-      alert("Не вдалося розблокувати IP");
+      await alertError("Не вдалося розблокувати IP");
     }
   };
 

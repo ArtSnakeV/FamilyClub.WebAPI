@@ -21,15 +21,39 @@ import {
   PromotionsApi,
   BlockReasonsApi,
   NotificationsApi,
+  type Middleware,
 } from "./generated";
+import { getAuthToken } from "@/lib/auth/tokenStorage";
 
-// Configuration tells the client where your backend is
-const defaultBasePath = typeof window !== "undefined" ? "" : "https://localhost:7069";
-export const apiBasePath = process.env.NEXT_PUBLIC_API_URL || defaultBasePath;
+// Browser: empty base → same-origin /api (Next rewrite).
+// Server (SSR): INTERNAL_API_URL → NEXT_PUBLIC_API_URL → local Kestrel.
+const defaultBasePath =
+  typeof window !== "undefined" ? "" : "https://localhost:7069";
+export const apiBasePath =
+  typeof window !== "undefined"
+    ? process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, "") || ""
+    : process.env.INTERNAL_API_URL?.replace(/\/$/, "") ||
+      process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, "") ||
+      defaultBasePath;
 
+/** Attach Bearer token to every OpenAPI client request (catalog CRUD, etc.). */
+const authMiddleware: Middleware = {
+  pre: async ({ url, init }) => {
+    const token = getAuthToken();
+    if (!token) return { url, init };
+
+    const headers = new Headers(init.headers ?? {});
+    if (!headers.has("Authorization")) {
+      headers.set("Authorization", `Bearer ${token}`);
+    }
+
+    return { url, init: { ...init, headers } };
+  },
+};
 
 export const apiConfig = new Configuration({
   basePath: apiBasePath,
+  middleware: [authMiddleware],
 });
 
 // Create instances for the controllers you want to use

@@ -19,6 +19,7 @@ import {
   reviewService,
 } from "@/lib/api/services";
 import { getAuthToken } from "@/lib/auth/tokenStorage";
+import { alertError, alertSuccess, alertWarning } from "@/lib/ui/sweetAlert";
 import {
   AuthorDTO,
   BookSizeDto,
@@ -264,7 +265,7 @@ export default function ProductDetailsClient({ id }: { id: string }) {
     if (!newComment.trim()) return;
     const token = getAuthToken();
     if (!token) {
-      alert("Потрібно увійти в акаунт, щоб залишити коментар");
+      await alertWarning("Потрібно увійти в акаунт, щоб залишити коментар");
       return;
     }
     const pid = Number(id);
@@ -289,7 +290,7 @@ export default function ProductDetailsClient({ id }: { id: string }) {
       setCurrentReviewPage(1);
     } catch (e) {
       console.error("Помилка при відправці коментаря:", e);
-      alert("Помилка при відправці коментаря");
+      await alertError("Помилка при відправці коментаря");
     } finally {
       setIsSubmittingComment(false);
     }
@@ -298,7 +299,7 @@ export default function ProductDetailsClient({ id }: { id: string }) {
   const toggleFavorite = async () => {
   const token = getAuthToken();
   if (!token) {
-    alert("Потрібно увійти в акаунт");
+    await alertWarning("Потрібно увійти в акаунт");
     return;
   }
   const pid = Number(id);
@@ -806,10 +807,10 @@ export default function ProductDetailsClient({ id }: { id: string }) {
                     <button
                       className="flex flex-1 items-center justify-center gap-3 py-3 text-[18px] text-[#242424]/70 hover:text-[#242424] transition-colors"
                       type="button"
-                      onClick={() => {
+                      onClick={async () => {
                         if (currentProduct?.id) {
                           addToCart(currentProduct.id);
-                          alert("Товар додано в кошик");
+                          await alertSuccess("Товар додано в кошик");
                         }
                       }}
                     >

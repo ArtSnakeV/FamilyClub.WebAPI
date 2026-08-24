@@ -1,0 +1,21 @@
+{
+  "name": "sweetalert2",
+  "version": "11.15.10",
+  "type": "module",
+  "main": "./dist/sweetalert2.esm.all.min.js",
+  "module": "./dist/sweetalert2.esm.all.min.js",
+  "types": "./sweetalert2.d.ts",
+  "exports": {
+    ".": {
+      "types": "./sweetalert2.d.ts",
+      "import": "./dist/sweetalert2.esm.all.min.js",
+      "default": "./dist/sweetalert2.esm.all.min.js"
+    },
+    "./dist/sweetalert2.min.css": "./dist/sweetalert2.min.css",
+    "./dist/*": "./dist/*"
+  },
+  "sideEffects": [
+    "*.css",
+    "dist/*.css"
+  ]
+}

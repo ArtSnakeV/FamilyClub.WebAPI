@@ -1,3 +1,4 @@
+import { alertWarning } from "@/lib/ui/sweetAlert";
 import { ProductDto } from "@/lib/api/generated";
 import { useRouter } from "next/navigation";
 import { FavoriteBook } from "@/lib/hooks/useFavorites";
@@ -74,10 +75,10 @@ export default function BookShelf({
                                 {/* like button */}
                                 <button
                                     type="button"
-                                    onClick={(e) => {
+                                    onClick={async (e) => {
                                         e.stopPropagation();
                                         if (!isAuthenticated) {
-                                            alert("Щоб додати в улюблене, будь ласка, авторизуйтесь");
+                                            await alertWarning("Щоб додати в улюблене, будь ласка, авторизуйтесь");
                                             return;
                                         }
                                         if (!book.id) return;

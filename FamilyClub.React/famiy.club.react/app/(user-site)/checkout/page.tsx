@@ -9,6 +9,7 @@ import {
 } from "@/lib/api/services";
 import type { ProductDto } from "@/lib/api/generated";
 import { getAuthToken, getAuthUserId } from "@/lib/auth/tokenStorage";
+import { alertError, alertSuccess, alertWarning } from "@/lib/ui/sweetAlert";
 import styles from "./checkout.module.css";
 import MobileCheckoutView from "./MobileCheckoutView";
 
@@ -222,7 +223,7 @@ export default function CheckoutPage() {
         : null;
 
       if (!storedId) {
-        alert("Помилка авторизації. Увійдіть в акаунт.");
+        await alertWarning("Помилка авторизації. Увійдіть в акаунт.");
         router.push("/login");
         return;
       }
@@ -279,7 +280,7 @@ export default function CheckoutPage() {
       setSuccess(true);
     } catch (error) {
       console.error("Failed to create order", error);
-      alert("Помилка при оформленні замовлення. Спробуйте ще раз.");
+      await alertError("Помилка при оформленні замовлення. Спробуйте ще раз.");
     } finally {
       setSubmitting(false);
     }

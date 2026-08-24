@@ -74,6 +74,13 @@ namespace FamilyClub.DAL.EF.DB
 				}
 			}
 
+			var runSeedOnStartup = configuration.GetValue("Seed:RunOnStartup", true);
+			if (!runSeedOnStartup)
+			{
+				Console.WriteLine("[DbInitializer] Seed:RunOnStartup=false — пропускаємо seed-catalog при старті.");
+				return;
+			}
+
 			var seedResult = await SeedCatalogIdempotentAsync(serviceProvider, configuration);
 			Console.WriteLine($"[DbInitializer] {seedResult.Message}");
 		}
