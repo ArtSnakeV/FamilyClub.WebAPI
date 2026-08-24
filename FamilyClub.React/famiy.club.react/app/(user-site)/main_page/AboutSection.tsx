@@ -6,7 +6,7 @@ export default function AboutSection() {
                     <img
                         alt=""
                         className="absolute inset-0 h-full w-full object-cover opacity-20"
-                        src="/images/body/Rectangle%20287.png"
+                        src="/images/body/Rectangle%20287.webp"
                     />
                     <div className="relative px-6 py-10 md:px-[85px]">
                         <div className="grid gap-10 md:grid-cols-[460px_460px] md:gap-[170px]">
@@ -36,7 +36,7 @@ export default function AboutSection() {
                             <img
                                 alt="Твій дім книг"
                                 className="w-full max-w-[1472px] rotate-[-1.5deg] rounded-[30px] shadow-[0px_0px_15px_0px_rgba(0,0,0,0.95)]"
-                                src="/images/body/Rectangle%20294.png"
+                                src="/images/body/Rectangle%20294.webp"
                             />
                         </div>
 
@@ -67,14 +67,14 @@ export default function AboutSection() {
                                 <img
                                     alt="Читальний зал"
                                     className="h-full w-full rounded-[4px] border-[16px] border-[#f5f3ee] object-cover shadow-inner md:border-[24px]"
-                                    src="/images/body/Rectangle%20295.png"
+                                    src="/images/body/Rectangle%20295.webp"
                                 />
                             </div>
                             <div className="relative h-[300px] w-[260px] rotate-[-5deg] shadow-[0px_15px_25px_rgba(0,0,0,0.5)] transition-transform hover:z-20 hover:scale-105 md:h-[400px] md:w-[360px]">
                                 <img
                                     alt="Атмосфера бібліотеки"
                                     className="h-full w-full rounded-[4px] border-[16px] border-[#f5f3ee] object-cover shadow-inner md:border-[24px]"
-                                    src="/images/body/Rectangle%20296.png"
+                                    src="/images/body/Rectangle%20296.webp"
                                 />
                             </div>
                         </div>

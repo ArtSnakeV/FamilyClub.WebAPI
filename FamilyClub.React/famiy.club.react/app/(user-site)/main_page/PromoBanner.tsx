@@ -20,19 +20,19 @@ const defaultBanners: BannerItem[] = [
         title: "Нові книги",
         subtitle: "Вже на полицях!",
         href: "/categories",
-        backgroundImage: "/images/body/banner-left.png",
+        backgroundImage: "/images/body/banner-left.webp",
     },
     {
         title: "Знижки та акції",
         subtitle: "Спеціальні пропозиції для тебе",
         href: "/categories",
-        backgroundImage: "/images/body/banner-middle.png",
+        backgroundImage: "/images/body/banner-middle.webp",
     },
     {
         title: "Добірки тижня",
         subtitle: "Найкраще за оцінками читачів",
         href: "/categories",
-        backgroundImage: "/images/body/banner-right.png",
+        backgroundImage: "/images/body/banner-right.webp",
     },
 ];
 
@@ -41,7 +41,7 @@ export default function PromoBanner({
     title,
     subtitle,
     href = "/categories",
-    backgroundImage = "/images/body/banner-single.png",
+    backgroundImage = "/images/body/banner-single.webp",
 }: PromoBannerProps) {
     const itemsToRender = title ? [{ title, subtitle, href, backgroundImage }] : banners;
 
