@@ -1,6 +1,7 @@
 ﻿using FamilyClub.BLL.DTOs.AgeRestriction;
 using FamilyClub.BLL.DTOs.Format;
 using FamilyClub.BLL.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -40,6 +41,7 @@ namespace FamilyClub.WebAPI.Controllers
 		}
 
 		// POST: api/ageRestrictions
+		[Authorize(Roles = "Admin,Manager")]
 		[HttpPost]
 		public async Task<IActionResult> Create([FromBody] AgeRestrictionDto dto, CancellationToken cancellationToken)
 		{
@@ -48,6 +50,7 @@ namespace FamilyClub.WebAPI.Controllers
 		}
 
 
+		[Authorize(Roles = "Admin,Manager")]
 		[HttpPut("{id:int}")]
 		public async Task<IActionResult> Update(int id, [FromBody] AgeRestrictionDto dto, CancellationToken cancellationToken)
 		{
@@ -61,6 +64,7 @@ namespace FamilyClub.WebAPI.Controllers
 		}
 
 		// DELETE: api/ageRestrictions/5
+		[Authorize(Roles = "Admin")]
 		[HttpDelete("{id:int}")]
 		public async Task<IActionResult> Delete(int id, CancellationToken cancellationToken)
 		{
