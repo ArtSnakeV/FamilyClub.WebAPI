@@ -6,6 +6,7 @@ import Link from "next/link";
 import BookCard from "@/app/(user-site)/main_page/BookCard";
 import { ProductDto } from "@/lib/api/generated";
 import { productService } from "@/lib/api/services";
+import { getProductCoverUrl } from "@/lib/products/productCoverUrl";
 
 interface CatalogClientProps {
   initialProducts?: ProductDto[];
@@ -22,6 +23,8 @@ export default function CatalogClient({ initialProducts = [] }: CatalogClientPro
   const [loadError, setLoadError] = useState(false);
 
   useEffect(() => {
+    if (initialProducts.length > 0) return;
+
     let mounted = true;
 
     const load = async () => {
@@ -51,7 +54,7 @@ export default function CatalogClient({ initialProducts = [] }: CatalogClientPro
     return () => {
       mounted = false;
     };
-  }, []);
+  }, [initialProducts.length]);
 
   // Apply filters when search params or catalog data change
   useEffect(() => {
@@ -203,53 +206,7 @@ export default function CatalogClient({ initialProducts = [] }: CatalogClientPro
   };
 
   const getProductImage = (product: ProductDto): string | undefined => {
-    if (product.productImages && product.productImages.length > 0) {
-      const image = product.productImages[0];
-      if (!image.imageData) return undefined;
-      const normalizedData = image.imageData.trim();
-      if (normalizedData.startsWith("data:") || normalizedData.startsWith("http://") || normalizedData.startsWith("https://")) {
-        return normalizedData;
-      }
-
-      const isRelativeUrl =
-        normalizedData.startsWith("/") &&
-        !normalizedData.startsWith("/9j/") &&
-        (normalizedData.startsWith("/images/") ||
-          normalizedData.startsWith("/static/") ||
-          normalizedData.startsWith("/assets/") ||
-          normalizedData.startsWith("/uploads/") ||
-          normalizedData.startsWith("/_next/") ||
-          /\.(jpg|jpeg|png|webp|svg|gif|ico)$/i.test(normalizedData));
-
-      if (isRelativeUrl) {
-        return normalizedData;
-      }
-
-      const mimeType = (() => {
-        if (normalizedData.startsWith("UklGR")) return "image/webp";
-        if (normalizedData.startsWith("/9j/") || normalizedData.startsWith("9j/")) return "image/jpeg";
-        if (normalizedData.startsWith("iVBORw0KGgo")) return "image/png";
-        if (normalizedData.startsWith("R0lGOD")) return "image/gif";
-
-        const extension = image.imageName?.split(".").pop()?.toLowerCase();
-        switch (extension) {
-          case "webp":
-            return "image/webp";
-          case "png":
-            return "image/png";
-          case "gif":
-            return "image/gif";
-          case "jpg":
-          case "jpeg":
-            return "image/jpeg";
-          default:
-            return "image/jpeg";
-        }
-      })();
-
-      return `data:${mimeType};base64,${normalizedData}`;
-    }
-    return undefined;
+    return getProductCoverUrl(product) ?? undefined;
   };
 
   const getProductPrice = (product: ProductDto): string => {

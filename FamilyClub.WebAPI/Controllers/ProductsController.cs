@@ -31,6 +31,19 @@ public class ProductsController : ControllerBase
         }
     }
 
+    [HttpGet("{productId:int}/images/{imageId:int}")]
+    [AllowAnonymous]
+    public async Task<IActionResult> GetImage(int productId, int imageId, CancellationToken cancellationToken)
+    {
+        var image = await _productService.GetProductImageAsync(productId, imageId, cancellationToken);
+        if (image is null)
+        {
+            return NotFound();
+        }
+
+        return File(image.Value.Data, image.Value.ContentType);
+    }
+
     [HttpGet("{id:int}")]
     [AllowAnonymous]
     public async Task<ActionResult<ProductDto>> GetById(int id, CancellationToken cancellationToken)

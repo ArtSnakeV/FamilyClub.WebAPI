@@ -1,4 +1,5 @@
 import type { AuthorDTO, FormatDto, ProductDto } from "@/lib/api/generated";
+import { getProductCoverUrl } from "@/lib/products/productCoverUrl";
 
 export type BookCardModel = {
   productId?: number;
@@ -17,51 +18,7 @@ export function formatBookPrice(value?: number | null) {
 }
 
 export function getProductImageSrc(product: ProductDto) {
-  const image = product.productImages?.[0];
-  if (!image?.imageData) return null;
-  const normalizedData = image.imageData.trim();
-  if (
-    normalizedData.startsWith("data:") ||
-    normalizedData.startsWith("http://") ||
-    normalizedData.startsWith("https://")
-  ) {
-    return normalizedData;
-  }
-
-  const isRelativeUrl =
-    normalizedData.startsWith("/") &&
-    !normalizedData.startsWith("/9j/") &&
-    (normalizedData.startsWith("/images/") ||
-      normalizedData.startsWith("/static/") ||
-      normalizedData.startsWith("/assets/") ||
-      normalizedData.startsWith("/uploads/") ||
-      normalizedData.startsWith("/_next/") ||
-      /\.(jpg|jpeg|png|webp|svg|gif|ico)$/i.test(normalizedData));
-
-  if (isRelativeUrl) {
-    return normalizedData;
-  }
-
-  const mimeType = (() => {
-    if (normalizedData.startsWith("UklGR")) return "image/webp";
-    if (normalizedData.startsWith("/9j/") || normalizedData.startsWith("9j/")) return "image/jpeg";
-    if (normalizedData.startsWith("iVBORw0KGgo")) return "image/png";
-    if (normalizedData.startsWith("R0lGOD")) return "image/gif";
-
-    const extension = image.imageName?.split(".").pop()?.toLowerCase();
-    switch (extension) {
-      case "webp":
-        return "image/webp";
-      case "png":
-        return "image/png";
-      case "gif":
-        return "image/gif";
-      default:
-        return "image/jpeg";
-    }
-  })();
-
-  return `data:${mimeType};base64,${normalizedData}`;
+  return getProductCoverUrl(product);
 }
 
 export function getAuthorLabel(
