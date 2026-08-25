@@ -10,7 +10,7 @@ interface BookshelfProps {
     getImageSrc: (book: ProductDto) => string | null;
     ratingByProductId: Map<number, number>;
     isInCart: (id?: number) => boolean;
-    addToCart: (id: number) => Promise<void>;
+    addToCart: (id: number) => Promise<boolean>;
     toggleFavorite: (id: number) => void;
     favorites: FavoriteBook[];
     isFav: (id?: number) => boolean;
