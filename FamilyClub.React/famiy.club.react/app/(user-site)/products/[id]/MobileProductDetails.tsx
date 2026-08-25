@@ -39,7 +39,7 @@ type MobileProductDetailsProps = {
   similarBookCards: any[];
   isFavorite: boolean;
   toggleFavorite: () => void;
-  addToCart: (id: number) => void;
+  addToCart: (id: number) => Promise<boolean>;
   galleryImages: string[];
   displayImage?: string | null;
   setSelectedImage: (img: string | null) => void;
