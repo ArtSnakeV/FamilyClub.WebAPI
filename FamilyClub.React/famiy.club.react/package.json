@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "cross-env NODE_EXTRA_CA_CERTS=%USERPROFILE%\\.aspnet\\https\\dev-cert.pem next dev",
-    "build": "next build",
-    "start": "next start",
+    "dev": "cross-env NODE_EXTRA_CA_CERTS=%USERPROFILE%\\.aspnet\\https\\dev-cert.pem node ./node_modules/next/dist/bin/next dev",
+    "build": "node ./node_modules/next/dist/bin/next build",
+    "start": "node ./node_modules/next/dist/bin/next start",
     "lint": "eslint",
     "update-api": "npx openapi-generator-cli generate -i https://localhost:7069/swagger/v1/swagger.json -g typescript-fetch -o ./lib/api/generated"
   },
@@ -21,8 +21,10 @@
     "next": "^16.2.11",
     "postcss": "^8.5.26",
     "react": "19.2.4",
+    "react-aria": "^3.48.0",
     "react-dom": "19.2.4",
-    "sharp": "^0.35.3"
+    "sharp": "^0.35.3",
+    "sweetalert2": "file:./vendor/sweetalert2"
   },
   "devDependencies": {
     "@openapitools/openapi-generator-cli": "^2.31.1",

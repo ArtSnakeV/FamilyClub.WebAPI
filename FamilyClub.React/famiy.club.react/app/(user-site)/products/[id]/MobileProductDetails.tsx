@@ -1,5 +1,6 @@
 "use client";
 
+import { alertSuccess, alertWarning } from "@/lib/ui/sweetAlert";
 import React from "react";
 import Link from "next/link";
 import { ProductDto, CoverType } from "@/lib/api/generated";
@@ -165,10 +166,13 @@ export default function MobileProductDetails({
               {/* Кнопка "Додати в кошик" */}
               <button
                 type="button"
-                onClick={() => {
-                  if (product?.id) {
-                    addToCart(product.id);
-                    alert("Товар додано в кошик");
+                onClick={async () => {
+                  if (!product?.id) return;
+                  const ok = await addToCart(product.id);
+                  if (ok) {
+                    await alertSuccess("Товар додано в кошик");
+                  } else {
+                    await alertWarning("Увійдіть в акаунт, щоб додати товар у кошик");
                   }
                 }}
                 className="w-full py-2.5 px-3 rounded-[6px] bg-[#0e503f] hover:bg-[#093529] active:scale-[0.98] transition-all text-white font-medium text-[15px] flex items-center justify-center gap-2 shadow-sm cursor-pointer"
@@ -272,11 +276,14 @@ export default function MobileProductDetails({
                     <span className="font-bold text-[15px] text-[#242424]">{book.price || ""}</span>
                     <button
                       type="button"
-                      onClick={() => {
+                      onClick={async () => {
                         const targetId = book.id ?? product?.id;
-                        if (targetId) {
-                          addToCart(targetId);
-                          alert("Товар додано в кошик");
+                        if (!targetId) return;
+                        const ok = await addToCart(targetId);
+                        if (ok) {
+                          await alertSuccess("Товар додано в кошик");
+                        } else {
+                          await alertWarning("Увійдіть в акаунт, щоб додати товар у кошик");
                         }
                       }}
                       className="w-[32px] h-[32px] rounded-full bg-[#0e503f] text-white flex items-center justify-center shadow-sm hover:bg-[#093529] transition-colors"
@@ -423,11 +430,14 @@ export default function MobileProductDetails({
                     <span className="font-bold text-[16px] text-[#242424]">{sim.price || ""}</span>
                     <button
                       type="button"
-                      onClick={() => {
+                      onClick={async () => {
                         const targetId = sim.id ?? product?.id;
-                        if (targetId) {
-                          addToCart(targetId);
-                          alert("Товар додано в кошик");
+                        if (!targetId) return;
+                        const ok = await addToCart(targetId);
+                        if (ok) {
+                          await alertSuccess("Товар додано в кошик");
+                        } else {
+                          await alertWarning("Увійдіть в акаунт, щоб додати товар у кошик");
                         }
                       }}
                       className="w-[32px] h-[32px] rounded-full bg-[#0e503f] text-white flex items-center justify-center shadow-sm hover:bg-[#093529] transition-colors"
@@ -582,10 +592,13 @@ export default function MobileProductDetails({
         </div>
         <button
           type="button"
-          onClick={() => {
-            if (product?.id) {
-              addToCart(product.id);
-              alert("Товар додано в кошик");
+          onClick={async () => {
+            if (!product?.id) return;
+            const ok = await addToCart(product.id);
+            if (ok) {
+              await alertSuccess("Товар додано в кошик");
+            } else {
+              await alertWarning("Увійдіть в акаунт, щоб додати товар у кошик");
             }
           }}
           className="bg-[#0e503f] hover:bg-[#093529] active:scale-95 text-white px-4 py-2.5 rounded-[10px] font-bold text-[14px] flex items-center gap-2 shadow-md shrink-0 transition-all cursor-pointer"

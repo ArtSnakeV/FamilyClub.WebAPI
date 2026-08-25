@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { apiBasePath } from "@/lib/api/services";
+import { getAuthToken } from "@/lib/auth/tokenStorage";
 
 export interface UserInfo {
     id: string;
@@ -35,10 +36,24 @@ export default function useAllUsersInfo() {
     const fetchUsers = useCallback(async () => {
         try {
             setLoadingUsersInfo(true);
-            const res = await fetch(`${apiBasePath}/api/ClubMember`);
-            const data = await res.json();
+            const token = getAuthToken();
+            const res = await fetch(`${apiBasePath}/api/ClubMember`, {
+                headers: token ? { Authorization: `Bearer ${token}` } : {},
+            });
 
-            const mapped: UserInfo[] = data.map((u: any) => ({
+            if (!res.ok) {
+                console.error("Failed to fetch users", res.status);
+                setUsersInfo([]);
+                return;
+            }
+
+            const data = await res.json();
+            if (!Array.isArray(data)) {
+                setUsersInfo([]);
+                return;
+            }
+
+            const mapped: UserInfo[] = data.map((u: UserInfo) => ({
                 ...u,
                 role: u.roles?.[0] ?? "User",
             }));
@@ -46,6 +61,7 @@ export default function useAllUsersInfo() {
             setUsersInfo(mapped);
         } catch (e) {
             console.error(e);
+            setUsersInfo([]);
         } finally {
             setLoadingUsersInfo(false);
         }

@@ -25,6 +25,8 @@ type Props = {
   onNotifications?: () => void;
   onOrders?: () => void;
   onLibrary?: () => void;
+  onAdminPanel?: () => void;
+  showAdminPanel?: boolean;
   onLogout?: () => void;
 };
 
@@ -35,6 +37,8 @@ export default function UserMenuDrop({
   onNotifications,
   onOrders,
   onLibrary,
+  onAdminPanel,
+  showAdminPanel = false,
   onLogout,
 }: Props) {
   const displayName =
@@ -246,6 +250,33 @@ export default function UserMenuDrop({
                         </button>
                       )}
                     </MenuItem>
+
+                    {showAdminPanel && (
+                      <MenuItem>
+                        {({ active }) => (
+                          <button
+                            onClick={onAdminPanel}
+                            className={`flex items-center w-full px-2 py-1 text-[14px] transition
+        ${active ? "bg-[#ece7df]" : ""}`}
+                          >
+                            <div className="h-[40px] flex flex-row place-content-around items-center">
+                              <div className="w-[22px] flex justify-center">
+                                <Image
+                                  src="/images/admin_manager_layout/books.svg"
+                                  alt="admin panel"
+                                  width={20}
+                                  height={20}
+                                />
+                              </div>
+
+                              <div className="w-[112px]">
+                                <span>Адмін панель</span>
+                              </div>
+                            </div>
+                          </button>
+                        )}
+                      </MenuItem>
+                    )}
 
                     <MenuSeparator className="h-px bg-[#e0dbd2] my-1" />
 

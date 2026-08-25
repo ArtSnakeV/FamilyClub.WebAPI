@@ -19,6 +19,10 @@ export function useUsersTotal() {
                 const res = await fetch(`${apiBasePath}/api/ClubMember`, {
                     headers: { Authorization: `Bearer ${token}` },
                 });
+                if (!res.ok) {
+                    setMembers([]);
+                    return;
+                }
                 const data: ClubMemberReadDto[] = await res.json();
                 setMembers(Array.isArray(data) ? data : []);
             } catch (err) {

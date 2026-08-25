@@ -1,3 +1,4 @@
+import { alertError, showConfirm } from "@/lib/ui/sweetAlert";
 import { useState } from "react";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { TranslatorDto } from "@/app/(admin-site)/admin/books/translators/addTranslator/types";
@@ -26,13 +27,13 @@ export default function useSubmitEditTranslator({ id, form, router }: Props) {
       router.push("/admin/books/translators");
     } catch (e) {
       console.error(e);
-      alert("Помилка при редагуванні перекладача");
+      await alertError("Помилка при редагуванні перекладача");
     } finally {
       setLoading(false);
     }
   };
   const handleDelete = async () => {
-    const confirmDelete = confirm("Ви точно хочете видалити цього перекладача?");
+    const confirmDelete = await showConfirm("Ви точно хочете видалити цього перекладача?");
     if (!confirmDelete) return;
 
     try {
@@ -42,7 +43,7 @@ export default function useSubmitEditTranslator({ id, form, router }: Props) {
       router.push("/admin/books/translators");
     } catch (e) {
       console.error(e);
-      alert("Помилка при видаленні перекладача");
+      await alertError("Помилка при видаленні перекладача");
     }
   };
   return { handleSubmit, loading, handleDelete };
