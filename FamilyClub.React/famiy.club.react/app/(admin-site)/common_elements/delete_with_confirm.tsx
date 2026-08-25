@@ -1,5 +1,6 @@
 "use client";
 
+import { alertError } from "@/lib/ui/sweetAlert";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import DeleteButton from "./delete_button"; // Твоя оригінальная кнопка видалення
@@ -44,7 +45,7 @@ export default function DeleteWithConfirm<T extends string | number>({
       router.refresh(); 
     } catch (error) {
       console.error(`Помилка видалення для сутності [${entityName}]:`, error);
-      alert(`Не вдалося видалити ${entityName}. Спробуйте ще раз.`);
+      await alertError(`Не вдалося видалити ${entityName}. Спробуйте ще раз.`);
     } finally {
       setIsDeleting(false);
       setIsConfirming(false);

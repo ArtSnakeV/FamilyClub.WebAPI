@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
-import { authorService, apiBasePath  } from "@/lib/api/services";
+import { authorService, apiBasePath } from "@/lib/api/services";
+import { authHeaders } from "@/lib/api/authHeaders";
 import { AuthorDto } from "@/app/(admin-site)/admin/books/authors/addAuthor/types";
 
 type Props = {
@@ -37,7 +38,12 @@ export function useSubmitAuthor({ form, router, mainImage }: Props) {
 
         const response = await fetch(
           `${apiBasePath}/api/Authors/${authorId}/photo`,
-          { method: "POST", body: formData, signal },
+          {
+            method: "POST",
+            headers: authHeaders(),
+            body: formData,
+            signal,
+          },
         );
 
         if (!response.ok) {

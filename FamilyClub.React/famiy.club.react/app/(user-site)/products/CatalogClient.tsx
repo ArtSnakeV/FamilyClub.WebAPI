@@ -28,11 +28,20 @@ export default function CatalogClient({ initialProducts = [] }: CatalogClientPro
       try {
         setLoading(true);
         setLoadError(false);
-        const products = (await productService.apiProductsGet().catch(() => [])) ?? [];
+        const products = await productService.apiProductsGet();
         if (!mounted) return;
+        if (!Array.isArray(products)) {
+          setAllProducts([]);
+          setLoadError(true);
+          return;
+        }
         setAllProducts(products);
-      } catch {
-        if (mounted) setLoadError(true);
+      } catch (err) {
+        console.error("Failed to load catalog", err);
+        if (mounted) {
+          setAllProducts([]);
+          setLoadError(true);
+        }
       } finally {
         if (mounted) setLoading(false);
       }
@@ -366,7 +375,7 @@ export default function CatalogClient({ initialProducts = [] }: CatalogClientPro
                 Не вдалося завантажити каталог
               </h2>
               <p className="text-[16px] text-gray-600">
-                Перевір, що API запущений, і онови сторінку.
+                Не вдалося завантажити товари. Спробуйте пізніше або оновіть сторінку.
               </p>
             </div>
           ) : paginatedProducts.length > 0 ? (

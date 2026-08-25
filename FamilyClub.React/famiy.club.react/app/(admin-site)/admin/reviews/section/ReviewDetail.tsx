@@ -1,5 +1,6 @@
 "use client";
 
+import { showConfirm } from "@/lib/ui/sweetAlert";
 import { Review } from "../types";
 import StarRating from "../ui/StarRating";
 
@@ -165,8 +166,8 @@ export default function ReviewDetail({
 
                     <button
                         type="button"
-                        onClick={() => {
-                            if (confirm("Видалити цей відгук назавжди? Дію не можна скасувати.")) {
+                        onClick={async () => {
+                            if (await showConfirm("Видалити цей відгук назавжди? Дію не можна скасувати.")) {
                                 onDelete();
                             }
                         }}

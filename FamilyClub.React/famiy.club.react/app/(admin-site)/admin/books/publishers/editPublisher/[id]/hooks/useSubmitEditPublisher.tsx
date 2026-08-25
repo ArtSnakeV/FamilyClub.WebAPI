@@ -1,3 +1,4 @@
+import { alertError, showConfirm } from "@/lib/ui/sweetAlert";
 import { useState } from "react";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { PublisherDto } from "@/app/(admin-site)/admin/books/publishers/addPublisher/types";
@@ -26,13 +27,13 @@ export default function useSubmitEditPublisher({ id, form, router }: Props) {
       router.push("/admin/books/publishers");
     } catch (e) {
       console.error(e);
-      alert("Помилка при редагуванні видавництва");
+      await alertError("Помилка при редагуванні видавництва");
     } finally {
       setLoading(false);
     }
   };
   const handleDelete = async () => {
-    const confirmDelete = confirm("Ви точно хочете видалити це видавництво?");
+    const confirmDelete = await showConfirm("Ви точно хочете видалити це видавництво?");
     if (!confirmDelete) return;
 
     try {
@@ -42,7 +43,7 @@ export default function useSubmitEditPublisher({ id, form, router }: Props) {
       router.push("/admin/books/publishers");
     } catch (e) {
       console.error(e);
-      alert("Помилка при видаленні видавництва");
+      await alertError("Помилка при видаленні видавництва");
     }
   };
   return { handleSubmit, loading, handleDelete };

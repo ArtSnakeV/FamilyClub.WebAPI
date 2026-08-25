@@ -1,3 +1,4 @@
+import { alertError } from "@/lib/ui/sweetAlert";
 import { useState } from "react";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { ProductDto, ImageUploadState } from "@/app/(user-site)/products/addProduct/types";
@@ -58,7 +59,7 @@ export default function useSubmitEdit({ id, form, images, router }: Props) {
         const text = await response?.text?.();
         console.error("SERVER RESPONSE:", text);
       }
-      alert("Помилка при оновленні продукту");
+      await alertError("Помилка при оновленні продукту");
     } finally {
       setLoading(false);
     }

@@ -1,7 +1,9 @@
+import { alertError } from "@/lib/ui/sweetAlert";
 import { useState } from "react";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { AuthorDto } from "@/app/(admin-site)/admin/books/authors/addAuthor/types";
 import { authorService, apiBasePath } from "@/lib/api/services";
+import { authHeaders } from "@/lib/api/authHeaders";
 
 type Props = {
   id: number;
@@ -31,6 +33,7 @@ export default function useSubmitEditAuthor({ id, form, mainImage, router }: Pro
 
         const response = await fetch(`${apiBasePath}/api/Authors/${id}/photo`, {
           method: "POST",
+          headers: authHeaders(),
           body: formData,
         });
 
@@ -40,7 +43,7 @@ export default function useSubmitEditAuthor({ id, form, mainImage, router }: Pro
       router.push("/admin/books/authors");
     } catch (e) {
       console.error(e);
-      alert("Помилка при редагуванні автора");
+      await alertError("Помилка при редагуванні автора");
     } finally {
       setLoading(false);
     }

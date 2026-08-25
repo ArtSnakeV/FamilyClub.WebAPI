@@ -1,5 +1,6 @@
 "use client";
 
+import { alertWarning } from "@/lib/ui/sweetAlert";
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -511,9 +512,9 @@ export default function MobileCartView({
           <button
             type="button"
             disabled={subtotal === 0}
-            onClick={() => {
+            onClick={async () => {
               if (!agreed) {
-                alert("Будь ласка, підтвердіть згоду з Політикою конфіденційності та Користувацькою угодою (поставте галочку)");
+                await alertWarning("Будь ласка, підтвердіть згоду з Політикою конфіденційності та Користувацькою угодою (поставте галочку)");
                 return;
               }
               router.push("/checkout");

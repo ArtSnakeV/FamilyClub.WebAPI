@@ -1,3 +1,4 @@
+import { alertWarning } from "@/lib/ui/sweetAlert";
 import { ProductDto } from "@/lib/api/generated";
 import { useRouter } from "next/navigation";
 import { FavoriteBook } from "@/lib/hooks/useFavorites";
@@ -74,10 +75,10 @@ export default function BookShelf({
                                 {/* like button */}
                                 <button
                                     type="button"
-                                    onClick={(e) => {
+                                    onClick={async (e) => {
                                         e.stopPropagation();
                                         if (!isAuthenticated) {
-                                            alert("Щоб додати в улюблене, будь ласка, авторизуйтесь");
+                                            await alertWarning("Щоб додати в улюблене, будь ласка, авторизуйтесь");
                                             return;
                                         }
                                         if (!book.id) return;
@@ -152,7 +153,12 @@ export default function BookShelf({
                                                 onClick={async (e) => {
                                                     e.stopPropagation();
                                                     if (!book.id) return;
-                                                    if (!isInCart(book.id)) await addToCart(book.id);
+                                                    if (!isInCart(book.id)) {
+                                                        const ok = await addToCart(book.id);
+                                                        if (!ok && !isAuthenticated) {
+                                                            await alertWarning("Увійдіть в акаунт, щоб додати товар у кошик");
+                                                        }
+                                                    }
                                                 }}
                                                 className="relative cursor-pointer bottom-[3.7vh] left-[10vw]"
                                                 style={{ zIndex: 11 }}

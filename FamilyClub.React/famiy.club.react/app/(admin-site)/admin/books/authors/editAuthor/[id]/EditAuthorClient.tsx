@@ -1,5 +1,6 @@
 "use client";
 
+import { alertError, showConfirm } from "@/lib/ui/sweetAlert";
 import { useRouter } from "next/navigation";
 import useEditAuthorForm from "./hooks/useEditAuthorForm";
 import useSubmitEditAuthor from "./hooks/useSubmitEditAuthor";
@@ -29,13 +30,13 @@ export default function EditAuthorClient({ id }: { id: string }) {
   });
 
   const handleDelete = async () => {
-    if (!confirm("Ви точно бажаєте видалити цього автора?")) return;
+    if (!(await showConfirm("Ви точно бажаєте видалити цього автора?"))) return;
     try {
       await authorService.apiAuthorsIdDelete({ id: Number(id) });
       router.push("/admin/books/authors");
     } catch (e) {
       console.error(e);
-      alert("Помилка при видаленні");
+      await alertError("Помилка при видаленні");
 
     }
   };
