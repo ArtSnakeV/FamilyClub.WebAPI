@@ -5,7 +5,8 @@ export default function UaCircle() {
   return (
     <div className="flex items-center justify-center gap-1">
       <div className="group flex items-center justify-center">
-        <div
+        {/* блок коду темна тема */}
+        {/* <div
           className="
           w-[40px]
           h-[40px]
@@ -27,7 +28,7 @@ export default function UaCircle() {
             className="object-contain"
             priority
           />
-        </div>
+        </div> */}
       </div>
       <div className="group flex items-center justify-center">
         <div
