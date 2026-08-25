@@ -153,7 +153,12 @@ export default function BookShelf({
                                                 onClick={async (e) => {
                                                     e.stopPropagation();
                                                     if (!book.id) return;
-                                                    if (!isInCart(book.id)) await addToCart(book.id);
+                                                    if (!isInCart(book.id)) {
+                                                        const ok = await addToCart(book.id);
+                                                        if (!ok && !isAuthenticated) {
+                                                            await alertWarning("Увійдіть в акаунт, щоб додати товар у кошик");
+                                                        }
+                                                    }
                                                 }}
                                                 className="relative cursor-pointer bottom-[3.7vh] left-[10vw]"
                                                 style={{ zIndex: 11 }}

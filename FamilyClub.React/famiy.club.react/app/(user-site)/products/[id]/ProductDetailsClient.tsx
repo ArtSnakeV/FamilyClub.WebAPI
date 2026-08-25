@@ -808,9 +808,12 @@ export default function ProductDetailsClient({ id }: { id: string }) {
                       className="flex flex-1 items-center justify-center gap-3 py-3 text-[18px] text-[#242424]/70 hover:text-[#242424] transition-colors"
                       type="button"
                       onClick={async () => {
-                        if (currentProduct?.id) {
-                          addToCart(currentProduct.id);
+                        if (!currentProduct?.id) return;
+                        const ok = await addToCart(currentProduct.id);
+                        if (ok) {
                           await alertSuccess("Товар додано в кошик");
+                        } else {
+                          await alertWarning("Увійдіть в акаунт, щоб додати товар у кошик");
                         }
                       }}
                     >
