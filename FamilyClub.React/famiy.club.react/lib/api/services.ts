@@ -46,14 +46,6 @@ const authMiddleware: Middleware = {
     if (!headers.has("Authorization")) {
       headers.set("Authorization", `Bearer ${token}`);
     }
-// Browser: empty base → same-origin /api (Next rewrite).
-// Server (SSR): INTERNAL_API_URL → NEXT_PUBLIC_API_URL → local Kestrel.
-export const apiBasePath =
-  typeof window !== "undefined"
-    ? process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, "") || ""
-    : process.env.INTERNAL_API_URL?.replace(/\/$/, "") ||
-      process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, "") ||
-      "https://localhost:7069";
 
     return { url, init: { ...init, headers } };
   },
