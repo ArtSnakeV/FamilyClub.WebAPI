@@ -91,6 +91,8 @@ export default function BookCard({ title, author, price, image, rating, href, fo
                     alt={title}
                     className="absolute left-1/2 top-[20px] h-[190px] w-[140px] -translate-x-1/2 object-contain"
                     src={image}
+                    loading="lazy"
+                    decoding="async"
                 />
             ) : (
                 <div className="absolute left-1/2 top-[20px] h-[190px] w-[140px] -translate-x-1/2 flex flex-col items-center justify-center text-gray-400 text-center p-2 bg-white/80 rounded-[6px] shadow-sm border border-gray-200">

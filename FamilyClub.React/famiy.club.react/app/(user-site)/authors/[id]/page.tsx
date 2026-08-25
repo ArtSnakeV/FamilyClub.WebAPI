@@ -10,6 +10,7 @@ import { useFavorites } from "@/lib/hooks/useFavorites";
 import { useCurrentUser } from "../../userProfile/hooks/useCurrentUser";
 import Bookshelf from "./Bookshelf";
 import AuthorPageBio from "./AuthorPageBio";
+import { getProductCoverUrl } from "@/lib/products/productCoverUrl";
 
 
 const BIO_PREVIEW_LENGTH = 400;
@@ -87,13 +88,7 @@ export default function AuthorDetailPage() {
         if (!id) return false;
         return favorites.some((f) => f.id === id);
     };
-    const getImageSrc = (book: ProductDto) => {
-        const firstImage = book.productImages?.[0];
-        if (!firstImage?.imageData) return null;
-        return firstImage.imageData.startsWith("data:")
-            ? firstImage.imageData
-            : `data:image/jpeg;base64,${firstImage.imageData}`;
-    };
+    const getImageSrc = (book: ProductDto) => getProductCoverUrl(book);
 
     if (loading) {
         return (

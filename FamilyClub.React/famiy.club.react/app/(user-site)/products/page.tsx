@@ -1,6 +1,8 @@
 import { Suspense } from "react";
 import CatalogClient from "./CatalogClient";
 
+export const dynamic = "force-dynamic";
+
 /** Products load on the client via /api rewrite — avoids SSR TLS issues with localhost. */
 export default function CatalogPage() {
   return (

@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import type { FormatType } from "@/lib/hooks/useCart";
 import type { ProductDto, AuthorDTO, FormatDto } from "@/lib/api/generated";
 import { Availability } from "@/lib/api/generated";
+import { getProductCoverUrl } from "@/lib/products/productCoverUrl";
 import { favoriteService } from "@/lib/api/services";
 import { getAuthToken, getAuthUserId } from "@/lib/auth/tokenStorage";
 import { usePaws } from "@/app/(user-site)/paws/hooks/usePaws";
@@ -34,42 +35,7 @@ function formatPrice(value: number): string {
 }
 
 function getImageSrc(product: ProductDto): string | null {
-  const image = product.productImages?.[0];
-  if (!image?.imageData) return null;
-  const normalizedData = image.imageData.trim();
-  if (
-    normalizedData.startsWith("data:") ||
-    normalizedData.startsWith("http://") ||
-    normalizedData.startsWith("https://")
-  ) {
-    return normalizedData;
-  }
-
-  const isRelativeUrl =
-    normalizedData.startsWith("/") &&
-    !normalizedData.startsWith("/9j/") &&
-    (normalizedData.startsWith("/images/") ||
-      normalizedData.startsWith("/static/") ||
-      normalizedData.startsWith("/assets/") ||
-      normalizedData.startsWith("/uploads/") ||
-      normalizedData.startsWith("/_next/") ||
-      /\.(jpg|jpeg|png|webp|svg|gif|ico)$/i.test(normalizedData));
-
-  if (isRelativeUrl) return normalizedData;
-
-  const extension = image.imageName?.split(".").pop()?.toLowerCase();
-  const mimeType =
-    normalizedData.startsWith("/9j/") || normalizedData.startsWith("9j/")
-      ? "image/jpeg"
-      : extension === "png"
-      ? "image/png"
-      : extension === "webp"
-        ? "image/webp"
-        : extension === "gif"
-          ? "image/gif"
-          : "image/jpeg";
-
-  return `data:${mimeType};base64,${normalizedData}`;
+  return getProductCoverUrl(product);
 }
 
 function getAuthorLabel(authorIds?: Array<number> | null, authorById?: Map<number, AuthorDTO>): string | null {
