@@ -167,9 +167,12 @@ export default function MobileProductDetails({
               <button
                 type="button"
                 onClick={async () => {
-                  if (product?.id) {
-                    addToCart(product.id);
+                  if (!product?.id) return;
+                  const ok = await addToCart(product.id);
+                  if (ok) {
                     await alertSuccess("Товар додано в кошик");
+                  } else {
+                    await alertWarning("Увійдіть в акаунт, щоб додати товар у кошик");
                   }
                 }}
                 className="w-full py-2.5 px-3 rounded-[6px] bg-[#0e503f] hover:bg-[#093529] active:scale-[0.98] transition-all text-white font-medium text-[15px] flex items-center justify-center gap-2 shadow-sm cursor-pointer"
@@ -275,9 +278,12 @@ export default function MobileProductDetails({
                       type="button"
                       onClick={async () => {
                         const targetId = book.id ?? product?.id;
-                        if (targetId) {
-                          addToCart(targetId);
+                        if (!targetId) return;
+                        const ok = await addToCart(targetId);
+                        if (ok) {
                           await alertSuccess("Товар додано в кошик");
+                        } else {
+                          await alertWarning("Увійдіть в акаунт, щоб додати товар у кошик");
                         }
                       }}
                       className="w-[32px] h-[32px] rounded-full bg-[#0e503f] text-white flex items-center justify-center shadow-sm hover:bg-[#093529] transition-colors"
@@ -426,9 +432,12 @@ export default function MobileProductDetails({
                       type="button"
                       onClick={async () => {
                         const targetId = sim.id ?? product?.id;
-                        if (targetId) {
-                          addToCart(targetId);
+                        if (!targetId) return;
+                        const ok = await addToCart(targetId);
+                        if (ok) {
                           await alertSuccess("Товар додано в кошик");
+                        } else {
+                          await alertWarning("Увійдіть в акаунт, щоб додати товар у кошик");
                         }
                       }}
                       className="w-[32px] h-[32px] rounded-full bg-[#0e503f] text-white flex items-center justify-center shadow-sm hover:bg-[#093529] transition-colors"
@@ -584,9 +593,12 @@ export default function MobileProductDetails({
         <button
           type="button"
           onClick={async () => {
-            if (product?.id) {
-              addToCart(product.id);
+            if (!product?.id) return;
+            const ok = await addToCart(product.id);
+            if (ok) {
               await alertSuccess("Товар додано в кошик");
+            } else {
+              await alertWarning("Увійдіть в акаунт, щоб додати товар у кошик");
             }
           }}
           className="bg-[#0e503f] hover:bg-[#093529] active:scale-95 text-white px-4 py-2.5 rounded-[10px] font-bold text-[14px] flex items-center gap-2 shadow-md shrink-0 transition-all cursor-pointer"
