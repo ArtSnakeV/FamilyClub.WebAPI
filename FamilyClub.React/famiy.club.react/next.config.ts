@@ -55,11 +55,6 @@ const nextConfig: NextConfig = {
     ];
   },
   async rewrites() {
-    const internalApi =
-      process.env.INTERNAL_API_URL?.replace(/\/$/, "") ||
-      process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, "") ||
-      "https://localhost:7069";
-
     return [
       {
         source: "/api/:path*",
