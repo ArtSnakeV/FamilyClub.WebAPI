@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { apiBasePath } from "@/lib/api/services";
 import { Review } from "../types";
+import { getAuthToken } from "@/lib/auth/tokenStorage";
 
 export default function useReviews() {
     const [reviews, setReviews] = useState<Review[]>([]);
@@ -11,7 +12,12 @@ export default function useReviews() {
     const fetchReviews = useCallback(async () => {
         setLoadingReviews(true);
         try {
-            const res = await fetch(`${apiBasePath}/api/Reviews`);
+            const token = getAuthToken();
+            const res = await fetch(`${apiBasePath}/api/Reviews`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
             if (!res.ok) throw new Error(`Failed to fetch reviews (${res.status})`);
             const data: Review[] = await res.json();
             setReviews(data);
