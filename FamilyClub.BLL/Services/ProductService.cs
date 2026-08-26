@@ -34,6 +34,21 @@ public class ProductService : IProductService
 		_cacheService = cacheService;
     }
 
+    //public async Task<IEnumerable<ProductDto>> GetAllAsync(CancellationToken cancellationToken = default)
+    //{
+    //    var cachedProducts = await _cacheService.GetAsync<List<ProductDto>>(AllProductsCacheKey, cancellationToken);
+    //    if (cachedProducts is not null)
+    //    {
+    //        return cachedProducts;
+    //    }
+
+    //    var products = await _productRepository.GetAllAsync(cancellationToken);
+    //    var dtos = products.Select(MapToDto).ToList();
+
+    //    await _cacheService.SetAsync(AllProductsCacheKey, dtos, TimeSpan.FromMinutes(15), cancellationToken);
+
+    //    return dtos;
+    //}
     public async Task<IEnumerable<ProductDto>> GetAllAsync(CancellationToken cancellationToken = default)
     {
         var cachedProducts = await _cacheService.GetAsync<List<ProductDto>>(AllProductsCacheKey, cancellationToken);
@@ -42,51 +57,8 @@ public class ProductService : IProductService
             return cachedProducts;
         }
 
-        // Project without ImageData bytes — keeps catalog/list endpoints fast.
-        var dtos = await _context.Products
-            .AsNoTracking()
-            .AsSplitQuery()
-            .Select(p => new ProductDto
-            {
-                Id = p.Id,
-                ProductName = p.ProductName,
-                Price = p.Price,
-                DiscountPrice = p.DiscountPrice,
-                Description = p.Description,
-                PublisherId = p.PublisherId,
-                OriginalTitle = p.OriginalTitle,
-                PageCount = p.PageCount,
-                PublishingDate = p.PublishingDate,
-                CoverType = p.CoverType,
-                Availability = p.Availability,
-                QuantityInStock = p.QuantityInStock,
-                ProductCode = p.ProductCode,
-                WeightGrams = p.WeightGrams,
-                ItemsInSet = p.ItemsInSet,
-                OriginalLanguageId = p.OriginalLanguageId,
-                ISBN = p.ISBN,
-                PromotionId = p.PromotionId,
-                ProductImages = (p.ProductImages ?? new List<ProductImage>())
-                    .OrderBy(i => i.Id)
-                    .Take(1)
-                    .Select(i => new ProductImage
-                    {
-                        Id = i.Id,
-                        ImageName = i.ImageName,
-                        ImageData = Array.Empty<byte>(),
-                        ProductId = p.Id,
-                    })
-                    .ToList(),
-                AuthorIds = p.Authors.Select(a => a.Id).ToList(),
-                LanguageIds = p.Languages.Select(l => l.Id).ToList(),
-                CategoryIds = p.Categories.Select(c => c.Id).ToList(),
-                SeriesIds = p.Series.Select(s => s.Id).ToList(),
-                TranslatorIds = p.Translators.Select(t => t.Id).ToList(),
-                FormatIds = p.Formats.Select(f => f.Id).ToList(),
-                BookSizeIds = p.BookSizes.Select(f => f.Id).ToList(),
-                AgeRestrictionIds = p.AgeRestrictions.Select(a => a.Id).ToList(),
-            })
-            .ToListAsync(cancellationToken);
+        var products = await _productRepository.GetAllAsync(cancellationToken);
+        var dtos = products.Select(MapToDto).ToList();
 
         await _cacheService.SetAsync(AllProductsCacheKey, dtos, TimeSpan.FromMinutes(15), cancellationToken);
 
@@ -531,8 +503,56 @@ public class ProductService : IProductService
 			AgeRestrictionIds = product.AgeRestrictions?.Select(a => a.Id).ToList(),
 		};
 	}
+    private static ProductDto MapToListDto(Product product)
+    {
+        return new ProductDto
+        {
+            Id = product.Id,
 
-	private async Task InvalidateCacheAsync(CancellationToken cancellationToken, int? id = null)
+            ProductName = product.ProductName,
+            Price = product.Price,
+            DiscountPrice = product.DiscountPrice,
+            Description = product.Description,
+
+            PublisherId = product.PublisherId,
+
+            OriginalTitle = product.OriginalTitle,
+            PageCount = product.PageCount,
+            PublishingDate = product.PublishingDate,
+
+            CoverType = product.CoverType,
+            Availability = product.Availability,
+
+            QuantityInStock = product.QuantityInStock,
+            ProductCode = product.ProductCode,
+            WeightGrams = product.WeightGrams,
+            ItemsInSet = product.ItemsInSet,
+
+            OriginalLanguageId = product.OriginalLanguageId,
+            ISBN = product.ISBN,
+
+            PromotionId = product.PromotionId,
+
+            // ТІЛЬКИ перше зображення — не всі 5
+            ProductImages = product.ProductImages?
+                .Take(1)
+                .Select(img => new ProductImage
+                {
+                    ImageData = img.ImageData,
+                    ImageName = img.ImageName
+                }).ToList(),
+
+            AuthorIds = product.Authors?.Select(a => a.Id).ToList(),
+            LanguageIds = product.Languages?.Select(l => l.Id).ToList(),
+            CategoryIds = product.Categories?.Select(c => c.Id).ToList(),
+            SeriesIds = product.Series?.Select(s => s.Id).ToList(),
+            TranslatorIds = product.Translators?.Select(t => t.Id).ToList(),
+            FormatIds = product.Formats?.Select(f => f.Id).ToList(),
+            BookSizeIds = product.BookSizes?.Select(f => f.Id).ToList(),
+            AgeRestrictionIds = product.AgeRestrictions?.Select(a => a.Id).ToList(),
+        };
+    }
+    private async Task InvalidateCacheAsync(CancellationToken cancellationToken, int? id = null)
 	{
 		await _cacheService.RemoveAsync(AllProductsCacheKey, cancellationToken);
 		await _cacheService.RemoveAsync("products_all", cancellationToken);
