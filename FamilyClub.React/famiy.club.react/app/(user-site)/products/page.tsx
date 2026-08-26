@@ -1,8 +1,9 @@
 import { Suspense } from "react";
-import { productService } from "@/lib/api/services";
 import CatalogClient from "./CatalogClient";
 
-/** Products load on the client via /api rewrite — avoids SSR TLS issues with localhost. */
+export const dynamic = "force-dynamic";
+
+/** Products load on the client via /api rewrite — avoids SSR TLS / cached error pages. */
 export default function CatalogPage() {
   return (
     <Suspense
