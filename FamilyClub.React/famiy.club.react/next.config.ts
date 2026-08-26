@@ -7,13 +7,13 @@ import type { NextConfig } from "next";
  * Production (K8s/Docker): set INTERNAL_API_URL to the API Service from the Next pod, e.g.
  *   INTERNAL_API_URL=http://familyclub-api:8080
  * Leave NEXT_PUBLIC_API_URL empty so the client uses relative /api.
- * Do not use localhost:7069 in cluster — API is in another pod.
+ * Do not use localhost in cluster — API is in another pod.
  *
- * Local default matches typical HTTPS Kestrel port.
+ * Local default: HTTP Kestrel (avoids Node TLS errors with self-signed HTTPS).
  */
 const internalApi =
   process.env.INTERNAL_API_URL?.replace(/\/$/, "") ||
-  "https://localhost:7069";
+  "http://localhost:5053";
 
 const nextConfig: NextConfig = {
   allowedDevOrigins: ["26.15.231.182", "localhost", "127.0.0.1"],

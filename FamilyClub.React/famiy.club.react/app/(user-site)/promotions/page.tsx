@@ -9,6 +9,7 @@ import { useCurrentUser } from "../userProfile/hooks/useCurrentUser";
 import BookShelf from "./BookShelf";
 import { usePagination } from "./hooks/usePagination";
 import Pagination from "./Pagination";
+import { getProductCoverUrl } from "@/lib/products/productCoverUrl";
 
 function isActive(promotion: PromotionDto): boolean {
     const now = new Date();
@@ -114,13 +115,7 @@ export default function PromotionsPage() {
         if (!id) return false;
         return favorites.some((f) => f.id === id);
     };
-    const getImageSrc = (book: ProductDto) => {
-        const firstImage = book.productImages?.[0];
-        if (!firstImage?.imageData) return null;
-        return firstImage.imageData.startsWith("data:")
-            ? firstImage.imageData
-            : `data:image/jpeg;base64,${firstImage.imageData}`;
-    };
+    const getImageSrc = (book: ProductDto) => getProductCoverUrl(book);
 
     if (loading) {
         return (

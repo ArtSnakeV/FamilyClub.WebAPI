@@ -6,6 +6,10 @@ namespace FamilyClub.BLL.Interfaces;
 public interface IProductService
 {
     Task<IEnumerable<ProductDto>> GetAllAsync(CancellationToken cancellationToken = default);
+    Task<(byte[] Data, string ContentType)?> GetProductImageAsync(
+        int productId,
+        int imageId,
+        CancellationToken cancellationToken = default);
     Task<ProductDto?> GetByIdAsync(int id, CancellationToken cancellationToken = default);
     Task<ProductDto> CreateAsync(ProductDto dto, List<IFormFile> productImageFiles, CancellationToken cancellationToken = default);
     Task<bool> UpdateAsync(int id, ProductDto dto, List<IFormFile> productImageFiles, CancellationToken cancellationToken = default);

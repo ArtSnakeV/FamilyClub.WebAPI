@@ -1,4 +1,4 @@
-﻿using FamilyClub.BLL.DTOs.ClubMember;
+using FamilyClub.BLL.DTOs.ClubMember;
 using FamilyClub.BLL.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
