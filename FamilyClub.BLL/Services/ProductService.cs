@@ -34,21 +34,6 @@ public class ProductService : IProductService
 		_cacheService = cacheService;
     }
 
-    //public async Task<IEnumerable<ProductDto>> GetAllAsync(CancellationToken cancellationToken = default)
-    //{
-    //    var cachedProducts = await _cacheService.GetAsync<List<ProductDto>>(AllProductsCacheKey, cancellationToken);
-    //    if (cachedProducts is not null)
-    //    {
-    //        return cachedProducts;
-    //    }
-
-    //    var products = await _productRepository.GetAllAsync(cancellationToken);
-    //    var dtos = products.Select(MapToDto).ToList();
-
-    //    await _cacheService.SetAsync(AllProductsCacheKey, dtos, TimeSpan.FromMinutes(15), cancellationToken);
-
-    //    return dtos;
-    //}
     public async Task<IEnumerable<ProductDto>> GetAllAsync(CancellationToken cancellationToken = default)
     {
         var cachedProducts = await _cacheService.GetAsync<List<ProductDto>>(AllProductsCacheKey, cancellationToken);
@@ -58,7 +43,7 @@ public class ProductService : IProductService
         }
 
         var products = await _productRepository.GetAllAsync(cancellationToken);
-        var dtos = products.Select(MapToListDto).ToList(); // ← було MapToDto
+        var dtos = products.Select(MapToDto).ToList();
 
         await _cacheService.SetAsync(AllProductsCacheKey, dtos, TimeSpan.FromMinutes(15), cancellationToken);
 
@@ -484,56 +469,8 @@ public class ProductService : IProductService
 			AgeRestrictionIds = product.AgeRestrictions?.Select(a => a.Id).ToList(),
 		};
 	}
-    private static ProductDto MapToListDto(Product product)
-    {
-        return new ProductDto
-        {
-            Id = product.Id,
 
-            ProductName = product.ProductName,
-            Price = product.Price,
-            DiscountPrice = product.DiscountPrice,
-            Description = product.Description,
-
-            PublisherId = product.PublisherId,
-
-            OriginalTitle = product.OriginalTitle,
-            PageCount = product.PageCount,
-            PublishingDate = product.PublishingDate,
-
-            CoverType = product.CoverType,
-            Availability = product.Availability,
-
-            QuantityInStock = product.QuantityInStock,
-            ProductCode = product.ProductCode,
-            WeightGrams = product.WeightGrams,
-            ItemsInSet = product.ItemsInSet,
-
-            OriginalLanguageId = product.OriginalLanguageId,
-            ISBN = product.ISBN,
-
-            PromotionId = product.PromotionId,
-
-            // ТІЛЬКИ перше зображення — не всі 5
-            ProductImages = product.ProductImages?
-                .Take(1)
-                .Select(img => new ProductImage
-                {
-                    ImageData = img.ImageData,
-                    ImageName = img.ImageName
-                }).ToList(),
-
-            AuthorIds = product.Authors?.Select(a => a.Id).ToList(),
-            LanguageIds = product.Languages?.Select(l => l.Id).ToList(),
-            CategoryIds = product.Categories?.Select(c => c.Id).ToList(),
-            SeriesIds = product.Series?.Select(s => s.Id).ToList(),
-            TranslatorIds = product.Translators?.Select(t => t.Id).ToList(),
-            FormatIds = product.Formats?.Select(f => f.Id).ToList(),
-            BookSizeIds = product.BookSizes?.Select(f => f.Id).ToList(),
-            AgeRestrictionIds = product.AgeRestrictions?.Select(a => a.Id).ToList(),
-        };
-    }
-    private async Task InvalidateCacheAsync(CancellationToken cancellationToken, int? id = null)
+	private async Task InvalidateCacheAsync(CancellationToken cancellationToken, int? id = null)
 	{
 		await _cacheService.RemoveAsync(AllProductsCacheKey, cancellationToken);
 		if (id.HasValue)
