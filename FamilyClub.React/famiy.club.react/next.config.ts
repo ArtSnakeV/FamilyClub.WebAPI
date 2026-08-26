@@ -42,7 +42,8 @@ const nextConfig: NextConfig = {
   async rewrites() {
     const internalApi =
       process.env.INTERNAL_API_URL?.replace(/\/$/, "") ||
-      "http://localhost:5053";
+      process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, "") ||
+      "https://localhost:7069";
 
     return [
       {
