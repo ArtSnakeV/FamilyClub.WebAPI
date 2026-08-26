@@ -1,4 +1,5 @@
 import type { ProductDto } from "@/lib/api/generated";
+import { apiBasePath } from "@/lib/api/services";
 
 type ProductImageLike = {
   id?: number;
@@ -12,12 +13,15 @@ export function getProductCoverApiUrl(
   imageId?: number | null,
 ): string | null {
   if (productId == null || imageId == null) return null;
-  return `/api/Products/${productId}/images/${imageId}`;
+  const base = apiBasePath.replace(/\/$/, "");
+  return `${base}/api/Products/${productId}/images/${imageId}`;
 }
 
 function resolveEmbeddedImageData(image: ProductImageLike): string | null {
   const normalizedData = image.imageData?.trim();
-  if (!normalizedData || normalizedData === "AA==") return null;
+  if (!normalizedData || normalizedData === "AA==" || normalizedData === "AAA=") {
+    return null;
+  }
 
   if (
     normalizedData.startsWith("data:") ||
