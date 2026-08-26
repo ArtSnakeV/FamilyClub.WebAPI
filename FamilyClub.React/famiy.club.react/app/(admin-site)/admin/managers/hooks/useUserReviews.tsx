@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { apiBasePath } from "@/lib/api/services";
+import { getAuthToken } from "@/lib/auth/tokenStorage";
 
 export interface Review {
     id: number;
@@ -23,10 +24,18 @@ export function useUserReviews(userId: string) {
 
         let cancelled = false;
         setLoading(true);
-
+        const token = getAuthToken();
+        if (!token) {
+            console.error("No auth token found");
+            setReviews([]);
+            setLoading(false);
+            return;
+        }
         const fetchReviews = async () => {
             try {
-                const res = await fetch(`${apiBasePath}/api/Reviews/by-user/${userId}`);
+                const res = await fetch(`${apiBasePath}/api/Reviews/by-user/${userId}`, {
+                    headers: token ? { Authorization: `Bearer ${token}` } : {},
+                });
                 if (!res.ok) throw new Error("Failed to fetch reviews");
                 const data: Review[] = await res.json();
                 if (!cancelled) setReviews(data);
