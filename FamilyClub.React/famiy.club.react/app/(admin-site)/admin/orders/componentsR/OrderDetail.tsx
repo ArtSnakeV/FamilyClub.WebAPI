@@ -83,12 +83,12 @@ export default function OrderDetail({
             {/* Status / dates / delivery card */}
             <section className="rounded-[9px] bg-[var(--color-white)] shadow-[0_0_10px_0_#00000040] text-[13px]
             flex flex-row gap-6 px-5 py-4 shrink-0">
-                <div className="flex flex-col gap-3 flex-1 min-w-0">
+                <div className="flex flex-col gap-3 flex-1 min-w-0 ">
                      <InfoRowInline label="Статус">
                         <select
                             value={order.status ?? "Pending"}
                             onChange={(e) => onStatusChange?.(e.target.value)}
-                            className="bg-[#F5F3EE] border border-[#C8C2B4] rounded-[6px] px-2 py-0.5 text-[13px] font-bold text-[#005b33] outline-none cursor-pointer hover:border-[#005B33] transition"
+                            className="bg-[#F5F3EE] w-[150px] border border-[#C8C2B4] rounded-[6px] px-2 py-0.5 text-[13px] font-bold text-[#005b33] outline-none cursor-pointer hover:border-[#005B33] transition"
                         >
                             <option value="Pending">Нове (Pending)</option>
                             <option value="Paid">Прийнято (Paid)</option>
