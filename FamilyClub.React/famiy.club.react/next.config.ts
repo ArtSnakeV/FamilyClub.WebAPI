@@ -40,15 +40,18 @@ const nextConfig: NextConfig = {
     ];
   },
   async rewrites() {
+    const internalApi =
+      process.env.INTERNAL_API_URL?.replace(/\/$/, "") ||
+      "http://localhost:5053";
+
     return [
       {
         source: "/api/:path*",
-        destination: "https://localhost:7069/api/:path*",
+        destination: `${internalApi}/api/:path*`,
       },
-      //створити .env і видалити цей блок для фото //
       {
         source: "/images/:path*",
-        destination: "https://localhost:7069/images/:path*",
+        destination: `${internalApi}/images/:path*`,
       },
     ];
   },
