@@ -183,7 +183,7 @@ export default function MobileProductDetails({
                     await alertWarning("Увійдіть в акаунт, щоб додати товар у кошик");
                   }
                 }}
-                className="w-full py-2.5 px-3 rounded-[6px] bg-[#0e503f] hover:bg-[#093529] active:scale-[0.98] transition-all text-white font-medium text-[15px] flex items-center justify-center gap-2 shadow-sm cursor-pointer"
+                className="w-full py-3 px-4 rounded-[10px] bg-[#0e503f] hover:bg-[#093529] active:scale-[0.98] transition-all text-white font-bold text-[16px] flex items-center justify-center gap-2 shadow-[0_4px_15px_rgba(14,80,63,0.35)] cursor-pointer"
               >
                 <img
                   src="/images/main_page/icons/rec-icon-basket.svg"
@@ -617,7 +617,7 @@ export default function MobileProductDetails({
               await alertWarning("Увійдіть в акаунт, щоб додати товар у кошик");
             }
           }}
-          className="bg-[#0e503f] hover:bg-[#093529] active:scale-95 text-white px-4 py-2.5 rounded-[10px] font-bold text-[14px] flex items-center gap-2 shadow-md shrink-0 transition-all cursor-pointer"
+          className="bg-[#0e503f] hover:bg-[#093529] active:scale-95 text-white px-5 py-3 rounded-[12px] font-bold text-[15px] flex items-center gap-2 shadow-[0_4px_15px_rgba(14,80,63,0.4)] shrink-0 transition-all cursor-pointer"
         >
           <img src="/images/main_page/icons/rec-icon-basket.svg" alt="" className="w-4 h-4 brightness-200" />
           <span>У кошик</span>
