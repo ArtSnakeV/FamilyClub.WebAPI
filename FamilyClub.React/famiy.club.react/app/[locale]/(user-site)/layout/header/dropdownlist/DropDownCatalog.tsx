@@ -3,9 +3,13 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import { useLocale, useTranslations } from "@/lib/i18n/LocaleProvider";
+import { localizedPath } from "@/lib/i18n/localized-path";
 
 export default function DropDownCatalog() {
   const [open, setOpen] = useState(false);
+  const { locale } = useLocale();
+  const t = useTranslations();
 
   return (
     <div className="relative w-[150px] z-10 pointer-events-auto">
@@ -25,7 +29,7 @@ export default function DropDownCatalog() {
         />
 
         <Link
-          href="/products"
+          href={localizedPath("/products", locale)}
           onClick={() => setOpen(true)}
           className="pointer-events-auto
             absolute inset-0
@@ -35,7 +39,7 @@ export default function DropDownCatalog() {
             focus:outline-none
           "
         >
-          <span className="text-[var(--color-white)]">Каталог</span>
+          <span className="text-[var(--color-white)]">{t("nav.catalog")}</span>
         </Link>
       </div>
     </div>

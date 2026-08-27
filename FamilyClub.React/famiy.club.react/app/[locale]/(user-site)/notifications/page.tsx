@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import LeftBlock from "./components/LeftBlock";
 import NotificationThreadCard from "./components/NotificationThreadCard";
 import NotificationThread from "./components/NotificationThread";
-import useReviews from "../../(admin-site)/admin/reviews/hooks/useReviews";
+import useReviews from "../../../(admin-site)/admin/reviews/hooks/useReviews";
 import useNotifications from "./hooks/useNotifications";
 import { useCurrentUser } from "../userProfile/hooks/useCurrentUser";
 import Image from "next/image";

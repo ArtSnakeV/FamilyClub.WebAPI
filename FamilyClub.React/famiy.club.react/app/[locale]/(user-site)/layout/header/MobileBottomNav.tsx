@@ -5,6 +5,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { apiBasePath } from "@/lib/api/services";
 import { clearAuthSession, getAuthToken } from "@/lib/auth/tokenStorage";
+import { useLocale, useTranslations } from "@/lib/i18n/LocaleProvider";
+import { localizedPath } from "@/lib/i18n/localized-path";
 
 type User = {
   id: string;
@@ -15,6 +17,8 @@ type User = {
 
 export default function MobileBottomNav() {
   const pathname = usePathname();
+  const { locale } = useLocale();
+  const t = useTranslations();
   const [member, setMember] = useState<User | null>(null);
 
   useEffect(() => {
@@ -52,15 +56,18 @@ export default function MobileBottomNav() {
   }, []);
 
   const isActive = (path: string) => {
-    if (path === "/" && pathname === "/") return true;
-    if (path !== "/" && pathname?.startsWith(path)) return true;
+    const localized = localizedPath(path, locale);
+    if (path === "/" && (pathname === localized || pathname === `${localized}/`)) {
+      return true;
+    }
+    if (path !== "/" && pathname?.startsWith(localized)) return true;
     return false;
   };
 
   const navItems = [
     {
-      name: "Головна",
-      href: "/",
+      name: t("nav.home"),
+      href: localizedPath("/", locale),
       icon: (active: boolean) => (
         <svg
           className={`w-[24px] h-[24px] transition-colors ${
@@ -73,8 +80,8 @@ export default function MobileBottomNav() {
       ),
     },
     {
-      name: "Бібліотека",
-      href: "/library",
+      name: t("nav.library"),
+      href: localizedPath("/library", locale),
       icon: (active: boolean) => (
         <svg
           className={`w-[24px] h-[24px] transition-colors ${
@@ -87,8 +94,8 @@ export default function MobileBottomNav() {
       ),
     },
     {
-      name: "Читальня",
-      href: "/categories",
+      name: t("nav.readingRoom"),
+      href: localizedPath("/categories", locale),
       icon: (active: boolean) => (
         <svg
           className={`w-[24px] h-[24px] transition-colors ${
@@ -101,8 +108,8 @@ export default function MobileBottomNav() {
       ),
     },
     {
-      name: "Спільнота",
-      href: "/community",
+      name: t("nav.community"),
+      href: localizedPath("/community", locale),
       icon: (active: boolean) => (
         <svg
           className={`w-[24px] h-[24px] transition-colors ${
@@ -141,7 +148,7 @@ export default function MobileBottomNav() {
 
         {/* Profile Item */}
         <Link
-          href={member ? "/userProfile" : "/login"}
+          href={member ? localizedPath("/userProfile", locale) : localizedPath("/login", locale)}
           className="flex flex-col items-center justify-center gap-1 min-w-[56px] py-1"
         >
           <div className="w-[24px] h-[24px] rounded-full overflow-hidden flex items-center justify-center bg-[rgba(0,0,0,0.05)] border border-[rgba(0,0,0,0.1)]">
@@ -159,7 +166,7 @@ export default function MobileBottomNav() {
             ) : (
               <img
                 src="/images/header/person_24px.png"
-                alt="Профіль"
+                alt={t("nav.profile")}
                 className={`w-[18px] h-[18px] object-contain ${
                   isActive("/userProfile") || isActive("/login")
                     ? "opacity-100"
@@ -175,7 +182,7 @@ export default function MobileBottomNav() {
                 : "text-[#242424]/70"
             }`}
           >
-            Профіль
+            {t("nav.profile")}
           </span>
         </Link>
       </div>

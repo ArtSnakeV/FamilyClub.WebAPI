@@ -10,7 +10,7 @@ import BookGrid from "./bookGrid/BookGrid";
 import BtnSection from "./section/BtnSection";
 import InfoUserSection from "./section/InfoUserSection";
 import { useCurrentUser } from "./hooks/useCurrentUser";
-import { useFavorites } from "../../../lib/hooks/useFavorites";
+import { useFavorites } from "../../../../lib/hooks/useFavorites";
 import { useMyBooks } from "./hooks/useMyBooks";
 import MobileUserProfileView from "./MobileUserProfileView";
 

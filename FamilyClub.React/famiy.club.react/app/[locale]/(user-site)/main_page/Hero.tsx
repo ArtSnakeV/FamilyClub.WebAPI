@@ -3,9 +3,19 @@
 import Link from "next/link";
 import { usePlatformSettingsOptional } from "@/lib/platformSettings/PlatformSettingsContext";
 import { mediaSrc } from "@/lib/platformSettings/platformSettingsApi";
+import { useLocale, useLocalizedPath, useTranslations } from "@/lib/i18n/LocaleProvider";
+
+const HERO_TITLE_IMAGES = {
+    uk: "/images/main_page/hero/hero-title.png",
+    en: "/images/main_page/hero/hero-titlee-en.png",
+} as const;
 
 export default function Hero() {
+    const { locale } = useLocale();
     const { settings } = usePlatformSettingsOptional();
+    const t = useTranslations();
+    const lp = useLocalizedPath();
+    const titleSrc = HERO_TITLE_IMAGES[locale];
     const bannerSrc =
         mediaSrc(settings.bannerData, settings.bannerContentType) ??
         "/images/main_page/hero/hero-background.png";
@@ -55,9 +65,9 @@ export default function Hero() {
                 </div>
 
                 <img
-                    alt="Нова твоя онлайн-бібліотека"
+                    alt={t("home.hero.titleAlt")}
                     className="absolute left-[734px] top-[184px] h-[118px] w-[835px]"
-                    src="/images/main_page/hero/hero-title.png"
+                    src={titleSrc}
                 />
 
                 <img
@@ -76,14 +86,14 @@ export default function Hero() {
                     className="absolute left-[770px] top-[405px] w-[800px] text-right font-mono text-[24px] font-medium text-[#f5f3ee]"
                     style={{ textShadow: "0px 0px 10px #242424, 0px 0px 28px #242424" }}
                 >
-                    Не знаєш, що ще почитати? Є в нас ідейка
+                    {t("home.hero.tagline")}
                 </p>
 
                 <Link
-                    href="/pick-book"
+                    href={lp("/pick-book")}
                     className="absolute left-[1062px] top-[500px] flex h-[60px] items-center gap-3 rounded-full bg-[#005B33] px-8 text-[20px] font-semibold text-[#f5f3ee] shadow-[0px_4px_12px_rgba(0,0,0,0.4)] transition-transform hover:scale-105"
                 >
-                    Підібрати книгу
+                    {t("home.hero.pickBook")}
                     <span className="text-[24px]">→</span>
                 </Link>
             </div>
@@ -120,9 +130,9 @@ export default function Hero() {
                 </div>
 
                 <img
-                    alt="Нова твоя онлайн-бібліотека"
+                    alt={t("home.hero.titleAlt")}
                     className="absolute left-1/2 top-[140px] w-[min(835px,92%)] -translate-x-1/2"
-                    src="/images/main_page/hero/hero-title.png"
+                    src={titleSrc}
                 />
 
                 <img
@@ -141,14 +151,14 @@ export default function Hero() {
                     className="absolute bottom-[195px] right-[40px] w-[320px] text-right font-mono text-[18px] font-medium text-[#f5f3ee] md:bottom-[210px] md:right-[60px] md:w-[520px] md:text-[24px]"
                     style={{ textShadow: "0px 0px 10px #242424, 0px 0px 28px #242424" }}
                 >
-                    Не знаєш, що ще почитати? Є в нас ідейка
+                    {t("home.hero.tagline")}
                 </p>
 
                 <Link
-                    href="/pick-book"
+                    href={lp("/pick-book")}
                     className="absolute bottom-[120px] right-[40px] flex h-[50px] items-center gap-2 rounded-full bg-[#005B33] px-6 text-[16px] font-semibold text-[#f5f3ee] shadow-[0px_4px_12px_rgba(0,0,0,0.4)] transition-transform hover:scale-105 md:bottom-[140px] md:right-[60px] md:h-[60px] md:px-8 md:text-[20px]"
                 >
-                    Підібрати книгу
+                    {t("home.hero.pickBook")}
                     <span className="text-[20px] md:text-[24px]">→</span>
                 </Link>
             </div>

@@ -1,4 +1,11 @@
+"use client";
+
+import { useLocale } from "@/lib/i18n/LocaleProvider";
+
 export default function InkSection() {
+    const { dictionary } = useLocale();
+    const ink = dictionary.home.ink;
+
     return (
         <section className="py-16">
             <div className="mx-auto max-w-[1504px] px-4 lg:px-0">
@@ -6,7 +13,7 @@ export default function InkSection() {
                     <div className="flex justify-center lg:justify-start">
                         <div className="rotate-[-2deg] border-[20px] border-[#f5f3ee] shadow-[0px_0px_15px_rgba(0,0,0,0.6)]">
                             <img
-                                alt="Ink — це тихий помічник"
+                                alt={ink.imageAlt}
                                 className="h-[571px] w-[832px] object-cover"
                                 src="/images/body/cat.webp"
                             />
@@ -14,23 +21,21 @@ export default function InkSection() {
                     </div>
 
                     <div className="max-w-[590px] text-[#242424] font-serif">
-                    <p className="text-[32px] font-bold leading-[1.2] text-[#407b61]">
-                        Ink — це тихий помічник
-                    </p>
-                    <p className="text-[32px] font-bold leading-[1.2] text-[#407b61]">
-                        і провідник у світі книг.
-                    </p>
-                    <p className="mt-4 text-[20px] leading-[1.6]">
-                        Він завжди поруч, щоб допомогти знайти саме ту історію, яка тобі підійде.
-                    </p>
-                    <p className="mt-4 text-[20px] leading-[1.6]">
-                        <span className="font-semibold">Ink не говорить, але розуміє тебе:</span> підкаже, що
-                        почитати, допоможе з пошуком і зробить вибір простішим.
-                    </p>
-                    <p className="mt-4 text-[20px] leading-[1.6]">
-                        Просто натисни на <span className="font-semibold">дзвіночок</span> — і він з'явиться,
-                        коли це потрібно.
-                    </p>
+                        <p className="text-[32px] font-bold leading-[1.2] text-[#407b61]">
+                            {ink.line1}
+                        </p>
+                        <p className="text-[32px] font-bold leading-[1.2] text-[#407b61]">
+                            {ink.line2}
+                        </p>
+                        <p className="mt-4 text-[20px] leading-[1.6]">
+                            {ink.intro}
+                        </p>
+                        <p className="mt-4 text-[20px] leading-[1.6]">
+                            {ink.helperParagraph}
+                        </p>
+                        <p className="mt-4 text-[20px] leading-[1.6]">
+                            {ink.bellParagraph}
+                        </p>
                     </div>
                 </div>
             </div>

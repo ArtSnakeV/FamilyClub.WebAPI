@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { useLocale, useLocalizedPath } from "@/lib/i18n/LocaleProvider";
 
 type BannerItem = {
     title: string;
@@ -15,35 +18,32 @@ type PromoBannerProps = {
     backgroundImage?: string;
 };
 
-const defaultBanners: BannerItem[] = [
-    {
-        title: "Нові книги",
-        subtitle: "Вже на полицях!",
-        href: "/categories",
-        backgroundImage: "/images/body/banner-left.webp",
-    },
-    {
-        title: "Знижки та акції",
-        subtitle: "Спеціальні пропозиції для тебе",
-        href: "/categories",
-        backgroundImage: "/images/body/banner-middle.webp",
-    },
-    {
-        title: "Добірки тижня",
-        subtitle: "Найкраще за оцінками читачів",
-        href: "/categories",
-        backgroundImage: "/images/body/banner-right.webp",
-    },
+const bannerImages = [
+    "/images/body/banner-left.webp",
+    "/images/body/banner-middle.webp",
+    "/images/body/banner-right.webp",
 ];
 
 export default function PromoBanner({
-    banners = defaultBanners,
+    banners,
     title,
     subtitle,
-    href = "/categories",
+    href,
     backgroundImage = "/images/body/banner-single.webp",
 }: PromoBannerProps) {
-    const itemsToRender = title ? [{ title, subtitle, href, backgroundImage }] : banners;
+    const { dictionary } = useLocale();
+    const lp = useLocalizedPath();
+
+    const defaultBanners: BannerItem[] = dictionary.home.promo.items.map((item, index) => ({
+        title: item.title,
+        subtitle: item.subtitle,
+        href: lp("/categories"),
+        backgroundImage: bannerImages[index] ?? bannerImages[0],
+    }));
+
+    const itemsToRender = title
+        ? [{ title, subtitle, href: href ? lp(href) : lp("/categories"), backgroundImage }]
+        : (banners ?? defaultBanners);
 
     return (
         <section className="py-12">

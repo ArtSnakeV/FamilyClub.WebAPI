@@ -1,7 +1,7 @@
 "use client"
 
 import { CurrentUser } from "../hooks/useCurrentUser";
-import { useFavorites } from "../../../../lib/hooks/useFavorites";
+import { useFavorites } from "../../../../../lib/hooks/useFavorites";
 import { useMyBooks } from "../hooks/useMyBooks";
 import { useUserReviews } from "../hooks/useUserReviews";
 import SocialLinks from "./SocialLinks";
