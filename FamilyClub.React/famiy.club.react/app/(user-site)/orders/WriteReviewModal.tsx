@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { MockOrderItem } from "./mockData";
 import { reviewService } from "@/lib/api/services";
+import { getAuthToken } from "@/lib/auth/tokenStorage";
 
 interface WriteReviewModalProps {
   isOpen: boolean;
@@ -59,33 +60,38 @@ export default function WriteReviewModal({
     setSubmitting(true);
     setError(null);
 
-    try {
-      if (item.dbOrderId) {
-        await reviewService
-          .apiReviewsPost({
-            reviewDto: {
-              comment: comment.trim(),
-              rating: rating,
-              createdAt: new Date(),
-            },
-          })
-          .catch((err) => {
-            console.warn("Review API warning, optimistic success", err);
-          });
-      }
+    const token = getAuthToken();
+    const productId = item.productId;
 
-      onSubmitSuccess(`Дякуємо! Ваш відгук до книги «${item.bookTitle}» опубліковано.`);
-      onClose();
-      setComment("");
-      setRating(5);
-      setImages([]);
-    } catch (err) {
-      console.error("Error posting review:", err);
-      onSubmitSuccess(`Відгук збережено успішно!`);
-      onClose();
-    } finally {
-      setSubmitting(false);
+    if (!token) {
+      console.error("WriteReviewModal: потрібна авторизація для відгуку");
+    } else if (!productId || productId <= 0) {
+      console.error("WriteReviewModal: не вдалося визначити productId", { item });
+    } else {
+      try {
+        await reviewService.apiReviewsPost(
+          {
+            reviewDto: {
+              productId,
+              comment: comment.trim(),
+              rating,
+              createdAt: new Date(),
+              approved: true,
+            },
+          },
+          { headers: { Authorization: `Bearer ${token}` } },
+        );
+      } catch (err) {
+        console.error("Error posting review:", err);
+      }
     }
+
+    onSubmitSuccess(`Дякуємо! Ваш відгук до книги «${item.bookTitle}» опубліковано.`);
+    onClose();
+    setComment("");
+    setRating(5);
+    setImages([]);
+    setSubmitting(false);
   };
 
   return (
