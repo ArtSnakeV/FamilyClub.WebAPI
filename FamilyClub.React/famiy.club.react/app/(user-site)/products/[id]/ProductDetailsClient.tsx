@@ -814,7 +814,7 @@ export default function ProductDetailsClient({ id }: { id: string }) {
 
                       <div className="mt-8 flex items-center justify-between gap-4">
                         <button
-                          className="flex flex-1 items-center cursor-pointer justify-center gap-3 py-3 text-[18px] text-[#242424]/70 hover:text-[#242424] transition-colors"
+                          className="flex flex-1 items-center cursor-pointer justify-center gap-3 py-3.5 px-6 rounded-[12px] bg-[#0e503f] hover:bg-[#093529] active:scale-[0.98] text-white font-bold text-[18px] shadow-[0_6px_20px_rgba(14,80,63,0.35)] transition-all"
                           type="button"
                           onClick={async () => {
                             if (!currentProduct?.id) return;
@@ -826,7 +826,7 @@ export default function ProductDetailsClient({ id }: { id: string }) {
                             }
                           }}
                         >
-                          <img alt="" className="h-[24px] w-[24px]" src="/images/main_page/icons/rec-icon-basket.svg" />
+                          <img alt="" className="h-[24px] w-[24px] brightness-200" src="/images/main_page/icons/rec-icon-basket.svg" />
                           <span>Додати в кошик</span>
                         </button>
                         <button
