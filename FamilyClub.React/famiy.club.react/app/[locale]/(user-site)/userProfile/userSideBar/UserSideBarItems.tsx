@@ -15,7 +15,7 @@ import FilterDropdown from "./FilterDropdown";
 import ebookIcon from "@/public/images/userProfile/mobile-button-solid-full 1.png";
 import audioIcon from "@/public/images/userProfile/volume-solid-full 1.png";
 import printIcon from "@/public/images/userProfile/Паперова.svg";
-import { useFavorites } from "../../../../lib/hooks/useFavorites";
+import { useFavorites } from "../../../../../lib/hooks/useFavorites";
 import { useMyBooks } from "../hooks/useMyBooks";
 import Paws from "../../paws/Paws";
 

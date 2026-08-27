@@ -1,0 +1,121 @@
+{
+  "metadata": {
+    "title": "Librellis",
+    "description": "Librellis book club"
+  },
+  "nav": {
+    "home": "Home",
+    "library": "Library",
+    "readingRoom": "Reading room",
+    "community": "Community",
+    "profile": "Profile",
+    "catalog": "Catalog"
+  },
+  "common": {
+    "homeAria": "Home",
+    "loading": "Loading...",
+    "anonymous": "Anonymous",
+    "user": "User",
+    "newsTag": "#news"
+  },
+  "home": {
+    "hero": {
+      "titleAlt": "Your new online library",
+      "tagline": "Not sure what to read next? We have an idea",
+      "pickBook": "Find a book"
+    },
+    "sections": {
+      "recommendationsForYou": "Recommended for you",
+      "newForYou": "New picks for you",
+      "romance": "Romance",
+      "thrillers": "Thrillers",
+      "science": "Science",
+      "fantasy": "Fantasy",
+      "bestsellers": "Bestsellers",
+      "newArrivals": "New arrivals",
+      "bookSets": "Book sets",
+      "announcements": "Coming soon",
+      "more": "More"
+    },
+    "about": {
+      "wideChoiceTitle": "A wide selection",
+      "wideChoiceText": "We have books for every taste — from light romance to deep stories, from popular new releases to trusted classics.\n\nChoose a genre, format, and mood — and find exactly the book you need right now.",
+      "promosTitle": "Deals",
+      "promosText": "Reading more is easier than it seems.\n\nDiscounts and special offers help you discover new books more often and with more joy.",
+      "homeImageAlt": "Your home for books",
+      "readingHallAlt": "Reading hall",
+      "libraryAtmosphereAlt": "Library atmosphere",
+      "story": [
+        "This site is a place where books find their readers.",
+        "We created a space that combines different reading formats, easy search, and the warm atmosphere of a library so choosing a book feels simple and enjoyable. Nothing here is random — every detail helps you find the story that speaks to you.",
+        "You can explore calmly, discover new genres, return to favorite books, or save the ones you want to come back to later. There is no rush here — only reading at your own pace.",
+        "And if you do not know where to start, that is fine too. A helpful hint is always nearby to guide you toward something new, unexpected, or exactly what you need right now."
+      ]
+    },
+    "ink": {
+      "imageAlt": "Ink is a quiet assistant",
+      "line1": "Ink is a quiet assistant",
+      "line2": "and your guide to the world of books.",
+      "intro": "Ink is always nearby to help you find the story that fits you best.",
+      "helperParagraph": "Ink does not speak, but understands you: it suggests what to read, helps you search, and makes choosing easier.",
+      "bellParagraph": "Just tap the bell — and Ink will appear when you need help."
+    },
+    "advantages": {
+      "title": "Our advantages",
+      "items": [
+        {
+          "title": "Personal\nlibrary",
+          "description": "Keep your purchased e-books and audiobooks and return to them anytime"
+        },
+        {
+          "title": "Smart\nrecommendations",
+          "description": "The site suggests books based on your taste and helps you discover something new"
+        },
+        {
+          "title": "Reader\ncommunity",
+          "description": "Discuss books, share thoughts, and find like-minded readers"
+        },
+        {
+          "title": "Easy search\nand filters",
+          "description": "Quickly find the right book by genre, author, or mood"
+        }
+      ]
+    },
+    "formats": {
+      "heading": "A format that works for you",
+      "items": [
+        {
+          "label": "Paper books",
+          "title": "Classic reading — pages you want to turn",
+          "imageAlt": "Paper books"
+        },
+        {
+          "label": "eBook",
+          "title": "Read anywhere — all your books in one device",
+          "imageAlt": "E-books"
+        },
+        {
+          "label": "Audiobooks",
+          "title": "Listen on the go, during walks, or while relaxing",
+          "imageAlt": "Audiobooks"
+        }
+      ]
+    },
+    "promo": {
+      "items": [
+        {
+          "title": "New books",
+          "subtitle": "Already on the shelves!"
+        },
+        {
+          "title": "Discounts and deals",
+          "subtitle": "Special offers for you"
+        },
+        {
+          "title": "Weekly picks",
+          "subtitle": "Top-rated by readers"
+        }
+      ]
+    }
+  }
+}

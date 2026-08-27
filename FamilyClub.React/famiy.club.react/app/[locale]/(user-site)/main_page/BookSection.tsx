@@ -1,5 +1,8 @@
+"use client";
+
 import Link from "next/link";
 import BookCard from "./BookCard";
+import { useLocalizedPath, useTranslations } from "@/lib/i18n/LocaleProvider";
 
 type Book = {
     title: string;
@@ -22,7 +25,11 @@ type BookSectionProps = {
     onToggleFavorite?: (productId: number) => void;
 };
 
-export default function BookSection({ title, books, showMore = false, showMoreHref = "/pick-book", pillWidth, isFav, onToggleFavorite }: BookSectionProps) {
+export default function BookSection({ title, books, showMore = false, showMoreHref, pillWidth, isFav, onToggleFavorite }: BookSectionProps) {
+    const t = useTranslations();
+    const lp = useLocalizedPath();
+    const moreHref = showMoreHref ?? lp("/pick-book");
+
     return (
         <section
             className="relative w-full overflow-hidden pt-0 pb-0"
@@ -30,7 +37,6 @@ export default function BookSection({ title, books, showMore = false, showMoreHr
                 backgroundImage: "linear-gradient(180.074deg, rgba(36, 36, 36, 0.2) 0.24409%, rgba(36, 36, 36, 0) 17.892%), linear-gradient(180.074deg, rgba(36, 36, 36, 0.5) 9.5072%, rgba(36, 36, 36, 0) 49.996%), linear-gradient(90deg, rgb(245, 243, 238) 0%, rgb(245, 243, 238) 100%)"
             }}
         >
-            {/* Top Full-Width Wooden Bookshelf Bar (on which books and pill hang) */}
             <div className="relative z-10 h-[105px] w-full shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] bg-[#7e4d1e]">
                 <img src="/images/catalog/shelf_tex1.png" className="absolute inset-0 w-full h-full object-cover mix-blend-multiply opacity-50 pointer-events-none" alt="" />
                 <div className="absolute inset-0 bg-[rgba(0,0,0,0.27)] pointer-events-none" />
@@ -40,9 +46,7 @@ export default function BookSection({ title, books, showMore = false, showMoreHr
                 </div>
             </div>
 
-            {/* Hanging Title Pill & Book Cards Container */}
             <div className="relative z-10 mx-auto max-w-[1220px] px-4 lg:px-0">
-                {/* Hanging Title Pill & Show More Button */}
                 <div className="absolute top-0 left-0 right-0 z-30 flex flex-wrap items-start justify-between gap-4 pointer-events-none px-4 lg:px-0">
                     <div
                         className="pointer-events-auto flex h-[57px] max-w-full items-center justify-center rounded-t-none rounded-b-[30px] bg-[#f5f3ee] px-6 md:px-8 shadow-[0px_8px_8.5px_0px_rgba(0,0,0,0.5)] w-fit"
@@ -54,15 +58,14 @@ export default function BookSection({ title, books, showMore = false, showMoreHr
                     </div>
                     {showMore && (
                         <Link
-                            href={showMoreHref}
+                            href={moreHref}
                             className="pointer-events-auto h-[55px] w-[150px] rounded-t-none rounded-b-[25px] bg-[#f5f3ee] text-[24px] font-medium text-[#242424] shadow-[0px_6px_8px_0px_rgba(0,0,0,0.3)] transition-transform hover:scale-105 flex items-center justify-center"
                         >
-                            Більше
+                            {t("home.sections.more")}
                         </Link>
                     )}
                 </div>
 
-                {/* Book Cards Grid - starting below hanging pill matching Figma */}
                 <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-[60px] pb-12 pt-[75px]">
                     {books.map((book, index) => (
                         <BookCard key={`${book.title}-${index}`} {...book} isFavorite={isFav?.(book.productId)}

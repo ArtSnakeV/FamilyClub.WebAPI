@@ -1,60 +1,45 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
+import { localeLabels, locales, type Locale } from "@/lib/i18n/config";
+import { switchLocalePath } from "@/lib/i18n/localized-path";
 
 export default function UaCircle() {
+  const pathname = usePathname() ?? "/";
+  const activeLocale = (pathname.split("/")[1] as Locale) || "uk";
+
   return (
     <div className="flex items-center justify-center gap-1">
-      <div className="group flex items-center justify-center">
-        {/* блок коду темна тема */}
-        {/* <div
-          className="
-          w-[40px]
-          h-[40px]
-          flex
-          items-center
-          justify-center
-          rounded-full
-          transition-all
-          duration-300
-          group-hover:bg-[var-(--color-white)]
-          group-hover:shadow-[0px_0px_15px_0px_#242424CC]
-        "
-        >
-          <Image
-            src="/images/header/Group11.png"
-            alt="group11"
-            width={36}
-            height={36}
-            className="object-contain"
-            priority
-          />
-        </div> */}
-      </div>
-      <div className="group flex items-center justify-center">
-        <div
-          className="
-          w-[40px]
-          h-[40px]
-          flex
-          items-center
-          justify-center
-          rounded-full
-          transition-all
-          duration-300
-          group-hover:bg-[var-(--color-white)]
-          group-hover:shadow-[0px_0px_15px_0px_#242424CC]
-        "
-        >
-          <Image
-            src="/images/header/Group19.png"
-            alt="group19"
-            width={36}
-            height={36}
-            className="object-contain"
-            priority
-          />
-        </div>
-      </div>
+      {locales.map((locale) => {
+        const isActive = activeLocale === locale;
+        return (
+          <Link
+            key={locale}
+            href={switchLocalePath(pathname, locale)}
+            aria-label={localeLabels[locale]}
+            className={`group flex h-[40px] w-[40px] items-center justify-center rounded-full text-[13px] font-semibold transition-all duration-300 ${
+              isActive
+                ? "bg-[var(--color-white)] text-[#005B33] shadow-[0px_0px_15px_0px_#242424CC]"
+                : "text-[#242424]/70 hover:bg-[var(--color-white)] hover:shadow-[0px_0px_15px_0px_#242424CC]"
+            }`}
+          >
+            {locale === "uk" ? (
+              <Image
+                src="/images/header/Group19.png"
+                alt={localeLabels[locale]}
+                width={36}
+                height={36}
+                className="object-contain"
+                priority
+              />
+            ) : (
+              <span>{localeLabels[locale]}</span>
+            )}
+          </Link>
+        );
+      })}
     </div>
   );
 }

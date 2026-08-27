@@ -16,6 +16,8 @@ import { apiBasePath } from "@/lib/api/services";
 import { clearAuthSession, getAuthToken } from "@/lib/auth/tokenStorage";
 import { canAccessPath } from "@/lib/auth/accessControl";
 import { useUnreadNotificationsCount } from "@/lib/hooks/useUnreadNotificationsCount";
+import { useLocale } from "@/lib/i18n/LocaleProvider";
+import { localizedPath } from "@/lib/i18n/localized-path";
 
 type User = {
   id: string;
@@ -32,6 +34,7 @@ export default function UpNavigation() {
   const [member, setMember] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
+  const { locale } = useLocale();
 
   // єдине джерело правди для лічильника непрочитаних —
   // хук сам перезапитує кількість при події "notifications-updated"
@@ -98,7 +101,7 @@ export default function UpNavigation() {
   const handleLogout = () => {
     clearAuthSession();
     setMember(null);
-    router.push("/");
+    router.push(localizedPath("/", locale));
   };
   return (
     <>
@@ -121,17 +124,17 @@ export default function UpNavigation() {
           <div className="flex relative items-center gap-4 h-[50px] w-[384px] left-[2vw] ">
             <div className="flex items-center h-[50px] w-[170px] mt-[4px] gap-[8px]">
               <div className=" relative w-[40px] h-[40px] ">
-                <Link href="/community">
+                <Link href={localizedPath("/community", locale)}>
                   <IcoPeople />
                 </Link>
               </div>
               <div className=" relative w-[40px] h-[40px] ">
-                <Link href="/userProfile?tab=favorite">
+                <Link href={localizedPath("/userProfile?tab=favorite", locale)}>
                   <FavoriteButton />
                 </Link>
               </div>
               <div className=" relative w-[40px] h-[40px] ">
-                <Link href="/cart">
+                <Link href={localizedPath("/cart", locale)}>
                   <ShoppingCartButton />
                 </Link>
               </div>
@@ -145,20 +148,20 @@ export default function UpNavigation() {
                     avatarData: member?.avatarData,
                   }}
                   notificationCount={notificationCount}
-                  onCabinet={() => router.push("/userProfile")}
-                  onNotifications={() => router.push("/notifications")}
-                  onOrders={() => router.push("/orders")}
-                  onLibrary={() => router.push("/library")}
+                  onCabinet={() => router.push(localizedPath("/userProfile", locale))}
+                  onNotifications={() => router.push(localizedPath("/notifications", locale))}
+                  onOrders={() => router.push(localizedPath("/orders", locale))}
+                  onLibrary={() => router.push(localizedPath("/library", locale))}
                   showAdminPanel={showAdminPanel}
                   onAdminPanel={() => router.push("/admin/desktop")}
                   onLogout={handleLogout}
                 />
               ) : (
                 <div className="flex w-[196px] items-center gap-1">
-                  <Link href="/login">
+                  <Link href={localizedPath("/login", locale)}>
                     <UserLoginButton />
                   </Link>
-                  <Link href="/register">
+                  <Link href={localizedPath("/register", locale)}>
                     <UserAuthorizationButton />
                   </Link>
                 </div>
