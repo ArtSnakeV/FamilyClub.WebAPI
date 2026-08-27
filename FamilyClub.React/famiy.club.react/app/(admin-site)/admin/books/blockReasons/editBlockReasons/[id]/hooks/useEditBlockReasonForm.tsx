@@ -4,7 +4,7 @@ import { BlockReasonDto } from "../../../addBlockReasons/types";
 
 const emptyForm: BlockReasonDto = {
   name: "",
-  description: "",
+  description: null,
 };
 
 export default function useEditBlockReasonForm(id: number) {
@@ -17,7 +17,7 @@ export default function useEditBlockReasonForm(id: number) {
       .then((blockReason) => {
         setForm({
           name: blockReason.name ?? "",
-          description: blockReason.description ?? "",
+          description: blockReason.description ?? null,
         });
       })
       .finally(() => setLoading(false));
