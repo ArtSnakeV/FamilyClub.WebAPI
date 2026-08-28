@@ -225,6 +225,12 @@ builder.Services.AddAuthentication(options =>
         options.ClientId = !string.IsNullOrWhiteSpace(clientId) ? clientId : "dummy-google-client-id";
         options.ClientSecret = !string.IsNullOrWhiteSpace(clientSecret) ? clientSecret : "dummy-google-client-secret";
         options.SignInScheme = IdentityConstants.ExternalScheme;
+
+        var callbackPath = builder.Configuration["Authentication:Google:CallbackPath"];
+        if (!string.IsNullOrWhiteSpace(callbackPath))
+        {
+            options.CallbackPath = callbackPath;
+        }
     })
     .AddJwtBearer(options =>
     {
