@@ -8,7 +8,7 @@ export default function MobileBanner() {
     <section className="relative w-full h-[380px] sm:h-[420px] pt-[65px] overflow-hidden bg-[#f5f3ee] select-none">
       {/* 1. Background Room Photo (blurred: blur-[10px] with scale-110) */}
       <img
-        src="/images/main_page/hero/hero-background.png"
+        src="/images/main_page/hero/hero-background-uk.png"
         alt=""
         className="absolute inset-0 w-full h-full object-cover blur-[10px] scale-110 opacity-95 pointer-events-none z-0"
       />

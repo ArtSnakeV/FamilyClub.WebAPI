@@ -2,9 +2,15 @@
 
 import { useLocale } from "@/lib/i18n/LocaleProvider";
 
+const ABOUT_HOME_IMAGES = {
+    uk: "/images/body/Rectangle%20294-uk.webp",
+    en: "/images/body/Rectangle%20294-en.webp",
+} as const;
+
 export default function AboutSection() {
-    const { dictionary } = useLocale();
+    const { locale, dictionary } = useLocale();
     const about = dictionary.home.about;
+    const homeImageSrc = ABOUT_HOME_IMAGES[locale];
 
     return (
         <section className="relative z-10 pt-16 pb-0">
@@ -35,7 +41,7 @@ export default function AboutSection() {
                             <img
                                 alt={about.homeImageAlt}
                                 className="w-full max-w-[1472px] rotate-[-1.5deg] rounded-[30px] shadow-[0px_0px_15px_0px_rgba(0,0,0,0.95)]"
-                                src="/images/body/Rectangle%20294.webp"
+                                src={homeImageSrc}
                             />
                         </div>
 

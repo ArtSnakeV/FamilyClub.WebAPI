@@ -392,7 +392,7 @@ export default function Home() {
             tag: "#новини",
             title: r.text.slice(0, 30) || "",
             image: r.bookImage || null,
-            avatar: r.avatar || "/images/body/cat.webp",
+            avatar: r.avatar || "/images/body/cat-uk.webp",
             href: "/categories",
         }));
     }, [reviewCards]);
