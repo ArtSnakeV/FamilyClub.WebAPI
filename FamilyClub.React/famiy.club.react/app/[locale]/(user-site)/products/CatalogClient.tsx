@@ -8,6 +8,7 @@ import MobileBookCard from "@/app/(user-site)/main_page/mobile/MobileBookCard";
 import { ProductDto } from "@/lib/api/generated";
 import { productService } from "@/lib/api/services";
 import { getProductCoverUrl } from "@/lib/products/productCoverUrl";
+import { useLocale, useLocalizedPath, useTranslations } from "@/lib/i18n/LocaleProvider";
 
 interface CatalogClientProps {
   initialProducts?: ProductDto[];
@@ -17,6 +18,9 @@ const PRODUCTS_PER_PAGE = 12; // 4 columns × 3 rows
 
 export default function CatalogClient({ initialProducts = [] }: CatalogClientProps) {
   const searchParams = useSearchParams();
+  const t = useTranslations();
+  const lp = useLocalizedPath();
+  const { locale } = useLocale();
   const [currentPage, setCurrentPage] = useState(1);
   const [allProducts, setAllProducts] = useState<ProductDto[]>(initialProducts);
   const [loading, setLoading] = useState(initialProducts.length === 0);
@@ -179,6 +183,12 @@ export default function CatalogClient({ initialProducts = [] }: CatalogClientPro
     return `${price.toLocaleString("uk-UA")} грн`;
   };
 
+  const getDesktopProductPrice = (p: ProductDto) => {
+    const price = p.discountPrice ?? p.price ?? 0;
+    const formatted = price.toLocaleString(locale === "en" ? "en-US" : "uk-UA");
+    return locale === "en" ? `${formatted} UAH` : `${formatted} грн`;
+  };
+
   const getProductImage = (p: ProductDto) => {
     return getProductCoverUrl(p) ?? undefined;
   };
@@ -271,10 +281,111 @@ export default function CatalogClient({ initialProducts = [] }: CatalogClientPro
     return chips;
   }, [searchParams]);
 
-  const handleRemoveFilterChip = (keysToRemove: string[]) => {
+  const desktopActiveFilterChips = useMemo(() => {
+    const chips: { id: string; label: string; removeKeys: string[] }[] = [];
+    const currency = locale === "en" ? "UAH" : "грн";
+
+    const yearFrom = searchParams.get("yearFrom");
+    const yearTo = searchParams.get("yearTo");
+    const year = searchParams.get("year");
+
+    if (yearFrom || yearTo) {
+      let label = t("catalog.filters.publicationYear") + " ";
+      if (yearFrom === "0" && yearTo === "1999") label += t("catalog.filters.before2000");
+      else if (yearFrom === "2000" && yearTo === "2010") label += t("catalog.filters.year2000_2010");
+      else if (yearFrom === "2010" && yearTo === "2020") label += t("catalog.filters.year2010_2020");
+      else if (yearFrom === "2020" && (yearTo === "3000" || yearTo === "9999")) label += t("catalog.filters.from2020");
+      else if (yearFrom && yearTo) label += `${yearFrom}–${yearTo}`;
+      else if (yearFrom) label += t("catalog.filters.from").replace("{value}", yearFrom);
+      else if (yearTo) label += t("catalog.filters.to").replace("{value}", yearTo);
+
+      chips.push({ id: "year-range", label, removeKeys: ["yearFrom", "yearTo"] });
+    } else if (year) {
+      chips.push({
+        id: "year-exact",
+        label: `${t("catalog.filters.publicationYear")} ${year}`,
+        removeKeys: ["year"],
+      });
+    }
+
+    const minPrice = searchParams.get("minPrice");
+    const maxPrice = searchParams.get("maxPrice");
+    if (minPrice || maxPrice) {
+      let label = t("catalog.filters.price") + " ";
+      if (minPrice && maxPrice) label += `${minPrice}–${maxPrice} ${currency}`;
+      else if (minPrice) label += `${t("catalog.filters.from").replace("{value}", minPrice)} ${currency}`;
+      else if (maxPrice) label += `${t("catalog.filters.to").replace("{value}", maxPrice)} ${currency}`;
+
+      chips.push({ id: "price-range", label, removeKeys: ["minPrice", "maxPrice"] });
+    }
+
+    const categoryIds = searchParams.getAll("categoryId").flatMap(v => v.split(',')).filter(Boolean);
+    if (categoryIds.length > 0) {
+      chips.push({
+        id: "categories",
+        label: t("catalog.filters.categoriesSelected").replace("{count}", String(categoryIds.length)),
+        removeKeys: ["categoryId"],
+      });
+    }
+
+    const authorIds = searchParams.getAll("authorId").flatMap(v => v.split(',')).filter(Boolean);
+    if (authorIds.length > 0) {
+      chips.push({
+        id: "authors",
+        label: t("catalog.filters.authorsSelected").replace("{count}", String(authorIds.length)),
+        removeKeys: ["authorId"],
+      });
+    }
+
+    const languageIds = searchParams.getAll("languageId").flatMap(v => v.split(',')).filter(Boolean);
+    if (languageIds.length > 0) {
+      chips.push({
+        id: "languages",
+        label: t("catalog.filters.languagesSelected").replace("{count}", String(languageIds.length)),
+        removeKeys: ["languageId"],
+      });
+    }
+
+    const formatIds = searchParams.getAll("formatId").flatMap(v => v.split(',')).filter(Boolean);
+    if (formatIds.length > 0) {
+      chips.push({
+        id: "formats",
+        label: t("catalog.filters.formatsSelected").replace("{count}", String(formatIds.length)),
+        removeKeys: ["formatId"],
+      });
+    }
+
+    const ageIds = searchParams.getAll("ageRestrictionId").flatMap(v => v.split(',')).filter(Boolean);
+    if (ageIds.length > 0) {
+      chips.push({
+        id: "age-restrictions",
+        label: t("catalog.filters.ageCategories").replace("{count}", String(ageIds.length)),
+        removeKeys: ["ageRestrictionId"],
+      });
+    }
+
+    const search = searchParams.get("search") || searchParams.get("q");
+    if (search && search.trim()) {
+      chips.push({
+        id: "search-q",
+        label: t("catalog.filters.search").replace("{query}", search.trim()),
+        removeKeys: ["search", "q"],
+      });
+    }
+
+    const promo = searchParams.get("promo");
+    if (promo === "true") {
+      chips.push({ id: "promo-tag", label: t("catalog.filters.promo"), removeKeys: ["promo"] });
+    }
+
+    return chips;
+  }, [searchParams, t, locale]);
+
+  const handleRemoveFilterChip = (keysToRemove: string[], localized = false) => {
     const params = new URLSearchParams(searchParams.toString());
     keysToRemove.forEach((key) => params.delete(key));
-    const newUrl = params.toString() ? `/products?${params.toString()}` : "/products";
+    const basePath = localized ? lp("/products") : "/products";
+    const newUrl = params.toString() ? `${basePath}?${params.toString()}` : basePath;
     window.history.replaceState({}, "", newUrl);
   };
 
@@ -444,32 +555,35 @@ export default function CatalogClient({ initialProducts = [] }: CatalogClientPro
           <div className="max-w-[1220px] mx-auto px-[16px] lg:px-0 relative">
             <img 
               src="/images/catalog/arrow.svg" 
-              alt="Вказівник" 
+              alt={t("catalog.arrowAlt")} 
               className="absolute left-[80px] -top-[120px] w-[120px] h-[72px] -rotate-90 pointer-events-none hidden md:block"
             />
             <div className="flex flex-col md:flex-row justify-between items-end gap-6 md:gap-0">
               <div className="max-w-[590px] font-mono font-semibold text-[16px] tracking-[-0.176px] leading-[1.5]">
                 <p className="text-[rgba(36,36,36,0.8)] whitespace-pre-wrap">
-                  <span className="text-[#242424]">Обери, що тебе цікавить</span>
+                  <span className="text-[#242424]">{t("catalog.introHighlight")}</span>
                   <br />
-                  Скористайся закладками у хедері — натисни на потрібний параметр, щоб швидко знайти книгу за жанром, автором, мовою або настроєм.
+                  {t("catalog.introText")}
                 </p>
               </div>
 
               <div className="text-[#242424] font-mono font-semibold text-[24px] md:text-[32px] text-right tracking-[-0.352px] leading-[1.5]">
                 {loading
-                  ? "Завантаження…"
-                  : `Знайдено ${totalProducts.toLocaleString("uk-UA")} збігів`}
+                  ? t("catalog.loading")
+                  : t("catalog.matchesFound").replace(
+                      "{count}",
+                      totalProducts.toLocaleString(locale === "en" ? "en-US" : "uk-UA")
+                    )}
               </div>
             </div>
 
             {/* Desktop Active Filter Chips */}
-            {activeFilterChips.length > 0 && (
+            {desktopActiveFilterChips.length > 0 && (
               <div className="mt-6 flex flex-wrap items-center gap-2 bg-white/90 p-3 rounded-2xl border border-[#e5ded4] shadow-sm">
                 <span className="text-sm font-semibold text-[#242424] mr-1">
-                  Активні фільтри:
+                  {t("catalog.activeFilters")}
                 </span>
-                {activeFilterChips.map((chip) => (
+                {desktopActiveFilterChips.map((chip) => (
                   <div
                     key={chip.id}
                     className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#005B33]/10 border border-[#005B33]/20 rounded-full text-xs font-semibold text-[#005B33]"
@@ -477,9 +591,9 @@ export default function CatalogClient({ initialProducts = [] }: CatalogClientPro
                     <span>{chip.label}</span>
                     <button
                       type="button"
-                      onClick={() => handleRemoveFilterChip(chip.removeKeys)}
+                      onClick={() => handleRemoveFilterChip(chip.removeKeys, true)}
                       className="text-[#005B33] hover:text-black font-bold ml-1 transition-colors"
-                      aria-label={`Видалити фільтр ${chip.label}`}
+                      aria-label={t("catalog.removeFilterAria").replace("{label}", chip.label)}
                     >
                       ✕
                     </button>
@@ -488,11 +602,11 @@ export default function CatalogClient({ initialProducts = [] }: CatalogClientPro
                 <button
                   type="button"
                   onClick={() => {
-                    window.history.replaceState({}, "", "/products");
+                    window.history.replaceState({}, "", lp("/products"));
                   }}
                   className="ml-auto text-xs font-bold text-[#005B33] hover:underline"
                 >
-                  Очистити все ✕
+                  {t("catalog.clearAll")}
                 </button>
               </div>
             )}
@@ -535,15 +649,15 @@ export default function CatalogClient({ initialProducts = [] }: CatalogClientPro
           <div className="max-w-[1220px] mx-auto px-[16px] lg:px-0 pt-[180px] pb-[100px] relative z-20">
             {loading ? (
               <div className="text-center py-[100px] relative z-20">
-                <p className="text-[18px] text-gray-600 font-mono">Завантаження книг…</p>
+                <p className="text-[18px] text-gray-600 font-mono">{t("catalog.loadingBooks")}</p>
               </div>
             ) : loadError ? (
               <div className="text-center py-[100px] relative z-20">
                 <h2 className="text-[24px] font-bold text-[#242424] mb-[16px]">
-                  Не вдалося завантажити каталог
+                  {t("catalog.loadErrorTitle")}
                 </h2>
                 <p className="text-[16px] text-gray-600">
-                  Не вдалося завантажити товари. Спробуйте пізніше або оновіть сторінку.
+                  {t("catalog.loadErrorText")}
                 </p>
               </div>
             ) : paginatedProducts.length > 0 ? (
@@ -552,12 +666,12 @@ export default function CatalogClient({ initialProducts = [] }: CatalogClientPro
                   {paginatedProducts.map((product) => (
                     <Link
                       key={product.id}
-                      href={`/products/${product.id}`}
+                      href={lp(`/products/${product.id}`)}
                       className="flex justify-center"
                     >
                       <BookCard
-                        title={product.productName || "Без назви"}
-                        price={getProductPrice(product)}
+                        title={product.productName || t("catalog.untitled")}
+                        price={getDesktopProductPrice(product)}
                         image={getProductImage(product)}
                         rating={0}
                       />
@@ -572,7 +686,7 @@ export default function CatalogClient({ initialProducts = [] }: CatalogClientPro
                       onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
                       disabled={currentPage === 1}
                       className="flex items-center justify-center w-[40px] h-[40px] disabled:opacity-50 disabled:cursor-not-allowed transition-all font-bold text-xl"
-                      aria-label="Попередня сторінка"
+                      aria-label={t("catalog.previousPageAria")}
                     >
                       ←
                     </button>
@@ -601,7 +715,7 @@ export default function CatalogClient({ initialProducts = [] }: CatalogClientPro
                       onClick={() => handlePageChange(Math.min(totalPages, currentPage + 1))}
                       disabled={currentPage === totalPages}
                       className="flex items-center justify-center w-[40px] h-[40px] disabled:opacity-50 disabled:cursor-not-allowed transition-all font-bold text-xl"
-                      aria-label="Наступна сторінка"
+                      aria-label={t("catalog.nextPageAria")}
                     >
                       →
                     </button>
@@ -611,19 +725,19 @@ export default function CatalogClient({ initialProducts = [] }: CatalogClientPro
             ) : (
               <div className="text-center py-[100px] relative z-20 bg-white/60 rounded-3xl border border-gray-200">
                 <h2 className="text-[24px] font-bold text-[#242424] mb-[16px]">
-                  Товарів не знайдено
+                  {t("catalog.noProductsTitle")}
                 </h2>
                 <p className="text-[16px] text-gray-600 mb-6">
-                  За вашим запитом або фільтром товарів не знайдено. Спробуйте скинути фільтри.
+                  {t("catalog.noProductsText")}
                 </p>
                 {Array.from(searchParams.entries()).length > 0 && (
                   <button
                     onClick={() => {
-                      window.history.replaceState({}, "", "/products");
+                      window.history.replaceState({}, "", lp("/products"));
                     }}
                     className="px-6 py-2.5 rounded-full bg-[#005B33] text-white font-semibold text-[15px] shadow-sm hover:bg-[#004e2b] transition-colors"
                   >
-                    Очистити всі фільтри
+                    {t("catalog.clearAllFilters")}
                   </button>
                 )}
               </div>

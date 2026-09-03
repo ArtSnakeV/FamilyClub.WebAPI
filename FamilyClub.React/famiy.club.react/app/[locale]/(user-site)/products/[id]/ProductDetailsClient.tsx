@@ -32,6 +32,7 @@ import {
   ReviewDto,
 } from "@/lib/api/generated";
 import { useCart } from "@/lib/hooks/useCart";
+import { useLocale, useLocalizedPath, useTranslations } from "@/lib/i18n/LocaleProvider";
 
 type ReviewCardData = {
   id: number | string;
@@ -186,6 +187,7 @@ function TornPaperBox({ children, className = "" }: { children: React.ReactNode;
 }
 
 function ReviewCard({ author, text, timeLabel, avatar, bookImage, likesCount }: ReviewCardData) {
+  const t = useTranslations();
   const displayLikes = likesCount ?? 0;
   return (
     <div className="flex h-full flex-col justify-between gap-4 rounded-[21px] bg-[#f5f3ee] p-5 shadow-[0px_4px_15px_rgba(0,0,0,0.12)] border border-[#242424]/5">
@@ -225,13 +227,13 @@ function ReviewCard({ author, text, timeLabel, avatar, bookImage, likesCount }: 
       </div>
       <div className="flex items-center justify-between pt-3 border-t border-[#242424]/10">
         <span className="text-[14px] font-medium text-[#242424]/70">
-          {timeLabel || "Щойно"}
+          {timeLabel || t("product.justNow")}
         </span>
         <div className="flex items-center gap-3 text-[15px] font-semibold text-[#242424]">
-          <span title="Поскаржитись" className="cursor-pointer opacity-40 hover:opacity-100 text-sm">🚩</span>
+          <span title={t("product.report")} className="cursor-pointer opacity-40 hover:opacity-100 text-sm">🚩</span>
           <span>{displayLikes}</span>
           <img
-            alt="Вподобати"
+            alt={t("product.like")}
             className="h-[22px] w-[22px] cursor-pointer hover:scale-110 transition-transform"
             src="/images/main_page/icons/reviews-heart.svg"
           />
@@ -245,6 +247,9 @@ function ReviewCard({ author, text, timeLabel, avatar, bookImage, likesCount }: 
 export default function ProductDetailsClient({ id }: { id: string }) {
   const router = useRouter();
   const { addToCart } = useCart();
+  const t = useTranslations();
+  const lp = useLocalizedPath();
+  const { locale } = useLocale();
   const [product, setProduct] = useState<ProductDto | null>(null);
   const [products, setProducts] = useState<ProductDto[]>([]);
   const [reviews, setReviews] = useState<ReviewDto[]>([]);
@@ -266,7 +271,7 @@ export default function ProductDetailsClient({ id }: { id: string }) {
     if (!newComment.trim()) return;
     const token = getAuthToken();
     if (!token) {
-      await alertWarning("Потрібно увійти в акаунт, щоб залишити коментар");
+      await alertWarning(t("product.loginToComment"));
       return;
     }
     const pid = Number(id);
@@ -292,7 +297,7 @@ export default function ProductDetailsClient({ id }: { id: string }) {
       setCurrentReviewPage(1);
     } catch (e) {
       console.error("Помилка при відправці коментаря:", e);
-      await alertError("Помилка при відправці коментаря");
+      await alertError(t("product.commentError"));
     } finally {
       setIsSubmittingComment(false);
     }
@@ -301,7 +306,7 @@ export default function ProductDetailsClient({ id }: { id: string }) {
   const toggleFavorite = async () => {
     const token = getAuthToken();
     if (!token) {
-      await alertWarning("Потрібно увійти в акаунт");
+      await alertWarning(t("product.loginRequired"));
       return;
     }
     const pid = Number(id);
@@ -618,19 +623,143 @@ export default function ProductDetailsClient({ id }: { id: string }) {
   const hasAuthorDetails = Boolean(authorName || authorBio || authorPhoto);
   const formatTags = getFormatTags(currentProduct?.formatIds);
 
-  const characteristics = [
-    { label: "Код товару:", value: currentProduct?.productCode ?? `#${currentProduct?.id ?? ""}` },
-    { label: "Назва книги:", value: productTitle },
-    { label: "Сторінок:", value: pageCountValue },
-    { label: "Вага:", value: weightText },
-    { label: "Рік видання:", value: yearText },
-    { label: "Жанри:", value: categoryLabel },
-    { label: "Автор:", value: authorName },
-    { label: "Мова:", value: languageName },
-    { label: "Видавництво:", value: publisherName },
-    { label: "Обкладинка:", value: currentProduct?.coverType != null ? (currentProduct.coverType === CoverType.NUMBER_1 ? "Мʼяка" : "Тверда") : "" },
-    { label: "Формат:", value: formatDisplay },
-  ].filter((item) => item.value);
+  const formatDesktopPrice = (value?: number | null) => {
+    if (value == null) return "";
+    const formatted = new Intl.NumberFormat(locale === "en" ? "en-US" : "uk-UA").format(value);
+    return locale === "en" ? `${formatted} UAH` : `${formatted} грн`;
+  };
+
+  const formatDesktopWeight = (value?: number | null) => {
+    if (value == null) return "";
+    return t("product.weightKg").replace("{value}", (value / 1000).toFixed(2));
+  };
+
+  const formatDesktopReviewDate = (value?: Date) => {
+    if (!value) return "";
+    return value.toLocaleDateString(locale === "en" ? "en-US" : "uk-UA");
+  };
+
+  const desktopFormatIconMap = useMemo(
+    () => ({
+      paper: { ...formatIconMap.paper, label: t("product.formats.paper") },
+      ebook: { ...formatIconMap.ebook, label: t("product.formats.ebook") },
+      audio: { ...formatIconMap.audio, label: t("product.formats.audio") },
+    }),
+    [t],
+  );
+
+  const desktopPageCountText = pageCountValue
+    ? t("product.pages").replace("{count}", pageCountValue)
+    : "";
+  const desktopWeightText = formatDesktopWeight(currentProduct?.weightGrams);
+  const desktopPriceText = priceValue != null ? formatDesktopPrice(priceValue) : "";
+
+  const desktopReviewCards = useMemo(
+    () =>
+      productReviews
+        .filter((review) => Boolean(review.comment))
+        .map((review, index) => ({
+          id:
+            review.id ??
+            review.createdAt?.toISOString() ??
+            review.comment ??
+            index,
+          author: review.userName || review.userId || t("common.anonymous"),
+          text: review.comment ?? "",
+          timeLabel: formatDesktopReviewDate(review.createdAt),
+          avatar: getAvatarSrc(review.userAvatarData),
+          bookImage: primaryImage,
+          likesCount: 0,
+        })),
+    [productReviews, primaryImage, t, locale],
+  );
+
+  const desktopTotalReviewPages = Math.ceil(desktopReviewCards.length / reviewsPerPage);
+  const desktopPaginatedReviewCards = desktopReviewCards.slice(
+    (currentReviewPage - 1) * reviewsPerPage,
+    currentReviewPage * reviewsPerPage,
+  );
+
+  const desktopBooksByAuthorCards = useMemo(
+    () =>
+      booksByAuthor.slice(0, 4).map((item) => ({
+        id: item.id,
+        href: item.id ? lp(`/products/${item.id}`) : undefined,
+        title: item.productName ?? "",
+        author:
+          (item.authorIds ?? [])
+            .map((authorId) => authors.find((author) => author.id === authorId)?.authorName)
+            .filter((name): name is string => Boolean(name))
+            .join(", ") || null,
+        price: formatDesktopPrice(item.discountPrice ?? item.price),
+        image: getImageSrc(item),
+        rating:
+          getReviewCountForProduct(item.id) > 0 ? getRatingForProduct(item.id) : null,
+        formatTags: getFormatTags(item.formatIds),
+      })),
+    [booksByAuthor, authors, lp, locale, ratingByProductId],
+  );
+
+  const desktopSimilarBookCards = useMemo(
+    () =>
+      similarByCategory.slice(0, 4).map((item) => ({
+        id: item.id,
+        href: item.id ? lp(`/products/${item.id}`) : undefined,
+        title: item.productName ?? "",
+        author:
+          (item.authorIds ?? [])
+            .map((authorId) => authors.find((author) => author.id === authorId)?.authorName)
+            .filter((name): name is string => Boolean(name))
+            .join(", ") || null,
+        price: formatDesktopPrice(item.discountPrice ?? item.price),
+        image: getImageSrc(item),
+        rating:
+          getReviewCountForProduct(item.id) > 0 ? getRatingForProduct(item.id) : null,
+        formatTags: getFormatTags(item.formatIds),
+      })),
+    [similarByCategory, authors, lp, locale, ratingByProductId],
+  );
+
+  const desktopCharacteristics = useMemo(
+    () =>
+      [
+        {
+          label: t("product.chars.productCode"),
+          value: currentProduct?.productCode ?? `#${currentProduct?.id ?? ""}`,
+        },
+        { label: t("product.chars.bookTitle"), value: productTitle },
+        { label: t("product.chars.pages"), value: pageCountValue },
+        { label: t("product.chars.weight"), value: desktopWeightText },
+        { label: t("product.chars.year"), value: yearText },
+        { label: t("product.chars.genres"), value: categoryLabel },
+        { label: t("product.chars.author"), value: authorName },
+        { label: t("product.chars.language"), value: languageName },
+        { label: t("product.chars.publisher"), value: publisherName },
+        {
+          label: t("product.chars.cover"),
+          value:
+            currentProduct?.coverType != null
+              ? currentProduct.coverType === CoverType.NUMBER_1
+                ? t("product.chars.softCover")
+                : t("product.chars.hardCover")
+              : "",
+        },
+        { label: t("product.chars.format"), value: formatDisplay },
+      ].filter((item) => item.value),
+    [
+      t,
+      currentProduct,
+      productTitle,
+      pageCountValue,
+      desktopWeightText,
+      yearText,
+      categoryLabel,
+      authorName,
+      languageName,
+      publisherName,
+      formatDisplay,
+    ],
+  );
 
   return (
     <>
@@ -687,7 +816,7 @@ export default function ProductDetailsClient({ id }: { id: string }) {
                   className="flex h-[44px] w-[44px] items-center justify-center rounded-full bg-[#f5f3ee] text-[24px] font-bold text-[#242424] shadow-md transition-transform hover:scale-105"
                   onClick={() => router.back()}
                   type="button"
-                  aria-label="Назад"
+                  aria-label={t("product.back")}
                 >
                   ←
                 </button>
@@ -717,7 +846,7 @@ export default function ProductDetailsClient({ id }: { id: string }) {
                     ) : (
                       <div className="flex h-[420px] w-[300px] flex-col items-center justify-center rounded-[12px] bg-[#f5f3ee]/80 border-2 border-dashed border-[#242424]/30 text-[#242424]/50 shadow-md">
                         <span className="text-4xl mb-2">📖</span>
-                        <span className="font-serif text-lg">Обкладинка відсутня</span>
+                        <span className="font-serif text-lg">{t("product.coverMissing")}</span>
                       </div>
                     )}
                   </div>
@@ -731,7 +860,7 @@ export default function ProductDetailsClient({ id }: { id: string }) {
                     <span className="font-mono text-[16px] font-bold">{rating.toFixed(0)}</span>
                     {ratingCount > 0 ? (
                       <span className="text-[14px] font-semibold text-[#0e503f] underline cursor-pointer hover:text-[#093529]">
-                        {ratingCount} оцінок
+                        {t("product.ratings").replace("{count}", String(ratingCount))}
                       </span>
                     ) : null}
                   </div>
@@ -742,8 +871,8 @@ export default function ProductDetailsClient({ id }: { id: string }) {
 
                   {authorName ? (
                     <div className="mt-2 flex items-center gap-2 text-[18px]"
-                      onClick={() => authorId && router.push(`/authors/${authorId}`)}>
-                      <span className="text-[#242424]/70">автор:</span>
+                      onClick={() => authorId && router.push(lp(`/authors/${authorId}`))}>
+                      <span className="text-[#242424]/70">{t("product.authorLabel")}</span>
                       <span className="font-semibold text-[#242424] cursor-pointer">
                         {authorName}
                       </span>
@@ -753,7 +882,7 @@ export default function ProductDetailsClient({ id }: { id: string }) {
                   {formatTags.length > 0 ? (
                     <div className="mt-6 flex flex-col gap-3.5">
                       {formatTags.map((tag, idx) => {
-                        const item = formatIconMap[tag];
+                        const item = desktopFormatIconMap[tag];
                         if (!item) return null;
                         const isGreen = idx % 2 !== 0;
                         return (
@@ -774,8 +903,8 @@ export default function ProductDetailsClient({ id }: { id: string }) {
                     </div>
                   ) : null}
 
-                  {pageCountText ? (
-                    <div className="mt-8 text-[16px] text-[#242424]">{pageCountText}</div>
+                  {desktopPageCountText ? (
+                    <div className="mt-8 text-[16px] text-[#242424]">{desktopPageCountText}</div>
                   ) : null}
 
                   <div className="my-3 border-b border-[#242424]/30 w-full" />
@@ -791,26 +920,26 @@ export default function ProductDetailsClient({ id }: { id: string }) {
                     <div className="flex h-[64px] items-center justify-between rounded-t-[20px] bg-[#0e503f] px-6 text-white">
                       <div className="flex items-center gap-3">
                         {authorPhoto ? (
-                          <img alt={authorName || "Автор"} className="h-[44px] w-[44px] rounded-full object-cover border-2 border-white shadow-sm" src={authorPhoto} />
+                          <img alt={authorName || t("product.authorAlt")} className="h-[44px] w-[44px] rounded-full object-cover border-2 border-white shadow-sm" src={authorPhoto} />
                         ) : (
                           <div className="flex h-[44px] w-[44px] items-center justify-center rounded-full bg-white/20 font-bold text-lg">
-                            {authorName ? authorName.charAt(0) : "А"}
+                            {authorName ? authorName.charAt(0) : "A"}
                           </div>
                         )}
-                        <span className="font-serif text-[18px] font-medium">{authorName || "Автор не вказаний"}</span>
+                        <span className="font-serif text-[18px] font-medium">{authorName || t("product.authorNotSpecified")}</span>
                       </div>
                       <button
                         type="button"
                         className="flex h-[36px] w-[36px] items-center justify-center rounded-full bg-white/20 text-2xl font-bold hover:bg-white/30 transition-colors"
-                        title="Підписатися / Більше"
+                        title={t("product.subscribeMore")}
                       >
                         +
                       </button>
                     </div>
 
                     <TornPaperBox className="rounded-t-none">
-                      <div className="text-[14px] text-[#242424]/70">Ціна в Libria:</div>
-                      <div className="mt-1 font-mono text-[38px] font-bold text-[#242424]">{priceText || "0 грн"}</div>
+                      <div className="text-[14px] text-[#242424]/70">{t("product.priceAtLibria")}</div>
+                      <div className="mt-1 font-mono text-[38px] font-bold text-[#242424]">{desktopPriceText || t("product.zeroPrice")}</div>
 
                       <div className="mt-8 flex items-center justify-between gap-4">
                         <button
@@ -820,20 +949,20 @@ export default function ProductDetailsClient({ id }: { id: string }) {
                             if (!currentProduct?.id) return;
                             const ok = await addToCart(currentProduct.id);
                             if (ok) {
-                              await alertSuccess("Товар додано в кошик");
+                              await alertSuccess(t("product.addedToCart"));
                             } else {
-                              await alertWarning("Увійдіть в акаунт, щоб додати товар у кошик");
+                              await alertWarning(t("product.loginToAddCart"));
                             }
                           }}
                         >
                           <img alt="" className="h-[24px] w-[24px] brightness-200" src="/images/main_page/icons/rec-icon-basket.svg" />
-                          <span>Додати в кошик</span>
+                          <span>{t("product.addToCart")}</span>
                         </button>
                         <button
                           className={`flex h-[40px] w-[40px] items-center justify-center transition-transform ${isFavorite ? "text-red-500 scale-110" : "opacity-80 hover:opacity-100"}`}
                           type="button"
                           onClick={toggleFavorite}
-                          aria-label="Додати в улюблені"
+                          aria-label={t("product.addToFavorites")}
                         >
                           <img alt="" className="h-[30px] w-[30px]" src="/images/main_page/icons/rec-icon-favorite.svg" />
                         </button>
@@ -841,18 +970,18 @@ export default function ProductDetailsClient({ id }: { id: string }) {
 
                       {isFavorite ? (
                         <div className="mt-4 text-center text-[14px] font-medium text-[#0e503f]">
-                          Товар у вашому списку бажань
+                          {t("product.inWishlist")}
                         </div>
                       ) : (
                         <div className="mt-4 text-center text-[13px] text-[#242424]/70">
-                          Додайте до списку бажань, щоб не втратити
+                          {t("product.wishlistHint")}
                         </div>
                       )}
 
                       <div className="mt-6 border-t border-[#242424]/20 pt-4">
-                        <div className="font-mono text-[16px] font-bold text-[#242424]">Оплата</div>
+                        <div className="font-mono text-[16px] font-bold text-[#242424]">{t("product.payment")}</div>
                         <div className="mt-1 text-[13px] leading-relaxed text-[#242424]/80">
-                          Онлайн-оплата платіжною картою або при отриманні
+                          {t("product.paymentDescription")}
                         </div>
                       </div>
                     </TornPaperBox>
@@ -863,7 +992,7 @@ export default function ProductDetailsClient({ id }: { id: string }) {
               {descriptionText ? (
                 <div className="mt-14">
                   <TornPaperBox className="shadow-lg">
-                    <h2 className="font-serif text-[28px] font-bold text-[#242424]">Опис</h2>
+                    <h2 className="font-serif text-[28px] font-bold text-[#242424]">{t("product.description")}</h2>
                     <p className="mt-4 text-[16px] leading-relaxed text-[#242424]/90 whitespace-pre-line font-sans">
                       {descriptionText}
                     </p>
@@ -874,11 +1003,13 @@ export default function ProductDetailsClient({ id }: { id: string }) {
               <div className="mt-14 grid gap-0 lg:grid-cols-[400px_1px_1fr]">
                 <div>
                   <h3 className="font-serif text-[26px] font-bold text-[#242424] mb-6">
-                    Характеристика
+                    {t("product.characteristics")}
                   </h3>
                   <div className="space-y-3.5 text-[15px]">
-                    {characteristics.map((item) => {
-                      const isHighlighted = item.label === "Жанри:" || item.label === "Автор:";
+                    {desktopCharacteristics.map((item) => {
+                      const isHighlighted =
+                        item.label === t("product.chars.genres") ||
+                        item.label === t("product.chars.author");
                       return (
                         <div key={item.label} className="grid grid-cols-[130px_1fr] gap-2 items-start">
                           <span className="text-[#242424]/80">{item.label}</span>
@@ -898,7 +1029,7 @@ export default function ProductDetailsClient({ id }: { id: string }) {
                   {hasAuthorDetails ? (
                     <div>
                       <h3 className="font-serif text-[26px] font-bold text-[#242424] mb-6">
-                        Про автора
+                        {t("product.aboutAuthor")}
                       </h3>
                       <div className="flex flex-col sm:flex-row gap-6 items-start">
                         {authorPhoto ? (
@@ -916,30 +1047,30 @@ export default function ProductDetailsClient({ id }: { id: string }) {
                             </p>
                           ) : null}
                           <button className="mt-3 cursor-pointer text-left font-semibold text-[#0e503f] hover:underline text-[15px]" type="button"
-                            onClick={() => authorId && router.push(`/authors/${authorId}`)}>
-                            Більше про автора
+                            onClick={() => authorId && router.push(lp(`/authors/${authorId}`))}>
+                            {t("product.moreAboutAuthor")}
                           </button>
                         </div>
                       </div>
                     </div>
                   ) : null}
 
-                  {booksByAuthorCards.length > 0 ? (
+                  {desktopBooksByAuthorCards.length > 0 ? (
                     <div className="mt-12">
                       <div className="flex items-center justify-between mb-6">
                         <h3 className="font-serif text-[26px] font-bold text-[#242424]">
-                          Книжки цього автора
+                          {t("product.booksByAuthor")}
                         </h3>
                         <button
                           className="flex h-[40px] w-[40px] items-center justify-center rounded-full bg-[#f5f3ee] text-xl font-bold text-[#242424] shadow-md hover:scale-105 transition-transform"
                           type="button"
-                          aria-label="Більше книжок автора"
+                          aria-label={t("product.moreAuthorBooksAria")}
                         >
                           →
                         </button>
                       </div>
                       <div className="flex flex-wrap gap-6">
-                        {booksByAuthorCards.map((book, index) => (
+                        {desktopBooksByAuthorCards.map((book, index) => (
                           <BookCard key={`${book.title}-${index}`} {...book} />
                         ))}
                       </div>
@@ -951,12 +1082,12 @@ export default function ProductDetailsClient({ id }: { id: string }) {
               <div className="mt-16 flex justify-end -mr-6 sm:-mr-10 md:-mr-14">
                 <div
                   className="flex cursor-pointer items-center gap-4 rounded-l-[30px] bg-[#7e4d1e] px-8 py-5 text-[#ffd9d9] shadow-2xl transition-transform hover:translate-x-[-8px]"
-                  onClick={() => router.push("/community")}
+                  onClick={() => router.push(lp("/community"))}
                 >
                   <div className="flex h-[40px] w-[40px] items-center justify-center rounded-full bg-white/20 text-2xl font-bold text-white">
                     📖
                   </div>
-                  <span className="font-serif text-[24px] font-bold">Перейти до спільноти</span>
+                  <span className="font-serif text-[24px] font-bold">{t("product.goToCommunity")}</span>
                 </div>
               </div>
 
@@ -982,7 +1113,7 @@ export default function ProductDetailsClient({ id }: { id: string }) {
               <div className="flex items-center gap-4 rounded-[30px] bg-[#f5f3ee] px-6 h-[60px] shadow-[0px_0px_15px_rgba(36,36,36,0.2)] border border-[#242424]/10 max-w-[1220px] mx-auto mb-12">
                 <input
                   className="flex-1 bg-transparent text-[18px] text-[#242424] placeholder:text-[#242424]/60 focus:outline-none font-sans"
-                  placeholder="Додайте коментар..."
+                  placeholder={t("product.addCommentPlaceholder")}
                   type="text"
                   value={newComment}
                   onChange={(e) => setNewComment(e.target.value)}
@@ -994,17 +1125,17 @@ export default function ProductDetailsClient({ id }: { id: string }) {
                   type="button"
                   onClick={handleCommentSubmit}
                   disabled={isSubmittingComment || !newComment.trim()}
-                  aria-label="Надіслати коментар"
+                  aria-label={t("product.sendCommentAria")}
                 >
                   {isSubmittingComment ? "..." : "➢"}
                 </button>
               </div>
 
               <div>
-                {reviewCards.length > 0 ? (
+                {desktopReviewCards.length > 0 ? (
                   <>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-[1220px] mx-auto">
-                      {paginatedReviewCards.map((rev) => (
+                      {desktopPaginatedReviewCards.map((rev) => (
                         <ReviewCard
                           key={rev.id}
                           id={rev.id}
@@ -1017,24 +1148,24 @@ export default function ProductDetailsClient({ id }: { id: string }) {
                         />
                       ))}
                     </div>
-                    {totalReviewPages > 1 && (
+                    {desktopTotalReviewPages > 1 && (
                       <div className="w-full max-w-[1220px] mx-auto mt-10 h-[15px] bg-[#242424]/20 rounded-[62px] overflow-hidden">
                         <div
                           className="h-full bg-[#0e503f] rounded-[62px] transition-all duration-300"
-                          style={{ width: `${(currentReviewPage / totalReviewPages) * 100}%` }}
+                          style={{ width: `${(currentReviewPage / desktopTotalReviewPages) * 100}%` }}
                         />
                       </div>
                     )}
                     <ReviewPagination
                       currentPage={currentReviewPage}
-                      totalPages={totalReviewPages}
+                      totalPages={desktopTotalReviewPages}
                       onPageChange={setCurrentReviewPage}
                     />
                   </>
                 ) : (
                   <div className="rounded-[20px] border border-dashed border-[#242424]/30 p-10 text-center">
                     <p className="text-[16px] text-[#242424]/60">
-                      Ще немає коментарів до цієї книги. Будьте першим, хто залишить відгук!
+                      {t("product.noComments")}
                     </p>
                   </div>
                 )}
@@ -1050,7 +1181,7 @@ export default function ProductDetailsClient({ id }: { id: string }) {
           </section>
 
           {/* 3. НИЖНІЙ БЛОК: СХОЖІ ТА БІЛЬШЕ (НА ДЕРЕВ'ЯНОМУ ФОНІ З ВЕРХНІМИ ВКЛАДКАМИ ЯК У FIGMA) */}
-          {similarBookCards.length > 0 ? (
+          {desktopSimilarBookCards.length > 0 ? (
             <section className="relative w-full py-16 overflow-hidden">
               {/* Top wooden shelf edge */}
               <div className="w-full h-[24px] bg-[#4a2e18] shadow-[0_4px_10px_rgba(0,0,0,0.6)] border-t-2 border-[#684323] border-b border-[#2a1a0c] mb-8" />
@@ -1058,18 +1189,18 @@ export default function ProductDetailsClient({ id }: { id: string }) {
               <div className="mx-auto max-w-[1280px] px-4 md:px-8">
                 <div className="flex items-center justify-between mb-10">
                   <div className="rounded-[20px] bg-[#f5f3ee] px-8 py-3 font-serif text-[26px] font-bold text-[#242424] shadow-lg border border-[#242424]/10">
-                    Схожі
+                    {t("product.similar")}
                   </div>
                   <button
                     type="button"
                     className="rounded-[20px] bg-[#f5f3ee] px-8 py-3 font-serif text-[18px] font-semibold text-[#242424] shadow-lg border border-[#242424]/10 hover:scale-105 transition-transform cursor-pointer"
                   >
-                    Більше
+                    {t("product.more")}
                   </button>
                 </div>
 
                 <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4 justify-items-center">
-                  {similarBookCards.map((book, index) => (
+                  {desktopSimilarBookCards.map((book, index) => (
                     <BookCard key={`${book.title}-${index}`} {...book} />
                   ))}
                 </div>
