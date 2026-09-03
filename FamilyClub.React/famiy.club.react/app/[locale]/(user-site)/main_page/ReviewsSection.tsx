@@ -1,4 +1,12 @@
+"use client";
+
 import type { CSSProperties } from "react";
+import { useLocale } from "@/lib/i18n/LocaleProvider";
+
+const REVIEWS_BOOK_IMAGES = {
+    uk: "/images/main_page/reviews/reviews-book-uk.png",
+    en: "/images/main_page/reviews/reviews-book-en.png",
+} as const;
 
 type ReviewCardData = {
     id: number | string;
@@ -13,6 +21,7 @@ type ReviewCardData = {
 type ReviewCardProps = ReviewCardData & {
     className?: string;
     style?: CSSProperties;
+    fallbackBookSrc: string;
 };
 
 const formatRating = (value?: number | null) => {
@@ -20,7 +29,19 @@ const formatRating = (value?: number | null) => {
     return Number.isInteger(value) ? `${value}` : value.toFixed(1);
 };
 
-function ReviewCard({ author, text, timeLabel, avatar, bookImage, rating, className, style }: ReviewCardProps) {
+function ReviewCard({
+    author,
+    text,
+    timeLabel,
+    avatar,
+    bookImage,
+    rating,
+    className,
+    style,
+    fallbackBookSrc,
+}: ReviewCardProps) {
+    const coverSrc = bookImage || fallbackBookSrc;
+
     return (
         <div
             className={`flex h-full flex-col gap-3 rounded-[21px] bg-[#f5f3ee] p-4 shadow-[0px_0px_15px_0px_rgba(0,0,0,0.6)] ${className ?? ""}`}
@@ -38,15 +59,11 @@ function ReviewCard({ author, text, timeLabel, avatar, bookImage, rating, classN
                     ) : null}
                     <p className="mt-2 max-h-[120px] overflow-hidden text-[14px] text-[#242424]">{text}</p>
                 </div>
-                {bookImage ? (
-                    <img
-                        alt=""
-                        className="h-[108px] w-[77px] rounded-[9px] object-cover"
-                        src={bookImage}
-                    />
-                ) : (
-                    <div className="h-[108px] w-[77px]" />
-                )}
+                <img
+                    alt=""
+                    className="h-[108px] w-[77px] rounded-[9px] object-cover"
+                    src={coverSrc}
+                />
             </div>
             <div className="flex items-center justify-between">
                 {timeLabel ? (
@@ -70,6 +87,9 @@ type ReviewsSectionProps = {
 };
 
 export default function ReviewsSection({ reviews }: ReviewsSectionProps) {
+    const { locale } = useLocale();
+    const reviewsBookSrc = REVIEWS_BOOK_IMAGES[locale];
+
     if (!reviews.length) return null;
     const expandedReviews = [...reviews, ...reviews];
     const desktopLayout = [
@@ -99,6 +119,7 @@ export default function ReviewsSection({ reviews }: ReviewsSectionProps) {
                         className="absolute w-[507px]"
                         style={{ left: layout.left, top: layout.top, height: layout.height }}
                         {...expandedReviews[index]}
+                        fallbackBookSrc={reviewsBookSrc}
                     />
                 ))}
             </div>
@@ -112,7 +133,11 @@ export default function ReviewsSection({ reviews }: ReviewsSectionProps) {
                     />
                     <div className="relative grid gap-6 px-6 py-8 md:grid-cols-2">
                         {expandedReviews.map((review, index) => (
-                            <ReviewCard key={`${review.id}-${index}`} {...review} />
+                            <ReviewCard
+                                key={`${review.id}-${index}`}
+                                {...review}
+                                fallbackBookSrc={reviewsBookSrc}
+                            />
                         ))}
                     </div>
                 </div>

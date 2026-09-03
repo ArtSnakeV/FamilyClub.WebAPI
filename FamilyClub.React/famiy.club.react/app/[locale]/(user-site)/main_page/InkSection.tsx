@@ -2,9 +2,15 @@
 
 import { useLocale } from "@/lib/i18n/LocaleProvider";
 
+const CAT_IMAGES = {
+    uk: "/images/body/cat-uk.webp",
+    en: "/images/body/cat-en.webp",
+} as const;
+
 export default function InkSection() {
-    const { dictionary } = useLocale();
+    const { locale, dictionary } = useLocale();
     const ink = dictionary.home.ink;
+    const catSrc = CAT_IMAGES[locale];
 
     return (
         <section className="py-16">
@@ -15,7 +21,7 @@ export default function InkSection() {
                             <img
                                 alt={ink.imageAlt}
                                 className="h-[571px] w-[832px] object-cover"
-                                src="/images/body/cat.webp"
+                                src={catSrc}
                             />
                         </div>
                     </div>

@@ -1,12 +1,22 @@
+"use client";
+
 import Image from "next/image";
+import { useLocale } from "@/lib/i18n/LocaleProvider";
 
 const LEVEL_MAX = 300;
+
+const GROUP_727_IMAGES = {
+  uk: "/images/pawsUser/Group 727-uk.png",
+  en: "/images/pawsUser/Group 727-en.png",
+} as const;
 
 type Props = {
   paws: number;
 };
 
 export default function NextLevelBlock({ paws }: Props) {
+  const { locale } = useLocale();
+  const group727Src = GROUP_727_IMAGES[locale];
   const progressPercent = Math.min(100, (paws / LEVEL_MAX) * 100);
 
   return (
@@ -55,29 +65,17 @@ export default function NextLevelBlock({ paws }: Props) {
       {/* Дві картки */}
       <div className="flex w-full flex-row gap-1 items-center -mt-4">
         <button
-          className="relative flex-1 flex items-center gap-2 bg-cover w-[340px] h-[142px] p-2 text-left overflow-hidden"
-          style={{
-            backgroundImage: "url('/images/pawsUser/Rectangle 471.png')",
-            backgroundSize: "cover",
-            width: "340px",
-            height: "142px"
-          }}
+          type="button"
+          className="relative flex-1 flex items-center justify-center w-[340px] h-[142px] p-0 text-left overflow-hidden bg-transparent border-0 cursor-pointer"
         >
           <Image
-            src="/images/userProfile/gift-solid-full.png"
-            width={50}
-            height={50}
-            alt=""
-            className="ml-5"
+            src={group727Src}
+            width={355}
+            height={189}
+            alt={locale === "en" ? "Exchange to paws" : "Обміняти на лапки"}
+            className="object-contain max-h-full w-auto"
+            priority
           />
-          <div>
-            <p className="font-bold text-[14px] leading-tight">
-              Обміняти на лапки
-            </p>
-            <p className="text-black/60 text-xs w-[150px] mt-1.5 leading-snug">
-              Перетвори лапки на знижку для покупки
-            </p>
-          </div>
         </button>
 
         <button

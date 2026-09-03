@@ -10,15 +10,44 @@ const HERO_TITLE_IMAGES = {
     en: "/images/main_page/hero/hero-titlee-en.png",
 } as const;
 
+const HERO_BOOK_IMAGES = {
+    uk: "/images/main_page/hero/hero-book-1-uk.png",
+    en: "/images/main_page/hero/hero-book-1-en.png",
+} as const;
+
+const HERO_BOOK_2_IMAGES = {
+    uk: "/images/main_page/hero/hero-book-2-uk.png",
+    en: "/images/main_page/hero/hero-book-2-en.png",
+} as const;
+
+const HERO_BOOK_3_IMAGES = {
+    uk: "/images/main_page/hero/hero-book-3-uk.png",
+    en: "/images/main_page/hero/hero-book-3-en.png",
+} as const;
+
+const HERO_BOOK_4_IMAGES = {
+    uk: "/images/main_page/hero/hero-book-4-uk.png",
+    en: "/images/main_page/hero/hero-book-4-en.png",
+} as const;
+
+const HERO_BACKGROUND_IMAGES = {
+    uk: "/images/main_page/hero/hero-background-uk.png",
+    en: "/images/main_page/hero/hero-background-en.png",
+} as const;
+
 export default function Hero() {
     const { locale } = useLocale();
     const { settings } = usePlatformSettingsOptional();
     const t = useTranslations();
     const lp = useLocalizedPath();
     const titleSrc = HERO_TITLE_IMAGES[locale];
+    const bookSrc = HERO_BOOK_IMAGES[locale];
+    const book2Src = HERO_BOOK_2_IMAGES[locale];
+    const book3Src = HERO_BOOK_3_IMAGES[locale];
+    const book4Src = HERO_BOOK_4_IMAGES[locale];
     const bannerSrc =
         mediaSrc(settings.bannerData, settings.bannerContentType) ??
-        "/images/main_page/hero/hero-background.png";
+        HERO_BACKGROUND_IMAGES[locale];
 
     return (
         <section className="relative bg-[#f5f3ee]">
@@ -45,22 +74,22 @@ export default function Hero() {
                     <img
                         alt=""
                         className="absolute inset-0 h-full w-full rotate-[-7.5deg] object-cover drop-shadow-[0px_0px_30px_rgba(245,243,238,0.9)]"
-                        src="/images/main_page/hero/hero-book-4.png"
+                        src={book4Src}
                     />
                     <img
                         alt=""
                         className="absolute inset-0 h-full w-full rotate-[-7.5deg] object-cover"
-                        src="/images/main_page/hero/hero-book-3.png"
+                        src={book3Src}
                     />
                     <img
                         alt=""
                         className="absolute inset-0 h-full w-full rotate-[-7.5deg] object-cover"
-                        src="/images/main_page/hero/hero-book-2.png"
+                        src={book2Src}
                     />
                     <img
                         alt=""
                         className="absolute inset-0 h-full w-full rotate-[-7.5deg] object-cover"
-                        src="/images/main_page/hero/hero-book-1.png"
+                        src={bookSrc}
                     />
                 </div>
 
@@ -110,22 +139,22 @@ export default function Hero() {
                     <img
                         alt=""
                         className="absolute inset-0 h-full w-full rotate-[-7.5deg] object-cover drop-shadow-[0px_0px_30px_rgba(245,243,238,0.9)]"
-                        src="/images/main_page/hero/hero-book-4.png"
+                        src={book4Src}
                     />
                     <img
                         alt=""
                         className="absolute inset-0 h-full w-full rotate-[-7.5deg] object-cover"
-                        src="/images/main_page/hero/hero-book-3.png"
+                        src={book3Src}
                     />
                     <img
                         alt=""
                         className="absolute inset-0 h-full w-full rotate-[-7.5deg] object-cover"
-                        src="/images/main_page/hero/hero-book-2.png"
+                        src={book2Src}
                     />
                     <img
                         alt=""
                         className="absolute inset-0 h-full w-full rotate-[-7.5deg] object-cover"
-                        src="/images/main_page/hero/hero-book-1.png"
+                        src={bookSrc}
                     />
                 </div>
 
