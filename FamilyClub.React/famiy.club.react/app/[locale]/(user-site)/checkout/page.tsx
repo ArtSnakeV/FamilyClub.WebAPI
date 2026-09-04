@@ -11,6 +11,7 @@ import type { ProductDto } from "@/lib/api/generated";
 import { getAuthToken, getAuthUserId } from "@/lib/auth/tokenStorage";
 import { alertError, alertSuccess, alertWarning } from "@/lib/ui/sweetAlert";
 import { useCurrentUser } from "@/app/(user-site)/userProfile/hooks/useCurrentUser";
+import { useLocale, useLocalizedPath, useTranslations } from "@/lib/i18n/LocaleProvider";
 import styles from "./checkout.module.css";
 import MobileCheckoutView from "./MobileCheckoutView";
 
@@ -18,11 +19,6 @@ import MobileCheckoutView from "./MobileCheckoutView";
 export type DeliveryProvider = "nova_poshta" | "ukr_poshta" | "meest";
 export type DeliveryType = "branch" | "postbox";
 export type PaymentMethod = "card_online" | "card_dia" | "cash_on_delivery";
-
-// ─── Helpers ───
-function formatPrice(value: number): string {
-  return `${new Intl.NumberFormat("uk-UA").format(value)} грн`;
-}
 
 // ─── SVGs ───
 function BackArrow() {
@@ -53,8 +49,17 @@ const DELIVERY_COSTS: Record<string, number> = {
 };
 
 export default function CheckoutPage() {
+  const t = useTranslations();
+  const lp = useLocalizedPath();
+  const { locale } = useLocale();
   const router = useRouter();
   const { items: cartItems, clearCart } = useCart();
+
+  function formatPrice(value: number): string {
+    if (value === 0) return t("cart.zeroPrice");
+    const formatted = new Intl.NumberFormat(locale === "en" ? "en-US" : "uk-UA").format(value);
+    return t("cart.price").replace("{value}", formatted);
+  }
 
   // Data
   const [products, setProducts] = useState<ProductDto[]>([]);
@@ -154,10 +159,10 @@ export default function CheckoutPage() {
       const token = getAuthToken();
       const userId = getAuthUserId();
       if (!token || !userId) {
-        router.push("/login");
+        router.push(lp("/login"));
       }
     }
-  }, [router]);
+  }, [router, lp]);
 
   // ─── Lookup ───
   const productById = useMemo(() => {
@@ -254,8 +259,8 @@ export default function CheckoutPage() {
         : null;
 
       if (!storedId) {
-        await alertWarning("Помилка авторизації. Увійдіть в акаунт.");
-        router.push("/login");
+        await alertWarning(t("checkout.authError"));
+        router.push(lp("/login"));
         return;
       }
 
@@ -311,7 +316,7 @@ export default function CheckoutPage() {
       setSuccess(true);
     } catch (error) {
       console.error("Failed to create order", error);
-      await alertError("Помилка при оформленні замовлення. Спробуйте ще раз.");
+      await alertError(t("checkout.orderError"));
     } finally {
       setSubmitting(false);
     }
@@ -339,11 +344,11 @@ export default function CheckoutPage() {
     return (
       <div className={styles.checkoutPage}>
         <div className={styles.checkoutHeader}>
-          <h1 className={styles.checkoutTitle}>Оформлення замовлення</h1>
+          <h1 className={styles.checkoutTitle}>{t("checkout.title")}</h1>
         </div>
         <div className={styles.loadingState}>
           <span className={styles.loadingIcon}>⏳</span>
-          Завантаження...
+          {t("cart.loading")}
         </div>
       </div>
     );
@@ -357,16 +362,16 @@ export default function CheckoutPage() {
           <button
             className={styles.backButton}
             onClick={() => router.back()}
-            aria-label="Назад"
+            aria-label={t("cart.backAria")}
             id="checkout-back-btn"
           >
             <BackArrow />
           </button>
-          <h1 className={styles.checkoutTitle}>Оформлення замовлення</h1>
+          <h1 className={styles.checkoutTitle}>{t("checkout.title")}</h1>
         </div>
         <div className={styles.loadingState}>
           <span className={styles.loadingIcon}>🛒</span>
-          Ваш кошик порожній. Додайте товари перед оформленням.
+          {t("checkout.emptyCart")}
         </div>
       </div>
     );
@@ -379,24 +384,24 @@ export default function CheckoutPage() {
         <div className={styles.successOverlay}>
           <div className={styles.successCard}>
             <span className={styles.successIcon}>✅</span>
-            <h2 className={styles.successTitle}>Замовлення оформлено!</h2>
+            <h2 className={styles.successTitle}>{t("checkout.successTitle")}</h2>
             <p className={styles.successText}>
-              Дякуємо за замовлення! Товар додано у розділ «Мої замовлення».
+              {t("checkout.successText")}
             </p>
             <div className="flex items-center gap-3 justify-center mt-4">
               <button
                 className={styles.successBtn}
-                onClick={() => router.push("/orders")}
+                onClick={() => router.push(lp("/orders"))}
                 id="success-orders-btn"
               >
-                Мої замовлення
+                {t("checkout.myOrders")}
               </button>
               <button
                 className="bg-[#E5E0D5] hover:bg-[#D8D2C5] text-[#242424] px-6 py-3 rounded-xl font-medium transition"
-                onClick={() => router.push("/")}
+                onClick={() => router.push(lp("/"))}
                 id="success-home-btn"
               >
-                На головну
+                {t("checkout.goHome")}
               </button>
             </div>
           </div>
@@ -412,12 +417,12 @@ export default function CheckoutPage() {
         <button
           className={styles.backButton}
           onClick={() => router.back()}
-          aria-label="Назад"
+          aria-label={t("cart.backAria")}
           id="checkout-back-btn"
         >
           <BackArrow />
         </button>
-        <h1 className={styles.checkoutTitle}>Оформлення замовлення</h1>
+        <h1 className={styles.checkoutTitle}>{t("checkout.title")}</h1>
       </div>
 
       <div className={styles.checkoutContent}>
@@ -426,25 +431,25 @@ export default function CheckoutPage() {
 
           {/* ── Section 1: Personal Data ── */}
           <div className={styles.sectionCard} id="personal-data-section">
-            <h2 className={styles.sectionTitle}>Особисті данні</h2>
+            <h2 className={styles.sectionTitle}>{t("checkout.personalData")}</h2>
             <div className={styles.formGrid}>
               <input
                 className={styles.formInput}
                 type="text"
-                placeholder="Ім'я *"
+                placeholder={t("checkout.firstNamePlaceholder")}
                 value={firstName}
                 onChange={(e) => setFirstName(e.target.value)}
                 id="checkout-first-name"
-                aria-label="Ім'я"
+                aria-label={t("checkout.firstNameAria")}
               />
               <input
                 className={styles.formInput}
                 type="text"
-                placeholder="Прізвище *"
+                placeholder={t("checkout.lastNamePlaceholder")}
                 value={lastName}
                 onChange={(e) => setLastName(e.target.value)}
                 id="checkout-last-name"
-                aria-label="Прізвище"
+                aria-label={t("checkout.lastNameAria")}
               />
               <input
                 className={styles.formInput}
@@ -463,7 +468,7 @@ export default function CheckoutPage() {
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   id="checkout-phone"
-                  aria-label="Телефон"
+                  aria-label={t("checkout.phoneAria")}
                 />
                 <ChevronDown />
               </div>
@@ -474,9 +479,9 @@ export default function CheckoutPage() {
           {hasPhysicalItems && (
             <div className={styles.sectionCard} id="delivery-section">
               <h2 className={styles.sectionTitle}>
-                Доставка{" "}
+                {t("checkout.delivery")}{" "}
                 <span className={styles.sectionTitleNote}>
-                  (якщо у вас на замовлення паперова книга)
+                  {t("checkout.deliveryNote")}
                 </span>
               </h2>
 
@@ -493,12 +498,12 @@ export default function CheckoutPage() {
                         active={deliveryProvider === "nova_poshta"}
                         onClick={() => setDeliveryProvider("nova_poshta")}
                       />
-                      <span className={styles.deliveryOptionName}>Нова пошта</span>
+                      <span className={styles.deliveryOptionName}>{t("checkout.novaPoshta")}</span>
                     </div>
                     <div className={styles.deliveryOptionRight}>
                       <span className={styles.deliveryTerm}>
-                        <span className={styles.deliveryTermLabel}>Термін: </span>
-                        2-4 робочі дні
+                        <span className={styles.deliveryTermLabel}>{t("checkout.termLabel")}</span>
+                        {t("checkout.termNova")}
                       </span>
                     </div>
                   </div>
@@ -516,9 +521,9 @@ export default function CheckoutPage() {
                               active={deliveryType === "branch"}
                               onClick={() => setDeliveryType("branch")}
                             />
-                            <span className={styles.deliverySubOptionName}>Відділення</span>
+                            <span className={styles.deliverySubOptionName}>{t("checkout.branch")}</span>
                           </div>
-                          <span className={styles.deliverySubOptionCost}>Вартість 75 грн</span>
+                          <span className={styles.deliverySubOptionCost}>{t("checkout.cost").replace("{value}", "75")}</span>
                         </div>
                         <div
                           className={styles.deliverySubOption}
@@ -529,9 +534,9 @@ export default function CheckoutPage() {
                               active={deliveryType === "postbox"}
                               onClick={() => setDeliveryType("postbox")}
                             />
-                            <span className={styles.deliverySubOptionName}>Поштомат</span>
+                            <span className={styles.deliverySubOptionName}>{t("checkout.postbox")}</span>
                           </div>
-                          <span className={styles.deliverySubOptionCost}>Вартість 70 грн</span>
+                          <span className={styles.deliverySubOptionCost}>{t("checkout.cost").replace("{value}", "70")}</span>
                         </div>
                       </div>
 
@@ -541,11 +546,11 @@ export default function CheckoutPage() {
                           <input
                             className={styles.deliverySelectInput}
                             type="text"
-                            placeholder="Оберіть населений пункт *"
+                            placeholder={t("checkout.cityPlaceholder")}
                             value={city}
                             onChange={(e) => setCity(e.target.value)}
                             id="delivery-city"
-                            aria-label="Населений пункт"
+                            aria-label={t("checkout.cityAria")}
                           />
                           <div className={styles.deliverySelectIcon}>
                             <ChevronDown />
@@ -555,11 +560,11 @@ export default function CheckoutPage() {
                           <input
                             className={styles.deliverySelectInput}
                             type="text"
-                            placeholder="Відділення Нової пошти *"
+                            placeholder={t("checkout.branchPlaceholder")}
                             value={branch}
                             onChange={(e) => setBranch(e.target.value)}
                             id="delivery-branch"
-                            aria-label="Відділення"
+                            aria-label={t("checkout.branchAria")}
                           />
                           <div className={styles.deliverySelectIcon}>
                             <ChevronDown />
@@ -581,12 +586,12 @@ export default function CheckoutPage() {
                       active={deliveryProvider === "ukr_poshta"}
                       onClick={() => setDeliveryProvider("ukr_poshta")}
                     />
-                    <span className={styles.deliveryOptionName}>Укр пошта</span>
+                    <span className={styles.deliveryOptionName}>{t("checkout.ukrPoshta")}</span>
                   </div>
                   <div className={styles.deliveryOptionRight}>
                     <span className={styles.deliveryTerm}>
-                      <span className={styles.deliveryTermLabel}>Термін: </span>
-                      3-7 робочі дні
+                      <span className={styles.deliveryTermLabel}>{t("checkout.termLabel")}</span>
+                      {t("checkout.termUkr")}
                     </span>
                   </div>
                 </div>
@@ -606,8 +611,8 @@ export default function CheckoutPage() {
                   </div>
                   <div className={styles.deliveryOptionRight}>
                     <span className={styles.deliveryTerm}>
-                      <span className={styles.deliveryTermLabel}>Термін: </span>
-                      2-4 робочі дні
+                      <span className={styles.deliveryTermLabel}>{t("checkout.termLabel")}</span>
+                      {t("checkout.termMeest")}
                     </span>
                   </div>
                 </div>
@@ -617,7 +622,7 @@ export default function CheckoutPage() {
 
           {/* ── Section 3: Payment ── */}
           <div className={styles.sectionCard} id="payment-section">
-            <h2 className={styles.sectionTitle}>Спосіб оплати</h2>
+            <h2 className={styles.sectionTitle}>{t("checkout.paymentMethod")}</h2>
             <div className={styles.paymentOptions}>
               <div
                 className={styles.paymentOption}
@@ -629,7 +634,7 @@ export default function CheckoutPage() {
                     active={paymentMethod === "card_online"}
                     onClick={() => setPaymentMethod("card_online")}
                   />
-                  <span className={styles.paymentOptionName}>Оплата карткою онлайн</span>
+                  <span className={styles.paymentOptionName}>{t("checkout.payCardOnline")}</span>
                 </div>
                 <div className={styles.paymentLogos}>
                   <span style={{ fontWeight: 700, fontSize: 14, color: "#1a1f71" }}>VISA</span>
@@ -649,7 +654,7 @@ export default function CheckoutPage() {
                     onClick={() => setPaymentMethod("card_dia")}
                   />
                   <span className={styles.paymentOptionName}>
-                    Оплата карткою онлайн ( Дія.Картка: єПідтримка, єКнига)
+                    {t("checkout.payCardDia")}
                   </span>
                 </div>
                 <div className={styles.paymentLogos}>
@@ -669,7 +674,7 @@ export default function CheckoutPage() {
                     active={paymentMethod === "cash_on_delivery"}
                     onClick={() => setPaymentMethod("cash_on_delivery")}
                   />
-                  <span className={styles.paymentOptionName}>Оплата під час отримання</span>
+                  <span className={styles.paymentOptionName}>{t("checkout.payOnDelivery")}</span>
                 </div>
               </div>
             </div>
@@ -678,28 +683,28 @@ export default function CheckoutPage() {
           {/* ── Section 4: Comment (only for physical goods) ── */}
           {hasPhysicalItems && (
             <div className={styles.sectionCard} id="comment-section">
-              <h2 className={styles.sectionTitle}>Коментар до замовлення</h2>
+              <h2 className={styles.sectionTitle}>{t("checkout.orderComment")}</h2>
               <textarea
                 className={styles.commentTextarea}
-                placeholder="Ваш коментар..."
+                placeholder={t("checkout.commentPlaceholder")}
                 maxLength={500}
                 value={comment}
                 onChange={(e) => setComment(e.target.value)}
                 id="checkout-comment"
-                aria-label="Коментар до замовлення"
+                aria-label={t("checkout.commentAria")}
               />
               <div className={styles.commentFooter}>
-                <span className={styles.commentCharCount}>{comment.length}/500 символів</span>
+                <span className={styles.commentCharCount}>{t("checkout.charCount").replace("{count}", String(comment.length))}</span>
                 <div className={styles.commentActions}>
                   <button
                     className={styles.commentCancelBtn}
                     type="button"
                     onClick={() => setComment("")}
                   >
-                    Скасувати
+                    {t("checkout.cancel")}
                   </button>
                   <button className={styles.commentSaveBtn} type="button">
-                    Зберегти
+                    {t("checkout.save")}
                   </button>
                 </div>
               </div>
@@ -711,29 +716,29 @@ export default function CheckoutPage() {
         <aside className={styles.summaryPanel} id="checkout-summary">
           {/* Apply loyalty points */}
           <button className={styles.applyPointsBtn} type="button" id="checkout-apply-points">
-            Застосувати лапки до знижки
+            {t("cart.applyPoints")}
           </button>
 
           {/* Summary lines */}
           <div className={styles.summaryLines}>
             <div className={styles.summaryRow}>
-              <span className={styles.summaryLabel}>Сума:</span>
+              <span className={styles.summaryLabel}>{t("cart.subtotal")}</span>
               <span className={styles.summaryValue}>{formatPrice(subtotal)}</span>
             </div>
             <div className={styles.summaryRow}>
-              <span className={styles.summaryLabel}>Знижка:</span>
+              <span className={styles.summaryLabel}>{t("cart.discount")}</span>
               <span className={`${styles.summaryValue} ${styles.discountValue}`}>
-                {discount > 0 ? `- ${formatPrice(discount)}` : "0 грн"}
+                {discount > 0 ? `- ${formatPrice(discount)}` : t("cart.zeroPrice")}
               </span>
             </div>
             <div className={styles.summaryRow}>
-              <span className={styles.summaryLabel}>Вартість доставки:</span>
+              <span className={styles.summaryLabel}>{t("cart.delivery")}</span>
               <span className={styles.summaryValue}>
-                {hasPhysicalItems ? formatPrice(deliveryCost) : "Безкоштовно"}
+                {hasPhysicalItems ? formatPrice(deliveryCost) : t("checkout.freeDelivery")}
               </span>
             </div>
             <div className={styles.summaryRow}>
-              <span className={styles.summaryLabel}>Сума до сплати:</span>
+              <span className={styles.summaryLabel}>{t("cart.total")}</span>
               <span className={`${styles.summaryValue} ${styles.totalValue}`}>
                 {formatPrice(total)}
               </span>
@@ -750,16 +755,16 @@ export default function CheckoutPage() {
               checked={agreed}
               onChange={(e) => setAgreed(e.target.checked)}
               id="checkout-agreement"
-              aria-label="Погоджуюсь з умовами"
+              aria-label={t("cart.agreeAria")}
             />
             <span className={styles.agreementText}>
-              Погоджуюсь з{" "}
-              <a href="/privacy-policy" className={styles.agreementLink}>
-                Політикою конфіденційності
+              {t("cart.agreePrefix")}{" "}
+              <a href={lp("/privacy-policy")} className={styles.agreementLink}>
+                {t("cart.privacyPolicy")}
               </a>{" "}
-              та з{" "}
-              <a href="/terms-of-service" className={styles.agreementLink}>
-                Користувацькою угодою
+              {t("cart.agreeAnd")}{" "}
+              <a href={lp("/terms-of-service")} className={styles.agreementLink}>
+                {t("cart.termsOfService")}
               </a>
             </span>
           </div>
@@ -772,20 +777,20 @@ export default function CheckoutPage() {
             onClick={handleSubmit}
             id="checkout-order-btn"
           >
-            {submitting ? "Оформлення..." : "Замовити"}
+            {submitting ? t("checkout.ordering") : t("checkout.order")}
           </button>
 
           {/* Promo code */}
           <div className={styles.promoSection}>
-            <span className={styles.promoLabel}>Є промокод?</span>
+            <span className={styles.promoLabel}>{t("cart.hasPromo")}</span>
             <input
               type="text"
               className={styles.promoInput}
-              placeholder="Промокод..."
+              placeholder={t("cart.promoPlaceholder")}
               value={promoCode}
               onChange={(e) => setPromoCode(e.target.value)}
               id="checkout-promo-input"
-              aria-label="Введіть промокод"
+              aria-label={t("cart.promoAria")}
             />
           </div>
         </aside>

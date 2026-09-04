@@ -2,11 +2,12 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
 import { MockOrderItem, OrderTabId } from "./mockData";
 import ebookIcon from "@/public/images/userProfile/mobile-button-solid-full 1.png";
 import audioIcon from "@/public/images/userProfile/volume-solid-full 1.png";
 import printIcon from "@/public/images/userProfile/Паперова.svg";
+import { useLocalizedPath, useTranslations } from "@/lib/i18n/LocaleProvider";
+import { translateListStatus } from "./orderStatusI18n";
 
 interface OrderCardProps {
   item: MockOrderItem;
@@ -16,6 +17,8 @@ interface OrderCardProps {
 
 export default function OrderCard({ item, activeTab, onAction }: OrderCardProps) {
   const router = useRouter();
+  const t = useTranslations();
+  const lp = useLocalizedPath();
   const [copied, setCopied] = useState(false);
 
   const handleCopy = () => {
@@ -36,6 +39,73 @@ export default function OrderCard({ item, activeTab, onAction }: OrderCardProps)
     ? "bg-[#C2BCB1] border-[#B0AAA0]"
     : "bg-[#D8D3C8] border-[#C8C2B4]";
 
+  const displayStatus = translateListStatus(item.statusText, t);
+  const displayDate =
+    item.lastStatusDate === "Щойно" ? t("orders.justNow") : item.lastStatusDate;
+  const priceLabel = t("cart.price").replace("{value}", String(item.price));
+
+  const goToOrder = () => {
+    if (item.dbOrderId) router.push(lp(`/orders/${item.dbOrderId}`));
+  };
+
+  const goToComplaints = () => {
+    if (item.dbOrderId) {
+      router.push(lp(`/complaints?orderId=${item.dbOrderId}`));
+    } else {
+      onAction && onAction("complain", item.id, item.dbOrderId);
+    }
+  };
+
+  const formatLabel = (fmt: string) => {
+    const f = String(fmt).toLowerCase();
+    if (f === "ebook" || f.includes("елек")) return t("orders.formats.ebook");
+    if (f === "audio" || f.includes("аудіо")) return t("orders.formats.audio");
+    if (f === "print" || f.includes("папер") || f === "paper") return t("orders.formats.paper");
+    return fmt;
+  };
+
+  const formatIcon = (fmt: string) => {
+    const f = String(fmt).toLowerCase();
+    if (f === "ebook" || f.includes("елек")) return "📱";
+    if (f === "audio" || f.includes("аудіо")) return "🎧";
+    return "📖";
+  };
+
+  const formatBadgeStyle = (fmt: string) => {
+    const f = String(fmt).toLowerCase();
+    if (f === "ebook" || f.includes("елек")) return "bg-[#E3F2FD] text-[#0277BD] border-[#B3E5FC]";
+    if (f === "audio" || f.includes("аудіо")) return "bg-[#F3E5F5] text-[#7B1FA2] border-[#E1BEE7]";
+    return "bg-[#E2F0D9] text-[#005b33] border-[#B8E0A4]";
+  };
+
+  const deleteBtn = (
+    <button
+      onClick={() => onAction && onAction("delete", item.id, item.dbOrderId)}
+      className="bg-[#C0392B] hover:bg-[#A93226] text-white px-5 py-2.5 rounded-xl font-medium transition text-sm shadow-sm"
+      title={t("orders.deleteAria")}
+    >
+      {t("orders.delete")}
+    </button>
+  );
+
+  const complainBtn = (
+    <button
+      onClick={goToComplaints}
+      className="bg-[#E5E0D5] hover:bg-[#D8D2C5] border border-[#C8C2B4] text-[#777777] hover:text-black px-5 py-2.5 rounded-xl font-medium transition text-sm shadow-sm"
+    >
+      {t("orders.complain")}
+    </button>
+  );
+
+  const cancelBtn = (
+    <button
+      onClick={() => onAction && onAction("cancel", item.id, item.dbOrderId)}
+      className="bg-[#524B42] hover:bg-[#3D3730] text-white px-5 py-2.5 rounded-xl font-medium transition text-sm shadow-sm"
+    >
+      {t("orders.cancelOrder")}
+    </button>
+  );
+
   return (
     <div className={`${cardBgClass} rounded-3xl p-5 md:p-6 mb-6 shadow-md border transition-all hover:shadow-lg`}>
       {/* Card Top Header */}
@@ -43,19 +113,19 @@ export default function OrderCard({ item, activeTab, onAction }: OrderCardProps)
         <div>
           <div className="flex items-center gap-3">
             <h3
-              onClick={() => item.dbOrderId && router.push(`/orders/${item.dbOrderId}`)}
+              onClick={goToOrder}
               className="text-xl md:text-2xl font-bold tracking-tight cursor-pointer hover:underline"
               style={{ color: item.statusColor }}
-              title="Переглянути деталі замовлення"
+              title={t("orders.viewDetails")}
             >
-              {item.statusText}
+              {displayStatus}
             </h3>
             {item.dbOrderId && (
               <button
-                onClick={() => router.push(`/orders/${item.dbOrderId}`)}
+                onClick={goToOrder}
                 className="text-xs font-bold text-[#005b33] bg-[#E2F0D9] hover:bg-[#D4EACC] px-2.5 py-1 rounded-lg border border-[#B8E0A4] transition"
               >
-                Детальніше →
+                {t("orders.viewDetails")}
               </button>
             )}
           </div>
@@ -64,10 +134,10 @@ export default function OrderCard({ item, activeTab, onAction }: OrderCardProps)
             <button
               onClick={handleCopy}
               className="text-[#555555] hover:text-black transition p-1"
-              title="Копіювати номер замовлення"
+              title={t("orders.copyOrderNumber")}
             >
               {copied ? (
-                <span className="text-xs text-green-700 font-bold">Скопійовано!</span>
+                <span className="text-xs text-green-700 font-bold">{t("orders.copied")}</span>
               ) : (
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
@@ -78,8 +148,8 @@ export default function OrderCard({ item, activeTab, onAction }: OrderCardProps)
         </div>
 
         <div className="text-xs md:text-sm text-[#555555] md:text-right font-medium">
-          Дата останнього статусу замовлення: <br className="hidden md:inline" />
-          <span className="text-[#242424] font-semibold">{item.lastStatusDate}</span>
+          {t("orders.lastStatusDate")} <br className="hidden md:inline" />
+          <span className="text-[#242424] font-semibold">{displayDate}</span>
         </div>
       </div>
 
@@ -120,40 +190,17 @@ export default function OrderCard({ item, activeTab, onAction }: OrderCardProps)
 
             <div className="flex items-center gap-2 flex-wrap mt-0.5">
               <span className="text-xs font-semibold text-[#555555] bg-[#EBE7DD] px-2.5 py-0.5 rounded-full border border-[#D5CFCE]">
-                {item.quantity} шт.
+                {t("orders.qty").replace("{count}", String(item.quantity))}
               </span>
 
-              {item.formats && item.formats.map((fmt, idx) => {
-                const f = String(fmt).toLowerCase();
-                let label = "Паперова";
-                let icon = "📖";
-                let badgeStyle = "bg-[#E2F0D9] text-[#005b33] border-[#B8E0A4]";
-
-                if (f === "ebook" || f.includes("елек")) {
-                  label = "Електронна";
-                  icon = "📱";
-                  badgeStyle = "bg-[#E3F2FD] text-[#0277BD] border-[#B3E5FC]";
-                } else if (f === "audio" || f.includes("аудіо")) {
-                  label = "Аудіокнига";
-                  icon = "🎧";
-                  badgeStyle = "bg-[#F3E5F5] text-[#7B1FA2] border-[#E1BEE7]";
-                } else if (f === "print" || f.includes("папер") || f === "paper") {
-                  label = "Паперова";
-                  icon = "📖";
-                  badgeStyle = "bg-[#E2F0D9] text-[#005b33] border-[#B8E0A4]";
-                } else {
-                  label = fmt;
-                }
-
-                return (
-                  <span
-                    key={idx}
-                    className={`text-xs font-semibold px-2.5 py-0.5 rounded-full border flex items-center gap-1 shadow-2xs ${badgeStyle}`}
-                  >
-                    <span>{icon}</span> {label}
-                  </span>
-                );
-              })}
+              {item.formats && item.formats.map((fmt, idx) => (
+                <span
+                  key={idx}
+                  className={`text-xs font-semibold px-2.5 py-0.5 rounded-full border flex items-center gap-1 shadow-2xs ${formatBadgeStyle(fmt)}`}
+                >
+                  <span>{formatIcon(fmt)}</span> {formatLabel(fmt)}
+                </span>
+              ))}
             </div>
 
             {/* Optional Confirm Receipt Button inside Book Card */}
@@ -162,7 +209,7 @@ export default function OrderCard({ item, activeTab, onAction }: OrderCardProps)
                 onClick={() => onAction && onAction("confirm_receipt", item.id, item.dbOrderId)}
                 className="mt-2.5 px-4 py-1.5 rounded-full border-2 border-[#005b33] text-[#005b33] font-semibold hover:bg-[#005b33] hover:text-white transition text-xs sm:text-sm w-fit shadow-sm"
               >
-                Підтвердити отримання товару
+                {t("orders.confirmReceipt")}
               </button>
             )}
           </div>
@@ -170,7 +217,7 @@ export default function OrderCard({ item, activeTab, onAction }: OrderCardProps)
 
         {/* Right Side: Price */}
         <div className="text-xl sm:text-2xl font-bold text-[#242424] self-end sm:self-center">
-          {item.price} грн
+          {priceLabel}
         </div>
       </div>
 
@@ -182,63 +229,19 @@ export default function OrderCard({ item, activeTab, onAction }: OrderCardProps)
               onClick={() => onAction && onAction("pay_order", item.id, item.dbOrderId)}
               className="bg-[#005b33] hover:bg-[#004727] text-white px-6 py-2.5 rounded-xl font-bold transition text-sm shadow-md"
             >
-              💳 Оплатити замовлення
+              {t("orders.payOrder")}
             </button>
-            <button
-              onClick={() => onAction && onAction("cancel", item.id, item.dbOrderId)}
-              className="bg-[#524B42] hover:bg-[#3D3730] text-white px-5 py-2.5 rounded-xl font-medium transition text-sm shadow-sm"
-            >
-              Скасувати замовлення
-            </button>
-            <button
-              onClick={() => {
-                if (item.dbOrderId) {
-                  router.push(`/complaints?orderId=${item.dbOrderId}`);
-                } else {
-                  onAction && onAction("complain", item.id, item.dbOrderId);
-                }
-              }}
-              className="bg-[#E5E0D5] hover:bg-[#D8D2C5] border border-[#C8C2B4] text-[#777777] hover:text-black px-5 py-2.5 rounded-xl font-medium transition text-sm shadow-sm"
-            >
-              Поскаржитися
-            </button>
-            <button
-              onClick={() => onAction && onAction("delete", item.id, item.dbOrderId)}
-              className="bg-[#C0392B] hover:bg-[#A93226] text-white px-5 py-2.5 rounded-xl font-medium transition text-sm shadow-sm"
-              title="Видалити замовлення"
-            >
-              🗑️ Видалити
-            </button>
+            {cancelBtn}
+            {complainBtn}
+            {deleteBtn}
           </>
         )}
 
         {(activeTab === "waiting_dispatch" || activeTab === "order_sent") && (
           <>
-            <button
-              onClick={() => onAction && onAction("cancel", item.id, item.dbOrderId)}
-              className="bg-[#524B42] hover:bg-[#3D3730] text-white px-5 py-2.5 rounded-xl font-medium transition text-sm shadow-sm"
-            >
-              Скасувати замовлення
-            </button>
-            <button
-              onClick={() => {
-                if (item.dbOrderId) {
-                  router.push(`/complaints?orderId=${item.dbOrderId}`);
-                } else {
-                  onAction && onAction("complain", item.id, item.dbOrderId);
-                }
-              }}
-              className="bg-[#E5E0D5] hover:bg-[#D8D2C5] border border-[#C8C2B4] text-[#777777] hover:text-black px-5 py-2.5 rounded-xl font-medium transition text-sm shadow-sm"
-            >
-              Поскаржитися
-            </button>
-            <button
-              onClick={() => onAction && onAction("delete", item.id, item.dbOrderId)}
-              className="bg-[#C0392B] hover:bg-[#A93226] text-white px-5 py-2.5 rounded-xl font-medium transition text-sm shadow-sm"
-              title="Видалити замовлення"
-            >
-              🗑️ Видалити
-            </button>
+            {cancelBtn}
+            {complainBtn}
+            {deleteBtn}
           </>
         )}
 
@@ -248,27 +251,10 @@ export default function OrderCard({ item, activeTab, onAction }: OrderCardProps)
               onClick={() => onAction && onAction("write_review", item.id, item.dbOrderId)}
               className="bg-[#524B42] hover:bg-[#3D3730] text-white px-5 py-2.5 rounded-xl font-medium transition text-sm shadow-sm"
             >
-              Написати відгук
+              {t("orders.writeReview")}
             </button>
-            <button
-              onClick={() => {
-                if (item.dbOrderId) {
-                  router.push(`/complaints?orderId=${item.dbOrderId}`);
-                } else {
-                  onAction && onAction("complain", item.id, item.dbOrderId);
-                }
-              }}
-              className="bg-[#E5E0D5] hover:bg-[#D8D2C5] border border-[#C8C2B4] text-[#777777] hover:text-black px-5 py-2.5 rounded-xl font-medium transition text-sm shadow-sm"
-            >
-              Поскаржитися
-            </button>
-            <button
-              onClick={() => onAction && onAction("delete", item.id, item.dbOrderId)}
-              className="bg-[#C0392B] hover:bg-[#A93226] text-white px-5 py-2.5 rounded-xl font-medium transition text-sm shadow-sm"
-              title="Видалити замовлення"
-            >
-              🗑️ Видалити
-            </button>
+            {complainBtn}
+            {deleteBtn}
           </>
         )}
 
@@ -278,51 +264,17 @@ export default function OrderCard({ item, activeTab, onAction }: OrderCardProps)
               onClick={() => onAction && onAction("return", item.id, item.dbOrderId)}
               className="bg-[#524B42] hover:bg-[#3D3730] text-white px-5 py-2.5 rounded-xl font-medium transition text-sm shadow-sm"
             >
-              Повернути
+              {t("orders.returnItem")}
             </button>
-            <button
-              onClick={() => {
-                if (item.dbOrderId) {
-                  router.push(`/complaints?orderId=${item.dbOrderId}`);
-                } else {
-                  onAction && onAction("complain", item.id, item.dbOrderId);
-                }
-              }}
-              className="bg-[#E5E0D5] hover:bg-[#D8D2C5] border border-[#C8C2B4] text-[#777777] hover:text-black px-5 py-2.5 rounded-xl font-medium transition text-sm shadow-sm"
-            >
-              Поскаржитися
-            </button>
-            <button
-              onClick={() => onAction && onAction("delete", item.id, item.dbOrderId)}
-              className="bg-[#C0392B] hover:bg-[#A93226] text-white px-5 py-2.5 rounded-xl font-medium transition text-sm shadow-sm"
-              title="Видалити замовлення"
-            >
-              🗑️ Видалити
-            </button>
+            {complainBtn}
+            {deleteBtn}
           </>
         )}
 
         {activeTab === "history" && (
           <>
-            <button
-              onClick={() => {
-                if (item.dbOrderId) {
-                  router.push(`/complaints?orderId=${item.dbOrderId}`);
-                } else {
-                  onAction && onAction("complain", item.id, item.dbOrderId);
-                }
-              }}
-              className="bg-[#E5E0D5] hover:bg-[#D8D2C5] border border-[#C8C2B4] text-[#777777] hover:text-black px-5 py-2.5 rounded-xl font-medium transition text-sm shadow-sm"
-            >
-              Поскаржитися
-            </button>
-            <button
-              onClick={() => onAction && onAction("delete", item.id, item.dbOrderId)}
-              className="bg-[#C0392B] hover:bg-[#A93226] text-white px-5 py-2.5 rounded-xl font-medium transition text-sm shadow-sm"
-              title="Видалити замовлення"
-            >
-              🗑️ Видалити
-            </button>
+            {complainBtn}
+            {deleteBtn}
           </>
         )}
       </div>

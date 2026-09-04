@@ -1,3 +1,7 @@
+"use client";
+
+import { useTranslations } from "@/lib/i18n/LocaleProvider";
+
 type Props = {
   onSave?: () => void;
   onCancel?: () => void;
@@ -9,6 +13,7 @@ export default function ButtonSubmitEditUserProfile({
   onCancel,
   loading,
 }: Props) {
+  const t = useTranslations();
   return (
     <div className="w-[530px] flex flex-col gap-4 text-[18px] font-medium">
       <button
@@ -26,7 +31,7 @@ export default function ButtonSubmitEditUserProfile({
           active:scale-[0.98]
         "
       >
-        Зберегти
+        {t("profileEdit.submitSave")}
       </button>
 
       <button
@@ -42,7 +47,7 @@ export default function ButtonSubmitEditUserProfile({
           active:scale-[0.98]
         "
       >
-        Скасувати
+        {t("profileEdit.submitCancel")}
       </button>
     </div>
   );

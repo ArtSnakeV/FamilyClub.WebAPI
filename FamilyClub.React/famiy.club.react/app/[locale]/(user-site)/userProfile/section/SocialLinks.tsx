@@ -4,6 +4,7 @@ import { createPortal } from "react-dom";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import { useLocalizedPath, useTranslations } from "@/lib/i18n/LocaleProvider";
 
 const SOCIALS = [
     { name: "telegram", href: "https://t.me", icon: `/images/userProfile/Vector1.png` },
@@ -14,6 +15,8 @@ const SOCIALS = [
 type Props = { userId?: string };
 
 export default function SocialLinks({ userId }: Props) {
+    const t = useTranslations();
+    const lp = useLocalizedPath();
     const router = useRouter();
     const [mounted, setMounted] = useState(false);
     const anchorRef = useRef<HTMLDivElement>(null);
@@ -54,9 +57,9 @@ export default function SocialLinks({ userId }: Props) {
                 zIndex: 19,
             }}
             className="hidden md:block px-4 py-2 text-[var(--color-white)] cursor-pointer rounded-[20px] text-[16px] bg-[#005B33] font-semibold hover:bg-[#097E4B] transition-colors duration-200"
-            onClick={() => router.push(`/userProfile/editUserProfile/${userId}`)}
+            onClick={() => router.push(lp(`/userProfile/editUserProfile/${userId}`))}
         >
-            Редагувати профіль
+            {t("profile.editProfile")}
         </button>
     );
 

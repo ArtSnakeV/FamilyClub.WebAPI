@@ -18,6 +18,7 @@ import printIcon from "@/public/images/userProfile/Паперова.svg";
 import { useFavorites } from "../../../../../lib/hooks/useFavorites";
 import { useMyBooks } from "../hooks/useMyBooks";
 import Paws from "../../paws/Paws";
+import { useLocalizedPath, useTranslations } from "@/lib/i18n/LocaleProvider";
 
 type Props = {
   onLibrary?: () => void;
@@ -30,16 +31,19 @@ type Props = {
   userId?: string;
 };
 
+type MenuKey = "library" | "subscriptions" | "communities";
 
 export default function UserSideBArProfile({
   subscriptions, community, categories, selectedIds, ebookSelected, audioSelected, userId,
 }: Props) {
+  const t = useTranslations();
+  const lp = useLocalizedPath();
   const [mounted, setMounted] = useState(false);
   useEffect(() => {
     setMounted(true);
   }, []);
   const { favorites, loadingFavorites } = useFavorites(userId);
-  const [selected, setSelected] = useState("Бібліотека");
+  const [selected, setSelected] = useState<MenuKey>("library");
   const [products, setProducts] = useState<ProductDto[]>([]);
   const [authors, setAuthors] = useState<AuthorDTO[]>([]);
   const [formats, setFormats] = useState<FormatDto[]>([]);
@@ -94,7 +98,7 @@ export default function UserSideBArProfile({
     return () => document.removeEventListener("click", handleClickOutside);
   }, []);
 
-  const handleSelect = (value: string, action?: () => void) => {
+  const handleSelect = (value: MenuKey, action?: () => void) => {
     setSelected(value);
     action?.();
   };
@@ -112,7 +116,7 @@ export default function UserSideBArProfile({
         backgroundSize: "100% 100%", backgroundPosition: "center",
       }}
     >
-      <Link href="/paws" className="w-[240px] h-[40px] relative ml-12 mt-14">
+      <Link href={lp("/paws")} className="w-[240px] h-[40px] relative ml-12 mt-14">
         <Paws userId={userId}/>
       </Link>
       {/* Верхній блок */}
@@ -126,7 +130,7 @@ export default function UserSideBArProfile({
       >
         <div className="relative flex flex-col top-[30px] items-center justify-center">
           <p className="font-source-sans font-semibold text-[16px] leading-[150%] tracking-[-0.011em] text-center">
-            Додати газету
+            {t("profile.addNewspaper")}
           </p>
           <div className="relative flex z-50 items-center justify-center mt-2">
             <Image src={ellipse} alt="ellipse" className="w-[50px] h-[50px]" />
@@ -139,22 +143,22 @@ export default function UserSideBArProfile({
             {({ open: menuOpen }) => (
               <div className="w-full bg-[#F5F3EE] rounded-2xl overflow-hidden transition-all duration-300 ease-in-out">
                 <MenuButton style={{ paddingLeft: "128px" }} className="w-[90%] flex items-center justify-between px-4 py-3 text-[22px] font-semibold text-black outline-none">
-                  <span>{selected}</span>
+                  <span>{t(`profile.menu.${selected}`)}</span>
                   <img src="/images/header/Vector.svg" alt="arrow" className={`w-[14px] h-[8px] transition-transform duration-200 ${menuOpen ? "rotate-180" : ""}`} />
                 </MenuButton>
                 <Transition as={Fragment} enter="transition ease-out duration-150" enterFrom="opacity-0 -translate-y-1" enterTo="opacity-100 translate-y-0" leave="transition ease-in duration-100" leaveFrom="opacity-100 translate-y-0" leaveTo="opacity-0 -translate-y-1">
                   <MenuItems className="outline-none pb-4">
                     {[
-                      { label: "Підписки", action: subscriptions },
-                      { label: "Групи спільнот", action: community },
-                    ].map(({ label, action }) => (
-                      <MenuItem key={label}>
+                      { key: "subscriptions" as const, action: subscriptions },
+                      { key: "communities" as const, action: community },
+                    ].map(({ key, action }) => (
+                      <MenuItem key={key}>
                         {({ active }) => (
                           <button
-                            onClick={() => handleSelect(label, action)}
-                            className={`w-full px-4 py-4 text-center text-[16px] font-semibold ${active ? "bg-[#ECE7DF]" : ""} ${selected === label ? "font-bold text-[#A87E52]" : ""}`}
+                            onClick={() => handleSelect(key, action)}
+                            className={`w-full px-4 py-4 text-center text-[16px] font-semibold ${active ? "bg-[#ECE7DF]" : ""} ${selected === key ? "font-bold text-[#A87E52]" : ""}`}
                           >
-                            {label}
+                            {t(`profile.menu.${key}`)}
                           </button>
                         )}
                       </MenuItem>

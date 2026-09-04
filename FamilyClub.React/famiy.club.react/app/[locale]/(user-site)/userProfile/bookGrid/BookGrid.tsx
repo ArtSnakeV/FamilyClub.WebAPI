@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { useCart } from "@/lib/hooks/useCart";
 import { FavoriteBook } from "@/lib/hooks/useFavorites";
 import FormatBadge from "../section/FormatBadge";
+import { useLocalizedPath, useTranslations } from "@/lib/i18n/LocaleProvider";
 
 type Props = {
   books: ProductDto[];
@@ -16,17 +17,19 @@ type Props = {
   toggleFavorite: (id: number) => void;
 };
 
-const FORMAT_CONFIG = [
-  { id: 3, icon: "/images/userProfile/Property1.svg", icon1: "/images/userProfile/Rectangle 185.svg", label: "Паперова" },
-  { id: 1, icon: "/images/userProfile/Property2.svg", icon1: "/images/userProfile/Rectangle 186.svg", label: "Ebooks" },
-  { id: 2, icon: "/images/userProfile/Property3.svg", icon1: "/images/userProfile/Rectangle 188.svg", label: "Аудіо книга" },
-];
-
 export default function BookGrid({ books, userId, favorites, toggleFavorite }: Props) {
+  const t = useTranslations();
+  const lp = useLocalizedPath();
   const [authors, setAuthors] = useState<AuthorDTO[]>([]);
   const [reviews, setReviews] = useState<ReviewDto[]>([]);
   const { items, addToCart } = useCart();
   const router = useRouter();
+
+  const FORMAT_CONFIG = [
+    { id: 3, icon: "/images/userProfile/Property1.svg", icon1: "/images/userProfile/Rectangle 185.svg", label: t("profile.formats.paper") },
+    { id: 1, icon: "/images/userProfile/Property2.svg", icon1: "/images/userProfile/Rectangle 186.svg", label: t("profile.formats.ebook") },
+    { id: 2, icon: "/images/userProfile/Property3.svg", icon1: "/images/userProfile/Rectangle 188.svg", label: t("profile.formats.audio") },
+  ];
 
   useEffect(() => {
     authorService.apiAuthorsGet().then(setAuthors).catch(console.error);
@@ -82,8 +85,8 @@ export default function BookGrid({ books, userId, favorites, toggleFavorite }: P
           backgroundPosition: "top center",
         }}
       >
-        <img src="/images/userProfile/imgIko.png" alt="Порожньо" className="w-[230px] h-[240px] object-contain" />
-        <p className="mt-4 text-gray-500 text-lg">Тут поки що порожньо</p>
+        <img src="/images/userProfile/imgIko.png" alt={t("profile.emptyAlt")} className="w-[230px] h-[240px] object-contain" />
+        <p className="mt-4 text-gray-500 text-lg">{t("profile.emptyTitle")}</p>
       </div>
     );
   }
@@ -128,7 +131,7 @@ export default function BookGrid({ books, userId, favorites, toggleFavorite }: P
             return (
               <div
                 key={book.id}
-                onClick={() => router.push(`/products/${book.id}`)}
+                onClick={() => router.push(lp(`/products/${book.id}`))}
                 className="relative flex flex-col items-center -mt-[3vh] pb-6 mb-10
                            transition-transform duration-300 ease-out
                            hover:translate-y-[16px]"
@@ -144,7 +147,7 @@ export default function BookGrid({ books, userId, favorites, toggleFavorite }: P
                     }}
                     className="absolute cursor-pointer top-16 right-2"
                     style={{ zIndex: 11 }}
-                    aria-label="Вподобані"
+                    aria-label={t("profile.ariaFavorite")}
                   >
                     <img
                       src={
@@ -195,10 +198,12 @@ export default function BookGrid({ books, userId, favorites, toggleFavorite }: P
 
                       <p className="font-semibold text-[15px] mt-2 line-clamp-2">{book.productName}</p>
 
-                      <p className="text-sm text-gray-500 mt-1">{authorNames || "Автор невідомий"}</p>
+                      <p className="text-sm text-gray-500 mt-1">{authorNames || t("profile.unknownAuthor")}</p>
 
                       <div>
-                        <p className="text-[20px] font-semibold text-black mt-1">{book.price} грн</p>
+                        <p className="text-[20px] font-semibold text-black mt-1">
+                          {t("cart.price").replace("{value}", String(book.price))}
+                        </p>
                         <button
                           type="button"
                           onClick={async (e) => {
@@ -208,7 +213,7 @@ export default function BookGrid({ books, userId, favorites, toggleFavorite }: P
                           }}
                           className="relative cursor-pointer bottom-[3.7vh] left-[10vw]"
                           style={{ zIndex: 11 }}
-                          aria-label="Додати в кошик"
+                          aria-label={t("profile.ariaAddToCart")}
                         >
                           <img
                             src={

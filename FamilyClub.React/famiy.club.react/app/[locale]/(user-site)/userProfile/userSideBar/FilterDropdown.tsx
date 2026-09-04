@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { CategoryDto } from "@/lib/api/generated";
 import { useState } from "react";
 import { useSearchParams } from "next/navigation";
+import { useLocalizedPath, useTranslations } from "@/lib/i18n/LocaleProvider";
 
 type Props = {
   categories: CategoryDto[];
@@ -19,6 +20,8 @@ const ITEMS_PER_PAGE = 5;
 export default function FilterDropdown({
   categories, ebookSelected, audioSelected, onClose,
 }: Props) {
+  const t = useTranslations();
+  const lp = useLocalizedPath();
   const router = useRouter();
   const searchParams = useSearchParams();
   const visibleCategories = categories.slice(0, ITEMS_PER_PAGE);
@@ -39,7 +42,7 @@ export default function FilterDropdown({
     } else {
       params.set("categories", updated.join(","));
     }
-    router.push(`/userProfile?${params.toString()}`);
+    router.push(`${lp("/userProfile")}?${params.toString()}`);
   };
 
   const updateParam = (key: string, active: boolean) => {
@@ -49,7 +52,7 @@ export default function FilterDropdown({
     } else {
       params.set(key, "true");
     }
-    router.push(`/userProfile?${params.toString()}`);
+    router.push(`${lp("/userProfile")}?${params.toString()}`);
   };
 
   return (
@@ -69,8 +72,8 @@ export default function FilterDropdown({
 
       {/* Жанри */}
       <div className="text-center mb-4">
-        <Link href="/products" onClick={onClose} className="text-[22px] font-semibold text-[var(--color-black)]">
-          Жанри
+        <Link href={lp("/products")} onClick={onClose} className="text-[22px] font-semibold text-[var(--color-black)]">
+          {t("header.genres")}
         </Link>
       </div>
 
@@ -102,8 +105,8 @@ export default function FilterDropdown({
         {/* Формати */}
         <div className="flex flex-row items-center justify-around mt-4">
           {[
-            { label: "Тільки електронні", key: "ebook", active: ebookSelected },
-            { label: "Тільки аудіо", key: "audio", active: audioSelected },
+            { label: t("profile.filter.ebookOnly"), key: "ebook", active: ebookSelected },
+            { label: t("profile.filter.audioOnly"), key: "audio", active: audioSelected },
           ].map(({ label, key, active }) => (
             <div key={key} className="flex flex-row gap-4 items-center justify-center w-[48%]">
               <p className="font-semibold text-[19px]">{label}</p>
@@ -128,18 +131,20 @@ export default function FilterDropdown({
 // ── вкладені під-компоненти ──────────────────────────────
 
 function YearSearch({ onClose }: { onClose: () => void }) {
+  const t = useTranslations();
+  const lp = useLocalizedPath();
   const router = useRouter();
   const [searchYear, setSearchYear] = useState("");
 
   const go = () => {
     if (!searchYear.trim()) return;
-    router.push(`/userProfile?year=${encodeURIComponent(searchYear.trim())}`);
+    router.push(`${lp("/userProfile")}?year=${encodeURIComponent(searchYear.trim())}`);
     onClose();
   };
 
   return (
     <div className="flex flex-col items-center w-[48%]">
-      <p className="font-semibold text-[19px]">Рік публікації</p>
+      <p className="font-semibold text-[19px]">{t("header.publicationYear")}</p>
       <div className="flex items-center bg-[var(--color-white)] rounded-[10px] px-2 h-[40px] w-[280px] shadow-[0px_0px_10px_0px_#24242466] hover:shadow-[0px_0px_15px_0px_#242424CC] transition-all duration-300">
         <input
           type="number"
@@ -158,6 +163,8 @@ function YearSearch({ onClose }: { onClose: () => void }) {
 }
 
 function AlphabetSort({ onClose }: { onClose: () => void }) {
+  const t = useTranslations();
+  const lp = useLocalizedPath();
   const router = useRouter();
   const [sortNameProduct, setSortNameProduct] = useState<"name-asc" | "name-desc" | null>(null);
 
@@ -166,14 +173,14 @@ function AlphabetSort({ onClose }: { onClose: () => void }) {
     setTimeout(() => {
       const params = new URLSearchParams(window.location.search);
       params.set("sort", dir);
-      router.push(`/userProfile?${params.toString()}`);
+      router.push(`${lp("/userProfile")}?${params.toString()}`);
       onClose();
     }, 800);
   };
 
   return (
     <div className="flex flex-col items-center w-[48%]">
-      <p className="font-semibold text-[19px]">По алфавіту</p>
+      <p className="font-semibold text-[19px]">{t("profile.filter.alphabet")}</p>
       <div className="flex flex-row gap-4 justify-around w-[280px]">
         {(["name-asc", "name-desc"] as const).map((dir) => (
           <button
@@ -185,7 +192,7 @@ function AlphabetSort({ onClose }: { onClose: () => void }) {
             style={{ padding: "3px 4px" }}
             onClick={() => handleSort(dir)}
           >
-            {dir === "name-asc" ? "Від А до Я" : "Від Я до А"}
+            {dir === "name-asc" ? t("profile.filter.az") : t("profile.filter.za")}
           </button>
         ))}
       </div>

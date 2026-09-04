@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import Image from "next/image";
 import type { ComplaintImagePreview } from "../hooks/useComplaintImages";
+import { useTranslations } from "@/lib/i18n/LocaleProvider";
 import styles from "../complaints.module.css";
 
 type Props = {
@@ -21,6 +22,7 @@ export default function ComplaintPhotoUpload({
   onRemove,
 }: Props) {
   const inputRef = useRef<HTMLInputElement>(null);
+  const t = useTranslations();
 
   return (
     <div className={styles.card}>
@@ -62,15 +64,12 @@ export default function ComplaintPhotoUpload({
             style={{ position: "absolute" }}
           />
         </div>
-        <div className={styles.uploadTitle}>Завантажити фото</div>
-        <div className={styles.uploadHint}>
-          Скріншот оплати, товарний чек, експрес-накладну тощо
-        </div>
+        <div className={styles.uploadTitle}>{t("complaints.uploadTitle")}</div>
+        <div className={styles.uploadHint}>{t("complaints.uploadHint")}</div>
       </div>
 
       <p className={styles.uploadNote}>
-        Можеш додати до {maxImages} фото товару, упаковки, пошкоджень або
-        документів, що підтверджують проблему.
+        {t("complaints.uploadNote").replace("{max}", String(maxImages))}
       </p>
 
       {images.length > 0 && (
@@ -86,7 +85,7 @@ export default function ComplaintPhotoUpload({
                 type="button"
                 className={styles.previewRemove}
                 onClick={() => onRemove(index)}
-                aria-label="Видалити фото"
+                aria-label={t("complaints.removePhotoAria")}
               >
                 ×
               </button>

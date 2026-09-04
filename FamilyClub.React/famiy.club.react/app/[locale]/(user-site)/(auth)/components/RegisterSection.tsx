@@ -4,6 +4,7 @@ import { useState } from "react";
 import { AsYouType } from "libphonenumber-js";
 import { authService } from "@/lib/api/services";
 import { readApiErrorMessage } from "@/lib/api/readApiError";
+import { useTranslations } from "@/lib/i18n/LocaleProvider";
 
 type RegisterSectionProps = {
   onGoToLogin: () => void;
@@ -23,6 +24,7 @@ const manualCountries = [
 ];
 
 export default function RegisterSection({ onGoToLogin }: RegisterSectionProps) {
+  const t = useTranslations();
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [phone, setPhone] = useState("");
@@ -76,23 +78,23 @@ export default function RegisterSection({ onGoToLogin }: RegisterSectionProps) {
       !formData.password ||
       formData.password !== formData.confirmPassword
     ) {
-      setError("Перевірте поля та переконайтесь, що паролі збігаються.");
+      setError(t("auth.checkFields"));
       return;
     }
     if (formData.password.length < 6) {
-      setError("Пароль має містити щонайменше 6 символів.");
+      setError(t("auth.passwordMinLength"));
       return;
     }
     if (!/[A-ZА-ЯІЇЄҐ]/.test(formData.password) || !/[a-zа-яіїєґ]/.test(formData.password) || !/\d/.test(formData.password)) {
-      setError("Пароль має містити велику літеру, малу літеру та цифру.");
+      setError(t("auth.passwordComplexity"));
       return;
     }
     if (!phone || phone.replace(/\D/g, "").length < 8) {
-      setError("Введіть коректний номер телефону.");
+      setError(t("auth.invalidPhone"));
       return;
     }
     if (!formData.agreeToTerms) {
-      setError("Потрібно погодитись з умовами використання.");
+      setError(t("auth.mustAgree"));
       return;
     }
     setLoading(true);
@@ -109,7 +111,7 @@ export default function RegisterSection({ onGoToLogin }: RegisterSectionProps) {
       });
       onGoToLogin();
     } catch (err) {
-      setError(await readApiErrorMessage(err, "Помилка реєстрації. Можливо, email уже зайнятий."));
+      setError(await readApiErrorMessage(err, t("auth.registerError")));
     } finally {
       setLoading(false);
     }
@@ -137,11 +139,11 @@ export default function RegisterSection({ onGoToLogin }: RegisterSectionProps) {
             color: "var(--color-black)",
           }}
         >
-          Ваше ім`я
+          {t("auth.firstName")}
         </label>
         <input
           type="text"
-          placeholder="Введіть логін"
+          placeholder={t("auth.firstNamePlaceholder")}
           value={formData.firstName}
           onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
           className="register-input"
@@ -182,12 +184,12 @@ export default function RegisterSection({ onGoToLogin }: RegisterSectionProps) {
             color: "var(--color-black)",
           }}
         >
-          Ваше прізвище *
+          {t("auth.lastName")}
         </label>
         <input
           type="text"
           name="lastName"
-          placeholder="Прізвище"
+          placeholder={t("auth.lastNamePlaceholder")}
           value={formData.lastName}
           onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
           className="register-input"
@@ -229,7 +231,7 @@ export default function RegisterSection({ onGoToLogin }: RegisterSectionProps) {
             color: "var(--color-black)",
           }}
         >
-          Номер телефону *
+          {t("auth.phone")}
         </label>
 
         <div style={{ display: "flex", width: "460px", height: "44px", position: "relative" }}>
@@ -355,12 +357,12 @@ export default function RegisterSection({ onGoToLogin }: RegisterSectionProps) {
             color: "var(--color-black)",
           }}
         >
-          Електронна пошта *
+          {t("auth.emailRequired")}
         </label>
         <input
           type="email"
           name="email"
-          placeholder="Введіть email"
+          placeholder={t("auth.emailPlaceholder")}
           value={formData.email}
           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
           className="register-input"
@@ -393,7 +395,7 @@ export default function RegisterSection({ onGoToLogin }: RegisterSectionProps) {
             color: "#242424",
           }}
         >
-          Пароль *
+          {t("auth.passwordRequired")}
         </label>
         <span
           style={{
@@ -404,14 +406,14 @@ export default function RegisterSection({ onGoToLogin }: RegisterSectionProps) {
             marginTop: "2px",
           }}
         >
-          Мінімум 6 символів: велика літера, мала літера та цифра
+          {t("auth.passwordHint")}
         </span>
 
         <div className="flex flex-col gap-[6px] w-[460px] mt-1.5">
           <div className="relative w-[460px] h-[44px]">
             <input
               type={isPasswordVisible ? "text" : "password"}
-              placeholder="Введіть пароль"
+              placeholder={t("auth.passwordPlaceholder")}
               value={formData.password}
               onChange={(e) => setFormData({ ...formData, password: e.target.value })}
               className="w-full h-full rounded-[9px] px-4 py-[8px] pr-[50px] bg-[#F5F3EE] shadow-[0px_0px_10px_0px_#00000040] outline-none text-[18px] leading-[150%] tracking-[-0.011em]"
@@ -442,7 +444,7 @@ export default function RegisterSection({ onGoToLogin }: RegisterSectionProps) {
           <div className="relative w-[460px] h-[44px]">
             <input
               type={isPasswordVisible ? "text" : "password"}
-              placeholder="Підтвердження паролю"
+              placeholder={t("auth.confirmPasswordPlaceholder")}
               value={formData.confirmPassword}
               onChange={(e) =>
                 setFormData({ ...formData, confirmPassword: e.target.value })
@@ -537,7 +539,7 @@ export default function RegisterSection({ onGoToLogin }: RegisterSectionProps) {
           }}
           onClick={() => setFormData({ ...formData, agreeToTerms: !formData.agreeToTerms })}
         >
-          Погоджуюсь з умовами використання
+          {t("auth.agreeTerms")}
         </span>
       </div>
 
@@ -553,9 +555,7 @@ export default function RegisterSection({ onGoToLogin }: RegisterSectionProps) {
           opacity: 0.85,
         }}
       >
-        Реєструючись, ви погоджуєтеся на зберігання і використання компанією “Libria” наданих вами
-        особистих даних відповідно до чинного законодавства України про недоторканність особистої
-        інформації.
+        {t("auth.privacyNotice")}
       </div>
 
       {error && (
@@ -596,14 +596,14 @@ export default function RegisterSection({ onGoToLogin }: RegisterSectionProps) {
             color: "#F5F3EE",
           }}
         >
-          {loading ? "Завантаження..." : "Зареєструватися"}
+          {loading ? t("auth.loading") : t("auth.registerSubmit")}
         </span>
       </button>
 
       <div className="flex items-center justify-center w-full py-0.5 gap-4 my-1.5" style={{ width: "460px" }}>
         <div className="flex-1 border-t border-[#242424]/40" />
         <span className="font-sans text-[16px] text-[#242424] whitespace-nowrap">
-          або
+          {t("auth.or")}
         </span>
         <div className="flex-1 border-t border-[#242424]/40" />
       </div>
@@ -620,7 +620,7 @@ export default function RegisterSection({ onGoToLogin }: RegisterSectionProps) {
           className="w-[20px] h-[20px] object-contain"
         />
         <span className="font-sans text-[17px] text-[#242424]">
-          Продовжити через Google
+          {t("auth.continueGoogle")}
         </span>
       </button>
 
@@ -646,7 +646,7 @@ export default function RegisterSection({ onGoToLogin }: RegisterSectionProps) {
             margin: 0,
           }}
         >
-          Вже маєте акаунт?{" "}
+          {t("auth.haveAccount")}{" "}
           <button
             type="button"
             onClick={onGoToLogin}
@@ -663,7 +663,7 @@ export default function RegisterSection({ onGoToLogin }: RegisterSectionProps) {
               textDecoration: "underline",
             }}
           >
-            Увійти
+            {t("auth.signIn")}
           </button>
         </p>
       </div>

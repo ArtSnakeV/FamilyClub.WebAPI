@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "@/lib/i18n/LocaleProvider";
 
 type SocialLink = { id: number; name: string; url: string };
 
@@ -9,6 +10,8 @@ type Props = {
 };
 
 export default function SocialLinkEditUserProfile({ links, setLinks }: Props) {
+    const t = useTranslations();
+
     const addLink = () => {
         setLinks([...links, { id: Date.now(), name: "", url: "" }]);
     };
@@ -37,9 +40,9 @@ export default function SocialLinkEditUserProfile({ links, setLinks }: Props) {
                     className="w-full h-[74px] object-fill"
                 />
                 <div className="absolute inset-0 -mt-1 flex flex-col justify-center pl-14">
-                    <h3 className="text-[24px] text-[var(--color-white)] font-semibold">Посилання</h3>
+                    <h3 className="text-[24px] text-[var(--color-white)] font-semibold">{t("profileEdit.linksTitle")}</h3>
                     <p className="text-[13px] -mt-1 text-[var(--color-white)]">
-                        (Поділіться зовнішніми посиланнями з аудиторією. Вони будуть показані в профілі.)
+                        {t("profileEdit.linksHint")}
                     </p>
                 </div>
             </div>
@@ -57,7 +60,7 @@ export default function SocialLinkEditUserProfile({ links, setLinks }: Props) {
                         {/* Назва */}
                         <div className="flex flex-col gap-0.5 w-[236px]">
                             <label className="text-[11px] text-gray-400 px-1">
-                                Назва посилання (обов'язково)
+                                {t("profileEdit.linkNameLabel")}
                             </label>
                             <input
                                 required
@@ -73,7 +76,7 @@ export default function SocialLinkEditUserProfile({ links, setLinks }: Props) {
                         {/* URL */}
                         <div className="flex w-[700px] flex-col gap-0.5 flex-1">
                             <label className="text-[11px] text-gray-400 px-1">
-                                URL (обов'язково)
+                                {t("profileEdit.linkUrlLabel")}
                             </label>
                             <input
                                 required
@@ -101,7 +104,7 @@ export default function SocialLinkEditUserProfile({ links, setLinks }: Props) {
                         alt="+"
                         className="w-[20px] h-[20px] object-contain"
                     />
-                    Додати посилання
+                    {t("profileEdit.addLink")}
                 </button>
 
                 {/* Видалити останній */}
@@ -109,7 +112,7 @@ export default function SocialLinkEditUserProfile({ links, setLinks }: Props) {
                     type="button"
                     onClick={() => removeLink(links[links.length - 1]?.id)}
                     className="text-gray-400 hover:text-red-500 transition-colors"
-                    aria-label="Видалити посилання"
+                    aria-label={t("profileEdit.deleteLinkAria")}
                 >
                     <img
                         src="/images/userProfile/editUserProfile/Vector.png"

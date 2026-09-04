@@ -1,5 +1,7 @@
 "use client";
 
+import { useTranslations } from "@/lib/i18n/LocaleProvider";
+
 type ReviewCardProps = {
     reviewerName: string;
     reviewerAvatarSrc?: string;
@@ -18,9 +20,12 @@ export default function ReviewCard({
     text,
     coverSrc,
     bookTitle,
-    actionLabel = "переглянути відгук",
+    actionLabel,
     onAction,
 }: ReviewCardProps) {
+    const t = useTranslations();
+    const resolvedActionLabel = actionLabel ?? t("notifications.viewReview");
+
     return (
         <div
             className="w-full max-w-[420px] text-left drop-shadow-[0_4px_12px_rgba(0,0,0,0.1)] flex items-start gap-3 justify-between"
@@ -58,12 +63,12 @@ export default function ReviewCard({
                     {text}
                 </p>
 
-                {actionLabel && (
+                {resolvedActionLabel && (
                     <button
                         onClick={onAction}
                         className="text-[13px] font-medium text-[#1e5631] hover:underline"
                     >
-                        {actionLabel}
+                        {resolvedActionLabel}
                     </button>
                 )}
             </div>

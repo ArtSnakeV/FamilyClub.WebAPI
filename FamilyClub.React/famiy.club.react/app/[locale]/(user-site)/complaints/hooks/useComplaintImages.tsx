@@ -2,6 +2,7 @@
 
 import { useCallback, useState } from "react";
 import type { ComplaintImageCreateDto } from "@/lib/api/types";
+import { useTranslations } from "@/lib/i18n/LocaleProvider";
 
 const MAX_IMAGES = 5;
 const MAX_FILE_BYTES = 4 * 1024 * 1024; // 4 MB per image
@@ -12,24 +13,28 @@ export type ComplaintImagePreview = {
 };
 
 export function useComplaintImages() {
+  const t = useTranslations();
   const [images, setImages] = useState<ComplaintImagePreview[]>([]);
   const [sizeError, setSizeError] = useState<string | null>(null);
 
-  const addImage = useCallback((file: File | null) => {
-    if (!file) return;
-    if (images.length >= MAX_IMAGES) return;
+  const addImage = useCallback(
+    (file: File | null) => {
+      if (!file) return;
+      if (images.length >= MAX_IMAGES) return;
 
-    if (file.size > MAX_FILE_BYTES) {
-      setSizeError("Кожне фото має бути не більше 4 МБ.");
-      return;
-    }
+      if (file.size > MAX_FILE_BYTES) {
+        setSizeError(t("complaints.photoTooLarge"));
+        return;
+      }
 
-    setSizeError(null);
-    setImages((prev) => [
-      ...prev,
-      { file, previewUrl: URL.createObjectURL(file) },
-    ]);
-  }, [images.length]);
+      setSizeError(null);
+      setImages((prev) => [
+        ...prev,
+        { file, previewUrl: URL.createObjectURL(file) },
+      ]);
+    },
+    [images.length, t],
+  );
 
   const removeImage = useCallback((index: number) => {
     setImages((prev) => {

@@ -2,6 +2,7 @@
 
 import React from "react";
 import { OrderTabId, ORDERS_TABS } from "./mockData";
+import { useTranslations } from "@/lib/i18n/LocaleProvider";
 
 interface OrdersTabsProps {
   activeTab: OrderTabId;
@@ -10,6 +11,8 @@ interface OrdersTabsProps {
 }
 
 export default function OrdersTabs({ activeTab, onSelectTab, counts }: OrdersTabsProps) {
+  const t = useTranslations();
+
   const getTabIcon = (id: OrderTabId) => {
     switch (id) {
       case "waiting_payment":
@@ -78,7 +81,7 @@ export default function OrdersTabs({ activeTab, onSelectTab, counts }: OrdersTab
             >
               {getTabIcon(tab.id)}
               <span className="text-white text-[12px] md:text-[13px] font-semibold text-center leading-tight mt-1 px-1">
-                {tab.label}
+                {t(`orders.tabs.${tab.id}`)}
               </span>
             </button>
 
@@ -94,4 +97,3 @@ export default function OrdersTabs({ activeTab, onSelectTab, counts }: OrdersTab
     </div>
   );
 }
-

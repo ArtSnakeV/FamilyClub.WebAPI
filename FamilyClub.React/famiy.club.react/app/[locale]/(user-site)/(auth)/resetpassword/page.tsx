@@ -9,8 +9,11 @@ import {
   confirmPasswordReset,
   requestPasswordResetCode,
 } from "@/lib/api/passwordReset";
+import { useLocalizedPath, useTranslations } from "@/lib/i18n/LocaleProvider";
 
 export default function ResetPasswordPage() {
+  const t = useTranslations();
+  const lp = useLocalizedPath();
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [code, setCode] = useState(["", "", "", "", ""]);
@@ -25,7 +28,7 @@ export default function ResetPasswordPage() {
 
   const handleSendCode = async () => {
     if (!email || !email.includes("@")) {
-      setError("Будь ласка, введіть коректну електронну пошту");
+      setError(t("auth.invalidEmail"));
       return;
     }
     setLoadingSend(true);
@@ -34,10 +37,10 @@ export default function ResetPasswordPage() {
     try {
       await requestPasswordResetCode(email.trim());
       setCodeSent(true);
-      setInfo("Якщо акаунт існує, код надіслано на пошту (діє 15 хв).");
+      setInfo(t("auth.codeSentInfo"));
       setTimeout(() => inputRefs.current[0]?.focus(), 50);
     } catch (e) {
-      setError(e instanceof Error ? e.message : "Помилка відправки коду");
+      setError(e instanceof Error ? e.message : t("auth.sendCodeError"));
     } finally {
       setLoadingSend(false);
     }
@@ -79,15 +82,15 @@ export default function ResetPasswordPage() {
   const handleConfirm = async () => {
     const full = code.join("");
     if (full.length < 5) {
-      setError("Будь ласка, введіть 5-значний код");
+      setError(t("auth.enterCodeDigits"));
       return;
     }
     if (newPassword.length < 6) {
-      setError("Пароль має містити щонайменше 6 символів");
+      setError(t("auth.passwordMinLength"));
       return;
     }
     if (newPassword !== confirmPassword) {
-      setError("Паролі не збігаються");
+      setError(t("auth.passwordsMismatch"));
       return;
     }
     setLoadingConfirm(true);
@@ -99,9 +102,9 @@ export default function ResetPasswordPage() {
         newPassword,
         confirmPassword,
       });
-      router.push("/login");
+      router.push(lp("/login"));
     } catch (e) {
-      setError(e instanceof Error ? e.message : "Невірний код");
+      setError(e instanceof Error ? e.message : t("auth.invalidCode"));
     } finally {
       setLoadingConfirm(false);
     }
@@ -145,7 +148,7 @@ export default function ResetPasswordPage() {
               color: "var(--color-black)",
               opacity: 0.5,
             }}
-            aria-label="Назад"
+            aria-label={t("auth.backAria")}
           >
             ←
           </button>
@@ -175,7 +178,7 @@ export default function ResetPasswordPage() {
                   setEmail(e.target.value);
                   setError("");
                 }}
-                placeholder="Введіть свою пошту"
+                placeholder={t("auth.emailOwnPlaceholder")}
                 className="bg-white h-[52px] w-full rounded-[9px] px-5 shadow-[0px_0px_10px_0px_rgba(0,0,0,0.2)] outline-none text-[18px] text-[#242424] placeholder:text-[#242424]/50"
               />
             </div>
@@ -187,15 +190,15 @@ export default function ResetPasswordPage() {
               className="bg-[#005B33] h-[52px] w-full rounded-[9px] shadow-[0px_0px_10px_0px_rgba(0,0,0,0.25)] text-[20px] text-white transition-all hover:brightness-110 active:scale-[0.98] disabled:opacity-70"
             >
               {loadingSend
-                ? "Надсилання..."
+                ? t("auth.sending")
                 : codeSent
-                  ? "Надіслати ще раз"
-                  : "Надіслати код"}
+                  ? t("auth.sendAgain")
+                  : t("auth.sendCode")}
             </button>
 
             <div className="flex flex-col items-center gap-4 w-full mt-2">
               <label className="text-[24px] font-semibold text-[#242424]">
-                Введіть код
+                {t("auth.enterCode")}
               </label>
               <div className="flex items-center justify-between gap-3 w-full max-w-[400px]">
                 {code.map((digit, idx) => (
@@ -219,7 +222,7 @@ export default function ResetPasswordPage() {
 
             <div className="flex flex-col gap-2 w-full">
               <label className="text-[24px] font-semibold text-[#242424]">
-                Новий пароль
+                {t("auth.newPassword")}
               </label>
               <input
                 type="password"
@@ -228,14 +231,14 @@ export default function ResetPasswordPage() {
                   setNewPassword(e.target.value);
                   setError("");
                 }}
-                placeholder="Мінімум 6 символів"
+                placeholder={t("auth.minSixChars")}
                 className="bg-white h-[52px] w-full rounded-[9px] px-5 shadow-[0px_0px_10px_0px_rgba(0,0,0,0.2)] outline-none text-[18px] text-[#242424] placeholder:text-[#242424]/50"
               />
             </div>
 
             <div className="flex flex-col gap-2 w-full">
               <label className="text-[24px] font-semibold text-[#242424]">
-                Підтвердіть пароль
+                {t("auth.confirmPassword")}
               </label>
               <input
                 type="password"
@@ -244,7 +247,7 @@ export default function ResetPasswordPage() {
                   setConfirmPassword(e.target.value);
                   setError("");
                 }}
-                placeholder="Повторіть пароль"
+                placeholder={t("auth.repeatPassword")}
                 className="bg-white h-[52px] w-full rounded-[9px] px-5 shadow-[0px_0px_10px_0px_rgba(0,0,0,0.2)] outline-none text-[18px] text-[#242424] placeholder:text-[#242424]/50"
               />
             </div>
@@ -256,7 +259,7 @@ export default function ResetPasswordPage() {
                 disabled={loadingConfirm}
                 className="bg-[#005B33] h-[52px] w-full rounded-[9px] shadow-[0px_0px_10px_0px_rgba(0,0,0,0.25)] text-[20px] text-white transition-all hover:brightness-110 active:scale-[0.98] disabled:opacity-70"
               >
-                {loadingConfirm ? "Збереження..." : "Змінити пароль"}
+                {loadingConfirm ? t("auth.saving") : t("auth.changePassword")}
               </button>
 
               <button
@@ -265,17 +268,17 @@ export default function ResetPasswordPage() {
                 disabled={loadingConfirm}
                 className="border-2 border-[#005B33] bg-transparent h-[52px] w-full rounded-[9px] shadow-[0px_0px_10px_0px_rgba(0,0,0,0.2)] text-[20px] text-[#005B33] transition-all hover:bg-[#005B33]/10 active:scale-[0.98] disabled:opacity-70"
               >
-                Скасувати
+                {t("auth.cancel")}
               </button>
             </div>
 
             <p className="text-[#242424] text-[18px] mt-4 text-center">
-              Згадали пароль?{" "}
+              {t("auth.rememberedPassword")}{" "}
               <Link
-                href="/login"
+                href={lp("/login")}
                 className="text-[#005B33] font-semibold hover:underline"
               >
-                Увійти
+                {t("auth.signIn")}
               </Link>
             </p>
           </div>

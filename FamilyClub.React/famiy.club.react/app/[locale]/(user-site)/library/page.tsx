@@ -13,6 +13,7 @@ import { useFavorites } from "@/lib/hooks/useFavorites";
 import { useMyBooks } from "../userProfile/hooks/useMyBooks";
 import MobileLibraryView from "./MobileLibraryView";
 import { TabType } from "../userProfile/page";
+import { useLocale, useTranslations } from "@/lib/i18n/LocaleProvider";
 
 function LibraryContent() {
   const searchParams = useSearchParams();
@@ -21,6 +22,7 @@ function LibraryContent() {
   const sortParam = searchParams.get("sort");
   const ebookParam = searchParams.get("ebook");
   const audioParam = searchParams.get("audio");
+  const { locale } = useLocale();
 
   const { user } = useCurrentUser();
   const { favorites, loadingFavorites, toggleFavorite } = useFavorites(user?.id);
@@ -86,9 +88,9 @@ function LibraryContent() {
 
   const sortedBooks = [...filteredBooks].sort((a, b) => {
     if (sortParam === "name-asc")
-      return (a.productName ?? "").localeCompare(b.productName ?? "", "uk");
+      return (a.productName ?? "").localeCompare(b.productName ?? "", locale);
     if (sortParam === "name-desc")
-      return (b.productName ?? "").localeCompare(a.productName ?? "", "uk");
+      return (b.productName ?? "").localeCompare(a.productName ?? "", locale);
     return 0;
   });
 
@@ -180,9 +182,18 @@ function LibraryContent() {
   );
 }
 
+function LibraryLoadingFallback() {
+  const t = useTranslations();
+  return (
+    <div className="min-h-screen bg-[#f5f3ee] flex items-center justify-center">
+      {t("common.loading")}
+    </div>
+  );
+}
+
 export default function LibraryPage() {
   return (
-    <Suspense fallback={<div className="min-h-screen bg-[#f5f3ee] flex items-center justify-center">Завантаження...</div>}>
+    <Suspense fallback={<LibraryLoadingFallback />}>
       <LibraryContent />
     </Suspense>
   );

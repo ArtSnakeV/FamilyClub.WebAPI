@@ -3,6 +3,7 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import type { NotificationDTO } from "@/lib/api/generated/models";
+import { useTranslations } from "@/lib/i18n/LocaleProvider";
 
 type NotificationThreadProps = {
     open: boolean;
@@ -47,14 +48,17 @@ export default function NotificationThread({
     messages,
     currentUserId,
     threadOwnerId,
-    title = "Повідомлення",
+    title,
     avatarSrc,
     avatarFallback,
     formatDate,
     onSend,
 }: NotificationThreadProps) {
+    const t = useTranslations();
     const [draft, setDraft] = useState("");
     const [sending, setSending] = useState(false);
+
+    const resolvedTitle = title ?? t("notifications.threadTitle");
 
     const sorted = [...messages].sort(
         (a, b) =>
@@ -85,10 +89,10 @@ export default function NotificationThread({
         }
 
         if (senderId === threadOwnerId) {
-            return "Користувач";
+            return t("notifications.userLabel");
         }
 
-        return "Адміністратор";
+        return t("notifications.adminLabel");
     }
 
     return (
@@ -145,7 +149,7 @@ export default function NotificationThread({
                                 />
 
                                 <Dialog.Title className="font-bold text-[16px]">
-                                    {title}
+                                    {resolvedTitle}
                                 </Dialog.Title>
 
                                 <button
@@ -159,7 +163,7 @@ export default function NotificationThread({
                                         leading-none
                                         px-2
                                     "
-                                    aria-label="закрити"
+                                    aria-label={t("notifications.closeAria")}
                                 >
                                     ×
                                 </button>
@@ -170,7 +174,7 @@ export default function NotificationThread({
 
                                 {sorted.length === 0 ? (
                                     <p className="text-black/50 text-sm text-center py-6">
-                                        Повідомлень немає. Напишіть перше!
+                                        {t("notifications.threadEmpty")}
                                     </p>
                                 ) : (
                                     sorted.map((m) => {
@@ -300,7 +304,7 @@ export default function NotificationThread({
                                             handleSend();
                                         }
                                     }}
-                                    placeholder="Написати повідомлення..."
+                                    placeholder={t("notifications.threadPlaceholder")}
                                     className="
                                         flex-1
                                         rounded-full
@@ -334,8 +338,8 @@ export default function NotificationThread({
                                     "
                                 >
                                     {sending
-                                        ? "Надсилання..."
-                                        : "Надіслати"}
+                                        ? t("notifications.sending")
+                                        : t("notifications.send")}
                                 </button>
 
                             </div>

@@ -15,9 +15,11 @@ import { useRouter } from "next/navigation";
 import ButtonReturn from "./ui/ButtonReturn";
 import { apiBasePath } from "@/lib/api/services";
 import { getAuthToken } from "@/lib/auth/tokenStorage";
+import { useTranslations } from "@/lib/i18n/LocaleProvider";
 
 
 export default function EditUserClient({ id }: { id: string }) {
+    const t = useTranslations();
     const {
         form,
         setField,
@@ -107,8 +109,8 @@ export default function EditUserClient({ id }: { id: string }) {
             }}
         >
             <div className="w-full flex flex-col text-left -top-[28vh] gap-2 ml-[53vw] justify-center relative">
-                <h2 className="text-[48px] text-[var(--color-white)]">Редагування профілю</h2>
-                <p className="text-[18px] text-[var(--color-white)] w-[600px]">Тут ви можете змінити інформацію про себе, налаштувати свій профіль та керувати вподобаннями!</p>
+                <h2 className="text-[48px] text-[var(--color-white)]">{t("profileEdit.title")}</h2>
+                <p className="text-[18px] text-[var(--color-white)] w-[600px]">{t("profileEdit.subtitle")}</p>
             </div>
             <div className="flex z-10 relative -top-[38vh] -ml-[53vw]">
                 <ButtonReturn />

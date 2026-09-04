@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useLocale } from "@/lib/i18n/LocaleProvider";
+import { useLocale, useTranslations } from "@/lib/i18n/LocaleProvider";
 
 const LEVEL_MAX = 300;
 
@@ -16,13 +16,12 @@ type Props = {
 
 export default function NextLevelBlock({ paws }: Props) {
   const { locale } = useLocale();
+  const t = useTranslations();
   const group727Src = GROUP_727_IMAGES[locale];
   const progressPercent = Math.min(100, (paws / LEVEL_MAX) * 100);
 
   return (
     <div className="w-full flex flex-col gap-4">
-
-      {/* Прогрес до наступного рівня */}
       <div
         className="relative px-5 py-4"
         style={{
@@ -31,20 +30,20 @@ export default function NextLevelBlock({ paws }: Props) {
         }}
       >
         <div className="flex items-center gap-2 text-[14px] font-semibold mb-3">
-          До наступного рівня
+          {t("paws.nextLevel")}
           <Image src="/images/userProfile/circle-info-solid-full 1.png" width={15} height={15} alt="" />
         </div>
 
         <div className="flex items-center gap-3 sm:gap-4">
           <div className="flex flex-col items-center shrink-0 w-[60px]">
             <Image src="/images/userProfile/Лапка.png" width={30} height={30} alt="" />
-            <span className="text-xs mt-1">Рівень 1</span>
+            <span className="text-xs mt-1">{t("paws.level").replace("{n}", "1")}</span>
           </div>
 
           <div className="flex-1 min-w-0">
             <div className="flex justify-between text-xs text-black/60 mb-1">
-              <span>{paws} лапок</span>
-              <span>{LEVEL_MAX} лапок</span>
+              <span>{t("paws.pawsCount").replace("{count}", String(paws))}</span>
+              <span>{t("paws.pawsCount").replace("{count}", String(LEVEL_MAX))}</span>
             </div>
             <div className="h-2 rounded-full overflow-hidden" style={{ backgroundColor: "#F5F0E7" }}>
               <div
@@ -56,13 +55,14 @@ export default function NextLevelBlock({ paws }: Props) {
 
           <div className="flex flex-col items-center shrink-0 w-[70px]">
             <Image src="/images/userProfile/Лапка.png" width={30} height={30} alt="" />
-            <span className="text-xs mt-1">Рівень 2</span>
-            <span className="text-xs font-semibold whitespace-nowrap">+100 Лапок</span>
+            <span className="text-xs mt-1">{t("paws.level").replace("{n}", "2")}</span>
+            <span className="text-xs font-semibold whitespace-nowrap">
+              {t("paws.bonusPaws").replace("{count}", "100")}
+            </span>
           </div>
         </div>
       </div>
 
-      {/* Дві картки */}
       <div className="flex w-full flex-row gap-1 items-center -mt-4">
         <button
           type="button"
@@ -72,7 +72,7 @@ export default function NextLevelBlock({ paws }: Props) {
             src={group727Src}
             width={355}
             height={189}
-            alt={locale === "en" ? "Exchange to paws" : "Обміняти на лапки"}
+            alt={t("paws.exchangeAlt")}
             className="object-contain max-h-full w-auto"
             priority
           />
@@ -84,7 +84,7 @@ export default function NextLevelBlock({ paws }: Props) {
             backgroundImage: "url('/images/pawsUser/Rectangle 471.png')",
             backgroundSize: "cover",
             width: "340px",
-            height: "142px"
+            height: "142px",
           }}
         >
           <Image
@@ -95,29 +95,26 @@ export default function NextLevelBlock({ paws }: Props) {
             className="ml-5"
           />
           <div>
-            <p className="font-bold text-[14px] leading-tight">
-              Застосувати до покупки
-            </p>
+            <p className="font-bold text-[14px] leading-tight">{t("paws.applyToPurchase")}</p>
             <p className="text-black/60 text-xs w-[150px] mt-1.5 leading-snug">
-              Оплачуй до 50% вартість книги лапками
+              {t("paws.applyHint")}
             </p>
           </div>
         </button>
       </div>
 
-      {/* Нижній блок */}
       <div
         className="relative w-[560px] h-[152px] -mt-8 bg-cover p-2 sm:p-5 text-[15px] sm:text-[16px]"
         style={{
           backgroundImage: "url('/images/pawsUser/Rectangle 471.svg')",
           backgroundSize: "cover",
           width: "560px",
-          height: "152px"
+          height: "152px",
         }}
       >
         <ul className="relative mt-5 space-y-4 sm:space-y-6 list-disc pl-8">
-          <li>Перетворити лапки в знижку можна при оформленні замовлення.</li>
-          <li>Лапки знімуться після покупки.</li>
+          <li>{t("paws.ruleCheckout")}</li>
+          <li>{t("paws.ruleDeduct")}</li>
         </ul>
       </div>
     </div>
