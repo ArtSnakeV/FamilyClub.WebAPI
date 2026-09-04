@@ -6,17 +6,18 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { useLocalizedPath, useTranslations } from "@/lib/i18n/LocaleProvider";
 
 const ITEMS_PER_PAGE = 3;
 
 export default function DropDownAuthors() {
+  const t = useTranslations();
+  const lp = useLocalizedPath();
   const router = useRouter();
   const [authors, setAuthors] = useState<AuthorDTO[]>([]);
   const [search, setSearch] = useState("");
   const [open, setOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
-
-  const visibleAuthors = authors.slice(0, ITEMS_PER_PAGE);
 
   useEffect(() => {
     authorService.apiAuthorsGet().then(setAuthors).catch(console.error);
@@ -77,7 +78,7 @@ export default function DropDownAuthors() {
             e.stopPropagation();
 
             if (open) {
-              router.push("/authors");
+              router.push(lp("/authors"));
               return;
             }
 
@@ -86,7 +87,7 @@ export default function DropDownAuthors() {
           }}
           className="absolute pointer-events-auto inset-0 flex justify-center items-end mb-[56px] z-10 focus:outline-none"
         >
-          <span className="text-[#F5F3EE]">Автори</span>
+          <span className="text-[#F5F3EE]">{t("header.authors")}</span>
         </button>
 
         {open && (
@@ -128,15 +129,14 @@ export default function DropDownAuthors() {
               </div>
             </div>
 
-            {/* <div className="relative mt-[50px] flex flex-col items-center justify-center gap-4"> */}
             <div className="relative mt-[50px] max-h-[130px] custom-scrollbar overflow-y-auto flex flex-col items-center justify-center gap-4">
               {displayedAuthors.length === 0 ? (
-                <div className="text-[13px]">Не знайдено</div>
+                <div className="text-[13px]">{t("header.notFound")}</div>
               ) : (
                 displayedAuthors.map((a) => (
                   <Link
                     key={a.id}
-                    href={`/authors/${a.id}`}
+                    href={lp(`/authors/${a.id}`)}
                     onClick={() => setOpen(false)}
                     className={`
     flex
@@ -165,4 +165,3 @@ export default function DropDownAuthors() {
     </div>
   );
 }
-

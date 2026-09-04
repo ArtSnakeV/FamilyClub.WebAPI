@@ -15,6 +15,7 @@ import CartItemCard from "./CartItemCard";
 import CartSummary from "./CartSummary";
 import MobileCartView from "./MobileCartView";
 import styles from "./cart.module.css";
+import { useTranslations } from "@/lib/i18n/LocaleProvider";
 
 // ─── Helpers ───
 function getImageSrc(product: ProductDto): string | null {
@@ -76,6 +77,7 @@ function BackArrow() {
 const DELIVERY_COST = 75;
 
 export default function CartPage() {
+  const t = useTranslations();
   const router = useRouter();
   const { items: cartItems, updateFormatQuantity, removeFromCart } = useCart();
 
@@ -232,11 +234,11 @@ export default function CartPage() {
         {loading ? (
           <div className={styles.cartPage}>
             <div className={styles.cartHeader}>
-              <h1 className={styles.cartTitle}>Мій кошик</h1>
+              <h1 className={styles.cartTitle}>{t("cart.title")}</h1>
             </div>
             <div className={styles.emptyCart}>
               <span className={styles.emptyCartIcon}>⏳</span>
-              Завантаження...
+              {t("cart.loading")}
             </div>
           </div>
         ) : fetchError && products.length === 0 ? (
@@ -245,16 +247,16 @@ export default function CartPage() {
               <button
                 className={styles.backButton}
                 onClick={() => router.back()}
-                aria-label="Назад"
+                aria-label={t("cart.backAria")}
                 id="cart-back-btn"
               >
                 <BackArrow />
               </button>
-              <h1 className={styles.cartTitle}>Мій кошик</h1>
+              <h1 className={styles.cartTitle}>{t("cart.title")}</h1>
             </div>
             <div className={styles.emptyCart}>
               <span className={styles.emptyCartIcon}>⚠️</span>
-              Не вдалося завантажити дані. Перевірте з&apos;єднання з сервером.
+              {t("cart.loadError")}
             </div>
           </div>
         ) : (
@@ -264,18 +266,18 @@ export default function CartPage() {
               <button
                 className={styles.backButton}
                 onClick={() => router.back()}
-                aria-label="Назад"
+                aria-label={t("cart.backAria")}
                 id="cart-back-btn"
               >
                 <BackArrow />
               </button>
-              <h1 className={styles.cartTitle}>Мій кошик</h1>
+              <h1 className={styles.cartTitle}>{t("cart.title")}</h1>
             </div>
 
             {!hasItems ? (
               <div className={styles.emptyCart}>
                 <span className={styles.emptyCartIcon}>🛒</span>
-                Ваш кошик порожній
+                {t("cart.empty")}
               </div>
             ) : (
               <div className={styles.cartContent}>
@@ -294,8 +296,8 @@ export default function CartPage() {
                     };
 
                     const mockFallback = mockTitles[item.productId] || {
-                      title: `Книга #${item.productId}`,
-                      author: "Сучасна література",
+                      title: t("cart.bookFallback").replace("{id}", String(item.productId)),
+                      author: t("cart.authorFallback"),
                     };
 
                     const displayTitle = isGeneric ? mockFallback.title : rawTitle;

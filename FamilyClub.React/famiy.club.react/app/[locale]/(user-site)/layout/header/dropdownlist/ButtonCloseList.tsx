@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { useTranslations } from "@/lib/i18n/LocaleProvider";
 
 interface ButtonCloseListProps {
     isOpen: boolean;
@@ -8,6 +9,8 @@ interface ButtonCloseListProps {
 }
 
 export default function ButtonCloseList({ isOpen, onToggle }: ButtonCloseListProps) {
+    const t = useTranslations();
+
     return (
         <div
             className="flex relative z-10 pointer-events-none"
@@ -32,7 +35,7 @@ export default function ButtonCloseList({ isOpen, onToggle }: ButtonCloseListPro
                     onClick={onToggle}
                     className="absolute left-0 right-0 flex justify-center items-center z-10 pointer-events-auto"
                     style={{ bottom: 115, height: 40 }}
-                    aria-label={isOpen ? "Згорнути список" : "Розгорнути список"}
+                    aria-label={isOpen ? t("header.collapseListAria") : t("header.expandListAria")}
                 >
                     <Image
                         src="/images/header/Ellipse 9.png"

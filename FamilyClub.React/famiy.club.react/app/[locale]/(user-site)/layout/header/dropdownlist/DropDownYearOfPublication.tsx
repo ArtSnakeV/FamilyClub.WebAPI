@@ -1,23 +1,37 @@
 "use client";
 
 import Image from "next/image";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useMemo } from "react";
 import { useRouter } from "next/navigation";
+import { useLocalizedPath, useTranslations } from "@/lib/i18n/LocaleProvider";
 
-const yearFilters = [
-  { label: "до 2000", from: 0, to: 1999 },
-  { label: "2000–2010", from: 2000, to: 2010 },
-  { label: "2010–2020", from: 2010, to: 2020 },
-  { label: "2020+", from: 2020, to: 3000 },
+type YearFilterId = "before2000" | "year2000_2010" | "year2010_2020" | "from2020";
+
+const yearRanges: { id: YearFilterId; from: number; to: number }[] = [
+  { id: "before2000", from: 0, to: 1999 },
+  { id: "year2000_2010", from: 2000, to: 2010 },
+  { id: "year2010_2020", from: 2010, to: 2020 },
+  { id: "from2020", from: 2020, to: 3000 },
 ];
 
 export default function DropDownYearOfPublication() {
+  const t = useTranslations();
+  const lp = useLocalizedPath();
   const [open, setOpen] = useState(false);
-  const [selectedYear, setSelectedYear] = useState<string | null>(null);
+  const [selectedYear, setSelectedYear] = useState<YearFilterId | null>(null);
   const [search, setSearch] = useState<string>("");
 
   const containerRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
+
+  const yearFilters = useMemo(
+    () =>
+      yearRanges.map((range) => ({
+        ...range,
+        label: t(`header.${range.id}`),
+      })),
+    [t],
+  );
 
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
@@ -36,7 +50,7 @@ export default function DropDownYearOfPublication() {
   }, []);
 
   function selectYear(f: (typeof yearFilters)[number]) {
-    setSelectedYear(f.label);
+    setSelectedYear(f.id);
 
     setTimeout(() => {
       const params = new URLSearchParams();
@@ -44,7 +58,7 @@ export default function DropDownYearOfPublication() {
       params.set("yearFrom", String(f.from));
       params.set("yearTo", String(f.to));
 
-      router.push(`/products?${params.toString()}`);
+      router.push(lp(`/products?${params.toString()}`));
 
       setOpen(false);
     }, 450);
@@ -87,7 +101,7 @@ export default function DropDownYearOfPublication() {
           }}
           className="absolute pointer-events-auto inset-0 flex justify-center items-end mb-[46px] z-10"
         >
-          <span className="text-white">Рік видання</span>
+          <span className="text-white">{t("header.publicationYear")}</span>
         </button>
 
         {/* DROPDOWN */}
@@ -107,7 +121,7 @@ export default function DropDownYearOfPublication() {
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 onClick={(e) => e.stopPropagation()}
-                aria-label="Пошук року видання"
+                aria-label={t("header.yearSearchAria")}
                 className="
                   absolute inset-0
                   w-full h-full
@@ -132,13 +146,13 @@ export default function DropDownYearOfPublication() {
             {/* YEARS */}
             <div className="relative mt-[16px] ml-[6px] w-[160px] flex flex-col gap-2">
               {displayedYears.length === 0 ? (
-                <div className="text-[13px] ml-4">Не знайдено</div>
+                <div className="text-[13px] ml-4">{t("header.notFound")}</div>
               ) : (
                 displayedYears.map((y) => {
-                  const isSelected = selectedYear === y.label;
+                  const isSelected = selectedYear === y.id;
 
                   return (
-                    <div key={y.label} className="flex items-center gap-1">
+                    <div key={y.id} className="flex items-center gap-1">
                       {/* RADIO */}
                       <div className="w-[28px] h-[28px] flex justify-center shrink-0">
                         <button

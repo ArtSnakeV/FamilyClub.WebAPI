@@ -10,7 +10,7 @@ import {
 } from "@headlessui/react";
 import Image from "next/image";
 import { Fragment } from "react";
-
+import { useTranslations } from "@/lib/i18n/LocaleProvider";
 
 type Member = {
   fullName?: string;
@@ -41,8 +41,9 @@ export default function UserMenuDrop({
   showAdminPanel = false,
   onLogout,
 }: Props) {
+  const t = useTranslations();
   const displayName =
-    member?.fullName || member?.email?.split("@")[0] || "User";
+    member?.fullName || member?.email?.split("@")[0] || t("common.user");
 
   const avatarSrc = member?.avatarData
     ? `data:image/jpeg;base64,${member.avatarData}`
@@ -54,7 +55,6 @@ export default function UserMenuDrop({
           <div
             className={`transition-all ${open ? "bg-[#F5F3EE] shadow-[0px_0px_15px_0px_#242424CC] rounded-t-[26px]" : "rounded-[26px]"}`}
           >
-            {/* TRIGGER */}
             <MenuButton
               className="relative z-30 flex items-center gap-2 px-3 py-1 min-w-[144px] h-[40px]
   bg-transparent
@@ -64,7 +64,6 @@ export default function UserMenuDrop({
   transition-all duration-200
   border-0 outline-none focus:outline-none focus:ring-0 focus-visible:ring-0"
             >
-              {/* Avatar */}
               <div className="w-[30px] h-[30px] rounded-full overflow-hidden flex items-center justify-center">
                 {avatarSrc ? (
                   <img
@@ -77,12 +76,10 @@ export default function UserMenuDrop({
                 )}
               </div>
 
-              {/* Name */}
               <span className="flex-1 text-[14px] font-semibold text-[#242424]">
                 {displayName}
               </span>
 
-              {/* Arrow */}
               <div className="w-[20px] h-[20px] mt-[14px]">
                 <img
                   src="/images/header/Vector.svg"
@@ -94,7 +91,6 @@ export default function UserMenuDrop({
               </div>
             </MenuButton>
 
-            {/* DROPDOWN */}
             <Transition
               as={Fragment}
               enter="transition ease-out duration-150"
@@ -113,7 +109,6 @@ export default function UserMenuDrop({
             outline-none
             pt-[50px]"
               >
-                {/* HEADER */}
                 <div className="flex flex-col justify-center ">
                   <div className="flex items-center gap-6 pt-4 pb-2 px-3">
                     <div className="w-[30px] h-[30px] rounded-full overflow-hidden flex items-center justify-center">
@@ -129,7 +124,6 @@ export default function UserMenuDrop({
                     <div className="font-bold text-[16px]">{displayName}</div>
                   </div>
 
-                  {/* ITEMS */}
                   <div className="py-1">
                     <MenuItem>
                       {({ active }) => (
@@ -149,14 +143,13 @@ export default function UserMenuDrop({
                             </div>
 
                             <div className="w-[112px]">
-                              <span>Кабінет користувача</span>
+                              <span>{t("header.userCabinet")}</span>
                             </div>
                           </div>
                         </button>
                       )}
                     </MenuItem>
 
-                    {/* Повідомлення */}
                     <MenuItem>
                       {({ active }) => (
                         <button
@@ -192,14 +185,13 @@ export default function UserMenuDrop({
                             </div>
 
                             <div className="w-[112px]">
-                              <span>Повідомлення</span>
+                              <span>{t("header.notifications")}</span>
                             </div>
                           </div>
                         </button>
                       )}
                     </MenuItem>
 
-                    {/* Замовлення */}
                     <MenuItem>
                       {({ active }) => (
                         <button
@@ -218,14 +210,13 @@ export default function UserMenuDrop({
                             </div>
 
                             <div className="w-[112px]">
-                              <span>Замовлення</span>
+                              <span>{t("header.orders")}</span>
                             </div>
                           </div>
                         </button>
                       )}
                     </MenuItem>
 
-                    {/* Бібліотека */}
                     <MenuItem>
                       {({ active }) => (
                         <button
@@ -244,7 +235,7 @@ export default function UserMenuDrop({
                             </div>
 
                             <div className="w-[112px]">
-                              <span>Бібліотека</span>
+                              <span>{t("header.library")}</span>
                             </div>
                           </div>
                         </button>
@@ -270,7 +261,7 @@ export default function UserMenuDrop({
                               </div>
 
                               <div className="w-[112px]">
-                                <span>Адмін панель</span>
+                                <span>{t("header.adminPanel")}</span>
                               </div>
                             </div>
                           </button>
@@ -291,14 +282,14 @@ export default function UserMenuDrop({
                             <div className="w-[22px] flex justify-center">
                               <Image
                                 src="/images/header/meeting_room_24px.svg"
-                                alt="library"
+                                alt="logout"
                                 width={20}
                                 height={20}
                               />
                             </div>
 
                             <div className="w-[112px]">
-                              <span>Вийти з акаунту</span>
+                              <span>{t("header.logout")}</span>
                             </div>
                           </div>
                         </button>

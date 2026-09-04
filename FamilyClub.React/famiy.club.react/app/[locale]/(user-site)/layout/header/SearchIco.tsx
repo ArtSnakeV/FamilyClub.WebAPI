@@ -9,8 +9,11 @@ import { productService, authorService } from "@/lib/api/services";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState, useRef } from "react";
+import { useLocalizedPath, useTranslations } from "@/lib/i18n/LocaleProvider";
 
 export default function SearchIco() {
+  const t = useTranslations();
+  const lp = useLocalizedPath();
   const [products, setProducts] = useState<ProductDto[]>([]);
   const [authors, setAuthors] = useState<AuthorDTO[]>([]);
   const [search, setSearch] = useState("");
@@ -116,11 +119,11 @@ export default function SearchIco() {
             {/* АВТОРИ */}
             {filteredAuthors.length > 0 && (
               <>
-                <p className="text-[11px] text-[#272727]/40 px-3 pt-1 pb-1">Автори</p>
+                <p className="text-[11px] text-[#272727]/40 px-3 pt-1 pb-1">{t("header.authors")}</p>
                 {filteredAuthors.map((a) => (
                   <Link
                     key={a.id}
-                    href={`/authors/${a.id}`}
+                    href={lp(`/authors/${a.id}`)}
                     onClick={() => { setOpen(false); setSearch(""); }}
                     className="flex items-center px-3 py-2 rounded-[14px] text-[13px] text-[#272727] hover:bg-white transition-all"
                   >
@@ -138,13 +141,13 @@ export default function SearchIco() {
             {/* КНИГИ */}
             {filteredProducts.length > 0 && (
               <>
-                <p className="text-[11px] text-[#272727]/40 px-3 pt-1 pb-1">Книги</p>
+                <p className="text-[11px] text-[#272727]/40 px-3 pt-1 pb-1">{t("header.books")}</p>
                 {filteredProducts.map((p) => {
                   const productAuthors = getProductAuthors(p);
                   return (
                     <Link
                       key={p.id}
-                      href={`/products/${p.id}`}
+                      href={lp(`/products/${p.id}`)}
                       onClick={() => { setOpen(false); setSearch(""); }}
                       className="flex flex-col px-3 py-2 rounded-[14px] hover:bg-white transition-all"
                     >
@@ -166,7 +169,7 @@ export default function SearchIco() {
       {/* EMPTY */}
       {open && search.trim() !== "" && !hasResults && (
         <div className="absolute top-[45px] left-0 w-[220px] rounded-[20px] bg-[#F5F3EE] shadow-[0px_0px_15px_0px_#24242433] p-4 text-[13px] text-[#272727] z-50">
-          Не знайдено
+          {t("header.notFound")}
         </div>
       )}
     </div>

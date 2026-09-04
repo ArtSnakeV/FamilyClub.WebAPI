@@ -3,6 +3,7 @@
 import { alertWarning } from "@/lib/ui/sweetAlert";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useLocale, useLocalizedPath, useTranslations } from "@/lib/i18n/LocaleProvider";
 import styles from "./cart.module.css";
 
 export interface CartSummaryProps {
@@ -11,11 +12,10 @@ export interface CartSummaryProps {
   deliveryCost: number;
 }
 
-function formatPrice(value: number): string {
-  return `${new Intl.NumberFormat("uk-UA").format(value)} грн`;
-}
-
 export default function CartSummary({ subtotal, discount, deliveryCost }: CartSummaryProps) {
+  const t = useTranslations();
+  const lp = useLocalizedPath();
+  const { locale } = useLocale();
   const router = useRouter();
   const [agreed, setAgreed] = useState(false);
   const [promoCode, setPromoCode] = useState("");
@@ -23,31 +23,37 @@ export default function CartSummary({ subtotal, discount, deliveryCost }: CartSu
   const effectiveDelivery = subtotal > 0 ? deliveryCost : 0;
   const total = subtotal > 0 ? Math.max(0, subtotal - discount + deliveryCost) : 0;
 
+  function formatPrice(value: number): string {
+    if (value === 0) return t("cart.zeroPrice");
+    const formatted = new Intl.NumberFormat(locale === "en" ? "en-US" : "uk-UA").format(value);
+    return t("cart.price").replace("{value}", formatted);
+  }
+
   return (
     <aside className={styles.summaryPanel} id="cart-summary">
       {/* Apply loyalty points */}
       <button className={styles.applyPointsBtn} type="button" id="apply-points-btn">
-        Застосувати лапки до знижки
+        {t("cart.applyPoints")}
       </button>
 
       {/* Summary lines */}
       <div className={styles.summaryLines}>
         <div className={styles.summaryRow}>
-          <span className={styles.summaryLabel}>Сума:</span>
+          <span className={styles.summaryLabel}>{t("cart.subtotal")}</span>
           <span className={styles.summaryValue}>{formatPrice(subtotal)}</span>
         </div>
         <div className={styles.summaryRow}>
-          <span className={styles.summaryLabel}>Знижка:</span>
+          <span className={styles.summaryLabel}>{t("cart.discount")}</span>
           <span className={`${styles.summaryValue} ${styles.discountValue}`}>
-            {discount > 0 ? `- ${formatPrice(discount)}` : "0 грн"}
+            {discount > 0 ? `- ${formatPrice(discount)}` : t("cart.zeroPrice")}
           </span>
         </div>
         <div className={styles.summaryRow}>
-          <span className={styles.summaryLabel}>Вартість доставки:</span>
+          <span className={styles.summaryLabel}>{t("cart.delivery")}</span>
           <span className={styles.summaryValue}>{formatPrice(effectiveDelivery)}</span>
         </div>
         <div className={styles.summaryRow}>
-          <span className={styles.summaryLabel}>Сума до сплати:</span>
+          <span className={styles.summaryLabel}>{t("cart.total")}</span>
           <span className={`${styles.summaryValue} ${styles.totalValue}`}>
             {formatPrice(total)}
           </span>
@@ -64,16 +70,16 @@ export default function CartSummary({ subtotal, discount, deliveryCost }: CartSu
           checked={agreed}
           onChange={(e) => setAgreed(e.target.checked)}
           id="agreement-checkbox"
-          aria-label="Погоджуюсь з умовами"
+          aria-label={t("cart.agreeAria")}
         />
         <span className={styles.agreementText}>
-          Погоджуюсь з{" "}
-          <a href="/privacy-policy" className={styles.agreementLink}>
-            Політикою конфіденційності
+          {t("cart.agreePrefix")}{" "}
+          <a href={lp("/privacy-policy")} className={styles.agreementLink}>
+            {t("cart.privacyPolicy")}
           </a>{" "}
-          та з{" "}
-          <a href="/terms-of-service" className={styles.agreementLink}>
-            Користувацькою угодою
+          {t("cart.agreeAnd")}{" "}
+          <a href={lp("/terms-of-service")} className={styles.agreementLink}>
+            {t("cart.termsOfService")}
           </a>
         </span>
       </div>
@@ -86,26 +92,26 @@ export default function CartSummary({ subtotal, discount, deliveryCost }: CartSu
         id="checkout-btn"
         onClick={async () => {
           if (!agreed) {
-            await alertWarning("Будь ласка, підтвердіть згоду з Політикою конфіденційності та Користувацькою угодою (поставте галочку)");
+            await alertWarning(t("cart.agreeWarning"));
             return;
           }
-          router.push("/checkout");
+          router.push(lp("/checkout"));
         }}
       >
-        До оформлення замовлення
+        {t("cart.checkout")}
       </button>
 
       {/* Promo code */}
       <div className={styles.promoSection}>
-        <span className={styles.promoLabel}>Є промокод?</span>
+        <span className={styles.promoLabel}>{t("cart.hasPromo")}</span>
         <input
           type="text"
           className={styles.promoInput}
-          placeholder="Промокод..."
+          placeholder={t("cart.promoPlaceholder")}
           value={promoCode}
           onChange={(e) => setPromoCode(e.target.value)}
           id="promo-code-input"
-          aria-label="Введіть промокод"
+          aria-label={t("cart.promoAria")}
         />
       </div>
     </aside>

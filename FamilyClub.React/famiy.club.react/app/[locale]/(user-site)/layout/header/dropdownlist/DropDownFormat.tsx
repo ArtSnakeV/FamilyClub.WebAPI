@@ -5,8 +5,11 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { ProductDto, FormatDto } from "@/lib/api/generated";
 import { productService, formatService } from "@/lib/api/services";
+import { useLocalizedPath, useTranslations } from "@/lib/i18n/LocaleProvider";
 
 export default function DropDownFormat() {
+  const t = useTranslations();
+  const lp = useLocalizedPath();
   const [open, setOpen] = useState(false);
   const [selectedFormat, setSelectedFormat] = useState<FormatDto["id"] | null>(
     null,
@@ -35,21 +38,6 @@ export default function DropDownFormat() {
     return () => document.removeEventListener("click", handleClickOutside);
   }, []);
 
-  useEffect(() => {
-    function handleClickOutside(e: MouseEvent) {
-      if (
-        containerRef.current &&
-        !containerRef.current.contains(e.target as Node)
-      ) {
-        setOpen(false);
-      }
-    }
-
-    document.addEventListener("click", handleClickOutside);
-
-    return () => document.removeEventListener("click", handleClickOutside);
-  }, []);
-
   return (
     <div ref={containerRef} className="relative w-[110px]">
       <div
@@ -75,7 +63,7 @@ export default function DropDownFormat() {
           }}
           className="absolute pointer-events-auto inset-0 flex justify-center items-end mb-[56px] z-10"
         >
-          <span className="text-[var(--color-white)]">Формати</span>
+          <span className="text-[var(--color-white)]">{t("header.formats")}</span>
         </button>
 
         {/* DROPDOWN */}
@@ -112,7 +100,7 @@ export default function DropDownFormat() {
 
                     {/* LINK */}
                     <Link
-                      href={`/products?formatId=${f.id}`}
+                      href={lp(`/products?formatId=${f.id}`)}
                       onClick={() => {
                         setSelectedFormat(f.id);
                         setOpen(false);
