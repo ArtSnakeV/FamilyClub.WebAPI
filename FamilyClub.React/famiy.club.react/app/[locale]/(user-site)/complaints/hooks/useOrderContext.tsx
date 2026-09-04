@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { orderService, productService, publisherService } from "@/lib/api/services";
 import type { OrderDTO, ProductDto, PublisherDto } from "@/lib/api/types";
+import { useTranslations } from "@/lib/i18n/LocaleProvider";
 
 export type OrderContextData = {
   order: OrderDTO;
@@ -11,19 +12,39 @@ export type OrderContextData = {
   primaryProduct: ProductDto | null;
 };
 
-export function formatOrderStatus(status?: string | null): string {
+type OrderStatusLabels = {
+  received: string;
+  shipped: string;
+  paid: string;
+  placed: string;
+  cancelled: string;
+};
+
+const DEFAULT_STATUS_LABELS: OrderStatusLabels = {
+  received: "Отримано",
+  shipped: "Відправлено",
+  paid: "Оплачено",
+  placed: "Оформлено",
+  cancelled: "Скасовано",
+};
+
+export function formatOrderStatus(
+  status?: string | null,
+  labels: OrderStatusLabels = DEFAULT_STATUS_LABELS,
+): string {
   const s = (status || "").toLowerCase();
   if (s.includes("delivered") || s.includes("received") || s.includes("completed")) {
-    return "Отримано";
+    return labels.received;
   }
-  if (s.includes("sent") || s.includes("shipped")) return "Відправлено";
-  if (s.includes("paid") || s.includes("processing")) return "Оплачено";
-  if (s.includes("pending")) return "Оформлено";
-  if (s.includes("cancelled")) return "Скасовано";
-  return status || "Оформлено";
+  if (s.includes("sent") || s.includes("shipped")) return labels.shipped;
+  if (s.includes("paid") || s.includes("processing")) return labels.paid;
+  if (s.includes("pending")) return labels.placed;
+  if (s.includes("cancelled")) return labels.cancelled;
+  return status || labels.placed;
 }
 
 export function useOrderContext(orderId: number | null) {
+  const t = useTranslations();
   const [data, setData] = useState<OrderContextData | null>(null);
   const [loading, setLoading] = useState(!!orderId);
   const [error, setError] = useState<string | null>(null);
@@ -73,7 +94,7 @@ export function useOrderContext(orderId: number | null) {
           primaryProduct,
         });
       } catch {
-        if (!cancelled) setError("Не вдалося завантажити замовлення");
+        if (!cancelled) setError(t("complaints.loadOrderError"));
       } finally {
         if (!cancelled) setLoading(false);
       }
@@ -83,7 +104,7 @@ export function useOrderContext(orderId: number | null) {
     return () => {
       cancelled = true;
     };
-  }, [orderId]);
+  }, [orderId, t]);
 
   return { data, loading, error };
 }

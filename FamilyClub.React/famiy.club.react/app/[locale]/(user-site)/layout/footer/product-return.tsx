@@ -3,6 +3,8 @@
 import type { ReactNode } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useLocale } from "@/lib/i18n/LocaleProvider";
+import { getProductReturnContent } from "@/lib/i18n/legal";
 
 function BulletList({ items }: { items: string[] }) {
   return (
@@ -11,16 +13,6 @@ function BulletList({ items }: { items: string[] }) {
         <li key={item}>{item}</li>
       ))}
     </ul>
-  );
-}
-
-function NumberedList({ items }: { items: ReactNode[] }) {
-  return (
-    <ol className="list-decimal pl-5 space-y-2">
-      {items.map((item, i) => (
-        <li key={i}>{item}</li>
-      ))}
-    </ol>
   );
 }
 
@@ -51,6 +43,8 @@ function Section({
  */
 export default function ProductReturn() {
   const router = useRouter();
+  const { locale, lp } = useLocale();
+  const content = getProductReturnContent(locale);
 
   return (
     <section className="relative w-full min-h-screen pt-0 pb-10 md:pb-16 px-2 sm:px-4">
@@ -82,7 +76,7 @@ export default function ProductReturn() {
               type="button"
               onClick={() => router.back()}
               className="absolute left-0 top-2 w-10 h-10 rounded-full flex items-center justify-center text-[22px] text-[#242424]/70 hover:bg-black/5 transition"
-              aria-label="Назад"
+              aria-label={content.backAria}
             >
               ←
             </button>
@@ -91,12 +85,12 @@ export default function ProductReturn() {
               className="text-[26px] sm:text-[32px] md:text-[40px] font-bold text-[#1F1F1F] tracking-tight text-center px-10"
               style={{ fontFamily: "var(--font-lora), Georgia, serif" }}
             >
-              Повернення замовлення
+              {content.title}
             </h1>
 
             {/* Figma Node 1472:32020 Badge "Як скасувати?" */}
             <div className="mt-3 px-6 py-1.5 rounded-full bg-[#005b33]/10 border border-[#005b33]/30 text-[#005b33] text-sm font-extrabold tracking-wide uppercase">
-              Як скасувати?
+              {content.badge}
             </div>
           </header>
 
@@ -106,73 +100,73 @@ export default function ProductReturn() {
               ✓
             </div>
             <p className="text-sm sm:text-base font-bold text-[#242424] leading-snug">
-              Повернення можливе протягом 14 днів з моменту отримання замовлення.
+              {content.highlight}
             </p>
           </div>
 
           <div className="text-[15px] md:text-[16px] leading-relaxed text-[#2A2A2A] space-y-3 mb-4">
-            <p>
-              У Librellis ми прагнемо забезпечити максимальну зручність. Якщо ви бажаєте скасувати замовлення або оформити повернення товарів, ми надали простий онлайн-інструмент у особистому кабінеті.
-            </p>
+            <p>{content.intro}</p>
           </div>
 
-          <Section title="1. Скасування або повернення через особистий кабінет">
-            <p className="mb-2">
-              Ви можете оформити повернення або скасування в декілька кліків:
-            </p>
+          <Section title={content.cancelTitle}>
+            <p className="mb-2">{content.cancelIntro}</p>
             <ol className="list-decimal pl-5 space-y-2 font-medium">
-              <li>
-                Перейдіть у розділ{" "}
-                <Link href="/orders" className="text-[#005b33] font-bold underline hover:opacity-80">
-                  Мої замовлення
-                </Link>
-                .
-              </li>
-              <li>Знайдіть відповідне замовлення та натисніть «Детальніше».</li>
-              <li>Натисніть кнопку «Повернути товар» або «Написати продавцю».</li>
+              {content.cancelSteps.map((step, index) => (
+                <li key={index}>
+                  {step.type === "link" ? (
+                    <>
+                      {step.before}{" "}
+                      <Link
+                        href={lp(step.href)}
+                        className="text-[#005b33] font-bold underline hover:opacity-80"
+                      >
+                        {step.linkText}
+                      </Link>
+                      {step.after}
+                    </>
+                  ) : (
+                    step.text
+                  )}
+                </li>
+              ))}
             </ol>
           </Section>
 
-          <Section title="2. Виявлено брак або пошкодження">
-            <BulletList
-              items={[
-                "Відсутні або переплутані сторінки в книзі",
-                "Розмитий або нечитабельний друк",
-                "Значні механічні пошкодження, отримані при транспортуванні",
-              ]}
-            />
+          <Section title={content.defectTitle}>
+            <BulletList items={content.defectItems} />
           </Section>
 
-          <Section title="3. Умови повернення товарів належної якості">
+          <Section title={content.qualityTitle}>
             <p>
-              Обмін або повернення можливі протягом <strong>14 днів</strong> з моменту отримання:
+              {content.qualityIntroBefore}{" "}
+              <strong>{content.qualityIntroStrong}</strong>{" "}
+              {content.qualityIntroAfter}
             </p>
-            <BulletList
-              items={[
-                "Збережено товарний вигляд книги (відсутні згини, закладки, сліди читання)",
-                "Збережено оригінальну обгортку / пакування",
-                "Є документ або розрахунковий номер замовлення",
-              ]}
-            />
+            <BulletList items={content.qualityItems} />
           </Section>
 
-          <Section title="4. Повернення коштів">
+          <Section title={content.refundTitle}>
             <p>
-              Після перевірки повернутого товару на складі кошти зараховуються на вашу банківську картку або IBAN протягом <strong>1–3 робочих днів</strong>.
+              {content.refundBefore}{" "}
+              <strong>{content.refundStrong}</strong>
+              {content.refundAfter}
             </p>
           </Section>
 
-          <Section title="Потрібна допомога?">
+          <Section title={content.helpTitle}>
             <div className="bg-[#F5F3EE] p-4 rounded-xl border border-[#C8C2B4] mt-2 space-y-1">
-              <p className="font-bold text-[#242424]">Служба підтримки Librellis:</p>
+              <p className="font-bold text-[#242424]">{content.supportTitle}</p>
               <p className="text-sm">
-                Телефон:{" "}
-                <a href="tel:08005553535" className="font-bold text-[#005b33] underline">
-                  0 (800) 555 35 35
+                {content.phoneLabel}{" "}
+                <a
+                  href={`tel:${content.phoneHref}`}
+                  className="font-bold text-[#005b33] underline"
+                >
+                  {content.phoneDisplay}
                 </a>{" "}
-                (безкоштовно)
+                {content.freeNote}
               </p>
-              <p className="text-xs text-[#666666]">Графік: Пн–Пт з 09:00 до 18:00</p>
+              <p className="text-xs text-[#666666]">{content.schedule}</p>
             </div>
           </Section>
         </article>

@@ -2,6 +2,8 @@
 
 import type { ReactNode } from "react";
 import { useRouter } from "next/navigation";
+import { useLocale } from "@/lib/i18n/LocaleProvider";
+import { getPersonalDataProtectionContent } from "@/lib/i18n/legal";
 
 function BulletList({ items }: { items: string[] }) {
   return (
@@ -41,6 +43,9 @@ function Section({
  */
 export default function PersonalDataProtection() {
   const router = useRouter();
+  const { locale } = useLocale();
+  const content = getPersonalDataProtectionContent(locale);
+  const { whoWeAre } = content;
 
   return (
     <section className="relative w-full min-h-screen pt-0 pb-10 md:pb-16 px-2 sm:px-4">
@@ -72,7 +77,7 @@ export default function PersonalDataProtection() {
               type="button"
               onClick={() => router.back()}
               className="absolute left-0 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full flex items-center justify-center text-[22px] text-[#242424]/70 hover:bg-black/5 transition"
-              aria-label="Назад"
+              aria-label={content.backAria}
             >
               ←
             </button>
@@ -80,111 +85,66 @@ export default function PersonalDataProtection() {
               className="text-[26px] sm:text-[32px] md:text-[40px] font-bold text-[#1F1F1F] tracking-tight text-center px-10"
               style={{ fontFamily: "var(--font-lora), Georgia, serif" }}
             >
-              Захист персональних даних
+              {content.title}
             </h1>
           </header>
 
-          <Section title="1. Хто ми?">
+          <Section title={whoWeAre.title}>
             <p>
-              <strong>ТОВ «Librellis»</strong> (ЄДРПОУ 12345678)
+              <strong>{whoWeAre.companyBold}</strong>
+              {whoWeAre.companyRest}
             </p>
-            <p>Юридична адреса: 01001, Львів 79000, а/с 64</p>
-            <p>Фактична адреса: м. Львів, вул. Книжкова, 10</p>
+            <p>{whoWeAre.legalAddress}</p>
+            <p>{whoWeAre.physicalAddress}</p>
             <p>
-              Контакт:{" "}
+              {whoWeAre.contactLabel}{" "}
               <a
-                href="mailto:LibrellisSupport@proton.me"
+                href={`mailto:${whoWeAre.email}`}
                 className="underline hover:opacity-70"
               >
-                LibrellisSupport@proton.me
+                {whoWeAre.email}
               </a>
               ,{" "}
-              <a href="tel:08005553535" className="underline hover:opacity-70">
-                0 (800) 555 35 35
-              </a>{" "}
-              (служба підтримки)
-            </p>
-          </Section>
-
-          <Section title="2. Які дані ми збираємо?">
-            <p className="font-semibold text-[#1F1F1F]">При замовленні:</p>
-            <BulletList
-              items={[
-                "ПІБ, номер телефону, e-mail",
-                "Адреса доставки (відділення / поштомат / кур’єр)",
-              ]}
-            />
-            <p className="font-semibold text-[#1F1F1F] pt-2">
-              Особистий кабінет:
-            </p>
-            <BulletList
-              items={[
-                "Логін, пароль (зберігається у зашифрованому вигляді)",
-                "Історія покупок, wishlist / обране",
-              ]}
-            />
-            <p className="font-semibold text-[#1F1F1F] pt-2">Автоматично:</p>
-            <BulletList
-              items={[
-                "IP-адреса, файли cookies",
-                "Дані пристрою та браузера",
-              ]}
-            />
-          </Section>
-
-          <Section title="3. Мета збору даних">
-            <BulletList
-              items={[
-                "Виконання та доставка замовлень",
-                "Комунікація про статус замовлення та ТТН",
-                "Маркетинг (за вашою згодою): розсилки про новинки та акції",
-                "Покращення сервісу та аналіз популярності жанрів",
-              ]}
-            />
-          </Section>
-
-          <Section title="4. Передача даних третім особам">
-            <BulletList
-              items={[
-                "Служби доставки (Нова Пошта, Укрпошта тощо) — лише ПІБ, телефон та адреса доставки",
-                "Платіжні системи (WayForPay, LiqPay) — для проведення оплати",
-                "Сервіси автоматизації (CRM, email-розсилки) — для обслуговування клієнтів",
-              ]}
-            />
-            <p className="pt-2 text-[14px] text-[#555]">
-              Ми не продаємо персональні дані третім особам і передаємо їх лише в
-              обсязі, необхідному для виконання договору чи вимог закону.
-            </p>
-          </Section>
-
-          <Section title="5. Термін зберігання даних">
-            <BulletList
-              items={[
-                "Протягом існування вашого профілю на платформі",
-                "До 3 років після останньої операції — для бухгалтерської та податкової звітності (згідно із законодавством України)",
-              ]}
-            />
-          </Section>
-
-          <Section title="6. Ваші права">
-            <BulletList
-              items={[
-                "Право доступу до ваших даних та їх перевірки",
-                "Право вимагати виправлення помилок",
-                "Право на «забуття»: видалення профілю та пов’язаних даних (окрім випадків, коли зберігання вимагає закон)",
-              ]}
-            />
-            <p className="pt-3 text-[14px] text-[#555]">
-              Щоб скористатися правами, напишіть на{" "}
               <a
-                href="mailto:LibrellisSupport@proton.me"
+                href={`tel:${whoWeAre.phoneHref}`}
                 className="underline hover:opacity-70"
               >
-                LibrellisSupport@proton.me
+                {whoWeAre.phoneDisplay}
               </a>{" "}
-              або зверніться до служби підтримки.
+              {whoWeAre.supportLabel}
             </p>
           </Section>
+
+          {content.sections.map((section) => (
+            <Section key={section.title} title={section.title}>
+              {section.subsections?.map((subsection, index) => (
+                <div key={subsection.heading}>
+                  <p
+                    className={`font-semibold text-[#1F1F1F]${index > 0 ? " pt-2" : ""}`}
+                  >
+                    {subsection.heading}
+                  </p>
+                  <BulletList items={subsection.items} />
+                </div>
+              ))}
+              {section.items ? <BulletList items={section.items} /> : null}
+              {section.note ? (
+                <p className="pt-2 text-[14px] text-[#555]">{section.note}</p>
+              ) : null}
+              {section.noteBeforeEmail ? (
+                <p className="pt-3 text-[14px] text-[#555]">
+                  {section.noteBeforeEmail}{" "}
+                  <a
+                    href={`mailto:${whoWeAre.email}`}
+                    className="underline hover:opacity-70"
+                  >
+                    {whoWeAre.email}
+                  </a>{" "}
+                  {section.noteAfterEmail}
+                </p>
+              ) : null}
+            </Section>
+          ))}
         </article>
       </div>
     </section>

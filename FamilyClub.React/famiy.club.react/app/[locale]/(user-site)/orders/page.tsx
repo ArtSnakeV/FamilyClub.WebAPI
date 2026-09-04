@@ -13,9 +13,12 @@ import { EMPTY_ORDERS_BY_TAB, MockOrderItem, OrderTabId } from "./mockData";
 import { orderService, productService } from "@/lib/api/services";
 import { getAuthUserId } from "@/lib/auth/tokenStorage";
 import { OrderDTO, ProductDto } from "@/lib/api/generated";
+import { useLocalizedPath, useTranslations } from "@/lib/i18n/LocaleProvider";
 
 export default function OrdersPage() {
   const router = useRouter();
+  const t = useTranslations();
+  const lp = useLocalizedPath();
   const [activeTab, setActiveTab] = useState<OrderTabId>("waiting_payment");
   const [ordersByTab, setOrdersByTab] = useState<Record<OrderTabId, MockOrderItem[]>>(EMPTY_ORDERS_BY_TAB);
   const [loading, setLoading] = useState<boolean>(true);
@@ -261,7 +264,7 @@ export default function OrdersPage() {
         }
       }
       removeLocalOrder(dbOrderId, itemId);
-      showToast("Замовлення успішно видалено");
+      showToast(t("orders.toasts.deleted"));
       await loadDatabaseOrders();
     } else if (actionName === "pay_order") {
       if (dbOrderId) {
@@ -279,7 +282,7 @@ export default function OrdersPage() {
           console.error("Failed to pay order in DB", e);
         }
       }
-      showToast("Оплату отримано! Замовлення переміщено в «Очікування відправки»");
+      showToast(t("orders.toasts.paidMoved"));
       await loadDatabaseOrders();
     } else if (actionName === "cancel") {
       if (dbOrderId) {
@@ -298,7 +301,7 @@ export default function OrdersPage() {
         }
       }
       removeLocalOrder(dbOrderId, itemId);
-      showToast("Замовлення скасовано та переміщено в Історію");
+      showToast(t("orders.toasts.cancelledMoved"));
       await loadDatabaseOrders();
     } else if (actionName === "confirm_receipt") {
       if (dbOrderId) {
@@ -316,7 +319,7 @@ export default function OrdersPage() {
           console.error("Failed to confirm receipt in DB", e);
         }
       }
-      showToast("Отримання підтверджено! Товар переміщено в «Додати відгук»");
+      showToast(t("orders.toasts.receiptConfirmed"));
       await loadDatabaseOrders();
     } else if (actionName === "return") {
       if (foundItem) {
@@ -336,17 +339,17 @@ export default function OrdersPage() {
             console.error("Failed to return order in DB", e);
           }
         }
-        showToast("Заявку на повернення надіслано в Базу Даних");
+        showToast(t("orders.toasts.returnSubmittedDb"));
         await loadDatabaseOrders();
       }
     } else if (actionName === "complain") {
-      showToast("Скаргу зареєстровано в системі");
+      showToast(t("orders.toasts.complainRegistered"));
     } else if (actionName === "write_review") {
       const foundItem = allItems.find((i) => i.id === itemId);
       if (foundItem) {
         setSelectedItemForReview(foundItem);
       } else {
-        showToast("Відкриття форми написання відгуку...");
+        showToast(t("orders.toasts.openingReview"));
       }
     }
   };
@@ -459,7 +462,7 @@ export default function OrdersPage() {
               {/* Informational Text Under Tabs for Certain States */}
               {(activeTab === "add_review" || activeTab === "returns" || activeTab === "history") && (
                 <div className="text-center text-sm md:text-base font-semibold text-[#242424] my-4 tracking-wide bg-white/70 backdrop-blur-sm py-2.5 px-6 rounded-2xl max-w-md mx-auto shadow-sm border border-white/40">
-                  Всі карточки автоматично приберуться через місяць
+                  {t("orders.autoRemoveNote")}
                 </div>
               )}
 
@@ -472,13 +475,13 @@ export default function OrdersPage() {
                 ) : currentItems.length === 0 ? (
                   <div className="bg-[#D8D3C8]/90 backdrop-blur-sm rounded-3xl p-12 text-center border border-[#C8C2B4] shadow-md my-6 max-w-xl mx-auto flex flex-col items-center gap-3">
                     <span className="text-4xl block mb-1">📦</span>
-                    <h3 className="text-xl font-bold text-[#242424]">На цій вкладці замовлень немає</h3>
-                    <p className="text-sm text-[#555555]">Ваші реальні замовлення після оформлення з кошика з&apos;являтимуться тут</p>
+                    <h3 className="text-xl font-bold text-[#242424]">{t("orders.emptyTitle")}</h3>
+                    <p className="text-sm text-[#555555]">{t("orders.emptyText")}</p>
                     <button
-                      onClick={() => router.push("/categories")}
+                      onClick={() => router.push(lp("/categories"))}
                       className="mt-2 bg-[#005b33] hover:bg-[#004727] text-white px-6 py-2.5 rounded-xl font-semibold text-sm transition shadow-sm"
                     >
-                      Перейти до каталогу
+                      {t("orders.goToCatalog")}
                     </button>
                   </div>
                 ) : (

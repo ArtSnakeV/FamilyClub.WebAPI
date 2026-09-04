@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useCurrentUser } from "@/app/(user-site)/userProfile/hooks/useCurrentUser";
 import { getAuthUserId } from "@/lib/auth/tokenStorage";
+import { useTranslations } from "@/lib/i18n/LocaleProvider";
 import { useComplaintForm } from "./hooks/useComplaintForm";
 import { useComplaintImages } from "./hooks/useComplaintImages";
 import { useOrderContext } from "./hooks/useOrderContext";
@@ -17,6 +18,7 @@ import styles from "./complaints.module.css";
 
 export default function ComplaintsPageClient() {
   const router = useRouter();
+  const t = useTranslations();
   const searchParams = useSearchParams();
   const orderIdParam = searchParams.get("orderId");
   const orderId = orderIdParam ? Number(orderIdParam) : null;
@@ -44,7 +46,7 @@ export default function ComplaintsPageClient() {
       user?.id ?? (typeof window !== "undefined" ? getAuthUserId() : null);
 
     if (!clubMemberId) {
-      await alertWarning("Увійдіть у систему, щоб подати скаргу.");
+      await alertWarning(t("complaints.loginRequired"));
       return;
     }
 
@@ -57,7 +59,7 @@ export default function ComplaintsPageClient() {
   };
 
   const publisherName =
-    orderContext?.publisher?.publisherName || "Видавництво «Книгарня»";
+    orderContext?.publisher?.publisherName || t("complaints.defaultPublisher");
 
   return (
     <div
@@ -81,7 +83,7 @@ export default function ComplaintsPageClient() {
           <ComplaintPageHeader />
 
           {orderLoading && orderId && (
-            <div className={styles.loading}>Завантаження замовлення...</div>
+            <div className={styles.loading}>{t("complaints.loadingOrder")}</div>
           )}
 
           {orderError && (
@@ -94,16 +96,13 @@ export default function ComplaintsPageClient() {
             <OrderSummaryAccordion context={orderContext} />
           )}
 
-          {/* STEP 1: INITIAL QUESTION: "Чи зверталися ви до продавця?" */}
           {contactedSellerStep === "ask" && (
             <div className="bg-white/80 p-6 rounded-3xl border border-[#C8C2B4] space-y-5 my-6 text-center shadow-sm">
               <span className="text-4xl block">💬🤝</span>
               <h2 className="text-xl font-bold text-[#242424]">
-                Чи зверталися ви до продавця перед подачею скарги?
+                {t("complaints.askTitle")}
               </h2>
-              <p className="text-xs text-[#555555]">
-                Звернення напряму до видавництва або продавця зазвичай вирішує 95% питань у найкоротші терміни.
-              </p>
+              <p className="text-xs text-[#555555]">{t("complaints.askHint")}</p>
 
               <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
                 <button
@@ -111,7 +110,7 @@ export default function ComplaintsPageClient() {
                   onClick={() => setContactedSellerStep("no")}
                   className="w-full sm:w-auto px-6 py-3 rounded-2xl bg-[#E5E0D5] hover:bg-[#D8D2C5] border border-[#C8C2B4] text-[#242424] font-bold text-sm transition"
                 >
-                  Ні, не звертався(лась)
+                  {t("complaints.askNo")}
                 </button>
 
                 <button
@@ -119,26 +118,24 @@ export default function ComplaintsPageClient() {
                   onClick={() => setContactedSellerStep("yes")}
                   className="w-full sm:w-auto px-6 py-3 rounded-2xl bg-[#005b33] hover:bg-[#004828] text-white font-bold text-sm transition shadow-sm"
                 >
-                  Так, проблему не вирішено
+                  {t("complaints.askYes")}
                 </button>
               </div>
             </div>
           )}
 
-          {/* STEP 2A: "Слід звернутися до продавця" (Figma Node 1387:14884) */}
           {contactedSellerStep === "no" && (
             <div className="bg-[#F5F3EE] p-6 sm:p-8 rounded-3xl border border-[#C8C2B4] space-y-6 my-6 shadow-sm">
               <div className="text-center">
                 <span className="text-3xl block mb-2">📞🏢</span>
                 <h2 className="text-2xl font-extrabold text-[#242424]">
-                  Слід звернутися до продавця
+                  {t("complaints.contactSellerTitle")}
                 </h2>
                 <p className="text-xs text-[#555555] mt-2 max-w-md mx-auto leading-relaxed">
-                  Це дозволить швидше розв&apos;язати проблему. Якщо ж не вдасться, можна подати скаргу адміністрації.
+                  {t("complaints.contactSellerHint")}
                 </p>
               </div>
 
-              {/* Publisher Card */}
               <div className="bg-white p-5 rounded-2xl border border-[#D5CFCE] space-y-4">
                 <div className="flex items-center gap-4">
                   <div className="w-14 h-14 rounded-full bg-[#005b33] text-white flex items-center justify-center font-bold text-xl shadow-xs">
@@ -147,14 +144,16 @@ export default function ComplaintsPageClient() {
                   <div>
                     <h3 className="font-bold text-[#242424] text-lg">{publisherName}</h3>
                     <span className="bg-[#005b33]/10 text-[#005b33] text-xs font-bold px-2.5 py-0.5 rounded-full inline-block mt-1">
-                      ⭐ 98% позитивних відгуків
+                      {t("complaints.positiveReviews").replace("{percent}", "98")}
                     </span>
                   </div>
                 </div>
 
                 <div className="pt-3 border-t border-[#EBE7DD] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                   <div>
-                    <span className="text-xs text-[#666666] block">Телефон менеджера:</span>
+                    <span className="text-xs text-[#666666] block">
+                      {t("complaints.managerPhone")}
+                    </span>
                     <a
                       href="tel:+380935050819"
                       className="text-sm font-extrabold text-[#005b33] hover:underline"
@@ -167,19 +166,18 @@ export default function ComplaintsPageClient() {
                     href="tel:+380935050819"
                     className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-[#005b33] hover:bg-[#004828] text-white text-xs font-bold text-center transition shadow-xs"
                   >
-                    💬 Зателефонувати / Чат
+                    {t("complaints.callChat")}
                   </a>
                 </div>
               </div>
 
-              {/* Alternative action */}
               <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-4 border-t border-[#C8C2B4]">
                 <button
                   type="button"
                   onClick={() => router.back()}
                   className="text-xs font-bold text-[#555555] hover:text-[#242424]"
                 >
-                  ← Повернутися назад
+                  {t("complaints.goBack")}
                 </button>
 
                 <button
@@ -187,13 +185,12 @@ export default function ComplaintsPageClient() {
                   onClick={() => setContactedSellerStep("yes")}
                   className="px-5 py-2.5 rounded-xl bg-[#E5E0D5] hover:bg-[#D8D2C5] border border-[#C8C2B4] text-[#242424] text-xs font-bold transition"
                 >
-                  Все одно подати скаргу →
+                  {t("complaints.fileAnyway")}
                 </button>
               </div>
             </div>
           )}
 
-          {/* STEP 2B: Full Complaint Form (Figma Node 1401:15264) */}
           {contactedSellerStep === "yes" && (
             <form onSubmit={handleSubmit} className="animate-fade-in">
               <ComplaintReasonSection
@@ -203,18 +200,21 @@ export default function ComplaintsPageClient() {
 
               <div className={styles.card}>
                 <div className={styles.sectionLabel}>
-                  Додайте опис<span className={styles.required}> *</span>
+                  {t("complaints.descriptionTitle")}
+                  <span className={styles.required}> *</span>
                 </div>
                 <textarea
                   className={styles.textarea}
                   value={form.description}
                   onChange={(e) => form.setDescription(e.target.value)}
-                  placeholder="Опишіть проблему детально..."
+                  placeholder={t("complaints.descriptionPlaceholder")}
                   maxLength={form.maxText}
                   required
                 />
                 <div className={styles.charCount}>
-                  {form.description.length} / {form.maxText} символів
+                  {t("complaints.charCount")
+                    .replace("{count}", String(form.description.length))
+                    .replace("{max}", String(form.maxText))}
                 </div>
               </div>
 
@@ -228,14 +228,15 @@ export default function ComplaintsPageClient() {
 
               <div className={styles.card}>
                 <div className={styles.sectionLabel}>
-                  Email для зв&apos;язку<span className={styles.required}> *</span>
+                  {t("complaints.emailTitle")}
+                  <span className={styles.required}> *</span>
                 </div>
                 <input
                   type="email"
                   className={styles.emailInput}
                   value={form.email}
                   onChange={(e) => form.setEmail(e.target.value)}
-                  placeholder="Мій email"
+                  placeholder={t("complaints.emailPlaceholder")}
                   required
                   disabled={userLoading}
                 />
@@ -246,10 +247,13 @@ export default function ComplaintsPageClient() {
                 className={styles.submitBtn}
                 disabled={!form.isValid || submitting || userLoading}
               >
-                {submitting ? "Надсилання..." : "Відправити"}
+                {submitting ? t("complaints.submitting") : t("complaints.submit")}
               </button>
 
               {submitError && <p className={styles.errorMsg}>{submitError}</p>}
+              {images.sizeError && (
+                <p className={styles.errorMsg}>{images.sizeError}</p>
+              )}
             </form>
           )}
         </div>
@@ -259,10 +263,8 @@ export default function ComplaintsPageClient() {
         <div className={styles.successOverlay}>
           <div className={styles.successCard}>
             <span className={styles.successIcon}>✓</span>
-            <h2 className={styles.successTitle}>Скаргу надіслано!</h2>
-            <p className={styles.successText}>
-              Дякуємо. Ми розглянемо ваше звернення найближчим часом.
-            </p>
+            <h2 className={styles.successTitle}>{t("complaints.successTitle")}</h2>
+            <p className={styles.successText}>{t("complaints.successText")}</p>
           </div>
         </div>
       )}

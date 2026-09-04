@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { MockOrderItem } from "./mockData";
 import { orderService } from "@/lib/api/services";
+import { useTranslations } from "@/lib/i18n/LocaleProvider";
 
 interface ReturnOrderModalProps {
   isOpen: boolean;
@@ -11,13 +12,8 @@ interface ReturnOrderModalProps {
   onSubmitSuccess: (msg: string) => void;
 }
 
-const RETURN_REASONS = [
-  "Пошкодження книги при транспортуванні / доставці",
-  "Брак друку, зіпсовані або відсутні сторінки",
-  "Помилково надіслано не ту книгу",
-  "Невідповідність фотографіям та опису на сайті",
-  "Інша причина",
-];
+const RETURN_REASON_KEYS = ["damage", "printDefect", "wrongBook", "mismatch", "other"] as const;
+type ReturnReasonKey = (typeof RETURN_REASON_KEYS)[number];
 
 export default function ReturnOrderModal({
   isOpen,
@@ -25,11 +21,12 @@ export default function ReturnOrderModal({
   item,
   onSubmitSuccess,
 }: ReturnOrderModalProps) {
+  const t = useTranslations();
   const [step, setStep] = useState<number>(1);
 
   // Form Data States
   const [returnQty, setReturnQty] = useState<number>(1);
-  const [selectedReason, setSelectedReason] = useState<string>(RETURN_REASONS[0]);
+  const [selectedReason, setSelectedReason] = useState<ReturnReasonKey>("damage");
   const [details, setDetails] = useState<string>("");
   const [returnMethod, setReturnMethod] = useState<"np" | "courier">("np");
   const [ibanCard, setIbanCard] = useState<string>("");
@@ -43,11 +40,11 @@ export default function ReturnOrderModal({
     setError(null);
     if (step === 3) {
       if (!ibanCard.trim()) {
-        setError("Будь ласка, введіть IBAN або номер картки для повернення коштів");
+        setError(t("orders.returnModal.errIban"));
         return;
       }
       if (!fullName.trim()) {
-        setError("Будь ласка, введіть ПІБ отримувача коштів");
+        setError(t("orders.returnModal.errFullName"));
         return;
       }
     }
@@ -80,7 +77,7 @@ export default function ReturnOrderModal({
       }
 
       onSubmitSuccess(
-        `Заявку на повернення замовлення ${item.orderNumber} успішно сформовано! Менеджер зв'яжеться з вами.`
+        t("orders.returnModal.successWithNumber").replace("{orderNumber}", item.orderNumber)
       );
       onClose();
       // Reset
@@ -90,12 +87,23 @@ export default function ReturnOrderModal({
       setFullName("");
     } catch (err) {
       console.error("Error submitting return request:", err);
-      onSubmitSuccess(`Заявку на повернення надіслано.`);
+      onSubmitSuccess(t("orders.returnModal.successFallback"));
       onClose();
     } finally {
       setSubmitting(false);
     }
   };
+
+  const stepperSteps = [
+    { num: 1, label: t("orders.returnModal.steps.item") },
+    { num: 2, label: t("orders.returnModal.steps.reason") },
+    { num: 3, label: t("orders.returnModal.steps.details") },
+    { num: 4, label: t("orders.returnModal.steps.done") },
+  ];
+
+  const reasonLabel = t(`orders.returnModal.reasons.${selectedReason}`);
+  const priceLabel = t("cart.price").replace("{value}", String(item.price));
+  const refundLabel = t("cart.price").replace("{value}", String(item.price * returnQty));
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in overflow-y-auto">
@@ -107,7 +115,7 @@ export default function ReturnOrderModal({
         <button
           onClick={onClose}
           className="absolute top-4 right-4 w-9 h-9 rounded-full bg-[#E5E0D5] hover:bg-[#D8D2C5] text-[#242424] font-bold flex items-center justify-center transition"
-          title="Закрити"
+          title={t("orders.returnModal.closeAria")}
         >
           ✕
         </button>
@@ -115,9 +123,9 @@ export default function ReturnOrderModal({
         {/* Modal Title */}
         <div className="text-center mb-6">
           <span className="text-3xl mb-1 block">📦🔄</span>
-          <h2 className="text-2xl font-extrabold text-[#242424]">Повернення замовлення</h2>
+          <h2 className="text-2xl font-extrabold text-[#242424]">{t("orders.returnModal.title")}</h2>
           <p className="text-xs text-[#666666] mt-1">
-            Оформлення повернення товару протягом 14 днів згідно закону України
+            {t("orders.returnModal.subtitle")}
           </p>
         </div>
 
@@ -125,12 +133,7 @@ export default function ReturnOrderModal({
         <div className="flex items-center justify-between mb-8 px-4 relative">
           <div className="absolute top-1/2 left-8 right-8 h-0.5 bg-[#C8C2B4] -translate-y-1/2 -z-0" />
 
-          {[
-            { num: 1, label: "Товар" },
-            { num: 2, label: "Причина" },
-            { num: 3, label: "Реквізити" },
-            { num: 4, label: "Готово" },
-          ].map((st) => {
+          {stepperSteps.map((st) => {
             const isCompleted = step > st.num;
             const isCurrent = step === st.num;
             return (
@@ -161,7 +164,7 @@ export default function ReturnOrderModal({
         {/* STEP 1: Select Item & Quantity */}
         {step === 1 && (
           <div className="space-y-5 animate-fade-in">
-            <h3 className="text-sm font-bold text-[#242424]">Крок 1: Оберіть товар для повернення</h3>
+            <h3 className="text-sm font-bold text-[#242424]">{t("orders.returnModal.step1Title")}</h3>
             <div className="flex items-center gap-4 bg-[#E8E3D8] p-4 rounded-2xl border border-[#DCD7CC]">
               <div className="w-14 h-20 relative rounded overflow-hidden shadow shrink-0 bg-white border border-gray-200">
                 <img
@@ -175,9 +178,9 @@ export default function ReturnOrderModal({
               </div>
               <div className="flex-1">
                 <h4 className="font-bold text-[#242424] text-base leading-snug">{item.bookTitle}</h4>
-                <p className="text-xs text-[#666666] mt-0.5">{item.orderNumber} • {item.price} грн</p>
+                <p className="text-xs text-[#666666] mt-0.5">{item.orderNumber} • {priceLabel}</p>
                 <div className="flex items-center gap-3 mt-3">
-                  <span className="text-xs font-semibold text-[#242424]">Кількість:</span>
+                  <span className="text-xs font-semibold text-[#242424]">{t("orders.returnModal.quantity")}</span>
                   <select
                     value={returnQty}
                     onChange={(e) => setReturnQty(Number(e.target.value))}
@@ -185,7 +188,7 @@ export default function ReturnOrderModal({
                   >
                     {Array.from({ length: item.quantity || 1 }, (_, i) => i + 1).map((q) => (
                       <option key={q} value={q}>
-                        {q} шт.
+                        {t("orders.qty").replace("{count}", String(q))}
                       </option>
                     ))}
                   </select>
@@ -198,35 +201,37 @@ export default function ReturnOrderModal({
         {/* STEP 2: Reason Selection */}
         {step === 2 && (
           <div className="space-y-5 animate-fade-in">
-            <h3 className="text-sm font-bold text-[#242424]">Крок 2: Оберіть причину повернення</h3>
+            <h3 className="text-sm font-bold text-[#242424]">{t("orders.returnModal.step2Title")}</h3>
             <div className="space-y-2.5 bg-white/80 p-4 rounded-2xl border border-[#C8C2B4]">
-              {RETURN_REASONS.map((reason, idx) => (
+              {RETURN_REASON_KEYS.map((reasonKey) => (
                 <label
-                  key={idx}
+                  key={reasonKey}
                   className="flex items-center gap-3 cursor-pointer p-2 hover:bg-[#F5F3EE] rounded-xl transition"
                 >
                   <input
                     type="radio"
                     name="return_reason"
-                    value={reason}
-                    checked={selectedReason === reason}
-                    onChange={() => setSelectedReason(reason)}
+                    value={reasonKey}
+                    checked={selectedReason === reasonKey}
+                    onChange={() => setSelectedReason(reasonKey)}
                     className="w-4 h-4 text-[#005b33] focus:ring-[#005b33] accent-[#005b33]"
                   />
-                  <span className="text-xs sm:text-sm text-[#242424] font-semibold">{reason}</span>
+                  <span className="text-xs sm:text-sm text-[#242424] font-semibold">
+                    {t(`orders.returnModal.reasons.${reasonKey}`)}
+                  </span>
                 </label>
               ))}
             </div>
 
             <div className="flex flex-col gap-1.5">
               <label className="text-xs font-bold text-[#242424]">
-                Детальний опис дефекту (необов’язково):
+                {t("orders.returnModal.detailsLabel")}
               </label>
               <textarea
                 value={details}
                 onChange={(e) => setDetails(e.target.value)}
                 rows={3}
-                placeholder="Вкажіть будь-які важливі нюанси..."
+                placeholder={t("orders.returnModal.detailsPlaceholder")}
                 className="w-full rounded-2xl border border-[#C8C2B4] p-3 text-xs bg-white text-[#242424] focus:outline-none focus:ring-2 focus:ring-[#005b33] transition"
               />
             </div>
@@ -236,18 +241,18 @@ export default function ReturnOrderModal({
         {/* STEP 3: Refund & Delivery Details */}
         {step === 3 && (
           <div className="space-y-5 animate-fade-in">
-            <h3 className="text-sm font-bold text-[#242424]">Крок 3: Реквізити для повернення коштів</h3>
+            <h3 className="text-sm font-bold text-[#242424]">{t("orders.returnModal.step3Title")}</h3>
 
             <div className="space-y-3">
               <div>
                 <label className="text-xs font-bold text-[#242424] block mb-1">
-                  ПІБ отримувача коштів *
+                  {t("orders.returnModal.fullNameLabel")}
                 </label>
                 <input
                   type="text"
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
-                  placeholder="Шевченко Тарас Григорович"
+                  placeholder={t("orders.returnModal.fullNamePlaceholder")}
                   className="w-full rounded-xl border border-[#C8C2B4] p-3 text-xs bg-white text-[#242424] focus:outline-none focus:ring-2 focus:ring-[#005b33]"
                   required
                 />
@@ -255,13 +260,13 @@ export default function ReturnOrderModal({
 
               <div>
                 <label className="text-xs font-bold text-[#242424] block mb-1">
-                  IBAN або Номер банківської картки *
+                  {t("orders.returnModal.ibanLabel")}
                 </label>
                 <input
                   type="text"
                   value={ibanCard}
                   onChange={(e) => setIbanCard(e.target.value)}
-                  placeholder="UA000000000000000000000000000 або 4149..."
+                  placeholder={t("orders.returnModal.ibanPlaceholder")}
                   className="w-full rounded-xl border border-[#C8C2B4] p-3 text-xs bg-white text-[#242424] focus:outline-none focus:ring-2 focus:ring-[#005b33]"
                   required
                 />
@@ -269,7 +274,7 @@ export default function ReturnOrderModal({
 
               <div>
                 <label className="text-xs font-bold text-[#242424] block mb-1">
-                  Спосіб відправки товару назад
+                  {t("orders.returnModal.shipMethodLabel")}
                 </label>
                 <div className="flex gap-4 bg-white/80 p-3 rounded-xl border border-[#C8C2B4]">
                   <label className="flex items-center gap-2 cursor-pointer text-xs font-medium">
@@ -280,7 +285,7 @@ export default function ReturnOrderModal({
                       onChange={() => setReturnMethod("np")}
                       className="accent-[#005b33]"
                     />
-                    Відділення Нової Пошти
+                    {t("orders.returnModal.npBranch")}
                   </label>
                   <label className="flex items-center gap-2 cursor-pointer text-xs font-medium">
                     <input
@@ -290,7 +295,7 @@ export default function ReturnOrderModal({
                       onChange={() => setReturnMethod("courier")}
                       className="accent-[#005b33]"
                     />
-                    Кур’єр Нової Пошти
+                    {t("orders.returnModal.npCourier")}
                   </label>
                 </div>
               </div>
@@ -301,35 +306,37 @@ export default function ReturnOrderModal({
         {/* STEP 4: Summary & Confirmation */}
         {step === 4 && (
           <div className="space-y-5 animate-fade-in">
-            <h3 className="text-sm font-bold text-[#242424]">Крок 4: Перевірте та підтвердіть заявку</h3>
+            <h3 className="text-sm font-bold text-[#242424]">{t("orders.returnModal.step4Title")}</h3>
 
             <div className="bg-white/90 p-4 rounded-2xl border border-[#C8C2B4] space-y-3 text-xs text-[#242424]">
               <div className="flex justify-between pb-2 border-b border-[#E0DBD2]">
-                <span className="text-[#666666]">Товар:</span>
-                <span className="font-bold text-right">{item.bookTitle} ({returnQty} шт.)</span>
+                <span className="text-[#666666]">{t("orders.returnModal.summaryItem")}</span>
+                <span className="font-bold text-right">
+                  {item.bookTitle} ({t("orders.qty").replace("{count}", String(returnQty))})
+                </span>
               </div>
               <div className="flex justify-between pb-2 border-b border-[#E0DBD2]">
-                <span className="text-[#666666]">Причина:</span>
-                <span className="font-semibold text-right max-w-[220px]">{selectedReason}</span>
+                <span className="text-[#666666]">{t("orders.returnModal.summaryReason")}</span>
+                <span className="font-semibold text-right max-w-[220px]">{reasonLabel}</span>
               </div>
               <div className="flex justify-between pb-2 border-b border-[#E0DBD2]">
-                <span className="text-[#666666]">Отримувач:</span>
+                <span className="text-[#666666]">{t("orders.returnModal.summaryRecipient")}</span>
                 <span className="font-semibold">{fullName}</span>
               </div>
               <div className="flex justify-between pb-2 border-b border-[#E0DBD2]">
-                <span className="text-[#666666]">IBAN / Картка:</span>
+                <span className="text-[#666666]">{t("orders.returnModal.summaryIban")}</span>
                 <span className="font-bold text-[#005b33]">{ibanCard}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-[#666666]">Сума повернення:</span>
+                <span className="text-[#666666]">{t("orders.returnModal.summaryAmount")}</span>
                 <span className="font-extrabold text-sm text-[#005b33]">
-                  {item.price * returnQty} грн
+                  {refundLabel}
                 </span>
               </div>
             </div>
 
             <p className="text-[11px] text-[#666666] text-center">
-              Натискаючи «Надіслати заявку», ви погоджуєтеся з правилами повернення товарів
+              {t("orders.returnModal.agreeNote")}
             </p>
           </div>
         )}
@@ -344,7 +351,7 @@ export default function ReturnOrderModal({
               onClick={handlePrevStep}
               className="px-5 py-2.5 rounded-xl border border-[#C8C2B4] bg-[#E5E0D5] hover:bg-[#D8D2C5] text-[#242424] text-xs font-bold transition"
             >
-              ← Назад
+              {t("orders.returnModal.back")}
             </button>
           ) : (
             <button
@@ -352,7 +359,7 @@ export default function ReturnOrderModal({
               onClick={onClose}
               className="px-5 py-2.5 rounded-xl border border-[#C8C2B4] bg-[#E5E0D5] hover:bg-[#D8D2C5] text-[#242424] text-xs font-medium transition"
             >
-              Скасувати
+              {t("orders.returnModal.cancel")}
             </button>
           )}
 
@@ -362,7 +369,7 @@ export default function ReturnOrderModal({
               onClick={handleNextStep}
               className="px-6 py-2.5 rounded-xl bg-[#005b33] hover:bg-[#004828] text-white text-xs font-bold shadow-md transition"
             >
-              Далі →
+              {t("orders.returnModal.next")}
             </button>
           ) : (
             <button
@@ -371,7 +378,7 @@ export default function ReturnOrderModal({
               disabled={submitting}
               className="px-6 py-2.5 rounded-xl bg-[#005b33] hover:bg-[#004828] text-white text-xs font-bold shadow-md transition disabled:opacity-50"
             >
-              {submitting ? "Надсилання..." : "Підтвердити та надіслати"}
+              {submitting ? t("orders.returnModal.submitting") : t("orders.returnModal.submit")}
             </button>
           )}
         </div>

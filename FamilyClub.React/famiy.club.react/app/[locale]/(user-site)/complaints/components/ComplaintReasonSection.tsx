@@ -4,6 +4,7 @@ import {
   COMPLAINT_REASONS,
   type ComplaintReason,
 } from "../hooks/useComplaintForm";
+import { useTranslations } from "@/lib/i18n/LocaleProvider";
 import styles from "../complaints.module.css";
 
 type Props = {
@@ -35,11 +36,11 @@ function RadioBtn({
 }
 
 export default function ComplaintReasonSection({ value, onChange }: Props) {
+  const t = useTranslations();
+
   return (
     <div className={styles.card}>
-      <div className={styles.sectionLabel}>
-        Виберіть причину скарги
-      </div>
+      <div className={styles.sectionLabel}>{t("complaints.reasonTitle")}</div>
       <div className={styles.reasonList}>
         {COMPLAINT_REASONS.map((opt) => (
           <label key={opt.value} className={styles.reasonOption}>
@@ -47,7 +48,9 @@ export default function ComplaintReasonSection({ value, onChange }: Props) {
               active={value === opt.value}
               onClick={() => onChange(opt.value)}
             />
-            <span className={styles.reasonLabel}>{opt.label}</span>
+            <span className={styles.reasonLabel}>
+              {t(`complaints.reasons.${opt.value}`)}
+            </span>
           </label>
         ))}
       </div>

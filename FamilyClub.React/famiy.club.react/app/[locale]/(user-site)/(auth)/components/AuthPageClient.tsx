@@ -6,6 +6,7 @@ import LoginSection from "./LoginSection";
 import RegisterSection from "./RegisterSection";
 import MobileAuthView from "../MobileAuthView";
 import MobileRegisterView from "../MobileRegisterView";
+import { useLocalizedPath } from "@/lib/i18n/LocaleProvider";
 
 type AuthSection = "login" | "register";
 
@@ -18,6 +19,7 @@ function easeInOutCubic(t: number) {
 
 export default function AuthPageClient() {
   const router = useRouter();
+  const lp = useLocalizedPath();
   const pathname = usePathname();
   const panelRef = useRef<HTMLDivElement>(null);
   const animationRef = useRef<number | null>(null);
@@ -90,9 +92,9 @@ export default function AuthPageClient() {
     (target: AuthSection) => {
       skipPathAnimation.current = true;
       animateToSection(target);
-      router.replace(target === "login" ? "/login" : "/register", { scroll: false });
+      router.replace(target === "login" ? lp("/login") : lp("/register"), { scroll: false });
     },
-    [animateToSection, router],
+    [animateToSection, router, lp],
   );
 
   useEffect(() => {

@@ -3,6 +3,7 @@
 import styles from "../complaints.module.css";
 import { usePlatformSettingsOptional } from "@/lib/platformSettings/PlatformSettingsContext";
 import { mediaSrc } from "@/lib/platformSettings/platformSettingsApi";
+import { useTranslations } from "@/lib/i18n/LocaleProvider";
 
 type Props = {
   publisherName?: string | null;
@@ -13,9 +14,10 @@ export default function PublisherBanner({
   publisherName,
   positivePercent = 88,
 }: Props) {
+  const t = useTranslations();
   const { settings } = usePlatformSettingsOptional();
   const name =
-    publisherName ?? settings.companyName ?? "Видавництво «Книгарня»";
+    publisherName ?? settings.companyName ?? t("complaints.defaultPublisher");
   const logo =
     mediaSrc(settings.logoData, settings.logoContentType) ??
     "/images/main_page/logo.png";
@@ -30,7 +32,10 @@ export default function PublisherBanner({
             ? [settings.supportEmail, settings.supportPhone]
                 .filter(Boolean)
                 .join(" · ")
-            : `${positivePercent}% позитивних відгуків`}
+            : t("complaints.positiveReviews").replace(
+                "{percent}",
+                String(positivePercent),
+              )}
         </div>
       </div>
     </div>

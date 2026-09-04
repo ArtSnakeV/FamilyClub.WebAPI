@@ -9,26 +9,18 @@ import useNotifications from "./hooks/useNotifications";
 import { useCurrentUser } from "../userProfile/hooks/useCurrentUser";
 import Image from "next/image";
 import ReviewCard from "./components/ReviewCard";
+import { useLocale, useTranslations } from "@/lib/i18n/LocaleProvider";
 
-const TABS = [
-    { label: "Усі" },
-    { label: "Відгуки" },
-    { label: "Повідомлення" },
-];
+type TabId = "all" | "reviews" | "messages";
 
-function formatDate(date?: Date) {
-    if (!date) return "";
-    return new Date(date).toLocaleString("uk-UA", {
-        day: "2-digit",
-        month: "2-digit",
-        year: "numeric",
-        hour: "2-digit",
-        minute: "2-digit",
-    });
-}
+const TAB_IDS: TabId[] = ["all", "reviews", "messages"];
 
 export default function NotificationsPage() {
-    const [activeTab, setActiveTab] = useState("Усі");
+    const t = useTranslations();
+    const { locale } = useLocale();
+    const dateLocale = locale === "en" ? "en-GB" : "uk-UA";
+
+    const [activeTab, setActiveTab] = useState<TabId>("all");
     const [threadOpen, setThreadOpen] = useState(false);
 
     const { user } = useCurrentUser();
@@ -38,6 +30,17 @@ export default function NotificationsPage() {
         loadingNotifications,
         markAllAsRead,
         sendMessage } = useNotifications(user?.id);
+
+    const formatDate = (date?: Date) => {
+        if (!date) return "";
+        return new Date(date).toLocaleString(dateLocale, {
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+        });
+    };
 
     useEffect(() => {
         document.body.style.backgroundImage = "url('/images/authorsUserPage/Rectangle 326.png')";
@@ -65,7 +68,7 @@ export default function NotificationsPage() {
                 const coverImage = r.productImages?.[0]?.imageData;
                 return {
                     key: `review-${r.id}`,
-                    reviewerName: r.userName ?? "Користувач",
+                    reviewerName: r.userName ?? t("notifications.userFallback"),
                     reviewerAvatarSrc: r.userAvatarData
                         ? r.userAvatarData.startsWith("data:")
                             ? r.userAvatarData
@@ -79,10 +82,10 @@ export default function NotificationsPage() {
                             : `data:image/jpeg;base64,${coverImage}`
                         : undefined,
                     bookTitle: r.productName ?? undefined,
-                    actionLabel: "переглянути відгук",
+                    actionLabel: t("notifications.viewReview"),
                 };
             }),
-        [reviews, user?.id]
+        [reviews, user?.id, t, dateLocale]
     );
 
     const avatarSrc = user?.avatarData
@@ -111,36 +114,36 @@ export default function NotificationsPage() {
     };
 
     const visibleItems = useMemo(() => {
-        if (activeTab === "Відгуки") return reviewItems;
-        if (activeTab === "Повідомлення") return [];
+        if (activeTab === "reviews") return reviewItems;
+        if (activeTab === "messages") return [];
         return reviewItems;
     }, [activeTab, reviewItems]);
 
     const showThreadCard =
-        (activeTab === "Усі" || activeTab === "Повідомлення");
+        activeTab === "all" || activeTab === "messages";
 
     return (
         <div className="w-full min-h-screen bg-[#f5f3ee] text-[#242424] font-sans overflow-x-hidden">
             {/* MOBILE NOTIFICATIONS VIEW (Figma Node 2199:4838 "Сповіщення" 1-to-1 spec) */}
             <div className="block md:hidden pt-[75px] pb-[100px] px-3 sm:px-4 max-w-[480px] mx-auto">
                 <h1 className="font-mono text-[28px] font-bold text-[#242424] mb-3 leading-tight">
-                    Сповіщення
+                    {t("notifications.title")}
                 </h1>
 
                 {/* Mobile Ribbon / Pill Tabs */}
                 <div className="flex items-center gap-2 mb-4 overflow-x-auto pb-1 scrollbar-none">
-                    {TABS.map((tab) => (
+                    {TAB_IDS.map((tabId) => (
                         <button
-                            key={tab.label}
+                            key={tabId}
                             type="button"
-                            onClick={() => setActiveTab(tab.label)}
+                            onClick={() => setActiveTab(tabId)}
                             className={`px-4 py-2 rounded-full font-sans text-[14px] font-semibold transition-all shrink-0 shadow-sm ${
-                                activeTab === tab.label
+                                activeTab === tabId
                                     ? "bg-[#005B33] text-white shadow-md"
                                     : "bg-white/80 text-[#242424] border border-gray-300 hover:bg-white"
                             }`}
                         >
-                            {tab.label}
+                            {t(`notifications.tabs.${tabId}`)}
                         </button>
                     ))}
                 </div>
@@ -148,7 +151,7 @@ export default function NotificationsPage() {
                 {/* Mobile Notification Cards Stack */}
                 {isLoading ? (
                     <div className="text-center py-12 text-black/60 font-mono">
-                        Завантаження сповіщень...
+                        {t("notifications.loading")}
                     </div>
                 ) : (
                     <div className="flex flex-col gap-3.5 items-center w-full">
@@ -171,8 +174,8 @@ export default function NotificationsPage() {
                                     <div className="flex items-center gap-3">
                                         <span className="text-2xl">✉️</span>
                                         <div>
-                                            <p className="font-bold text-[15px] text-[#242424]">Написати адміністратору</p>
-                                            <p className="text-[12px] text-gray-500">Натисніть для відкриття діалогу</p>
+                                            <p className="font-bold text-[15px] text-[#242424]">{t("notifications.writeAdminShort")}</p>
+                                            <p className="text-[12px] text-gray-500">{t("notifications.writeAdminHint")}</p>
                                         </div>
                                     </div>
                                 </button>
@@ -185,7 +188,7 @@ export default function NotificationsPage() {
 
                         {!showThreadCard && visibleItems.length === 0 && (
                             <div className="text-center py-12 text-black/60 font-serif">
-                                Поки що немає сповіщень
+                                {t("notifications.emptyNone")}
                             </div>
                         )}
                     </div>
@@ -204,12 +207,12 @@ export default function NotificationsPage() {
 
                     <div className="relative flex gap-8 mt-52">
                         <div className="w-[310px] shrink-0 flex flex-col gap-3 -ml-8">
-                            {TABS.map((tab) => (
+                            {TAB_IDS.map((tabId) => (
                                 <LeftBlock
-                                    key={tab.label}
-                                    label={tab.label}
-                                    active={activeTab === tab.label}
-                                    onClick={() => setActiveTab(tab.label)}
+                                    key={tabId}
+                                    label={t(`notifications.tabs.${tabId}`)}
+                                    active={activeTab === tabId}
+                                    onClick={() => setActiveTab(tabId)}
                                 />
                             ))}
                         </div>
@@ -217,9 +220,9 @@ export default function NotificationsPage() {
                         <div className="flex-1 ml-14">
                             {isLoading ? (
                                 <div className="text-center py-8 text-black/60">
-                                    Завантаження...
+                                    {t("notifications.loadingShort")}
                                 </div>
-                            ) : activeTab === "Усі" ? (
+                            ) : activeTab === "all" ? (
                                 <div className="grid grid-cols-2 gap-0 items-start">
                                     {/* ПОВІДОМЛЕННЯ */}
                                     <div className="flex flex-col gap-4">
@@ -238,7 +241,7 @@ export default function NotificationsPage() {
                                                 onClick={handleOpenThread}
                                                 className="text-left w-[80%] p-4 rounded-2xl bg-white/70 hover:bg-white shadow-[0_0_20px_rgba(80,137,190,0.6)] transition text-black/70"
                                             >
-                                                ✉️ Написати повідомлення адміну
+                                                {t("notifications.writeAdmin")}
                                             </button>
                                         )}
                                     </div>
@@ -251,7 +254,7 @@ export default function NotificationsPage() {
 
                                         {reviewItems.length === 0 && (
                                             <div className="text-center py-8 text-black/60">
-                                                Тут поки що порожньо
+                                                {t("notifications.empty")}
                                             </div>
                                         )}
                                     </div>
@@ -274,7 +277,7 @@ export default function NotificationsPage() {
                                                 onClick={handleOpenThread}
                                                 className="text-left w-[30%] p-4 rounded-2xl bg-white/70 hover:bg-white shadow-[0_0_20px_rgba(80,137,190,0.6)] transition text-black/70"
                                             >
-                                                ✉️ Написати повідомлення адміну
+                                                {t("notifications.writeAdmin")}
                                             </button>
                                         )
                                     )}
@@ -285,7 +288,7 @@ export default function NotificationsPage() {
 
                                     {!showThreadCard && visibleItems.length === 0 && (
                                         <div className="text-center py-8 text-black/60">
-                                            Тут поки що порожньо
+                                            {t("notifications.empty")}
                                         </div>
                                     )}
                                 </div>

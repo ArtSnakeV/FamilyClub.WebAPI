@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
+import { useTranslations } from "@/lib/i18n/LocaleProvider";
 
 interface DateOfBirth {
     day: string;
@@ -13,6 +14,7 @@ interface Props {
     initialDate?: Date | null;
 }
 export default function PrivacyAndAgeUserProfile({ onDateChange, initialDate }: Props) {
+    const t = useTranslations();
     const [showAdult, setShowAdult] = useState(false);
     const [showFavorites, setShowFavorites] = useState(false);
     const [dateOfBirth, setDateOfBirth] = useState<DateOfBirth>({ day: "", month: "", year: "" });
@@ -73,7 +75,7 @@ export default function PrivacyAndAgeUserProfile({ onDateChange, initialDate }: 
                     className="w-full h-[74px] object-fill"
                 />
                 <div className="absolute inset-0 -mt-1 flex flex-col justify-center pl-14">
-                    <h3 className="text-[22px] text-white font-semibold">Конфіденційність і вік</h3>
+                    <h3 className="text-[22px] text-white font-semibold">{t("profileEdit.privacyTitle")}</h3>
                 </div>
             </div>
 
@@ -81,7 +83,7 @@ export default function PrivacyAndAgeUserProfile({ onDateChange, initialDate }: 
                 {/* Дата народження */}
                 <div className="flex flex-row items-start gap-6">
                     <div className="flex flex-col gap-2">
-                        <label className="text-[18px] w-full font-medium">Вкажіть вашу дату народження</label>
+                        <label className="text-[18px] w-full font-medium">{t("profileEdit.birthDate")}</label>
                         <div className="flex items-center gap-2">
                             <input
                                 type="text"
@@ -122,17 +124,17 @@ export default function PrivacyAndAgeUserProfile({ onDateChange, initialDate }: 
                         </div>
                     </div>
                     <p className="text-[13px] text-gray-500 text-left text-wrap mt-8 max-w-[170px]">
-                        Якщо вам менше років, Ви незможете купувати книги рейтинг якого перевищує ваш вік
+                        {t("profileEdit.ageHint")}
                     </p>
                 </div>
                 <div className="flex flex-col">
                     <div className="flex w-full h-[50px] items-center justify-between">
-                        <span className="text-[18px]">Відображати книги +18</span>
+                        <span className="text-[18px]">{t("profileEdit.showAdult")}</span>
                         <ToggleCircle value={showAdult} onToggle={() => setShowAdult(!showAdult)} />
                     </div>
 
                     <div className="flex w-full h-[50px] items-center justify-between">
-                        <span className="text-[18px]">Перегляд улюбленого для інших користувачів</span>
+                        <span className="text-[18px]">{t("profileEdit.showFavorites")}</span>
                         <ToggleCircle value={showFavorites} onToggle={() => setShowFavorites(!showFavorites)} />
                     </div>
                 </div>

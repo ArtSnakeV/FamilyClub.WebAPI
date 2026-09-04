@@ -13,6 +13,7 @@ import { useCurrentUser } from "./hooks/useCurrentUser";
 import { useFavorites } from "../../../../lib/hooks/useFavorites";
 import { useMyBooks } from "./hooks/useMyBooks";
 import MobileUserProfileView from "./MobileUserProfileView";
+import { useLocale, useTranslations } from "@/lib/i18n/LocaleProvider";
 
 export type TabType = "myBooks" | "favorite" | "myPosts";
 
@@ -23,6 +24,7 @@ function UserProfileContent() {
   const sortParam = searchParams.get("sort");
   const ebookParam = searchParams.get("ebook");
   const audioParam = searchParams.get("audio");
+  const { locale } = useLocale();
 
   const { user } = useCurrentUser();
   const { favorites, loadingFavorites, toggleFavorite } = useFavorites(user?.id);
@@ -96,9 +98,9 @@ function UserProfileContent() {
   }
   const sortedBooks = [...filteredBooks].sort((a, b) => {
     if (sortParam === "name-asc")
-      return (a.productName ?? "").localeCompare(b.productName ?? "", "uk");
+      return (a.productName ?? "").localeCompare(b.productName ?? "", locale);
     if (sortParam === "name-desc")
-      return (b.productName ?? "").localeCompare(a.productName ?? "", "uk");
+      return (b.productName ?? "").localeCompare(a.productName ?? "", locale);
     return 0;
   });
 
@@ -197,9 +199,14 @@ function UserProfileContent() {
 
 }
 
+function ProfileLoadingFallback() {
+  const t = useTranslations();
+  return <div>{t("common.loading")}</div>;
+}
+
 export default function Page() {
   return (
-    <Suspense fallback={<div>Завантаження...</div>}>
+    <Suspense fallback={<ProfileLoadingFallback />}>
       <UserProfileContent />
     </Suspense>
   );

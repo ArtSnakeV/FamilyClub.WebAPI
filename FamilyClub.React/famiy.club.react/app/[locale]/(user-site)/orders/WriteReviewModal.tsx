@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { MockOrderItem } from "./mockData";
 import { reviewService } from "@/lib/api/services";
 import { getAuthToken } from "@/lib/auth/tokenStorage";
+import { useTranslations } from "@/lib/i18n/LocaleProvider";
 
 interface WriteReviewModalProps {
   isOpen: boolean;
@@ -18,6 +19,7 @@ export default function WriteReviewModal({
   item,
   onSubmitSuccess,
 }: WriteReviewModalProps) {
+  const t = useTranslations();
   const [rating, setRating] = useState<number>(5);
   const [hoverRating, setHoverRating] = useState<number>(0);
   const [comment, setComment] = useState<string>("");
@@ -31,7 +33,6 @@ export default function WriteReviewModal({
     const files = e.target.files;
     if (!files || files.length === 0) return;
 
-    const newImages: string[] = [];
     const maxAllowed = 5 - images.length;
     const filesToProcess = Array.from(files).slice(0, maxAllowed);
 
@@ -50,65 +51,33 @@ export default function WriteReviewModal({
     setImages((prev) => prev.filter((_, i) => i !== index));
   };
 
-  // const handleSubmit = async (e: React.FormEvent) => {
-  //   e.preventDefault();
-  //   if (!comment.trim()) {
-  //     setError("Будь ласка, введіть декілька слів про ваші враження");
-  //     return;
-  //   }
+  const ratingLabel =
+    rating === 5
+      ? t("orders.reviewModal.rating.r5")
+      : rating === 4
+        ? t("orders.reviewModal.rating.r4")
+        : rating === 3
+          ? t("orders.reviewModal.rating.r3")
+          : rating === 2
+            ? t("orders.reviewModal.rating.r2")
+            : t("orders.reviewModal.rating.r1");
 
-  //   setSubmitting(true);
-  //   setError(null);
-
-  //   const token = getAuthToken();
-  //   const productId = item.productId;
-
-  //   if (!token) {
-  //     console.error("WriteReviewModal: потрібна авторизація для відгуку");
-  //   } else if (!productId || productId <= 0) {
-  //     console.error("WriteReviewModal: не вдалося визначити productId", { item });
-  //   } else {
-  //     try {
-  //       await reviewService.apiReviewsPost(
-  //         {
-  //           reviewDto: {
-  //             productId,
-  //             comment: comment.trim(),
-  //             rating,
-  //             createdAt: new Date(),
-  //             approved: true,
-  //           },
-  //         },
-  //         { headers: { Authorization: `Bearer ${token}` } },
-  //       );
-  //     } catch (err) {
-  //       console.error("Error posting review:", err);
-  //     }
-  //   }
-
-  //   onSubmitSuccess(`Дякуємо! Ваш відгук до книги «${item.bookTitle}» опубліковано.`);
-  //   onClose();
-  //   setComment("");
-  //   setRating(5);
-  //   setImages([]);
-  //   setSubmitting(false);
-  // };
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!comment.trim()) {
-      setError("Будь ласка, введіть декілька слів про ваші враження");
+      setError(t("orders.reviewModal.errComment"));
       return;
     }
 
     const token = getAuthToken();
     if (!token) {
-      setError("Для додавання відгуку необхідно увійти до свого акаунту");
+      setError(t("orders.reviewModal.errAuth"));
       return;
     }
 
     const productId = item.productId;
     if (!productId || productId <= 0) {
-      setError("Не вдалося визначити товар для відгуку");
+      setError(t("orders.reviewModal.errProduct"));
       return;
     }
 
@@ -116,8 +85,6 @@ export default function WriteReviewModal({
     setError(null);
 
     try {
-      // reviewService сам підставить Authorization через authMiddleware,
-      // не перетираючи заголовок Content-Type: application/json
       await reviewService.apiReviewsPost({
         reviewDto: {
           productId,
@@ -128,7 +95,9 @@ export default function WriteReviewModal({
         },
       });
 
-      onSubmitSuccess(`Дякуємо! Ваш відгук до книги «${item.bookTitle}» опубліковано.`);
+      onSubmitSuccess(
+        t("orders.reviewModal.success").replace("{title}", item.bookTitle)
+      );
       onClose();
       setComment("");
       setRating(5);
@@ -136,14 +105,16 @@ export default function WriteReviewModal({
     } catch (err: any) {
       console.error("Error posting review:", err);
       if (err?.response?.status === 401) {
-        setError("Сесія закінчилася. Будь ласка, авторизуйтесь знову.");
+        setError(t("orders.reviewModal.errSession"));
       } else {
-        setError("Не вдалося надіслати відгук. Спробуйте пізніше.");
+        setError(t("orders.reviewModal.errGeneric"));
       }
     } finally {
       setSubmitting(false);
     }
   };
+
+  const priceLabel = t("cart.price").replace("{value}", String(item.price));
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in overflow-y-auto">
@@ -155,7 +126,7 @@ export default function WriteReviewModal({
         <button
           onClick={onClose}
           className="absolute top-4 right-4 w-9 h-9 rounded-full bg-[#E5E0D5] hover:bg-[#D8D2C5] text-[#242424] font-bold flex items-center justify-center transition"
-          title="Закрити"
+          title={t("orders.reviewModal.closeAria")}
         >
           ✕
         </button>
@@ -163,9 +134,9 @@ export default function WriteReviewModal({
         {/* Header (Figma 1324:16113) */}
         <div className="text-center mb-6">
           <span className="text-3xl mb-1 block">⭐✍️</span>
-          <h2 className="text-2xl font-extrabold text-[#242424]">Відгук про товар</h2>
+          <h2 className="text-2xl font-extrabold text-[#242424]">{t("orders.reviewModal.title")}</h2>
           <p className="text-xs text-[#666666] mt-1">
-            Поділіться враженнями та допоможіть іншим читачам зробити вибір
+            {t("orders.reviewModal.subtitle")}
           </p>
         </div>
 
@@ -183,7 +154,7 @@ export default function WriteReviewModal({
           </div>
           <div>
             <h3 className="font-bold text-[#242424] text-base leading-snug">{item.bookTitle}</h3>
-            <p className="text-xs text-[#666666] mt-0.5">{item.orderNumber} • {item.price} грн</p>
+            <p className="text-xs text-[#666666] mt-0.5">{item.orderNumber} • {priceLabel}</p>
           </div>
         </div>
 
@@ -191,7 +162,7 @@ export default function WriteReviewModal({
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Star Rating Picker */}
           <div className="flex flex-col items-center gap-2 bg-white/70 p-4 rounded-2xl border border-[#C8C2B4]">
-            <label className="text-sm font-bold text-[#242424]">Оцініть книгу:</label>
+            <label className="text-sm font-bold text-[#242424]">{t("orders.reviewModal.rateLabel")}</label>
             <div className="flex items-center gap-2">
               {[1, 2, 3, 4, 5].map((star) => {
                 const isFilled = (hoverRating || rating) >= star;
@@ -210,26 +181,18 @@ export default function WriteReviewModal({
               })}
             </div>
             <span className="text-xs font-bold text-[#005b33]">
-              {rating === 5
-                ? "Відмінно! (5/5)"
-                : rating === 4
-                  ? "Добре (4/5)"
-                  : rating === 3
-                    ? "Нормально (3/5)"
-                    : rating === 2
-                      ? "Погано (2/5)"
-                      : "Жахливо (1/5)"}
+              {ratingLabel}
             </span>
           </div>
 
           {/* Comment Textarea */}
           <div className="flex flex-col gap-1.5">
-            <label className="text-sm font-bold text-[#242424]">Текст відгуку *</label>
+            <label className="text-sm font-bold text-[#242424]">{t("orders.reviewModal.commentLabel")}</label>
             <textarea
               value={comment}
               onChange={(e) => setComment(e.target.value)}
               rows={4}
-              placeholder="Напишіть, що вам сподобалося або не сподобалося в книзі, особливості оформлення чи сюжету..."
+              placeholder={t("orders.reviewModal.commentPlaceholder")}
               className="w-full rounded-2xl border border-[#C8C2B4] p-3.5 text-sm bg-white text-[#242424] focus:outline-none focus:ring-2 focus:ring-[#005b33] transition"
               required
             />
@@ -238,9 +201,9 @@ export default function WriteReviewModal({
           {/* Photo Upload Section (Figma Node 1324:16113) */}
           <div className="bg-white/80 p-4 rounded-2xl border border-[#C8C2B4] space-y-3">
             <div>
-              <h4 className="text-sm font-bold text-[#242424]">Твоє фото буде першим</h4>
+              <h4 className="text-sm font-bold text-[#242424]">{t("orders.reviewModal.photosTitle")}</h4>
               <p className="text-xs text-[#666666]">
-                Можеш додати до 5 фото товару, щоб показати іншим покупцям, як він виглядає у житті
+                {t("orders.reviewModal.photosHint")}
               </p>
             </div>
 
@@ -252,7 +215,7 @@ export default function WriteReviewModal({
                     <img src={img} alt={`upload-${idx}`} className="w-full h-full object-cover" />
                     {idx === 0 && (
                       <span className="absolute bottom-0 left-0 right-0 bg-[#005b33] text-white text-[9px] font-bold text-center py-0.5">
-                        1-ше
+                        {t("orders.reviewModal.firstBadge")}
                       </span>
                     )}
                     <button
@@ -272,9 +235,9 @@ export default function WriteReviewModal({
               <label className="flex flex-col items-center justify-center p-4 border-2 border-dashed border-[#B7895E] rounded-xl cursor-pointer hover:bg-[#F5F3EE] transition text-center">
                 <span className="text-2xl mb-1">📸</span>
                 <span className="text-xs font-bold text-[#005b33]">
-                  Оберіть або перетягніть файли ({images.length}/5)
+                  {t("orders.reviewModal.chooseFiles").replace("{count}", String(images.length))}
                 </span>
-                <span className="text-[11px] text-[#777777] mt-0.5">PNG, JPG, WEBP до 10MB</span>
+                <span className="text-[11px] text-[#777777] mt-0.5">{t("orders.reviewModal.fileTypes")}</span>
                 <input
                   type="file"
                   accept="image/*"
@@ -295,14 +258,14 @@ export default function WriteReviewModal({
               onClick={onClose}
               className="px-5 py-2.5 rounded-xl border border-[#C8C2B4] bg-[#E5E0D5] hover:bg-[#D8D2C5] text-[#242424] text-sm font-medium transition"
             >
-              Скасувати
+              {t("orders.reviewModal.cancel")}
             </button>
             <button
               type="submit"
               disabled={submitting}
               className="px-6 py-2.5 rounded-xl bg-[#005b33] hover:bg-[#004828] text-white text-sm font-bold shadow-md transition disabled:opacity-50"
             >
-              {submitting ? "Надсилання..." : "Опублікувати відгук"}
+              {submitting ? t("orders.reviewModal.submitting") : t("orders.reviewModal.publish")}
             </button>
           </div>
         </form>

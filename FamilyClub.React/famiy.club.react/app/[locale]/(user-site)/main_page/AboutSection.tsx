@@ -12,11 +12,17 @@ const ABOUT_ATMOSPHERE_IMAGES = {
     en: "/images/body/Rectangle%20296-en.webp",
 } as const;
 
+const ABOUT_READING_HALL_IMAGES = {
+    uk: "/images/body/Rectangle%20295-uk.webp",
+    en: "/images/body/Rectangle%20295-en.webp",
+} as const;
+
 export default function AboutSection() {
     const { locale, dictionary } = useLocale();
     const about = dictionary.home.about;
     const homeImageSrc = ABOUT_HOME_IMAGES[locale];
     const atmosphereImageSrc = ABOUT_ATMOSPHERE_IMAGES[locale];
+    const readingHallImageSrc = ABOUT_READING_HALL_IMAGES[locale];
 
     return (
         <section className="relative z-10 pt-16 pb-0">
@@ -64,7 +70,7 @@ export default function AboutSection() {
                                 <img
                                     alt={about.readingHallAlt}
                                     className="h-full w-full rounded-[4px] border-[16px] border-[#f5f3ee] object-cover shadow-inner md:border-[24px]"
-                                    src="/images/body/Rectangle%20295.webp"
+                                    src={readingHallImageSrc}
                                 />
                             </div>
                             <div className="relative h-[300px] w-[260px] rotate-[-5deg] shadow-[0px_15px_25px_rgba(0,0,0,0.5)] transition-transform hover:z-20 hover:scale-105 md:h-[400px] md:w-[360px]">

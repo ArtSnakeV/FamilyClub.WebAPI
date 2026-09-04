@@ -54,7 +54,12 @@ export default function MobileAuthView() {
       window.dispatchEvent(new Event("auth-change"));
       router.push("/");
     } catch (err) {
-      setError(await loginErrorMessage(err));
+      setError(
+        await loginErrorMessage(err, {
+          invalidCredentials: "Невірний email або пароль",
+          accountLocked: "Акаунт тимчасово заблоковано. Спробуйте пізніше.",
+        }),
+      );
     } finally {
       setLoading(false);
     }

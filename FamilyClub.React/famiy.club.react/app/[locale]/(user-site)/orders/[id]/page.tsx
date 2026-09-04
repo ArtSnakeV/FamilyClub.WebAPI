@@ -2,12 +2,12 @@
 
 import React, { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import Image from "next/image";
 import { orderService, productService } from "@/lib/api/services";
 import { OrderDTO, ProductDto } from "@/lib/api/generated";
 import WriteReviewModal from "../WriteReviewModal";
 import ReturnOrderModal from "../ReturnOrderModal";
 import { MockOrderItem } from "../mockData";
+import { useLocale, useLocalizedPath, useTranslations } from "@/lib/i18n/LocaleProvider";
 
 type OrderStatusStep = {
   id: string;
@@ -17,9 +17,16 @@ type OrderStatusStep = {
   date?: string;
 };
 
+type BadgeKey = "new" | "accepted" | "packing" | "shipped" | "delivered" | "cancelled" | "returned";
+
 export default function OrderDetailPage() {
   const params = useParams();
   const router = useRouter();
+  const t = useTranslations();
+  const lp = useLocalizedPath();
+  const { locale } = useLocale();
+  const dateLocale = locale === "en" ? "en-GB" : "uk-UA";
+
   const rawId = params?.id;
   const orderId = rawId ? Number(rawId) : null;
 
@@ -42,7 +49,6 @@ export default function OrderDetailPage() {
     async function loadData() {
       setLoading(true);
       try {
-        // Load products for title & image map
         const allProducts = await productService.apiProductsGet().catch(() => []);
         const pMap = new Map<number, ProductDto>();
         (allProducts || []).forEach((p) => {
@@ -54,11 +60,11 @@ export default function OrderDetailPage() {
           const ord = await orderService.apiOrdersIdGet({ id: orderId });
           setDbOrder(ord);
         } else {
-          setError("Замовлення не знайдено");
+          setError(t("orders.detail.notFound"));
         }
       } catch (err: any) {
         console.error("Error loading order:", err);
-        setError("Не вдалося завантажити деталі замовлення");
+        setError(t("orders.detail.loadError"));
       } finally {
         setLoading(false);
       }
@@ -68,51 +74,63 @@ export default function OrderDetailPage() {
 
   const rawStatus = (dbOrder?.status || "Pending").toLowerCase();
 
-  // Status index: 0: Нове, 1: Прийнято, 2: Комплектується, 3: Відправлено, 4: Отримано
   let activeStepIndex = 0;
-  let statusBadgeText = "Нове";
+  let badgeKey: BadgeKey = "new";
   let statusBadgeColor = "#005b33";
 
   if (rawStatus.includes("new") || rawStatus.includes("pending") || rawStatus.includes("оформл")) {
     activeStepIndex = 0;
-    statusBadgeText = "Нове";
+    badgeKey = "new";
   } else if (rawStatus.includes("paid") || rawStatus.includes("accept") || rawStatus.includes("прийнят") || rawStatus.includes("очікув")) {
     activeStepIndex = 1;
-    statusBadgeText = "Прийнято";
+    badgeKey = "accepted";
   } else if (rawStatus.includes("process") || rawStatus.includes("pack") || rawStatus.includes("комплек")) {
     activeStepIndex = 2;
-    statusBadgeText = "Комплектується";
+    badgeKey = "packing";
   } else if (rawStatus.includes("sent") || rawStatus.includes("shipp") || rawStatus.includes("відправл")) {
     activeStepIndex = 3;
-    statusBadgeText = "Відправлено";
+    badgeKey = "shipped";
   } else if (rawStatus.includes("deliver") || rawStatus.includes("receiv") || rawStatus.includes("отримал") || rawStatus.includes("доставл") || rawStatus.includes("complet")) {
     activeStepIndex = 4;
-    statusBadgeText = "Отримано";
+    badgeKey = "delivered";
   } else if (rawStatus.includes("cancel") || rawStatus.includes("скасов")) {
     activeStepIndex = -1;
-    statusBadgeText = "Скасовано";
+    badgeKey = "cancelled";
     statusBadgeColor = "#C0392B";
   } else if (rawStatus.includes("return") || rawStatus.includes("поверн")) {
     activeStepIndex = -2;
-    statusBadgeText = "Повернено";
+    badgeKey = "returned";
     statusBadgeColor = "#2A2A2A";
   }
 
+  const statusBadgeText = t(`orders.detail.badge.${badgeKey}`);
+
   const orderDateStr = dbOrder?.orderDate
-    ? new Date(dbOrder.orderDate).toLocaleDateString("uk-UA", { day: "2-digit", month: "2-digit", year: "numeric" })
+    ? new Date(dbOrder.orderDate).toLocaleDateString(dateLocale, { day: "2-digit", month: "2-digit", year: "numeric" })
     : "14.08.2026";
 
   const orderTimeStr = dbOrder?.orderDate
-    ? new Date(dbOrder.orderDate).toLocaleTimeString("uk-UA", { hour: "2-digit", minute: "2-digit" })
+    ? new Date(dbOrder.orderDate).toLocaleTimeString(dateLocale, { hour: "2-digit", minute: "2-digit" })
     : "14:30";
 
   const timelineSteps: OrderStatusStep[] = [
-    { id: "new", title: "Нове", completed: activeStepIndex >= 0, active: activeStepIndex === 0, date: orderDateStr },
-    { id: "accepted", title: "Прийнято", completed: activeStepIndex >= 1, active: activeStepIndex === 1, date: orderDateStr },
-    { id: "packing", title: "Комплектується", completed: activeStepIndex >= 2, active: activeStepIndex === 2, date: orderDateStr },
-    { id: "shipped", title: "Відправлено", completed: activeStepIndex >= 3, active: activeStepIndex === 3, date: orderDateStr },
-    { id: "delivered", title: "Отримано", completed: activeStepIndex >= 4, active: activeStepIndex === 4, date: orderDateStr },
+    { id: "new", title: t("orders.detail.steps.new"), completed: activeStepIndex >= 0, active: activeStepIndex === 0, date: orderDateStr },
+    { id: "accepted", title: t("orders.detail.steps.accepted"), completed: activeStepIndex >= 1, active: activeStepIndex === 1, date: orderDateStr },
+    { id: "packing", title: t("orders.detail.steps.packing"), completed: activeStepIndex >= 2, active: activeStepIndex === 2, date: orderDateStr },
+    { id: "shipped", title: t("orders.detail.steps.shipped"), completed: activeStepIndex >= 3, active: activeStepIndex === 3, date: orderDateStr },
+    { id: "delivered", title: t("orders.detail.steps.delivered"), completed: activeStepIndex >= 4, active: activeStepIndex === 4, date: orderDateStr },
   ];
+
+  const formatDisplay = (formats: string[]) =>
+    formats
+      .map((f) => {
+        const lower = f.toLowerCase();
+        if (lower === "ebook") return t("orders.formats.ebook");
+        if (lower === "audio") return t("orders.formats.audio");
+        if (lower === "print" || lower === "paper") return t("orders.formats.paper");
+        return f;
+      })
+      .join(", ");
 
   // Helper to map OrderItem to MockOrderItem for Review / Return modal
   const createMockItem = (item: any, idx: number): MockOrderItem => {
@@ -139,6 +157,8 @@ export default function OrderDetailPage() {
     if (isAudio) itemFormats.push("audio");
     if (itemFormats.length === 0) itemFormats.push("print");
 
+    const fallbackId = item.productId || idx + 1;
+
     return {
       id: `item-${dbOrder?.id || idx}-${idx}`,
       dbOrderId: dbOrder?.id || orderId || 0,
@@ -147,13 +167,15 @@ export default function OrderDetailPage() {
       statusText: statusBadgeText,
       statusColor: statusBadgeColor,
       lastStatusDate: `${orderDateStr}, ${orderTimeStr}`,
-      bookTitle: prod?.productName || `Книга #${item.productId || idx + 1}`,
+      bookTitle: prod?.productName || t("orders.bookFallback").replace("{id}", String(fallbackId)),
       bookImage: imageSrc,
       quantity: item.quantity || 1,
       formats: itemFormats,
       price: item.unitPrice || (dbOrder?.totalPrice ? Math.round(dbOrder.totalPrice) : 350),
     };
   };
+
+  const complaintsPath = lp(`/complaints?orderId=${dbOrder?.id || orderId}`);
 
   return (
     <div
@@ -188,11 +210,11 @@ export default function OrderDetailPage() {
               onClick={() => router.back()}
               className="flex items-center gap-2 text-sm font-semibold text-[#555555] hover:text-[#242424] transition bg-[#E5E0D5] px-4 py-2 rounded-2xl border border-[#C8C2B4]"
             >
-              ← Назад до замовлень
+              {t("orders.detail.backToOrders")}
             </button>
 
             <div className="text-right">
-              <span className="text-xs text-[#666666] block">Замовлення</span>
+              <span className="text-xs text-[#666666] block">{t("orders.detail.orderLabel")}</span>
               <span className="text-base sm:text-lg font-bold text-[#242424]">
                 № {dbOrder?.id ? String(dbOrder.id).padStart(10, "0") : "0000000001"}
               </span>
@@ -200,15 +222,17 @@ export default function OrderDetailPage() {
           </div>
 
           <h1 className="text-2xl sm:text-3xl font-extrabold text-[#242424] mb-2 text-center">
-            Сторінка замовлення
+            {t("orders.detail.pageTitle")}
           </h1>
           <p className="text-center text-sm text-[#666666] mb-8">
-            Оформлено {orderDateStr} о {orderTimeStr}
+            {t("orders.detail.placedAt")
+              .replace("{date}", orderDateStr)
+              .replace("{time}", orderTimeStr)}
           </p>
 
           {loading ? (
             <div className="text-center py-12 text-[#666666] font-medium animate-pulse">
-              Завантаження деталей замовлення...
+              {t("orders.detail.loading")}
             </div>
           ) : error ? (
             <div className="text-center py-12 text-red-600 font-semibold bg-red-50 rounded-2xl border border-red-200">
@@ -219,7 +243,7 @@ export default function OrderDetailPage() {
               {/* SECTION 1: Status Tracking Stepper (Figma Node 1387:14537) */}
               <div className="bg-[#EBE7DD] rounded-2xl p-6 border border-[#C8C2B4] shadow-xs">
                 <div className="flex items-center justify-between mb-6">
-                  <h2 className="text-lg font-bold text-[#242424]">Статус замовлення</h2>
+                  <h2 className="text-lg font-bold text-[#242424]">{t("orders.detail.statusTitle")}</h2>
                   <span
                     className="px-3 py-1 rounded-full text-xs font-bold text-white shadow-xs"
                     style={{ backgroundColor: statusBadgeColor }}
@@ -230,9 +254,8 @@ export default function OrderDetailPage() {
 
                 {/* Stepper Timeline */}
                 <div className="relative flex flex-col md:flex-row justify-between items-start md:items-center gap-6 md:gap-0 px-2 py-4">
-                  {/* Connecting line for desktop */}
                   <div className="hidden md:block absolute top-1/2 left-8 right-8 h-1 bg-[#C8C2B4] -translate-y-1/2 -z-0" />
-                  
+
                   {timelineSteps.map((step, idx) => {
                     const isPassed = step.completed;
                     const isCurrent = step.active;
@@ -273,19 +296,19 @@ export default function OrderDetailPage() {
               <div className="bg-[#F5F3EE] rounded-2xl p-6 border border-[#C8C2B4] shadow-xs">
                 <div className="flex items-center gap-3 mb-4">
                   <span className="text-2xl">🚚</span>
-                  <h2 className="text-lg font-bold text-[#242424]">Доставка</h2>
+                  <h2 className="text-lg font-bold text-[#242424]">{t("orders.detail.deliveryTitle")}</h2>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-[#242424]">
                   <div className="bg-[#EBE7DD] p-3.5 rounded-xl border border-[#D5CFCE]">
-                    <span className="text-xs text-[#666666] block mb-0.5">Служба доставки</span>
-                    <span className="font-semibold text-base">Нова Пошта</span>
+                    <span className="text-xs text-[#666666] block mb-0.5">{t("orders.detail.carrier")}</span>
+                    <span className="font-semibold text-base">{t("orders.detail.carrierName")}</span>
                   </div>
                   <div className="bg-[#EBE7DD] p-3.5 rounded-xl border border-[#D5CFCE]">
-                    <span className="text-xs text-[#666666] block mb-0.5">Номер ТТН</span>
+                    <span className="text-xs text-[#666666] block mb-0.5">{t("orders.detail.trackingNumber")}</span>
                     <span className="font-bold text-base text-[#005b33]">20450918234910</span>
                   </div>
                   <div className="sm:col-span-2 bg-[#EBE7DD] p-3.5 rounded-xl border border-[#D5CFCE]">
-                    <span className="text-xs text-[#666666] block mb-0.5">Адреса отримання / Відділення</span>
+                    <span className="text-xs text-[#666666] block mb-0.5">{t("orders.detail.pickupAddress")}</span>
                     <span className="font-medium">м. Київ, Відділення № 45 (вул. Хрещатик, 22)</span>
                   </div>
                 </div>
@@ -295,17 +318,21 @@ export default function OrderDetailPage() {
               <div className="bg-[#F5F3EE] rounded-2xl p-6 border border-[#C8C2B4] shadow-xs">
                 <div className="flex items-center gap-3 mb-4">
                   <span className="text-2xl">💳</span>
-                  <h2 className="text-lg font-bold text-[#242424]">Оплата</h2>
+                  <h2 className="text-lg font-bold text-[#242424]">{t("orders.detail.paymentTitle")}</h2>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-[#242424]">
                   <div className="bg-[#EBE7DD] p-3.5 rounded-xl border border-[#D5CFCE]">
-                    <span className="text-xs text-[#666666] block mb-0.5">Спосіб оплати</span>
-                    <span className="font-semibold">Оплата карткою на сайті</span>
+                    <span className="text-xs text-[#666666] block mb-0.5">{t("orders.detail.paymentMethod")}</span>
+                    <span className="font-semibold">{t("orders.detail.paymentMethodValue")}</span>
                   </div>
                   <div className="bg-[#EBE7DD] p-3.5 rounded-xl border border-[#D5CFCE]">
-                    <span className="text-xs text-[#666666] block mb-0.5">Статус оплати</span>
+                    <span className="text-xs text-[#666666] block mb-0.5">{t("orders.detail.paymentStatus")}</span>
                     <span className="font-bold text-[#005b33] flex items-center gap-1">
-                      <span>✓</span> Оплачено ({dbOrder?.totalPrice || 350} грн)
+                      <span>✓</span>{" "}
+                      {t("orders.detail.paidAmount").replace(
+                        "{amount}",
+                        String(dbOrder?.totalPrice || 350)
+                      )}
                     </span>
                   </div>
                 </div>
@@ -315,7 +342,7 @@ export default function OrderDetailPage() {
               <div className="bg-[#F5F3EE] rounded-2xl p-6 border border-[#C8C2B4] shadow-xs">
                 <div className="flex items-center gap-3 mb-4">
                   <span className="text-2xl">🏢</span>
-                  <h2 className="text-lg font-bold text-[#242424]">Контакти продавця</h2>
+                  <h2 className="text-lg font-bold text-[#242424]">{t("orders.detail.sellerContacts")}</h2>
                 </div>
                 <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-[#EBE7DD] p-4 rounded-xl border border-[#D5CFCE]">
                   <div className="flex items-center gap-3">
@@ -323,28 +350,28 @@ export default function OrderDetailPage() {
                       К
                     </div>
                     <div>
-                      <h3 className="font-bold text-[#242424] text-base">Видавництво «Книгарня»</h3>
+                      <h3 className="font-bold text-[#242424] text-base">{t("orders.detail.defaultPublisher")}</h3>
                       <div className="flex items-center gap-2 text-xs text-[#555555] mt-0.5">
                         <span className="bg-[#005b33]/10 text-[#005b33] px-2 py-0.5 rounded-md font-semibold">
-                          ⭐ 98% позитивних відгуків
+                          {t("orders.detail.positiveReviews").replace("{percent}", "98")}
                         </span>
-                        <span>• Менеджер: +380(93) 505-08-19</span>
+                        <span>{t("orders.detail.manager").replace("{phone}", "+380(93) 505-08-19")}</span>
                       </div>
                     </div>
                   </div>
 
                   <button
-                    onClick={() => router.push(`/complaints?orderId=${dbOrder?.id || orderId}`)}
+                    onClick={() => router.push(complaintsPath)}
                     className="px-4 py-2 rounded-xl bg-white hover:bg-[#F5F3EE] border border-[#C8C2B4] text-[#242424] text-xs font-bold transition flex items-center gap-2 shadow-2xs"
                   >
-                    💬 Написати продавцю
+                    {t("orders.detail.writeSeller")}
                   </button>
                 </div>
               </div>
 
               {/* SECTION 5: Order Items List & Actions */}
               <div className="bg-[#F5F3EE] rounded-2xl p-6 border border-[#C8C2B4] shadow-xs">
-                <h2 className="text-lg font-bold text-[#242424] mb-4">Товари у замовленні</h2>
+                <h2 className="text-lg font-bold text-[#242424] mb-4">{t("orders.detail.itemsTitle")}</h2>
 
                 <div className="space-y-4">
                   {((dbOrder?.orderItems && dbOrder.orderItems.length > 0) ? dbOrder.orderItems : [{ id: 1, productId: 1, quantity: 1, unitPrice: dbOrder?.totalPrice || 350 }]).map((item: any, idx: number) => {
@@ -371,14 +398,14 @@ export default function OrderDetailPage() {
                             </h3>
                             <div className="flex items-center gap-2 mt-1">
                               <span className="text-xs font-semibold text-[#555555] bg-[#F5F3EE] px-2 py-0.5 rounded-full border border-[#D5CFCE]">
-                                {mockItem.quantity} шт.
+                                {t("orders.qty").replace("{count}", String(mockItem.quantity))}
                               </span>
                               <span className="text-xs font-semibold text-[#005b33] bg-[#E2F0D9] px-2 py-0.5 rounded-full border border-[#B8E0A4]">
-                                {mockItem.formats.join(", ")}
+                                {formatDisplay(mockItem.formats)}
                               </span>
                             </div>
                             <p className="text-sm font-bold text-[#242424] mt-2">
-                              {mockItem.price} грн
+                              {t("cart.price").replace("{value}", String(mockItem.price))}
                             </p>
                           </div>
                         </div>
@@ -389,19 +416,19 @@ export default function OrderDetailPage() {
                             onClick={() => setSelectedItemForReview(mockItem)}
                             className="px-4 py-2 rounded-xl bg-[#005b33] hover:bg-[#004828] text-white text-xs font-bold transition shadow-xs flex items-center gap-1.5"
                           >
-                            ✍️ Написати відгук
+                            {t("orders.detail.writeReviewBtn")}
                           </button>
                           <button
                             onClick={() => setSelectedItemForReturn(mockItem)}
                             className="px-4 py-2 rounded-xl bg-[#E5E0D5] hover:bg-[#D8D2C5] border border-[#C8C2B4] text-[#242424] text-xs font-semibold transition"
                           >
-                            📦 Повернути товар
+                            {t("orders.detail.returnProductBtn")}
                           </button>
                           <button
-                            onClick={() => router.push(`/complaints?orderId=${dbOrder?.id || orderId}`)}
+                            onClick={() => router.push(complaintsPath)}
                             className="px-4 py-2 rounded-xl bg-[#F0E6DF] hover:bg-[#E4D7CF] text-[#C0392B] border border-[#D1AFA9] text-xs font-semibold transition"
                           >
-                            ⚠️ Скарги
+                            {t("orders.detail.complaintsBtn")}
                           </button>
                         </div>
                       </div>

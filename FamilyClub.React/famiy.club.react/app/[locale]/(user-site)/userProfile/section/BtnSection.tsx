@@ -1,7 +1,7 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { TabType } from "../page";
+import { useTranslations } from "@/lib/i18n/LocaleProvider";
 
 type Props = {
     activeTab: TabType | null;
@@ -9,12 +9,12 @@ type Props = {
 };
 
 export default function BtnSection({ activeTab, onTabChange }: Props) {
-    const router = useRouter();
-  
+    const t = useTranslations();
+
     const buttons: { label: string; tab: TabType }[] = [
-        { label: "Мої книги", tab: "myBooks" },
-        { label: "Улюблене", tab: "favorite" },
-        { label: "Моя газета", tab: "myPosts" },
+        { label: t("profile.tabs.myBooks"), tab: "myBooks" },
+        { label: t("profile.tabs.favorite"), tab: "favorite" },
+        { label: t("profile.tabs.myPosts"), tab: "myPosts" },
     ];
 
     return (
@@ -23,8 +23,7 @@ export default function BtnSection({ activeTab, onTabChange }: Props) {
                 const isSelected = activeTab === tab;
                 return (
                     <button
-                        key={label}
-                      
+                        key={tab}
                         onClick={() => {
                             if (activeTab === tab) {
                                 onTabChange(null);

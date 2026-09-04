@@ -1,5 +1,7 @@
 "use client";
 
+import { useTranslations } from "@/lib/i18n/LocaleProvider";
+
 type NotificationThreadCardProps = {
     avatarSrc?: string;
     avatarFallback?: string;
@@ -17,6 +19,8 @@ export default function NotificationThreadCard({
     unreadCount,
     onClick,
 }: NotificationThreadCardProps) {
+    const t = useTranslations();
+
     return (
         <button
             type="button"
@@ -37,7 +41,7 @@ export default function NotificationThreadCard({
                         {avatarSrc ? (
                             <img
                                 src={avatarSrc}
-                                alt="Повідомлення"
+                                alt={t("notifications.avatarAlt")}
                                 className="w-9 h-9 rounded-full object-cover border border-[#d4cbbd]"
                             />
                         ) : (
@@ -52,7 +56,7 @@ export default function NotificationThreadCard({
                         )}
                     </div>
                     <h3 className="font-bold text-[16px] text-black truncate">
-                        Повідомлення
+                        {t("notifications.cardTitle")}
                     </h3>
                 </div>
                 {lastMessageTime && (
@@ -64,13 +68,13 @@ export default function NotificationThreadCard({
 
             {/* Message preview text */}
             <p className="text-[13px] text-black/75 leading-snug my-1.5 line-clamp-2 w-full">
-                {lastMessageText || "Немає вмісту повідомлення"}
+                {lastMessageText || t("notifications.cardEmptyPreview")}
             </p>
 
             {/* Bottom action link */}
             <div className="mt-1">
                 <span className="text-[13px] font-medium text-[#1e5631] hover:underline">
-                    переглянути
+                    {t("notifications.view")}
                 </span>
             </div>
         </button>

@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { AuthorDTO, ProductDto } from "@/lib/api/generated";
+import { useLocalizedPath, useTranslations } from "@/lib/i18n/LocaleProvider";
 
 type Props = {
   search: string;
@@ -17,6 +18,8 @@ type Props = {
 export default function SearchBar({
   search, open, authors, products, onChange, onToggleOpen, onClose,
 }: Props) {
+  const t = useTranslations();
+  const lp = useLocalizedPath();
   const q = search.toLowerCase();
 
   const filteredAuthors = search.trim() === ""
@@ -37,7 +40,7 @@ export default function SearchBar({
           value={search}
           onChange={(e) => { onChange(e.target.value); }}
           onClick={(e) => e.stopPropagation()}
-          placeholder="Пошук за назвою"
+          placeholder={t("profile.searchPlaceholder")}
           className="w-full h-full bg-transparent text-[12px] text-[#272727] outline-none px-2"
         />
         <button
@@ -52,9 +55,9 @@ export default function SearchBar({
         <div className="absolute top-[38px] left-0 w-[220px] max-h-[260px] overflow-y-auto rounded-[20px] bg-[#F5F3EE] shadow-[0px_0px_15px_0px_#24242433] p-2 z-50">
           {filteredAuthors.length > 0 && (
             <>
-              <p className="text-[11px] text-[#272727]/40 px-3 pt-1 pb-1">Автори</p>
+              <p className="text-[11px] text-[#272727]/40 px-3 pt-1 pb-1">{t("header.authors")}</p>
               {filteredAuthors.map((a) => (
-                <Link key={a.id} href={`/authors/${a.id}`} onClick={onClose}
+                <Link key={a.id} href={lp(`/authors/${a.id}`)} onClick={onClose}
                   className="flex items-center px-3 py-2 rounded-[14px] text-[13px] text-[#272727] hover:bg-white transition-all">
                   {a.authorName}
                 </Link>
@@ -66,9 +69,9 @@ export default function SearchBar({
           )}
           {filteredProducts.length > 0 && (
             <>
-              <p className="text-[11px] text-[#272727]/40 px-3 pt-1 pb-1">Книги</p>
+              <p className="text-[11px] text-[#272727]/40 px-3 pt-1 pb-1">{t("header.books")}</p>
               {filteredProducts.map((p) => (
-                <Link key={p.id} href={`/products/${p.id}`} onClick={onClose}
+                <Link key={p.id} href={lp(`/products/${p.id}`)} onClick={onClose}
                   className="flex flex-col px-3 py-2 rounded-[14px] hover:bg-white transition-all">
                   <span className="text-[13px] text-[#272727]">{p.productName}</span>
                 </Link>
@@ -80,7 +83,7 @@ export default function SearchBar({
 
       {open && search.trim() !== "" && !hasResults && (
         <div className="absolute top-[38px] left-0 w-[220px] rounded-[20px] bg-[#F5F3EE] shadow-[0px_0px_15px_0px_#24242433] p-4 text-[13px] text-[#272727] z-50">
-          Не знайдено
+          {t("header.notFound")}
         </div>
       )}
     </div>

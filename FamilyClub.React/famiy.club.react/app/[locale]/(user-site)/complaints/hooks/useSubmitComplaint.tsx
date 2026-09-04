@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { complaintsService } from "@/lib/api/services";
 import { getAuthToken } from "@/lib/auth/tokenStorage";
 import { ResponseError } from "@/lib/api/generated/runtime";
+import { useLocalizedPath, useTranslations } from "@/lib/i18n/LocaleProvider";
 import type { ComplaintReason } from "./useComplaintForm";
 import type { useComplaintImages } from "./useComplaintImages";
 
@@ -20,9 +21,23 @@ type SubmitParams = {
   images: ImagesApi;
 };
 
-async function parseApiError(err: unknown): Promise<string> {
+type ErrorMessages = {
+  generic: string;
+  sessionExpired: string;
+  format: string;
+  tooLarge: string;
+  accountMissing: string;
+  invalidForm: string;
+  server: string;
+  withCode: string;
+};
+
+async function parseApiError(
+  err: unknown,
+  messages: ErrorMessages,
+): Promise<string> {
   if (!(err instanceof ResponseError)) {
-    return "Не вдалося надіслати скаргу. Спробуйте ще раз.";
+    return messages.generic;
   }
 
   const status = err.response.status;
@@ -36,29 +51,31 @@ async function parseApiError(err: unknown): Promise<string> {
   console.error("Complaint API error:", status, body);
 
   if (status === 401) {
-    return "Сесію закінчено. Увійдіть знову та спробуйте ще раз.";
+    return messages.sessionExpired;
   }
   if (status === 415) {
-    return "Помилка формату запиту. Спробуйте оновити сторінку та надіслати знову.";
+    return messages.format;
   }
   if (status === 413) {
-    return "Фото занадто великі. Спробуйте менші зображення (до 4 МБ кожне).";
+    return messages.tooLarge;
   }
   if (status === 400) {
     if (body.includes("ClubMember") || body.includes("club_member")) {
-      return "Обліковий запис не знайдено. Увійдіть знову.";
+      return messages.accountMissing;
     }
-    return "Невірні дані форми. Перевірте опис та спробуйте ще раз.";
+    return messages.invalidForm;
   }
   if (status >= 500) {
-    return "Помилка сервера. Переконайтесь, що API запущено, і спробуйте без фото.";
+    return messages.server;
   }
 
-  return `Не вдалося надіслати скаргу (код ${status}).`;
+  return messages.withCode.replace("{status}", String(status));
 }
 
 export function useSubmitComplaint() {
   const router = useRouter();
+  const lp = useLocalizedPath();
+  const t = useTranslations();
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
@@ -71,6 +88,17 @@ export function useSubmitComplaint() {
   }: SubmitParams) => {
     setSubmitting(true);
     setError(null);
+
+    const errorMessages: ErrorMessages = {
+      generic: t("complaints.errors.generic"),
+      sessionExpired: t("complaints.errors.sessionExpired"),
+      format: t("complaints.errors.format"),
+      tooLarge: t("complaints.errors.tooLarge"),
+      accountMissing: t("complaints.errors.accountMissing"),
+      invalidForm: t("complaints.errors.invalidForm"),
+      server: t("complaints.errors.server"),
+      withCode: t("complaints.errors.withCode"),
+    };
 
     try {
       const token = typeof window !== "undefined" ? getAuthToken() : null;
@@ -97,10 +125,10 @@ export function useSubmitComplaint() {
       );
 
       setSuccess(true);
-      setTimeout(() => router.push("/orders"), 2500);
+      setTimeout(() => router.push(lp("/orders")), 2500);
     } catch (err) {
       console.error("Failed to submit complaint:", err);
-      setError(await parseApiError(err));
+      setError(await parseApiError(err, errorMessages));
     } finally {
       setSubmitting(false);
     }

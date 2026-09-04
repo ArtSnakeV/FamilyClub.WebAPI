@@ -6,6 +6,7 @@ import { useState, type FormEvent } from "react";
 import { authService } from "@/lib/api/services";
 import { loginErrorMessage } from "@/lib/auth/loginErrorMessage";
 import { setAuthSession } from "@/lib/auth/tokenStorage";
+import { useLocalizedPath, useTranslations } from "@/lib/i18n/LocaleProvider";
 import AuthBrandLogo from "./AuthBrandLogo";
 
 type LoginSectionProps = {
@@ -16,6 +17,8 @@ const CONTENT_WIDTH = 460;
 const INPUT_HEIGHT = 52;
 
 export default function LoginSection({ onGoToRegister }: LoginSectionProps) {
+  const t = useTranslations();
+  const lp = useLocalizedPath();
   const router = useRouter();
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [formData, setFormData] = useState({ login: "", password: "" });
@@ -28,7 +31,7 @@ export default function LoginSection({ onGoToRegister }: LoginSectionProps) {
     if (e) e.preventDefault();
     const email = formData.login.trim();
     if (!email || !formData.password) {
-      setError("Будь ласка, заповніть усі поля");
+      setError(t("auth.fillAllFields"));
       return;
     }
     setLoading(true);
@@ -43,7 +46,7 @@ export default function LoginSection({ onGoToRegister }: LoginSectionProps) {
       });
 
       if (!response.token) {
-        setError("Не вдалося отримати токен. Спробуйте ще раз.");
+        setError(t("auth.tokenError"));
         return;
       }
 
@@ -53,9 +56,14 @@ export default function LoginSection({ onGoToRegister }: LoginSectionProps) {
         rememberMe
       );
       window.dispatchEvent(new Event("auth-change"));
-      router.push("/");
+      router.push(lp("/"));
     } catch (err) {
-      setError(await loginErrorMessage(err));
+      setError(
+        await loginErrorMessage(err, {
+          invalidCredentials: t("auth.invalidCredentials"),
+          accountLocked: t("auth.accountLocked"),
+        }),
+      );
     } finally {
       setLoading(false);
     }
@@ -81,7 +89,7 @@ export default function LoginSection({ onGoToRegister }: LoginSectionProps) {
       >
         <div className="w-full flex flex-col gap-2.5">
           <label className="font-sans font-semibold text-[24px] text-[#242424]">
-            Email
+            {t("auth.email")}
           </label>
           <input
             type="email"
@@ -90,7 +98,7 @@ export default function LoginSection({ onGoToRegister }: LoginSectionProps) {
             onChange={(e) =>
               setFormData({ ...formData, login: e.target.value })
             }
-            placeholder="Введіть email"
+            placeholder={t("auth.emailPlaceholder")}
             className="outline-none transition-shadow focus:shadow-md w-full rounded-[9px] px-4 bg-white shadow-[0px_0px_10px_0px_#00000033] font-sans text-[18px] text-[#242424] placeholder:text-[#242424]/50"
             style={{ height: INPUT_HEIGHT }}
           />
@@ -99,13 +107,13 @@ export default function LoginSection({ onGoToRegister }: LoginSectionProps) {
         <div className="w-full flex flex-col gap-2.5">
           <div className="flex justify-between items-center w-full gap-2">
             <label className="font-sans font-semibold text-[24px] text-[#242424]">
-              Пароль
+              {t("auth.password")}
             </label>
             <Link
-              href="/forgot-password"
+              href={lp("/forgot-password")}
               className="text-[16px] text-[#242424] hover:underline whitespace-nowrap"
             >
-              Забули пароль?
+              {t("auth.forgotPassword")}
             </Link>
           </div>
 
@@ -115,7 +123,7 @@ export default function LoginSection({ onGoToRegister }: LoginSectionProps) {
           >
             <input
               type={isPasswordVisible ? "text" : "password"}
-              placeholder="Введіть пароль"
+              placeholder={t("auth.passwordPlaceholder")}
               value={formData.password}
               onChange={(e) =>
                 setFormData({ ...formData, password: e.target.value })
@@ -129,7 +137,7 @@ export default function LoginSection({ onGoToRegister }: LoginSectionProps) {
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
               onClick={() => setIsPasswordVisible((v) => !v)}
-              aria-label="Показати або приховати пароль"
+              aria-label={t("auth.togglePasswordAria")}
             >
               <img
                 src={
@@ -159,7 +167,7 @@ export default function LoginSection({ onGoToRegister }: LoginSectionProps) {
             onChange={(e) => setRememberMe(e.target.checked)}
             className="w-4 h-4 accent-[var(--color-green)]"
           />
-          <span className="text-[16px] text-[#242424]">Запамʼятати мене</span>
+          <span className="text-[16px] text-[#242424]">{t("auth.rememberMe")}</span>
         </label>
 
         <button
@@ -169,14 +177,14 @@ export default function LoginSection({ onGoToRegister }: LoginSectionProps) {
           style={{ height: INPUT_HEIGHT }}
         >
           <span className="font-sans text-[20px] text-white">
-            {loading ? "..." : "Увійти"}
+            {loading ? "..." : t("auth.signIn")}
           </span>
         </button>
 
         <div className="flex items-center justify-center w-full py-1 gap-5">
           <div className="flex-1 border-t border-[#242424]" />
           <span className="font-sans text-[18px] text-[#242424] whitespace-nowrap">
-            або
+            {t("auth.or")}
           </span>
           <div className="flex-1 border-t border-[#242424]" />
         </div>
@@ -193,18 +201,18 @@ export default function LoginSection({ onGoToRegister }: LoginSectionProps) {
             className="w-[22px] h-[22px] object-contain"
           />
           <span className="font-sans text-[18px] text-[#242424]">
-            Продовжити через Google
+            {t("auth.continueGoogle")}
           </span>
         </button>
 
         <span className="mt-1 font-sans text-[18px] text-[#242424] inline-flex whitespace-nowrap gap-1.5">
-          Немає аккаунту?{" "}
+          {t("auth.noAccount")}{" "}
           <button
             type="button"
             onClick={onGoToRegister}
             className="text-[var(--color-green)] font-semibold bg-transparent border-0 p-0 cursor-pointer hover:underline"
           >
-            Зареєструватися.
+            {t("auth.register")}
           </button>
         </span>
       </form>

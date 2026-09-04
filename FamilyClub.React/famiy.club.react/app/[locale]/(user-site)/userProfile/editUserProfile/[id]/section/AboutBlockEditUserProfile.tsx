@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "@/lib/i18n/LocaleProvider";
 
 const MAX_LENGTH = 500;
 type Props = {
@@ -8,6 +9,8 @@ type Props = {
 };
 
 export default function AboutBlockEditUserProfile({ about, setAbout }: Props) {
+    const t = useTranslations();
+
     return (
         <div className="w-[1120px] flex flex-col relative">
             {/* Фон */}
@@ -25,7 +28,7 @@ export default function AboutBlockEditUserProfile({ about, setAbout }: Props) {
                     className="w-full h-[74px] object-fill"
                 />
                 <div className="absolute inset-0 -mt-1 flex flex-col justify-center pl-14">
-                    <h3 className="text-[24px] text-white font-semibold">Про себе</h3>
+                    <h3 className="text-[24px] text-white font-semibold">{t("profileEdit.aboutTitle")}</h3>
                 </div>
             </div>
             <div className="relative z-10 w-[1126px] flex flex-col px-20 pb-12">
@@ -46,7 +49,9 @@ export default function AboutBlockEditUserProfile({ about, setAbout }: Props) {
                 {/* Лічильник і кнопки */}
                 <div className="flex items-center justify-between mt-2">
                     <span className="text-[18px] text-[var(--color-black)]">
-                        {about.length}/{MAX_LENGTH} символів
+                        {t("profileEdit.charCount")
+                            .replace("{count}", String(about.length))
+                            .replace("{max}", String(MAX_LENGTH))}
                     </span>
                     <div className="flex gap-6">
                         <button
@@ -54,13 +59,13 @@ export default function AboutBlockEditUserProfile({ about, setAbout }: Props) {
                             onClick={() => setAbout("")}
                             className="text-[18px] font-medium text-[var(--color-black)]-600 hover:text-[var(--color-black)]-1000 transition-colors"
                         >
-                            Скасувати
+                            {t("profileEdit.cancel")}
                         </button>
                         <button
                             type="button"
                             className="text-[18px] font-medium text-[#005B33] hover:text-[#097E4B] transition-colors"
                         >
-                            Зберегти
+                            {t("profileEdit.save")}
                         </button>
                     </div>
                 </div>

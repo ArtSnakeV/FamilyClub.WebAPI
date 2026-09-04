@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { categoriesService } from "@/lib/api/services";
 import { CategoryDto } from "@/lib/api/generated";
 import CategoryButton from "../ui/CategoryButton";
+import { useTranslations } from "@/lib/i18n/LocaleProvider";
 
 type Props = {
     selectedCategories: number[];
@@ -11,6 +12,7 @@ type Props = {
 };
 
 export default function FavoriteCategoryUserProfile({ selectedCategories, setSelectedCategories }: Props) {
+    const t = useTranslations();
     const [categories, setCategories] = useState<CategoryDto[]>([]);
 
     useEffect(() => {
@@ -45,8 +47,8 @@ export default function FavoriteCategoryUserProfile({ selectedCategories, setSel
                     className="w-full h-[74px] object-fill"
                 />
                 <div className="absolute inset-0 -mt-1 flex flex-col justify-center pl-14">
-                    <h3 className="text-[24px] text-white font-semibold">Улюблені жанри</h3>
-                    <p className="text-[13px] -mt-1 text-white">(можна обрати декілька)</p>
+                    <h3 className="text-[24px] text-white font-semibold">{t("profileEdit.genresTitle")}</h3>
+                    <p className="text-[13px] -mt-1 text-white">{t("profileEdit.genresHint")}</p>
                 </div>
             </div>
 
