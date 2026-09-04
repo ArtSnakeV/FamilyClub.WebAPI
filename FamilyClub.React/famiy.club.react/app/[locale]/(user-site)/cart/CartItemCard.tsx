@@ -1,6 +1,7 @@
 "use client";
 
 import type { FormatType } from "@/lib/hooks/useCart";
+import { useLocale, useTranslations } from "@/lib/i18n/LocaleProvider";
 import styles from "./cart.module.css";
 
 // ─── SVG Icons (inline, no external deps) ───
@@ -90,16 +91,11 @@ export interface CartItemCardProps {
   onRemove: (productId: number) => void;
 }
 
-const FORMAT_CONFIG: Record<FormatType, { icon: React.ReactNode; label: string; className: string }> = {
-  paper: { icon: <PaperIcon />, label: "Паперова", className: styles.formatPaper },
-  ebook: { icon: <EbookIcon />, label: "Електронна", className: styles.formatEbook },
-  audio: { icon: <AudioIcon />, label: "Аудіо", className: styles.formatAudio },
+const FORMAT_ICON: Record<FormatType, { icon: React.ReactNode; className: string; labelKey: string }> = {
+  paper: { icon: <PaperIcon />, className: styles.formatPaper, labelKey: "cart.formatPaper" },
+  ebook: { icon: <EbookIcon />, className: styles.formatEbook, labelKey: "cart.formatEbook" },
+  audio: { icon: <AudioIcon />, className: styles.formatAudio, labelKey: "cart.formatAudio" },
 };
-
-function formatPrice(value: number): string {
-  if (value === 0) return "0 грн";
-  return `${new Intl.NumberFormat("uk-UA").format(value)} грн`;
-}
 
 export default function CartItemCard({
   productId,
@@ -114,7 +110,15 @@ export default function CartItemCard({
   onQuantityChange,
   onRemove,
 }: CartItemCardProps) {
+  const t = useTranslations();
+  const { locale } = useLocale();
   const unitPrice = discountPrice ?? price;
+
+  function formatPrice(value: number): string {
+    if (value === 0) return t("cart.zeroPrice");
+    const formatted = new Intl.NumberFormat(locale === "en" ? "en-US" : "uk-UA").format(value);
+    return t("cart.price").replace("{value}", formatted);
+  }
 
   return (
     <div className={styles.cartCard} id={`cart-item-${productId}`}>
@@ -135,12 +139,13 @@ export default function CartItemCard({
         <h3 className={styles.bookTitle}>{title}</h3>
         {author && <p className={styles.bookAuthor}>{author}</p>}
         <span className={`${styles.availability} ${!isAvailable ? styles.unavailable : ""}`}>
-          {isAvailable ? "В наявності" : "Немає в наявності"}
+          {isAvailable ? t("cart.inStock") : t("cart.outOfStock")}
         </span>
 
         <div className={styles.formatRows}>
           {formats.map(({ type }) => {
-            const config = FORMAT_CONFIG[type];
+            const config = FORMAT_ICON[type];
+            const label = t(config.labelKey);
             const qty = formatQuantities[type];
             const linePrice = qty * unitPrice;
 
@@ -156,7 +161,7 @@ export default function CartItemCard({
                   <button
                     className={styles.qtyButton}
                     onClick={() => onQuantityChange(productId, type, qty - 1)}
-                    aria-label={`Зменшити кількість ${config.label}`}
+                    aria-label={t("cart.decreaseQtyAria").replace("{format}", label)}
                     id={`qty-minus-${productId}-${type}`}
                   >
                     <MinusIcon />
@@ -165,7 +170,7 @@ export default function CartItemCard({
                   <button
                     className={styles.qtyButton}
                     onClick={() => onQuantityChange(productId, type, qty + 1)}
-                    aria-label={`Збільшити кількість ${config.label}`}
+                    aria-label={t("cart.increaseQtyAria").replace("{format}", label)}
                     id={`qty-plus-${productId}-${type}`}
                   >
                     <PlusIcon />
@@ -183,7 +188,7 @@ export default function CartItemCard({
       <div className={styles.cardActions}>
         <button
           className={styles.favoriteBtn}
-          aria-label="Додати в обране"
+          aria-label={t("cart.addToFavoritesAria")}
           id={`favorite-${productId}`}
         >
           <HeartIcon />
@@ -191,7 +196,7 @@ export default function CartItemCard({
         <button
           className={styles.deleteBtn}
           onClick={() => onRemove(productId)}
-          aria-label="Видалити з кошика"
+          aria-label={t("cart.removeAria")}
           id={`delete-${productId}`}
         >
           <TrashIcon />

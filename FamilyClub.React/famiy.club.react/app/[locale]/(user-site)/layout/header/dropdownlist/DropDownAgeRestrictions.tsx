@@ -6,22 +6,17 @@ import { ageRestrictionService } from "@/lib/api/services";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { useLocalizedPath, useTranslations } from "@/lib/i18n/LocaleProvider";
 
 export default function DropDownAgeRestrictions() {
+  const t = useTranslations();
+  const lp = useLocalizedPath();
   const [open, setOpen] = useState(false);
   const [ageFilters, setAgeFilters] = useState<AgeRestrictionDto[]>([]);
   const [selectedAge, setSelectedAge] = useState<number | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
 
-  // useEffect(() => {
-
-  //   const config = new Configuration({
-  //     basePath: "https://localhost:7069",
-  //   });
-  //   const api = new AgeRestrictionsApi(config);
-  //   api.apiAgeRestrictionsGet().then(setAgeFilters).catch(console.error);
-  // }, []);
   useEffect(() => {
     ageRestrictionService.apiAgeRestrictionsGet().then(setAgeFilters).catch(console.error);
   }, []);
@@ -45,13 +40,10 @@ export default function DropDownAgeRestrictions() {
     setTimeout(() => {
       const params = new URLSearchParams();
       params.set("ageRestrictionId", String(f.id));
-      router.push(`/products?${params.toString()}`);
+      router.push(lp(`/products?${params.toString()}`));
       setOpen(false);
     }, 600);
   }
-
-  const selectedLabel = "Вік";
-
 
   return (
     <div ref={containerRef} className="relative w-[110px]">
@@ -78,7 +70,7 @@ export default function DropDownAgeRestrictions() {
           }}
           className="pointer-events-auto absolute inset-0  flex justify-center items-end mb-[56px] z-10"
         >
-          <span className="text-[var(--color-white)]">{selectedLabel}</span>
+          <span className="text-[var(--color-white)]">{t("header.age")}</span>
         </button>
 
         {/* DROPDOWN */}

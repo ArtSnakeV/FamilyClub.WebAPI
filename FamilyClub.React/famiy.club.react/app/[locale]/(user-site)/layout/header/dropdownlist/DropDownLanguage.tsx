@@ -5,9 +5,12 @@ import { useEffect, useRef, useState } from "react";
 import { LanguageDto } from "@/lib/api/generated";
 import { languageService } from "@/lib/api/services";
 import Link from "next/link";
+import { useLocalizedPath, useTranslations } from "@/lib/i18n/LocaleProvider";
 
 
 export default function DropDownLanguage() {
+  const t = useTranslations();
+  const lp = useLocalizedPath();
   const [languages, setLanguages] = useState<LanguageDto[]>([]);
   const [open, setOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -55,7 +58,7 @@ export default function DropDownLanguage() {
           }}
           className="absolute pointer-events-auto inset-0 flex justify-center items-end mb-[56px] z-10 focus:outline-none"
         >
-          <span className="text-[var(--color-white)]">Мови</span>
+          <span className="text-[var(--color-white)]">{t("header.languages")}</span>
         </button>
 
         {open && (
@@ -71,12 +74,12 @@ export default function DropDownLanguage() {
                 }}
               >
                 {languages.length === 0 ? (
-                  <div className="text-[13px]">Не знайдено</div>
+                  <div className="text-[13px]">{t("header.notFound")}</div>
                 ) : (
                   languages.map((l) => (
                     <Link
                       key={l.id}
-                      href={`/products?languageId=${l.id}`}
+                      href={lp(`/products?languageId=${l.id}`)}
                       onClick={() => setOpen(false)}
                       className="flex items-center justify-center text-center text-[13px] rounded-[15px] border-[2px] border-transparent hover:border-[#27272780] transition-all duration-200"
                       style={{ width: "80px", height: "30px", flexShrink: 0 }}
@@ -93,4 +96,3 @@ export default function DropDownLanguage() {
     </div>
   );
 }
-

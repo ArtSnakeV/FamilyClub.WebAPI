@@ -7,10 +7,16 @@ const ABOUT_HOME_IMAGES = {
     en: "/images/body/Rectangle%20294-en.webp",
 } as const;
 
+const ABOUT_ATMOSPHERE_IMAGES = {
+    uk: "/images/body/Rectangle%20296-uk.webp",
+    en: "/images/body/Rectangle%20296-en.webp",
+} as const;
+
 export default function AboutSection() {
     const { locale, dictionary } = useLocale();
     const about = dictionary.home.about;
     const homeImageSrc = ABOUT_HOME_IMAGES[locale];
+    const atmosphereImageSrc = ABOUT_ATMOSPHERE_IMAGES[locale];
 
     return (
         <section className="relative z-10 pt-16 pb-0">
@@ -65,7 +71,7 @@ export default function AboutSection() {
                                 <img
                                     alt={about.libraryAtmosphereAlt}
                                     className="h-full w-full rounded-[4px] border-[16px] border-[#f5f3ee] object-cover shadow-inner md:border-[24px]"
-                                    src="/images/body/Rectangle%20296.webp"
+                                    src={atmosphereImageSrc}
                                 />
                             </div>
                         </div>

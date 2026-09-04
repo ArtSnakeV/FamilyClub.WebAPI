@@ -18,21 +18,35 @@ type PromoBannerProps = {
     backgroundImage?: string;
 };
 
-const bannerImages = [
-    "/images/body/banner-left.webp",
-    "/images/body/banner-middle.webp",
-    "/images/body/banner-right.webp",
-];
+const BANNER_IMAGES = {
+    uk: [
+        "/images/body/banner-left-uk.webp",
+        "/images/body/banner-middle-uk.webp",
+        "/images/body/banner-right-uk.webp",
+    ],
+    en: [
+        "/images/body/banner-left-en.webp",
+        "/images/body/banner-middle-en.webp",
+        "/images/body/banner-right-en.webp",
+    ],
+} as const;
+
+const BANNER_SINGLE = {
+    uk: "/images/body/banner-single-uk.webp",
+    en: "/images/body/banner-single-en.webp",
+} as const;
 
 export default function PromoBanner({
     banners,
     title,
     subtitle,
     href,
-    backgroundImage = "/images/body/banner-single.webp",
+    backgroundImage,
 }: PromoBannerProps) {
-    const { dictionary } = useLocale();
+    const { dictionary, locale } = useLocale();
     const lp = useLocalizedPath();
+    const bannerImages = BANNER_IMAGES[locale];
+    const singleBackground = backgroundImage ?? BANNER_SINGLE[locale];
 
     const defaultBanners: BannerItem[] = dictionary.home.promo.items.map((item, index) => ({
         title: item.title,
@@ -42,7 +56,7 @@ export default function PromoBanner({
     }));
 
     const itemsToRender = title
-        ? [{ title, subtitle, href: href ? lp(href) : lp("/categories"), backgroundImage }]
+        ? [{ title, subtitle, href: href ? lp(href) : lp("/categories"), backgroundImage: singleBackground }]
         : (banners ?? defaultBanners);
 
     return (

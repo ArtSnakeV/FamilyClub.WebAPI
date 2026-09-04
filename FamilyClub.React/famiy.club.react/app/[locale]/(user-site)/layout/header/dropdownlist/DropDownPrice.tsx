@@ -3,8 +3,11 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useLocalizedPath, useTranslations } from "@/lib/i18n/LocaleProvider";
 
 export default function DropDownPrice() {
+  const t = useTranslations();
+  const lp = useLocalizedPath();
   const [open, setOpen] = useState(false);
 
   const [from, setFrom] = useState("");
@@ -35,9 +38,10 @@ export default function DropDownPrice() {
     if (to) params.set("maxPrice", to);
 
     if (promotionOnly) {
-      router.push("/promotions");
+      router.push(lp("/promotions"));
     } else {
-      router.push(`/products?${params.toString()}`);
+      const qs = params.toString();
+      router.push(lp(qs ? `/products?${qs}` : "/products"));
     }
 
     setFrom("");
@@ -72,7 +76,7 @@ export default function DropDownPrice() {
           }}
           className="absolute pointer-events-auto inset-0 flex justify-center items-end mb-[56px] z-10"
         >
-          <span className="text-[#F5F3EE]">Ціна</span>
+          <span className="text-[#F5F3EE]">{t("header.price")}</span>
         </button>
 
         {open && (
@@ -89,7 +93,7 @@ export default function DropDownPrice() {
                 />
                 <input
                   type="number"
-                  aria-label="Ціна від"
+                  aria-label={t("header.priceFromAria")}
                   value={from}
                   onChange={(e) => setFrom(e.target.value)}
                   className="absolute inset-0 w-full h-full bg-transparent px-4 text-[#272727] text-[12px]"
@@ -106,7 +110,7 @@ export default function DropDownPrice() {
                 />
                 <input
                   type="number"
-                  aria-label="Ціна до"
+                  aria-label={t("header.priceToAria")}
                   value={to}
                   onChange={(e) => setTo(e.target.value)}
                   className="absolute inset-0 w-full h-full bg-transparent px-4 text-[#272727] text-[12px]"
@@ -138,7 +142,7 @@ export default function DropDownPrice() {
 
                 <span className="text-[13px] text-white"
                   onClick={goToPromotions}
-                >Акції
+                >{t("header.promos")}
                 </span>
               </div>
 
@@ -147,7 +151,7 @@ export default function DropDownPrice() {
                 onClick={applyFilters}
                 className="text-[13px] mt-1 opacity-80 hover:opacity-100"
               >
-                Застосувати
+                {t("header.apply")}
               </button>
             </div>
           </div>

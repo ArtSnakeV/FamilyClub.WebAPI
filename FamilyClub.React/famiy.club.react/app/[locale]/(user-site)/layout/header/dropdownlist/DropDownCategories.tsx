@@ -5,10 +5,13 @@ import { useEffect, useRef, useState } from "react";
 import { type CategoryDto } from "@/lib/api/generated";
 import { categoriesService } from "@/lib/api/services";
 import Link from "next/link";
+import { useLocalizedPath, useTranslations } from "@/lib/i18n/LocaleProvider";
 
 const ITEMS_PER_PAGE = 5;
 
 export default function DropDownCategories() {
+  const t = useTranslations();
+  const lp = useLocalizedPath();
   const [categories, setCategories] = useState<CategoryDto[]>([]);
   const [open, setOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -16,7 +19,7 @@ export default function DropDownCategories() {
     null,
   );
   const visibleCategories = categories.slice(0, ITEMS_PER_PAGE);
- 
+
   useEffect(() => {
     categoriesService.apiCategoriesGet().then(setCategories).catch(console.error);
   }, []);
@@ -57,7 +60,7 @@ export default function DropDownCategories() {
           }}
           className="absolute pointer-events-auto inset-0 flex justify-center items-end mb-[70px] z-10 focus:outline-none"
         >
-          <span className="text-[var(--color-white)]">Жанри</span>
+          <span className="text-[var(--color-white)]">{t("header.genres")}</span>
         </button>
 
         {open && (
@@ -102,14 +105,14 @@ export default function DropDownCategories() {
                   </div>
 
                   <Link
-                    href="/products"
+                    href={lp("/products")}
                     onClick={() => {
                       setSelectedCategoryId(null);
                       setOpen(false);
                     }}
                     className="text-[11px] mt-2"
                   >
-                    Всі жанри
+                    {t("header.allGenres")}
                   </Link>
                 </div>
 
@@ -143,7 +146,7 @@ export default function DropDownCategories() {
                       </div>
 
                       <Link
-                        href={`/products?categoryId=${c.id}`}
+                        href={lp(`/products?categoryId=${c.id}`)}
                         onClick={() => {
                           setSelectedCategoryId(c.id!);
                           setOpen(false);
@@ -163,4 +166,3 @@ export default function DropDownCategories() {
     </div>
   );
 }
-
