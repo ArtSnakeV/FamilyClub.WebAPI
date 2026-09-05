@@ -1,4 +1,7 @@
+"use client";
+
 import type { PromotionDto } from "@/lib/api/generated";
+import { useLocale, useTranslations } from "@/lib/i18n/LocaleProvider";
 
 type Props = {
   promotions: PromotionDto[];
@@ -15,7 +18,8 @@ export default function PromotionSelectForm({
   onChange,
   onDiscountPriceChange,
 }: Props) {
-
+  const t = useTranslations();
+  const { locale } = useLocale();
 
   const activePromotions = promotions.filter((p) => {
     if (!p.endDate) return true;
@@ -23,26 +27,27 @@ export default function PromotionSelectForm({
     return new Date(p.endDate) >= new Date();
   });
 
+  const dateLocale = locale === "uk" ? "uk-UA" : "en-GB";
+
   return (
     <div className="w-[200px]" style={{ width: 200 }}>
       <p className="pt-3 text-[var(--color-black)] font-sans-pro font-normal text-[18px] leading-[150%] tracking-[-0.011em]">
-        Акція (необов&apos;язково)
+        {t("sellerProduct.promotion")}
       </p>
       <select
         value={value ?? ""}
         style={{
           width: 200,
-          maxWidth: 200
+          maxWidth: 200,
         }}
         onChange={(e) => {
           const id = e.target.value ? Number(e.target.value) : undefined;
           onChange(id);
 
-          // const promo = promotions.find((p) => p.id === id);
           const promo = activePromotions.find((p) => p.id === id);
           if (promo?.discountPercent != null && price != null) {
             onDiscountPriceChange(
-              Math.round(price * (1 - promo.discountPercent / 100))
+              Math.round(price * (1 - promo.discountPercent / 100)),
             );
           }
         }}
@@ -50,12 +55,17 @@ export default function PromotionSelectForm({
           ${!value ? "text-gray-500" : "text-[var(--color-black)]"}
         `}
       >
-        <option value="" style={{ width: 200 }}>Оберіть акцію</option>
+        <option value="" style={{ width: 200 }}>
+          {t("sellerProduct.selectPromotion")}
+        </option>
         {activePromotions.map((p) => (
           <option key={p.id} value={p.id}>
             {p.name ?? `${p.id}`} — {p.discountPercent}%
             {p.endDate
-              ? ` (до ${new Date(p.endDate).toLocaleDateString("uk-UA")})`
+              ? t("sellerProduct.promotionUntil").replace(
+                  "{date}",
+                  new Date(p.endDate).toLocaleDateString(dateLocale),
+                )
               : ""}
           </option>
         ))}

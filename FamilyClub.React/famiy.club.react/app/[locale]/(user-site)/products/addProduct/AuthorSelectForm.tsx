@@ -1,5 +1,8 @@
+"use client";
+
 import { useState } from "react";
 import type { AuthorDTO } from "@/lib/api/generated";
+import { useTranslations } from "@/lib/i18n/LocaleProvider";
 
 type Props = {
   authors: AuthorDTO[];
@@ -12,6 +15,7 @@ export default function AuthorSelectForm({
   value = [],
   onChange,
 }: Props) {
+  const t = useTranslations();
   const [open, setOpen] = useState(false);
 
   const toggle = (id: number) => {
@@ -28,12 +32,12 @@ export default function AuthorSelectForm({
           .filter((a) => value.includes(a.id!))
           .map((a) => a.authorName)
           .join(", ")
-      : "Ім'я автора";
+      : t("sellerProduct.authorPlaceholder");
 
   return (
     <>
       <p className="pt-3 text-[var(--color-black)] font-sans-pro font-normal text-[18px] leading-[150%] tracking-[-0.011em]">
-        Автор(и) *
+        {t("sellerProduct.authors")}
       </p>
       <div className="relative w-full">
         <button

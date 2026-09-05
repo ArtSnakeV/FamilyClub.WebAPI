@@ -1,10 +1,7 @@
-import { Availability } from "@/lib/api/generated";
+"use client";
 
-const conditionOfTheGoods = [
-  { label: "В наявності", value: Availability.NUMBER_0 },
-  { label: "Немає", value: Availability.NUMBER_1 },
-  { label: "Передзамовлення", value: Availability.NUMBER_2 },
-];
+import { Availability } from "@/lib/api/generated";
+import { useTranslations } from "@/lib/i18n/LocaleProvider";
 
 type Props = {
   value?: Availability;
@@ -12,6 +9,13 @@ type Props = {
 };
 
 export default function AvailabilitySelector({ value, onChange }: Props) {
+  const t = useTranslations();
+  const conditionOfTheGoods = [
+    { label: t("sellerProduct.availabilityInStock"), value: Availability.NUMBER_0 },
+    { label: t("sellerProduct.availabilityOut"), value: Availability.NUMBER_1 },
+    { label: t("sellerProduct.availabilityPreorder"), value: Availability.NUMBER_2 },
+  ];
+
   return (
     <div className="w-[540px] m-2 p-2 flex flex-col gap-2 items-center">
       <ul className="flex flex-col items-center w-full gap-2">

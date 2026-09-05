@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import { useTranslations } from "@/lib/i18n/LocaleProvider";
 import "./ink-assistant.css";
 import { INK_ASSETS, type InkPhase } from "./inkAssets";
 import InkChatPanel from "./InkChatPanel";
@@ -24,6 +25,7 @@ function usePrefersReducedMotion() {
 }
 
 export default function InkAssistant() {
+  const t = useTranslations();
   const reducedMotion = usePrefersReducedMotion();
   const [phase, setPhase] = useState<InkPhase>("idle");
   const [gameKey, setGameKey] = useState(0);
@@ -126,7 +128,7 @@ export default function InkAssistant() {
             <div className="ink-cat-in mb-10 h-[130px] w-[200px] shrink-0">
               <img
                 src={catSrc}
-                alt="Ink сидить поруч"
+                alt={t("ink.catAlt")}
                 className="h-full w-full object-contain object-bottom drop-shadow-md"
                 draggable={false}
               />
@@ -147,7 +149,7 @@ export default function InkAssistant() {
               }`}
               aria-hidden={phase !== "idle"}
             >
-              Натисни на дзвіночок або на котика
+              {t("ink.hint")}
             </p>
           </div>
         </div>

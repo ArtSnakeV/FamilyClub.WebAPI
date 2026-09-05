@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useTranslations } from "@/lib/i18n/LocaleProvider";
 import { INK_ASSETS, type InkPreyKind } from "../inkAssets";
 
 type GamePhase = "playing" | "catching" | "done";
@@ -47,6 +48,7 @@ function formatTime(msLeft: number) {
 }
 
 export default function InkPlayGame({ onExit, onPlayAgain }: InkPlayGameProps) {
+  const t = useTranslations();
   const [prey] = useState<InkPreyKind>(() => pickPrey());
   const [duration] = useState(() => pickDurationMs());
   const [phase, setPhase] = useState<GamePhase>("playing");
@@ -139,7 +141,6 @@ export default function InkPlayGame({ onExit, onPlayAgain }: InkPlayGameProps) {
       const dist = Math.hypot(dx, dy) || 1;
 
       if (phaseRef.current === "playing") {
-        // Start crouch / prepare when close
         if (
           moveModeRef.current === "walk" &&
           dist < JUMP_TRIGGER_DIST &&
@@ -148,13 +149,11 @@ export default function InkPlayGame({ onExit, onPlayAgain }: InkPlayGameProps) {
           moveModeRef.current = "prepare";
           setMoveMode("prepare");
           prepareUntilRef.current = now + PREPARE_MS;
-          // Re-roll jump burst speed each pounce
           jumpSpeedRef.current = pickBetween(JUMP_SPEED_MIN, JUMP_SPEED_MAX);
           setJumpFrame(0);
         }
 
         if (moveModeRef.current === "prepare") {
-          // Stalk slowly while winding up
           const stalk = walkSpeedRef.current * 0.25;
           cat.x += dx * stalk * (dt / 16);
           cat.y += dy * stalk * (dt / 16);
@@ -183,7 +182,6 @@ export default function InkPlayGame({ onExit, onPlayAgain }: InkPlayGameProps) {
             moveModeRef.current = "walk";
             setMoveMode("walk");
             jumpCooldownUntilRef.current = now + JUMP_COOLDOWN_MS;
-            // Slight walk-speed drift each failed pounce
             walkSpeedRef.current = pickBetween(WALK_SPEED_MIN, WALK_SPEED_MAX);
           }
         } else {
@@ -216,7 +214,7 @@ export default function InkPlayGame({ onExit, onPlayAgain }: InkPlayGameProps) {
         }
       }
 
-      setTick((t) => t + 1);
+      setTick((tick) => tick + 1);
       raf = requestAnimationFrame(loop);
     };
 
@@ -251,23 +249,34 @@ export default function InkPlayGame({ onExit, onPlayAgain }: InkPlayGameProps) {
       ? `scaleX(${face * 1.12}) scaleY(0.78)`
       : `scaleX(${face})`;
 
+  const statusText =
+    phase === "playing"
+      ? t("ink.game.statusPlaying")
+          .replace("{time}", formatTime(msLeft))
+          .replace("{minutes}", String(duration.minutes))
+          .replace(
+            "{prey}",
+            prey === "laser" ? t("ink.game.preyLaser") : t("ink.game.preyMouse"),
+          )
+          .replace(
+            "{prepare}",
+            moveMode === "prepare" ? t("ink.game.prepareSuffix") : "",
+          )
+      : phase === "catching"
+        ? t("ink.game.catching")
+        : t("ink.game.ended");
+
   return (
     <div
       className="fixed inset-0 z-[60] hidden md:block"
       style={{ cursor: phase === "playing" ? "none" : "auto" }}
       role="dialog"
-      aria-label="Гра з Ink"
+      aria-label={t("ink.game.aria")}
     >
       <div className="absolute inset-0 bg-black/10" />
 
       <div className="pointer-events-none absolute left-1/2 top-4 z-10 -translate-x-1/2 rounded-full bg-[#005B33]/90 px-4 py-1.5 font-serif text-sm text-white shadow-md">
-        {phase === "playing"
-          ? `Залишилось ${formatTime(msLeft)} · ${duration.minutes} хв · ${prey === "laser" ? "лазер" : "мишка"}${
-              moveMode === "prepare" ? " · готується…" : ""
-            }`
-          : phase === "catching"
-            ? "Ловить…"
-            : "Кінець гри"}
+        {statusText}
       </div>
 
       {showPrey && (
@@ -318,12 +327,12 @@ export default function InkPlayGame({ onExit, onPlayAgain }: InkPlayGameProps) {
       {phase === "done" && (
         <div className="absolute left-1/2 top-1/2 z-40 w-[340px] -translate-x-1/2 -translate-y-1/2 rounded-[14px] border border-[#005B33]/25 bg-[#F5F3EE] p-5 text-center shadow-[0_12px_40px_rgba(36,36,36,0.35)]">
           <p className="font-serif text-lg font-semibold text-[#005B33]">
-            Дякуємо за гру!
+            {t("ink.game.thanks")}
           </p>
           <p className="mt-2 text-sm leading-snug text-[#242424]">
             {prey === "mouse"
-              ? "Ink спіймав мишку й дуже задоволений."
-              : "Лазер зник — Ink задоволений полюванням."}
+              ? t("ink.game.caughtMouse")
+              : t("ink.game.caughtLaser")}
           </p>
           <div className="mt-4 flex justify-center gap-2">
             <button
@@ -331,14 +340,14 @@ export default function InkPlayGame({ onExit, onPlayAgain }: InkPlayGameProps) {
               onClick={onPlayAgain}
               className="rounded-[8px] bg-[#005B33] px-4 py-2 text-sm font-semibold text-white hover:bg-[#004d2b]"
             >
-              Зіграти знову
+              {t("ink.game.playAgain")}
             </button>
             <button
               type="button"
               onClick={onExit}
               className="rounded-[8px] border border-[#005B33]/40 bg-white px-4 py-2 text-sm font-semibold text-[#005B33] hover:bg-[#E8F5EF]"
             >
-              Вихід
+              {t("ink.game.exit")}
             </button>
           </div>
         </div>
@@ -351,7 +360,7 @@ export default function InkPlayGame({ onExit, onPlayAgain }: InkPlayGameProps) {
             onClick={onExit}
             className="rounded-full border border-white/40 bg-[#242424]/80 px-5 py-2 text-sm font-medium text-white shadow-md backdrop-blur-sm hover:bg-[#242424]"
           >
-            Вийти · Esc
+            {t("ink.game.exitEsc")}
           </button>
         </div>
       )}

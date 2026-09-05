@@ -764,11 +764,11 @@ export default function CheckoutPage() {
             />
             <span className={styles.agreementText}>
               {t("cart.agreePrefix")}{" "}
-              <a href={lp("/privacy-policy")} className={styles.agreementLink}>
+              <a href={lp("/personal-data-protection")} className={styles.agreementLink}>
                 {t("cart.privacyPolicy")}
               </a>{" "}
               {t("cart.agreeAnd")}{" "}
-              <a href={lp("/terms-of-service")} className={styles.agreementLink}>
+              <a href={lp("/terms-of-use")} className={styles.agreementLink}>
                 {t("cart.termsOfService")}
               </a>
             </span>

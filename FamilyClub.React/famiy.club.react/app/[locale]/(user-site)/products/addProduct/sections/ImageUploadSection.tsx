@@ -1,16 +1,21 @@
+"use client";
+
 import { ImageUploadState } from "@/app/(user-site)/products/addProduct/types";
 import { ImageUploadSlot } from "@/app/(user-site)/products/addProduct/ui/ImageUploadSlot";
+import { useTranslations } from "@/lib/i18n/LocaleProvider";
 
 type Props = {
   images: ImageUploadState;
 };
 
 export function ImageUploadSection({ images }: Props) {
+  const t = useTranslations();
+
   return (
     <>
       <div className="flex justify-center items-center">
         <p className="font-['Roboto_Mono'] font-bold text-[34px] leading-[150%] tracking-[-0.011em] text-center">
-          Головне фото
+          {t("sellerProduct.mainPhoto")}
         </p>
       </div>
 
@@ -27,7 +32,7 @@ export function ImageUploadSection({ images }: Props) {
 
       <div className="h-[540px] flex relative -mt-4 flex-col items-center">
         <p className="font-['Roboto_Mono'] font-bold text-[18px] leading-[150%] tracking-[-0.011em] text-center mb-4">
-          Додаткові фото
+          {t("sellerProduct.extraPhotos")}
         </p>
         <div className="grid grid-cols-2 gap-[34px]">
           {images.gallery.map((item, index) => (

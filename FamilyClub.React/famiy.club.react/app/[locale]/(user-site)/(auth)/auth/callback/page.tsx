@@ -4,13 +4,18 @@ import { useEffect, useState, Suspense } from "react";
 import { useRouter } from "next/navigation";
 import { setAuthSession } from "@/lib/auth/tokenStorage";
 import Link from "next/link";
+import {
+  useLocalizedPath,
+  useTranslations,
+} from "@/lib/i18n/LocaleProvider";
 
 function AuthCallbackContent() {
   const router = useRouter();
+  const t = useTranslations();
+  const lp = useLocalizedPath();
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    // Token is in hash fragment (not query) so it is not logged by servers / proxies.
     const hash = typeof window !== "undefined" ? window.location.hash.replace(/^#/, "") : "";
     const params = new URLSearchParams(hash);
     const token = params.get("token");
@@ -25,27 +30,28 @@ function AuthCallbackContent() {
     if (token) {
       setAuthSession(token, userId, true);
       window.dispatchEvent(new Event("auth-change"));
-      // Clear hash so token is not left in history bar longer than needed.
       if (typeof window !== "undefined") {
         window.history.replaceState(null, "", window.location.pathname);
       }
-      router.push("/");
+      router.push(lp("/"));
     } else {
-      setError("Помилка авторизації: Токен відсутній.");
+      setError(t("auth.callbackMissingToken"));
     }
-  }, [router]);
+  }, [router, lp, t]);
 
   if (error) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh] px-4 font-sans text-center">
         <div className="bg-red-50 border border-red-200 rounded-xl p-8 max-w-md w-full shadow-sm">
-          <h2 className="text-2xl font-bold text-red-600 mb-4">Помилка авторизації</h2>
+          <h2 className="text-2xl font-bold text-red-600 mb-4">
+            {t("auth.callbackErrorTitle")}
+          </h2>
           <p className="text-gray-700 mb-6">{error}</p>
           <Link
-            href="/login"
+            href={lp("/login")}
             className="inline-block bg-[var(--color-green)] text-white font-medium px-6 py-3 rounded-lg hover:brightness-110 transition shadow-md"
           >
-            Повернутися до входу
+            {t("auth.callbackBackToLogin")}
           </Link>
         </div>
       </div>
@@ -55,19 +61,23 @@ function AuthCallbackContent() {
   return (
     <div className="flex flex-col items-center justify-center min-h-[60vh] font-sans">
       <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[var(--color-green)] mb-4"></div>
-      <p className="text-lg text-gray-700">Виконується авторизація, зачекайте...</p>
+      <p className="text-lg text-gray-700">{t("auth.callbackAuthorizing")}</p>
     </div>
   );
 }
 
 export default function AuthCallbackPage() {
+  const t = useTranslations();
+
   return (
-    <Suspense fallback={
-      <div className="flex flex-col items-center justify-center min-h-[60vh] font-sans">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[var(--color-green)] mb-4"></div>
-        <p className="text-lg text-gray-700">Завантаження...</p>
-      </div>
-    }>
+    <Suspense
+      fallback={
+        <div className="flex flex-col items-center justify-center min-h-[60vh] font-sans">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[var(--color-green)] mb-4"></div>
+          <p className="text-lg text-gray-700">{t("auth.callbackLoading")}</p>
+        </div>
+      }
+    >
       <AuthCallbackContent />
     </Suspense>
   );

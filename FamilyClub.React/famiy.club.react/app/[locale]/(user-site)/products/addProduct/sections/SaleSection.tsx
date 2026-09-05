@@ -1,9 +1,12 @@
+"use client";
+
 import { ProductDto } from "@/app/(user-site)/products/addProduct/types";
 import { NumberInput } from "@/app/(user-site)/products/addProduct/ui/NumberInput";
 import AvailabilitySelector from "@/app/(user-site)/products/addProduct/AvailabilitySelector";
 import ButtonSubmitAddProduct from "@/app/(user-site)/products/addProduct/ButtonSubmitAddProduct";
 import { usePromotions } from "../hooks/usePromotions";
 import PromotionSelectForm from "../PromotionSelectForm";
+import { useTranslations } from "@/lib/i18n/LocaleProvider";
 
 type Props = {
   form: ProductDto;
@@ -22,13 +25,14 @@ export function SaleSection({
   onSaveDraft,
   onCancel,
 }: Props) {
-
+  const t = useTranslations();
   const { promotions } = usePromotions();
 
   return (
     <div className="w-full h-[600px] flex relative -mt-[110px] text-[var(--color-white)]">
       <div className="w-full h-[600px] relative">
-        <img src="/images/addProducts/Rectangle 315.png"
+        <img
+          src="/images/addProducts/Rectangle 315.png"
           alt=""
           aria-hidden
           className="absolute inset-0 w-full h-[600px] pointer-events-none"
@@ -45,28 +49,21 @@ export function SaleSection({
               />
               <div className="absolute inset-0 -mt-[14px] flex items-center ml-[40px] justify-start">
                 <p className="font-['Roboto_Mono'] font-semibold text-[20px] leading-[100%] tracking-[-0.011em]">
-                  Продаж та наявність
+                  {t("sellerProduct.saleTitle")}
                 </p>
               </div>
             </div>
 
             <NumberInput
-              label="Ціна *"
+              label={t("sellerProduct.price")}
               value={form.price}
               onChange={(v) => setField("price", v)}
               className="w-[200px] text-[var(--color-black)]"
             />
 
-            {/* <NumberInput
-            label="Ціна зі знижкою *"
-            placeholder="0"
-            value={form.discountPrice}
-            onChange={(v) => setField("discountPrice", v)}
-            className="w-[200px] mt-4"
-          /> */}
             <div className="flex flex-col items-center w-[200px] mt-4">
               <NumberInput
-                label="Ціна зі знижкою *"
+                label={t("sellerProduct.discountPrice")}
                 placeholder="0"
                 value={form.discountPrice}
                 onChange={(v) => setField("discountPrice", v)}
@@ -76,7 +73,7 @@ export function SaleSection({
                 form.price != null &&
                 form.discountPrice >= form.price && (
                   <p className="text-red-400 text-xs mt-1">
-                    Ціна зі знижкою має бути меншою за звичайну ціну
+                    {t("sellerProduct.discountPriceError")}
                   </p>
                 )}
             </div>

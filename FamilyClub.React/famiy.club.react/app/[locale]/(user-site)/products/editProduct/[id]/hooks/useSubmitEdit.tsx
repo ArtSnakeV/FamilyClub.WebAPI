@@ -1,8 +1,14 @@
+"use client";
+
 import { alertError } from "@/lib/ui/sweetAlert";
 import { useState } from "react";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { ProductDto, ImageUploadState } from "@/app/(user-site)/products/addProduct/types";
 import { productService } from "@/lib/api/services";
+import {
+  useLocalizedPath,
+  useTranslations,
+} from "@/lib/i18n/LocaleProvider";
 
 type Props = {
   id: number;
@@ -12,6 +18,8 @@ type Props = {
 };
 
 export default function useSubmitEdit({ id, form, images, router }: Props) {
+  const t = useTranslations();
+  const lp = useLocalizedPath();
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async () => {
@@ -51,7 +59,7 @@ export default function useSubmitEdit({ id, form, images, router }: Props) {
         productImageFiles: productImageFiles.length > 0 ? productImageFiles : undefined,
       });
 
-      router.push(`/products/${id}`);
+      router.push(lp(`/products/${id}`));
     } catch (err: unknown) {
       console.error("FULL ERROR:", err);
       if (typeof err === "object" && err !== null && "response" in err) {
@@ -59,7 +67,7 @@ export default function useSubmitEdit({ id, form, images, router }: Props) {
         const text = await response?.text?.();
         console.error("SERVER RESPONSE:", text);
       }
-      await alertError("Помилка при оновленні продукту");
+      await alertError(t("sellerProduct.updateError"));
     } finally {
       setLoading(false);
     }

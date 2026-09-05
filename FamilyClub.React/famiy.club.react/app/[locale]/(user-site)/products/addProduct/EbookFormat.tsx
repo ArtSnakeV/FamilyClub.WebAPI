@@ -1,13 +1,14 @@
 "use client";
 
 import { useRef, useState } from "react";
-
+import { useTranslations } from "@/lib/i18n/LocaleProvider";
 
 type Props = {
   onSelect?: () => void;
 };
 
-export default function EbookFormat({onSelect}: Props) {
+export default function EbookFormat({ onSelect }: Props) {
+  const t = useTranslations();
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [file, setFile] = useState<File | null>(null);
   const handleClick = () => {
@@ -17,7 +18,7 @@ export default function EbookFormat({onSelect}: Props) {
   return (
     <div className="h-[40px] flex flex-row items-center justify-between px-4 rounded-[9px] bg-[var(--color-white)] shadow-[0px_0px_10px_0px_#00000040]">
       <p className="text-[14px] text-[#242424]/50">
-        {file ? file.name : "Завантажити в EPUB, FB2, MOBI/AZW, PDF"}
+        {file ? file.name : t("sellerProduct.uploadEbook")}
       </p>
 
       <button
@@ -38,7 +39,7 @@ export default function EbookFormat({onSelect}: Props) {
           const selectedFile = e.target.files?.[0] ?? null;
           setFile(selectedFile);
           if (selectedFile) {
-            onSelect?.(); 
+            onSelect?.();
           }
         }}
       />

@@ -598,11 +598,11 @@ export default function MobileCheckoutView({
               className="text-[15px] sm:text-[16px] text-[#242424] leading-snug cursor-pointer font-normal"
             >
               Погоджуюсь з{" "}
-              <Link href="/privacy-policy" className="text-[#005b33] font-semibold hover:underline">
+              <Link href="/personal-data-protection" className="text-[#005b33] font-semibold hover:underline">
                 Політикою конфіденційності
               </Link>{" "}
               та з{" "}
-              <Link href="/terms-of-service" className="text-[#005b33] font-semibold hover:underline">
+              <Link href="/terms-of-use" className="text-[#005b33] font-semibold hover:underline">
                 Користувацькою угодою
               </Link>
             </label>

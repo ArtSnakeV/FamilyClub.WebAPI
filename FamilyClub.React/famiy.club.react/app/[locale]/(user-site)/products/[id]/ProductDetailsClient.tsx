@@ -62,9 +62,10 @@ const formatIconMap = {
   },
 };
 
-const formatPrice = (value?: number | null) => {
+const formatPrice = (value?: number | null, locale: "uk" | "en" = "uk") => {
   if (value == null) return "";
-  return `${new Intl.NumberFormat("uk-UA").format(value)} грн`;
+  const formatted = new Intl.NumberFormat(locale === "en" ? "en-US" : "uk-UA").format(value);
+  return locale === "en" ? `${formatted} UAH` : `${formatted} грн`;
 };
 
 const clampRating = (value: number) => Math.max(0, Math.min(5, value));
@@ -492,8 +493,16 @@ export default function ProductDetailsClient({ id }: { id: string }) {
   const formatDisplay = bookSizeLabel || formatLabel;
   const pageCountValue =
     currentProduct?.pageCount != null ? `${currentProduct.pageCount}` : "";
-  const pageCountText = pageCountValue ? `${pageCountValue} стор.` : "";
-  const weightText = formatWeight(currentProduct?.weightGrams);
+  const pageCountText = pageCountValue
+    ? t("product.pages").replace("{count}", pageCountValue)
+    : "";
+  const weightText =
+    currentProduct?.weightGrams != null
+      ? t("product.weightKg").replace(
+          "{value}",
+          (currentProduct.weightGrams / 1000).toFixed(2),
+        )
+      : "";
   const yearText = formatYear(currentProduct?.publishingDate);
 
   const getFormatTags = (formatIds?: Array<number> | null) => {
@@ -552,7 +561,7 @@ export default function ProductDetailsClient({ id }: { id: string }) {
   const reviewCards: ReviewCardData[] = productReviews
     .filter((review) => Boolean(review.comment))
     .map((review, index) => {
-      const authorLabel = review.userName || review.userId || "Анонім";
+      const authorLabel = review.userName || review.userId || t("common.anonymous");
       return {
         id:
           review.id ??
@@ -591,7 +600,7 @@ export default function ProductDetailsClient({ id }: { id: string }) {
       .map((authorId) => authors.find((author) => author.id === authorId)?.authorName)
       .filter((name): name is string => Boolean(name))
       .join(", ") || null,
-    price: formatPrice(item.discountPrice ?? item.price),
+    price: formatPrice(item.discountPrice ?? item.price, locale),
     image: getImageSrc(item),
     rating:
       getReviewCountForProduct(item.id) > 0
@@ -607,7 +616,7 @@ export default function ProductDetailsClient({ id }: { id: string }) {
       .map((authorId) => authors.find((author) => author.id === authorId)?.authorName)
       .filter((name): name is string => Boolean(name))
       .join(", ") || null,
-    price: formatPrice(item.discountPrice ?? item.price),
+    price: formatPrice(item.discountPrice ?? item.price, locale),
     image: getImageSrc(item),
     rating:
       getReviewCountForProduct(item.id) > 0
@@ -619,7 +628,7 @@ export default function ProductDetailsClient({ id }: { id: string }) {
   const productTitle = currentProduct?.productName ?? "";
   const descriptionText = currentProduct?.description ?? "";
   const priceValue = currentProduct?.discountPrice ?? currentProduct?.price;
-  const priceText = priceValue != null ? formatPrice(priceValue) : "";
+  const priceText = priceValue != null ? formatPrice(priceValue, locale) : "";
   const hasAuthorDetails = Boolean(authorName || authorBio || authorPhoto);
   const formatTags = getFormatTags(currentProduct?.formatIds);
 

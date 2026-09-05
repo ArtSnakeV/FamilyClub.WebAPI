@@ -447,11 +447,11 @@ export default function MobileCartView({
             </button>
             <p className="text-[14px] sm:text-[15px] text-[#242424] leading-[1.4] pt-1.5 select-none">
               Погоджуюсь з{" "}
-              <Link href="/privacy-policy" className="text-[#005b33] font-medium hover:underline">
+              <Link href="/personal-data-protection" className="text-[#005b33] font-medium hover:underline">
                 Політикою конфіденційності
               </Link>{" "}
               та з{" "}
-              <Link href="/terms-of-service" className="text-[#005b33] font-medium hover:underline">
+              <Link href="/terms-of-use" className="text-[#005b33] font-medium hover:underline">
                 Користувацькою угодою
               </Link>
             </p>

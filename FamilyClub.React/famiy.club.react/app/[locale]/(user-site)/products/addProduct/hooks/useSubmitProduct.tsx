@@ -1,8 +1,14 @@
+"use client";
+
 import { alertError } from "@/lib/ui/sweetAlert";
 import { useState } from "react";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { ProductDto, ImageUploadState } from "@/app/(user-site)/products/addProduct/types";
 import { productService } from "@/lib/api/services";
+import {
+  useLocalizedPath,
+  useTranslations,
+} from "@/lib/i18n/LocaleProvider";
 
 type Props = {
   form: ProductDto;
@@ -12,6 +18,8 @@ type Props = {
 };
 
 export function useSubmitProduct({ form, images, router, clearDraft }: Props) {
+  const t = useTranslations();
+  const lp = useLocalizedPath();
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async () => {
@@ -50,7 +58,7 @@ export function useSubmitProduct({ form, images, router, clearDraft }: Props) {
       });
 
       clearDraft();
-      router.push("/products");
+      router.push(lp("/products"));
     } catch (err: unknown) {
       console.error("FULL ERROR:", err);
       if (typeof err === "object" && err !== null && "response" in err) {
@@ -58,7 +66,7 @@ export function useSubmitProduct({ form, images, router, clearDraft }: Props) {
         const text = await response?.text?.();
         console.error("SERVER RESPONSE:", text);
       }
-      await alertError("Помилка при створенні продукту");
+      await alertError(t("sellerProduct.createError"));
     } finally {
       setLoading(false);
     }
