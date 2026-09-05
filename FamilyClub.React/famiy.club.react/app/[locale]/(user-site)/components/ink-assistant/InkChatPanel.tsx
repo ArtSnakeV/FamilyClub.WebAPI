@@ -1,7 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef, useState, type FormEvent } from "react";
+import { useEffect, useMemo, useRef, useState, type FormEvent } from "react";
+import {
+  useLocalizedPath,
+  useTranslations,
+} from "@/lib/i18n/LocaleProvider";
 
 type ChatMessage = {
   id: string;
@@ -9,106 +13,122 @@ type ChatMessage = {
   text: string;
 };
 
+type QuickReply = {
+  id: string;
+  label: string;
+  reply: string;
+  href?: string;
+  action?: "play";
+};
+
 type InkChatPanelProps = {
   onClose: () => void;
   onPlayGame?: () => void;
 };
 
-const QUICK_REPLIES: {
-  label: string;
-  reply: string;
-  href?: string;
-  action?: "play";
-}[] = [
-  {
-    label: "Пограти",
-    reply: "Мурр! Водимо лазер або мишку — я ловлю. Готовий?",
-    action: "play",
-  },
-  {
-    label: "Порекомендувати книгу",
-    reply: "Мурр… Підберу історію під настрій. Ходімо до підбору книг.",
-    href: "/pick-book",
-  },
-  {
-    label: "Підібрати книгу",
-    reply: "Добре! Відкриваю майстер підбору — відповідай на кілька питань.",
-    href: "/pick-book",
-  },
-  {
-    label: "Каталог",
-    reply: "У каталозі багато полиць. Дивись уважно — і не забудь дзвіночок, якщо загубишся.",
-    href: "/products",
-  },
-  {
-    label: "Служба підтримки",
-    reply:
-      "Люди з підтримки завжди поруч. Переходь на сторінку звернень — там можна написати скаргу чи запитання.",
-    href: "/complaints",
-  },
-  {
-    label: "Акції",
-    reply: "Люблю знижки майже так само, як сонячні підвіконня. Зазирни в акції!",
-    href: "/promotions",
-  },
-  {
-    label: "Оплата й доставка",
-    reply: "Про оплату, доставку й терміни все зібрано на окремій сторінці. Зараз проведу тебе.",
-    href: "/payment-delivery",
-  },
-  {
-    label: "Хто ти?",
-    reply:
-      "Я Ink — тихий помічник бібліотеки Librellis. Не говорю багато, але допоможу знайти потрібну книгу.",
-  },
-];
-
-function matchReply(input: string): string {
+function matchReply(input: string, t: (key: string) => string): string {
   const q = input.toLowerCase().trim();
-  if (!q) return "Мур… Напиши щось, або обери підказку нижче.";
-  if (/(гра|пограт|полюван|лазер|мишк|play)/i.test(q)) {
-    return "Хочеш пограти? Натисни «Пограти» — побігаємо за лазером або мишкою.";
+  if (!q) return t("ink.match.empty");
+  if (/(гра|пограт|полюван|лазер|мишк|play|game|laser|mouse)/i.test(q)) {
+    return t("ink.match.play");
   }
-  if (/(привіт|вітаю|hello|hi|здраст)/i.test(q)) {
-    return "Привіт! Я поруч. Можу порекомендувати книгу, відкрити каталог або зв’язати зі службою підтримки.";
+  if (/(привіт|вітаю|hello|hi|здраст|hey)/i.test(q)) {
+    return t("ink.match.hello");
   }
-  if (/(рекоменд|порекоменд|що почита)/i.test(q)) {
-    return "Натисни «Порекомендувати книгу» — підберемо щось цікаве.";
+  if (/(рекоменд|порекоменд|що почита|recommend|suggest)/i.test(q)) {
+    return t("ink.match.recommend");
   }
-  if (/(книг|підібр|read)/i.test(q)) {
-    return "Для підбору історії натисни «Підібрати книгу» або «Порекомендувати книгу».";
+  if (/(книг|підібр|read|book|find)/i.test(q)) {
+    return t("ink.match.book");
   }
-  if (/(підтримк|скарг|допомог|support|контакт|зв.?язат)/i.test(q)) {
-    return "Служба підтримки — кнопка «Служба підтримки». Там можна залишити звернення.";
+  if (/(підтримк|скарг|допомог|support|контакт|зв.?язат|help|contact)/i.test(q)) {
+    return t("ink.match.support");
   }
-  if (/(акці|знижк|промо|promo)/i.test(q)) {
-    return "Актуальні пропозиції — у розділі «Акції».";
+  if (/(акці|знижк|промо|promo|deal|discount)/i.test(q)) {
+    return t("ink.match.promos");
   }
   if (/(доставк|оплат|нова пошта|payment|delivery)/i.test(q)) {
-    return "Умови оплати й доставки зібрані на сторінці «Оплата й доставка».";
+    return t("ink.match.payment");
   }
-  if (/(каталог|жанр|автор|shop|product)/i.test(q)) {
-    return "Каталог відкривається кнопкою нижче. Там можна фільтрувати за жанром, мовою й ціною.";
+  if (/(каталог|жанр|автор|shop|product|catalog)/i.test(q)) {
+    return t("ink.match.catalog");
   }
-  if (/(хто ти|що ти|інк|ink|помічник)/i.test(q)) {
-    return "Я Ink. Живу в будиночку справа й з’являюсь, коли дзвонить дзвіночок.";
+  if (/(хто ти|що ти|інк|ink|помічник|who are you|assistant)/i.test(q)) {
+    return t("ink.match.who");
   }
-  if (/(дякую|thanks|спасиб)/i.test(q)) {
-    return "Завжди радий допомогти. Якщо знову знадобиться — подзвони в дзвіночок.";
+  if (/(дякую|thanks|спасиб|thank)/i.test(q)) {
+    return t("ink.match.thanks");
   }
-  return "Я ще вчуся розуміти складні питання. Спробуй швидкі дії нижче — підтримка, рекомендація книги, акції…";
+  return t("ink.match.fallback");
 }
 
 export default function InkChatPanel({ onClose, onPlayGame }: InkChatPanelProps) {
+  const t = useTranslations();
+  const lp = useLocalizedPath();
+  const welcome = t("ink.welcome");
+
+  const quickReplies = useMemo<QuickReply[]>(
+    () => [
+      {
+        id: "play",
+        label: t("ink.quick.playLabel"),
+        reply: t("ink.quick.playReply"),
+        action: "play",
+      },
+      {
+        id: "recommend",
+        label: t("ink.quick.recommendLabel"),
+        reply: t("ink.quick.recommendReply"),
+        href: lp("/pick-book"),
+      },
+      {
+        id: "pickBook",
+        label: t("ink.quick.pickBookLabel"),
+        reply: t("ink.quick.pickBookReply"),
+        href: lp("/pick-book"),
+      },
+      {
+        id: "catalog",
+        label: t("ink.quick.catalogLabel"),
+        reply: t("ink.quick.catalogReply"),
+        href: lp("/products"),
+      },
+      {
+        id: "support",
+        label: t("ink.quick.supportLabel"),
+        reply: t("ink.quick.supportReply"),
+        href: lp("/complaints"),
+      },
+      {
+        id: "promos",
+        label: t("ink.quick.promosLabel"),
+        reply: t("ink.quick.promosReply"),
+        href: lp("/promotions"),
+      },
+      {
+        id: "payment",
+        label: t("ink.quick.paymentLabel"),
+        reply: t("ink.quick.paymentReply"),
+        href: lp("/payment-delivery"),
+      },
+      {
+        id: "who",
+        label: t("ink.quick.whoLabel"),
+        reply: t("ink.quick.whoReply"),
+      },
+    ],
+    [lp, t],
+  );
+
   const [messages, setMessages] = useState<ChatMessage[]>([
-    {
-      id: "welcome",
-      from: "ink",
-      text: "Мурр… Ти подзвонив — я тут. Чим допомогти?",
-    },
+    { id: "welcome", from: "ink", text: welcome },
   ]);
   const [draft, setDraft] = useState("");
   const listRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    setMessages([{ id: "welcome", from: "ink", text: welcome }]);
+  }, [welcome]);
 
   useEffect(() => {
     const el = listRef.current;
@@ -130,7 +150,7 @@ export default function InkChatPanel({ onClose, onPlayGame }: InkChatPanelProps)
     ]);
   };
 
-  const handleQuick = (item: (typeof QUICK_REPLIES)[number]) => {
+  const handleQuick = (item: QuickReply) => {
     pushUser(item.label);
     window.setTimeout(() => {
       pushInk(item.reply);
@@ -146,13 +166,13 @@ export default function InkChatPanel({ onClose, onPlayGame }: InkChatPanelProps)
     if (!text) return;
     pushUser(text);
     setDraft("");
-    window.setTimeout(() => pushInk(matchReply(text)), 320);
+    window.setTimeout(() => pushInk(matchReply(text, t)), 320);
   };
 
   return (
     <div
       role="dialog"
-      aria-label="Діалог з Ink"
+      aria-label={t("ink.dialogAria")}
       className="ink-panel-in flex w-[300px] flex-col overflow-hidden rounded-[12px] border border-[#005B33]/30 bg-[#F5F3EE] shadow-[0_8px_28px_rgba(36,36,36,0.28)]"
     >
       <div className="flex items-center justify-between bg-[#005B33] px-3 py-2 text-white">
@@ -163,7 +183,7 @@ export default function InkChatPanel({ onClose, onPlayGame }: InkChatPanelProps)
         <button
           type="button"
           onClick={onClose}
-          aria-label="Закрити діалог з Ink"
+          aria-label={t("ink.closeAria")}
           className="rounded px-2 py-0.5 text-lg leading-none text-white/90 transition-colors hover:bg-white/15 hover:text-white"
         >
           ×
@@ -189,10 +209,10 @@ export default function InkChatPanel({ onClose, onPlayGame }: InkChatPanelProps)
       </div>
 
       <div className="flex flex-wrap gap-1.5 border-t border-[#005B33]/15 px-3 py-2">
-        {QUICK_REPLIES.map((item) =>
+        {quickReplies.map((item) =>
           item.href ? (
             <Link
-              key={item.label}
+              key={item.id}
               href={item.href}
               onClick={() => handleQuick(item)}
               className="rounded-full border border-[#005B33]/35 bg-white px-2.5 py-1 text-[11px] font-medium text-[#005B33] transition-colors hover:border-[#005B33] hover:bg-[#E8F5EF]"
@@ -201,7 +221,7 @@ export default function InkChatPanel({ onClose, onPlayGame }: InkChatPanelProps)
             </Link>
           ) : (
             <button
-              key={item.label}
+              key={item.id}
               type="button"
               onClick={() => handleQuick(item)}
               className="rounded-full border border-[#005B33]/35 bg-white px-2.5 py-1 text-[11px] font-medium text-[#005B33] transition-colors hover:border-[#005B33] hover:bg-[#E8F5EF]"
@@ -219,15 +239,15 @@ export default function InkChatPanel({ onClose, onPlayGame }: InkChatPanelProps)
         <input
           value={draft}
           onChange={(e) => setDraft(e.target.value)}
-          placeholder="Напиши Ink…"
-          aria-label="Повідомлення для Ink"
+          placeholder={t("ink.placeholder")}
+          aria-label={t("ink.messageAria")}
           className="min-w-0 flex-1 rounded-[8px] border border-gray-300 bg-white px-2.5 py-1.5 text-[13px] text-[#242424] outline-none focus:border-[#005B33]"
         />
         <button
           type="submit"
           className="rounded-[8px] bg-[#005B33] px-3 py-1.5 text-[12px] font-semibold text-white transition-colors hover:bg-[#004d2b]"
         >
-          Надіслати
+          {t("ink.send")}
         </button>
       </form>
     </div>

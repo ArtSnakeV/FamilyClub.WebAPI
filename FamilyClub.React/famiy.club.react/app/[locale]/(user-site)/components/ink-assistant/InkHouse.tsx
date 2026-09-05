@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "@/lib/i18n/LocaleProvider";
 import { INK_ASSETS, type InkPhase } from "./inkAssets";
 import { useSpriteAnimation } from "./useSpriteAnimation";
 
@@ -39,6 +40,7 @@ export default function InkHouse({
   onBellComplete,
   reducedMotion,
 }: InkHouseProps) {
+  const t = useTranslations();
   const isOpen = phase === "open" || phase === "emerging";
   const isRinging = phase === "ringing";
   const interactive = phase === "idle";
@@ -65,7 +67,7 @@ export default function InkHouse({
       <div className="relative" style={{ width: DISP_W, height: DISP_H }}>
         <img
           src={houseSrc}
-          alt={isOpen ? "Будиночок Ink — порожній" : "Будиночок Ink з котом"}
+          alt={isOpen ? t("ink.houseEmptyAlt") : t("ink.houseWithCatAlt")}
           className="pointer-events-none absolute inset-0 h-full w-full object-fill"
           draggable={false}
         />
@@ -74,7 +76,7 @@ export default function InkHouse({
         {interactive && (
           <button
             type="button"
-            aria-label="Покликати Ink — натисни на котика в кружечку"
+            aria-label={t("ink.callCatAria")}
             onClick={onActivate}
             className="group absolute z-10 cursor-pointer rounded-full border-0 bg-transparent p-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#005B33]"
             style={{
@@ -97,7 +99,7 @@ export default function InkHouse({
 
         <button
           type="button"
-          aria-label="Подзвонити в дзвіночок Ink"
+          aria-label={t("ink.ringBellAria")}
           disabled={!interactive && !isRinging}
           onClick={interactive ? onActivate : undefined}
           className={`absolute z-20 border-0 bg-transparent p-0 ${

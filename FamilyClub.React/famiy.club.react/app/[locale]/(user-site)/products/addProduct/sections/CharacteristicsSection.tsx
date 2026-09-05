@@ -1,3 +1,5 @@
+"use client";
+
 import {
   LanguageDto,
   FormatDto,
@@ -12,6 +14,7 @@ import AgeRestrictions from "@/app/(user-site)/products/addProduct/AgeRestrictio
 import BookSizeSelectForm from "@/app/(user-site)/products/addProduct/BookSizeSelectForm";
 import CoverTypeSelect from "@/app/(user-site)/products/addProduct/CoverTypeSelect";
 import FormatBook from "@/app/(user-site)/products/addProduct/FormatBook";
+import { useTranslations } from "@/lib/i18n/LocaleProvider";
 
 type Props = {
   form: ProductDto;
@@ -30,10 +33,12 @@ export function CharacteristicsSection({
   bookSizes,
   ageRestrictions,
 }: Props) {
+  const t = useTranslations();
+
   return (
     <div className="w-[500px] h-[950px] flex -mt-[10px] flex-col">
       <SectionCard
-        title="Характеристики"
+        title={t("sellerProduct.characteristics")}
         titleMt="top-[48px]"
         titlePos="relative"
         backgroundImage="/images/addProducts/Rectangle 314.svg"
@@ -48,7 +53,7 @@ export function CharacteristicsSection({
           </div>
           <div className="flex flex-col w-[180px]">
             <NumberInput
-              label="Рік видання *"
+              label={t("sellerProduct.year")}
               placeholder={String(new Date().getFullYear())}
               value={form.publishingYear}
               onChange={(v) => setField("publishingYear", v)}
@@ -67,7 +72,7 @@ export function CharacteristicsSection({
           </div>
           <div className="flex flex-col w-[180px]">
             <NumberInput
-              label="Кількість сторінок *"
+              label={t("sellerProduct.pages")}
               placeholder="567"
               value={form.pageCount}
               onChange={(v) => setField("pageCount", v)}
@@ -86,7 +91,7 @@ export function CharacteristicsSection({
           </div>
           <div className="flex flex-col w-[180px]">
             <NumberInput
-              label="Вага"
+              label={t("sellerProduct.weight")}
               placeholder="1180g"
               value={form.weightGrams}
               onChange={(v) => setField("weightGrams", v)}
@@ -107,7 +112,7 @@ export function CharacteristicsSection({
         <div className="flex flex-row relative top-[22px] gap-2 h-[164px] justify-around">
           <div className="flex flex-col w-[180px]">
             <NumberInput
-              label="Кількість в наявності"
+              label={t("sellerProduct.stockQty")}
               value={form.quantityInStock}
               onChange={(v) => setField("quantityInStock", v)}
               className="w-[180px] text-[16px] "
@@ -115,7 +120,7 @@ export function CharacteristicsSection({
           </div>
           <div className="flex flex-col w-[180px]">
             <NumberInput
-              label="Кількість товару в наборі"
+              label={t("sellerProduct.setQty")}
               value={form.itemsInSet}
               onChange={(v) => setField("itemsInSet", v)}
               className="w-[180px] text-[16px]"

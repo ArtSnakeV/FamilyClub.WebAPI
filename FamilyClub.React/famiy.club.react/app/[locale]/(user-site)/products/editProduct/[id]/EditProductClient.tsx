@@ -13,9 +13,15 @@ import { useISBNLookup } from "@/app/(user-site)/products/addProduct/hooks/useIS
 import useEditForm from "./hooks/useEditForm";
 import useSubmitEdit from "./hooks/useSubmitEdit";
 import ButtonReturn from "../../addProduct/ui/ButtonReturn";
+import {
+  useLocalizedPath,
+  useTranslations,
+} from "@/lib/i18n/LocaleProvider";
 
 export default function EditProductClient({ id }: { id: string }) {
   const router = useRouter();
+  const t = useTranslations();
+  const lp = useLocalizedPath();
   const productId = Number(id);
   const {
     form,
@@ -75,7 +81,9 @@ export default function EditProductClient({ id }: { id: string }) {
   if (formLoading) {
     return (
       <div className="w-full min-h-screen flex items-center justify-center">
-        <p className="text-[var(--color-black)] text-[24px]">Завантаження...</p>
+        <p className="text-[var(--color-black)] text-[24px]">
+          {t("sellerProduct.loading")}
+        </p>
       </div>
     );
   }
@@ -93,10 +101,10 @@ export default function EditProductClient({ id }: { id: string }) {
         </div>
         <div className="flex flex-col items-center mt-[100px]">
           <h1 className="text-[var(--color-black)] w-[600px] font-['Roboto_Mono'] font-bold text-[44px] leading-[150%] tracking-[-0.011em] text-center">
-            Редагувати книгу
+            {t("sellerProduct.editTitle")}
           </h1>
           <p className="text-[var(--color-black)] -mt-2 font-sans font-normal text-[22px] leading-[150%] tracking-[-0.011em] text-center">
-            Змінити інформацію
+            {t("sellerProduct.editSubtitle")}
           </p>
         </div>
 
@@ -139,8 +147,8 @@ export default function EditProductClient({ id }: { id: string }) {
                 setField={setField}
                 loading={loading}
                 onPublish={handleSubmit}
-                onSaveDraft={() => { }}
-                onCancel={() => router.push(`/products/${id}`)}
+                onSaveDraft={() => {}}
+                onCancel={() => router.push(lp(`/products/${id}`))}
               />
             </div>
           </div>

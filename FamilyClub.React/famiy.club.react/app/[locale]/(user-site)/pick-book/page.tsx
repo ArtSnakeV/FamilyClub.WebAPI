@@ -21,8 +21,14 @@ import type {
 } from "@/lib/api/generated";
 import { pickRecommendedBooks } from "@/lib/recommendations/pickBooks";
 import { mapProductToBookCard } from "@/lib/recommendations/mapProductToBook";
+import {
+  useLocalizedPath,
+  useTranslations,
+} from "@/lib/i18n/LocaleProvider";
 
 export default function PickBookPage() {
+  const t = useTranslations();
+  const lp = useLocalizedPath();
   const { user, loading: userLoading } = useCurrentUser();
   const { favorites, toggleFavorite } = useFavorites(user?.id);
   const isFav = (id?: number) => !!id && favorites.some((f) => f.id === id);
@@ -142,49 +148,51 @@ export default function PickBookPage() {
   const newBookCards = toCards(newBooks.slice(0, 8));
 
   const subtitle = basedOnPurchases
-    ? "Підібрали за жанрами та авторами з твоїх замовлень — плюс свіжі новинки."
+    ? t("pickBook.subtitlePurchases")
     : basedOnPreferences
-      ? "Орієнтуємось на твоє вибране — і додаємо новинки."
+      ? t("pickBook.subtitleFavorites")
       : user
-        ? "Поки немає покупок — ось новинки, з яких варто почати."
-        : "Увійди в акаунт після покупок — підберемо схоже. Зараз показуємо новинки.";
+        ? t("pickBook.subtitleGuestNew")
+        : t("pickBook.subtitleLoggedOut");
 
   return (
     <main className="bg-[#f5f3ee] text-[#242424] min-h-screen overflow-x-hidden pb-16">
       <section className="relative mx-auto max-w-[1180px] px-4 pt-[120px] md:pt-[180px] pb-6 lg:px-0">
         <p className="font-mono text-[14px] text-[#005B33] mb-2">
-          <Link href="/" className="hover:underline">
-            Головна
+          <Link href={lp("/")} className="hover:underline">
+            {t("pickBook.breadcrumbHome")}
           </Link>
           <span className="mx-2 text-[#242424]/40">/</span>
-          Підібрати книгу
+          {t("pickBook.title")}
         </p>
         <h1 className="font-serif text-[36px] md:text-[48px] font-bold leading-tight">
-          Підібрати книгу
+          {t("pickBook.title")}
         </h1>
         <p className="mt-3 max-w-[640px] text-[16px] md:text-[18px] text-[#242424]/80">
           {subtitle}
         </p>
         <div className="mt-6 flex flex-wrap gap-3">
           <Link
-            href="/products"
+            href={lp("/products")}
             className="inline-flex h-[48px] items-center rounded-full border border-[#005B33] px-6 text-[16px] font-semibold text-[#005B33] transition-transform hover:scale-105"
           >
-            Весь каталог
+            {t("pickBook.allCatalog")}
           </Link>
         </div>
       </section>
 
       {loading || userLoading ? (
         <p className="mx-auto max-w-[1220px] px-4 py-16 text-[#6B6B6B]">
-          Шукаємо ідеї для тебе…
+          {t("pickBook.loading")}
         </p>
       ) : (
         <>
           {recommendedCards.length > 0 ? (
             <BookSection
               title={
-                basedOnPreferences ? "Підібрано для тебе" : "Почни з новинок"
+                basedOnPreferences
+                  ? t("pickBook.sectionForYou")
+                  : t("pickBook.sectionStartNew")
               }
               books={recommendedCards}
               pillWidth={basedOnPreferences ? 420 : 430}
@@ -193,10 +201,9 @@ export default function PickBookPage() {
             />
           ) : null}
 
-          {/* Always show новинки as a dedicated shelf when there are personal picks */}
           {basedOnPreferences && newBookCards.length > 0 ? (
             <BookSection
-              title="Новинки"
+              title={t("pickBook.sectionNew")}
               books={newBookCards}
               pillWidth={237}
               isFav={isFav}
@@ -206,7 +213,7 @@ export default function PickBookPage() {
 
           {!basedOnPreferences && newBookCards.length > 4 ? (
             <BookSection
-              title="Ще новинки"
+              title={t("pickBook.sectionMoreNew")}
               books={newBookCards.slice(4)}
               pillWidth={320}
               isFav={isFav}
@@ -217,13 +224,13 @@ export default function PickBookPage() {
           {!loading && recommendedCards.length === 0 && newBookCards.length === 0 ? (
             <div className="mx-auto max-w-[1220px] px-4 py-20 text-center">
               <p className="text-[18px] text-[#6B6B6B] mb-6">
-                Поки немає книг для підбору. Зазирни в каталог.
+                {t("pickBook.empty")}
               </p>
               <Link
-                href="/products"
+                href={lp("/products")}
                 className="inline-flex h-[56px] items-center gap-2 rounded-full bg-[#005B33] px-8 text-[18px] font-semibold text-[#f5f3ee] shadow-[0px_4px_12px_rgba(0,0,0,0.25)] transition-transform hover:scale-105"
               >
-                До каталогу
+                {t("pickBook.toCatalog")}
                 <span>→</span>
               </Link>
             </div>

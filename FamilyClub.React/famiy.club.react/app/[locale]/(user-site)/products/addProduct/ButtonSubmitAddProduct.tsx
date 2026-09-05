@@ -1,3 +1,7 @@
+"use client";
+
+import { useTranslations } from "@/lib/i18n/LocaleProvider";
+
 type Props = {
   onPublish?: () => void;
   onSaveDraft?: () => void;
@@ -11,6 +15,8 @@ export default function ButtonSubmitAddProduct({
   onCancel,
   loading,
 }: Props) {
+  const t = useTranslations();
+
   return (
     <div className="w-[250px] flex flex-col gap-4 text-[18px] font-medium">
       <button
@@ -28,7 +34,7 @@ export default function ButtonSubmitAddProduct({
           active:scale-[0.98]
         "
       >
-        Опублікувати
+        {t("sellerProduct.publish")}
       </button>
 
       <button
@@ -46,7 +52,7 @@ export default function ButtonSubmitAddProduct({
           active:scale-[0.98]
         "
       >
-        Зберегти як чернетку
+        {t("sellerProduct.saveDraft")}
       </button>
 
       <button
@@ -62,7 +68,7 @@ export default function ButtonSubmitAddProduct({
           active:scale-[0.98]
         "
       >
-        Скасувати
+        {t("sellerProduct.cancel")}
       </button>
     </div>
   );

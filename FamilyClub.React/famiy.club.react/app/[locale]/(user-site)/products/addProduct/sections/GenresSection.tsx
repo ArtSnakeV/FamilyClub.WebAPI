@@ -1,5 +1,8 @@
+"use client";
+
 import { CategoryDto } from "@/lib/api/generated";
 import CategoryList from "@/app/(user-site)/products/addProduct/CategoryList";
+import { useTranslations } from "@/lib/i18n/LocaleProvider";
 
 type Props = {
   categories: CategoryDto[];
@@ -8,6 +11,8 @@ type Props = {
 };
 
 export function GenresSection({ categories, selectedIds, onToggle }: Props) {
+  const t = useTranslations();
+
   return (
     <div className="w-[480px] h-[480px] relative flex flex-col ml-3 -top-[184px]">
       <div
@@ -20,9 +25,11 @@ export function GenresSection({ categories, selectedIds, onToggle }: Props) {
         >
           <div className="ml-[60px] w-[262px] gap-4 flex flex-col">
             <p className="h-[25px] font-['Roboto_Mono'] relative -ml-4 font-semibold text-[22px] leading-[150%] tracking-[-0.011em]">
-              Жанри
+              {t("sellerProduct.genres")}
             </p>
-            <p className="h-[12px] text-[12px] relative -ml-4 -mt-3">(можна обрати декілька)</p>
+            <p className="h-[12px] text-[12px] relative -ml-4 -mt-3">
+              {t("sellerProduct.genresHint")}
+            </p>
           </div>
           <CategoryList
             categories={categories}

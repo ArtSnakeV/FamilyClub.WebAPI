@@ -3,10 +3,16 @@
 import React, { useEffect, useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import MobileFiltersView from "./MobileFiltersView";
+import {
+  useLocalizedPath,
+  useTranslations,
+} from "@/lib/i18n/LocaleProvider";
 
 function CategoriesContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const t = useTranslations();
+  const lp = useLocalizedPath();
   const [isMobile, setIsMobile] = useState<boolean | null>(null);
 
   useEffect(() => {
@@ -21,9 +27,11 @@ function CategoriesContent() {
   useEffect(() => {
     if (isMobile === false) {
       const queryString = searchParams?.toString();
-      router.replace(`/products${queryString ? `?${queryString}` : ""}`);
+      router.replace(
+        `${lp("/products")}${queryString ? `?${queryString}` : ""}`,
+      );
     }
-  }, [isMobile, router, searchParams]);
+  }, [isMobile, router, searchParams, lp]);
 
   if (isMobile === null) {
     return <div className="min-h-screen bg-[#c7a381]" />;
@@ -32,7 +40,7 @@ function CategoriesContent() {
   if (!isMobile) {
     return (
       <div className="min-h-screen bg-[var(--background-main)] pt-[200px] pb-12 flex justify-center items-center">
-        <p className="text-gray-600 font-mono">Перенаправлення в каталог...</p>
+        <p className="text-gray-600 font-mono">{t("catalog.redirecting")}</p>
       </div>
     );
   }

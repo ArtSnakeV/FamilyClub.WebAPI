@@ -13,9 +13,15 @@ import { SaleSection } from "./sections/SaleSection";
 import { useISBNLookup } from "./hooks/useISBNLookup";
 import { useEffect } from "react";
 import ButtonReturn from "./ui/ButtonReturn";
+import {
+  useLocalizedPath,
+  useTranslations,
+} from "@/lib/i18n/LocaleProvider";
 
 export default function AddProductPage() {
   const router = useRouter();
+  const t = useTranslations();
+  const lp = useLocalizedPath();
   const { form, setField, toggleCategory, saveDraft, clearDraft } =
     useProductForm();
   const data = useProductData();
@@ -59,10 +65,10 @@ export default function AddProductPage() {
         </div>
         <div className="flex flex-col items-center mt-[100px]">
           <h1 className="text-[var(--color-black)] w-[600px] font-['Roboto_Mono'] font-bold text-[44px] leading-[150%] tracking-[-0.011em] text-center">
-            Додати нову книгу
+            {t("sellerProduct.addTitle")}
           </h1>
           <p className="text-[var(--color-black)] -mt-2 font-sans font-normal text-[22px] leading-[150%] tracking-[-0.011em] text-center">
-            Заповни інформацію
+            {t("sellerProduct.addSubtitle")}
           </p>
         </div>
 
@@ -108,7 +114,7 @@ export default function AddProductPage() {
                 onSaveDraft={saveDraft}
                 onCancel={() => {
                   clearDraft();
-                  router.push("/products");
+                  router.push(lp("/products"));
                 }}
               />
             </div>
