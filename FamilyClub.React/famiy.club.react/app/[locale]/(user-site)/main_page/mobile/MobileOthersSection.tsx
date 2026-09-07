@@ -2,6 +2,7 @@
 
 import React from "react";
 import MobileBookCard from "./MobileBookCard";
+import { useTranslations } from "@/lib/i18n/LocaleProvider";
 
 type Book = {
   title: string;
@@ -18,6 +19,8 @@ type MobileOthersSectionProps = {
 };
 
 export default function MobileOthersSection({ books }: MobileOthersSectionProps) {
+  const t = useTranslations();
+
   if (!books || books.length === 0) return null;
 
   return (
@@ -25,7 +28,7 @@ export default function MobileOthersSection({ books }: MobileOthersSectionProps)
       {/* Title "Інші" left-aligned (Figma Node 2199:3282) */}
       <div className="px-4 mb-2">
         <h2 className="font-mono text-[32px] sm:text-[36px] font-bold text-[#242424] leading-none tracking-tight">
-          Інші
+          {t("home.mobile.others")}
         </h2>
       </div>
 

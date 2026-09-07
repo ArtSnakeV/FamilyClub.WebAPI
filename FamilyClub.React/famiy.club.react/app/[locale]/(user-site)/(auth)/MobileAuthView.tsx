@@ -6,10 +6,13 @@ import { useRouter } from "next/navigation";
 import { authService } from "@/lib/api/services";
 import { loginErrorMessage } from "@/lib/auth/loginErrorMessage";
 import { setAuthSession } from "@/lib/auth/tokenStorage";
+import { useLocalizedPath, useTranslations } from "@/lib/i18n/LocaleProvider";
 import AuthBrandLogo from "./components/AuthBrandLogo";
 
 export default function MobileAuthView() {
   const router = useRouter();
+  const t = useTranslations();
+  const lp = useLocalizedPath();
   const [formData, setFormData] = useState({ login: "", password: "" });
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
@@ -19,7 +22,7 @@ export default function MobileAuthView() {
 
   const handleExternalLogin = (provider: "Google") => {
     const apiBase = process.env.NEXT_PUBLIC_API_URL || "";
-    const returnUrl = encodeURIComponent(`${window.location.origin}/auth/callback`);
+    const returnUrl = encodeURIComponent(`${window.location.origin}${lp("/auth/callback")}`);
     window.location.href = `${apiBase}/api/AuthClubMember/external-login?provider=${provider}&returnUrl=${returnUrl}`;
   };
 
@@ -27,7 +30,7 @@ export default function MobileAuthView() {
     if (e) e.preventDefault();
     const email = formData.login.trim();
     if (!email || !formData.password) {
-      setError("Будь ласка, заповніть всі поля");
+      setError(t("auth.fillAllFields"));
       return;
     }
     setLoading(true);
@@ -42,7 +45,7 @@ export default function MobileAuthView() {
       });
 
       if (!response?.token) {
-        setError("Не вдалося отримати токен. Спробуйте ще раз.");
+        setError(t("auth.tokenError"));
         return;
       }
 
@@ -52,12 +55,12 @@ export default function MobileAuthView() {
         rememberMe
       );
       window.dispatchEvent(new Event("auth-change"));
-      router.push("/");
+      router.push(lp("/"));
     } catch (err) {
       setError(
         await loginErrorMessage(err, {
-          invalidCredentials: "Невірний email або пароль",
-          accountLocked: "Акаунт тимчасово заблоковано. Спробуйте пізніше.",
+          invalidCredentials: t("auth.invalidCredentials"),
+          accountLocked: t("auth.accountLocked"),
         }),
       );
     } finally {
@@ -72,7 +75,7 @@ export default function MobileAuthView() {
           type="button"
           onClick={() => router.back()}
           className="w-[40px] h-[40px] rounded-full bg-[#f5f3ee]/50 flex items-center justify-center text-[20px] text-[#242424] hover:bg-[#f5f3ee] transition-colors active:scale-95 shadow-sm"
-          aria-label="Назад"
+          aria-label={t("auth.backAria")}
         >
           ←
         </button>
@@ -92,7 +95,7 @@ export default function MobileAuthView() {
 
         <div className="flex flex-col gap-[10px] w-full">
           <label className="text-[20px] font-semibold text-[#242424]">
-            Email
+            {t("auth.email")}
           </label>
           <div className="bg-white h-[50px] w-full rounded-[9px] px-[20px] drop-shadow-[0px_0px_5px_rgba(0,0,0,0.25)] flex items-center">
             <input
@@ -102,7 +105,7 @@ export default function MobileAuthView() {
               onChange={(e) =>
                 setFormData({ ...formData, login: e.target.value })
               }
-              placeholder="Введіть email"
+              placeholder={t("auth.emailPlaceholder")}
               className="w-full bg-transparent outline-none text-[16px] text-[#242424] placeholder:text-[#242424]/50"
             />
           </div>
@@ -111,13 +114,13 @@ export default function MobileAuthView() {
         <div className="flex flex-col gap-[10px] w-full">
           <div className="flex items-end justify-between w-full">
             <label className="text-[20px] font-semibold text-[#242424]">
-              Пароль
+              {t("auth.password")}
             </label>
             <Link
-              href="/forgot-password"
+              href={lp("/forgot-password")}
               className="text-[14px] text-[#242424] hover:underline"
             >
-              Забули пароль?
+              {t("auth.forgotPassword")}
             </Link>
           </div>
           <div className="bg-white h-[50px] w-full rounded-[9px] px-[20px] drop-shadow-[0px_0px_5px_rgba(0,0,0,0.25)] flex items-center justify-between gap-2">
@@ -127,7 +130,7 @@ export default function MobileAuthView() {
               onChange={(e) =>
                 setFormData({ ...formData, password: e.target.value })
               }
-              placeholder="Введіть пароль"
+              placeholder={t("auth.passwordPlaceholder")}
               className="w-full bg-transparent outline-none text-[16px] text-[#242424] placeholder:text-[#242424]/50"
             />
             <button
@@ -136,7 +139,7 @@ export default function MobileAuthView() {
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
               className="flex-shrink-0 w-[30px] h-[30px] flex items-center justify-center"
-              aria-label="Показати або приховати пароль"
+              aria-label={t("auth.togglePasswordAria")}
             >
               <img
                 src={
@@ -162,7 +165,7 @@ export default function MobileAuthView() {
             onChange={(e) => setRememberMe(e.target.checked)}
             className="w-4 h-4 accent-[#005b33]"
           />
-          <span className="text-[15px] text-[#242424]">Запамʼятати мене</span>
+          <span className="text-[15px] text-[#242424]">{t("auth.rememberMe")}</span>
         </label>
 
         <button
@@ -170,12 +173,12 @@ export default function MobileAuthView() {
           disabled={loading}
           className="mt-1 bg-[#005b33] h-[50px] w-full rounded-[9px] drop-shadow-[0px_0px_5px_rgba(0,0,0,0.25)] flex items-center justify-center text-[20px] text-white transition-all hover:brightness-110 active:scale-[0.98] disabled:opacity-70"
         >
-          {loading ? "Завантаження..." : "Увійти"}
+          {loading ? t("auth.loading") : t("auth.signIn")}
         </button>
 
         <div className="flex items-center justify-between gap-4 w-full my-1">
           <div className="flex-1 h-px bg-[#242424]" />
-          <span className="text-[18px] text-[#242424]">або</span>
+          <span className="text-[18px] text-[#242424]">{t("auth.or")}</span>
           <div className="flex-1 h-px bg-[#242424]" />
         </div>
 
@@ -190,19 +193,19 @@ export default function MobileAuthView() {
             className="w-[28px] h-[28px] object-contain"
           />
           <span className="text-[18px] text-[#242424]">
-            Продовжити через Google
+            {t("auth.continueGoogle")}
           </span>
         </button>
       </form>
 
       <div className="w-full max-w-[392px] text-center mt-6 mb-4">
         <p className="text-[#242424] text-[15px]">
-          Немає аккаунту?{" "}
+          {t("auth.noAccount")}{" "}
           <Link
-            href="/register"
+            href={lp("/register")}
             className="text-[#005b33] font-semibold hover:underline"
           >
-            Зареєструватися.
+            {t("auth.register")}
           </Link>
         </p>
       </div>

@@ -8,9 +8,12 @@ import {
   confirmPasswordReset,
   requestPasswordResetCode,
 } from "@/lib/api/passwordReset";
+import { useLocalizedPath, useTranslations } from "@/lib/i18n/LocaleProvider";
 
 export default function MobileResetPasswordView() {
   const router = useRouter();
+  const t = useTranslations();
+  const lp = useLocalizedPath();
   const [email, setEmail] = useState("");
   const [code, setCode] = useState(["", "", "", "", ""]);
   const [newPassword, setNewPassword] = useState("");
@@ -25,7 +28,7 @@ export default function MobileResetPasswordView() {
   const handleSendCode = async (e?: React.FormEvent) => {
     if (e) e.preventDefault();
     if (!email || !email.includes("@")) {
-      setError("Будь ласка, введіть коректну електронну пошту");
+      setError(t("auth.invalidEmail"));
       return;
     }
     setLoadingSend(true);
@@ -34,13 +37,13 @@ export default function MobileResetPasswordView() {
     try {
       await requestPasswordResetCode(email.trim());
       setCodeSent(true);
-      setInfo("Якщо акаунт існує, код надіслано на пошту (діє 15 хв).");
+      setInfo(t("auth.codeSentInfo"));
       setTimeout(() => inputRefs.current[0]?.focus(), 50);
     } catch (err) {
       setError(
         err instanceof Error
           ? err.message
-          : "Не вдалося надіслати код. Спробуйте ще раз."
+          : t("auth.sendCodeError")
       );
     } finally {
       setLoadingSend(false);
@@ -84,15 +87,15 @@ export default function MobileResetPasswordView() {
     if (e) e.preventDefault();
     const full = code.join("");
     if (full.length < 5) {
-      setError("Будь ласка, введіть 5-значний код");
+      setError(t("auth.enterCodeDigits"));
       return;
     }
     if (newPassword.length < 6) {
-      setError("Пароль має містити щонайменше 6 символів");
+      setError(t("auth.passwordMinLength"));
       return;
     }
     if (newPassword !== confirmPassword) {
-      setError("Паролі не збігаються");
+      setError(t("auth.passwordsMismatch"));
       return;
     }
     setLoadingConfirm(true);
@@ -104,10 +107,10 @@ export default function MobileResetPasswordView() {
         newPassword,
         confirmPassword,
       });
-      router.push("/login");
+      router.push(lp("/login"));
     } catch (err) {
       setError(
-        err instanceof Error ? err.message : "Невірний або застарілий код"
+        err instanceof Error ? err.message : t("auth.invalidCode")
       );
     } finally {
       setLoadingConfirm(false);
@@ -121,7 +124,7 @@ export default function MobileResetPasswordView() {
           type="button"
           onClick={() => router.back()}
           className="w-[40px] h-[40px] rounded-full bg-[#f5f3ee]/50 flex items-center justify-center text-[20px] text-[#242424] hover:bg-[#f5f3ee] transition-colors active:scale-95 shadow-sm"
-          aria-label="Назад"
+          aria-label={t("auth.backAria")}
         >
           ←
         </button>
@@ -143,7 +146,7 @@ export default function MobileResetPasswordView() {
 
         <div className="flex flex-col gap-2.5 w-full">
           <label className="text-[20px] font-semibold text-[#242424]">
-            Email
+            {t("auth.email")}
           </label>
           <div className="bg-white h-[50px] w-full rounded-[9px] px-5 drop-shadow-[0px_0px_5px_rgba(0,0,0,0.25)] flex items-center">
             <input
@@ -153,7 +156,7 @@ export default function MobileResetPasswordView() {
                 setEmail(e.target.value);
                 setError("");
               }}
-              placeholder="Введіть свою пошту"
+              placeholder={t("auth.emailOwnPlaceholder")}
               className="w-full bg-transparent outline-none text-[16px] text-[#242424] placeholder:text-[#242424]/50"
             />
           </div>
@@ -166,15 +169,15 @@ export default function MobileResetPasswordView() {
           className="bg-[#005b33] h-[50px] w-full rounded-[9px] drop-shadow-[0px_0px_5px_rgba(0,0,0,0.25)] text-[18px] text-white hover:brightness-110 active:scale-[0.98] disabled:opacity-70"
         >
           {loadingSend
-            ? "Надсилання..."
+            ? t("auth.sending")
             : codeSent
-              ? "Надіслати ще раз"
-              : "Надіслати код"}
+              ? t("auth.sendAgain")
+              : t("auth.sendCode")}
         </button>
 
         <div className="flex flex-col items-center gap-3 w-full mt-2">
           <label className="text-[20px] font-semibold text-[#242424]">
-            Введіть код
+            {t("auth.enterCode")}
           </label>
           <div className="flex items-center justify-between gap-2 w-full max-w-[355px]">
             {code.map((digit, idx) => (
@@ -198,7 +201,7 @@ export default function MobileResetPasswordView() {
 
         <div className="flex flex-col gap-2.5 w-full">
           <label className="text-[20px] font-semibold text-[#242424]">
-            Новий пароль
+            {t("auth.newPassword")}
           </label>
           <div className="bg-white h-[50px] w-full rounded-[9px] px-5 drop-shadow-[0px_0px_5px_rgba(0,0,0,0.25)] flex items-center">
             <input
@@ -208,7 +211,7 @@ export default function MobileResetPasswordView() {
                 setNewPassword(e.target.value);
                 setError("");
               }}
-              placeholder="Мінімум 6 символів"
+              placeholder={t("auth.minSixChars")}
               className="w-full bg-transparent outline-none text-[16px] text-[#242424] placeholder:text-[#242424]/50"
             />
           </div>
@@ -216,7 +219,7 @@ export default function MobileResetPasswordView() {
 
         <div className="flex flex-col gap-2.5 w-full">
           <label className="text-[20px] font-semibold text-[#242424]">
-            Підтвердіть пароль
+            {t("auth.confirmPassword")}
           </label>
           <div className="bg-white h-[50px] w-full rounded-[9px] px-5 drop-shadow-[0px_0px_5px_rgba(0,0,0,0.25)] flex items-center">
             <input
@@ -226,7 +229,7 @@ export default function MobileResetPasswordView() {
                 setConfirmPassword(e.target.value);
                 setError("");
               }}
-              placeholder="Повторіть пароль"
+              placeholder={t("auth.repeatPassword")}
               className="w-full bg-transparent outline-none text-[16px] text-[#242424] placeholder:text-[#242424]/50"
             />
           </div>
@@ -239,28 +242,28 @@ export default function MobileResetPasswordView() {
             disabled={loadingConfirm}
             className="bg-[#005b33] h-[50px] w-full rounded-[9px] drop-shadow-[0px_0px_5px_rgba(0,0,0,0.25)] text-[18px] text-white hover:brightness-110 active:scale-[0.98] disabled:opacity-70"
           >
-            {loadingConfirm ? "Збереження..." : "Змінити пароль"}
+            {loadingConfirm ? t("auth.saving") : t("auth.changePassword")}
           </button>
 
           <button
             type="button"
-            onClick={() => router.push("/login")}
+            onClick={() => router.push(lp("/login"))}
             disabled={loadingConfirm}
             className="border-2 border-[#005b33] bg-transparent h-[50px] w-full rounded-[9px] shadow-[0px_0px_10px_0px_rgba(0,0,0,0.25)] text-[18px] text-[#005b33] hover:bg-[#005b33]/10 active:scale-[0.98] disabled:opacity-70"
           >
-            Скасувати
+            {t("auth.cancel")}
           </button>
         </div>
       </div>
 
       <div className="w-full max-w-[392px] text-center mt-6 mb-4">
         <p className="text-[#242424] text-[16px]">
-          Згадали пароль?{" "}
+          {t("auth.rememberedPassword")}{" "}
           <Link
-            href="/login"
+            href={lp("/login")}
             className="text-[#005b33] font-semibold hover:underline"
           >
-            Увійти
+            {t("auth.signIn")}
           </Link>
         </p>
       </div>

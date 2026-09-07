@@ -16,23 +16,24 @@ import {
   FormatDto,
   AgeRestrictionDto,
 } from "@/lib/api/generated";
+import { useLocalizedPath, useTranslations } from "@/lib/i18n/LocaleProvider";
 
-const FALLBACK_CATEGORIES: CategoryDto[] = [
-  { id: 1, categoryName: "Роман" },
-  { id: 2, categoryName: "Трилер" },
-  { id: 3, categoryName: "Детектив" },
-  { id: 4, categoryName: "Біографія" },
-  { id: 5, categoryName: "Поезія" },
-  { id: 6, categoryName: "Дитяча література" },
-  { id: 7, categoryName: "Сучасна література" },
-  { id: 8, categoryName: "Навчання" },
-  { id: 9, categoryName: "Фентезі" },
-  { id: 10, categoryName: "Наукова фантастика" },
-  { id: 11, categoryName: "Підліткова література" },
-  { id: 12, categoryName: "Комікси та манга" },
-  { id: 13, categoryName: "Психологія" },
-  { id: 14, categoryName: "Пригоди" },
-  { id: 15, categoryName: "Історична література" },
+const FALLBACK_CATEGORY_KEYS = [
+  "romance",
+  "thriller",
+  "detective",
+  "biography",
+  "poetry",
+  "children",
+  "contemporary",
+  "education",
+  "fantasy",
+  "scienceFiction",
+  "youngAdult",
+  "comics",
+  "psychology",
+  "adventure",
+  "historical",
 ];
 
 const FALLBACK_AUTHORS: AuthorDTO[] = [
@@ -49,12 +50,6 @@ const FALLBACK_LANGUAGES: LanguageDto[] = [
   { id: 4, languageName: "DE" },
 ];
 
-const FALLBACK_FORMATS: FormatDto[] = [
-  { id: 1, name: "Паперова" },
-  { id: 2, name: "eBook" },
-  { id: 3, name: "Аудіо книга" },
-];
-
 const FALLBACK_AGE_RESTRICTIONS: AgeRestrictionDto[] = [
   { id: 1, name: "0" },
   { id: 2, name: "6+" },
@@ -64,10 +59,10 @@ const FALLBACK_AGE_RESTRICTIONS: AgeRestrictionDto[] = [
 ];
 
 const YEAR_RANGES = [
-  { label: "До 2000", from: 0, to: 1999 },
-  { label: "2000 - 2010", from: 2000, to: 2010 },
-  { label: "2010 - 2020", from: 2010, to: 2020 },
-  { label: "2020+", from: 2020, to: 3000 },
+  { id: "before2000", labelKey: "header.before2000", from: 0, to: 1999 },
+  { id: "2000_2010", labelKey: "header.year2000_2010", from: 2000, to: 2010 },
+  { id: "2010_2020", labelKey: "header.year2010_2020", from: 2010, to: 2020 },
+  { id: "from2020", labelKey: "header.from2020", from: 2020, to: 3000 },
 ];
 
 type SectionId =
@@ -83,6 +78,8 @@ type SectionId =
 export default function MobileFiltersView() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const t = useTranslations();
+  const lp = useLocalizedPath();
 
   // Active expanded accordion section
   const [activeSection, setActiveSection] = useState<SectionId>(null);
@@ -129,6 +126,8 @@ export default function MobileFiltersView() {
         .map((id) => parseInt(id))
         .filter((id) => !isNaN(id));
 
+    // URL parameters are the external source of truth for this filter drawer.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setSelectedCategoryIds(parseIds("categoryId"));
     setSelectedAuthorIds(parseIds("authorId"));
     setSelectedLanguageIds(parseIds("languageId"));
@@ -151,7 +150,7 @@ export default function MobileFiltersView() {
         (r) => r.from === parseInt(yearFrom) && r.to === parseInt(yearTo)
       );
       if (match) {
-        setSelectedYearRange(match.label);
+        setSelectedYearRange(match.id);
         setCustomYear("");
       } else {
         setCustomYear(yearFrom);
@@ -190,7 +189,7 @@ export default function MobileFiltersView() {
     if (promo) params.set("promo", "true");
 
     if (selectedYearRange) {
-      const range = YEAR_RANGES.find((r) => r.label === selectedYearRange);
+      const range = YEAR_RANGES.find((r) => r.id === selectedYearRange);
       if (range) {
         params.set("yearFrom", String(range.from));
         params.set("yearTo", String(range.to));
@@ -199,7 +198,7 @@ export default function MobileFiltersView() {
       params.set("year", customYear.trim());
     }
 
-    router.push(`/products?${params.toString()}`);
+    router.push(`${lp("/products")}?${params.toString()}`);
   };
 
   const resetAllFilters = () => {
@@ -213,15 +212,24 @@ export default function MobileFiltersView() {
     setPromo(false);
     setSelectedYearRange(null);
     setCustomYear("");
-    router.push("/products");
+    router.push(lp("/products"));
   };
 
-  const displayedCategories = categories.length > 0 ? categories : FALLBACK_CATEGORIES;
+  const fallbackCategories: CategoryDto[] = FALLBACK_CATEGORY_KEYS.map((key, index) => ({
+    id: index + 1,
+    categoryName: t(`catalog.mobileFilters.categories.${key}`),
+  }));
+  const fallbackFormats: FormatDto[] = [
+    { id: 1, name: t("product.formats.paper") },
+    { id: 2, name: t("product.formats.ebook") },
+    { id: 3, name: t("product.formats.audio") },
+  ];
+  const displayedCategories = categories.length > 0 ? categories : fallbackCategories;
   const displayedAuthors = (authors.length > 0 ? authors : FALLBACK_AUTHORS).filter((a) =>
     a.authorName?.toLowerCase().includes(authorSearch.toLowerCase())
   );
   const displayedLanguages = languages.length > 0 ? languages : FALLBACK_LANGUAGES;
-  const displayedFormats = formats.length > 0 ? formats : FALLBACK_FORMATS;
+  const displayedFormats = formats.length > 0 ? formats : fallbackFormats;
   const displayedAgeRestrictions = ageRestrictions.length > 0 ? ageRestrictions : FALLBACK_AGE_RESTRICTIONS;
 
   const clipPathRibbon = "polygon(0% 0%, 100% 0%, 100% calc(100% - 18px), 50% 100%, 0% calc(100% - 18px))";
@@ -256,7 +264,7 @@ export default function MobileFiltersView() {
             {activeSection !== "genres" ? (
               <div className="w-full h-full flex items-center justify-center pb-2">
                 <span className="font-mono font-medium text-[#f5f3ee] text-[30px] sm:text-[32px] tracking-[-0.35px]">
-                  Жанри
+                  {t("header.genres")}
                 </span>
               </div>
             ) : (
@@ -277,7 +285,7 @@ export default function MobileFiltersView() {
                         />
                       </div>
                       <span className="font-sans font-semibold text-[18px] text-[#f5f3ee]">
-                        Всі жанри
+                        {t("header.allGenres")}
                       </span>
                     </button>
                   </div>
@@ -315,7 +323,7 @@ export default function MobileFiltersView() {
                   className="w-full flex justify-center items-center pt-3 pb-4 border-t border-white/10 cursor-pointer hover:bg-black/10 transition-colors"
                 >
                   <span className="font-mono font-medium text-[#f5f3ee] text-[28px] sm:text-[32px] tracking-[-0.35px]">
-                    Жанри
+                    {t("header.genres")}
                   </span>
                 </div>
               </div>
@@ -338,7 +346,7 @@ export default function MobileFiltersView() {
               {activeSection !== "authors" ? (
                 <div className="w-full h-full flex items-center justify-center pb-2">
                   <span className="font-mono font-medium text-[#f5f3ee] text-[26px] sm:text-[30px] tracking-[-0.35px]">
-                    Автори
+                    {t("header.authors")}
                   </span>
                 </div>
               ) : (
@@ -348,12 +356,12 @@ export default function MobileFiltersView() {
                     <div className="relative flex items-center bg-[#f5f3ee] rounded-full px-2.5 py-1 mb-3 shadow">
                       <input
                         type="text"
-                        placeholder="Пошук автора..."
+                        placeholder={t("catalog.mobileFilters.authorSearch")}
                         value={authorSearch}
                         onChange={(e) => setAuthorSearch(e.target.value)}
                         className="w-full bg-transparent text-[#242424] text-[14px] font-sans placeholder:text-[#242424]/50 focus:outline-none"
                       />
-                      <img src="/images/header/zoom_out_24px.svg" alt="Пошук" className="w-[18px] h-[18px] shrink-0 opacity-70 ml-1" />
+                      <img src="/images/header/zoom_out_24px.svg" alt={t("common.search")} className="w-[18px] h-[18px] shrink-0 opacity-70 ml-1" />
                     </div>
 
                     <div className="flex flex-col gap-2 max-h-[230px] overflow-y-auto pr-1">
@@ -387,7 +395,7 @@ export default function MobileFiltersView() {
                     className="w-full flex justify-center items-center pt-2 pb-4 border-t border-white/10 cursor-pointer hover:bg-black/10 transition-colors"
                   >
                     <span className="font-mono font-medium text-[#f5f3ee] text-[26px] sm:text-[30px] tracking-[-0.35px]">
-                      Автори
+                      {t("header.authors")}
                     </span>
                   </div>
                 </div>
@@ -405,7 +413,7 @@ export default function MobileFiltersView() {
               {activeSection !== "format" ? (
                 <div className="w-full h-full flex items-center justify-center pb-2">
                   <span className="font-mono font-medium text-[#f5f3ee] text-[26px] sm:text-[30px] tracking-[-0.35px]">
-                    Формат
+                    {t("header.formats")}
                   </span>
                 </div>
               ) : (
@@ -440,7 +448,7 @@ export default function MobileFiltersView() {
                     className="w-full flex justify-center items-center pt-2 pb-4 border-t border-white/10 cursor-pointer hover:bg-black/10 transition-colors"
                   >
                     <span className="font-mono font-medium text-[#f5f3ee] text-[26px] sm:text-[30px] tracking-[-0.35px]">
-                      Формат
+                      {t("header.formats")}
                     </span>
                   </div>
                 </div>
@@ -458,20 +466,20 @@ export default function MobileFiltersView() {
               {activeSection !== "year" ? (
                 <div className="w-full h-full flex items-center justify-center pb-2">
                   <span className="font-mono font-medium text-[#f5f3ee] text-[24px] sm:text-[28px] tracking-[-0.35px] text-center px-1">
-                    Рік видання
+                    {t("header.publicationYear")}
                   </span>
                 </div>
               ) : (
                 <div className="w-full flex flex-col justify-between min-h-[360px]" onClick={(e) => e.stopPropagation()}>
                   <div className="px-3 sm:px-4 pt-1 pb-4 flex flex-col gap-2.5">
                     {YEAR_RANGES.map((r) => {
-                      const isSelected = selectedYearRange === r.label;
+                      const isSelected = selectedYearRange === r.id;
                       return (
                         <button
-                          key={r.label}
+                          key={r.id}
                           type="button"
                           onClick={() => {
-                            setSelectedYearRange(isSelected ? null : r.label);
+                            setSelectedYearRange(isSelected ? null : r.id);
                             if (!isSelected) setCustomYear("");
                           }}
                           className="flex items-center gap-2.5 text-left py-1 hover:bg-white/10 rounded px-1 transition-colors"
@@ -484,14 +492,14 @@ export default function MobileFiltersView() {
                             />
                           </div>
                           <span className="font-sans font-semibold text-[16px] sm:text-[18px] text-[#f5f3ee] leading-tight">
-                            {r.label}
+                            {t(r.labelKey)}
                           </span>
                         </button>
                       );
                     })}
 
                     <div className="mt-3 pt-2 border-t border-white/15">
-                      <span className="font-sans text-xs text-[#f5f3ee]/80 block mb-1.5 text-center">Конкретний рік:</span>
+                      <span className="font-sans text-xs text-[#f5f3ee]/80 block mb-1.5 text-center">{t("catalog.mobileFilters.exactYear")}</span>
                       <input
                         type="number"
                         placeholder="-"
@@ -510,7 +518,7 @@ export default function MobileFiltersView() {
                     className="w-full flex justify-center items-center pt-2 pb-4 border-t border-white/10 cursor-pointer hover:bg-black/10 transition-colors"
                   >
                     <span className="font-mono font-medium text-[#f5f3ee] text-[24px] sm:text-[28px] tracking-[-0.35px]">
-                      Рік видання
+                      {t("header.publicationYear")}
                     </span>
                   </div>
                 </div>
@@ -531,7 +539,7 @@ export default function MobileFiltersView() {
               {activeSection !== "language" ? (
                 <div className="w-full h-full flex items-center justify-center pb-2">
                   <span className="font-mono font-medium text-[#f5f3ee] text-[26px] sm:text-[30px] tracking-[-0.35px]">
-                    Мова
+                    {t("header.languages")}
                   </span>
                 </div>
               ) : (
@@ -566,7 +574,7 @@ export default function MobileFiltersView() {
                     className="w-full flex justify-center items-center pt-2 pb-4 border-t border-white/10 cursor-pointer hover:bg-black/10 transition-colors"
                   >
                     <span className="font-mono font-medium text-[#f5f3ee] text-[26px] sm:text-[30px] tracking-[-0.35px]">
-                      Мова
+                      {t("header.languages")}
                     </span>
                   </div>
                 </div>
@@ -584,14 +592,14 @@ export default function MobileFiltersView() {
               {activeSection !== "price" ? (
                 <div className="w-full h-full flex items-center justify-center pb-2">
                   <span className="font-mono font-medium text-[#f5f3ee] text-[26px] sm:text-[30px] tracking-[-0.35px]">
-                    Ціна
+                    {t("header.price")}
                   </span>
                 </div>
               ) : (
                 <div className="w-full flex flex-col justify-between min-h-[320px]" onClick={(e) => e.stopPropagation()}>
                   <div className="px-3 sm:px-4 pt-1 pb-4 flex flex-col gap-3">
                     <div>
-                      <span className="font-sans font-semibold text-[15px] text-white block mb-1">Від :</span>
+                      <span className="font-sans font-semibold text-[15px] text-white block mb-1">{t("catalog.mobileFilters.from")}</span>
                       <input
                         type="number"
                         placeholder="-"
@@ -602,7 +610,7 @@ export default function MobileFiltersView() {
                     </div>
 
                     <div>
-                      <span className="font-sans font-semibold text-[15px] text-white block mb-1">До :</span>
+                      <span className="font-sans font-semibold text-[15px] text-white block mb-1">{t("catalog.mobileFilters.to")}</span>
                       <input
                         type="number"
                         placeholder="-"
@@ -625,7 +633,7 @@ export default function MobileFiltersView() {
                         />
                       </div>
                       <span className="font-sans font-semibold text-[17px] text-[#f5f3ee]">
-                        Акції
+                        {t("header.promos")}
                       </span>
                     </button>
                   </div>
@@ -635,7 +643,7 @@ export default function MobileFiltersView() {
                     className="w-full flex justify-center items-center pt-2 pb-4 border-t border-white/10 cursor-pointer hover:bg-black/10 transition-colors"
                   >
                     <span className="font-mono font-medium text-[#f5f3ee] text-[26px] sm:text-[30px] tracking-[-0.35px]">
-                      Ціна
+                      {t("header.price")}
                     </span>
                   </div>
                 </div>
@@ -653,7 +661,7 @@ export default function MobileFiltersView() {
               {activeSection !== "rating" ? (
                 <div className="w-full h-full flex items-center justify-center pb-2">
                   <span className="font-mono font-medium text-[#f5f3ee] text-[26px] sm:text-[30px] tracking-[-0.35px]">
-                    Рейтинг
+                    {t("catalog.mobileFilters.rating")}
                   </span>
                 </div>
               ) : (
@@ -688,7 +696,7 @@ export default function MobileFiltersView() {
                     className="w-full flex justify-center items-center pt-2 pb-4 border-t border-white/10 cursor-pointer hover:bg-black/10 transition-colors"
                   >
                     <span className="font-mono font-medium text-[#f5f3ee] text-[26px] sm:text-[30px] tracking-[-0.35px]">
-                      Рейтинг
+                      {t("catalog.mobileFilters.rating")}
                     </span>
                   </div>
                 </div>
@@ -702,14 +710,14 @@ export default function MobileFiltersView() {
           <button
             type="button"
             onClick={applyAllFilters}
-            aria-label="Застосувати фільтри"
+            aria-label={t("catalog.mobileFilters.applyAria")}
             className="w-[85px] sm:w-[95px] h-[115px] sm:h-[125px] bg-[#035b3c] hover:bg-[#024a31] active:scale-95 transition-all duration-200 shadow-[0_6px_16px_rgba(0,0,0,0.35)] flex flex-col items-center justify-center pb-4 rounded-t-[10px] border-t border-white/15"
             style={{ clipPath: clipPathCheckBadge }}
           >
             <div className="w-[48px] h-[48px] sm:w-[54px] sm:h-[54px] rounded-full bg-[#367258] hover:bg-[#2e634c] flex items-center justify-center shadow-inner border border-white/20 transition-transform">
               <img
                 src="/images/header/check_24px.svg"
-                alt="Apply"
+                alt=""
                 className="w-[26px] h-[26px] sm:w-[28px] sm:h-[28px] brightness-0 invert object-contain"
               />
             </div>
@@ -730,7 +738,7 @@ export default function MobileFiltersView() {
               onClick={resetAllFilters}
               className="mt-2 px-3 py-1 bg-black/70 backdrop-blur text-xs rounded-full text-[#f5f3ee] hover:bg-black/90 transition-colors shadow border border-white/10"
             >
-              Очистити
+              {t("catalog.clearAllFilters")}
             </button>
           )}
         </div>

@@ -62,7 +62,11 @@ export type Dictionary = {
     loading: string;
     anonymous: string;
     user: string;
+    userHandle: string;
     newsTag: string;
+    search: string;
+    menu: string;
+    lightTheme: string;
   };
   home: {
     hero: {
@@ -112,6 +116,14 @@ export type Dictionary = {
     promo: {
       items: PromoBannerItem[];
     };
+    mobile: {
+      gazette: string;
+      others: string;
+      moreSection: string;
+      moreGazette: string;
+      goTo: string;
+      inkBellAria: string;
+    };
   };
   footer: {
     qrAlt: string;
@@ -131,8 +143,11 @@ export type Dictionary = {
     title: string;
     backAria: string;
     loading: string;
+    loadingCart: string;
     loadError: string;
+    retry: string;
     empty: string;
+    emptyHint: string;
     inStock: string;
     outOfStock: string;
     formatPaper: string;
@@ -143,6 +158,8 @@ export type Dictionary = {
     addToFavoritesAria: string;
     removeAria: string;
     applyPoints: string;
+    cancelPoints: string;
+    walletAlt: string;
     subtotal: string;
     discount: string;
     delivery: string;
@@ -175,6 +192,7 @@ export type Dictionary = {
     lastNamePlaceholder: string;
     lastNameAria: string;
     phoneAria: string;
+    phonePlaceholder: string;
     delivery: string;
     deliveryNote: string;
     novaPoshta: string;
@@ -199,6 +217,7 @@ export type Dictionary = {
     commentAria: string;
     charCount: string;
     cancel: string;
+    confirm: string;
     save: string;
     freeDelivery: string;
     order: string;
@@ -231,6 +250,7 @@ export type Dictionary = {
     lastNamePlaceholder: string;
     lastNamePlaceholderAlt: string;
     phone: string;
+    phonePlaceholder: string;
     emailRequired: string;
     passwordRequired: string;
     passwordHint: string;
@@ -298,6 +318,31 @@ export type Dictionary = {
     nextPage: string;
     prevPage: string;
     redirecting: string;
+    mobileFilters: {
+      authorSearch: string;
+      exactYear: string;
+      from: string;
+      to: string;
+      rating: string;
+      applyAria: string;
+      categories: {
+        romance: string;
+        thriller: string;
+        detective: string;
+        biography: string;
+        poetry: string;
+        children: string;
+        contemporary: string;
+        education: string;
+        fantasy: string;
+        scienceFiction: string;
+        youngAdult: string;
+        comics: string;
+        psychology: string;
+        adventure: string;
+        historical: string;
+      };
+    };
     filters: {
       publicationYear: string;
       before2000: string;
@@ -359,6 +404,11 @@ export type Dictionary = {
     addCommentPlaceholder: string;
     sendCommentAria: string;
     noComments: string;
+    descriptionMissing: string;
+    otherAuthorBooks: string;
+    noSimilar: string;
+    noReviews: string;
+    firstReview: string;
     similar: string;
     more: string;
     addedToCart: string;
@@ -654,6 +704,52 @@ export type Dictionary = {
     unknownAuthor: string;
     ariaFavorite: string;
     ariaAddToCart: string;
+    mobile: {
+      booksCount: string;
+      postsCount: string;
+      bio: string;
+      details: string;
+      edit: string;
+      emptyHint: string;
+    };
+  };
+  library: {
+    noBooks: string;
+    booksCount: string;
+    postsCount: string;
+    bio: string;
+    details: string;
+    filter: string;
+    yourCollection: string;
+    ebookCount: string;
+    audioCount: string;
+    publicationYear: string;
+    yearPlaceholder: string;
+    reset: string;
+    recentlyRead: string;
+    all: string;
+    genres: {
+      romance: string;
+      scienceFiction: string;
+      fantasy: string;
+      contemporary: string;
+      thriller: string;
+      youngAdult: string;
+      detective: string;
+      children: string;
+      biography: string;
+      historical: string;
+      horror: string;
+      adventure: string;
+      education: string;
+      classics: string;
+      business: string;
+      comics: string;
+      poetry: string;
+      memoirs: string;
+      drama: string;
+      psychology: string;
+    };
   };
   profileEdit: {
     title: string;
@@ -876,6 +972,16 @@ export type Dictionary = {
     title: string;
     description: string;
     toCatalog: string;
+  };
+  notFound: {
+    backAria: string;
+    back: string;
+    error: string;
+    pageNotFound: string;
+    title: string;
+    description: string;
+    goHome: string;
+    catalog: string;
   };
   sellerProduct: {
     addTitle: string;

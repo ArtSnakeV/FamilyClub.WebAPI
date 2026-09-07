@@ -2,15 +2,16 @@
 
 import React from "react";
 import Link from "next/link";
+import { useLocalizedPath, useTranslations } from "@/lib/i18n/LocaleProvider";
 
-type GazetteItem = {
+export type GazetteItem = {
   id: string;
   authorName: string;
   authorHandle: string;
   tag: string;
   title: string;
-  image?: string;
-  avatar?: string;
+  image?: string | null;
+  avatar?: string | null;
   href?: string;
 };
 
@@ -19,6 +20,8 @@ type MobileInkSectionProps = {
 };
 
 export default function MobileInkSection({ items }: MobileInkSectionProps) {
+  const t = useTranslations();
+  const lp = useLocalizedPath();
   const displayItems: GazetteItem[] =
     items && items.length > 0
       ? items
@@ -31,11 +34,11 @@ export default function MobileInkSection({ items }: MobileInkSectionProps) {
       {/* Title "Газета" & Arrow Button (Figma Node 2199:2774 / 2199:2982) */}
       <div className="flex items-center justify-between px-4 mb-3">
         <h2 className="font-mono text-[32px] sm:text-[36px] font-bold text-[#242424] leading-none tracking-tight">
-          Газета
+          {t("home.mobile.gazette")}
         </h2>
         <Link
-          href="/categories"
-          aria-label="Більше з газети Ink"
+          href={lp("/categories")}
+          aria-label={t("home.mobile.moreGazette")}
           className="relative w-[40px] h-[40px] shrink-0 block transition-transform hover:scale-105 active:scale-95"
         >
           <img
@@ -46,7 +49,7 @@ export default function MobileInkSection({ items }: MobileInkSectionProps) {
           <div className="absolute inset-0 flex items-center justify-center">
             <img
               src="/images/main_page/mobile/arrow-icon.svg"
-              alt="Перейти"
+              alt={t("home.mobile.goTo")}
               className="w-[18px] h-[18px] rotate-90 object-contain"
             />
           </div>
@@ -58,7 +61,7 @@ export default function MobileInkSection({ items }: MobileInkSectionProps) {
         {displayItems.map((item) => (
           <Link
             key={item.id}
-            href={item.href || "/categories"}
+            href={item.href && !item.href.startsWith("/") ? item.href : lp(item.href || "/categories")}
             className="group relative h-[205px] w-[186px] shrink-0 snap-start rounded-[10px] bg-[#f5f3ee] p-3 shadow-[0px_0px_20px_0px_rgba(0,0,0,0.4)] border-[10px] border-[#f5f3ee] flex flex-col justify-between transition-transform active:scale-[0.98]"
           >
             {/* Background texture (Figma imgRectangle438) */}
@@ -106,7 +109,7 @@ export default function MobileInkSection({ items }: MobileInkSectionProps) {
               ) : (
                 <div className="flex flex-col items-center justify-center text-gray-400 text-center p-1 bg-white/60 w-full h-full">
                   <span className="text-lg">📖</span>
-                  <span className="text-[8px] font-serif">Немає фото</span>
+                  <span className="text-[8px] font-serif">{t("product.noPhoto")}</span>
                 </div>
               )}
             </div>

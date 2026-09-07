@@ -4,10 +4,11 @@ import React from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import type { DeliveryProvider, DeliveryType, PaymentMethod } from "./page";
+import { useLocalizedPath, useTranslations } from "@/lib/i18n/LocaleProvider";
 
 export type MobileCheckoutViewProps = {
   loading: boolean;
-  cartItems: any[];
+  cartItems: unknown[];
   success: boolean;
   hasPhysicalItems: boolean;
 
@@ -134,16 +135,18 @@ export default function MobileCheckoutView({
   formatPrice,
 }: MobileCheckoutViewProps) {
   const router = useRouter();
+  const t = useTranslations();
+  const lp = useLocalizedPath();
 
   // Loading State
   if (loading) {
     return (
       <div className="min-h-screen bg-[#c7a381] py-6 px-4 font-['Source_Sans_Pro',sans-serif] flex flex-col items-center">
         <h1 className="font-['Lora',serif] font-semibold text-[#242424] text-[24px] text-center my-4">
-          Оформлення замовлення
+          {t("checkout.title")}
         </h1>
         <div className="bg-[#f5f3ee] rounded-[20px] shadow-[0px_0px_10px_0px_rgba(0,0,0,0.25)] p-8 text-center text-[#242424] text-[20px] w-full max-w-[412px] my-auto">
-          ⏳ Завантаження...
+          ⏳ {t("common.loading")}
         </div>
       </div>
     );
@@ -158,25 +161,25 @@ export default function MobileCheckoutView({
             type="button"
             onClick={() => router.back()}
             className="size-[40px] rounded-full bg-[#f5f3ee]/50 flex items-center justify-center text-[20px] text-[#242424] hover:bg-[#f5f3ee] active:scale-95 transition-all shrink-0"
-            aria-label="Назад"
+            aria-label={t("cart.backAria")}
           >
             ←
           </button>
           <h1 className="font-['Lora',serif] font-semibold text-[#242424] text-[24px] text-center flex-1 pr-10">
-            Оформлення замовлення
+            {t("checkout.title")}
           </h1>
         </div>
         <div className="bg-[#f5f3ee] rounded-[20px] shadow-[0px_0px_10px_0px_rgba(0,0,0,0.25)] p-8 text-center flex flex-col items-center gap-4 w-full max-w-[412px] my-auto">
           <span className="text-[48px]">🛒</span>
           <p className="text-[#242424] text-[20px] leading-snug font-medium">
-            Ваш кошик порожній. Додайте товари перед оформленням.
+            {t("checkout.emptyCart")}
           </p>
           <button
             type="button"
-            onClick={() => router.push("/")}
+            onClick={() => router.push(lp("/"))}
             className="bg-[#005b33] text-white font-semibold px-6 py-3 rounded-[9px] text-[18px] shadow hover:bg-[#004828] active:scale-95 transition-all mt-2"
           >
-            На головну
+            {t("checkout.goHome")}
           </button>
         </div>
       </div>
@@ -192,24 +195,24 @@ export default function MobileCheckoutView({
             ✅
           </div>
           <h2 className="font-['Lora',serif] font-bold text-[#242424] text-[26px]">
-            Замовлення оформлено!
+            {t("checkout.successTitle")}
           </h2>
           <p className="text-[#242424]/80 text-[18px] leading-relaxed">
-            Дякуємо за замовлення! Товар додано у розділ «Мої замовлення».
+            {t("checkout.successText")}
           </p>
           <button
             type="button"
-            onClick={() => router.push("/orders")}
+            onClick={() => router.push(lp("/orders"))}
             className="bg-[#005b33] text-white font-semibold w-full py-3.5 rounded-[9px] text-[18px] shadow hover:bg-[#004828] active:scale-95 transition-all mt-2"
           >
-            Перейти в Мої замовлення
+            {t("checkout.myOrders")}
           </button>
           <button
             type="button"
-            onClick={() => router.push("/")}
+            onClick={() => router.push(lp("/"))}
             className="bg-[#E5E0D5] text-[#242424] font-semibold w-full py-3.5 rounded-[9px] text-[18px] hover:bg-[#D8D2C5] active:scale-95 transition-all"
           >
-            На головну
+            {t("checkout.goHome")}
           </button>
         </div>
       </div>
@@ -220,20 +223,21 @@ export default function MobileCheckoutView({
     <div className="min-h-screen bg-[#c7a381] pt-[110px] pb-[140px] px-3 sm:px-4 font-['Source_Sans_Pro',sans-serif] flex flex-col items-center text-[#242424]">
       {/* Title */}
       <h1 className="font-['Lora',serif] font-semibold text-[#242424] text-[24px] text-center mb-6 mt-2">
-        Оформлення замовлення
+        {t("checkout.title")}
       </h1>
 
       <div className="w-full max-w-[412px] flex flex-col gap-6">
         {/* ── Card 1: Особисті данні ── */}
         <div className="bg-[#f5f3ee] rounded-[20px] p-5 sm:p-6 shadow-[0px_0px_10px_0px_rgba(0,0,0,0.25)] flex flex-col gap-5">
           <h2 className="text-[24px] font-semibold text-[#242424] leading-tight tracking-[-0.264px]">
-            Особисті данні
+            {t("checkout.personalData")}
           </h2>
           <div className="flex flex-col gap-4">
             <div className="bg-[#f5f3ee] h-[65px] rounded-[9px] shadow-[0px_0px_10px_0px_rgba(0,0,0,0.25)] flex items-center px-5 sm:px-6">
               <input
                 type="text"
-                placeholder="Ім’я *"
+                placeholder={t("checkout.firstNamePlaceholder")}
+                aria-label={t("checkout.firstNameAria")}
                 value={firstName}
                 onChange={(e) => setFirstName(e.target.value)}
                 className="w-full bg-transparent text-[20px] text-[#242424] placeholder:text-[#242424]/70 focus:outline-none"
@@ -243,7 +247,8 @@ export default function MobileCheckoutView({
             <div className="bg-[#f5f3ee] h-[65px] rounded-[9px] shadow-[0px_0px_10px_0px_rgba(0,0,0,0.25)] flex items-center px-5 sm:px-6">
               <input
                 type="text"
-                placeholder="Прізвище *"
+                placeholder={t("checkout.lastNamePlaceholder")}
+                aria-label={t("checkout.lastNameAria")}
                 value={lastName}
                 onChange={(e) => setLastName(e.target.value)}
                 className="w-full bg-transparent text-[20px] text-[#242424] placeholder:text-[#242424]/70 focus:outline-none"
@@ -253,7 +258,8 @@ export default function MobileCheckoutView({
             <div className="bg-[#f5f3ee] h-[65px] rounded-[9px] shadow-[0px_0px_10px_0px_rgba(0,0,0,0.25)] flex items-center px-5 sm:px-6">
               <input
                 type="email"
-                placeholder="Email"
+                placeholder={t("auth.email")}
+                aria-label={t("auth.email")}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full bg-transparent text-[20px] text-[#242424] placeholder:text-[#242424]/70 focus:outline-none"
@@ -263,7 +269,8 @@ export default function MobileCheckoutView({
             <div className="bg-[#f5f3ee] h-[65px] rounded-[9px] shadow-[0px_0px_10px_0px_rgba(0,0,0,0.25)] flex items-center justify-between px-5 sm:px-6">
               <input
                 type="tel"
-                placeholder="+ 380 800 555 35 35"
+                placeholder={t("checkout.phonePlaceholder")}
+                aria-label={t("checkout.phoneAria")}
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
                 className="w-full bg-transparent text-[20px] text-[#242424] placeholder:text-[#242424]/70 focus:outline-none"
@@ -277,9 +284,9 @@ export default function MobileCheckoutView({
         {hasPhysicalItems && (
           <div className="bg-[#f5f3ee] rounded-[20px] p-5 sm:p-6 shadow-[0px_0px_10px_0px_rgba(0,0,0,0.25)] flex flex-col">
             <h2 className="text-[24px] font-semibold text-[#242424] leading-tight tracking-[-0.44px] mb-5 flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-2">
-              <span>Доставка</span>
+              <span>{t("checkout.delivery")}</span>
               <span className="font-normal text-[14px] text-[#242424]/50">
-                (якщо у вас на замовлення паперова книга)
+                {t("checkout.deliveryNote")}
               </span>
             </h2>
 
@@ -295,9 +302,9 @@ export default function MobileCheckoutView({
                     onClick={() => setDeliveryProvider("nova_poshta")}
                   />
                   <div className="flex flex-col leading-snug">
-                    <span className="text-[20px] font-semibold text-[#242424]">Нова пошта</span>
+                    <span className="text-[20px] font-semibold text-[#242424]">{t("checkout.novaPoshta")}</span>
                     <span className="text-[14px] text-[#242424]">
-                      <span className="text-[#242424]/50">Термін: </span>2-4 робочі дні
+                      <span className="text-[#242424]/50">{t("checkout.termLabel")}</span>{t("checkout.termNova")}
                     </span>
                   </div>
                 </div>
@@ -320,8 +327,8 @@ export default function MobileCheckoutView({
                         onClick={() => setDeliveryType("branch")}
                       />
                       <div className="flex flex-col leading-tight">
-                        <span className="text-[18px] sm:text-[20px] font-semibold text-[#242424]">Відділення</span>
-                        <span className="text-[13px] text-[#242424]/70">Вартість 75 грн</span>
+                        <span className="text-[18px] sm:text-[20px] font-semibold text-[#242424]">{t("checkout.branch")}</span>
+                        <span className="text-[13px] text-[#242424]/70">{t("checkout.cost").replace("{value}", "75")}</span>
                       </div>
                     </div>
 
@@ -334,8 +341,8 @@ export default function MobileCheckoutView({
                         onClick={() => setDeliveryType("postbox")}
                       />
                       <div className="flex flex-col leading-tight">
-                        <span className="text-[18px] sm:text-[20px] font-semibold text-[#242424]">Поштомат</span>
-                        <span className="text-[13px] text-[#242424]/70">Вартість 70 грн</span>
+                        <span className="text-[18px] sm:text-[20px] font-semibold text-[#242424]">{t("checkout.postbox")}</span>
+                        <span className="text-[13px] text-[#242424]/70">{t("checkout.cost").replace("{value}", "70")}</span>
                       </div>
                     </div>
                   </div>
@@ -345,7 +352,8 @@ export default function MobileCheckoutView({
                     <div className="bg-[#f5f3ee] h-[65px] rounded-[9px] shadow-[0px_0px_10px_0px_rgba(0,0,0,0.25)] flex items-center justify-between px-5">
                       <input
                         type="text"
-                        placeholder="Оберіть населений пункт *"
+                        placeholder={t("checkout.cityPlaceholder")}
+                        aria-label={t("checkout.cityAria")}
                         value={city}
                         onChange={(e) => setCity(e.target.value)}
                         className="w-full bg-transparent text-[18px] sm:text-[20px] text-[#242424] placeholder:text-[#242424]/70 focus:outline-none"
@@ -356,7 +364,8 @@ export default function MobileCheckoutView({
                     <div className="bg-[#f5f3ee] h-[65px] rounded-[9px] shadow-[0px_0px_10px_0px_rgba(0,0,0,0.25)] flex items-center justify-between px-5">
                       <input
                         type="text"
-                        placeholder="Відділення Нової пошти *"
+                        placeholder={t("checkout.branchPlaceholder")}
+                        aria-label={t("checkout.branchAria")}
                         value={branch}
                         onChange={(e) => setBranch(e.target.value)}
                         className="w-full bg-transparent text-[18px] sm:text-[20px] text-[#242424] placeholder:text-[#242424]/70 focus:outline-none"
@@ -380,9 +389,9 @@ export default function MobileCheckoutView({
                     onClick={() => setDeliveryProvider("ukr_poshta")}
                   />
                   <div className="flex flex-col leading-snug">
-                    <span className="text-[20px] font-semibold text-[#242424]">Укр пошта</span>
+                    <span className="text-[20px] font-semibold text-[#242424]">{t("checkout.ukrPoshta")}</span>
                     <span className="text-[14px] text-[#242424]">
-                      <span className="text-[#242424]/50">Термін: </span>3-7 робочі дні
+                      <span className="text-[#242424]/50">{t("checkout.termLabel")}</span>{t("checkout.termUkr")}
                     </span>
                   </div>
                 </div>
@@ -406,7 +415,7 @@ export default function MobileCheckoutView({
                   <div className="flex flex-col leading-snug">
                     <span className="text-[20px] font-semibold text-[#242424]">Meest</span>
                     <span className="text-[14px] text-[#242424]">
-                      <span className="text-[#242424]/50">Термін: </span>2-4 робочі дні
+                      <span className="text-[#242424]/50">{t("checkout.termLabel")}</span>{t("checkout.termMeest")}
                     </span>
                   </div>
                 </div>
@@ -421,7 +430,7 @@ export default function MobileCheckoutView({
         {/* ── Card 3: Спосіб оплати ── */}
         <div className="bg-[#f5f3ee] rounded-[20px] p-5 sm:p-6 shadow-[0px_0px_10px_0px_rgba(0,0,0,0.25)] flex flex-col">
           <h2 className="text-[24px] font-semibold text-[#242424] mb-3 leading-tight">
-            Спосіб оплати
+            {t("checkout.paymentMethod")}
           </h2>
 
           <div className="flex flex-col">
@@ -436,7 +445,7 @@ export default function MobileCheckoutView({
                   onClick={() => setPaymentMethod("card_online")}
                 />
                 <span className="text-[17px] sm:text-[18px] font-semibold text-[#242424] leading-snug">
-                  Оплата карткою онлайн
+                  {t("checkout.payCardOnline")}
                 </span>
               </div>
               <div className="flex items-center gap-2 shrink-0">
@@ -459,7 +468,7 @@ export default function MobileCheckoutView({
                   onClick={() => setPaymentMethod("card_dia")}
                 />
                 <span className="text-[17px] sm:text-[18px] font-semibold text-[#242424] leading-snug">
-                  Оплата карткою онлайн ( Дія.Картка: єПідтримка, єКнига)
+                  {t("checkout.payCardDia")}
                 </span>
               </div>
               <div className="flex items-center gap-2 shrink-0 self-start sm:self-center mt-1 sm:mt-0">
@@ -482,7 +491,7 @@ export default function MobileCheckoutView({
                   onClick={() => setPaymentMethod("cash_on_delivery")}
                 />
                 <span className="text-[17px] sm:text-[18px] font-semibold text-[#242424] leading-snug">
-                  Оплата під час отримання
+                  {t("checkout.payOnDelivery")}
                 </span>
               </div>
             </div>
@@ -493,18 +502,19 @@ export default function MobileCheckoutView({
         {hasPhysicalItems && (
           <div className="bg-[#f5f3ee] rounded-[20px] p-5 sm:p-6 shadow-[0px_0px_10px_0px_rgba(0,0,0,0.25)] flex flex-col">
             <h2 className="text-[24px] font-semibold text-[#242424] mb-4 leading-tight">
-              Коментар до замовлення
+              {t("checkout.orderComment")}
             </h2>
 
             <textarea
-              placeholder="Ваш коментар..."
+              placeholder={t("checkout.commentPlaceholder")}
+              aria-label={t("checkout.commentAria")}
               maxLength={500}
               value={comment}
               onChange={(e) => setComment(e.target.value)}
               className="bg-[#f5f3ee] h-[200px] sm:h-[229px] w-full rounded-[15px] sm:rounded-[20px] shadow-[0px_0px_10px_0px_rgba(0,0,0,0.25)] p-5 text-[18px] text-[#242424] placeholder:text-[#242424]/50 focus:outline-none resize-none"
             />
             <span className="text-[14px] text-[#242424] text-right mt-2 font-medium">
-              {comment.length}/500 символів
+              {t("checkout.charCount").replace("{count}", String(comment.length))}
             </span>
 
             <div className="flex flex-col gap-3 mt-4">
@@ -514,7 +524,7 @@ export default function MobileCheckoutView({
                 className="bg-[#005b33] text-white h-[50px] rounded-[9px] px-5 flex items-center justify-start gap-4 font-semibold text-[20px] shadow-md hover:bg-[#004828] active:scale-95 transition-all w-full"
               >
                 <span className="text-[22px]">✓</span>
-                <span>Підтвердити</span>
+                <span>{t("checkout.confirm")}</span>
               </button>
 
               <button
@@ -523,7 +533,7 @@ export default function MobileCheckoutView({
                 className="border-2 border-[#005b33] text-[#005b33] h-[50px] rounded-[9px] px-5 flex items-center justify-start gap-4 font-semibold text-[20px] shadow-sm hover:bg-[#005b33]/10 active:scale-95 transition-all w-full"
               >
                 <span className="text-[22px]">✕</span>
-                <span>Скасувати</span>
+                <span>{t("checkout.cancel")}</span>
               </button>
             </div>
           </div>
@@ -536,32 +546,32 @@ export default function MobileCheckoutView({
             type="button"
             className="bg-[#6c9a84] text-white rounded-[9px] py-3 px-4 font-semibold text-center w-full shadow-sm hover:opacity-95 active:scale-95 transition-all text-[16px] sm:text-[18px]"
           >
-            Застосувати лапки до знижки
+            {t("cart.applyPoints")}
           </button>
 
           {/* Summary Lines */}
           <div className="flex flex-col gap-3.5 px-1">
             <div className="flex justify-between items-center text-[18px] sm:text-[20px]">
-              <span className="text-[#242424]/50 font-normal">Сума:</span>
+              <span className="text-[#242424]/50 font-normal">{t("cart.subtotal")}</span>
               <span className="text-[#242424] font-semibold">{formatPrice(subtotal)}</span>
             </div>
 
             <div className="flex justify-between items-center text-[18px] sm:text-[20px]">
-              <span className="text-[#242424]/50 font-normal">Знижка:</span>
+              <span className="text-[#242424]/50 font-normal">{t("cart.discount")}</span>
               <span className="text-[#c81e1e] font-semibold">
-                {discount > 0 ? `- ${formatPrice(discount)}` : "0 грн"}
+                {discount > 0 ? `- ${formatPrice(discount)}` : t("cart.zeroPrice")}
               </span>
             </div>
 
             <div className="flex justify-between items-center text-[18px] sm:text-[20px]">
-              <span className="text-[#242424]/50 font-normal">Вартість доставки:</span>
+              <span className="text-[#242424]/50 font-normal">{t("cart.delivery")}</span>
               <span className="text-[#242424] font-semibold">
-                {hasPhysicalItems ? formatPrice(deliveryCost) : "Безкоштовно"}
+                {hasPhysicalItems ? formatPrice(deliveryCost) : t("checkout.freeDelivery")}
               </span>
             </div>
 
             <div className="flex justify-between items-center text-[20px] sm:text-[22px] pt-2">
-              <span className="text-[#242424]/50 font-normal">Сума до сплати:</span>
+              <span className="text-[#242424]/50 font-normal">{t("cart.total")}</span>
               <span className="text-[#c81e1e] font-bold text-[24px] sm:text-[26px]">
                 {formatPrice(total)}
               </span>
@@ -572,11 +582,12 @@ export default function MobileCheckoutView({
 
           {/* Promo code */}
           <div className="flex flex-col gap-2.5">
-            <span className="text-[20px] font-semibold text-[#242424]">Є промокод?</span>
+            <span className="text-[20px] font-semibold text-[#242424]">{t("cart.hasPromo")}</span>
             <div className="bg-[#f5f3ee] h-[50px] rounded-[9px] shadow-[0px_0px_5px_rgba(0,0,0,0.25)] flex items-center px-5">
               <input
                 type="text"
-                placeholder="Промокод..."
+                placeholder={t("cart.promoPlaceholder")}
+                aria-label={t("cart.promoAria")}
                 value={promoCode}
                 onChange={(e) => setPromoCode(e.target.value)}
                 className="w-full bg-transparent text-[18px] text-[#242424] placeholder:text-[#242424]/50 focus:outline-none"
@@ -597,13 +608,13 @@ export default function MobileCheckoutView({
               htmlFor="mobile-checkout-agreement-checkbox"
               className="text-[15px] sm:text-[16px] text-[#242424] leading-snug cursor-pointer font-normal"
             >
-              Погоджуюсь з{" "}
-              <Link href="/personal-data-protection" className="text-[#005b33] font-semibold hover:underline">
-                Політикою конфіденційності
+              {t("cart.agreePrefix")}{" "}
+              <Link href={lp("/personal-data-protection")} className="text-[#005b33] font-semibold hover:underline">
+                {t("cart.privacyPolicy")}
               </Link>{" "}
-              та з{" "}
-              <Link href="/terms-of-use" className="text-[#005b33] font-semibold hover:underline">
-                Користувацькою угодою
+              {t("cart.agreeAnd")}{" "}
+              <Link href={lp("/terms-of-use")} className="text-[#005b33] font-semibold hover:underline">
+                {t("cart.termsOfService")}
               </Link>
             </label>
           </div>
@@ -615,7 +626,7 @@ export default function MobileCheckoutView({
             onClick={handleSubmit}
             className="bg-[#005b33] text-white text-[22px] font-semibold h-[56px] w-full rounded-[9px] shadow-[0px_0px_10px_0px_rgba(0,0,0,0.25)] flex items-center justify-center gap-2 hover:bg-[#004828] active:scale-95 transition-all disabled:opacity-50 disabled:pointer-events-none mt-3"
           >
-            {submitting ? "Оформлення..." : "Замовити"}
+            {submitting ? t("checkout.ordering") : t("checkout.order")}
           </button>
         </div>
       </div>

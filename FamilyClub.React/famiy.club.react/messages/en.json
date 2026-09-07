@@ -46,7 +46,11 @@
     "loading": "Loading...",
     "anonymous": "Anonymous",
     "user": "User",
-    "newsTag": "#news"
+    "userHandle": "user",
+    "newsTag": "#news",
+    "search": "Search",
+    "menu": "Menu",
+    "lightTheme": "Light theme"
   },
   "home": {
     "hero": {
@@ -146,6 +150,14 @@
           "subtitle": "Top-rated by readers"
         }
       ]
+    },
+    "mobile": {
+      "gazette": "Gazette",
+      "others": "Other books",
+      "moreSection": "More from “{title}”",
+      "moreGazette": "More from the Ink Gazette",
+      "goTo": "Open",
+      "inkBellAria": "Ink’s bell — find a book"
     }
   },
   "footer": {
@@ -166,8 +178,11 @@
     "title": "My cart",
     "backAria": "Back",
     "loading": "Loading...",
+    "loadingCart": "Loading cart...",
     "loadError": "Could not load data. Check your connection to the server.",
+    "retry": "Try again",
     "empty": "Your cart is empty",
+    "emptyHint": "Add your favorite books from the catalog to place an order.",
     "inStock": "In stock",
     "outOfStock": "Out of stock",
     "formatPaper": "Paperback",
@@ -178,6 +193,8 @@
     "addToFavoritesAria": "Add to favorites",
     "removeAria": "Remove from cart",
     "applyPoints": "Apply paw points to discount",
+    "cancelPoints": "Remove paw points discount",
+    "walletAlt": "Wallet",
     "subtotal": "Subtotal:",
     "discount": "Discount:",
     "delivery": "Delivery:",
@@ -210,6 +227,7 @@
     "lastNamePlaceholder": "Last name *",
     "lastNameAria": "Last name",
     "phoneAria": "Phone",
+    "phonePlaceholder": "+1 202 555 0123",
     "delivery": "Delivery",
     "deliveryNote": "(if your order includes a paperback)",
     "novaPoshta": "Nova Poshta",
@@ -234,6 +252,7 @@
     "commentAria": "Order comment",
     "charCount": "{count}/500 characters",
     "cancel": "Cancel",
+    "confirm": "Confirm",
     "save": "Save",
     "freeDelivery": "Free",
     "order": "Place order",
@@ -266,6 +285,7 @@
     "lastNamePlaceholder": "Last name",
     "lastNamePlaceholderAlt": "Enter last name",
     "phone": "Phone number *",
+    "phonePlaceholder": "+1",
     "emailRequired": "Email *",
     "passwordRequired": "Password *",
     "passwordHint": "At least 6 characters: uppercase, lowercase, and a digit",
@@ -333,6 +353,31 @@
     "nextPage": "Next →",
     "prevPage": "← Back",
     "redirecting": "Redirecting to catalog...",
+    "mobileFilters": {
+      "authorSearch": "Search authors...",
+      "exactYear": "Specific year:",
+      "from": "From:",
+      "to": "To:",
+      "rating": "Rating",
+      "applyAria": "Apply filters",
+      "categories": {
+        "romance": "Romance",
+        "thriller": "Thriller",
+        "detective": "Mystery",
+        "biography": "Biography",
+        "poetry": "Poetry",
+        "children": "Children’s literature",
+        "contemporary": "Contemporary literature",
+        "education": "Education",
+        "fantasy": "Fantasy",
+        "scienceFiction": "Science fiction",
+        "youngAdult": "Young adult",
+        "comics": "Comics and manga",
+        "psychology": "Psychology",
+        "adventure": "Adventure",
+        "historical": "Historical literature"
+      }
+    },
     "filters": {
       "publicationYear": "Publication year:",
       "before2000": "before 2000",
@@ -394,6 +439,11 @@
     "addCommentPlaceholder": "Add a comment...",
     "sendCommentAria": "Send comment",
     "noComments": "No comments for this book yet. Be the first to leave a review!",
+    "descriptionMissing": "No book description available.",
+    "otherAuthorBooks": "More books by this author:",
+    "noSimilar": "There are no similar books in this category yet.",
+    "noReviews": "There are no reviews for this book yet.",
+    "firstReview": "Be the first to share your thoughts!",
     "similar": "Similar",
     "more": "More",
     "addedToCart": "Item added to cart",
@@ -688,7 +738,53 @@
     "emptyAlt": "Empty",
     "unknownAuthor": "Unknown author",
     "ariaFavorite": "Favorites",
-    "ariaAddToCart": "Add to cart"
+    "ariaAddToCart": "Add to cart",
+    "mobile": {
+      "booksCount": "{count} books",
+      "postsCount": "{count} posts",
+      "bio": "Your personal reading page in Family Club.",
+      "details": "Learn more",
+      "edit": "Edit",
+      "emptyHint": "Choose another tab or add new books to your collection"
+    }
+  },
+  "library": {
+    "noBooks": "No books found",
+    "booksCount": "{count} books",
+    "postsCount": "{count} posts",
+    "bio": "Your personal reading library in Family Club.",
+    "details": "Learn more",
+    "filter": "Filter",
+    "yourCollection": "Your collection",
+    "ebookCount": "E-books: {count}",
+    "audioCount": "Audiobooks: {count}",
+    "publicationYear": "Publication year",
+    "yearPlaceholder": "For example: 2024 or 2020–2023",
+    "reset": "Reset",
+    "recentlyRead": "Recently read",
+    "all": "All",
+    "genres": {
+      "romance": "Romance",
+      "scienceFiction": "Science fiction",
+      "fantasy": "Fantasy",
+      "contemporary": "Contemporary literature",
+      "thriller": "Thriller",
+      "youngAdult": "Young adult",
+      "detective": "Mystery",
+      "children": "Children’s literature",
+      "biography": "Biography",
+      "historical": "Historical literature",
+      "horror": "Horror",
+      "adventure": "Adventure",
+      "education": "Education",
+      "classics": "Classics",
+      "business": "Business",
+      "comics": "Comics and manga",
+      "poetry": "Poetry",
+      "memoirs": "Memoirs",
+      "drama": "Drama",
+      "psychology": "Psychology"
+    }
   },
   "profileEdit": {
     "title": "Edit profile",
@@ -911,6 +1007,16 @@
     "title": "Readers’ community",
     "description": "We’re building an interactive space where you can discuss favorite books, share reviews, and find like-minded readers. Something exciting is coming soon!",
     "toCatalog": "Go to the book catalog"
+  },
+  "notFound": {
+    "backAria": "Go back",
+    "back": "Back",
+    "error": "Error",
+    "pageNotFound": "Page not found",
+    "title": "This page does not exist",
+    "description": "You can return to the home page or browse the book catalog",
+    "goHome": "Go to home page",
+    "catalog": "Book catalog"
   },
   "sellerProduct": {
     "addTitle": "Add a new book",
