@@ -2,6 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
+import { useLocalizedPath, useTranslations } from "@/lib/i18n/LocaleProvider";
 
 type MobileBookCardProps = {
   title: string;
@@ -17,17 +18,17 @@ const formatIconMap = {
   paper: {
     bg: "/images/main_page/icons/rec-icon-paper-bg.svg",
     icon: "/images/main_page/icons/rec-icon-paper.svg",
-    label: "Паперова",
+    labelKey: "product.formats.paper",
   },
   ebook: {
     bg: "/images/main_page/icons/rec-icon-ebook-bg.svg",
     icon: "/images/main_page/icons/rec-icon-ebook.svg",
-    label: "eBooks",
+    labelKey: "product.formats.ebook",
   },
   audio: {
     bg: "/images/main_page/icons/rec-icon-audio-bg.svg",
     icon: "/images/main_page/icons/rec-icon-audio.svg",
-    label: "Аудіо книга",
+    labelKey: "product.formats.audio",
   },
 };
 
@@ -39,6 +40,8 @@ export default function MobileBookCard({
   href,
   formatTags,
 }: MobileBookCardProps) {
+  const t = useTranslations();
+  const lp = useLocalizedPath();
   const activeFormatTags = formatTags?.length ? formatTags : [];
 
   const cardContent = (
@@ -60,7 +63,7 @@ export default function MobileBookCard({
             return (
               <div key={tag} className="relative h-[26px] w-[28px] group">
                 <img
-                  alt={item.label}
+                  alt={t(item.labelKey)}
                   className="absolute inset-0 h-full w-full object-fill"
                   src={item.bg}
                 />
@@ -78,7 +81,7 @@ export default function MobileBookCard({
       {/* Top Right Favorite Button (Figma Node 2190:2717) */}
       <button
         type="button"
-        aria-label="Додати в улюблене"
+        aria-label={t("product.addToFavorites")}
         onClick={(e) => {
           e.preventDefault();
           e.stopPropagation();
@@ -86,7 +89,7 @@ export default function MobileBookCard({
         className="absolute right-[8px] top-[12px] z-20 h-[32px] w-[32px] flex items-center justify-center rounded-full hover:bg-[rgba(0,0,0,0.05)] transition-colors"
       >
         <img
-          alt="Улюблене"
+          alt=""
           className="h-[20px] w-[20px] object-contain"
           src="/images/main_page/icons/rec-icon-favorite.svg"
         />
@@ -103,7 +106,7 @@ export default function MobileBookCard({
         ) : (
           <div className="flex flex-col items-center justify-center text-gray-400 text-center p-1 bg-white/80 rounded-[4px] w-full h-full shadow-sm border border-gray-200">
             <span className="text-xl">📖</span>
-            <span className="text-[8px] font-serif">Немає фото</span>
+            <span className="text-[8px] font-serif">{t("product.noPhoto")}</span>
           </div>
         )}
       </div>
@@ -133,7 +136,7 @@ export default function MobileBookCard({
         {/* Shopping Basket Button (Figma Node 2784:6220) */}
         <button
           type="button"
-          aria-label="Додати в кошик"
+          aria-label={t("product.addToCart")}
           onClick={(e) => {
             e.preventDefault();
             e.stopPropagation();
@@ -141,7 +144,7 @@ export default function MobileBookCard({
           className="h-[32px] w-[32px] sm:h-[34px] sm:w-[34px] flex items-center justify-center rounded-full bg-[#005B33]/10 hover:bg-[#005B33]/20 transition-colors shrink-0"
         >
           <img
-            alt="Кошик"
+            alt=""
             className="h-[18px] w-[18px] sm:h-[20px] sm:w-[20px] object-contain"
             src="/images/main_page/icons/rec-icon-basket.svg"
           />
@@ -152,7 +155,7 @@ export default function MobileBookCard({
 
   if (href) {
     return (
-      <Link href={href} className="block w-full max-w-[186px] flex justify-center">
+      <Link href={href.startsWith("/") ? lp(href) : href} className="block w-full max-w-[186px] flex justify-center">
         {cardContent}
       </Link>
     );

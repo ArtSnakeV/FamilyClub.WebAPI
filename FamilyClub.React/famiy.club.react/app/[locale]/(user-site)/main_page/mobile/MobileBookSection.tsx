@@ -3,6 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import MobileBookCard from "./MobileBookCard";
+import { useLocalizedPath, useTranslations } from "@/lib/i18n/LocaleProvider";
 
 type Book = {
   title: string;
@@ -27,6 +28,9 @@ export default function MobileBookSection({
   showShelf = false,
   href = "/categories",
 }: MobileBookSectionProps) {
+  const t = useTranslations();
+  const lp = useLocalizedPath();
+
   if (!books || books.length === 0) return null;
 
   return (
@@ -38,8 +42,8 @@ export default function MobileBookSection({
             {title}
           </h2>
           <Link
-            href={href}
-            aria-label={`Більше з секції ${title}`}
+            href={lp(href)}
+            aria-label={t("home.mobile.moreSection").replace("{title}", title)}
             className="relative w-[40px] h-[40px] shrink-0 block transition-transform hover:scale-105 active:scale-95"
           >
             <img
@@ -50,7 +54,7 @@ export default function MobileBookSection({
             <div className="absolute inset-0 flex items-center justify-center">
               <img
                 src="/images/main_page/mobile/arrow-icon.svg"
-                alt="Перейти"
+                alt={t("home.mobile.goTo")}
                 className="w-[18px] h-[18px] rotate-90 object-contain"
               />
             </div>

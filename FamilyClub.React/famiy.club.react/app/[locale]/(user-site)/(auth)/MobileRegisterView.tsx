@@ -6,9 +6,12 @@ import { useRouter } from "next/navigation";
 import { AsYouType } from "libphonenumber-js";
 import { authService } from "@/lib/api/services";
 import { readApiErrorMessage } from "@/lib/api/readApiError";
+import { useLocalizedPath, useTranslations } from "@/lib/i18n/LocaleProvider";
 
 export default function MobileRegisterView() {
   const router = useRouter();
+  const t = useTranslations();
+  const lp = useLocalizedPath();
 
   // Password visibility
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -44,7 +47,7 @@ export default function MobileRegisterView() {
 
   const handleExternalLogin = (provider: "Google") => {
     const apiBase = process.env.NEXT_PUBLIC_API_URL || "";
-    const returnUrl = encodeURIComponent(`${window.location.origin}/auth/callback`);
+    const returnUrl = encodeURIComponent(`${window.location.origin}${lp("/auth/callback")}`);
     window.location.href = `${apiBase}/api/AuthClubMember/external-login?provider=${provider}&returnUrl=${returnUrl}`;
   };
 
@@ -74,27 +77,27 @@ export default function MobileRegisterView() {
   const handleRegister = async (e?: React.FormEvent) => {
     if (e) e.preventDefault();
     if (!formData.email || !formData.password || !formData.lastName || !formData.firstName) {
-      setError("Будь ласка, заповніть всі обов'язкові поля");
+      setError(t("auth.fillRequiredFields"));
       return;
     }
     if (formData.password !== formData.confirmPassword) {
-      setError("Паролі не співпадають");
+      setError(t("auth.passwordsMismatch"));
       return;
     }
     if (formData.password.length < 6) {
-      setError("Пароль має містити щонайменше 6 символів.");
+      setError(t("auth.passwordMinLength"));
       return;
     }
     if (!/[A-ZА-ЯІЇЄҐ]/.test(formData.password) || !/[a-zа-яіїєґ]/.test(formData.password) || !/\d/.test(formData.password)) {
-      setError("Пароль має містити велику літеру, малу літеру та цифру.");
+      setError(t("auth.passwordComplexity"));
       return;
     }
     if (!phone || phone.replace(/\D/g, "").length < 8) {
-      setError("Введіть коректний номер телефону.");
+      setError(t("auth.invalidPhone"));
       return;
     }
     if (!formData.agreeToTerms) {
-      setError("Необхідно погодитись з умовами використання");
+      setError(t("auth.mustAgree"));
       return;
     }
     setLoading(true);
@@ -109,12 +112,12 @@ export default function MobileRegisterView() {
           password: formData.password,
         },
       });
-      router.push("/login");
+      router.push(lp("/login"));
     } catch (err) {
       setError(
         await readApiErrorMessage(
           err,
-          "Помилка під час реєстрації або користувач вже існує"
+          t("auth.registerExistsError")
         )
       );
     } finally {
@@ -134,7 +137,7 @@ export default function MobileRegisterView() {
           type="button"
           onClick={() => router.back()}
           className="w-[40px] h-[40px] rounded-full bg-[#f5f3ee]/50 flex items-center justify-center text-[20px] text-[#242424] hover:bg-[#f5f3ee] transition-colors active:scale-95"
-          aria-label="Назад"
+          aria-label={t("auth.backAria")}
         >
           ←
         </button>
@@ -164,7 +167,7 @@ export default function MobileRegisterView() {
         {/* First Name Input */}
         <div className="flex flex-col gap-[8px] w-full">
           <label className="text-[20px] font-semibold text-[#242424] leading-normal">
-            Ваше ім'я
+            {t("auth.firstName")}
           </label>
           <div className="bg-[#f5f3ee] h-[50px] w-full rounded-[9px] px-[20px] py-[10px] drop-shadow-[0px_0px_5px_rgba(0,0,0,0.25)] flex items-center">
             <input
@@ -173,7 +176,7 @@ export default function MobileRegisterView() {
               onChange={(e) =>
                 setFormData({ ...formData, firstName: e.target.value })
               }
-              placeholder="Введіть ваше ім'я"
+              placeholder={t("auth.firstNamePlaceholderAlt")}
               className="w-full bg-transparent outline-none text-[16px] text-[#242424] placeholder:text-[#242424]/50 tracking-[-0.176px]"
             />
           </div>
@@ -182,7 +185,7 @@ export default function MobileRegisterView() {
         {/* Last Name Input */}
         <div className="flex flex-col gap-[8px] w-full">
           <label className="text-[20px] font-semibold text-[#242424] leading-normal">
-            Ваше прізвище *
+            {t("auth.lastName")}
           </label>
           <div className="bg-[#f5f3ee] h-[50px] w-full rounded-[9px] px-[20px] py-[10px] drop-shadow-[0px_0px_5px_rgba(0,0,0,0.25)] flex items-center">
             <input
@@ -191,7 +194,7 @@ export default function MobileRegisterView() {
               onChange={(e) =>
                 setFormData({ ...formData, lastName: e.target.value })
               }
-              placeholder="Введіть прізвище"
+              placeholder={t("auth.lastNamePlaceholderAlt")}
               className="w-full bg-transparent outline-none text-[16px] text-[#242424] placeholder:text-[#242424]/50 tracking-[-0.176px]"
             />
           </div>
@@ -200,7 +203,7 @@ export default function MobileRegisterView() {
         {/* Phone Input with Country Dropdown */}
         <div className="flex flex-col gap-[8px] w-full relative">
           <label className="text-[20px] font-semibold text-[#242424] leading-normal">
-            Номер телефону *
+            {t("auth.phone")}
           </label>
           <div className="flex w-full h-[50px] relative drop-shadow-[0px_0px_5px_rgba(0,0,0,0.25)]">
             {/* Left Country Flag Box */}
@@ -229,7 +232,7 @@ export default function MobileRegisterView() {
               type="tel"
               value={phone}
               onChange={handlePhoneChange}
-              placeholder="+380"
+              placeholder={t("auth.phonePlaceholder")}
               className="flex-1 h-[50px] bg-[#f5f3ee] rounded-r-[9px] px-[15px] outline-none text-[16px] text-[#242424] placeholder:text-[#242424]/50 tracking-[-0.176px]"
             />
           </div>
@@ -275,7 +278,7 @@ export default function MobileRegisterView() {
         {/* Email Input */}
         <div className="flex flex-col gap-[8px] w-full">
           <label className="text-[20px] font-semibold text-[#242424] leading-normal">
-            Електронна пошта *
+            {t("auth.emailRequired")}
           </label>
           <div className="bg-[#f5f3ee] h-[50px] w-full rounded-[9px] px-[20px] py-[10px] drop-shadow-[0px_0px_5px_rgba(0,0,0,0.25)] flex items-center">
             <input
@@ -284,7 +287,7 @@ export default function MobileRegisterView() {
               onChange={(e) =>
                 setFormData({ ...formData, email: e.target.value })
               }
-              placeholder="Введіть email"
+              placeholder={t("auth.emailPlaceholder")}
               className="w-full bg-transparent outline-none text-[16px] text-[#242424] placeholder:text-[#242424]/50 tracking-[-0.176px]"
             />
           </div>
@@ -294,10 +297,10 @@ export default function MobileRegisterView() {
         <div className="flex flex-col gap-[8px] w-full mt-1">
           <div className="flex flex-col">
             <label className="text-[20px] font-semibold text-[#242424] leading-normal">
-              Пароль *
+              {t("auth.passwordRequired")}
             </label>
             <span className="text-[13px] text-[#242424]/80 leading-snug mt-[2px]">
-              Мінімум 6 символів: велика літера, мала літера та цифра
+              {t("auth.passwordHint")}
             </span>
           </div>
 
@@ -309,7 +312,7 @@ export default function MobileRegisterView() {
               onChange={(e) =>
                 setFormData({ ...formData, password: e.target.value })
               }
-              placeholder="Введіть пароль"
+              placeholder={t("auth.passwordPlaceholder")}
               className="w-full bg-transparent outline-none text-[16px] text-[#242424] placeholder:text-[#242424]/50 tracking-[-0.176px]"
             />
             <button
@@ -318,7 +321,7 @@ export default function MobileRegisterView() {
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
               className="flex-shrink-0 w-[30px] h-[30px] flex items-center justify-center transition-opacity"
-              aria-label="Показати або приховати пароль"
+              aria-label={t("auth.togglePasswordAria")}
             >
               <img
                 src={
@@ -330,7 +333,7 @@ export default function MobileRegisterView() {
                       ? "/images/login register/eye-open-hover.svg"
                       : "/images/login register/eye-open-default.svg"
                 }
-                alt="Toggle Password"
+                alt=""
                 className="w-[24px] h-[24px] object-contain"
               />
             </button>
@@ -344,14 +347,14 @@ export default function MobileRegisterView() {
               onChange={(e) =>
                 setFormData({ ...formData, confirmPassword: e.target.value })
               }
-              placeholder="Підтвердження паролю"
+              placeholder={t("auth.confirmPasswordPlaceholder")}
               className="w-full bg-transparent outline-none text-[16px] text-[#242424] placeholder:text-[#242424]/50 tracking-[-0.176px]"
             />
             <button
               type="button"
               onClick={togglePasswordVisibility}
               className="flex-shrink-0 w-[30px] h-[30px] flex items-center justify-center transition-opacity"
-              aria-label="Показати або приховати пароль"
+              aria-label={t("auth.togglePasswordAria")}
             >
               <img
                 src={
@@ -363,7 +366,7 @@ export default function MobileRegisterView() {
                       ? "/images/login register/eye-open-hover.svg"
                       : "/images/login register/eye-open-default.svg"
                 }
-                alt="Toggle Password"
+                alt=""
                 className="w-[24px] h-[24px] object-contain"
               />
             </button>
@@ -394,15 +397,13 @@ export default function MobileRegisterView() {
             }
             className="text-[16px] text-[#242424] font-normal leading-snug"
           >
-            Погоджуюсь з умовами використання
+            {t("auth.agreeTerms")}
           </span>
         </div>
 
         {/* Legal Disclaimer */}
         <p className="text-[13px] text-[#242424]/80 leading-snug mt-[2px]">
-          Реєструючись, ви погоджуєтеся на зберігання і використання компанією
-          “Libria” наданих вами особистих даних відповідно до чинного
-          законодавства України про недоторканність особистої інформації.
+          {t("auth.privacyNotice")}
         </p>
 
         {/* Submit Register Button */}
@@ -411,14 +412,14 @@ export default function MobileRegisterView() {
           disabled={loading}
           className="mt-2 bg-[#005b33] h-[50px] w-full rounded-[9px] px-[20px] py-[10px] drop-shadow-[0px_0px_5px_rgba(0,0,0,0.25)] flex items-center justify-center text-[24px] text-white tracking-[-0.264px] transition-all hover:brightness-110 active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed"
         >
-          {loading ? "Завантаження..." : "Зареєструватися"}
+          {loading ? t("auth.loading") : t("auth.registerSubmit")}
         </button>
 
         {/* Divider "або" */}
         <div className="flex items-center justify-between gap-4 w-full my-[6px]">
           <div className="flex-1 h-[1px] bg-[#242424]" />
           <span className="text-[20px] text-[#242424] tracking-[-0.22px]">
-            або
+            {t("auth.or")}
           </span>
           <div className="flex-1 h-[1px] bg-[#242424]" />
         </div>
@@ -435,19 +436,19 @@ export default function MobileRegisterView() {
             className="w-[34px] h-[34px] object-contain flex-shrink-0"
           />
           <span className="text-[20px] text-[#242424] tracking-[-0.22px] font-normal whitespace-nowrap">
-            Продовжити через Google
+            {t("auth.continueGoogle")}
           </span>
         </button>
 
         {/* Bottom Navigation */}
         <div className="w-full text-center mt-3 mb-4">
           <p className="text-[#242424] text-[18px] leading-normal font-normal">
-            Вже маєте акаунт?{" "}
+            {t("auth.haveAccount")}{" "}
             <Link
-              href="/login"
+              href={lp("/login")}
               className="text-[#005b33] font-bold underline hover:opacity-80"
             >
-              Увійти
+              {t("auth.signIn")}
             </Link>
           </p>
         </div>

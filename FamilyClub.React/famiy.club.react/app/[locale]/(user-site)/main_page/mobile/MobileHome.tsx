@@ -5,6 +5,7 @@ import MobileBanner from "./MobileBanner";
 import MobileBookSection from "./MobileBookSection";
 import MobileInkSection from "./MobileInkSection";
 import MobileOthersSection from "./MobileOthersSection";
+import { useTranslations } from "@/lib/i18n/LocaleProvider";
 
 type Book = {
   title: string;
@@ -22,7 +23,7 @@ type MobileHomeProps = {
   announcements: Book[];
   hitsBooks: Book[];
   otherBooks: Book[];
-  gazetteItems?: any[];
+  gazetteItems?: React.ComponentProps<typeof MobileInkSection>["items"];
 };
 
 export default function MobileHome({
@@ -33,6 +34,8 @@ export default function MobileHome({
   otherBooks,
   gazetteItems,
 }: MobileHomeProps) {
+  const t = useTranslations();
+
   return (
     <div className="w-full bg-[#f5f3ee] min-h-screen text-[#242424] overflow-x-hidden font-sans">
       {/* 1. Top Banner / Stories (Figma Group 903) */}
@@ -49,7 +52,7 @@ export default function MobileHome({
 
       {/* 4. New Books / "Нові" (Figma Node 2199:2992) */}
       <MobileBookSection
-        title="Нові"
+        title={t("home.sections.newArrivals")}
         books={newBooks}
         showShelf={true}
         href="/pick-book"
@@ -57,7 +60,7 @@ export default function MobileHome({
 
       {/* 5. Announcements / "Анонси" (Figma Node 2199:3275) */}
       <MobileBookSection
-        title="Анонси"
+        title={t("home.sections.announcements")}
         books={announcements}
         showShelf={true}
         href="/categories?sort=announcements"
@@ -65,7 +68,7 @@ export default function MobileHome({
 
       {/* 6. Sales Hits / "Хід продажу" */}
       <MobileBookSection
-        title="Хід продажу"
+        title={t("home.sections.bestsellers")}
         books={hitsBooks}
         showShelf={true}
         href="/categories?sort=hits"

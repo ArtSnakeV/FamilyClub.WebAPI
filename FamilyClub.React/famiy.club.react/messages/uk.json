@@ -46,7 +46,11 @@
     "loading": "Завантаження...",
     "anonymous": "Анонім",
     "user": "Користувач",
-    "newsTag": "#новини"
+    "userHandle": "користувач",
+    "newsTag": "#новини",
+    "search": "Пошук",
+    "menu": "Меню",
+    "lightTheme": "Світла тема"
   },
   "home": {
     "hero": {
@@ -146,6 +150,14 @@
           "subtitle": "Найкраще за оцінками читачів"
         }
       ]
+    },
+    "mobile": {
+      "gazette": "Газета",
+      "others": "Інші",
+      "moreSection": "Більше із секції «{title}»",
+      "moreGazette": "Більше з газети Ink",
+      "goTo": "Перейти",
+      "inkBellAria": "Дзвіночок Ink — підібрати книгу"
     }
   },
   "footer": {
@@ -166,8 +178,11 @@
     "title": "Мій кошик",
     "backAria": "Назад",
     "loading": "Завантаження...",
+    "loadingCart": "Завантаження кошика...",
     "loadError": "Не вдалося завантажити дані. Перевірте з'єднання з сервером.",
+    "retry": "Спробувати знову",
     "empty": "Ваш кошик порожній",
+    "emptyHint": "Додайте улюблені книги з каталогу, щоб оформити замовлення.",
     "inStock": "В наявності",
     "outOfStock": "Немає в наявності",
     "formatPaper": "Паперова",
@@ -178,6 +193,8 @@
     "addToFavoritesAria": "Додати в обране",
     "removeAria": "Видалити з кошика",
     "applyPoints": "Застосувати лапки до знижки",
+    "cancelPoints": "Скасувати лапки до знижки",
+    "walletAlt": "Гаманець",
     "subtotal": "Сума:",
     "discount": "Знижка:",
     "delivery": "Вартість доставки:",
@@ -210,6 +227,7 @@
     "lastNamePlaceholder": "Прізвище *",
     "lastNameAria": "Прізвище",
     "phoneAria": "Телефон",
+    "phonePlaceholder": "+ 380 800 555 35 35",
     "delivery": "Доставка",
     "deliveryNote": "(якщо у вас на замовлення паперова книга)",
     "novaPoshta": "Нова пошта",
@@ -234,6 +252,7 @@
     "commentAria": "Коментар до замовлення",
     "charCount": "{count}/500 символів",
     "cancel": "Скасувати",
+    "confirm": "Підтвердити",
     "save": "Зберегти",
     "freeDelivery": "Безкоштовно",
     "order": "Замовити",
@@ -266,6 +285,7 @@
     "lastNamePlaceholder": "Прізвище",
     "lastNamePlaceholderAlt": "Введіть прізвище",
     "phone": "Номер телефону *",
+    "phonePlaceholder": "+380",
     "emailRequired": "Електронна пошта *",
     "passwordRequired": "Пароль *",
     "passwordHint": "Мінімум 6 символів: велика літера, мала літера та цифра",
@@ -333,6 +353,31 @@
     "nextPage": "Вперед →",
     "prevPage": "← Назад",
     "redirecting": "Перенаправлення в каталог...",
+    "mobileFilters": {
+      "authorSearch": "Пошук автора...",
+      "exactYear": "Конкретний рік:",
+      "from": "Від:",
+      "to": "До:",
+      "rating": "Рейтинг",
+      "applyAria": "Застосувати фільтри",
+      "categories": {
+        "romance": "Роман",
+        "thriller": "Трилер",
+        "detective": "Детектив",
+        "biography": "Біографія",
+        "poetry": "Поезія",
+        "children": "Дитяча література",
+        "contemporary": "Сучасна література",
+        "education": "Навчання",
+        "fantasy": "Фентезі",
+        "scienceFiction": "Наукова фантастика",
+        "youngAdult": "Підліткова література",
+        "comics": "Комікси та манга",
+        "psychology": "Психологія",
+        "adventure": "Пригоди",
+        "historical": "Історична література"
+      }
+    },
     "filters": {
       "publicationYear": "Рік видання:",
       "before2000": "до 2000",
@@ -394,6 +439,11 @@
     "addCommentPlaceholder": "Додайте коментар...",
     "sendCommentAria": "Надіслати коментар",
     "noComments": "Ще немає коментарів до цієї книги. Будьте першим, хто залишить відгук!",
+    "descriptionMissing": "Опис книги відсутній.",
+    "otherAuthorBooks": "Інші книги автора:",
+    "noSimilar": "Схожих книг у цій категорії поки що немає.",
+    "noReviews": "Поки що немає відгуків на цю книгу.",
+    "firstReview": "Станьте першим, хто поділиться своїми враженнями!",
     "similar": "Схожі",
     "more": "Більше",
     "addedToCart": "Товар додано в кошик",
@@ -688,7 +738,53 @@
     "emptyAlt": "Порожньо",
     "unknownAuthor": "Автор невідомий",
     "ariaFavorite": "Вподобані",
-    "ariaAddToCart": "Додати в кошик"
+    "ariaAddToCart": "Додати в кошик",
+    "mobile": {
+      "booksCount": "{count} книг",
+      "postsCount": "{count} постів",
+      "bio": "Особиста читацька сторінка у Family Club.",
+      "details": "Докладніше",
+      "edit": "Редагувати",
+      "emptyHint": "Оберіть іншу вкладку або додайте нові книги до своєї колекції"
+    }
+  },
+  "library": {
+    "noBooks": "Книг не знайдено",
+    "booksCount": "{count} книг",
+    "postsCount": "{count} постів",
+    "bio": "Особиста читацька бібліотека у Family Club.",
+    "details": "Докладніше",
+    "filter": "Фільтр",
+    "yourCollection": "У вас",
+    "ebookCount": "Електронних книг: {count}",
+    "audioCount": "Аудіокниг: {count}",
+    "publicationYear": "Рік публікації",
+    "yearPlaceholder": "Наприклад: 2024 або 2020–2023",
+    "reset": "Скинути",
+    "recentlyRead": "Останнє, що читали",
+    "all": "Усі",
+    "genres": {
+      "romance": "Роман",
+      "scienceFiction": "Наукова фантастика",
+      "fantasy": "Фентезі",
+      "contemporary": "Сучасна література",
+      "thriller": "Трилер",
+      "youngAdult": "Підліткова література",
+      "detective": "Детектив",
+      "children": "Дитяча література",
+      "biography": "Біографія",
+      "historical": "Історична література",
+      "horror": "Жахи",
+      "adventure": "Пригоди",
+      "education": "Навчання",
+      "classics": "Класика",
+      "business": "Бізнес",
+      "comics": "Комікси та манга",
+      "poetry": "Поезія",
+      "memoirs": "Мемуари",
+      "drama": "Драма",
+      "psychology": "Психологія"
+    }
   },
   "profileEdit": {
     "title": "Редагування профілю",
@@ -911,6 +1007,16 @@
     "title": "Спільнота читачів",
     "description": "Ми активно працюємо над створенням інтерактивного простору, де ви зможете обговорювати улюблені книги, ділитися рецензіями та знаходити однодумців. Скоро тут з'явиться багато цікавого!",
     "toCatalog": "Перейти до каталогу книг"
+  },
+  "notFound": {
+    "backAria": "Повернутися назад",
+    "back": "Назад",
+    "error": "Помилка",
+    "pageNotFound": "Сторінку не знайдено",
+    "title": "Такої сторінки не існує",
+    "description": "Але ви можете перейти на головну сторінку або скористатися каталогом книг",
+    "goHome": "Перейти на головну",
+    "catalog": "Каталог книг"
   },
   "sellerProduct": {
     "addTitle": "Додати нову книгу",

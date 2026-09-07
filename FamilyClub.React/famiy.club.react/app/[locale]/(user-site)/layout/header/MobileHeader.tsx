@@ -2,13 +2,21 @@
 
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { usePlatformSettingsOptional } from "@/lib/platformSettings/PlatformSettingsContext";
 import { mediaSrc } from "@/lib/platformSettings/platformSettingsApi";
 import { useCart } from "@/lib/hooks/useCart";
 import { getAuthToken, getAuthUserId } from "@/lib/auth/tokenStorage";
 import { apiBasePath, orderService } from "@/lib/api/services";
+import { useLocale, useLocalizedPath, useTranslations } from "@/lib/i18n/LocaleProvider";
+import { switchLocalePath } from "@/lib/i18n/localized-path";
 
 export default function MobileHeader() {
+  const pathname = usePathname() ?? "/";
+  const { locale } = useLocale();
+  const t = useTranslations();
+  const lp = useLocalizedPath();
+  const nextLocale = locale === "uk" ? "en" : "uk";
   const [menuOpen, setMenuOpen] = useState(false);
   const { settings } = usePlatformSettingsOptional();
   const { totalItemsCount: cartCount } = useCart();
@@ -73,8 +81,8 @@ export default function MobileHeader() {
           {/* Left: Hanging Bookmark Logo (Figma Group 112 / Group 61) */}
           <div className="flex items-center">
             <Link
-              href="/"
-              aria-label="Головна"
+              href={lp("/")}
+              aria-label={t("common.homeAria")}
               className="absolute top-0 left-[16px] z-[110] block w-[85px] h-[56px] sm:w-[95px] sm:h-[62px] isolate transition-transform hover:scale-105"
             >
               <img
@@ -99,21 +107,21 @@ export default function MobileHeader() {
           <div className="flex items-center gap-4 pl-[90px]">
             {/* Search Button */}
             <Link
-              href="/categories"
-              aria-label="Пошук"
+              href={lp("/categories")}
+              aria-label={t("common.search")}
               className="p-1.5 rounded-full hover:bg-[rgba(0,0,0,0.05)] transition-colors"
             >
               <img
                 src="/images/header/zoom_out_24px.svg"
-                alt="Пошук"
+                alt={t("common.search")}
                 className="w-[24px] h-[24px]"
               />
             </Link>
 
             {/* Filter Button (Funnel icon - filter-solid-full) */}
             <Link
-              href="/categories"
-              aria-label="Фільтри"
+              href={lp("/categories")}
+              aria-label={t("catalog.filtersButton")}
               className="p-1.5 rounded-full hover:bg-[rgba(0,0,0,0.05)] transition-colors text-[#242424]"
             >
               <svg
@@ -127,7 +135,7 @@ export default function MobileHeader() {
             {/* Menu Button (Burger menu) */}
             <button
               onClick={() => setMenuOpen(!menuOpen)}
-              aria-label="Меню"
+              aria-label={t("common.menu")}
               className="p-1.5 rounded-full hover:bg-[rgba(0,0,0,0.05)] transition-colors text-[#242424]"
             >
               <svg
@@ -151,7 +159,7 @@ export default function MobileHeader() {
           <nav className="flex flex-col justify-evenly gap-4 py-6 px-6 sm:px-10 min-h-full max-w-[480px] mx-auto">
             {/* 1. Сповіщення (Figma Node 2773:7053) */}
             <Link
-              href="/notifications"
+              href={lp("/notifications")}
               onClick={() => setMenuOpen(false)}
               className="flex items-center justify-between group py-2 cursor-pointer"
             >
@@ -160,7 +168,7 @@ export default function MobileHeader() {
                   <img src="/images/header/add_24px.svg" alt="" className="w-[28px] h-[32px] object-contain brightness-0 invert pointer-events-none" />
                 </div>
                 <span className="font-sans font-semibold text-[26px] sm:text-[30px] text-white tracking-[-0.01em] group-hover:text-[#f5f3ee]/80 transition-colors">
-                  Сповіщення
+                  {t("notifications.title")}
                 </span>
               </div>
               <div className="w-[32px] h-[32px] rounded-full bg-[#4C85B2] flex items-center justify-center text-[#f5f3ee] font-sans text-[16px] font-medium shadow-md">
@@ -170,7 +178,7 @@ export default function MobileHeader() {
 
             {/* 2. Мої замовлення (Figma Node 2773:7073) */}
             <Link
-              href="/orders"
+              href={lp("/orders")}
               onClick={() => setMenuOpen(false)}
               className="flex items-center justify-between group py-2 cursor-pointer"
             >
@@ -179,7 +187,7 @@ export default function MobileHeader() {
                   <img src="/images/header/assignment_24px.svg" alt="" className="w-[28px] h-[28px] object-contain brightness-0 invert pointer-events-none" />
                 </div>
                 <span className="font-sans font-semibold text-[26px] sm:text-[30px] text-white tracking-[-0.01em] group-hover:text-[#f5f3ee]/80 transition-colors">
-                  Мої замовлення
+                  {t("orders.title")}
                 </span>
               </div>
               <div className="w-[32px] h-[32px] rounded-full bg-[#4C85B2] flex items-center justify-center text-[#f5f3ee] font-sans text-[16px] font-medium shadow-md">
@@ -189,7 +197,7 @@ export default function MobileHeader() {
 
             {/* 3. Улюблене (Figma Node 2773:7075) */}
             <Link
-              href="/userProfile"
+              href={lp("/userProfile")}
               onClick={() => setMenuOpen(false)}
               className="flex items-center justify-between group py-2 cursor-pointer"
             >
@@ -198,14 +206,14 @@ export default function MobileHeader() {
                   <img src="/images/header/favorite_border_24px.png" alt="" className="w-[30px] h-[30px] object-contain brightness-0 invert pointer-events-none" />
                 </div>
                 <span className="font-sans font-semibold text-[26px] sm:text-[30px] text-white tracking-[-0.01em] group-hover:text-[#f5f3ee]/80 transition-colors">
-                  Улюблене
+                  {t("profile.tabs.favorite")}
                 </span>
               </div>
             </Link>
 
             {/* 4. Кошик (Figma Node 2773:7083) */}
             <Link
-              href="/cart"
+              href={lp("/cart")}
               onClick={() => setMenuOpen(false)}
               className="flex items-center justify-between group py-2 cursor-pointer"
             >
@@ -214,7 +222,7 @@ export default function MobileHeader() {
                   <img src="/images/header/shopping_basket_24px.png" alt="" className="w-[30px] h-[30px] object-contain brightness-0 invert pointer-events-none" />
                 </div>
                 <span className="font-sans font-semibold text-[26px] sm:text-[30px] text-white tracking-[-0.01em] group-hover:text-[#f5f3ee]/80 transition-colors">
-                  Кошик
+                  {t("cart.title")}
                 </span>
               </div>
               <div className="w-[32px] h-[32px] rounded-full bg-[#4C85B2] flex items-center justify-center text-[#f5f3ee] font-sans text-[16px] font-medium shadow-md">
@@ -223,22 +231,22 @@ export default function MobileHeader() {
             </Link>
 
             {/* 5. Українська (Figma Node 2773:7087) */}
-            <button
-              type="button"
-              onClick={() => {}}
+            <Link
+              href={switchLocalePath(pathname, nextLocale)}
+              onClick={() => setMenuOpen(false)}
               className="flex items-center justify-between group py-2 cursor-pointer w-full text-left"
             >
               <div className="flex items-center gap-5 sm:gap-6">
                 <div className="w-[36px] flex items-center justify-center shrink-0">
                   <span className="font-sans font-semibold text-[26px] text-white tracking-wide">
-                    UA
+                    {nextLocale.toUpperCase()}
                   </span>
                 </div>
                 <span className="font-sans font-semibold text-[26px] sm:text-[30px] text-white tracking-[-0.01em] group-hover:text-[#f5f3ee]/80 transition-colors">
-                  Українська
+                  {nextLocale === "uk" ? t("profileEdit.langUk") : t("profileEdit.langEn")}
                 </span>
               </div>
-            </button>
+            </Link>
 
             {/* 6. Світла тема (Figma Node 2773:7091) */}
             <button
@@ -257,7 +265,7 @@ export default function MobileHeader() {
                   </svg>
                 </div>
                 <span className="font-sans font-semibold text-[26px] sm:text-[30px] text-white tracking-[-0.01em] group-hover:text-[#f5f3ee]/80 transition-colors">
-                  Світла тема
+                  {t("common.lightTheme")}
                 </span>
               </div>
             </button>

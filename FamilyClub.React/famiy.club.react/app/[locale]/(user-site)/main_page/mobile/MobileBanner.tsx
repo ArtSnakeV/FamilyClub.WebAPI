@@ -2,8 +2,12 @@
 
 import React from "react";
 import Link from "next/link";
+import { useLocalizedPath, useTranslations } from "@/lib/i18n/LocaleProvider";
 
 export default function MobileBanner() {
+  const t = useTranslations();
+  const lp = useLocalizedPath();
+
   return (
     <section className="relative w-full h-[380px] sm:h-[420px] pt-[65px] overflow-hidden bg-[#f5f3ee] select-none">
       {/* 1. Background Room Photo (blurred: blur-[10px] with scale-110) */}
@@ -41,7 +45,7 @@ export default function MobileBanner() {
         <div className="absolute inset-0 flex items-center justify-center p-1.5">
           <img
             src="/images/main_page/mobile/banner-cat.png"
-            alt="Ink mascot"
+            alt={t("ink.catAlt")}
             className="w-[85%] h-[85%] object-contain pointer-events-none"
           />
         </div>
@@ -49,13 +53,13 @@ export default function MobileBanner() {
 
       {/* 4. Hanging Yellow Ball / Bell hanging down */}
       <Link
-        href="/pick-book"
-        aria-label="Дзвіночок Ink — підібрати книгу"
+        href={lp("/pick-book")}
+        aria-label={t("home.mobile.inkBellAria")}
         className="absolute top-[65px] right-[65px] sm:right-[85px] z-30 block w-[44px] h-[132px] cursor-pointer transition-transform duration-300 hover:scale-105"
       >
         <img
           src="/images/main_page/mobile/bell.png"
-          alt="Дзвіночок Ink"
+          alt={t("ink.ringBellAria")}
           className="w-full h-full object-contain drop-shadow-md pointer-events-none"
         />
       </Link>

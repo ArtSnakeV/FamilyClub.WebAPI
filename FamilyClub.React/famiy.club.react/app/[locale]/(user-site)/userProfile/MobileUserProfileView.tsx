@@ -12,11 +12,12 @@ import { CurrentUser } from "./hooks/useCurrentUser";
 import { FavoriteBook } from "@/lib/hooks/useFavorites";
 import { TabType } from "./page";
 import FormatBadge from "./section/FormatBadge";
+import { useLocale, useLocalizedPath, useTranslations } from "@/lib/i18n/LocaleProvider";
 
 const FORMAT_CONFIG = [
-  { id: 3, icon: "/images/userProfile/Property1.svg", icon1: "/images/userProfile/Rectangle 185.svg", label: "Паперова" },
-  { id: 1, icon: "/images/userProfile/Property2.svg", icon1: "/images/userProfile/Rectangle 186.svg", label: "Ebooks" },
-  { id: 2, icon: "/images/userProfile/Property3.svg", icon1: "/images/userProfile/Rectangle 188.svg", label: "Аудіо книга" },
+  { id: 3, icon: "/images/userProfile/Property1.svg", icon1: "/images/userProfile/Rectangle 185.svg", labelKey: "profile.formats.paper" },
+  { id: 1, icon: "/images/userProfile/Property2.svg", icon1: "/images/userProfile/Rectangle 186.svg", labelKey: "profile.formats.ebook" },
+  { id: 2, icon: "/images/userProfile/Property3.svg", icon1: "/images/userProfile/Rectangle 188.svg", labelKey: "profile.formats.audio" },
 ];
 
 const SOCIALS = [
@@ -49,14 +50,14 @@ export default function MobileUserProfileView({
   toggleFavorite,
   myBooks,
   loadingMyBooks,
-  products,
   activeTab,
   setActiveTab,
-  hasFilters,
-  sortedBooks,
   getBooksForTab,
 }: MobileUserProfileViewProps) {
   const router = useRouter();
+  const { locale } = useLocale();
+  const t = useTranslations();
+  const lp = useLocalizedPath();
   const { items, addToCart } = useCart();
   const { reviews: userReviews, loading: loadingUserReviews } = useUserReviews(userId);
 
@@ -109,7 +110,7 @@ export default function MobileUserProfileView({
   const displayName =
     [user?.name, user?.surname].filter(Boolean).join(" ") ||
     user?.email?.split("@")[0] ||
-    "Користувач";
+    t("common.user");
 
   const avatarSrc = user?.avatarData
     ? user.avatarData.startsWith("http") || user.avatarData.startsWith("data:")
@@ -118,10 +119,16 @@ export default function MobileUserProfileView({
     : null;
 
   const buttons: { label: string; tab: TabType; iconType: "books" | "favorite" | "newspaper" }[] = [
-    { label: "Мої книги", tab: "myBooks", iconType: "books" },
-    { label: "Улюблене", tab: "favorite", iconType: "favorite" },
-    { label: "Моя газета", tab: "myPosts", iconType: "newspaper" },
+    { label: t("profile.tabs.myBooks"), tab: "myBooks", iconType: "books" },
+    { label: t("profile.tabs.favorite"), tab: "favorite", iconType: "favorite" },
+    { label: t("profile.tabs.myPosts"), tab: "myPosts", iconType: "newspaper" },
   ];
+
+  const formatPrice = (value?: number | null) => {
+    if (value == null || value === 0) return t("cart.zeroPrice");
+    const formatted = new Intl.NumberFormat(locale === "uk" ? "uk-UA" : "en-US").format(value);
+    return t("cart.price").replace("{value}", formatted);
+  };
 
   const booksToDisplay = activeTab === "favorite" && loadingFavorites ? [] : getBooksForTab();
 
@@ -149,7 +156,7 @@ export default function MobileUserProfileView({
               {avatarSrc ? (
                 <img src={avatarSrc} alt={displayName} className="w-full h-full object-cover" />
               ) : (
-                <img src="/images/header/person_24px.png" alt="Профіль" className="w-[30px] h-[30px] object-contain brightness-0 invert opacity-80" />
+                <img src="/images/header/person_24px.png" alt={t("nav.profile")} className="w-[30px] h-[30px] object-contain brightness-0 invert opacity-80" />
               )}
             </div>
             <div className="flex flex-col min-w-0 flex-1 justify-center pt-0.5">
@@ -157,11 +164,11 @@ export default function MobileUserProfileView({
                 {displayName}
               </span>
               <p className="text-[13.5px] text-[#f5f3ee] font-bold tracking-[-0.154px] leading-snug truncate mt-1">
-                @{user?.email?.split("@")[0] || "user"} · {!loadingMyBooks ? `${myBooks.length} книг` : "..."} · {!loadingUserReviews ? `${userReviews.length} постів` : "..."}
+                @{user?.email?.split("@")[0] || t("common.userHandle")} · {!loadingMyBooks ? t("profile.mobile.booksCount").replace("{count}", String(myBooks.length)) : "..."} · {!loadingUserReviews ? t("profile.mobile.postsCount").replace("{count}", String(userReviews.length)) : "..."}
               </p>
               <p className="text-[13px] text-[#f5f3ee]/95 leading-snug tracking-[-0.154px] truncate mt-0.5">
-                <span>Особиста читацька сторінка у Family Club. </span>
-                <span className="font-bold cursor-pointer underline">Докладніше</span>
+                <span>{t("profile.mobile.bio")} </span>
+                <span className="font-bold cursor-pointer underline">{t("profile.mobile.details")}</span>
               </p>
             </div>
           </div>
@@ -184,22 +191,22 @@ export default function MobileUserProfileView({
             <div className="flex items-center gap-2">
               <button
                 type="button"
-                onClick={() => router.push("/library")}
+                onClick={() => router.push(lp("/library"))}
                 className="px-3.5 py-1.5 rounded-full bg-[#005B33] text-[#f5f3ee] text-[13px] font-semibold tracking-tight shadow-md flex items-center gap-1.5 hover:bg-[#097E4B] active:scale-95 transition-all"
               >
                 <svg className="w-4 h-4 text-[#f5f3ee] shrink-0" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0-2-.9-2-2V4c0-1.1-.9-2-2-2zm-1 9H9V9h10v2zm-4 4H9v-2h6v2zm4-8H9V5h10v2z" />
                 </svg>
-                <span>Бібліотека</span>
+                <span>{t("nav.library")}</span>
               </button>
 
               {userId && (
                 <button
                   type="button"
-                  onClick={() => router.push(`/userProfile/editUserProfile/${userId}`)}
+                  onClick={() => router.push(lp(`/userProfile/editUserProfile/${userId}`))}
                   className="px-3.5 py-1.5 rounded-full bg-[#3c2a1e] text-[#f5f3ee] text-[13px] font-semibold tracking-tight shadow-md flex items-center gap-1.5 hover:bg-[#4d3728] active:scale-95 transition-all"
                 >
-                  <span>Редагувати</span>
+                  <span>{t("profile.mobile.edit")}</span>
                 </button>
               )}
             </div>
@@ -263,9 +270,9 @@ export default function MobileUserProfileView({
             }}
           >
             <div className="bg-[#f5f3ee]/90 backdrop-blur-sm p-6 rounded-2xl flex flex-col items-center max-w-[280px] shadow-lg border border-[#e0d8cc]">
-              <img src="/images/userProfile/imgIko.png" alt="Порожньо" className="w-[140px] h-auto object-contain drop-shadow" />
-              <p className="mt-4 text-[#242424] text-[17px] font-bold tracking-tight">Тут поки що порожньо</p>
-              <p className="text-[13px] text-[#242424]/70 mt-1">Оберіть іншу вкладку або додайте нові книги до своєї колекції</p>
+              <img src="/images/userProfile/imgIko.png" alt={t("profile.emptyAlt")} className="w-[140px] h-auto object-contain drop-shadow" />
+              <p className="mt-4 text-[#242424] text-[17px] font-bold tracking-tight">{t("profile.emptyTitle")}</p>
+              <p className="text-[13px] text-[#242424]/70 mt-1">{t("profile.mobile.emptyHint")}</p>
             </div>
           </div>
         ) : (
@@ -299,7 +306,7 @@ export default function MobileUserProfileView({
                   return (
                     <div
                       key={book.id}
-                      onClick={() => router.push(`/products/${book.id}`)}
+                      onClick={() => router.push(lp(`/products/${book.id}`))}
                       className="relative w-full bg-[#f5f3ee] rounded-t-none rounded-bl-[20px] rounded-br-[20px] shadow-[0_10px_14px_rgba(36,36,36,0.3)] border-b border-x border-[#e0d8cc] flex flex-col items-center transition-transform active:scale-[0.98] cursor-pointer overflow-visible"
                     >
                       {/* Format Badges on Left Edge (Figma Group4) */}
@@ -307,7 +314,7 @@ export default function MobileUserProfileView({
                         {FORMAT_CONFIG
                           .filter((f) => (book.formatIds ?? []).includes(f.id))
                           .map((f) => (
-                            <FormatBadge key={f.id} icon={f.icon} icon1={f.icon1} label={f.label} />
+                            <FormatBadge key={f.id} icon={f.icon} icon1={f.icon1} label={t(f.labelKey)} />
                           ))}
                       </div>
 
@@ -319,7 +326,7 @@ export default function MobileUserProfileView({
                           if (book.id) toggleFavorite(book.id);
                         }}
                         className="absolute top-[14px] right-[6px] z-30 p-1 rounded-full hover:bg-black/10 transition-all active:scale-90"
-                        aria-label="Вподобати"
+                        aria-label={t("profile.ariaFavorite")}
                       >
                         <img
                           src={
@@ -327,7 +334,7 @@ export default function MobileUserProfileView({
                               ? "/images/userProfile/heart-filled.svg"
                               : "/images/userProfile/icon-heart.svg"
                           }
-                          alt="Heart"
+                          alt=""
                           className="w-[24px] h-[24px] sm:w-[26px] sm:h-[26px] object-contain"
                         />
                       </button>
@@ -357,15 +364,14 @@ export default function MobileUserProfileView({
 
                           {/* Author (Source Sans Pro Regular 14px text-opacity 70%) */}
                           <p className="font-['Source_Sans_3',sans-serif] text-[13px] sm:text-[14px] text-[#242424]/70 leading-tight mt-0.5 truncate">
-                            {authorNames || "Автор невідомий"}
+                            {authorNames || t("profile.unknownAuthor")}
                           </p>
                         </div>
 
                         {/* Price & Cart row (Figma 504 грн & shopping_basket_24px) */}
                         <div className="flex items-center justify-between w-full mt-3 pt-1 border-t border-[#242424]/10">
                           <span className="font-bold text-[15px] sm:text-[16px] text-[#242424] tracking-tight">
-                            {book.price}{" "}
-                            <span className="text-[12px] font-normal">грн</span>
+                            {formatPrice(book.price)}
                           </span>
                           <button
                             type="button"
@@ -374,7 +380,7 @@ export default function MobileUserProfileView({
                               if (book.id && !isInCart(book.id)) await addToCart(book.id);
                             }}
                             className="p-1 rounded-full hover:bg-black/5 active:scale-90 transition-all z-20"
-                            aria-label="Додати в кошик"
+                            aria-label={t("profile.ariaAddToCart")}
                           >
                             <img
                               src={
@@ -382,7 +388,7 @@ export default function MobileUserProfileView({
                                   ? "/images/userProfile/checkBuy.png"
                                   : "/images/userProfile/icon.svg"
                               }
-                              alt="Cart"
+                              alt=""
                               className="w-[30px] h-[30px] sm:w-[32px] sm:h-[32px] object-contain"
                             />
                           </button>

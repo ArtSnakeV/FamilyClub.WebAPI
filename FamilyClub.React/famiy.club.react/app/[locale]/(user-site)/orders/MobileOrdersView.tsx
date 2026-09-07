@@ -7,6 +7,7 @@ import OrdersPagination from "./OrdersPagination";
 import printIcon from "@/public/images/userProfile/Паперова.svg";
 import ebookIcon from "@/public/images/userProfile/mobile-button-solid-full 1.png";
 import audioIcon from "@/public/images/userProfile/volume-solid-full 1.png";
+import { useLocale, useLocalizedPath, useTranslations } from "@/lib/i18n/LocaleProvider";
 
 interface MobileOrdersViewProps {
   ordersByTab: Record<OrderTabId, MockOrderItem[]>;
@@ -24,39 +25,67 @@ interface MobileOrdersViewProps {
 }
 
 export default function MobileOrdersView({
-  ordersByTab,
   activeTab,
   setActiveTab,
   counts,
   loading,
   onAction,
   paws = 0,
-  discount = 0,
   currentPage,
   totalPages,
   onPageChange,
   currentItems,
 }: MobileOrdersViewProps) {
   const router = useRouter();
+  const { locale } = useLocale();
+  const t = useTranslations();
+  const lp = useLocalizedPath();
   const [copiedId, setCopiedId] = useState<string | null>(null);
 
   const printIconSrc =
     typeof printIcon === "string"
       ? printIcon
-      : (printIcon as any).src || "/images/userProfile/Паперова.svg";
+      : printIcon.src || "/images/userProfile/Паперова.svg";
   const ebookIconSrc =
     typeof ebookIcon === "string"
       ? ebookIcon
-      : (ebookIcon as any).src || "/images/userProfile/mobile-button-solid-full 1.png";
+      : ebookIcon.src || "/images/userProfile/mobile-button-solid-full 1.png";
   const audioIconSrc =
     typeof audioIcon === "string"
       ? audioIcon
-      : (audioIcon as any).src || "/images/userProfile/volume-solid-full 1.png";
+      : audioIcon.src || "/images/userProfile/volume-solid-full 1.png";
 
   const handleCopy = (orderNumber: string, id: string) => {
     navigator.clipboard.writeText(orderNumber);
     setCopiedId(id);
     setTimeout(() => setCopiedId(null), 2000);
+  };
+
+  const localizedStatus = (status: string) => {
+    const normalized = status.trim().toLowerCase();
+    const statusKey =
+      normalized === "оформлено" || normalized === "placed"
+        ? "placed"
+        : normalized === "очікувана" || normalized === "awaiting"
+          ? "awaiting"
+          : normalized === "відправлено" || normalized === "shipped"
+            ? "shipped"
+            : normalized === "доставлено" || normalized === "delivered"
+              ? "delivered"
+              : normalized === "повернення" || normalized === "returning"
+                ? "returning"
+                : normalized === "скасовано" || normalized === "cancelled"
+                  ? "cancelled"
+                  : normalized === "повернено" || normalized === "returned"
+                    ? "returned"
+                    : null;
+
+    return statusKey ? t(`orders.status.${statusKey}`) : status;
+  };
+
+  const formatPrice = (value: number) => {
+    const formatted = new Intl.NumberFormat(locale === "uk" ? "uk-UA" : "en-US").format(value);
+    return t("cart.price").replace("{value}", formatted);
   };
 
   const getTabSvg = (id: OrderTabId) => {
@@ -109,12 +138,12 @@ export default function MobileOrdersView({
             type="button"
             onClick={() => router.back()}
             className="w-[36px] h-[36px] rounded-full bg-[#f5f3ee]/60 hover:bg-[#f5f3ee] transition-colors flex items-center justify-center text-[#242424] text-[18px] shadow-sm active:scale-95"
-            aria-label="Назад"
+            aria-label={t("orders.backAria")}
           >
             ←
           </button>
           <h1 className="text-[24px] sm:text-[26px] font-bold text-[#242424] tracking-[-0.01em] font-sans">
-            Мої замовлення
+            {t("orders.title")}
           </h1>
         </div>
         {paws > 0 && (
@@ -146,7 +175,7 @@ export default function MobileOrdersView({
               >
                 {getTabSvg(tab.id)}
                 <span className="text-white text-[11px] font-medium text-center leading-tight mt-1 px-0.5 line-clamp-1">
-                  {tab.label}
+                  {t(`orders.tabs.${tab.id}`)}
                 </span>
               </button>
 
@@ -163,7 +192,7 @@ export default function MobileOrdersView({
       {/* Informational Notice */}
       {(activeTab === "add_review" || activeTab === "returns" || activeTab === "history") && (
         <div className="text-center text-[13px] font-semibold text-[#242424] mb-4 bg-white/75 backdrop-blur-sm py-2 px-4 rounded-xl max-w-[392px] mx-auto shadow-sm border border-white/40">
-          Всі карточки автоматично приберуться через місяць
+          {t("orders.autoRemoveNote")}
         </div>
       )}
 
@@ -176,15 +205,16 @@ export default function MobileOrdersView({
         ) : currentItems.length === 0 ? (
           <div className="bg-[#e3be9b]/95 backdrop-blur-sm rounded-[15px] p-8 text-center border border-[#B7895E]/50 shadow-md my-4">
             <span className="text-4xl block mb-2">📦</span>
-            <h3 className="text-lg font-bold text-[#242424] mb-1">Тут наразі пусто</h3>
+            <h3 className="text-lg font-bold text-[#242424] mb-1">{t("orders.emptyTitle")}</h3>
             <p className="text-xs text-[#242424]/70">
-              Тут з&apos;являтимуться ваші реальні замовлення після оформлення
+              {t("orders.emptyText")}
             </p>
           </div>
         ) : (
           currentItems.map((item) => {
-            const isCancelled = item.statusText === "Скасовано";
-            const isReturned = item.statusText === "Повернено";
+            const normalizedStatus = item.statusText.trim().toLowerCase();
+            const isCancelled = normalizedStatus === "скасовано" || normalizedStatus === "cancelled";
+            const isReturned = normalizedStatus === "повернено" || normalizedStatus === "returned";
             const outerBgClass = isCancelled
               ? "bg-[#E3C8C4] border-[#D1AFA9]"
               : isReturned
@@ -203,7 +233,7 @@ export default function MobileOrdersView({
                       className="font-semibold text-[20px] leading-tight tracking-[-0.22px]"
                       style={{ color: item.statusColor || "#005b33" }}
                     >
-                      {item.statusText}
+                      {localizedStatus(item.statusText)}
                     </h3>
                     <div className="flex items-center gap-1.5 mt-0.5">
                       <span className="font-semibold text-[14px] text-[#242424] tracking-[-0.154px]">
@@ -213,7 +243,7 @@ export default function MobileOrdersView({
                         type="button"
                         onClick={() => handleCopy(item.orderNumber, item.id)}
                         className="p-1 text-[#242424] hover:opacity-75 transition-opacity active:scale-90"
-                        title="Копіювати номер"
+                        title={t("orders.copyOrderNumber")}
                       >
                         {copiedId === item.id ? (
                           <span className="text-[11px] text-green-800 font-bold whitespace-nowrap">
@@ -230,7 +260,7 @@ export default function MobileOrdersView({
 
                   <div className="flex flex-col items-end text-right ml-auto">
                     <span className="text-[13px] sm:text-[14px] text-[rgba(36,36,36,0.5)] leading-tight tracking-[-0.154px]">
-                      Останне оновлення:
+                      {t("orders.lastStatusDate")}
                     </span>
                     <span className="text-[13px] sm:text-[14px] text-[rgba(36,36,36,0.5)] leading-tight tracking-[-0.154px] mt-0.5">
                       {item.lastStatusDate}
@@ -245,21 +275,21 @@ export default function MobileOrdersView({
                     {item.formats.includes("print") && (
                       <img
                         src={printIconSrc}
-                        alt="print"
+                        alt={t("orders.formats.paper")}
                         className="w-[18px] h-auto object-contain"
                       />
                     )}
                     {item.formats.includes("ebook") && (
                       <img
                         src={ebookIconSrc}
-                        alt="ebook"
+                        alt={t("orders.formats.ebook")}
                         className="w-[16px] h-auto object-contain"
                       />
                     )}
                     {item.formats.includes("audio") && (
                       <img
                         src={audioIconSrc}
-                        alt="audio"
+                        alt={t("orders.formats.audio")}
                         className="w-[16px] h-auto object-contain"
                       />
                     )}
@@ -286,24 +316,24 @@ export default function MobileOrdersView({
                       </h4>
                       <div className="flex items-center gap-1.5 flex-wrap mt-1">
                         <span className="text-[12px] font-semibold text-[#555555] bg-[#EBE7DD] px-2 py-0.5 rounded-full border border-[#D5CFCE]">
-                          {item.quantity} шт.
+                          {t("orders.qty").replace("{count}", String(item.quantity))}
                         </span>
                         {item.formats && item.formats.map((fmt, idx) => {
                           const f = String(fmt).toLowerCase();
-                          let label = "Паперова";
+                          let label = t("orders.formats.paper");
                           let icon = "📖";
                           let badgeStyle = "bg-[#E2F0D9] text-[#005b33] border-[#B8E0A4]";
 
                           if (f === "ebook" || f.includes("елек")) {
-                            label = "Електронна";
+                            label = t("orders.formats.ebook");
                             icon = "📱";
                             badgeStyle = "bg-[#E3F2FD] text-[#0277BD] border-[#B3E5FC]";
                           } else if (f === "audio" || f.includes("аудіо")) {
-                            label = "Аудіокнига";
+                            label = t("orders.formats.audio");
                             icon = "🎧";
                             badgeStyle = "bg-[#F3E5F5] text-[#7B1FA2] border-[#E1BEE7]";
                           } else if (f === "print" || f.includes("папер") || f === "paper") {
-                            label = "Паперова";
+                            label = t("orders.formats.paper");
                             icon = "📖";
                             badgeStyle = "bg-[#E2F0D9] text-[#005b33] border-[#B8E0A4]";
                           } else {
@@ -329,13 +359,13 @@ export default function MobileOrdersView({
                           }
                           className="mt-2.5 px-3 py-1 rounded-full border border-[#005b33] text-[#005b33] font-semibold hover:bg-[#005b33] hover:text-white transition text-[12px] w-fit shadow-sm"
                         >
-                          Підтвердити отримання
+                          {t("orders.confirmReceipt")}
                         </button>
                       )}
                     </div>
 
                     <div className="self-end font-semibold text-[18px] sm:text-[20px] text-[#242424] tracking-[-0.22px] mt-auto pt-2">
-                      {item.price} грн
+                      {formatPrice(item.price)}
                     </div>
                   </div>
                 </div>
@@ -349,34 +379,34 @@ export default function MobileOrdersView({
                         onClick={() => onAction("pay_order", item.id, item.dbOrderId)}
                         className="bg-[#005b33] hover:bg-[#004727] text-white px-3.5 py-2 rounded-xl font-bold transition text-xs sm:text-sm shadow-md active:scale-95"
                       >
-                        💳 Оплатити
+                        {t("orders.payOrder")}
                       </button>
                       <button
                         type="button"
                         onClick={() => onAction("cancel", item.id, item.dbOrderId)}
                         className="bg-[#524B42] hover:bg-[#3D3730] text-white px-3.5 py-2 rounded-xl font-medium transition text-xs sm:text-sm shadow-sm active:scale-95"
                       >
-                        Скасувати
+                        {t("orders.cancelOrder")}
                       </button>
                       <button
                         type="button"
                         onClick={() => {
                           if (item.dbOrderId) {
-                            router.push(`/complaints?orderId=${item.dbOrderId}`);
+                            router.push(lp(`/complaints?orderId=${item.dbOrderId}`));
                           } else {
                             onAction("complain", item.id, item.dbOrderId);
                           }
                         }}
                         className="bg-[#f5f3ee] hover:bg-[#E5E0D5] border border-[#C8C2B4] text-[#242424] px-3 py-2 rounded-xl font-medium transition text-xs shadow-sm active:scale-95"
                       >
-                        Поскаржитися
+                        {t("orders.complain")}
                       </button>
                       <button
                         type="button"
                         onClick={() => onAction("delete", item.id, item.dbOrderId)}
                         className="bg-[#C0392B] hover:bg-[#A93226] text-white px-3.5 py-2 rounded-xl font-medium transition text-xs sm:text-sm shadow-sm active:scale-95"
                       >
-                        🗑️ Видалити
+                        {t("orders.delete")}
                       </button>
                     </>
                   )}
@@ -388,27 +418,27 @@ export default function MobileOrdersView({
                         onClick={() => onAction("cancel", item.id, item.dbOrderId)}
                         className="bg-[#524B42] hover:bg-[#3D3730] text-white px-3.5 py-2 rounded-xl font-medium transition text-xs sm:text-sm shadow-sm active:scale-95"
                       >
-                        Скасувати замовлення
+                        {t("orders.cancelOrder")}
                       </button>
                       <button
                         type="button"
                         onClick={() => {
                           if (item.dbOrderId) {
-                            router.push(`/complaints?orderId=${item.dbOrderId}`);
+                            router.push(lp(`/complaints?orderId=${item.dbOrderId}`));
                           } else {
                             onAction("complain", item.id, item.dbOrderId);
                           }
                         }}
                         className="bg-[#f5f3ee] hover:bg-[#E5E0D5] border border-[#C8C2B4] text-[#242424] px-3.5 py-2 rounded-xl font-medium transition text-xs sm:text-sm shadow-sm active:scale-95"
                       >
-                        Поскаржитися
+                        {t("orders.complain")}
                       </button>
                       <button
                         type="button"
                         onClick={() => onAction("delete", item.id, item.dbOrderId)}
                         className="bg-[#C0392B] hover:bg-[#A93226] text-white px-3.5 py-2 rounded-xl font-medium transition text-xs sm:text-sm shadow-sm active:scale-95"
                       >
-                        🗑️ Видалити
+                        {t("orders.delete")}
                       </button>
                     </>
                   )}
@@ -422,27 +452,27 @@ export default function MobileOrdersView({
                         }
                         className="bg-[#524B42] hover:bg-[#3D3730] text-white px-3.5 py-2 rounded-xl font-medium transition text-xs sm:text-sm shadow-sm active:scale-95"
                       >
-                        Написати відгук
+                        {t("orders.writeReview")}
                       </button>
                       <button
                         type="button"
                         onClick={() => {
                           if (item.dbOrderId) {
-                            router.push(`/complaints?orderId=${item.dbOrderId}`);
+                            router.push(lp(`/complaints?orderId=${item.dbOrderId}`));
                           } else {
                             onAction("complain", item.id, item.dbOrderId);
                           }
                         }}
                         className="bg-[#f5f3ee] hover:bg-[#E5E0D5] border border-[#C8C2B4] text-[#242424] px-3.5 py-2 rounded-xl font-medium transition text-xs sm:text-sm shadow-sm active:scale-95"
                       >
-                        Поскаржитися
+                        {t("orders.complain")}
                       </button>
                       <button
                         type="button"
                         onClick={() => onAction("delete", item.id, item.dbOrderId)}
                         className="bg-[#C0392B] hover:bg-[#A93226] text-white px-3.5 py-2 rounded-xl font-medium transition text-xs sm:text-sm shadow-sm active:scale-95"
                       >
-                        🗑️ Видалити
+                        {t("orders.delete")}
                       </button>
                     </>
                   )}
@@ -454,27 +484,27 @@ export default function MobileOrdersView({
                         onClick={() => onAction("return", item.id, item.dbOrderId)}
                         className="bg-[#524B42] hover:bg-[#3D3730] text-white px-3.5 py-2 rounded-xl font-medium transition text-xs sm:text-sm shadow-sm active:scale-95"
                       >
-                        Повернути
+                        {t("orders.returnItem")}
                       </button>
                       <button
                         type="button"
                         onClick={() => {
                           if (item.dbOrderId) {
-                            router.push(`/complaints?orderId=${item.dbOrderId}`);
+                            router.push(lp(`/complaints?orderId=${item.dbOrderId}`));
                           } else {
                             onAction("complain", item.id, item.dbOrderId);
                           }
                         }}
                         className="bg-[#f5f3ee] hover:bg-[#E5E0D5] border border-[#C8C2B4] text-[#242424] px-3.5 py-2 rounded-xl font-medium transition text-xs sm:text-sm shadow-sm active:scale-95"
                       >
-                        Поскаржитися
+                        {t("orders.complain")}
                       </button>
                       <button
                         type="button"
                         onClick={() => onAction("delete", item.id, item.dbOrderId)}
                         className="bg-[#C0392B] hover:bg-[#A93226] text-white px-3.5 py-2 rounded-xl font-medium transition text-xs sm:text-sm shadow-sm active:scale-95"
                       >
-                        🗑️ Видалити
+                        {t("orders.delete")}
                       </button>
                     </>
                   )}
@@ -485,21 +515,21 @@ export default function MobileOrdersView({
                         type="button"
                         onClick={() => {
                           if (item.dbOrderId) {
-                            router.push(`/complaints?orderId=${item.dbOrderId}`);
+                            router.push(lp(`/complaints?orderId=${item.dbOrderId}`));
                           } else {
                             onAction("complain", item.id, item.dbOrderId);
                           }
                         }}
                         className="bg-[#f5f3ee] hover:bg-[#E5E0D5] border border-[#C8C2B4] text-[#242424] px-3.5 py-2 rounded-xl font-medium transition text-xs sm:text-sm shadow-sm active:scale-95"
                       >
-                        Поскаржитися
+                        {t("orders.complain")}
                       </button>
                       <button
                         type="button"
                         onClick={() => onAction("delete", item.id, item.dbOrderId)}
                         className="bg-[#C0392B] hover:bg-[#A93226] text-white px-3.5 py-2 rounded-xl font-medium transition text-xs sm:text-sm shadow-sm active:scale-95"
                       >
-                        🗑️ Видалити
+                        {t("orders.delete")}
                       </button>
                     </>
                   )}

@@ -11,6 +11,7 @@ import { getProductCoverUrl } from "@/lib/products/productCoverUrl";
 import { favoriteService } from "@/lib/api/services";
 import { getAuthToken, getAuthUserId } from "@/lib/auth/tokenStorage";
 import { usePaws } from "@/app/(user-site)/paws/hooks/usePaws";
+import { useLocale, useLocalizedPath, useTranslations } from "@/lib/i18n/LocaleProvider";
 
 export interface MobileCartViewProps {
   cartItems: Array<{
@@ -29,11 +30,6 @@ export interface MobileCartViewProps {
   fetchError: boolean;
 }
 
-function formatPrice(value: number): string {
-  if (value === 0) return "0 грн";
-  return `${new Intl.NumberFormat("uk-UA").format(value)} грн`;
-}
-
 function getImageSrc(product: ProductDto): string | null {
   return getProductCoverUrl(product);
 }
@@ -46,21 +42,21 @@ function getAuthorLabel(authorIds?: Array<number> | null, authorById?: Map<numbe
   return names.length ? names.join(", ") : null;
 }
 
-const FORMAT_ICONS: Record<FormatType, { bg: string; icon: string; label: string }> = {
+const FORMAT_ICONS: Record<FormatType, { bg: string; icon: string; labelKey: string }> = {
   paper: {
     bg: "/images/main_page/icons/rec-icon-paper-bg.svg",
     icon: "/images/main_page/icons/rec-icon-paper.svg",
-    label: "Паперова",
+    labelKey: "cart.formatPaper",
   },
   ebook: {
     bg: "/images/main_page/icons/rec-icon-ebook-bg.svg",
     icon: "/images/main_page/icons/rec-icon-ebook.svg",
-    label: "eBooks",
+    labelKey: "cart.formatEbook",
   },
   audio: {
     bg: "/images/main_page/icons/rec-icon-audio-bg.svg",
     icon: "/images/main_page/icons/rec-icon-audio.svg",
-    label: "Аудіо книга",
+    labelKey: "cart.formatAudio",
   },
 };
 
@@ -77,6 +73,9 @@ export default function MobileCartView({
   fetchError,
 }: MobileCartViewProps) {
   const router = useRouter();
+  const { locale } = useLocale();
+  const t = useTranslations();
+  const lp = useLocalizedPath();
   const [agreed, setAgreed] = useState(false);
   const [promoCode, setPromoCode] = useState("");
   const [favorites, setFavorites] = useState<Set<number>>(new Set());
@@ -100,8 +99,8 @@ export default function MobileCartView({
           .catch(() => null);
         if (Array.isArray(resFav)) {
           const favIds = new Set<number>();
-          resFav.forEach((f: any) => {
-            const id = f?.productId || f?.id;
+          resFav.forEach((f) => {
+            const id = f.id;
             if (id) favIds.add(Number(id));
           });
           setFavorites(favIds);
@@ -153,12 +152,16 @@ export default function MobileCartView({
   const effectiveDelivery = subtotal > 0 ? deliveryCost : 0;
   const totalToPay = subtotal > 0 ? Math.max(0, subtotal - totalDiscount + effectiveDelivery) : 0;
   const hasItems = cartItems.length > 0;
+  const formatPrice = (value: number) => {
+    const formatted = new Intl.NumberFormat(locale === "uk" ? "uk-UA" : "en-US").format(value);
+    return t("cart.price").replace("{value}", formatted);
+  };
 
   return (
     <div className="w-full min-h-screen bg-[#c7a381] pt-[110px] pb-10 select-none font-['Source_Sans_3',sans-serif] text-[#242424] overflow-x-hidden">
       {/* Заголовок */}
       <h1 className="font-['Lora',serif] font-semibold text-[24px] sm:text-[26px] text-[#242424] text-center tracking-[-0.264px] mb-6 px-4">
-        Кошик
+        {t("cart.title")}
       </h1>
 
       {/* Контент верхньої частини кошика (карточки товарів) */}
@@ -166,32 +169,32 @@ export default function MobileCartView({
         {loading ? (
           <div className="bg-[#f5f3ee] rounded-[9px] shadow-[0px_0px_5px_rgba(0,0,0,0.35)] p-8 text-center my-6 flex flex-col items-center justify-center">
             <span className="text-3xl mb-2 animate-spin">⏳</span>
-            <p className="text-[16px] text-[#242424]">Завантаження кошика...</p>
+            <p className="text-[16px] text-[#242424]">{t("cart.loadingCart")}</p>
           </div>
         ) : fetchError && !hasItems ? (
           <div className="bg-[#f5f3ee] rounded-[9px] shadow-[0px_0px_5px_rgba(0,0,0,0.35)] p-8 text-center my-6 flex flex-col items-center justify-center">
             <span className="text-3xl mb-2">⚠️</span>
-            <p className="text-[16px] text-[#242424] mb-4">Не вдалося завантажити дані кошика.</p>
+            <p className="text-[16px] text-[#242424] mb-4">{t("cart.loadError")}</p>
             <button
               type="button"
               onClick={() => window.location.reload()}
               className="px-6 py-2 rounded-full bg-[#005b33] text-white font-medium hover:bg-[#004e2b] transition"
             >
-              Спробувати знову
+              {t("cart.retry")}
             </button>
           </div>
         ) : !hasItems ? (
           <div className="bg-[#f5f3ee] rounded-[9px] shadow-[0px_0px_5px_rgba(0,0,0,0.35)] p-8 text-center my-6 flex flex-col items-center justify-center">
             <span className="text-5xl mb-3">🛒</span>
-            <h3 className="text-xl font-bold text-[#242424] mb-2 font-['Lora',serif]">Ваш кошик порожній</h3>
+            <h3 className="text-xl font-bold text-[#242424] mb-2 font-['Lora',serif]">{t("cart.empty")}</h3>
             <p className="text-sm text-[rgba(36,36,36,0.6)] mb-6">
-              Додайте улюблені книги з каталогу, щоб оформити замовлення.
+              {t("cart.emptyHint")}
             </p>
             <Link
-              href="/"
+              href={lp("/categories")}
               className="px-7 py-3 rounded-full bg-[#005b33] text-white font-medium hover:bg-[#004e2b] transition shadow-sm"
             >
-              Перейти до каталогу
+              {t("orders.goToCatalog")}
             </Link>
           </div>
         ) : (
@@ -199,7 +202,7 @@ export default function MobileCartView({
             const product = productById.get(item.productId);
             if (!product) return null;
 
-            const title = product.productName ?? "Без назви";
+            const title = product.productName ?? t("catalog.untitled");
             const author = getAuthorLabel(product.authorIds, authorById);
             const imageSrc = getImageSrc(product);
             const isAvailable =
@@ -216,7 +219,7 @@ export default function MobileCartView({
                 <div className="flex items-start">
                   {/* Обкладинка */}
                   <Link
-                    href={`/products/${item.productId}`}
+                    href={lp(`/products/${item.productId}`)}
                     className="relative w-[85px] sm:w-[95px] h-[130px] sm:h-[145px] shrink-0 rounded-[6px] overflow-hidden bg-white shadow-sm flex items-center justify-center block"
                   >
                     <img
@@ -232,20 +235,20 @@ export default function MobileCartView({
                   {/* Інформація про книгу */}
                   <div className="flex-1 ml-3.5 sm:ml-4 flex flex-col justify-between self-stretch py-0.5">
                     <div>
-                      <Link href={`/products/${item.productId}`} className="block">
+                      <Link href={lp(`/products/${item.productId}`)} className="block">
                         <h3 className="text-[16px] sm:text-[17px] font-semibold text-[#242424] leading-[1.3] line-clamp-2">
                           {title}
                         </h3>
                       </Link>
                       <p className="text-[14px] text-[rgba(36,36,36,0.5)] leading-[1.3] mt-1 line-clamp-1">
-                        {author ?? "Автор не вказаний"}
+                        {author ?? t("product.authorNotSpecified")}
                       </p>
                       <p
                         className={`text-[14px] font-medium leading-[1.3] mt-1 ${
                           isAvailable ? "text-[#005b33]" : "text-[#c81e1e]"
                         }`}
                       >
-                        {isAvailable ? "В наявності" : "Немає в наявності"}
+                        {isAvailable ? t("cart.inStock") : t("cart.outOfStock")}
                       </p>
                     </div>
 
@@ -254,12 +257,12 @@ export default function MobileCartView({
                       <button
                         type="button"
                         onClick={() => handleToggleFavorite(item.productId)}
-                        aria-label="Додати в обране"
+                        aria-label={t("cart.addToFavoritesAria")}
                         className="w-[38px] h-[38px] flex items-center justify-center rounded-full hover:bg-black/5 active:scale-90 transition text-[#242424]"
                       >
                         <img
                           src="/images/main_page/icons/rec-icon-favorite.svg"
-                          alt="Улюблене"
+                          alt=""
                           className={`w-[24px] h-[24px] object-contain transition-transform ${
                             isFav ? "scale-110 filter brightness-90 sepia-[0.3] hue-rotate-[320deg] saturate-[5]" : ""
                           }`}
@@ -269,7 +272,7 @@ export default function MobileCartView({
                       <button
                         type="button"
                         onClick={() => removeFromCart(item.productId)}
-                        aria-label="Видалити з кошика"
+                        aria-label={t("cart.removeAria")}
                         className="w-[38px] h-[38px] flex items-center justify-center rounded-full hover:bg-black/5 active:scale-90 transition text-[rgba(36,36,36,0.7)] hover:text-red-600 ml-auto"
                       >
                         <svg viewBox="0 0 24 24" fill="none" className="w-[24px] h-[24px]">
@@ -287,6 +290,7 @@ export default function MobileCartView({
                 <div className="mt-4 pt-3 border-t border-[rgba(0,0,0,0.08)] flex flex-col gap-3.5">
                   {(["paper", "ebook", "audio"] as FormatType[]).map((type) => {
                     const cfg = FORMAT_ICONS[type];
+                    const formatLabel = t(cfg.labelKey);
                     const qty = item.formatQuantities[type] || 0;
                     const linePrice = qty * unitPrice;
 
@@ -294,7 +298,7 @@ export default function MobileCartView({
                       <div key={type} className="flex items-center justify-between">
                         {/* Бейдж формату */}
                         <div className="relative w-[32px] sm:w-[36px] h-[28px] sm:h-[30px] shrink-0 flex items-center justify-center">
-                          <img src={cfg.bg} alt={cfg.label} className="absolute inset-0 w-full h-full object-fill" />
+                          <img src={cfg.bg} alt={formatLabel} className="absolute inset-0 w-full h-full object-fill" />
                           <img
                             src={cfg.icon}
                             alt=""
@@ -307,7 +311,7 @@ export default function MobileCartView({
                           <button
                             type="button"
                             onClick={() => updateFormatQuantity(item.productId, type, Math.max(0, qty - 1))}
-                            aria-label={`Зменшити кількість ${cfg.label}`}
+                            aria-label={t("cart.decreaseQtyAria").replace("{format}", formatLabel)}
                             className="w-7 h-7 flex items-center justify-center text-[#242424] active:scale-90 transition font-bold"
                           >
                             <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
@@ -322,7 +326,7 @@ export default function MobileCartView({
                           <button
                             type="button"
                             onClick={() => updateFormatQuantity(item.productId, type, qty + 1)}
-                            aria-label={`Збільшити кількість ${cfg.label}`}
+                            aria-label={t("cart.increaseQtyAria").replace("{format}", formatLabel)}
                             className="w-7 h-7 flex items-center justify-center text-[#242424] active:scale-90 transition font-bold"
                           >
                             <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
@@ -351,19 +355,19 @@ export default function MobileCartView({
               <div className="flex items-center gap-2">
                 <span className="text-xl sm:text-2xl select-none">🐾</span>
                 <div className="flex flex-col text-left leading-none">
-                  <span className="text-[12px] text-[rgba(36,36,36,0.6)] font-semibold">Лапок:</span>
+                  <span className="text-[12px] text-[rgba(36,36,36,0.6)] font-semibold">{t("orders.pawsLabel")}</span>
                   <span className="text-[14px] font-bold text-[#242424] mt-0.5">{pawsBalance}</span>
                 </div>
               </div>
               <div className="text-[rgba(36,36,36,0.6)] font-bold">→</div>
               <div className="flex items-center gap-2">
                 <div className="flex flex-col text-left leading-none">
-                  <span className="text-[12px] text-[rgba(36,36,36,0.6)] font-semibold">Знижка:</span>
-                  <span className="text-[14px] font-bold text-[#242424] mt-0.5">{pawsDiscountAmount} грн</span>
+                  <span className="text-[12px] text-[rgba(36,36,36,0.6)] font-semibold">{t("orders.discountLabel")}</span>
+                  <span className="text-[14px] font-bold text-[#242424] mt-0.5">{formatPrice(pawsDiscountAmount)}</span>
                 </div>
                 <img
                   src="/images/header/account_balance_wallet_24px.svg"
-                  alt="Гаманець"
+                  alt={t("cart.walletAlt")}
                   className="w-[28px] h-[28px] object-contain"
                   onError={(e) => {
                     (e.target as HTMLElement).style.display = "none";
@@ -377,7 +381,7 @@ export default function MobileCartView({
               onClick={() => setPawsApplied(!pawsApplied)}
               className="block w-fit mx-auto px-7 py-2.5 rounded-[9px] bg-[rgba(0,91,51,0.55)] hover:bg-[rgba(0,91,51,0.7)] active:scale-95 transition-all text-[#f5f3ee] text-[16px] font-normal shadow-sm cursor-pointer mb-8 select-none"
             >
-              {pawsApplied ? "Скасувати лапки до знижки" : "Застосувати лапки до знижки"}
+              {pawsApplied ? t("cart.cancelPoints") : t("cart.applyPoints")}
             </button>
           </>
         )}
@@ -399,25 +403,25 @@ export default function MobileCartView({
           {/* Підсумок замовлення */}
           <div className="flex flex-col gap-3 w-full max-w-[392px] mx-auto text-[#242424]">
             <div className="flex items-center justify-between">
-              <span className="text-[18px] sm:text-[20px] text-[rgba(155,158,175,0.7)] font-normal">Сума:</span>
+              <span className="text-[18px] sm:text-[20px] text-[rgba(155,158,175,0.7)] font-normal">{t("cart.subtotal")}</span>
               <span className="text-[18px] sm:text-[20px] font-semibold text-[#242424]">
                 {formatPrice(subtotal)}
               </span>
             </div>
             <div className="flex items-center justify-between">
-              <span className="text-[18px] sm:text-[20px] text-[rgba(155,158,175,0.7)] font-normal">Знижка:</span>
+              <span className="text-[18px] sm:text-[20px] text-[rgba(155,158,175,0.7)] font-normal">{t("cart.discount")}</span>
               <span className="text-[18px] sm:text-[20px] font-semibold text-[#c81e1e]">
-                {totalDiscount > 0 ? `- ${formatPrice(totalDiscount)}` : "0 грн"}
+                {totalDiscount > 0 ? `- ${formatPrice(totalDiscount)}` : t("cart.zeroPrice")}
               </span>
             </div>
             <div className="flex items-center justify-between">
-              <span className="text-[18px] sm:text-[20px] text-[rgba(155,158,175,0.7)] font-normal">Вартість доставки:</span>
+              <span className="text-[18px] sm:text-[20px] text-[rgba(155,158,175,0.7)] font-normal">{t("cart.delivery")}</span>
               <span className="text-[18px] sm:text-[20px] font-semibold text-[#242424]">
                 {formatPrice(deliveryCost)}
               </span>
             </div>
             <div className="flex items-center justify-between pt-1">
-              <span className="text-[18px] sm:text-[20px] text-[rgba(155,158,175,0.7)] font-normal">Сума до сплати:</span>
+              <span className="text-[18px] sm:text-[20px] text-[rgba(155,158,175,0.7)] font-normal">{t("cart.total")}</span>
               <span className="text-[22px] sm:text-[24px] font-bold text-[#c81e1e]">
                 {formatPrice(totalToPay)}
               </span>
@@ -433,7 +437,7 @@ export default function MobileCartView({
               type="button"
               onClick={() => setAgreed(!agreed)}
               className="w-[36px] sm:w-[40px] h-[36px] sm:h-[40px] shrink-0 flex items-center justify-center relative cursor-pointer active:scale-90 transition"
-              aria-label="Погоджуюсь з умовами"
+              aria-label={t("cart.agreeAria")}
             >
               {agreed ? (
                 <div className="w-[28px] h-[28px] rounded-full bg-[#005b33] border-2 border-[#005b33] flex items-center justify-center shadow-xs transition-all">
@@ -446,13 +450,13 @@ export default function MobileCartView({
               )}
             </button>
             <p className="text-[14px] sm:text-[15px] text-[#242424] leading-[1.4] pt-1.5 select-none">
-              Погоджуюсь з{" "}
-              <Link href="/personal-data-protection" className="text-[#005b33] font-medium hover:underline">
-                Політикою конфіденційності
+              {t("cart.agreePrefix")}{" "}
+              <Link href={lp("/personal-data-protection")} className="text-[#005b33] font-medium hover:underline">
+                {t("cart.privacyPolicy")}
               </Link>{" "}
-              та з{" "}
-              <Link href="/terms-of-use" className="text-[#005b33] font-medium hover:underline">
-                Користувацькою угодою
+              {t("cart.agreeAnd")}{" "}
+              <Link href={lp("/terms-of-use")} className="text-[#005b33] font-medium hover:underline">
+                {t("cart.termsOfService")}
               </Link>
             </p>
           </div>
@@ -460,7 +464,7 @@ export default function MobileCartView({
           {/* Промокод */}
           <div className="flex flex-col gap-2.5 w-full max-w-[392px] mx-auto mb-7">
             <label htmlFor="mobile-promo-code" className="text-[18px] sm:text-[20px] font-normal text-[#242424]">
-              Є промокод?
+              {t("cart.hasPromo")}
             </label>
             <div className="w-full bg-[#f5f3ee] rounded-[9px] shadow-[0px_0px_5px_rgba(0,0,0,0.25)] flex items-center px-4 py-2.5 border border-transparent focus-within:border-[#005b33] transition">
               <input
@@ -468,7 +472,8 @@ export default function MobileCartView({
                 type="text"
                 value={promoCode}
                 onChange={(e) => setPromoCode(e.target.value)}
-                placeholder="Промокод..."
+                placeholder={t("cart.promoPlaceholder")}
+                aria-label={t("cart.promoAria")}
                 className="w-full bg-transparent text-[16px] sm:text-[18px] text-[#242424] placeholder:text-[rgba(36,36,36,0.5)] focus:outline-none"
               />
             </div>
@@ -480,10 +485,10 @@ export default function MobileCartView({
             disabled={subtotal === 0}
             onClick={async () => {
               if (!agreed) {
-                await alertWarning("Будь ласка, підтвердіть згоду з Політикою конфіденційності та Користувацькою угодою (поставте галочку)");
+                await alertWarning(t("cart.agreeWarning"));
                 return;
               }
-              router.push("/checkout");
+              router.push(lp("/checkout"));
             }}
             className={`w-full max-w-[392px] mx-auto py-3.5 px-6 rounded-[60px] font-medium text-[18px] sm:text-[20px] text-white text-center transition-all shadow-md flex items-center justify-center ${
               subtotal > 0
@@ -491,7 +496,7 @@ export default function MobileCartView({
                 : "bg-[#005b33]/50 cursor-not-allowed"
             }`}
           >
-            До оформлення замовлення
+            {t("cart.checkout")}
           </button>
         </div>
       )}

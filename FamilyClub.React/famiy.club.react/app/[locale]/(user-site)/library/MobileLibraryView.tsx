@@ -5,16 +5,16 @@ import { useRouter } from "next/navigation";
 import { AuthorDTO, CategoryDto, ProductDto, ReviewDto as ApiReviewDto } from "@/lib/api/generated";
 import { authorService, categoriesService, productService, reviewService } from "@/lib/api/services";
 import { getImageSrc } from "../userProfile/hooks/useImageBook";
-import { useCart } from "@/lib/hooks/useCart";
 import { useUserReviews } from "../userProfile/hooks/useUserReviews";
 import { CurrentUser } from "../userProfile/hooks/useCurrentUser";
 import { FavoriteBook } from "@/lib/hooks/useFavorites";
 import FormatBadge from "../userProfile/section/FormatBadge";
+import { useLocale, useLocalizedPath, useTranslations } from "@/lib/i18n/LocaleProvider";
 
 const FORMAT_CONFIG = [
-  { id: 3, icon: "/images/userProfile/Property1.svg", icon1: "/images/userProfile/Rectangle 185.svg", label: "Паперова" },
-  { id: 1, icon: "/images/userProfile/Property2.svg", icon1: "/images/userProfile/Rectangle 186.svg", label: "Ebooks" },
-  { id: 2, icon: "/images/userProfile/Property3.svg", icon1: "/images/userProfile/Rectangle 188.svg", label: "Аудіо книга" },
+  { id: 3, icon: "/images/userProfile/Property1.svg", icon1: "/images/userProfile/Rectangle 185.svg", labelKey: "profile.formats.paper" },
+  { id: 1, icon: "/images/userProfile/Property2.svg", icon1: "/images/userProfile/Rectangle 186.svg", labelKey: "profile.formats.ebook" },
+  { id: 2, icon: "/images/userProfile/Property3.svg", icon1: "/images/userProfile/Rectangle 188.svg", labelKey: "profile.formats.audio" },
 ];
 
 const SOCIALS = [
@@ -34,11 +34,11 @@ const CARD_COLORS = [
   "#592A2B",
 ];
 
-const FALLBACK_GENRES = [
-  "Роман", "Наукова фантастика", "Фентезі", "Сучасна література", "Трилер",
-  "Підліткова література", "Детектив", "Дитяча література", "Біографія",
-  "Історична література", "Жахи", "Пригоди", "Навчання", "Класика",
-  "Бізнес", "Комікси та манга", "Поезія", "Мемуари", "Драма", "Психологія"
+const FALLBACK_GENRE_KEYS = [
+  "romance", "scienceFiction", "fantasy", "contemporary", "thriller",
+  "youngAdult", "detective", "children", "biography", "historical",
+  "horror", "adventure", "education", "classics", "business", "comics",
+  "poetry", "memoirs", "drama", "psychology",
 ];
 
 export type MobileLibraryViewProps = {
@@ -60,7 +60,9 @@ export default function MobileLibraryView({
   loadingMyBooks,
 }: MobileLibraryViewProps) {
   const router = useRouter();
-  const { items, addToCart } = useCart();
+  const { locale } = useLocale();
+  const t = useTranslations();
+  const lp = useLocalizedPath();
   const { reviews: userReviews, loading: loadingUserReviews } = useUserReviews(userId);
 
   const [authors, setAuthors] = useState<AuthorDTO[]>([]);
@@ -124,7 +126,7 @@ export default function MobileLibraryView({
   const displayName =
     [user?.name, user?.surname].filter(Boolean).join(" ") ||
     user?.email?.split("@")[0] ||
-    "Користувач";
+    t("common.user");
 
   const avatarSrc = user?.avatarData
     ? user.avatarData.startsWith("http") || user.avatarData.startsWith("data:")
@@ -151,8 +153,8 @@ export default function MobileLibraryView({
     if (categories.length > 0) {
       return categories.map((c) => c.categoryName ?? "").filter(Boolean);
     }
-    return FALLBACK_GENRES;
-  }, [categories]);
+    return FALLBACK_GENRE_KEYS.map((key) => t(`library.genres.${key}`));
+  }, [categories, t]);
 
   const toggleGenre = (genre: string) => {
     setSelectedGenres((prev) =>
@@ -199,13 +201,13 @@ export default function MobileLibraryView({
 
     // Sort
     if (sortOrder === "asc") {
-      list.sort((a, b) => (a.productName ?? "").localeCompare(b.productName ?? "", "uk"));
+      list.sort((a, b) => (a.productName ?? "").localeCompare(b.productName ?? "", locale));
     } else if (sortOrder === "desc") {
-      list.sort((a, b) => (b.productName ?? "").localeCompare(a.productName ?? "", "uk"));
+      list.sort((a, b) => (b.productName ?? "").localeCompare(a.productName ?? "", locale));
     }
 
     return list;
-  }, [libraryPool, onlyEbooks, onlyAudio, yearFilter, selectedGenres, categories, sortOrder]);
+  }, [libraryPool, onlyEbooks, onlyAudio, yearFilter, selectedGenres, categories, sortOrder, locale]);
 
   // Recently read subset
   const recentlyReadBooks = useMemo(() => {
@@ -232,7 +234,7 @@ export default function MobileLibraryView({
     if (rows.length === 0) {
       return (
         <div className="py-8 text-center text-[#242424]/60 text-sm font-medium">
-          Книг не знайдено
+          {t("library.noBooks")}
         </div>
       );
     }
@@ -254,7 +256,7 @@ export default function MobileLibraryView({
               return (
                 <div
                   key={book.id ?? `${rowIndex}-${idx}`}
-                  onClick={() => router.push(`/products/${book.id}`)}
+                  onClick={() => router.push(lp(`/products/${book.id}`))}
                   className="relative w-full rounded-bl-[20px] rounded-br-[20px] rounded-t-none shadow-[0_10px_16px_rgba(36,36,36,0.4)] border-b border-x border-[#e0d8cc]/30 flex flex-col items-center transition-transform active:scale-[0.98] cursor-pointer overflow-hidden pb-4"
                   style={{ backgroundColor: cardColor }}
                 >
@@ -263,7 +265,7 @@ export default function MobileLibraryView({
                     {FORMAT_CONFIG
                       .filter((f) => (book.formatIds ?? []).includes(f.id))
                       .map((f) => (
-                        <FormatBadge key={f.id} icon={f.icon} icon1={f.icon1} label={f.label} />
+                        <FormatBadge key={f.id} icon={f.icon} icon1={f.icon1} label={t(f.labelKey)} />
                       ))}
                   </div>
 
@@ -275,7 +277,7 @@ export default function MobileLibraryView({
                       if (book.id) toggleFavorite(book.id);
                     }}
                     className="absolute top-[14px] right-[14px] z-30 p-1 rounded-full hover:bg-black/20 transition-all active:scale-90"
-                    aria-label="Вподобати"
+                    aria-label={t("profile.ariaFavorite")}
                   >
                     <img
                       src={
@@ -283,7 +285,7 @@ export default function MobileLibraryView({
                           ? "/images/userProfile/heart-filled.svg"
                           : "/images/userProfile/icon-heart.svg"
                       }
-                      alt="Heart"
+                      alt=""
                       className="w-[26px] h-[26px] sm:w-[28px] sm:h-[28px] object-contain opacity-85 hover:opacity-100 transition-opacity drop-shadow-md"
                     />
                   </button>
@@ -318,7 +320,7 @@ export default function MobileLibraryView({
 
                       {/* Author in Source Sans 3 font */}
                       <p className="font-['Source_Sans_3',sans-serif] text-[13.5px] sm:text-[14.5px] text-[#f5f3ee]/75 leading-tight mt-1 truncate">
-                        {authorNames || "Автор невідомий"}
+                        {authorNames || t("profile.unknownAuthor")}
                       </p>
                     </div>
                   </div>
@@ -351,7 +353,7 @@ export default function MobileLibraryView({
               {avatarSrc ? (
                 <img src={avatarSrc} alt={displayName} className="w-full h-full object-cover" />
               ) : (
-                <img src="/images/header/person_24px.png" alt="Профіль" className="w-[30px] h-[30px] object-contain brightness-0 invert opacity-80" />
+                <img src="/images/header/person_24px.png" alt={t("nav.profile")} className="w-[30px] h-[30px] object-contain brightness-0 invert opacity-80" />
               )}
             </div>
             <div className="flex flex-col min-w-0 flex-1 justify-center pt-0.5">
@@ -359,11 +361,11 @@ export default function MobileLibraryView({
                 {displayName}
               </span>
               <p className="text-[13.5px] text-[#f5f3ee] font-bold tracking-[-0.154px] leading-snug truncate mt-1">
-                @{user?.email?.split("@")[0] || "user"} · {!loadingMyBooks ? `${myBooks.length} книг` : "..."} · {!loadingUserReviews ? `${userReviews.length} постів` : "..."}
+                @{user?.email?.split("@")[0] || t("common.userHandle")} · {!loadingMyBooks ? t("library.booksCount").replace("{count}", String(myBooks.length)) : "..."} · {!loadingUserReviews ? t("library.postsCount").replace("{count}", String(userReviews.length)) : "..."}
               </p>
               <p className="text-[13px] text-[#f5f3ee]/95 leading-snug tracking-[-0.154px] truncate mt-0.5">
-                <span>Особиста читацька бібліотека у Family Club. </span>
-                <span className="font-bold cursor-pointer underline">Докладніше</span>
+                <span>{t("library.bio")} </span>
+                <span className="font-bold cursor-pointer underline">{t("library.details")}</span>
               </p>
             </div>
           </div>
@@ -386,11 +388,11 @@ export default function MobileLibraryView({
             <div className="flex items-center gap-2">
               <button
                 type="button"
-                onClick={() => router.push("/userProfile")}
+                onClick={() => router.push(lp("/userProfile"))}
                 className="px-3.5 py-1.5 rounded-full bg-[#3c2a1e] text-[#f5f3ee] text-[13px] font-semibold tracking-tight shadow-md flex items-center gap-1 hover:bg-[#4d3728] active:scale-95 transition-all"
               >
-                <img src="/images/header/person_24px.png" alt="Профіль" className="w-3.5 h-3.5 object-contain brightness-0 invert opacity-90" />
-                <span>Профіль</span>
+                <img src="/images/header/person_24px.png" alt="" className="w-3.5 h-3.5 object-contain brightness-0 invert opacity-90" />
+                <span>{t("nav.profile")}</span>
               </button>
             </div>
           </div>
@@ -411,7 +413,7 @@ export default function MobileLibraryView({
           {/* Top Title: "Бібліотека" full width (NO book icon, continuous box exact to Figma) */}
           <div className="w-full py-3 sm:py-3.5 px-4 bg-[#c7a381]/85 backdrop-blur-[1px] flex items-center justify-center">
             <span className="text-[#242424] font-['Roboto_Mono',monospace] text-[17px] sm:text-[19px] font-bold tracking-tight">
-              Бібліотека
+              {t("nav.library")}
             </span>
           </div>
 
@@ -422,7 +424,7 @@ export default function MobileLibraryView({
               type="button"
               onClick={() => setIsFilterOpen(!isFilterOpen)}
               className="w-[42px] h-[42px] rounded-full bg-[#dfcfbf] text-[#242424] flex items-center justify-center shadow hover:bg-[#d4c3b2] active:scale-90 transition-all shrink-0 border border-[#242424]/10"
-              aria-label="Фільтр"
+              aria-label={t("library.filter")}
             >
               <svg className="w-5 h-5 text-[#242424] -rotate-90" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z" />
@@ -432,11 +434,11 @@ export default function MobileLibraryView({
             {/* Right: Stats Summary (Frame 1031 & Frame 1030) */}
             <div className="flex items-center gap-4 sm:gap-5">
               <span className="font-['Source_Sans_3',sans-serif] text-[20px] sm:text-[22px] font-bold text-[#242424] tracking-tight">
-                У вас
+                {t("library.yourCollection")}
               </span>
               <div className="flex flex-col text-right font-['Source_Sans_3',sans-serif] text-[14px] sm:text-[15px] font-medium text-[#242424] leading-snug">
-                <span>Електронних книг: <strong className="font-bold">{ebookCount}</strong></span>
-                <span>Аудіо книг: <strong className="font-bold">{audioCount}</strong></span>
+                <span>{t("library.ebookCount").replace("{count}", String(ebookCount))}</span>
+                <span>{t("library.audioCount").replace("{count}", String(audioCount))}</span>
               </div>
             </div>
           </div>
@@ -449,7 +451,7 @@ export default function MobileLibraryView({
           <div className="w-full max-h-[85vh] bg-[#f5f3ee] rounded-t-[28px] shadow-[0_-10px_25px_rgba(0,0,0,0.3)] flex flex-col overflow-hidden animate-in slide-in-from-bottom duration-300">
             {/* Modal Header */}
             <div className="px-6 py-4 border-b border-[#e0d8cc] flex items-center justify-between shrink-0 bg-[#ebe5da]">
-              <span className="text-[24px] font-bold text-[#242424]">Фільтр</span>
+              <span className="text-[24px] font-bold text-[#242424]">{t("library.filter")}</span>
               <button
                 type="button"
                 onClick={() => setIsFilterOpen(false)}
@@ -463,7 +465,7 @@ export default function MobileLibraryView({
             <div className="p-6 overflow-y-auto flex flex-col gap-6">
               {/* Genres Section (Group 826) */}
               <div>
-                <p className="text-[17px] font-bold text-[#242424] mb-3">Жанри</p>
+                <p className="text-[17px] font-bold text-[#242424] mb-3">{t("header.genres")}</p>
                 <div className="flex flex-wrap gap-2">
                   {genreList.map((genre) => {
                     const selected = selectedGenres.includes(genre);
@@ -487,12 +489,12 @@ export default function MobileLibraryView({
 
               {/* Publication Year (Group 815 & Group 596) */}
               <div className="border-t border-[#e0d8cc] pt-5">
-                <p className="text-[17px] font-bold text-[#242424] mb-2.5">Рік публікації</p>
+                <p className="text-[17px] font-bold text-[#242424] mb-2.5">{t("library.publicationYear")}</p>
                 <input
                   type="text"
                   value={yearFilter}
                   onChange={(e) => setYearFilter(e.target.value)}
-                  placeholder="Наприклад: 2024 або 2020-2023"
+                  placeholder={t("library.yearPlaceholder")}
                   className="w-full px-4 py-2.5 rounded-xl bg-white border border-[#d4b595] text-[#242424] text-[15px] outline-none focus:border-[#005B33] shadow-inner"
                 />
               </div>
@@ -500,7 +502,7 @@ export default function MobileLibraryView({
               {/* Format Checkboxes (Frame 1034) */}
               <div className="border-t border-[#e0d8cc] pt-5 flex flex-col gap-3.5">
                 <label className="flex items-center justify-between cursor-pointer select-none">
-                  <span className="text-[16px] font-semibold text-[#242424]">Тільки електронні</span>
+                  <span className="text-[16px] font-semibold text-[#242424]">{t("profile.filter.ebookOnly")}</span>
                   <input
                     type="checkbox"
                     checked={onlyEbooks}
@@ -510,7 +512,7 @@ export default function MobileLibraryView({
                 </label>
 
                 <label className="flex items-center justify-between cursor-pointer select-none">
-                  <span className="text-[16px] font-semibold text-[#242424]">Тільки аудіокниги</span>
+                  <span className="text-[16px] font-semibold text-[#242424]">{t("profile.filter.audioOnly")}</span>
                   <input
                     type="checkbox"
                     checked={onlyAudio}
@@ -522,7 +524,7 @@ export default function MobileLibraryView({
 
               {/* Sorting (Group 816) */}
               <div className="border-t border-[#e0d8cc] pt-5">
-                <p className="text-[17px] font-bold text-[#242424] mb-3">По алфавіту</p>
+                <p className="text-[17px] font-bold text-[#242424] mb-3">{t("profile.filter.alphabet")}</p>
                 <div className="flex gap-3">
                   <button
                     type="button"
@@ -533,7 +535,7 @@ export default function MobileLibraryView({
                         : "bg-white text-[#242424] border-[#d4b595] hover:bg-[#ebe5da]"
                     }`}
                   >
-                    Від А до Я
+                    {t("profile.filter.az")}
                   </button>
                   <button
                     type="button"
@@ -544,7 +546,7 @@ export default function MobileLibraryView({
                         : "bg-white text-[#242424] border-[#d4b595] hover:bg-[#ebe5da]"
                     }`}
                   >
-                    Від Я до А
+                    {t("profile.filter.za")}
                   </button>
                 </div>
               </div>
@@ -563,14 +565,14 @@ export default function MobileLibraryView({
                 }}
                 className="px-5 py-2.5 rounded-full text-sm font-semibold text-[#242424] hover:bg-black/10 transition-all"
               >
-                Скинути
+                {t("library.reset")}
               </button>
               <button
                 type="button"
                 onClick={() => setIsFilterOpen(false)}
                 className="px-7 py-2.5 rounded-full bg-[#005B33] text-white text-sm font-bold shadow-md hover:bg-[#097E4B] active:scale-95 transition-all"
               >
-                Застосувати
+                {t("header.apply")}
               </button>
             </div>
           </div>
@@ -592,7 +594,7 @@ export default function MobileLibraryView({
             }}
           >
             <span className="text-[18px] sm:text-[20px] font-bold text-[#f5f3ee] tracking-tight drop-shadow-sm">
-              Останнє що читали
+              {t("library.recentlyRead")}
             </span>
             <div className={`transition-transform duration-300 ${isRecentlyReadOpen ? "rotate-0" : "rotate-180"}`}>
               <svg className="w-6 h-6 text-[#f5f3ee] drop-shadow-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -617,7 +619,7 @@ export default function MobileLibraryView({
             }}
           >
             <span className="text-[18px] sm:text-[20px] font-bold text-[#f5f3ee] tracking-tight drop-shadow-sm">
-              Улюблені
+              {t("profile.tabs.favorite")}
             </span>
             <div className={`transition-transform duration-300 ${isFavoritesOpen ? "rotate-0" : "rotate-180"}`}>
               <svg className="w-6 h-6 text-[#f5f3ee] drop-shadow-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -642,7 +644,7 @@ export default function MobileLibraryView({
             }}
           >
             <span className="text-[18px] sm:text-[20px] font-bold text-[#f5f3ee] tracking-tight drop-shadow-sm">
-              Усі
+              {t("library.all")}
             </span>
             <div className={`transition-transform duration-300 ${isAllOpen ? "rotate-0" : "rotate-180"}`}>
               <svg className="w-6 h-6 text-[#f5f3ee] drop-shadow-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
