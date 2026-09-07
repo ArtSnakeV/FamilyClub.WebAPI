@@ -30,7 +30,13 @@ builder.Services.AddCors(options =>
         });
 });
 
-
+// Configure Stripe
+var stripeSecret = builder.Configuration["Stripe:SecretKey"];
+if (!string.IsNullOrWhiteSpace(stripeSecret))
+{
+    Stripe.StripeConfiguration.ApiKey = stripeSecret;
+    builder.Services.AddSingleton(new Stripe.StripeClient(stripeSecret));
+}
 
 // MVC + Views
 // Add services to the container.
@@ -119,6 +125,7 @@ builder.Services.Configure<FamilyClub.BLL.Options.SmtpOptions>(
     builder.Configuration.GetSection(FamilyClub.BLL.Options.SmtpOptions.SectionName));
 builder.Services.Configure<FamilyClub.BLL.Options.AzureCommunicationServicesOptions>(
     builder.Configuration.GetSection(FamilyClub.BLL.Options.AzureCommunicationServicesOptions.SectionName));
+
 
 var azureEmailOptions = builder.Configuration
     .GetSection(FamilyClub.BLL.Options.AzureCommunicationServicesOptions.SectionName)
