@@ -5,11 +5,11 @@ import { useRouter } from "next/navigation";
 import { useCart, type FormatType } from "@/lib/hooks/useCart";
 import {
   productService,
-  orderService,
+  apiBasePath,
 } from "@/lib/api/services";
 import type { ProductDto } from "@/lib/api/generated";
 import { getAuthToken, getAuthUserId } from "@/lib/auth/tokenStorage";
-import { alertError, alertSuccess, alertWarning } from "@/lib/ui/sweetAlert";
+import { alertError, alertWarning } from "@/lib/ui/sweetAlert";
 import { useCurrentUser } from "@/app/(user-site)/userProfile/hooks/useCurrentUser";
 import { useLocale, useLocalizedPath, useTranslations } from "@/lib/i18n/LocaleProvider";
 import styles from "./checkout.module.css";
@@ -18,7 +18,7 @@ import MobileCheckoutView from "./MobileCheckoutView";
 // ─── Types ───
 export type DeliveryProvider = "nova_poshta" | "ukr_poshta" | "meest";
 export type DeliveryType = "branch" | "postbox";
-export type PaymentMethod = "card_online" | "card_dia" | "cash_on_delivery";
+export type PaymentMethod = "card_online" | "cash_on_delivery";
 
 // ─── SVGs ───
 function BackArrow() {
@@ -269,54 +269,57 @@ export default function CheckoutPage() {
         return;
       }
 
-      const initialStatus = paymentMethod === "cash_on_delivery" ? "Pending" : "Paid";
-
-      let apiSuccess = false;
-      try {
-        await orderService.apiOrdersPost({
-          orderDTO: {
-            userId: storedId,
-            status: initialStatus,
-            totalPrice: total,
-            orderItems: orderItems.map((oi) => ({
-              productId: oi.productId,
-              quantity: oi.quantity,
-              unitPrice: oi.unitPrice,
-              format: oi.format,
-              orderId: 0,
-            })),
-          },
-        });
-        apiSuccess = true;
-      } catch (err) {
-        console.warn("Orders API warning, fallback to local persistence", err);
+      const token = getAuthToken();
+      if (!token) {
+        await alertWarning(t("checkout.authError"));
+        router.push(lp("/login"));
+        return;
       }
 
-      if (!apiSuccess) {
-        const orderIdToSave = Math.floor(10000000 + Math.random() * 90000000);
-        const localOrderObj = {
-          id: orderIdToSave,
+      const createRes = await fetch(`${apiBasePath}/api/Orders`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
           userId: storedId,
-          status: initialStatus,
-          orderDate: new Date().toISOString(),
+          status: "Pending",
+          paymentMethod,
           totalPrice: total,
-          orderItems: orderItems.map((oi, idx) => ({
-            id: idx + 1,
+          orderItems: orderItems.map((oi) => ({
             productId: oi.productId,
             quantity: oi.quantity,
             unitPrice: oi.unitPrice,
             format: oi.format,
+            orderId: 0,
           })),
-        };
+        }),
+      });
+      if (!createRes.ok) throw new Error("Order create failed");
+      const createdOrder = await createRes.json();
+      if (!createdOrder?.id) throw new Error("Order id missing");
 
-        if (typeof window !== "undefined") {
-          const localOrders = JSON.parse(localStorage.getItem("librellis_local_orders") || "[]");
-          localOrders.unshift(localOrderObj);
-          localStorage.setItem("librellis_local_orders", JSON.stringify(localOrders));
-        }
+      if (paymentMethod === "card_online") {
+        const payRes = await fetch(`${apiBasePath}/api/Payments/checkout-session`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            orderId: createdOrder.id,
+            currency: "uah",
+            locale,
+          }),
+        });
+        if (!payRes.ok) throw new Error("Checkout session failed");
+        const { url } = await payRes.json();
+        if (!url) throw new Error("Checkout url missing");
+        window.location.href = url;
+        return;
       }
 
-      // Clear cart after successful order
       await clearCart();
       setSuccess(true);
     } catch (error) {
@@ -650,16 +653,18 @@ export default function CheckoutPage() {
 
               <div
                 className={styles.paymentOption}
-                onClick={() => setPaymentMethod("card_dia")}
                 id="payment-card-dia"
+                aria-disabled="true"
+                title={t("checkout.payComingSoon")}
+                style={{ opacity: 0.55, cursor: "not-allowed" }}
               >
                 <div className={styles.paymentOptionLeft}>
-                  <RadioBtn
-                    active={paymentMethod === "card_dia"}
-                    onClick={() => setPaymentMethod("card_dia")}
-                  />
+                  <RadioBtn active={false} onClick={() => {}} />
                   <span className={styles.paymentOptionName}>
                     {t("checkout.payCardDia")}
+                    <span style={{ marginLeft: 8, fontSize: 12, fontWeight: 600, color: "#666" }}>
+                      ({t("checkout.payComingSoon")})
+                    </span>
                   </span>
                 </div>
                 <div className={styles.paymentLogos}>
