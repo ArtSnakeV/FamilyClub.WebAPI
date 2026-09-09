@@ -27,10 +27,10 @@ public class PaymentsController : ControllerBase
     }
 
     /// <summary>
-    /// Currency передає фронт (напр. з locale). За замовчуванням — uah.
+    /// Currency і locale передає фронт. За замовчуванням — uah / uk.
     /// TotalPrice замовлення має вже бути в цій валюті (без конвертації на бекенді).
     /// </summary>
-    public record CheckoutSessionRequest(int OrderId, string? Currency = null);
+    public record CheckoutSessionRequest(int OrderId, string? Currency = null, string? Locale = null);
 
     [HttpPost("checkout-session")]
     public async Task<IActionResult> CreateCheckoutSession(
@@ -65,6 +65,14 @@ public class PaymentsController : ControllerBase
             return BadRequest("Supported currencies: uah, usd");
         }
 
+        var locale = string.IsNullOrWhiteSpace(request.Locale)
+            ? "uk"
+            : request.Locale.Trim().ToLowerInvariant();
+        if (locale is not ("uk" or "en"))
+        {
+            locale = "uk";
+        }
+
         // Сума вже в обраній валюті (фронт відповідає за це)
         var unitAmount = (long)Math.Round(order.TotalPrice * 100m, MidpointRounding.AwayFromZero);
         if (unitAmount < 1)
@@ -77,8 +85,8 @@ public class PaymentsController : ControllerBase
         var options = new SessionCreateOptions
         {
             Mode = "payment",
-            SuccessUrl = $"{frontendBase}/checkout/success?orderId={order.Id}&session_id={{CHECKOUT_SESSION_ID}}",
-            CancelUrl = $"{frontendBase}/checkout/cancel?orderId={order.Id}",
+            SuccessUrl = $"{frontendBase}/{locale}/checkout/success?orderId={order.Id}&session_id={{CHECKOUT_SESSION_ID}}",
+            CancelUrl = $"{frontendBase}/{locale}/checkout/cancel?orderId={order.Id}",
             LineItems =
             [
                 new SessionLineItemOptions
@@ -99,6 +107,7 @@ public class PaymentsController : ControllerBase
             {
                 ["orderId"] = order.Id.ToString(),
                 ["currency"] = currency,
+                ["locale"] = locale,
             },
         };
 
