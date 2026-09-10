@@ -13,6 +13,7 @@ import { alertError, alertSuccess, alertWarning } from "@/lib/ui/sweetAlert";
 import { useCurrentUser } from "@/app/(user-site)/userProfile/hooks/useCurrentUser";
 import styles from "./checkout.module.css";
 import MobileCheckoutView from "./MobileCheckoutView";
+import NovaPoshtaFields from "./NovaPoshtaFields";
 
 // ─── Types ───
 export type DeliveryProvider = "nova_poshta" | "ukr_poshta" | "meest";
@@ -100,6 +101,7 @@ export default function CheckoutPage() {
   const [deliveryProvider, setDeliveryProvider] = useState<DeliveryProvider>("nova_poshta");
   const [deliveryType, setDeliveryType] = useState<DeliveryType>("branch");
   const [city, setCity] = useState("");
+  const [cityRef, setCityRef] = useState("");
   const [branch, setBranch] = useState("");
 
   // Payment
@@ -536,36 +538,16 @@ export default function CheckoutPage() {
                       </div>
 
                       {/* City + Branch selectors */}
-                      <div className={styles.deliverySelectors}>
-                        <div className={styles.deliverySelect}>
-                          <input
-                            className={styles.deliverySelectInput}
-                            type="text"
-                            placeholder="Оберіть населений пункт *"
-                            value={city}
-                            onChange={(e) => setCity(e.target.value)}
-                            id="delivery-city"
-                            aria-label="Населений пункт"
-                          />
-                          <div className={styles.deliverySelectIcon}>
-                            <ChevronDown />
-                          </div>
-                        </div>
-                        <div className={styles.deliverySelect}>
-                          <input
-                            className={styles.deliverySelectInput}
-                            type="text"
-                            placeholder="Відділення Нової пошти *"
-                            value={branch}
-                            onChange={(e) => setBranch(e.target.value)}
-                            id="delivery-branch"
-                            aria-label="Відділення"
-                          />
-                          <div className={styles.deliverySelectIcon}>
-                            <ChevronDown />
-                          </div>
-                        </div>
-                      </div>
+                      <NovaPoshtaFields
+                        city={city}
+                        setCity={setCity}
+                        cityRef={cityRef}
+                        setCityRef={setCityRef}
+                        branch={branch}
+                        setBranch={setBranch}
+                        deliveryType={deliveryType}
+                        variant="desktop"
+                      />
                     </>
                   )}
                 </div>
@@ -816,6 +798,8 @@ export default function CheckoutPage() {
           setDeliveryType={setDeliveryType}
           city={city}
           setCity={setCity}
+          cityRef={cityRef}
+          setCityRef={setCityRef}
           branch={branch}
           setBranch={setBranch}
           paymentMethod={paymentMethod}
