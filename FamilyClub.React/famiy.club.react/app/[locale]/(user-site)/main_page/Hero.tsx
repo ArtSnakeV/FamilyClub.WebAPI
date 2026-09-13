@@ -32,24 +32,13 @@ const HERO_BACKGROUND_IMAGES = {
   en: "/images/main_page/hero/hero-background-en.png",
 } as const;
 
-const REVEAL_MS = 140;
-
-function shuffle<T>(items: readonly T[]): T[] {
-  const next = [...items];
-  for (let i = next.length - 1; i > 0; i -= 1) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [next[i], next[j]] = [next[j], next[i]];
-  }
-  return next;
-}
-
 function HeroBookStack({
   covers,
   href,
   className,
   ariaLabel,
 }: {
-  covers: string[];
+  covers: readonly string[];
   href: string;
   className: string;
   ariaLabel: string;
@@ -72,20 +61,17 @@ function HeroBookStack({
 
         if (hovering) {
           if (isFront) {
-            // Front cover tips slightly to the right
             transform = "translate(28px, 6px) rotate(-2deg)";
             opacity = 1;
           } else {
-            // Remaining covers fan out to the left, staggered
             const step = index;
-            const angleStep = 21; // gap between consecutive covers
+            const angleStep = 21;
             transform = `translate(${-22 * step}px, ${4 * step}px) rotate(${-2 - step * angleStep}deg)`;
             opacity = 1;
-            transitionDelay = `${step * 24}ms`;
+            transitionDelay = `${step * 30}ms`;
           }
         } else if (!isFront) {
-          // Collapse back under the front cover
-          transitionDelay = `${(covers.length - index) * 12}ms`;
+          transitionDelay = `${(covers.length - index) * 20}ms`;
         }
 
         return (
@@ -93,7 +79,7 @@ function HeroBookStack({
             key={src}
             alt=""
             src={src}
-            className={`absolute left-[65px] top-[27px] h-[341px] w-[230px] object-contain transition-[transform] ease-out ${
+            className={`pointer-events-none absolute left-[65px] top-[27px] h-[341px] w-[230px] object-contain transition-all duration-300 ease-out ${
               isFront
                 ? "drop-shadow-[0px_0px_30px_rgba(245,243,238,0.9)]"
                 : "drop-shadow-[0px_6px_14px_rgba(0,0,0,0.35)]"
@@ -102,7 +88,6 @@ function HeroBookStack({
               zIndex: covers.length - index,
               opacity,
               transform,
-              transitionDuration: `${REVEAL_MS}ms`,
               transitionDelay,
             }}
           />
@@ -122,8 +107,7 @@ export default function Hero() {
     mediaSrc(settings.bannerData, settings.bannerContentType) ??
     HERO_BACKGROUND_IMAGES[locale];
 
-  const [bookOrder] = useState(() => shuffle([0, 1, 2, 3] as const));
-  const covers = bookOrder.map((index) => HERO_BOOKS[locale][index]);
+  const covers = HERO_BOOKS[locale] ?? HERO_BOOKS.uk;
 
   useEffect(() => {
     covers.slice(1).forEach((src) => {

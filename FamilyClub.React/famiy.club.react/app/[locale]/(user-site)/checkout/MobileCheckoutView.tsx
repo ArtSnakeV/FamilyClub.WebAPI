@@ -3,6 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useLocalizedPath, useTranslations } from "@/lib/i18n/LocaleProvider";
 import type { DeliveryProvider, DeliveryType, PaymentMethod } from "./page";
 import NovaPoshtaFields from "./NovaPoshtaFields";
 
