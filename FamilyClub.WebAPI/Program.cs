@@ -6,6 +6,7 @@ using FamilyClub.DAL.Interfaces;
 using FamilyClub.DAL.Repositories;
 using FamilyClubLibrary;
 using FamilyClub.WebAPI.Middlewares;
+using FamilyClub.WebAPI.Filters;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.RateLimiting;
 using System.Threading.RateLimiting;
@@ -40,7 +41,10 @@ if (!string.IsNullOrWhiteSpace(stripeSecret))
 
 // MVC + Views
 // Add services to the container.
-builder.Services.AddControllers();
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add<OperationCanceledExceptionFilter>();
+});
 //builder.Services.AddControllersWithViews();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
@@ -289,7 +293,7 @@ try
     builder.Services.AddSingleton<StackExchange.Redis.IConnectionMultiplexer>(multiplexer);
     builder.Services.AddStackExchangeRedisCache(options =>
     {
-        options.Configuration = redisConnStr;
+        options.ConnectionMultiplexerFactory = () => Task.FromResult<StackExchange.Redis.IConnectionMultiplexer>(multiplexer);
         options.InstanceName = builder.Configuration["CacheSettings:InstanceName"] ?? "FamilyClubCache_";
     });
 }
