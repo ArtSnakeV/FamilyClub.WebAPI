@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import type { DeliveryProvider, DeliveryType, PaymentMethod } from "./page";
 import NovaPoshtaFields from "./NovaPoshtaFields";
+import { useLocalizedPath, useTranslations } from "@/lib/i18n/LocaleProvider";
 
 export type MobileCheckoutViewProps = {
   loading: boolean;
