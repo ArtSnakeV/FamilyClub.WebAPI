@@ -44,7 +44,7 @@ function ReviewCard({
 
     return (
         <div
-            className={`flex h-full flex-col gap-3 rounded-[21px] bg-[#f5f3ee] p-4 shadow-[0px_0px_15px_0px_rgba(0,0,0,0.6)] ${className ?? ""}`}
+            className={`flex h-full flex-col gap-3 rounded-[21px] bg-[var(--background-elevated)] p-4 shadow-[0px_0px_15px_0px_rgba(0,0,0,0.6)] ${className ?? ""}`}
             style={style}
         >
             <div className="flex gap-4">
@@ -55,9 +55,9 @@ function ReviewCard({
                 )}
                 <div className="flex-1">
                     {author ? (
-                        <p className="font-mono text-[24px] font-medium text-[#242424]">{author}</p>
+                        <p className="font-mono text-[24px] font-medium text-[var(--foreground-primary)]">{author}</p>
                     ) : null}
-                    <p className="mt-2 max-h-[120px] overflow-hidden text-[14px] text-[#242424]">{text}</p>
+                    <p className="mt-2 max-h-[120px] overflow-hidden text-[14px] text-[var(--foreground-primary)]">{text}</p>
                 </div>
                 <img
                     alt=""
@@ -67,13 +67,13 @@ function ReviewCard({
             </div>
             <div className="flex items-center justify-between">
                 {timeLabel ? (
-                    <span className="text-[14px] font-medium text-[#242424]">{timeLabel}</span>
+                    <span className="text-[14px] font-medium text-[var(--foreground-primary)]">{timeLabel}</span>
                 ) : (
                     <span />
                 )}
                 {rating != null ? (
                     <div className="flex items-center gap-2">
-                        <span className="text-[16px] text-[#242424]">{formatRating(rating)}</span>
+                        <span className="text-[16px] text-[var(--foreground-primary)]">{formatRating(rating)}</span>
                         <img alt="" className="h-[30px] w-[30px]" src="/images/main_page/icons/reviews-heart.svg" />
                     </div>
                 ) : null}
@@ -106,7 +106,7 @@ export default function ReviewsSection({ reviews }: ReviewsSectionProps) {
     return (
         <section className="relative w-full overflow-hidden pb-4 pt-8">
             <div className="relative mx-auto hidden h-[450px] w-[1920px] max-w-full min-[1600px]:block">
-                <div className="absolute inset-0 border-[20px] border-[#f5f3ee] shadow-[0px_0px_40px_0px_rgba(0,0,0,0.7)]">
+                <div className="absolute inset-0 border-[20px] border-[var(--background-elevated)] shadow-[0px_0px_40px_0px_rgba(0,0,0,0.7)]">
                     <img
                         alt=""
                         className="absolute inset-0 h-full w-full object-cover opacity-20"
@@ -125,7 +125,7 @@ export default function ReviewsSection({ reviews }: ReviewsSectionProps) {
             </div>
 
             <div className="relative mx-auto max-w-[1920px] px-4 min-[1600px]:hidden">
-                <div className="relative border-[20px] border-[#f5f3ee] shadow-[0px_0px_40px_0px_rgba(0,0,0,0.7)]">
+                <div className="relative border-[20px] border-[var(--background-elevated)] shadow-[0px_0px_40px_0px_rgba(0,0,0,0.7)]">
                     <img
                         alt=""
                         className="absolute inset-0 h-full w-full object-cover opacity-20"
@@ -144,7 +144,7 @@ export default function ReviewsSection({ reviews }: ReviewsSectionProps) {
             </div>
 
             {/* Bottom Wooden Bookshelf Bar */}
-            <div className="relative z-20 mt-8 h-[50px] w-full bg-gradient-to-b from-[#9A6028] via-[#7E4D1E] to-[#5C3613] shadow-[0px_8px_15px_rgba(0,0,0,0.5)] border-t-[3px] border-[#B87838] border-b-[4px] border-[#3E220A]" />
+            <div className="relative z-20 mt-8 h-[50px] w-full bg-gradient-to-b from-[var(--color-wood-gradient-from)] via-[var(--color-shelf)] to-[#3E220A] shadow-[0px_8px_15px_rgba(0,0,0,0.5)] border-t-[3px] border-[var(--color-border-warm)] border-b-[4px] border-[#3E220A]" />
         </section>
     );
 }

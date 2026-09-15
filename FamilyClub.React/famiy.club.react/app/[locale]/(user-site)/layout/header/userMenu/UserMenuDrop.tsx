@@ -53,14 +53,14 @@ export default function UserMenuDrop({
       {({ open }) => (
         <>
           <div
-            className={`transition-all ${open ? "bg-[#F5F3EE] shadow-[0px_0px_15px_0px_#242424CC] rounded-t-[26px]" : "rounded-[26px]"}`}
+            className={`transition-all ${open ? "bg-[var(--color-menu-bg)] shadow-[0px_0px_15px_0px_#242424CC] rounded-t-[26px]" : "rounded-[26px]"}`}
           >
             <MenuButton
               className="relative z-30 flex items-center gap-2 px-3 py-1 min-w-[144px] h-[40px]
   bg-transparent
   rounded-[26px]
   shadow-none hover:shadow-[0px_0px_15px_0px_#242424CC]
-  hover:bg-[#F5F3EE]
+  hover:bg-[var(--color-menu-bg)]
   transition-all duration-200
   border-0 outline-none focus:outline-none focus:ring-0 focus-visible:ring-0"
             >
@@ -76,14 +76,14 @@ export default function UserMenuDrop({
                 )}
               </div>
 
-              <span className="flex-1 text-[14px] font-semibold text-[#242424]">
+              <span className="flex-1 text-[14px] font-semibold text-[var(--color-menu-text)]">
                 {displayName}
               </span>
 
               <div className="w-[20px] h-[20px] mt-[14px]">
                 <img
                   src="/images/header/Vector.svg"
-                  className={`w-[14px] h-[8px] transition-transform duration-200 ${
+                  className={`user-menu-chevron w-[14px] h-[8px] transition-transform duration-200 ${
                     open ? "rotate-180" : "rotate-0"
                   }`}
                   alt="arrow"
@@ -101,8 +101,9 @@ export default function UserMenuDrop({
               leaveTo="opacity-0 -translate-y-2"
             >
               <MenuItems
-                className="absolute left-0 top-0 z-20 w-full
-            bg-[#F5F3EE]
+                className="user-menu-panel absolute left-0 top-0 z-20 w-full
+            bg-[var(--color-menu-bg)]
+            text-[var(--color-menu-text)]
             rounded-[26px]
             shadow-[0px_0px_15px_0px_#242424CC]
             overflow-hidden
@@ -121,7 +122,7 @@ export default function UserMenuDrop({
                         <i className="ti ti-user-circle text-white" />
                       )}
                     </div>
-                    <div className="font-bold text-[16px]">{displayName}</div>
+                    <div className="font-bold text-[16px] text-[var(--color-menu-text)]">{displayName}</div>
                   </div>
 
                   <div className="py-1">
@@ -130,7 +131,7 @@ export default function UserMenuDrop({
                         <button
                           onClick={onCabinet}
                           className={`flex items-center w-full px-2 py-1 text-[14px] transition
-        ${active ? "bg-[#ece7df]" : ""}`}
+        ${active ? "bg-[var(--color-menu-hover)]" : ""}`}
                         >
                           <div className="h-[40px] flex flex-row place-content-around items-center">
                             <div className="w-[22px] flex justify-center">
@@ -155,7 +156,7 @@ export default function UserMenuDrop({
                         <button
                           onClick={onNotifications}
                           className={`flex items-center w-full px-2 py-1 text-[14px] transition
-        ${active ? "bg-[#ece7df]" : ""}`}
+        ${active ? "bg-[var(--color-menu-hover)]" : ""}`}
                         >
                           <div className="h-[40px] flex flex-row place-content-around items-center">
                             <div className="w-[22px] flex justify-center relative">
@@ -197,7 +198,7 @@ export default function UserMenuDrop({
                         <button
                           onClick={onOrders}
                           className={`flex items-center w-full px-2 py-1 text-[14px] transition
-        ${active ? "bg-[#ece7df]" : ""}`}
+        ${active ? "bg-[var(--color-menu-hover)]" : ""}`}
                         >
                           <div className="h-[40px] flex flex-row place-content-around items-center">
                             <div className="w-[22px] flex justify-center">
@@ -222,7 +223,7 @@ export default function UserMenuDrop({
                         <button
                           onClick={onLibrary}
                           className={`flex items-center w-full px-2 py-1 text-[14px] transition
-        ${active ? "bg-[#ece7df]" : ""}`}
+        ${active ? "bg-[var(--color-menu-hover)]" : ""}`}
                         >
                           <div className="h-[40px] flex flex-row place-content-around items-center">
                             <div className="w-[22px] flex justify-center">
@@ -248,7 +249,7 @@ export default function UserMenuDrop({
                           <button
                             onClick={onAdminPanel}
                             className={`flex items-center w-full px-2 py-1 text-[14px] transition
-        ${active ? "bg-[#ece7df]" : ""}`}
+        ${active ? "bg-[var(--color-menu-hover)]" : ""}`}
                           >
                             <div className="h-[40px] flex flex-row place-content-around items-center">
                               <div className="w-[22px] flex justify-center">
@@ -269,14 +270,14 @@ export default function UserMenuDrop({
                       </MenuItem>
                     )}
 
-                    <MenuSeparator className="h-px bg-[#e0dbd2] my-1" />
+                    <MenuSeparator className="h-px bg-[var(--color-menu-separator)] my-1" />
 
                     <MenuItem>
                       {({ active }) => (
                         <button
                           onClick={onLogout}
                           className={`flex items-center gap-2 w-full px-2 py-2 text-[14px] text-red-600 transition
-                    ${active ? "bg-[#ece7df]" : ""}`}
+                    ${active ? "bg-[var(--color-menu-hover)]" : ""}`}
                         >
                           <div className="h-[40px] flex flex-row place-content-around items-center">
                             <div className="w-[22px] flex justify-center">

@@ -20,8 +20,8 @@ export default function UaCircle() {
             aria-label={localeLabels[locale]}
             className={`flex h-[40px] w-[40px] items-center justify-center rounded-full text-[13px] font-semibold leading-none tracking-wide transition-all duration-300 ${
               isActive
-                ? "bg-[var(--color-white)] text-[#005B33] shadow-[0px_0px_15px_0px_#242424CC]"
-                : "text-[#242424]/70 hover:bg-[var(--color-white)] hover:shadow-[0px_0px_15px_0px_#242424CC]"
+                ? "bg-[var(--color-white)] text-[var(--color-green)] shadow-[0px_0px_15px_0px_#242424CC]"
+                : "text-[var(--foreground-primary)]/70 hover:bg-[var(--color-white)] hover:shadow-[0px_0px_15px_0px_#242424CC]"
             }`}
           >
             <span className="text-[13px] font-semibold leading-none">

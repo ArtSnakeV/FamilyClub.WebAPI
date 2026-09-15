@@ -4,7 +4,7 @@ export default function IcoPeople() {
   return (
     <div className="group flex items-center justify-center">
       <div
-        className="
+        className="header-utility-icon
           w-[40px]
           h-[40px]
           flex
@@ -13,7 +13,7 @@ export default function IcoPeople() {
           rounded-full
           transition-all
           duration-300
-          group-hover:bg-[var-(--color-white)]
+          group-hover:bg-[var(--color-white)]
           group-hover:shadow-[0px_0px_15px_0px_#242424CC]
         "
       >

@@ -33,7 +33,7 @@ export default function MobileInkSection({ items }: MobileInkSectionProps) {
     <section className="relative w-full py-4">
       {/* Title "Газета" & Arrow Button (Figma Node 2199:2774 / 2199:2982) */}
       <div className="flex items-center justify-between px-4 mb-3">
-        <h2 className="font-mono text-[32px] sm:text-[36px] font-bold text-[#242424] leading-none tracking-tight">
+        <h2 className="font-mono text-[32px] sm:text-[36px] font-bold text-[var(--foreground-primary)] leading-none tracking-tight">
           {t("home.mobile.gazette")}
         </h2>
         <Link
@@ -62,11 +62,11 @@ export default function MobileInkSection({ items }: MobileInkSectionProps) {
           <Link
             key={item.id}
             href={item.href && !item.href.startsWith("/") ? item.href : lp(item.href || "/categories")}
-            className="group relative h-[205px] w-[186px] shrink-0 snap-start rounded-[10px] bg-[#f5f3ee] p-3 shadow-[0px_0px_20px_0px_rgba(0,0,0,0.4)] border-[10px] border-[#f5f3ee] flex flex-col justify-between transition-transform active:scale-[0.98]"
+            className="group relative h-[205px] w-[186px] shrink-0 snap-start rounded-[10px] bg-[var(--background-elevated)] p-3 shadow-[0px_0px_20px_0px_rgba(0,0,0,0.4)] border-[10px] border-[var(--background-elevated)] flex flex-col justify-between transition-transform active:scale-[0.98]"
           >
             {/* Background texture (Figma imgRectangle438) */}
             <div className="absolute inset-0 rounded-[10px] -z-10 overflow-hidden pointer-events-none">
-              <div className="absolute bg-[#f5f3ee] inset-0" />
+              <div className="absolute bg-[var(--background-elevated)] inset-0" />
               <img
                 src="/images/main_page/mobile/gazette-bg.png"
                 alt=""
@@ -85,15 +85,15 @@ export default function MobileInkSection({ items }: MobileInkSectionProps) {
                   />
                 </div>
                 <div className="flex flex-col leading-none overflow-hidden">
-                  <span className="font-sans font-bold text-[16px] text-[#242424] truncate leading-tight">
+                  <span className="font-sans font-bold text-[16px] text-[var(--foreground-primary)] truncate leading-tight">
                     {item.authorName}
                   </span>
-                  <span className="font-sans font-bold text-[14px] text-[rgba(36,36,36,0.5)] truncate">
+                  <span className="font-sans font-bold text-[14px] text-[var(--color-muted-fg)] truncate">
                     {item.authorHandle}
                   </span>
                 </div>
               </div>
-              <span className="font-sans font-bold text-[14px] text-[rgba(36,36,36,0.5)] mt-1 block">
+              <span className="font-sans font-bold text-[14px] text-[var(--color-muted-fg)] mt-1 block">
                 {item.tag}
               </span>
             </div>
@@ -116,7 +116,7 @@ export default function MobileInkSection({ items }: MobileInkSectionProps) {
 
             {/* Bottom Title / Action Text (Figma Node 2199:2783) */}
             <div className="text-center">
-              <span className="font-sans font-bold text-[20px] text-[#242424] leading-tight block truncate tracking-[-0.22px]">
+              <span className="font-sans font-bold text-[20px] text-[var(--foreground-primary)] leading-tight block truncate tracking-[-0.22px]">
                 {item.title}
               </span>
             </div>
