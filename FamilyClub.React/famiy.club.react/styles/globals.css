@@ -30,6 +30,22 @@
   --background: var(--background-main);
   --foreground: var(--foreground-primary);
 
+  /* Extended surfaces (Ink Night–ready) */
+  --color-cream: #F5F3EE; /* Light text on media / green CTAs */
+  --color-wood: #c7a381;
+  --color-shelf: #7e4d1e;
+  --background-elevated: #F5F3EE;
+  --color-muted-fg: rgba(36, 36, 36, 0.7);
+  --ink-section-accent: #407b61;
+  --color-border-warm: #B7895E;
+  --color-wood-gradient-from: #b7895e;
+  --color-wood-gradient-via: #c7a381;
+  --color-wood-gradient-to: #b7895e;
+
+  --color-menu-bg: #F5F3EE;
+  --color-menu-text: #242424;
+  --color-menu-hover: #ece7df;
+  --color-menu-separator: #e0dbd2;
 
   --font-geist-sans: var(--font-source-sans), 'Source Sans Pro', 'Source Sans 3', Segoe UIf, Roboto, Helvetica, Arial, sans-serif; /* Source Sans 3 font from Figma */
   --font-geist-mono: var(--font-roboto-mono), 'Roboto Mono', monospace, Consolas, 'Courier New'; /* Roboto Mono font from Figma */
@@ -84,6 +100,67 @@
 
 }
 
+/* Ink Night — warm literary night (home page activates via data-theme) */
+[data-theme="ink-night"] {
+  --color-green: #1A7A4A;
+  --color-brown: #C4A07A;
+
+  --foreground-primary: #EDE8DF;
+  --foreground-on-dark: #EDE8DF;
+  --foreground-accent: #C4A07A;
+
+  --background-main: #1A1814;
+  --background-dark: #0F0E0C;
+  --background-surface: #1A7A4A;
+
+  --color-success: #1A7A4A;
+  --color-primary-action: #C4A07A;
+
+  --background: var(--background-main);
+  --foreground: var(--foreground-primary);
+
+  --color-cream: #EDE8DF;
+  --color-wood: #8B6F4E;
+  --color-shelf: #8B6F4E;
+  --background-elevated: #221F1A;
+  --color-muted-fg: rgba(237, 232, 223, 0.7);
+  --ink-section-accent: #6c9a84;
+  --color-border-warm: #A88968;
+  --color-wood-gradient-from: #6E553A;
+  --color-wood-gradient-via: #8B6F4E;
+  --color-wood-gradient-to: #6E553A;
+
+  --footer-inner-div-border-color: #1A1814;
+  --color-menu-bg: #2A2620;
+  --color-menu-text: #EDE8DF;
+  --color-menu-hover: #3A342C;
+  --color-menu-separator: #4A4338;
+  color-scheme: dark;
+}
+
+/* Darken footer parchment image so text stays readable in Ink Night */
+[data-theme="ink-night"] .footer-surface::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 8, 6, 0.68);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Keep utility header icon glyphs readable on Ink Night chrome */
+[data-theme="ink-night"] .header-utility-icon img {
+  filter: brightness(0) invert(0.92);
+}
+
+[data-theme="ink-night"] .user-menu-panel img {
+  filter: brightness(0) invert(0.88);
+}
+
+[data-theme="ink-night"] .user-menu-chevron {
+  filter: brightness(0) invert(0.88);
+}
+
 @media (prefers-color-scheme: white) {
   :root {
     --background: #0a0a0a;
@@ -110,7 +187,7 @@ body {
     font-size: 32px;
     line-height: 1.5;
     letter-spacing: -0.011em;
-    color: var(--brand-black);
+    color: var(--foreground-primary);
     display: flex;
     align-items: left;
     justify-content: left;
@@ -121,7 +198,7 @@ body {
     font-size: 18px;
     line-height: 1.5;
     letter-spacing: -0.011em;
-    color: var(--brand-black);
+    color: var(--foreground-primary);
     transition: opacity 0.2s ease;
 }
 .shadow-footer-heavy {
@@ -142,10 +219,10 @@ body {
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background-color: rgba(36, 36, 36, 0.2);
+  background-color: color-mix(in srgb, var(--foreground-primary) 20%, transparent);
   border-radius: 999px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(36, 36, 36, 0.35);
+  background-color: color-mix(in srgb, var(--foreground-primary) 35%, transparent);
 }

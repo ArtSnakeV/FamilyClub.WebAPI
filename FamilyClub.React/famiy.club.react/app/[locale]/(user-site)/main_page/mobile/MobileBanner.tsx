@@ -9,7 +9,7 @@ export default function MobileBanner() {
   const lp = useLocalizedPath();
 
   return (
-    <section className="relative w-full h-[380px] sm:h-[420px] pt-[65px] overflow-hidden bg-[#f5f3ee] select-none">
+    <section className="relative w-full h-[380px] sm:h-[420px] pt-[65px] overflow-hidden bg-[var(--background-main)] select-none">
       {/* 1. Background Room Photo (blurred: blur-[10px] with scale-110) */}
       <img
         src="/images/main_page/hero/hero-background-uk.png"

@@ -27,22 +27,22 @@ export default function AboutSection() {
     return (
         <section className="relative z-10 pt-16 pb-0">
             <div className="mx-auto max-w-[1920px]">
-                <div className="relative mx-auto w-full max-w-[1260px] overflow-hidden border-[15px] border-[#f5f3ee] bg-[#f5f3ee] shadow-[0px_0px_20px_0px_rgba(0,0,0,0.9)] rounded-[20px]">
+                <div className="relative mx-auto w-full max-w-[1260px] overflow-hidden border-[15px] border-[var(--background-elevated)] bg-[var(--background-elevated)] shadow-[0px_0px_20px_0px_rgba(0,0,0,0.9)] rounded-[20px]">
                     <img
                         alt=""
                         className="absolute inset-0 h-full w-full object-cover opacity-20"
                         src="/images/body/Rectangle%20287.webp"
                     />
-                    <div className="relative px-6 py-10 md:px-[85px]">
+                    <div className="relative px-6 py-10 md:px-[85px] text-[var(--foreground-primary)]">
                         <div className="grid gap-10 md:grid-cols-[460px_460px] md:gap-[170px]">
                             <div>
-                                <h3 className="font-mono text-[36px] font-semibold text-[#242424]">{about.wideChoiceTitle}</h3>
+                                <h3 className="font-mono text-[36px] font-semibold text-[var(--foreground-primary)]">{about.wideChoiceTitle}</h3>
                                 <p className="mt-4 whitespace-pre-line text-[20px] leading-[1.6] text-left">
                                     {about.wideChoiceText}
                                 </p>
                             </div>
                             <div>
-                                <h3 className="font-mono text-[32px] font-semibold text-[#242424]">{about.promosTitle}</h3>
+                                <h3 className="font-mono text-[32px] font-semibold text-[var(--foreground-primary)]">{about.promosTitle}</h3>
                                 <p className="mt-4 whitespace-pre-line text-[20px] leading-[1.6] text-left">
                                     {about.promosText}
                                 </p>
@@ -69,14 +69,14 @@ export default function AboutSection() {
                             <div className="relative h-[300px] w-[260px] rotate-[12deg] shadow-[0px_15px_25px_rgba(0,0,0,0.5)] transition-transform hover:z-20 hover:scale-105 md:h-[420px] md:w-[380px]">
                                 <img
                                     alt={about.readingHallAlt}
-                                    className="h-full w-full rounded-[4px] border-[16px] border-[#f5f3ee] object-cover shadow-inner md:border-[24px]"
+                                    className="h-full w-full rounded-[4px] border-[16px] border-[var(--background-elevated)] object-cover shadow-inner md:border-[24px]"
                                     src={readingHallImageSrc}
                                 />
                             </div>
                             <div className="relative h-[300px] w-[260px] rotate-[-5deg] shadow-[0px_15px_25px_rgba(0,0,0,0.5)] transition-transform hover:z-20 hover:scale-105 md:h-[400px] md:w-[360px]">
                                 <img
                                     alt={about.libraryAtmosphereAlt}
-                                    className="h-full w-full rounded-[4px] border-[16px] border-[#f5f3ee] object-cover shadow-inner md:border-[24px]"
+                                    className="h-full w-full rounded-[4px] border-[16px] border-[var(--background-elevated)] object-cover shadow-inner md:border-[24px]"
                                     src={atmosphereImageSrc}
                                 />
                             </div>

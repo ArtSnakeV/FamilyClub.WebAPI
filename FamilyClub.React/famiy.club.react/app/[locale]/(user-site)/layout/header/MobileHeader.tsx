@@ -10,6 +10,7 @@ import { getAuthToken, getAuthUserId } from "@/lib/auth/tokenStorage";
 import { apiBasePath, orderService } from "@/lib/api/services";
 import { useLocale, useLocalizedPath, useTranslations } from "@/lib/i18n/LocaleProvider";
 import { switchLocalePath } from "@/lib/i18n/localized-path";
+import { useTheme } from "@/lib/theme/ThemeProvider";
 
 export default function MobileHeader() {
   const pathname = usePathname() ?? "/";
@@ -18,6 +19,7 @@ export default function MobileHeader() {
   const lp = useLocalizedPath();
   const nextLocale = locale === "uk" ? "en" : "uk";
   const [menuOpen, setMenuOpen] = useState(false);
+  const { theme, toggleTheme } = useTheme();
   const { settings } = usePlatformSettingsOptional();
   const { totalItemsCount: cartCount } = useCart();
   const [ordersCount, setOrdersCount] = useState<number>(0);
@@ -248,24 +250,22 @@ export default function MobileHeader() {
               </div>
             </Link>
 
-            {/* 6. Світла тема (Figma Node 2773:7091) */}
+            {/* 6. Theme toggle (Figma Node 2773:7091) */}
             <button
               type="button"
-              onClick={() => {}}
+              onClick={toggleTheme}
               className="flex items-center justify-between group py-2 cursor-pointer w-full text-left"
             >
               <div className="flex items-center gap-5 sm:gap-6">
                 <div className="w-[36px] flex items-center justify-center shrink-0">
-                  <svg
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    className="w-[30px] h-[30px] text-white"
-                  >
-                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18v-16c4.41 0 8 3.59 8 8s-3.59 8-8 8z" />
+                  <svg viewBox="0 0 24 24" aria-hidden className="w-[30px] h-[30px]">
+                    <circle cx="12" cy="12" r="10" fill="none" stroke="white" strokeWidth="1.5" />
+                    <path d="M12 2 A10 10 0 0 0 12 22 Z" fill="white" />
+                    <path d="M12 2 A10 10 0 0 1 12 22 Z" fill="rgba(255,255,255,0.35)" />
                   </svg>
                 </div>
                 <span className="font-sans font-semibold text-[26px] sm:text-[30px] text-white tracking-[-0.01em] group-hover:text-[#f5f3ee]/80 transition-colors">
-                  {t("common.lightTheme")}
+                  {theme === "ink-night" ? t("common.lightTheme") : t("common.darkTheme")}
                 </span>
               </div>
             </button>

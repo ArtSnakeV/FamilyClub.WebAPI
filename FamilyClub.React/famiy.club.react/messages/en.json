@@ -50,7 +50,8 @@
     "newsTag": "#news",
     "search": "Search",
     "menu": "Menu",
-    "lightTheme": "Light theme"
+    "lightTheme": "Light theme",
+    "darkTheme": "Night theme"
   },
   "home": {
     "hero": {

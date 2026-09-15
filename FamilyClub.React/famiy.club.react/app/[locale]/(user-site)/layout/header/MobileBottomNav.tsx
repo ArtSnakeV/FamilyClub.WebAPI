@@ -71,7 +71,7 @@ export default function MobileBottomNav() {
       icon: (active: boolean) => (
         <svg
           className={`w-[24px] h-[24px] transition-colors ${
-            active ? "text-[#005B33] fill-current" : "text-[#242424]/60 fill-current"
+            active ? "text-[var(--color-green)] fill-current" : "text-[var(--foreground-primary)]/60 fill-current"
           }`}
           viewBox="0 0 24 24"
         >
@@ -85,7 +85,7 @@ export default function MobileBottomNav() {
       icon: (active: boolean) => (
         <svg
           className={`w-[24px] h-[24px] transition-colors ${
-            active ? "text-[#005B33] fill-current" : "text-[#242424]/60 fill-current"
+            active ? "text-[var(--color-green)] fill-current" : "text-[var(--foreground-primary)]/60 fill-current"
           }`}
           viewBox="0 0 24 24"
         >
@@ -99,7 +99,7 @@ export default function MobileBottomNav() {
       icon: (active: boolean) => (
         <svg
           className={`w-[24px] h-[24px] transition-colors ${
-            active ? "text-[#005B33] fill-current" : "text-[#242424]/60 fill-current"
+            active ? "text-[var(--color-green)] fill-current" : "text-[var(--foreground-primary)]/60 fill-current"
           }`}
           viewBox="0 0 24 24"
         >
@@ -113,7 +113,7 @@ export default function MobileBottomNav() {
       icon: (active: boolean) => (
         <svg
           className={`w-[24px] h-[24px] transition-colors ${
-            active ? "text-[#005B33] fill-current" : "text-[#242424]/60 fill-current"
+            active ? "text-[var(--color-green)] fill-current" : "text-[var(--foreground-primary)]/60 fill-current"
           }`}
           viewBox="0 0 24 24"
         >
@@ -124,7 +124,7 @@ export default function MobileBottomNav() {
   ];
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-[100] block md:hidden h-[70px] bg-[#f5f3ee] border-t border-[#d4b595] shadow-[0px_-4px_15px_rgba(0,0,0,0.15)]">
+    <nav className="fixed bottom-0 left-0 right-0 z-[100] block md:hidden h-[70px] bg-[var(--background-main)] border-t border-[var(--color-border-warm)] shadow-[0px_-4px_15px_rgba(0,0,0,0.15)]">
       <div className="flex items-center justify-around h-full px-2">
         {navItems.map((item) => {
           const active = isActive(item.href);
@@ -137,7 +137,7 @@ export default function MobileBottomNav() {
               {item.icon(active)}
               <span
                 className={`text-[12px] font-medium leading-none tracking-tight ${
-                  active ? "text-[#005B33] font-semibold" : "text-[#242424]/70"
+                  active ? "text-[var(--color-green)] font-semibold" : "text-[var(--foreground-primary)]/70"
                 }`}
               >
                 {item.name}
@@ -178,8 +178,8 @@ export default function MobileBottomNav() {
           <span
             className={`text-[12px] font-medium leading-none tracking-tight ${
               isActive("/userProfile") || isActive("/login")
-                ? "text-[#005B33] font-semibold"
-                : "text-[#242424]/70"
+                ? "text-[var(--color-green)] font-semibold"
+                : "text-[var(--foreground-primary)]/70"
             }`}
           >
             {t("nav.profile")}

@@ -67,6 +67,7 @@ export type Dictionary = {
     search: string;
     menu: string;
     lightTheme: string;
+    darkTheme: string;
   };
   home: {
     hero: {

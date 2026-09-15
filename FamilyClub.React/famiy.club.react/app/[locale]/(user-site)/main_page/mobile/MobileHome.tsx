@@ -37,7 +37,7 @@ export default function MobileHome({
   const t = useTranslations();
 
   return (
-    <div className="w-full bg-[#f5f3ee] min-h-screen text-[#242424] overflow-x-hidden font-sans">
+    <div className="w-full bg-[var(--background-main)] min-h-screen text-[var(--foreground-primary)] overflow-x-hidden font-sans">
       {/* 1. Top Banner / Stories (Figma Group 903) */}
       <MobileBanner />
 

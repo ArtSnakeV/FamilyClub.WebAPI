@@ -50,7 +50,8 @@
     "newsTag": "#новини",
     "search": "Пошук",
     "menu": "Меню",
-    "lightTheme": "Світла тема"
+    "lightTheme": "Світла тема",
+    "darkTheme": "Нічна тема"
   },
   "home": {
     "hero": {

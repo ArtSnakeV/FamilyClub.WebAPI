@@ -117,7 +117,7 @@ export default function Hero() {
   }, [covers]);
 
   return (
-    <section className="relative overflow-visible bg-[#f5f3ee]">
+    <section className="relative overflow-visible bg-[var(--background-main)]">
       <div className="relative mx-auto hidden h-[700px] max-w-[1920px] overflow-visible min-[1600px]:block">
         <img
           alt=""
@@ -163,7 +163,7 @@ export default function Hero() {
         />
 
         <p
-          className="absolute left-[770px] top-[405px] w-[800px] text-right font-mono text-[24px] font-medium text-[#f5f3ee]"
+          className="absolute left-[770px] top-[405px] w-[800px] text-right font-mono text-[24px] font-medium text-[var(--color-cream)]"
           style={{ textShadow: "0px 0px 10px #242424, 0px 0px 28px #242424" }}
         >
           {t("home.hero.tagline")}
@@ -171,7 +171,7 @@ export default function Hero() {
 
         <Link
           href={lp("/pick-book")}
-          className="absolute left-[1062px] top-[500px] flex h-[60px] items-center gap-3 rounded-full bg-[#005B33] px-8 text-[20px] font-semibold text-[#f5f3ee] shadow-[0px_4px_12px_rgba(0,0,0,0.4)] transition-transform hover:scale-105"
+          className="absolute left-[1062px] top-[500px] flex h-[60px] items-center gap-3 rounded-full bg-[var(--color-green)] px-8 text-[20px] font-semibold text-[var(--color-cream)] shadow-[0px_4px_12px_rgba(0,0,0,0.4)] transition-transform hover:scale-105"
         >
           {t("home.hero.pickBook")}
           <span className="text-[24px]">→</span>
@@ -212,7 +212,7 @@ export default function Hero() {
         />
 
         <p
-          className="absolute bottom-[195px] right-[40px] w-[320px] text-right font-mono text-[18px] font-medium text-[#f5f3ee] md:bottom-[210px] md:right-[60px] md:w-[520px] md:text-[24px]"
+          className="absolute bottom-[195px] right-[40px] w-[320px] text-right font-mono text-[18px] font-medium text-[var(--color-cream)] md:bottom-[210px] md:right-[60px] md:w-[520px] md:text-[24px]"
           style={{ textShadow: "0px 0px 10px #242424, 0px 0px 28px #242424" }}
         >
           {t("home.hero.tagline")}
@@ -220,7 +220,7 @@ export default function Hero() {
 
         <Link
           href={lp("/pick-book")}
-          className="absolute bottom-[120px] right-[40px] flex h-[50px] items-center gap-2 rounded-full bg-[#005B33] px-6 text-[16px] font-semibold text-[#f5f3ee] shadow-[0px_4px_12px_rgba(0,0,0,0.4)] transition-transform hover:scale-105 md:bottom-[140px] md:right-[60px] md:h-[60px] md:px-8 md:text-[20px]"
+          className="absolute bottom-[120px] right-[40px] flex h-[50px] items-center gap-2 rounded-full bg-[var(--color-green)] px-6 text-[16px] font-semibold text-[var(--color-cream)] shadow-[0px_4px_12px_rgba(0,0,0,0.4)] transition-transform hover:scale-105 md:bottom-[140px] md:right-[60px] md:h-[60px] md:px-8 md:text-[20px]"
         >
           {t("home.hero.pickBook")}
           <span className="text-[20px] md:text-[24px]">→</span>
