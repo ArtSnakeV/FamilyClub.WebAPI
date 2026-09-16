@@ -33,6 +33,8 @@ export type MobileCheckoutViewProps = {
   setCityRef?: (val: string) => void;
   branch: string;
   setBranch: (val: string) => void;
+  branchRef?: string;
+  setBranchRef?: (val: string) => void;
 
   paymentMethod: PaymentMethod;
   setPaymentMethod: (val: PaymentMethod) => void;
@@ -120,6 +122,8 @@ export default function MobileCheckoutView({
   setCityRef = () => {},
   branch,
   setBranch,
+  branchRef = "",
+  setBranchRef = () => {},
   paymentMethod,
   setPaymentMethod,
   comment,
@@ -358,6 +362,8 @@ export default function MobileCheckoutView({
                     setCityRef={setCityRef}
                     branch={branch}
                     setBranch={setBranch}
+                    branchRef={branchRef}
+                    setBranchRef={setBranchRef}
                     deliveryType={deliveryType}
                     variant="mobile"
                   />
@@ -402,8 +408,12 @@ export default function MobileCheckoutView({
                     <UkrposhtaFields
                       city={city}
                       setCity={setCity}
+                      cityRef={cityRef}
+                      setCityRef={setCityRef}
                       branch={branch}
                       setBranch={setBranch}
+                      branchRef={branchRef}
+                      setBranchRef={setBranchRef}
                       variant="mobile"
                     />
                   </div>

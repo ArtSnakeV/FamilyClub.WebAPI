@@ -12,6 +12,8 @@ interface NovaPoshtaFieldsProps {
   setCityRef: (val: string) => void;
   branch: string;
   setBranch: (val: string) => void;
+  branchRef?: string;
+  setBranchRef?: (val: string) => void;
   deliveryType: "branch" | "postbox";
   variant?: "desktop" | "mobile";
 }
@@ -56,6 +58,8 @@ export default function NovaPoshtaFields({
   setCityRef,
   branch,
   setBranch,
+  branchRef,
+  setBranchRef,
   deliveryType,
   variant = "desktop",
 }: NovaPoshtaFieldsProps) {
@@ -138,6 +142,7 @@ export default function NovaPoshtaFields({
     setCityRef("");
     setBranch("");
     setBranchQuery("");
+    setBranchRef?.("");
     setSortByDistance(false);
     fetchCities(val);
   };
@@ -148,6 +153,7 @@ export default function NovaPoshtaFields({
     setCityRef(selected.ref);
     setBranch("");
     setBranchQuery("");
+    setBranchRef?.("");
     setIsCityOpen(false);
     setSortByDistance(false);
     setIsBranchOpen(true);
@@ -180,6 +186,7 @@ export default function NovaPoshtaFields({
     if (cityRef) {
       setBranch("");
       setBranchQuery("");
+      setBranchRef?.("");
       setSortByDistance(false);
       fetchWarehouses(cityRef, deliveryType, "");
     }
@@ -197,6 +204,7 @@ export default function NovaPoshtaFields({
     const val = e.target.value;
     setBranchQuery(val);
     setBranch(val);
+    setBranchRef?.("");
     setIsBranchOpen(true);
     setSortByDistance(false);
 
@@ -215,6 +223,7 @@ export default function NovaPoshtaFields({
   const handleSelectBranch = (selected: NovaPoshtaWarehouse) => {
     setBranch(selected.description);
     setBranchQuery(selected.description);
+    setBranchRef?.(selected.ref);
     setIsBranchOpen(false);
   };
 
