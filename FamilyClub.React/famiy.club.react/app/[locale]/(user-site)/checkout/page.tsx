@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useCart, type FormatType } from "@/lib/hooks/useCart";
 import {
   productService,
+  orderService,
   apiBasePath,
 } from "@/lib/api/services";
 import type { ProductDto } from "@/lib/api/generated";
@@ -15,14 +16,13 @@ import { useCurrentUser } from "@/app/(user-site)/userProfile/hooks/useCurrentUs
 import styles from "./checkout.module.css";
 import MobileCheckoutView from "./MobileCheckoutView";
 import NovaPoshtaFields from "./NovaPoshtaFields";
+import UkrposhtaFields from "./UkrposhtaFields";
 import { useLocale, useLocalizedPath, useTranslations } from "@/lib/i18n/LocaleProvider";
 
-// ─── Types ───
 export type DeliveryProvider = "nova_poshta" | "ukr_poshta" | "meest";
 export type DeliveryType = "branch" | "postbox";
 export type PaymentMethod = "card_online" | "cash_on_delivery";
 
-// ─── SVGs ───
 function BackArrow() {
   return (
     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -42,7 +42,6 @@ function ChevronDown() {
   );
 }
 
-// ─── Constants ───
 const DELIVERY_COSTS: Record<string, number> = {
   nova_poshta_branch: 75,
   nova_poshta_postbox: 70,
@@ -279,13 +278,8 @@ export default function CheckoutPage() {
         return;
       }
 
-      const createRes = await fetch(`${apiBasePath}/api/Orders`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
+      const createRes = await orderService.apiOrdersPostRaw({
+        orderDTO: {
           userId: storedId,
           status: "Pending",
           paymentMethod,
@@ -297,10 +291,10 @@ export default function CheckoutPage() {
             format: oi.format,
             orderId: 0,
           })),
-        }),
+        },
       });
-      if (!createRes.ok) throw new Error("Order create failed");
-      const createdOrder = await createRes.json();
+      if (!createRes.raw.ok) throw new Error("Order create failed");
+      const createdOrder = await createRes.raw.json();
       if (!createdOrder?.id) throw new Error("Order id missing");
 
       if (paymentMethod === "card_online") {
@@ -567,24 +561,44 @@ export default function CheckoutPage() {
                 </div>
 
                 {/* Ukr Poshta */}
-                <div
-                  className={styles.deliveryOption}
-                  onClick={() => setDeliveryProvider("ukr_poshta")}
-                  id="delivery-ukr-poshta"
-                >
-                  <div className={styles.deliveryOptionLeft}>
-                    <RadioBtn
-                      active={deliveryProvider === "ukr_poshta"}
-                      onClick={() => setDeliveryProvider("ukr_poshta")}
+                <div>
+                  <div
+                    className={styles.deliveryOption}
+                    onClick={() => {
+                      if (deliveryProvider !== "ukr_poshta") {
+                        setDeliveryProvider("ukr_poshta");
+                        setBranch("");
+                      }
+                    }}
+                    id="delivery-ukr-poshta"
+                  >
+                    <div className={styles.deliveryOptionLeft}>
+                      <RadioBtn
+                        active={deliveryProvider === "ukr_poshta"}
+                        onClick={() => {
+                          setDeliveryProvider("ukr_poshta");
+                          setBranch("");
+                        }}
+                      />
+                      <span className={styles.deliveryOptionName}>{t("checkout.ukrPoshta")}</span>
+                    </div>
+                    <div className={styles.deliveryOptionRight}>
+                      <span className={styles.deliveryTerm}>
+                        <span className={styles.deliveryTermLabel}>{t("checkout.termLabel")}</span>
+                        {t("checkout.termUkr")}
+                      </span>
+                    </div>
+                  </div>
+
+                  {deliveryProvider === "ukr_poshta" && (
+                    <UkrposhtaFields
+                      city={city}
+                      setCity={setCity}
+                      branch={branch}
+                      setBranch={setBranch}
+                      variant="desktop"
                     />
-                    <span className={styles.deliveryOptionName}>{t("checkout.ukrPoshta")}</span>
-                  </div>
-                  <div className={styles.deliveryOptionRight}>
-                    <span className={styles.deliveryTerm}>
-                      <span className={styles.deliveryTermLabel}>{t("checkout.termLabel")}</span>
-                      {t("checkout.termUkr")}
-                    </span>
-                  </div>
+                  )}
                 </div>
 
                 {/* Meest */}
