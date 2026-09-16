@@ -8,8 +8,12 @@ import styles from "./checkout.module.css";
 interface UkrposhtaFieldsProps {
   city: string;
   setCity: (val: string) => void;
+  cityRef?: string;
+  setCityRef?: (val: string) => void;
   branch: string;
   setBranch: (val: string) => void;
+  branchRef?: string;
+  setBranchRef?: (val: string) => void;
   variant?: "desktop" | "mobile";
 }
 
@@ -49,8 +53,12 @@ function getDistanceKm(lat1: number, lon1: number, lat2: number, lon2: number): 
 export default function UkrposhtaFields({
   city,
   setCity,
+  cityRef,
+  setCityRef,
   branch,
   setBranch,
+  branchRef,
+  setBranchRef,
   variant = "desktop",
 }: UkrposhtaFieldsProps) {
   const [isCityOpen, setIsCityOpen] = useState(false);
@@ -136,6 +144,7 @@ export default function UkrposhtaFields({
     const val = e.target.value;
     setCityQuery(val);
     setCity(val);
+    setCityRef?.("");
     setIsCityOpen(true);
 
     const cleanDigits = val.replace(/\D/g, "");
@@ -144,6 +153,7 @@ export default function UkrposhtaFields({
     } else {
       setBranch("");
       setBranchQuery("");
+      setBranchRef?.("");
     }
     fetchCities(val);
   };
@@ -151,8 +161,10 @@ export default function UkrposhtaFields({
   const handleSelectCity = (selected: UkrposhtaCity) => {
     setCity(selected.name);
     setCityQuery(selected.name);
+    setCityRef?.(selected.ref);
     setBranch("");
     setBranchQuery("");
+    setBranchRef?.("");
     setIsCityOpen(false);
     setIsBranchOpen(true);
     if (/^\d{5}$/.test(selected.ref)) {
@@ -207,6 +219,7 @@ export default function UkrposhtaFields({
     const val = e.target.value;
     setBranchQuery(val);
     setBranch(val);
+    setBranchRef?.("");
     setIsBranchOpen(true);
     setSortByDistance(false);
 
@@ -231,6 +244,7 @@ export default function UkrposhtaFields({
   const handleSelectBranch = (selected: UkrposhtaWarehouse) => {
     setBranch(selected.description);
     setBranchQuery(selected.description);
+    setBranchRef?.(selected.ref || selected.postcode);
     setIsBranchOpen(false);
 
     if (!city && selected.shortAddress) {
