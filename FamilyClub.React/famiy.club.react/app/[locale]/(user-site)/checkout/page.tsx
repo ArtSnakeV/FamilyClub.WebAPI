@@ -113,6 +113,7 @@ export default function CheckoutPage() {
   const [city, setCity] = useState("");
   const [cityRef, setCityRef] = useState("");
   const [branch, setBranch] = useState("");
+  const [branchRef, setBranchRef] = useState("");
 
   // Payment
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>("card_online");
@@ -284,6 +285,18 @@ export default function CheckoutPage() {
           status: "Pending",
           paymentMethod,
           totalPrice: total,
+          firstName: firstName.trim(),
+          lastName: lastName.trim(),
+          email: email.trim() || undefined,
+          phone: phone.trim() || undefined,
+          deliveryProvider: hasPhysicalItems ? deliveryProvider : undefined,
+          deliveryType: hasPhysicalItems ? (deliveryProvider === "nova_poshta" ? deliveryType : "branch") : undefined,
+          city: hasPhysicalItems ? (city.trim() || undefined) : undefined,
+          cityRef: hasPhysicalItems ? (cityRef.trim() || undefined) : undefined,
+          branch: hasPhysicalItems ? (branch.trim() || undefined) : undefined,
+          branchRef: hasPhysicalItems ? (branchRef.trim() || undefined) : undefined,
+          deliveryCost: hasPhysicalItems ? deliveryCost : 0,
+          comment: comment.trim() || undefined,
           orderItems: orderItems.map((oi) => ({
             productId: oi.productId,
             quantity: oi.quantity,
@@ -553,6 +566,8 @@ export default function CheckoutPage() {
                         setCityRef={setCityRef}
                         branch={branch}
                         setBranch={setBranch}
+                        branchRef={branchRef}
+                        setBranchRef={setBranchRef}
                         deliveryType={deliveryType}
                         variant="desktop"
                       />
@@ -594,8 +609,12 @@ export default function CheckoutPage() {
                     <UkrposhtaFields
                       city={city}
                       setCity={setCity}
+                      cityRef={cityRef}
+                      setCityRef={setCityRef}
                       branch={branch}
                       setBranch={setBranch}
+                      branchRef={branchRef}
+                      setBranchRef={setBranchRef}
                       variant="desktop"
                     />
                   )}
@@ -832,6 +851,8 @@ export default function CheckoutPage() {
           setCityRef={setCityRef}
           branch={branch}
           setBranch={setBranch}
+          branchRef={branchRef}
+          setBranchRef={setBranchRef}
           paymentMethod={paymentMethod}
           setPaymentMethod={setPaymentMethod}
           comment={comment}
