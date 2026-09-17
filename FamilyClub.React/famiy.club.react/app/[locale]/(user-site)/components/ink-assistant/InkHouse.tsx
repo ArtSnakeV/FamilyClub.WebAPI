@@ -78,7 +78,7 @@ export default function InkHouse({
             type="button"
             aria-label={t("ink.callCatAria")}
             onClick={onActivate}
-            className="group absolute z-10 cursor-pointer rounded-full border-0 bg-transparent p-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#005B33]"
+            className="group absolute z-10 cursor-pointer rounded-full border-0 bg-transparent p-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-green)]"
             style={{
               left: `${HOLE_LEFT}%`,
               top: `${HOLE_TOP}%`,

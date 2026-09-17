@@ -39,26 +39,26 @@ export default function InfoUserSection({ member, userId }: Props) {
                 )}
             </div>
             <div className="flex flex-col -mt-[20px] text-left">
-                <span className="flex-1 text-[42px] text-left weight-700 h-[46px] font-semibold text-[var(--color-white)]">
+                <span className="flex-1 text-[42px] text-left weight-700 h-[46px] font-semibold text-[var(--color-cream)]">
                     {displayName}
                 </span>
-                <div className="flex flex-row p-1 gap-2 text-[22px] items-center weight-700 h-[26px] font-semibold text-[var(--color-white)]">
+                <div className="flex flex-row p-1 gap-2 text-[22px] items-center weight-700 h-[26px] font-semibold text-[var(--color-cream)]">
                     <p>{member?.email}</p>
-                    <div className="w-2 h-2 rounded-full bg-[white]"></div>
+                    <div className="w-2 h-2 rounded-full bg-[var(--color-cream)]"></div>
                     {!loadingMyBooks && (
-                        <p className="text-[var(--color-white)]">
+                        <p className="text-[var(--color-cream)]">
                             {t("profile.booksLabel").replace("{count}", String(myBooks.length))}
                         </p>
                     )}
-                    <div className="w-2 h-2 rounded-full bg-[white]"></div>
+                    <div className="w-2 h-2 rounded-full bg-[var(--color-cream)]"></div>
                     {!loading && (
-                        <p className="text-[var(--color-white)]">
+                        <p className="text-[var(--color-cream)]">
                             {t("profile.reviewsLabel").replace("{count}", String(reviews.length))}
                         </p>
                     )}
 
                 </div>
-                <div className="flex flex-col w-[880px] text-[var(--color-white)] text-[16px] text-left p-1">
+                <div className="flex flex-col w-[880px] text-[var(--color-cream)] text-[16px] text-left p-1">
                     <p>{t("profile.bio")}</p>
                 </div>
                 <div className="flex flex-row mt-[4px]">

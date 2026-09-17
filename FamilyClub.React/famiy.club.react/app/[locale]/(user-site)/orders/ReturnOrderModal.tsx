@@ -108,13 +108,13 @@ export default function ReturnOrderModal({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in overflow-y-auto">
       <div
-        className="bg-[#F5F3EE] rounded-3xl max-w-xl w-full p-6 sm:p-8 shadow-2xl border border-[#B7895E]/40 relative overflow-hidden my-8"
+        className="bg-[var(--background-elevated)] rounded-3xl max-w-xl w-full p-6 sm:p-8 shadow-2xl border border-[var(--color-border-warm)]/40 relative overflow-hidden my-8"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 w-9 h-9 rounded-full bg-[#E5E0D5] hover:bg-[#D8D2C5] text-[#242424] font-bold flex items-center justify-center transition"
+          className="absolute top-4 right-4 w-9 h-9 rounded-full bg-[var(--color-menu-hover)] hover:bg-[var(--color-menu-separator)] text-[var(--foreground-primary)] font-bold flex items-center justify-center transition"
           title={t("orders.returnModal.closeAria")}
         >
           ✕
@@ -123,15 +123,15 @@ export default function ReturnOrderModal({
         {/* Modal Title */}
         <div className="text-center mb-6">
           <span className="text-3xl mb-1 block">📦🔄</span>
-          <h2 className="text-2xl font-extrabold text-[#242424]">{t("orders.returnModal.title")}</h2>
-          <p className="text-xs text-[#666666] mt-1">
+          <h2 className="text-2xl font-extrabold text-[var(--foreground-primary)]">{t("orders.returnModal.title")}</h2>
+          <p className="text-xs text-[var(--color-muted-fg)] mt-1">
             {t("orders.returnModal.subtitle")}
           </p>
         </div>
 
         {/* Stepper Progress Indicator (Figma Node 1431:19193) */}
         <div className="flex items-center justify-between mb-8 px-4 relative">
-          <div className="absolute top-1/2 left-8 right-8 h-0.5 bg-[#C8C2B4] -translate-y-1/2 -z-0" />
+          <div className="absolute top-1/2 left-8 right-8 h-0.5 bg-[var(--color-menu-separator)] -translate-y-1/2 -z-0" />
 
           {stepperSteps.map((st) => {
             const isCompleted = step > st.num;
@@ -141,17 +141,17 @@ export default function ReturnOrderModal({
                 <div
                   className={`w-9 h-9 rounded-full flex items-center justify-center font-bold text-xs transition-all ${
                     isCurrent
-                      ? "bg-[#005b33] text-white ring-4 ring-[#005b33]/20 shadow-md scale-110"
+                      ? "bg-[var(--color-green)] text-white ring-4 ring-[var(--color-green)]/20 shadow-md scale-110"
                       : isCompleted
-                      ? "bg-[#005b33] text-white"
-                      : "bg-[#C8C2B4] text-[#666666]"
+                      ? "bg-[var(--color-green)] text-white"
+                      : "bg-[var(--color-menu-separator)] text-[var(--color-muted-fg)]"
                   }`}
                 >
                   {isCompleted ? "✓" : st.num}
                 </div>
                 <span
                   className={`text-[11px] font-semibold ${
-                    isCurrent ? "text-[#005b33]" : isCompleted ? "text-[#242424]" : "text-[#777777]"
+                    isCurrent ? "text-[var(--color-green)]" : isCompleted ? "text-[var(--foreground-primary)]" : "text-[var(--color-muted-fg)]"
                   }`}
                 >
                   {st.label}
@@ -164,9 +164,9 @@ export default function ReturnOrderModal({
         {/* STEP 1: Select Item & Quantity */}
         {step === 1 && (
           <div className="space-y-5 animate-fade-in">
-            <h3 className="text-sm font-bold text-[#242424]">{t("orders.returnModal.step1Title")}</h3>
-            <div className="flex items-center gap-4 bg-[#E8E3D8] p-4 rounded-2xl border border-[#DCD7CC]">
-              <div className="w-14 h-20 relative rounded overflow-hidden shadow shrink-0 bg-white border border-gray-200">
+            <h3 className="text-sm font-bold text-[var(--foreground-primary)]">{t("orders.returnModal.step1Title")}</h3>
+            <div className="flex items-center gap-4 bg-[var(--color-menu-hover)] p-4 rounded-2xl border border-[var(--color-menu-separator)]">
+              <div className="w-14 h-20 relative rounded overflow-hidden shadow shrink-0 bg-[var(--background-elevated)] border border-gray-200">
                 <img
                   src={item.bookImage || "/images/catalog/hunger_games.png"}
                   alt={item.bookTitle}
@@ -177,14 +177,14 @@ export default function ReturnOrderModal({
                 />
               </div>
               <div className="flex-1">
-                <h4 className="font-bold text-[#242424] text-base leading-snug">{item.bookTitle}</h4>
-                <p className="text-xs text-[#666666] mt-0.5">{item.orderNumber} • {priceLabel}</p>
+                <h4 className="font-bold text-[var(--foreground-primary)] text-base leading-snug">{item.bookTitle}</h4>
+                <p className="text-xs text-[var(--color-muted-fg)] mt-0.5">{item.orderNumber} • {priceLabel}</p>
                 <div className="flex items-center gap-3 mt-3">
-                  <span className="text-xs font-semibold text-[#242424]">{t("orders.returnModal.quantity")}</span>
+                  <span className="text-xs font-semibold text-[var(--foreground-primary)]">{t("orders.returnModal.quantity")}</span>
                   <select
                     value={returnQty}
                     onChange={(e) => setReturnQty(Number(e.target.value))}
-                    className="bg-white border border-[#C8C2B4] rounded-lg px-3 py-1 text-xs font-bold text-[#242424] focus:outline-none focus:ring-1 focus:ring-[#005b33]"
+                    className="bg-[var(--background-elevated)] border border-[var(--color-menu-separator)] rounded-lg px-3 py-1 text-xs font-bold text-[var(--foreground-primary)] focus:outline-none focus:ring-1 focus:ring-[var(--color-green)]"
                   >
                     {Array.from({ length: item.quantity || 1 }, (_, i) => i + 1).map((q) => (
                       <option key={q} value={q}>
@@ -201,12 +201,12 @@ export default function ReturnOrderModal({
         {/* STEP 2: Reason Selection */}
         {step === 2 && (
           <div className="space-y-5 animate-fade-in">
-            <h3 className="text-sm font-bold text-[#242424]">{t("orders.returnModal.step2Title")}</h3>
-            <div className="space-y-2.5 bg-white/80 p-4 rounded-2xl border border-[#C8C2B4]">
+            <h3 className="text-sm font-bold text-[var(--foreground-primary)]">{t("orders.returnModal.step2Title")}</h3>
+            <div className="space-y-2.5 bg-[var(--background-elevated)]/80 p-4 rounded-2xl border border-[var(--color-menu-separator)]">
               {RETURN_REASON_KEYS.map((reasonKey) => (
                 <label
                   key={reasonKey}
-                  className="flex items-center gap-3 cursor-pointer p-2 hover:bg-[#F5F3EE] rounded-xl transition"
+                  className="flex items-center gap-3 cursor-pointer p-2 hover:bg-[var(--background-elevated)] rounded-xl transition"
                 >
                   <input
                     type="radio"
@@ -214,9 +214,9 @@ export default function ReturnOrderModal({
                     value={reasonKey}
                     checked={selectedReason === reasonKey}
                     onChange={() => setSelectedReason(reasonKey)}
-                    className="w-4 h-4 text-[#005b33] focus:ring-[#005b33] accent-[#005b33]"
+                    className="w-4 h-4 text-[var(--color-green)] focus:ring-[var(--color-green)] accent-[var(--color-green)]"
                   />
-                  <span className="text-xs sm:text-sm text-[#242424] font-semibold">
+                  <span className="text-xs sm:text-sm text-[var(--foreground-primary)] font-semibold">
                     {t(`orders.returnModal.reasons.${reasonKey}`)}
                   </span>
                 </label>
@@ -224,7 +224,7 @@ export default function ReturnOrderModal({
             </div>
 
             <div className="flex flex-col gap-1.5">
-              <label className="text-xs font-bold text-[#242424]">
+              <label className="text-xs font-bold text-[var(--foreground-primary)]">
                 {t("orders.returnModal.detailsLabel")}
               </label>
               <textarea
@@ -232,7 +232,7 @@ export default function ReturnOrderModal({
                 onChange={(e) => setDetails(e.target.value)}
                 rows={3}
                 placeholder={t("orders.returnModal.detailsPlaceholder")}
-                className="w-full rounded-2xl border border-[#C8C2B4] p-3 text-xs bg-white text-[#242424] focus:outline-none focus:ring-2 focus:ring-[#005b33] transition"
+                className="w-full rounded-2xl border border-[var(--color-menu-separator)] p-3 text-xs bg-[var(--background-elevated)] text-[var(--foreground-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--color-green)] transition"
               />
             </div>
           </div>
@@ -241,11 +241,11 @@ export default function ReturnOrderModal({
         {/* STEP 3: Refund & Delivery Details */}
         {step === 3 && (
           <div className="space-y-5 animate-fade-in">
-            <h3 className="text-sm font-bold text-[#242424]">{t("orders.returnModal.step3Title")}</h3>
+            <h3 className="text-sm font-bold text-[var(--foreground-primary)]">{t("orders.returnModal.step3Title")}</h3>
 
             <div className="space-y-3">
               <div>
-                <label className="text-xs font-bold text-[#242424] block mb-1">
+                <label className="text-xs font-bold text-[var(--foreground-primary)] block mb-1">
                   {t("orders.returnModal.fullNameLabel")}
                 </label>
                 <input
@@ -253,13 +253,13 @@ export default function ReturnOrderModal({
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
                   placeholder={t("orders.returnModal.fullNamePlaceholder")}
-                  className="w-full rounded-xl border border-[#C8C2B4] p-3 text-xs bg-white text-[#242424] focus:outline-none focus:ring-2 focus:ring-[#005b33]"
+                  className="w-full rounded-xl border border-[var(--color-menu-separator)] p-3 text-xs bg-[var(--background-elevated)] text-[var(--foreground-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--color-green)]"
                   required
                 />
               </div>
 
               <div>
-                <label className="text-xs font-bold text-[#242424] block mb-1">
+                <label className="text-xs font-bold text-[var(--foreground-primary)] block mb-1">
                   {t("orders.returnModal.ibanLabel")}
                 </label>
                 <input
@@ -267,23 +267,23 @@ export default function ReturnOrderModal({
                   value={ibanCard}
                   onChange={(e) => setIbanCard(e.target.value)}
                   placeholder={t("orders.returnModal.ibanPlaceholder")}
-                  className="w-full rounded-xl border border-[#C8C2B4] p-3 text-xs bg-white text-[#242424] focus:outline-none focus:ring-2 focus:ring-[#005b33]"
+                  className="w-full rounded-xl border border-[var(--color-menu-separator)] p-3 text-xs bg-[var(--background-elevated)] text-[var(--foreground-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--color-green)]"
                   required
                 />
               </div>
 
               <div>
-                <label className="text-xs font-bold text-[#242424] block mb-1">
+                <label className="text-xs font-bold text-[var(--foreground-primary)] block mb-1">
                   {t("orders.returnModal.shipMethodLabel")}
                 </label>
-                <div className="flex gap-4 bg-white/80 p-3 rounded-xl border border-[#C8C2B4]">
+                <div className="flex gap-4 bg-[var(--background-elevated)]/80 p-3 rounded-xl border border-[var(--color-menu-separator)]">
                   <label className="flex items-center gap-2 cursor-pointer text-xs font-medium">
                     <input
                       type="radio"
                       name="method"
                       checked={returnMethod === "np"}
                       onChange={() => setReturnMethod("np")}
-                      className="accent-[#005b33]"
+                      className="accent-[var(--color-green)]"
                     />
                     {t("orders.returnModal.npBranch")}
                   </label>
@@ -293,7 +293,7 @@ export default function ReturnOrderModal({
                       name="method"
                       checked={returnMethod === "courier"}
                       onChange={() => setReturnMethod("courier")}
-                      className="accent-[#005b33]"
+                      className="accent-[var(--color-green)]"
                     />
                     {t("orders.returnModal.npCourier")}
                   </label>
@@ -306,36 +306,36 @@ export default function ReturnOrderModal({
         {/* STEP 4: Summary & Confirmation */}
         {step === 4 && (
           <div className="space-y-5 animate-fade-in">
-            <h3 className="text-sm font-bold text-[#242424]">{t("orders.returnModal.step4Title")}</h3>
+            <h3 className="text-sm font-bold text-[var(--foreground-primary)]">{t("orders.returnModal.step4Title")}</h3>
 
-            <div className="bg-white/90 p-4 rounded-2xl border border-[#C8C2B4] space-y-3 text-xs text-[#242424]">
-              <div className="flex justify-between pb-2 border-b border-[#E0DBD2]">
-                <span className="text-[#666666]">{t("orders.returnModal.summaryItem")}</span>
+            <div className="bg-[var(--background-elevated)]/90 p-4 rounded-2xl border border-[var(--color-menu-separator)] space-y-3 text-xs text-[var(--foreground-primary)]">
+              <div className="flex justify-between pb-2 border-b border-[var(--color-menu-separator)]">
+                <span className="text-[var(--color-muted-fg)]">{t("orders.returnModal.summaryItem")}</span>
                 <span className="font-bold text-right">
                   {item.bookTitle} ({t("orders.qty").replace("{count}", String(returnQty))})
                 </span>
               </div>
-              <div className="flex justify-between pb-2 border-b border-[#E0DBD2]">
-                <span className="text-[#666666]">{t("orders.returnModal.summaryReason")}</span>
+              <div className="flex justify-between pb-2 border-b border-[var(--color-menu-separator)]">
+                <span className="text-[var(--color-muted-fg)]">{t("orders.returnModal.summaryReason")}</span>
                 <span className="font-semibold text-right max-w-[220px]">{reasonLabel}</span>
               </div>
-              <div className="flex justify-between pb-2 border-b border-[#E0DBD2]">
-                <span className="text-[#666666]">{t("orders.returnModal.summaryRecipient")}</span>
+              <div className="flex justify-between pb-2 border-b border-[var(--color-menu-separator)]">
+                <span className="text-[var(--color-muted-fg)]">{t("orders.returnModal.summaryRecipient")}</span>
                 <span className="font-semibold">{fullName}</span>
               </div>
-              <div className="flex justify-between pb-2 border-b border-[#E0DBD2]">
-                <span className="text-[#666666]">{t("orders.returnModal.summaryIban")}</span>
-                <span className="font-bold text-[#005b33]">{ibanCard}</span>
+              <div className="flex justify-between pb-2 border-b border-[var(--color-menu-separator)]">
+                <span className="text-[var(--color-muted-fg)]">{t("orders.returnModal.summaryIban")}</span>
+                <span className="font-bold text-[var(--color-green)]">{ibanCard}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-[#666666]">{t("orders.returnModal.summaryAmount")}</span>
-                <span className="font-extrabold text-sm text-[#005b33]">
+                <span className="text-[var(--color-muted-fg)]">{t("orders.returnModal.summaryAmount")}</span>
+                <span className="font-extrabold text-sm text-[var(--color-green)]">
                   {refundLabel}
                 </span>
               </div>
             </div>
 
-            <p className="text-[11px] text-[#666666] text-center">
+            <p className="text-[11px] text-[var(--color-muted-fg)] text-center">
               {t("orders.returnModal.agreeNote")}
             </p>
           </div>
@@ -344,12 +344,12 @@ export default function ReturnOrderModal({
         {error && <p className="text-xs text-red-600 font-semibold text-center mt-3">{error}</p>}
 
         {/* Controls */}
-        <div className="flex items-center justify-between gap-3 pt-6 border-t border-[#C8C2B4] mt-6">
+        <div className="flex items-center justify-between gap-3 pt-6 border-t border-[var(--color-menu-separator)] mt-6">
           {step > 1 ? (
             <button
               type="button"
               onClick={handlePrevStep}
-              className="px-5 py-2.5 rounded-xl border border-[#C8C2B4] bg-[#E5E0D5] hover:bg-[#D8D2C5] text-[#242424] text-xs font-bold transition"
+              className="px-5 py-2.5 rounded-xl border border-[var(--color-menu-separator)] bg-[var(--color-menu-hover)] hover:bg-[var(--color-menu-separator)] text-[var(--foreground-primary)] text-xs font-bold transition"
             >
               {t("orders.returnModal.back")}
             </button>
@@ -357,7 +357,7 @@ export default function ReturnOrderModal({
             <button
               type="button"
               onClick={onClose}
-              className="px-5 py-2.5 rounded-xl border border-[#C8C2B4] bg-[#E5E0D5] hover:bg-[#D8D2C5] text-[#242424] text-xs font-medium transition"
+              className="px-5 py-2.5 rounded-xl border border-[var(--color-menu-separator)] bg-[var(--color-menu-hover)] hover:bg-[var(--color-menu-separator)] text-[var(--foreground-primary)] text-xs font-medium transition"
             >
               {t("orders.returnModal.cancel")}
             </button>
@@ -367,7 +367,7 @@ export default function ReturnOrderModal({
             <button
               type="button"
               onClick={handleNextStep}
-              className="px-6 py-2.5 rounded-xl bg-[#005b33] hover:bg-[#004828] text-white text-xs font-bold shadow-md transition"
+              className="px-6 py-2.5 rounded-xl bg-[var(--color-green)] hover:bg-[color-mix(in_srgb,var(--color-green)_85%,black)] text-white text-xs font-bold shadow-md transition"
             >
               {t("orders.returnModal.next")}
             </button>
@@ -376,7 +376,7 @@ export default function ReturnOrderModal({
               type="button"
               onClick={handleSubmit}
               disabled={submitting}
-              className="px-6 py-2.5 rounded-xl bg-[#005b33] hover:bg-[#004828] text-white text-xs font-bold shadow-md transition disabled:opacity-50"
+              className="px-6 py-2.5 rounded-xl bg-[var(--color-green)] hover:bg-[color-mix(in_srgb,var(--color-green)_85%,black)] text-white text-xs font-bold shadow-md transition disabled:opacity-50"
             >
               {submitting ? t("orders.returnModal.submitting") : t("orders.returnModal.submit")}
             </button>

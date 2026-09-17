@@ -42,7 +42,7 @@ export default function AboutBlockEditUserProfile({ about, setAbout }: Props) {
                     }}
                     placeholder="..."
                     rows={7}
-                    className="mt-6 w-full px-4 py-3 rounded-[12px] border border-gray-200 bg-[#f5f5f5] text-[15px] outline-none focus:border-[#005B33] resize-none"
+                    className="mt-6 w-full px-4 py-3 rounded-[12px] border border-gray-200 bg-[var(--background-elevated)] text-[15px] outline-none focus:border-[var(--color-green)] resize-none"
                     style={{ boxShadow: "0px 0px 10px 0px #00000040" }}
                 />
 
@@ -63,7 +63,7 @@ export default function AboutBlockEditUserProfile({ about, setAbout }: Props) {
                         </button>
                         <button
                             type="button"
-                            className="text-[18px] font-medium text-[#005B33] hover:text-[#097E4B] transition-colors"
+                            className="text-[18px] font-medium text-[var(--color-green)] hover:text-[#097E4B] transition-colors"
                         >
                             {t("profileEdit.save")}
                         </button>

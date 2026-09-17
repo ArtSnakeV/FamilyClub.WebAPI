@@ -68,7 +68,7 @@ export default function Pagination({
   return (
     <div className="w-full flex items-center justify-between gap-4 flex-wrap">
       {hasCountInfo && (
-        <p className="font-['Source_Sans_Pro'] text-[16px] text-[#4b4b4b]">
+        <p className="font-['Source_Sans_Pro'] text-[16px] text-[var(--color-muted-fg)]">
           {t("promotions.shownRange")
             .replace("{start}", String(startIndex))
             .replace("{end}", String(endIndex))
@@ -102,7 +102,7 @@ export default function Pagination({
                                     flex items-center justify-center
                                     text-[18px]
                                     font-['Source_Sans_Pro']
-                                    text-[#a3a19e]
+                                    text-[var(--color-muted-fg)]
                                 "
               >
                 …
@@ -122,7 +122,7 @@ export default function Pagination({
                                     ${
                                       item === currentPage
                                         ? "bg-[var(--color-brand-green,#1f4d3d)] text-[var(--color-white)]"
-                                        : "bg-transparent text-[var(--color-white)] hover:bg-[#ececec] hover:text-[var(--color-black)]"
+                                        : "bg-transparent text-[var(--color-white)] hover:bg-[var(--color-menu-hover)] hover:text-[var(--color-black)]"
                                     }
                                 `}
               >

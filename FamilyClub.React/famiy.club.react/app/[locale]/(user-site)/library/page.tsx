@@ -185,7 +185,7 @@ function LibraryContent() {
 function LibraryLoadingFallback() {
   const t = useTranslations();
   return (
-    <div className="min-h-screen bg-[#f5f3ee] flex items-center justify-center">
+    <div className="min-h-screen bg-[var(--background-elevated)] flex items-center justify-center">
       {t("common.loading")}
     </div>
   );

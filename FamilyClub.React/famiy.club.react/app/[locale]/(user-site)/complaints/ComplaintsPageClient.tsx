@@ -97,18 +97,18 @@ export default function ComplaintsPageClient() {
           )}
 
           {contactedSellerStep === "ask" && (
-            <div className="bg-white/80 p-6 rounded-3xl border border-[#C8C2B4] space-y-5 my-6 text-center shadow-sm">
+            <div className="bg-[var(--background-elevated)]/80 p-6 rounded-3xl border border-[var(--color-menu-separator)] space-y-5 my-6 text-center shadow-sm">
               <span className="text-4xl block">💬🤝</span>
-              <h2 className="text-xl font-bold text-[#242424]">
+              <h2 className="text-xl font-bold text-[var(--foreground-primary)]">
                 {t("complaints.askTitle")}
               </h2>
-              <p className="text-xs text-[#555555]">{t("complaints.askHint")}</p>
+              <p className="text-xs text-[var(--color-muted-fg)]">{t("complaints.askHint")}</p>
 
               <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
                 <button
                   type="button"
                   onClick={() => setContactedSellerStep("no")}
-                  className="w-full sm:w-auto px-6 py-3 rounded-2xl bg-[#E5E0D5] hover:bg-[#D8D2C5] border border-[#C8C2B4] text-[#242424] font-bold text-sm transition"
+                  className="w-full sm:w-auto px-6 py-3 rounded-2xl bg-[var(--color-menu-hover)] hover:bg-[var(--color-menu-separator)] border border-[var(--color-menu-separator)] text-[var(--foreground-primary)] font-bold text-sm transition"
                 >
                   {t("complaints.askNo")}
                 </button>
@@ -116,7 +116,7 @@ export default function ComplaintsPageClient() {
                 <button
                   type="button"
                   onClick={() => setContactedSellerStep("yes")}
-                  className="w-full sm:w-auto px-6 py-3 rounded-2xl bg-[#005b33] hover:bg-[#004828] text-white font-bold text-sm transition shadow-sm"
+                  className="w-full sm:w-auto px-6 py-3 rounded-2xl bg-[var(--color-green)] hover:bg-[color-mix(in_srgb,var(--color-green)_85%,black)] text-white font-bold text-sm transition shadow-sm"
                 >
                   {t("complaints.askYes")}
                 </button>
@@ -125,25 +125,25 @@ export default function ComplaintsPageClient() {
           )}
 
           {contactedSellerStep === "no" && (
-            <div className="bg-[#F5F3EE] p-6 sm:p-8 rounded-3xl border border-[#C8C2B4] space-y-6 my-6 shadow-sm">
+            <div className="bg-[var(--background-elevated)] p-6 sm:p-8 rounded-3xl border border-[var(--color-menu-separator)] space-y-6 my-6 shadow-sm">
               <div className="text-center">
                 <span className="text-3xl block mb-2">📞🏢</span>
-                <h2 className="text-2xl font-extrabold text-[#242424]">
+                <h2 className="text-2xl font-extrabold text-[var(--foreground-primary)]">
                   {t("complaints.contactSellerTitle")}
                 </h2>
-                <p className="text-xs text-[#555555] mt-2 max-w-md mx-auto leading-relaxed">
+                <p className="text-xs text-[var(--color-muted-fg)] mt-2 max-w-md mx-auto leading-relaxed">
                   {t("complaints.contactSellerHint")}
                 </p>
               </div>
 
-              <div className="bg-white p-5 rounded-2xl border border-[#D5CFCE] space-y-4">
+              <div className="bg-[var(--background-elevated)] p-5 rounded-2xl border border-[var(--color-menu-separator)] space-y-4">
                 <div className="flex items-center gap-4">
-                  <div className="w-14 h-14 rounded-full bg-[#005b33] text-white flex items-center justify-center font-bold text-xl shadow-xs">
+                  <div className="w-14 h-14 rounded-full bg-[var(--color-green)] text-white flex items-center justify-center font-bold text-xl shadow-xs">
                     К
                   </div>
                   <div>
-                    <h3 className="font-bold text-[#242424] text-lg">{publisherName}</h3>
-                    <span className="bg-[#005b33]/10 text-[#005b33] text-xs font-bold px-2.5 py-0.5 rounded-full inline-block mt-1">
+                    <h3 className="font-bold text-[var(--foreground-primary)] text-lg">{publisherName}</h3>
+                    <span className="bg-[color-mix(in_srgb,var(--color-green)_10%,transparent)] text-[var(--color-green)] text-xs font-bold px-2.5 py-0.5 rounded-full inline-block mt-1">
                       {t("complaints.positiveReviews").replace("{percent}", "98")}
                     </span>
                   </div>
@@ -151,12 +151,12 @@ export default function ComplaintsPageClient() {
 
                 <div className="pt-3 border-t border-[#EBE7DD] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                   <div>
-                    <span className="text-xs text-[#666666] block">
+                    <span className="text-xs text-[var(--color-muted-fg)] block">
                       {t("complaints.managerPhone")}
                     </span>
                     <a
                       href="tel:+380935050819"
-                      className="text-sm font-extrabold text-[#005b33] hover:underline"
+                      className="text-sm font-extrabold text-[var(--color-green)] hover:underline"
                     >
                       +380(93) 505-08-19
                     </a>
@@ -164,18 +164,18 @@ export default function ComplaintsPageClient() {
 
                   <a
                     href="tel:+380935050819"
-                    className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-[#005b33] hover:bg-[#004828] text-white text-xs font-bold text-center transition shadow-xs"
+                    className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-[var(--color-green)] hover:bg-[color-mix(in_srgb,var(--color-green)_85%,black)] text-white text-xs font-bold text-center transition shadow-xs"
                   >
                     {t("complaints.callChat")}
                   </a>
                 </div>
               </div>
 
-              <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-4 border-t border-[#C8C2B4]">
+              <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-4 border-t border-[var(--color-menu-separator)]">
                 <button
                   type="button"
                   onClick={() => router.back()}
-                  className="text-xs font-bold text-[#555555] hover:text-[#242424]"
+                  className="text-xs font-bold text-[var(--color-muted-fg)] hover:text-[var(--foreground-primary)]"
                 >
                   {t("complaints.goBack")}
                 </button>
@@ -183,7 +183,7 @@ export default function ComplaintsPageClient() {
                 <button
                   type="button"
                   onClick={() => setContactedSellerStep("yes")}
-                  className="px-5 py-2.5 rounded-xl bg-[#E5E0D5] hover:bg-[#D8D2C5] border border-[#C8C2B4] text-[#242424] text-xs font-bold transition"
+                  className="px-5 py-2.5 rounded-xl bg-[var(--color-menu-hover)] hover:bg-[var(--color-menu-separator)] border border-[var(--color-menu-separator)] text-[var(--foreground-primary)] text-xs font-bold transition"
                 >
                   {t("complaints.fileAnyway")}
                 </button>

@@ -27,7 +27,7 @@ function CarrierBlock({ name, accent, children }: CarrierBlockProps) {
           {name}
         </h3>
       </div>
-      <div className="pl-0 md:pl-4 text-[15px] md:text-[16px] leading-relaxed text-[#2A2A2A]">
+      <div className="pl-0 md:pl-4 text-[15px] md:text-[16px] leading-relaxed text-[var(--foreground-primary)]">
         {children}
       </div>
     </div>
@@ -36,7 +36,7 @@ function CarrierBlock({ name, accent, children }: CarrierBlockProps) {
 
 function SubTitle({ children }: { children: ReactNode }) {
   return (
-    <p className="font-semibold text-[#1F1F1F] mt-4 mb-2 text-[16px] md:text-[17px]">
+    <p className="font-semibold text-[var(--foreground-primary)] mt-4 mb-2 text-[16px] md:text-[17px]">
       {children}
     </p>
   );
@@ -44,7 +44,7 @@ function SubTitle({ children }: { children: ReactNode }) {
 
 function BulletList({ items }: { items: string[] }) {
   return (
-    <ul className="list-disc pl-5 space-y-1.5 marker:text-[#7E4D1E]">
+    <ul className="list-disc pl-5 space-y-1.5 marker:text-[var(--color-brown)]">
       {items.map((item) => (
         <li key={item}>{item}</li>
       ))}
@@ -79,7 +79,7 @@ export default function PaymentDelivery() {
       <div className="relative mx-auto w-full max-w-[900px]">
         {/* Torn paper sheet from long_background.png */}
         <article
-          className="relative text-[#242424] px-8 sm:px-12 md:px-16 lg:px-20 pt-10 md:pt-12 pb-12 md:pb-16"
+          className="relative text-[var(--foreground-primary)] px-8 sm:px-12 md:px-16 lg:px-20 pt-10 md:pt-12 pb-12 md:pb-16"
           style={{
             backgroundImage:
               "url('/images/Layout/Footer/long_background.png')",
@@ -93,20 +93,20 @@ export default function PaymentDelivery() {
             <button
               type="button"
               onClick={() => router.back()}
-              className="absolute left-0 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full flex items-center justify-center text-[22px] text-[#242424]/70 hover:bg-black/5 transition"
+              className="absolute left-0 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full flex items-center justify-center text-[22px] text-[var(--color-muted-fg)] hover:bg-black/5 transition"
               aria-label={content.backAria}
             >
               ←
             </button>
             <h1
-              className="text-[36px] md:text-[48px] font-bold text-[#1F1F1F] tracking-tight text-center px-10"
+              className="text-[36px] md:text-[48px] font-bold text-[var(--foreground-primary)] tracking-tight text-center px-10"
               style={{ fontFamily: "var(--font-lora), Georgia, serif" }}
             >
               {content.deliveryTitle}
             </h1>
           </header>
 
-          <div className="space-y-4 text-[15px] md:text-[16px] leading-relaxed text-[#2A2A2A]">
+          <div className="space-y-4 text-[15px] md:text-[16px] leading-relaxed text-[var(--foreground-primary)]">
             {content.deliveryIntro.map((paragraph) => (
               <p key={paragraph}>{paragraph}</p>
             ))}
@@ -132,24 +132,24 @@ export default function PaymentDelivery() {
             </CarrierBlock>
           ))}
 
-          <p className="mt-8 text-[14px] md:text-[15px] text-[#555] leading-relaxed border-t border-[#D9D0C3] pt-5">
+          <p className="mt-8 text-[14px] md:text-[15px] text-[var(--color-muted-fg)] leading-relaxed border-t border-[#D9D0C3] pt-5">
             {content.deliveryNote}
           </p>
 
           {/* ——— Оплата ——— */}
           <header className="text-center mt-14 md:mt-16 mb-8 md:mb-10">
             <h2
-              className="text-[36px] md:text-[48px] font-bold text-[#1F1F1F] tracking-tight"
+              className="text-[36px] md:text-[48px] font-bold text-[var(--foreground-primary)] tracking-tight"
               style={{ fontFamily: "var(--font-lora), Georgia, serif" }}
             >
               {content.paymentTitle}
             </h2>
           </header>
 
-          <div className="space-y-6 text-[15px] md:text-[16px] leading-relaxed text-[#2A2A2A]">
+          <div className="space-y-6 text-[15px] md:text-[16px] leading-relaxed text-[var(--foreground-primary)]">
             {content.paymentMethods.map((method) => (
               <div key={method.title}>
-                <h3 className="font-semibold text-[18px] md:text-[19px] text-[#1F1F1F] mb-2">
+                <h3 className="font-semibold text-[18px] md:text-[19px] text-[var(--foreground-primary)] mb-2">
                   {method.title}
                 </h3>
                 {method.items ? <BulletList items={method.items} /> : null}
@@ -163,12 +163,12 @@ export default function PaymentDelivery() {
             ))}
 
             <div className="border-t border-[#D9D0C3] pt-6">
-              <h3 className="font-semibold text-[18px] md:text-[19px] text-[#1F1F1F] mb-2">
+              <h3 className="font-semibold text-[18px] md:text-[19px] text-[var(--foreground-primary)] mb-2">
                 {content.returnsTitle}
               </h3>
               <p className="mb-2">{content.returnsIntro}</p>
               <BulletList items={content.returnsItems} />
-              <p className="mt-3 text-[14px] text-[#555]">{content.returnsNote}</p>
+              <p className="mt-3 text-[14px] text-[var(--color-muted-fg)]">{content.returnsNote}</p>
             </div>
           </div>
         </article>

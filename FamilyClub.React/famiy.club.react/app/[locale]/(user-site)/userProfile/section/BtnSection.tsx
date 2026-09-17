@@ -59,7 +59,7 @@ export default function BtnSection({ activeTab, onTabChange }: Props) {
                                 ${isSelected ? "translate-y-[32px]" : ""}
                             `}
                         >
-                            <span className="text-[var(--color-white)] text-[22px] font-bold">
+                            <span className="text-[var(--color-cream)] text-[22px] font-bold drop-shadow-[0_1px_3px_rgba(0,0,0,0.75)]">
                                 {label}
                             </span>
                         </div>

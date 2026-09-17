@@ -39,7 +39,7 @@ export default function OrdersPagination({ currentPage, totalPages, onPageChange
       <button
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
-        className="w-9 h-9 flex items-center justify-center rounded-full bg-white/60 text-[#242424] shadow-sm disabled:opacity-50 hover:bg-white transition"
+        className="w-9 h-9 flex items-center justify-center rounded-full bg-[var(--background-elevated)]/60 text-[var(--foreground-primary)] shadow-sm disabled:opacity-50 hover:bg-[var(--background-elevated)] transition"
       >
         ‹
       </button>
@@ -50,8 +50,8 @@ export default function OrdersPagination({ currentPage, totalPages, onPageChange
           onClick={() => onPageChange(page)}
           className={`w-9 h-9 flex items-center justify-center rounded-full transition shadow-sm font-semibold text-sm ${
             currentPage === page 
-              ? "bg-[#005b33] text-white" 
-              : "bg-white/60 text-[#242424] hover:bg-white"
+              ? "bg-[var(--color-green)] text-white" 
+              : "bg-[var(--background-elevated)]/60 text-[var(--foreground-primary)] hover:bg-[var(--background-elevated)]"
           }`}
         >
           {page}
@@ -61,7 +61,7 @@ export default function OrdersPagination({ currentPage, totalPages, onPageChange
       <button
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
-        className="w-9 h-9 flex items-center justify-center rounded-full bg-white/60 text-[#242424] shadow-sm disabled:opacity-50 hover:bg-white transition"
+        className="w-9 h-9 flex items-center justify-center rounded-full bg-[var(--background-elevated)]/60 text-[var(--foreground-primary)] shadow-sm disabled:opacity-50 hover:bg-[var(--background-elevated)] transition"
       >
         ›
       </button>

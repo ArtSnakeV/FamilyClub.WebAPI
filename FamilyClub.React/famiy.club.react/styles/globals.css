@@ -47,6 +47,20 @@
   --color-menu-hover: #ece7df;
   --color-menu-separator: #e0dbd2;
 
+  /* Soft elevation — dark on light, light glow on Ink Night */
+  --shadow-card: 0 0 5px color-mix(in srgb, var(--foreground-primary) 35%, transparent);
+  --shadow-card-hover: 0 0 12px color-mix(in srgb, var(--foreground-primary) 25%, transparent);
+  --shadow-control: 0 0 2.5px color-mix(in srgb, var(--foreground-primary) 30%, transparent);
+  --shadow-panel: 0 0 20px color-mix(in srgb, var(--foreground-primary) 30%, transparent);
+  --shadow-input: 0 0 5px color-mix(in srgb, var(--foreground-primary) 25%, transparent);
+
+  /* Product page materials */
+  --color-product-page-bg: #3a2618;
+  --color-product-board: #c4a680;
+  --color-product-cta: #0e503f;
+  --color-product-cta-hover: #093529;
+  --color-product-reviews-bg: #fcfbf8;
+
   --font-geist-sans: var(--font-source-sans), 'Source Sans Pro', 'Source Sans 3', Segoe UIf, Roboto, Helvetica, Arial, sans-serif; /* Source Sans 3 font from Figma */
   --font-geist-mono: var(--font-roboto-mono), 'Roboto Mono', monospace, Consolas, 'Courier New'; /* Roboto Mono font from Figma */
   --font-geist-serif: var(--font-lora), 'Lora', Georgia, Cambria, 'Times New Roman', Times, serif; /* Lora font from Figma */
@@ -102,6 +116,10 @@
 
 /* Ink Night — warm literary night (home page activates via data-theme) */
 [data-theme="ink-night"] {
+  /* Keep --color-black / --color-white as brand ink & cream so Tailwind
+     text-white / bg-white stay light-on-green (title, CTAs). Surfaces use
+     --background-* / --foreground-* tokens below. */
+
   --color-green: #1A7A4A;
   --color-brown: #C4A07A;
 
@@ -135,6 +153,19 @@
   --color-menu-text: #EDE8DF;
   --color-menu-hover: #3A342C;
   --color-menu-separator: #4A4338;
+
+  --shadow-card: 0 0 8px color-mix(in srgb, var(--foreground-primary) 32%, transparent);
+  --shadow-card-hover: 0 0 14px color-mix(in srgb, var(--foreground-primary) 42%, transparent);
+  --shadow-control: 0 0 5px color-mix(in srgb, var(--foreground-primary) 40%, transparent);
+  --shadow-panel: 0 0 24px color-mix(in srgb, var(--foreground-primary) 28%, transparent);
+  --shadow-input: 0 0 8px color-mix(in srgb, var(--foreground-primary) 35%, transparent);
+
+  --color-product-page-bg: #14110E;
+  --color-product-board: #2A241C;
+  --color-product-cta: #1A7A4A;
+  --color-product-cta-hover: #14663C;
+  --color-product-reviews-bg: #1A1814;
+
   color-scheme: dark;
 }
 

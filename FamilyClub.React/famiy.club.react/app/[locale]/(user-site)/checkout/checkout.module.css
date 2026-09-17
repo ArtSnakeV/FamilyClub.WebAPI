@@ -1,12 +1,12 @@
 /* ==============================
    Checkout Page – checkout.module.css
    Matches Figma "Оформлення замовлення"
-   Design tokens: #242424, #F5F3EE, #005B33
+   Design tokens: var(--foreground-primary), var(--background-elevated), var(--color-green)
    ============================== */
 
 /* ---------- Page layout ---------- */
 .checkoutPage {
-  background-color: var(--background-main, #f5f3ee);
+  background-color: var(--background-main);
   min-height: 100vh;
   padding-top: 180px;
   padding-bottom: 60px;
@@ -28,8 +28,8 @@
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  background: var(--background-main, #f5f3ee);
-  border: 2px solid var(--color-black, #242424);
+  background: var(--background-main);
+  border: 2px solid var(--foreground-primary);
   cursor: pointer;
   transition: opacity 0.2s ease, transform 0.15s ease;
   flex-shrink: 0;
@@ -43,7 +43,7 @@
 .backButton svg {
   width: 24px;
   height: 24px;
-  color: var(--color-black, #242424);
+  color: var(--foreground-primary);
 }
 
 .checkoutTitle {
@@ -52,7 +52,7 @@
   font-size: 48px;
   line-height: 1.5;
   letter-spacing: -0.528px;
-  color: var(--color-black, #242424);
+  color: var(--foreground-primary);
   margin: 0;
 }
 
@@ -74,7 +74,7 @@
 
 /* ---------- Section card ---------- */
 .sectionCard {
-  background: var(--background-main, #f5f3ee);
+  background: var(--background-main);
   border-radius: 0;
   padding: 30px 62px;
 }
@@ -85,7 +85,7 @@
   font-size: 40px;
   line-height: 1.5;
   letter-spacing: -0.44px;
-  color: var(--color-black, #242424);
+  color: var(--foreground-primary);
   margin: 0 0 30px;
 }
 
@@ -93,7 +93,7 @@
   font-family: var(--font-sans);
   font-weight: 400;
   font-size: 20px;
-  color: rgba(36, 36, 36, 0.5);
+  color: color-mix(in srgb, var(--foreground-primary) 50%, transparent);
   letter-spacing: -0.22px;
 }
 
@@ -105,7 +105,7 @@
 }
 
 .formInput {
-  background: var(--background-main, #f5f3ee);
+  background: var(--background-main);
   border: none;
   border-radius: 9px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
@@ -113,14 +113,14 @@
   font-family: var(--font-sans);
   font-weight: 400;
   font-size: 24px;
-  color: var(--color-black, #242424);
+  color: var(--foreground-primary);
   width: 474px;
   outline: none;
   transition: box-shadow 0.2s ease;
 }
 
 .formInput::placeholder {
-  color: var(--color-black, #242424);
+  color: var(--foreground-primary);
   opacity: 1;
 }
 
@@ -160,7 +160,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 20px 0;
-  border-bottom: 1px solid rgba(36, 36, 36, 0.15);
+  border-bottom: 1px solid color-mix(in srgb, var(--foreground-primary) 15%, transparent);
   cursor: pointer;
   transition: background 0.15s ease;
 }
@@ -189,18 +189,18 @@
   font-family: var(--font-sans);
   font-weight: 600;
   font-size: 24px;
-  color: var(--color-black, #242424);
+  color: var(--foreground-primary);
 }
 
 .deliveryTerm {
   font-family: var(--font-sans);
   font-weight: 400;
   font-size: 20px;
-  color: var(--color-black, #242424);
+  color: var(--foreground-primary);
 }
 
 .deliveryTermLabel {
-  color: rgba(36, 36, 36, 0.5);
+  color: color-mix(in srgb, var(--foreground-primary) 50%, transparent);
 }
 
 .deliveryLogo {
@@ -215,7 +215,7 @@
   flex-wrap: wrap;
   gap: 75px;
   padding: 10px 0 20px 55px;
-  border-bottom: 1px solid rgba(36, 36, 36, 0.15);
+  border-bottom: 1px solid color-mix(in srgb, var(--foreground-primary) 15%, transparent);
 }
 
 .deliverySubOption {
@@ -236,14 +236,14 @@
   font-family: var(--font-sans);
   font-weight: 400;
   font-size: 24px;
-  color: var(--color-black, #242424);
+  color: var(--foreground-primary);
 }
 
 .deliverySubOptionCost {
   font-family: var(--font-sans);
   font-weight: 400;
   font-size: 14px;
-  color: var(--color-black, #242424);
+  color: var(--foreground-primary);
   text-align: right;
 }
 
@@ -261,7 +261,7 @@
 }
 
 .deliverySelectInput {
-  background: var(--background-main, #f5f3ee);
+  background: var(--background-main);
   border: none;
   border-radius: 9px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
@@ -269,7 +269,7 @@
   font-family: var(--font-sans);
   font-weight: 400;
   font-size: 24px;
-  color: var(--color-black, #242424);
+  color: var(--foreground-primary);
   width: 100%;
   outline: none;
   cursor: pointer;
@@ -304,7 +304,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 25px 0;
-  border-bottom: 1px solid rgba(36, 36, 36, 0.15);
+  border-bottom: 1px solid color-mix(in srgb, var(--foreground-primary) 15%, transparent);
   cursor: pointer;
   transition: background 0.15s ease;
 }
@@ -327,7 +327,7 @@
   font-family: var(--font-sans);
   font-weight: 600;
   font-size: 24px;
-  color: var(--color-black, #242424);
+  color: var(--foreground-primary);
 }
 
 .paymentLogos {
@@ -347,7 +347,7 @@
   width: 30px;
   height: 30px;
   border-radius: 50%;
-  border: 2px solid rgba(36, 36, 36, 0.4);
+  border: 2px solid color-mix(in srgb, var(--foreground-primary) 40%, transparent);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -357,14 +357,14 @@
 }
 
 .radioButton.radioActive {
-  border-color: var(--color-green, #005b33);
+  border-color: var(--color-green);
 }
 
 .radioButtonInner {
   width: 16px;
   height: 16px;
   border-radius: 50%;
-  background: var(--color-green, #005b33);
+  background: var(--color-green);
   transform: scale(0);
   transition: transform 0.15s ease;
 }
@@ -375,7 +375,7 @@
 
 /* ---------- Comment section ---------- */
 .commentTextarea {
-  background: var(--background-main, #f5f3ee);
+  background: var(--background-main);
   border: none;
   border-radius: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
@@ -383,7 +383,7 @@
   font-family: var(--font-sans);
   font-weight: 400;
   font-size: 18px;
-  color: var(--color-black, #242424);
+  color: var(--foreground-primary);
   width: 100%;
   min-height: 355px;
   resize: vertical;
@@ -392,7 +392,7 @@
 }
 
 .commentTextarea::placeholder {
-  color: rgba(36, 36, 36, 0.5);
+  color: color-mix(in srgb, var(--foreground-primary) 50%, transparent);
 }
 
 .commentTextarea:focus {
@@ -411,7 +411,7 @@
   font-weight: 400;
   font-size: 18px;
   letter-spacing: -0.198px;
-  color: var(--color-black, #242424);
+  color: var(--foreground-primary);
 }
 
 .commentActions {
@@ -424,7 +424,7 @@
   font-weight: 600;
   font-size: 18px;
   letter-spacing: -0.198px;
-  color: var(--color-black, #242424);
+  color: var(--foreground-primary);
   background: none;
   border: none;
   cursor: pointer;
@@ -436,7 +436,7 @@
   font-weight: 600;
   font-size: 18px;
   letter-spacing: -0.198px;
-  color: var(--color-green, #005b33);
+  color: var(--color-green);
   background: none;
   border: none;
   cursor: pointer;
@@ -447,7 +447,7 @@
 .summaryPanel {
   position: sticky;
   top: 80px;
-  background: var(--background-main, #f5f3ee);
+  background: var(--background-main);
   border-radius: 23px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
   padding: 40px 50px;
@@ -468,7 +468,7 @@
   font-family: var(--font-sans);
   font-weight: 400;
   font-size: 16px;
-  color: var(--background-main, #f5f3ee);
+  color: var(--background-main);
   letter-spacing: -0.176px;
   transition: background 0.2s ease;
   width: 100%;
@@ -505,7 +505,7 @@
   font-size: 18px;
   line-height: 1.5;
   letter-spacing: -0.198px;
-  color: var(--color-black, #242424);
+  color: var(--foreground-primary);
 }
 
 .discountValue {
@@ -521,7 +521,7 @@
 .summaryDivider {
   width: 100%;
   height: 1px;
-  background: rgba(36, 36, 36, 0.2);
+  background: color-mix(in srgb, var(--foreground-primary) 20%, transparent);
   margin: 10px 0;
 }
 
@@ -537,7 +537,7 @@
   height: 30px;
   flex-shrink: 0;
   cursor: pointer;
-  accent-color: var(--color-green, #005b33);
+  accent-color: var(--color-green);
 }
 
 .agreementText {
@@ -546,11 +546,11 @@
   font-size: 15px;
   line-height: 1.5;
   letter-spacing: -0.165px;
-  color: #000;
+  color: var(--foreground-primary);
 }
 
 .agreementLink {
-  color: var(--color-green, #005b33);
+  color: var(--color-green);
   text-decoration: none;
   cursor: pointer;
 }
@@ -565,14 +565,14 @@
   align-items: center;
   justify-content: center;
   padding: 10px 30px;
-  background: var(--color-green, #005b33);
+  background: var(--color-green);
   border-radius: 60px;
   border: none;
   cursor: pointer;
   font-family: var(--font-sans);
   font-weight: 400;
   font-size: 24px;
-  color: var(--background-main, #f5f3ee);
+  color: var(--background-main);
   letter-spacing: -0.264px;
   line-height: 1.5;
   width: 100%;
@@ -580,7 +580,7 @@
 }
 
 .orderBtn:hover {
-  background: #004a2a;
+  background: color-mix(in srgb, var(--color-green) 85%, black);
   transform: translateY(-1px);
 }
 
@@ -607,11 +607,11 @@
   font-size: 20px;
   line-height: 1.5;
   letter-spacing: -0.22px;
-  color: var(--color-black, #242424);
+  color: var(--foreground-primary);
 }
 
 .promoInput {
-  background: var(--background-main, #f5f3ee);
+  background: var(--background-main);
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
   border-radius: 9px;
   border: none;
@@ -620,14 +620,14 @@
   font-weight: 400;
   font-size: 18px;
   letter-spacing: -0.198px;
-  color: var(--color-black, #242424);
+  color: var(--foreground-primary);
   width: 100%;
   outline: none;
   transition: box-shadow 0.2s ease;
 }
 
 .promoInput::placeholder {
-  color: rgba(36, 36, 36, 0.5);
+  color: color-mix(in srgb, var(--foreground-primary) 50%, transparent);
 }
 
 .promoInput:focus {
@@ -638,7 +638,7 @@
 .successOverlay {
   position: fixed;
   inset: 0;
-  background: rgba(36, 36, 36, 0.5);
+  background: color-mix(in srgb, var(--foreground-primary) 50%, transparent);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -647,7 +647,7 @@
 }
 
 .successCard {
-  background: var(--background-main, #f5f3ee);
+  background: var(--background-main);
   border-radius: 20px;
   box-shadow: 0 0 40px rgba(0, 0, 0, 0.3);
   padding: 60px 80px;
@@ -666,7 +666,7 @@
   font-family: var(--font-mono);
   font-weight: 600;
   font-size: 32px;
-  color: var(--color-black, #242424);
+  color: var(--foreground-primary);
   margin: 0 0 12px;
 }
 
@@ -674,7 +674,7 @@
   font-family: var(--font-sans);
   font-weight: 400;
   font-size: 18px;
-  color: rgba(36, 36, 36, 0.7);
+  color: color-mix(in srgb, var(--foreground-primary) 70%, transparent);
   margin: 0 0 30px;
   line-height: 1.5;
 }
@@ -684,20 +684,20 @@
   align-items: center;
   justify-content: center;
   padding: 12px 40px;
-  background: var(--color-green, #005b33);
+  background: var(--color-green);
   border-radius: 60px;
   border: none;
   cursor: pointer;
   font-family: var(--font-sans);
   font-weight: 400;
   font-size: 20px;
-  color: var(--background-main, #f5f3ee);
+  color: var(--background-main);
   letter-spacing: -0.22px;
   transition: background 0.2s ease;
 }
 
 .successBtn:hover {
-  background: #004a2a;
+  background: color-mix(in srgb, var(--color-green) 85%, black);
 }
 
 /* ---------- Loading ---------- */
@@ -706,7 +706,7 @@
   padding: 80px 20px;
   font-family: var(--font-sans);
   font-size: 24px;
-  color: rgba(36, 36, 36, 0.5);
+  color: color-mix(in srgb, var(--foreground-primary) 50%, transparent);
 }
 
 .loadingIcon {

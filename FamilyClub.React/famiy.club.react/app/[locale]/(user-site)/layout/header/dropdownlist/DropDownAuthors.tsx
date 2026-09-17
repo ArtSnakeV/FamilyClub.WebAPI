@@ -87,12 +87,12 @@ export default function DropDownAuthors() {
           }}
           className="absolute pointer-events-auto inset-0 flex justify-center items-end mb-[56px] z-10 focus:outline-none"
         >
-          <span className="text-[#F5F3EE]">{t("header.authors")}</span>
+          <span className="text-[var(--color-cream)]">{t("header.authors")}</span>
         </button>
 
         {open && (
           <div className="absolute pointer-events-auto z-20 top-[42px] w-full flex flex-col 
-          items-center gap-2 text-[var(--color-white)]">
+          items-center gap-2 text-[var(--color-cream)]">
             <div className="relative top-[40px] w-[90px] h-[30px]">
               <Image
                 src="/images/header/Rectangle 58.svg"
@@ -112,7 +112,7 @@ export default function DropDownAuthors() {
                       w-full
                       bg-transparent
                       outline-none
-                      text-[#272727]
+                      text-[var(--color-black)]
                       text-xs
                       pr-5
                       -mt-1
@@ -149,7 +149,7 @@ export default function DropDownAuthors() {
     rounded-[15px]
     border-[2px]
     border-transparent
-    hover:border-[#27272780]
+    hover:border-[color-mix(in_srgb,var(--color-cream)_50%,transparent)]
     transition-all
     duration-200
   `}

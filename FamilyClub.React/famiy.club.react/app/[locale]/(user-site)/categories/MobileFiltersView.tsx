@@ -236,13 +236,13 @@ export default function MobileFiltersView() {
   const clipPathCheckBadge = "polygon(0% 0%, 100% 0%, 100% calc(100% - 15px), 50% 100%, 0% calc(100% - 15px))";
 
   return (
-    <div className="w-full min-h-screen bg-[#c7a381] pt-[65px] pb-[100px] relative select-none font-sans text-white overflow-x-hidden">
+    <div className="w-full min-h-screen bg-[var(--color-wood)] pt-[65px] pb-[100px] relative select-none font-sans text-white overflow-x-hidden">
       {/* Wooden Shelves Horizontal Gradients Background */}
       <div className="absolute inset-0 pointer-events-none z-0 flex flex-col">
         {Array.from({ length: 8 }).map((_, i) => (
           <div
             key={i}
-            className="w-full h-[140px] border-b border-[#7a5530]/40 shadow-[0_6px_12px_rgba(0,0,0,0.18)] flex-shrink-0"
+            className="w-full h-[140px] border-b border-[var(--color-brown)]/40 shadow-[var(--shadow-card)] flex-shrink-0"
             style={{
               backgroundImage:
                 "linear-gradient(180deg, rgba(170, 140, 112, 0) 65%, rgba(74, 53, 33, 0.45) 100%), linear-gradient(90deg, rgb(199, 163, 129) 0%, rgb(199, 163, 129) 100%)",
@@ -256,14 +256,14 @@ export default function MobileFiltersView() {
         <div className="w-full mb-3">
           <div
             onClick={() => toggleSection("genres")}
-            className={`w-full bg-[#035b3c] transition-all duration-300 shadow-[0_4px_12px_rgba(0,0,0,0.3)] relative cursor-pointer overflow-hidden ${
+            className={`w-full bg-[var(--color-green)] transition-all duration-300 shadow-[var(--shadow-panel)] relative cursor-pointer overflow-hidden ${
               activeSection === "genres" ? "pt-4 pb-7 min-h-[360px]" : "h-[110px] flex items-center justify-center pb-3"
             }`}
             style={{ clipPath: clipPathRibbon }}
           >
             {activeSection !== "genres" ? (
               <div className="w-full h-full flex items-center justify-center pb-2">
-                <span className="font-mono font-medium text-[#f5f3ee] text-[30px] sm:text-[32px] tracking-[-0.35px]">
+                <span className="font-mono font-medium text-[var(--color-cream)] text-[30px] sm:text-[32px] tracking-[-0.35px]">
                   {t("header.genres")}
                 </span>
               </div>
@@ -284,7 +284,7 @@ export default function MobileFiltersView() {
                           className="w-[22px] h-[22px] object-contain"
                         />
                       </div>
-                      <span className="font-sans font-semibold text-[18px] text-[#f5f3ee]">
+                      <span className="font-sans font-semibold text-[18px] text-[var(--color-cream)]">
                         {t("header.allGenres")}
                       </span>
                     </button>
@@ -299,7 +299,7 @@ export default function MobileFiltersView() {
                           key={c.id}
                           type="button"
                           onClick={() => c.id !== undefined && toggleId(c.id, selectedCategoryIds, setSelectedCategoryIds)}
-                          className="flex items-center gap-2 text-left py-1 hover:bg-white/10 rounded px-1 transition-colors"
+                          className="flex items-center gap-2 text-left py-1 hover:bg-[var(--background-elevated)]/10 rounded px-1 transition-colors"
                         >
                           <div className="w-[22px] h-[22px] flex items-center justify-center shrink-0">
                             <img
@@ -308,7 +308,7 @@ export default function MobileFiltersView() {
                               className="w-[20px] h-[20px] object-contain"
                             />
                           </div>
-                          <span className="font-sans font-normal text-[16px] sm:text-[18px] text-[#f5f3ee] leading-tight truncate">
+                          <span className="font-sans font-normal text-[16px] sm:text-[18px] text-[var(--color-cream)] leading-tight truncate">
                             {c.categoryName}
                           </span>
                         </button>
@@ -322,7 +322,7 @@ export default function MobileFiltersView() {
                   onClick={() => setActiveSection(null)}
                   className="w-full flex justify-center items-center pt-3 pb-4 border-t border-white/10 cursor-pointer hover:bg-black/10 transition-colors"
                 >
-                  <span className="font-mono font-medium text-[#f5f3ee] text-[28px] sm:text-[32px] tracking-[-0.35px]">
+                  <span className="font-mono font-medium text-[var(--color-cream)] text-[28px] sm:text-[32px] tracking-[-0.35px]">
                     {t("header.genres")}
                   </span>
                 </div>
@@ -338,14 +338,14 @@ export default function MobileFiltersView() {
             {/* 1. АВТОРИ */}
             <div
               onClick={() => toggleSection("authors")}
-              className={`w-full bg-[#035b3c] transition-all duration-300 shadow-[0_4px_12px_rgba(0,0,0,0.3)] relative cursor-pointer overflow-hidden ${
+              className={`w-full bg-[var(--color-green)] transition-all duration-300 shadow-[var(--shadow-panel)] relative cursor-pointer overflow-hidden ${
                 activeSection === "authors" ? "pt-3 pb-6 min-h-[360px]" : "h-[115px] flex items-center justify-center pb-3"
               }`}
               style={{ clipPath: clipPathRibbon }}
             >
               {activeSection !== "authors" ? (
                 <div className="w-full h-full flex items-center justify-center pb-2">
-                  <span className="font-mono font-medium text-[#f5f3ee] text-[26px] sm:text-[30px] tracking-[-0.35px]">
+                  <span className="font-mono font-medium text-[var(--color-cream)] text-[26px] sm:text-[30px] tracking-[-0.35px]">
                     {t("header.authors")}
                   </span>
                 </div>
@@ -353,13 +353,13 @@ export default function MobileFiltersView() {
                 <div className="w-full flex flex-col justify-between min-h-[340px]" onClick={(e) => e.stopPropagation()}>
                   <div className="px-2 sm:px-3 pt-1 pb-4">
                     {/* Search inside authors */}
-                    <div className="relative flex items-center bg-[#f5f3ee] rounded-full px-2.5 py-1 mb-3 shadow">
+                    <div className="relative flex items-center bg-[var(--background-elevated)] rounded-full px-2.5 py-1 mb-3 shadow">
                       <input
                         type="text"
                         placeholder={t("catalog.mobileFilters.authorSearch")}
                         value={authorSearch}
                         onChange={(e) => setAuthorSearch(e.target.value)}
-                        className="w-full bg-transparent text-[#242424] text-[14px] font-sans placeholder:text-[#242424]/50 focus:outline-none"
+                        className="w-full bg-transparent text-[var(--foreground-primary)] text-[14px] font-sans placeholder:text-[var(--color-muted-fg)] focus:outline-none"
                       />
                       <img src="/images/header/zoom_out_24px.svg" alt={t("common.search")} className="w-[18px] h-[18px] shrink-0 opacity-70 ml-1" />
                     </div>
@@ -372,7 +372,7 @@ export default function MobileFiltersView() {
                             key={a.id}
                             type="button"
                             onClick={() => a.id !== undefined && toggleId(a.id, selectedAuthorIds, setSelectedAuthorIds)}
-                            className="flex items-center gap-2 text-left py-1 px-1 hover:bg-white/10 rounded transition-colors"
+                            className="flex items-center gap-2 text-left py-1 px-1 hover:bg-[var(--background-elevated)]/10 rounded transition-colors"
                           >
                             <div className="w-[20px] h-[20px] flex items-center justify-center shrink-0">
                               <img
@@ -381,7 +381,7 @@ export default function MobileFiltersView() {
                                 className="w-[18px] h-[18px] object-contain"
                               />
                             </div>
-                            <span className="font-sans font-normal text-[16px] sm:text-[18px] text-[#f5f3ee] leading-tight truncate">
+                            <span className="font-sans font-normal text-[16px] sm:text-[18px] text-[var(--color-cream)] leading-tight truncate">
                               {a.authorName}
                             </span>
                           </button>
@@ -394,7 +394,7 @@ export default function MobileFiltersView() {
                     onClick={() => setActiveSection(null)}
                     className="w-full flex justify-center items-center pt-2 pb-4 border-t border-white/10 cursor-pointer hover:bg-black/10 transition-colors"
                   >
-                    <span className="font-mono font-medium text-[#f5f3ee] text-[26px] sm:text-[30px] tracking-[-0.35px]">
+                    <span className="font-mono font-medium text-[var(--color-cream)] text-[26px] sm:text-[30px] tracking-[-0.35px]">
                       {t("header.authors")}
                     </span>
                   </div>
@@ -405,14 +405,14 @@ export default function MobileFiltersView() {
             {/* 2. ФОРМАТ */}
             <div
               onClick={() => toggleSection("format")}
-              className={`w-full bg-[#035b3c] transition-all duration-300 shadow-[0_4px_12px_rgba(0,0,0,0.3)] relative cursor-pointer overflow-hidden ${
+              className={`w-full bg-[var(--color-green)] transition-all duration-300 shadow-[var(--shadow-panel)] relative cursor-pointer overflow-hidden ${
                 activeSection === "format" ? "pt-4 pb-6 min-h-[300px]" : "h-[128px] flex items-center justify-center pb-3"
               }`}
               style={{ clipPath: clipPathRibbon }}
             >
               {activeSection !== "format" ? (
                 <div className="w-full h-full flex items-center justify-center pb-2">
-                  <span className="font-mono font-medium text-[#f5f3ee] text-[26px] sm:text-[30px] tracking-[-0.35px]">
+                  <span className="font-mono font-medium text-[var(--color-cream)] text-[26px] sm:text-[30px] tracking-[-0.35px]">
                     {t("header.formats")}
                   </span>
                 </div>
@@ -426,7 +426,7 @@ export default function MobileFiltersView() {
                           key={f.id}
                           type="button"
                           onClick={() => f.id !== undefined && toggleId(f.id, selectedFormatIds, setSelectedFormatIds)}
-                          className="flex items-center gap-2.5 text-left py-1 hover:bg-white/10 rounded px-1 transition-colors"
+                          className="flex items-center gap-2.5 text-left py-1 hover:bg-[var(--background-elevated)]/10 rounded px-1 transition-colors"
                         >
                           <div className="w-[22px] h-[22px] flex items-center justify-center shrink-0">
                             <img
@@ -435,7 +435,7 @@ export default function MobileFiltersView() {
                               className="w-[20px] h-[20px] object-contain"
                             />
                           </div>
-                          <span className="font-sans font-semibold text-[17px] sm:text-[19px] text-[#f5f3ee] leading-tight">
+                          <span className="font-sans font-semibold text-[17px] sm:text-[19px] text-[var(--color-cream)] leading-tight">
                             {f.name}
                           </span>
                         </button>
@@ -447,7 +447,7 @@ export default function MobileFiltersView() {
                     onClick={() => setActiveSection(null)}
                     className="w-full flex justify-center items-center pt-2 pb-4 border-t border-white/10 cursor-pointer hover:bg-black/10 transition-colors"
                   >
-                    <span className="font-mono font-medium text-[#f5f3ee] text-[26px] sm:text-[30px] tracking-[-0.35px]">
+                    <span className="font-mono font-medium text-[var(--color-cream)] text-[26px] sm:text-[30px] tracking-[-0.35px]">
                       {t("header.formats")}
                     </span>
                   </div>
@@ -458,14 +458,14 @@ export default function MobileFiltersView() {
             {/* 3. РІК ВИДАННЯ */}
             <div
               onClick={() => toggleSection("year")}
-              className={`w-full bg-[#035b3c] transition-all duration-300 shadow-[0_4px_12px_rgba(0,0,0,0.3)] relative cursor-pointer overflow-hidden ${
+              className={`w-full bg-[var(--color-green)] transition-all duration-300 shadow-[var(--shadow-panel)] relative cursor-pointer overflow-hidden ${
                 activeSection === "year" ? "pt-4 pb-6 min-h-[380px]" : "h-[165px] flex items-center justify-center pb-3"
               }`}
               style={{ clipPath: clipPathRibbon }}
             >
               {activeSection !== "year" ? (
                 <div className="w-full h-full flex items-center justify-center pb-2">
-                  <span className="font-mono font-medium text-[#f5f3ee] text-[24px] sm:text-[28px] tracking-[-0.35px] text-center px-1">
+                  <span className="font-mono font-medium text-[var(--color-cream)] text-[24px] sm:text-[28px] tracking-[-0.35px] text-center px-1">
                     {t("header.publicationYear")}
                   </span>
                 </div>
@@ -482,7 +482,7 @@ export default function MobileFiltersView() {
                             setSelectedYearRange(isSelected ? null : r.id);
                             if (!isSelected) setCustomYear("");
                           }}
-                          className="flex items-center gap-2.5 text-left py-1 hover:bg-white/10 rounded px-1 transition-colors"
+                          className="flex items-center gap-2.5 text-left py-1 hover:bg-[var(--background-elevated)]/10 rounded px-1 transition-colors"
                         >
                           <div className="w-[22px] h-[22px] flex items-center justify-center shrink-0">
                             <img
@@ -491,7 +491,7 @@ export default function MobileFiltersView() {
                               className="w-[20px] h-[20px] object-contain"
                             />
                           </div>
-                          <span className="font-sans font-semibold text-[16px] sm:text-[18px] text-[#f5f3ee] leading-tight">
+                          <span className="font-sans font-semibold text-[16px] sm:text-[18px] text-[var(--color-cream)] leading-tight">
                             {t(r.labelKey)}
                           </span>
                         </button>
@@ -499,7 +499,7 @@ export default function MobileFiltersView() {
                     })}
 
                     <div className="mt-3 pt-2 border-t border-white/15">
-                      <span className="font-sans text-xs text-[#f5f3ee]/80 block mb-1.5 text-center">{t("catalog.mobileFilters.exactYear")}</span>
+                      <span className="font-sans text-xs text-[var(--color-cream)]/80 block mb-1.5 text-center">{t("catalog.mobileFilters.exactYear")}</span>
                       <input
                         type="number"
                         placeholder="-"
@@ -508,7 +508,7 @@ export default function MobileFiltersView() {
                           setCustomYear(e.target.value);
                           setSelectedYearRange(null);
                         }}
-                        className="bg-[#f5f3ee] rounded-full h-[36px] w-[110px] sm:w-[130px] text-center text-[#242424] text-[15px] font-sans focus:outline-none placeholder:text-[#242424]/50 shadow mx-auto block"
+                        className="bg-[var(--background-elevated)] rounded-full h-[36px] w-[110px] sm:w-[130px] text-center text-[var(--foreground-primary)] text-[15px] font-sans focus:outline-none placeholder:text-[var(--color-muted-fg)] shadow mx-auto block"
                       />
                     </div>
                   </div>
@@ -517,7 +517,7 @@ export default function MobileFiltersView() {
                     onClick={() => setActiveSection(null)}
                     className="w-full flex justify-center items-center pt-2 pb-4 border-t border-white/10 cursor-pointer hover:bg-black/10 transition-colors"
                   >
-                    <span className="font-mono font-medium text-[#f5f3ee] text-[24px] sm:text-[28px] tracking-[-0.35px]">
+                    <span className="font-mono font-medium text-[var(--color-cream)] text-[24px] sm:text-[28px] tracking-[-0.35px]">
                       {t("header.publicationYear")}
                     </span>
                   </div>
@@ -531,14 +531,14 @@ export default function MobileFiltersView() {
             {/* 1. МОВА */}
             <div
               onClick={() => toggleSection("language")}
-              className={`w-full bg-[#035b3c] transition-all duration-300 shadow-[0_4px_12px_rgba(0,0,0,0.3)] relative cursor-pointer overflow-hidden ${
+              className={`w-full bg-[var(--color-green)] transition-all duration-300 shadow-[var(--shadow-panel)] relative cursor-pointer overflow-hidden ${
                 activeSection === "language" ? "pt-4 pb-6 min-h-[300px]" : "h-[115px] flex items-center justify-center pb-3"
               }`}
               style={{ clipPath: clipPathRibbon }}
             >
               {activeSection !== "language" ? (
                 <div className="w-full h-full flex items-center justify-center pb-2">
-                  <span className="font-mono font-medium text-[#f5f3ee] text-[26px] sm:text-[30px] tracking-[-0.35px]">
+                  <span className="font-mono font-medium text-[var(--color-cream)] text-[26px] sm:text-[30px] tracking-[-0.35px]">
                     {t("header.languages")}
                   </span>
                 </div>
@@ -552,7 +552,7 @@ export default function MobileFiltersView() {
                           key={l.id}
                           type="button"
                           onClick={() => l.id !== undefined && toggleId(l.id, selectedLanguageIds, setSelectedLanguageIds)}
-                          className="flex items-center gap-2.5 text-left py-1 hover:bg-white/10 rounded px-1 transition-colors"
+                          className="flex items-center gap-2.5 text-left py-1 hover:bg-[var(--background-elevated)]/10 rounded px-1 transition-colors"
                         >
                           <div className="w-[22px] h-[22px] flex items-center justify-center shrink-0">
                             <img
@@ -561,7 +561,7 @@ export default function MobileFiltersView() {
                               className="w-[20px] h-[20px] object-contain"
                             />
                           </div>
-                          <span className="font-sans font-semibold text-[18px] sm:text-[20px] text-[#f5f3ee] leading-tight uppercase">
+                          <span className="font-sans font-semibold text-[18px] sm:text-[20px] text-[var(--color-cream)] leading-tight uppercase">
                             {l.languageName}
                           </span>
                         </button>
@@ -573,7 +573,7 @@ export default function MobileFiltersView() {
                     onClick={() => setActiveSection(null)}
                     className="w-full flex justify-center items-center pt-2 pb-4 border-t border-white/10 cursor-pointer hover:bg-black/10 transition-colors"
                   >
-                    <span className="font-mono font-medium text-[#f5f3ee] text-[26px] sm:text-[30px] tracking-[-0.35px]">
+                    <span className="font-mono font-medium text-[var(--color-cream)] text-[26px] sm:text-[30px] tracking-[-0.35px]">
                       {t("header.languages")}
                     </span>
                   </div>
@@ -584,14 +584,14 @@ export default function MobileFiltersView() {
             {/* 2. ЦІНА */}
             <div
               onClick={() => toggleSection("price")}
-              className={`w-full bg-[#035b3c] transition-all duration-300 shadow-[0_4px_12px_rgba(0,0,0,0.3)] relative cursor-pointer overflow-hidden ${
+              className={`w-full bg-[var(--color-green)] transition-all duration-300 shadow-[var(--shadow-panel)] relative cursor-pointer overflow-hidden ${
                 activeSection === "price" ? "pt-4 pb-6 min-h-[340px]" : "h-[120px] flex items-center justify-center pb-3"
               }`}
               style={{ clipPath: clipPathRibbon }}
             >
               {activeSection !== "price" ? (
                 <div className="w-full h-full flex items-center justify-center pb-2">
-                  <span className="font-mono font-medium text-[#f5f3ee] text-[26px] sm:text-[30px] tracking-[-0.35px]">
+                  <span className="font-mono font-medium text-[var(--color-cream)] text-[26px] sm:text-[30px] tracking-[-0.35px]">
                     {t("header.price")}
                   </span>
                 </div>
@@ -605,7 +605,7 @@ export default function MobileFiltersView() {
                         placeholder="-"
                         value={minPrice}
                         onChange={(e) => setMinPrice(e.target.value)}
-                        className="bg-[#f5f3ee] rounded-full h-[36px] w-full text-center text-[#242424] font-sans focus:outline-none placeholder:text-[#242424]/50 shadow text-sm"
+                        className="bg-[var(--background-elevated)] rounded-full h-[36px] w-full text-center text-[var(--foreground-primary)] font-sans focus:outline-none placeholder:text-[var(--color-muted-fg)] shadow text-sm"
                       />
                     </div>
 
@@ -616,7 +616,7 @@ export default function MobileFiltersView() {
                         placeholder="-"
                         value={maxPrice}
                         onChange={(e) => setMaxPrice(e.target.value)}
-                        className="bg-[#f5f3ee] rounded-full h-[36px] w-full text-center text-[#242424] font-sans focus:outline-none placeholder:text-[#242424]/50 shadow text-sm"
+                        className="bg-[var(--background-elevated)] rounded-full h-[36px] w-full text-center text-[var(--foreground-primary)] font-sans focus:outline-none placeholder:text-[var(--color-muted-fg)] shadow text-sm"
                       />
                     </div>
 
@@ -632,7 +632,7 @@ export default function MobileFiltersView() {
                           className="w-[20px] h-[20px] object-contain"
                         />
                       </div>
-                      <span className="font-sans font-semibold text-[17px] text-[#f5f3ee]">
+                      <span className="font-sans font-semibold text-[17px] text-[var(--color-cream)]">
                         {t("header.promos")}
                       </span>
                     </button>
@@ -642,7 +642,7 @@ export default function MobileFiltersView() {
                     onClick={() => setActiveSection(null)}
                     className="w-full flex justify-center items-center pt-2 pb-4 border-t border-white/10 cursor-pointer hover:bg-black/10 transition-colors"
                   >
-                    <span className="font-mono font-medium text-[#f5f3ee] text-[26px] sm:text-[30px] tracking-[-0.35px]">
+                    <span className="font-mono font-medium text-[var(--color-cream)] text-[26px] sm:text-[30px] tracking-[-0.35px]">
                       {t("header.price")}
                     </span>
                   </div>
@@ -653,14 +653,14 @@ export default function MobileFiltersView() {
             {/* 3. РЕЙТИНГ */}
             <div
               onClick={() => toggleSection("rating")}
-              className={`w-full bg-[#035b3c] transition-all duration-300 shadow-[0_4px_12px_rgba(0,0,0,0.3)] relative cursor-pointer overflow-hidden ${
+              className={`w-full bg-[var(--color-green)] transition-all duration-300 shadow-[var(--shadow-panel)] relative cursor-pointer overflow-hidden ${
                 activeSection === "rating" ? "pt-4 pb-6 min-h-[340px]" : "h-[135px] flex items-center justify-center pb-3"
               }`}
               style={{ clipPath: clipPathRibbon }}
             >
               {activeSection !== "rating" ? (
                 <div className="w-full h-full flex items-center justify-center pb-2">
-                  <span className="font-mono font-medium text-[#f5f3ee] text-[26px] sm:text-[30px] tracking-[-0.35px]">
+                  <span className="font-mono font-medium text-[var(--color-cream)] text-[26px] sm:text-[30px] tracking-[-0.35px]">
                     {t("catalog.mobileFilters.rating")}
                   </span>
                 </div>
@@ -674,7 +674,7 @@ export default function MobileFiltersView() {
                           key={r.id}
                           type="button"
                           onClick={() => r.id !== undefined && toggleId(r.id, selectedAgeRestrictionIds, setSelectedAgeRestrictionIds)}
-                          className="flex items-center gap-2.5 text-left py-1 hover:bg-white/10 rounded px-1 transition-colors"
+                          className="flex items-center gap-2.5 text-left py-1 hover:bg-[var(--background-elevated)]/10 rounded px-1 transition-colors"
                         >
                           <div className="w-[22px] h-[22px] flex items-center justify-center shrink-0">
                             <img
@@ -683,7 +683,7 @@ export default function MobileFiltersView() {
                               className="w-[20px] h-[20px] object-contain"
                             />
                           </div>
-                          <span className="font-sans font-semibold text-[18px] sm:text-[20px] text-[#f5f3ee] leading-tight">
+                          <span className="font-sans font-semibold text-[18px] sm:text-[20px] text-[var(--color-cream)] leading-tight">
                             {r.name}
                           </span>
                         </button>
@@ -695,7 +695,7 @@ export default function MobileFiltersView() {
                     onClick={() => setActiveSection(null)}
                     className="w-full flex justify-center items-center pt-2 pb-4 border-t border-white/10 cursor-pointer hover:bg-black/10 transition-colors"
                   >
-                    <span className="font-mono font-medium text-[#f5f3ee] text-[26px] sm:text-[30px] tracking-[-0.35px]">
+                    <span className="font-mono font-medium text-[var(--color-cream)] text-[26px] sm:text-[30px] tracking-[-0.35px]">
                       {t("catalog.mobileFilters.rating")}
                     </span>
                   </div>
@@ -711,10 +711,10 @@ export default function MobileFiltersView() {
             type="button"
             onClick={applyAllFilters}
             aria-label={t("catalog.mobileFilters.applyAria")}
-            className="w-[85px] sm:w-[95px] h-[115px] sm:h-[125px] bg-[#035b3c] hover:bg-[#024a31] active:scale-95 transition-all duration-200 shadow-[0_6px_16px_rgba(0,0,0,0.35)] flex flex-col items-center justify-center pb-4 rounded-t-[10px] border-t border-white/15"
+            className="w-[85px] sm:w-[95px] h-[115px] sm:h-[125px] bg-[var(--color-green)] hover:bg-[color-mix(in_srgb,var(--color-green)_85%,black)] active:scale-95 transition-all duration-200 shadow-[var(--shadow-card)] flex flex-col items-center justify-center pb-4 rounded-t-[10px] border-t border-white/15"
             style={{ clipPath: clipPathCheckBadge }}
           >
-            <div className="w-[48px] h-[48px] sm:w-[54px] sm:h-[54px] rounded-full bg-[#367258] hover:bg-[#2e634c] flex items-center justify-center shadow-inner border border-white/20 transition-transform">
+            <div className="w-[48px] h-[48px] sm:w-[54px] sm:h-[54px] rounded-full bg-[var(--ink-section-accent)] hover:bg-[var(--ink-section-accent)] flex items-center justify-center shadow-inner border border-white/20 transition-transform">
               <img
                 src="/images/header/check_24px.svg"
                 alt=""
@@ -736,7 +736,7 @@ export default function MobileFiltersView() {
             <button
               type="button"
               onClick={resetAllFilters}
-              className="mt-2 px-3 py-1 bg-black/70 backdrop-blur text-xs rounded-full text-[#f5f3ee] hover:bg-black/90 transition-colors shadow border border-white/10"
+              className="mt-2 px-3 py-1 bg-black/70 backdrop-blur text-xs rounded-full text-[var(--color-cream)] hover:bg-black/90 transition-colors shadow border border-white/10"
             >
               {t("catalog.clearAllFilters")}
             </button>

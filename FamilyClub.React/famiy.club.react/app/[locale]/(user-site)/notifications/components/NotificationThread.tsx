@@ -133,9 +133,9 @@ export default function NotificationThread({
                                 max-h-[80vh]
                                 flex
                                 flex-col
-                                bg-[#F5F3EE]
+                                bg-[var(--background-elevated)]
                                 rounded-[26px]
-                                shadow-[0px_0px_15px_0px_#242424CC]
+                                shadow-[var(--shadow-panel)]
                                 overflow-hidden
                             "
                         >
@@ -233,7 +233,7 @@ export default function NotificationThread({
                                                             w-8
                                                             h-8
                                                             rounded-full
-                                                            bg-[#1e5631]/10
+                                                            bg-[var(--color-green)]/10
                                                             flex
                                                             items-center
                                                             justify-center
@@ -252,8 +252,8 @@ export default function NotificationThread({
                                                             rounded-2xl
                                                             ${
                                                                 isMine
-                                                                    ? "bg-[#1e5631] text-white rounded-br-sm"
-                                                                    : "bg-white text-black/80 rounded-tl-sm"
+                                                                    ? "bg-[var(--color-green)] text-white rounded-br-sm"
+                                                                    : "bg-[var(--background-elevated)] text-black/80 rounded-tl-sm"
                                                             }
                                                         `}
                                                     >
@@ -308,14 +308,14 @@ export default function NotificationThread({
                                     className="
                                         flex-1
                                         rounded-full
-                                        bg-white
+                                        bg-[var(--background-elevated)]
                                         px-4
                                         py-2
                                         text-sm
                                         outline-none
                                         border
                                         border-black/10
-                                        focus:border-[#1e5631]
+                                        focus:border-[var(--color-green)]
                                     "
                                 />
 
@@ -328,7 +328,7 @@ export default function NotificationThread({
                                     className="
                                         shrink-0
                                         rounded-full
-                                        bg-[#1e5631]
+                                        bg-[var(--color-green)]
                                         text-white
                                         px-4
                                         py-2

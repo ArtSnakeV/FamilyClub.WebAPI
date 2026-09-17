@@ -13,6 +13,10 @@ import { FavoriteBook } from "@/lib/hooks/useFavorites";
 import { TabType } from "./page";
 import FormatBadge from "./section/FormatBadge";
 import { useLocale, useLocalizedPath, useTranslations } from "@/lib/i18n/LocaleProvider";
+import { useTheme } from "@/lib/theme/ThemeProvider";
+
+const NIGHT_BG_FILTER = "invert(1) hue-rotate(180deg)";
+const NIGHT_EMPTY_ICON_FILTER = "brightness(0) invert(0.58)";
 
 const FORMAT_CONFIG = [
   { id: 3, icon: "/images/userProfile/Property1.svg", icon1: "/images/userProfile/Rectangle 185.svg", labelKey: "profile.formats.paper" },
@@ -58,6 +62,8 @@ export default function MobileUserProfileView({
   const { locale } = useLocale();
   const t = useTranslations();
   const lp = useLocalizedPath();
+  const { theme } = useTheme();
+  const isNight = theme === "ink-night";
   const { items, addToCart } = useCart();
   const { reviews: userReviews, loading: loadingUserReviews } = useUserReviews(userId);
 
@@ -138,7 +144,7 @@ export default function MobileUserProfileView({
   }
 
   return (
-    <div className="w-full min-h-screen bg-[#f5f3ee] flex flex-col font-['Source_Sans_3',sans-serif] pb-28 pt-[65px] select-none overflow-x-hidden">
+    <div className="w-full min-h-screen bg-[var(--background-elevated)] flex flex-col font-['Source_Sans_3',sans-serif] pb-28 pt-[65px] select-none overflow-x-hidden">
       <div
         className="relative w-full pt-[24px] pb-[20px] px-4 sm:px-6 overflow-hidden min-h-[210px] sm:min-h-[220px] flex flex-col justify-end shadow-md"
         style={{
@@ -152,7 +158,7 @@ export default function MobileUserProfileView({
 
         <div className="relative z-10 flex flex-col w-full">
           <div className="flex items-start gap-3.5 sm:gap-4 w-full">
-            <div className="w-[60px] h-[60px] rounded-full overflow-hidden border border-[#f5f3ee]/50 shadow-lg shrink-0 bg-[#3c2a1e] flex items-center justify-center">
+            <div className="w-[60px] h-[60px] rounded-full overflow-hidden border border-[color-mix(in_srgb,var(--color-cream)_50%,transparent)] shadow-lg shrink-0 bg-[#3c2a1e] flex items-center justify-center">
               {avatarSrc ? (
                 <img src={avatarSrc} alt={displayName} className="w-full h-full object-cover" />
               ) : (
@@ -160,20 +166,20 @@ export default function MobileUserProfileView({
               )}
             </div>
             <div className="flex flex-col min-w-0 flex-1 justify-center pt-0.5">
-              <span className="text-[20px] sm:text-[22px] font-bold text-[#f5f3ee] tracking-[-0.22px] leading-tight truncate">
+              <span className="text-[20px] sm:text-[22px] font-bold text-[var(--color-cream)] tracking-[-0.22px] leading-tight truncate">
                 {displayName}
               </span>
-              <p className="text-[13.5px] text-[#f5f3ee] font-bold tracking-[-0.154px] leading-snug truncate mt-1">
+              <p className="text-[13.5px] text-[var(--color-cream)] font-bold tracking-[-0.154px] leading-snug truncate mt-1">
                 @{user?.email?.split("@")[0] || t("common.userHandle")} · {!loadingMyBooks ? t("profile.mobile.booksCount").replace("{count}", String(myBooks.length)) : "..."} · {!loadingUserReviews ? t("profile.mobile.postsCount").replace("{count}", String(userReviews.length)) : "..."}
               </p>
-              <p className="text-[13px] text-[#f5f3ee]/95 leading-snug tracking-[-0.154px] truncate mt-0.5">
+              <p className="text-[13px] text-[var(--color-cream)]/95 leading-snug tracking-[-0.154px] truncate mt-0.5">
                 <span>{t("profile.mobile.bio")} </span>
                 <span className="font-bold cursor-pointer underline">{t("profile.mobile.details")}</span>
               </p>
             </div>
           </div>
 
-          <div className="flex items-center justify-between w-full mt-4 pt-3 border-t border-[#f5f3ee]/15 pr-1">
+          <div className="flex items-center justify-between w-full mt-4 pt-3 border-t border-[color-mix(in_srgb,var(--color-cream)_15%,transparent)] pr-1">
             <div className="flex items-center gap-5">
               {SOCIALS.map(({ name, href, icon }) => (
                 <a
@@ -192,9 +198,9 @@ export default function MobileUserProfileView({
               <button
                 type="button"
                 onClick={() => router.push(lp("/library"))}
-                className="px-3.5 py-1.5 rounded-full bg-[#005B33] text-[#f5f3ee] text-[13px] font-semibold tracking-tight shadow-md flex items-center gap-1.5 hover:bg-[#097E4B] active:scale-95 transition-all"
+                className="px-3.5 py-1.5 rounded-full bg-[var(--color-green)] text-[var(--color-cream)] text-[13px] font-semibold tracking-tight shadow-md flex items-center gap-1.5 hover:bg-[color-mix(in_srgb,var(--color-green)_85%,white)] active:scale-95 transition-all"
               >
-                <svg className="w-4 h-4 text-[#f5f3ee] shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                <svg className="w-4 h-4 text-[var(--color-cream)] shrink-0" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0-2-.9-2-2V4c0-1.1-.9-2-2-2zm-1 9H9V9h10v2zm-4 4H9v-2h6v2zm4-8H9V5h10v2z" />
                 </svg>
                 <span>{t("nav.library")}</span>
@@ -204,7 +210,7 @@ export default function MobileUserProfileView({
                 <button
                   type="button"
                   onClick={() => router.push(lp(`/userProfile/editUserProfile/${userId}`))}
-                  className="px-3.5 py-1.5 rounded-full bg-[#3c2a1e] text-[#f5f3ee] text-[13px] font-semibold tracking-tight shadow-md flex items-center gap-1.5 hover:bg-[#4d3728] active:scale-95 transition-all"
+                  className="px-3.5 py-1.5 rounded-full bg-[#3c2a1e] text-[var(--color-cream)] text-[13px] font-semibold tracking-tight shadow-md flex items-center gap-1.5 hover:bg-[#4d3728] active:scale-95 transition-all"
                 >
                   <span>{t("profile.mobile.edit")}</span>
                 </button>
@@ -234,7 +240,7 @@ export default function MobileUserProfileView({
               }}
             >
               {iconType === "books" && (
-                <svg className="w-[22px] h-[22px] text-[#f5f3ee] drop-shadow-sm shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                <svg className="w-[22px] h-[22px] text-[var(--color-cream)] drop-shadow-sm shrink-0" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M19 3H7C5.89543 3 5 3.89543 5 5V19C5 20.1046 5.89543 21 7 21H19C20.1046 21 21 20.1046 21 19V5C21 3.89543 20.1046 3 19 3ZM19 19H7V5H19V19ZM9 7H17V9H9V7ZM9 11H17V13H9V11Z"/>
                 </svg>
               )}
@@ -246,11 +252,11 @@ export default function MobileUserProfileView({
                 />
               )}
               {iconType === "newspaper" && (
-                <svg className="w-[22px] h-[22px] text-[#f5f3ee] drop-shadow-sm shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                <svg className="w-[22px] h-[22px] text-[var(--color-cream)] drop-shadow-sm shrink-0" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M19 3H5C3.89543 3 3 3.89543 3 5V19C3 20.1046 3.89543 21 5 21H19C20.1046 21 21 20.1046 21 19V5C21 3.89543 20.1046 3 19 3ZM19 19H5V5H19V19ZM7 7H17V9H7V7ZM7 11H17V13H7V11ZM7 15H13V17H7V15Z"/>
                 </svg>
               )}
-              <span className="text-[#f5f3ee] text-[13px] font-bold mt-1.5 tracking-tight truncate px-1 w-full text-center">
+              <span className="text-[var(--color-cream)] text-[13px] font-bold mt-1.5 tracking-tight truncate px-1 w-full text-center">
                 {label}
               </span>
             </button>
@@ -269,10 +275,15 @@ export default function MobileUserProfileView({
               backgroundPosition: "center",
             }}
           >
-            <div className="bg-[#f5f3ee]/90 backdrop-blur-sm p-6 rounded-2xl flex flex-col items-center max-w-[280px] shadow-lg border border-[#e0d8cc]">
-              <img src="/images/userProfile/imgIko.png" alt={t("profile.emptyAlt")} className="w-[140px] h-auto object-contain drop-shadow" />
-              <p className="mt-4 text-[#242424] text-[17px] font-bold tracking-tight">{t("profile.emptyTitle")}</p>
-              <p className="text-[13px] text-[#242424]/70 mt-1">{t("profile.mobile.emptyHint")}</p>
+            <div className="bg-[color-mix(in_srgb,var(--background-elevated)_90%,transparent)] backdrop-blur-sm p-6 rounded-2xl flex flex-col items-center max-w-[280px] shadow-lg border border-[var(--color-border-warm)]">
+              <img
+                src="/images/userProfile/imgIko.png"
+                alt={t("profile.emptyAlt")}
+                className="w-[140px] h-auto object-contain drop-shadow"
+                style={isNight ? { filter: NIGHT_EMPTY_ICON_FILTER } : undefined}
+              />
+              <p className="mt-4 text-[var(--foreground-primary)] text-[17px] font-bold tracking-tight">{t("profile.emptyTitle")}</p>
+              <p className="text-[13px] text-[var(--color-muted-fg)] mt-1">{t("profile.mobile.emptyHint")}</p>
             </div>
           </div>
         ) : (
@@ -307,7 +318,7 @@ export default function MobileUserProfileView({
                     <div
                       key={book.id}
                       onClick={() => router.push(lp(`/products/${book.id}`))}
-                      className="relative w-full bg-[#f5f3ee] rounded-t-none rounded-bl-[20px] rounded-br-[20px] shadow-[0_10px_14px_rgba(36,36,36,0.3)] border-b border-x border-[#e0d8cc] flex flex-col items-center transition-transform active:scale-[0.98] cursor-pointer overflow-visible"
+                      className="relative w-full bg-[var(--background-elevated)] rounded-t-none rounded-bl-[20px] rounded-br-[20px] shadow-[0_10px_14px_rgba(36,36,36,0.3)] border-b border-x border-[var(--color-border-warm)] flex flex-col items-center transition-transform active:scale-[0.98] cursor-pointer overflow-visible"
                     >
                       {/* Format Badges on Left Edge (Figma Group4) */}
                       <div className="absolute left-[-2px] top-[14px] flex flex-col gap-1 z-30 pointer-events-auto">
@@ -340,7 +351,7 @@ export default function MobileUserProfileView({
                       </button>
 
                       {/* Book Cover Image (Figma 310-828-new-250x250 1) */}
-                      <div className="w-[90px] sm:w-[98px] h-[126px] sm:h-[136px] mt-[16px] rounded-[4px] overflow-hidden bg-[#e8e2d8] shadow-[0_4px_8px_rgba(0,0,0,0.25)] shrink-0 relative flex items-center justify-center">
+                      <div className="w-[90px] sm:w-[98px] h-[126px] sm:h-[136px] mt-[16px] rounded-[4px] overflow-hidden bg-[var(--color-menu-hover)] shadow-[0_4px_8px_rgba(0,0,0,0.25)] shrink-0 relative flex items-center justify-center">
                         {imageSrc ? (
                           <img
                             src={imageSrc}
@@ -348,7 +359,7 @@ export default function MobileUserProfileView({
                             className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
                           />
                         ) : (
-                          <span className="text-xs text-[#242424]/60 px-1 text-center font-medium">
+                          <span className="text-xs text-[var(--color-muted-fg)] px-1 text-center font-medium">
                             {book.productName}
                           </span>
                         )}
@@ -358,19 +369,19 @@ export default function MobileUserProfileView({
                       <div className="w-full px-3 pt-2 pb-3 flex flex-col text-left flex-1 justify-between">
                         <div>
                           {/* Title (Lora Medium 16px) */}
-                          <p className="font-['Lora',serif] font-medium text-[15px] sm:text-[16px] text-[#242424] leading-tight line-clamp-1 truncate">
+                          <p className="font-['Lora',serif] font-medium text-[15px] sm:text-[16px] text-[var(--foreground-primary)] leading-tight line-clamp-1 truncate">
                             {book.productName}
                           </p>
 
                           {/* Author (Source Sans Pro Regular 14px text-opacity 70%) */}
-                          <p className="font-['Source_Sans_3',sans-serif] text-[13px] sm:text-[14px] text-[#242424]/70 leading-tight mt-0.5 truncate">
+                          <p className="font-['Source_Sans_3',sans-serif] text-[13px] sm:text-[14px] text-[var(--color-muted-fg)] leading-tight mt-0.5 truncate">
                             {authorNames || t("profile.unknownAuthor")}
                           </p>
                         </div>
 
                         {/* Price & Cart row (Figma 504 грн & shopping_basket_24px) */}
-                        <div className="flex items-center justify-between w-full mt-3 pt-1 border-t border-[#242424]/10">
-                          <span className="font-bold text-[15px] sm:text-[16px] text-[#242424] tracking-tight">
+                        <div className="flex items-center justify-between w-full mt-3 pt-1 border-t border-[color-mix(in_srgb,var(--foreground-primary)_10%,transparent)]">
+                          <span className="font-bold text-[15px] sm:text-[16px] text-[var(--foreground-primary)] tracking-tight">
                             {formatPrice(book.price)}
                           </span>
                           <button

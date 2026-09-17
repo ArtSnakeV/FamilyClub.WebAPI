@@ -34,7 +34,7 @@ export default function YourPawsBlock({ paws, discountInUah }: Props) {
       </div>
 
       <div className="flex flex-col relative top-2 items-center justify-center text-center w-full">
-        <p className="text-[#F5F3EE80] w-[300px] text-[14px] border-b border-[#242424]">
+        <p className="text-[#F5F3EE80] w-[300px] text-[14px] border-b border-[var(--foreground-primary)]">
           {t("paws.exchangeHint")}
         </p>
         <div className="flex flex-row items-center gap-8 ">

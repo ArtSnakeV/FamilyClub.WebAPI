@@ -130,26 +130,26 @@ export default function MobileOrdersView({
   };
 
   return (
-    <div className="block md:hidden min-h-screen bg-[#c7a381] pt-[110px] pb-[85px] px-3 font-['Source_Sans_Pro',sans-serif]">
+    <div className="block md:hidden min-h-screen bg-[var(--color-wood)] pt-[110px] pb-[85px] px-3 font-['Source_Sans_Pro',sans-serif]">
       {/* Mobile Page Title & Back & Balance */}
       <div className="flex items-center justify-between py-3 px-1 w-full max-w-[392px] mx-auto">
         <div className="flex items-center gap-3">
           <button
             type="button"
             onClick={() => router.back()}
-            className="w-[36px] h-[36px] rounded-full bg-[#f5f3ee]/60 hover:bg-[#f5f3ee] transition-colors flex items-center justify-center text-[#242424] text-[18px] shadow-sm active:scale-95"
+            className="w-[36px] h-[36px] rounded-full bg-[var(--background-elevated)]/60 hover:bg-[var(--background-elevated)] transition-colors flex items-center justify-center text-[var(--foreground-primary)] text-[18px] shadow-sm active:scale-95"
             aria-label={t("orders.backAria")}
           >
             ←
           </button>
-          <h1 className="text-[24px] sm:text-[26px] font-bold text-[#242424] tracking-[-0.01em] font-sans">
+          <h1 className="text-[24px] sm:text-[26px] font-bold text-[var(--foreground-primary)] tracking-[-0.01em] font-sans">
             {t("orders.title")}
           </h1>
         </div>
         {paws > 0 && (
-          <div className="flex items-center gap-1.5 bg-[#ECE8DE]/95 px-3 py-1 rounded-full border border-[#DCD7CC] shadow-sm text-xs">
+          <div className="flex items-center gap-1.5 bg-[#ECE8DE]/95 px-3 py-1 rounded-full border border-[var(--color-menu-separator)] shadow-sm text-xs">
             <span className="text-sm">🐾</span>
-            <span className="font-bold text-[#242424] text-[13px]">{paws}</span>
+            <span className="font-bold text-[var(--foreground-primary)] text-[13px]">{paws}</span>
           </div>
         )}
       </div>
@@ -166,8 +166,8 @@ export default function MobileOrdersView({
                 onClick={() => setActiveTab(tab.id)}
                 className={`w-full flex flex-col items-center justify-start pt-3 px-1.5 transition-all duration-300 transform ${
                   isActive
-                    ? "bg-[#004e2B] pb-7 shadow-md translate-y-0.5"
-                    : "bg-[#006338] pb-5 hover:bg-[#005430]"
+                    ? "bg-[color-mix(in_srgb,var(--color-green)_90%,black)] pb-7 shadow-md translate-y-0.5"
+                    : "bg-[var(--color-green)] pb-5 hover:bg-[color-mix(in_srgb,var(--color-green)_90%,black)]"
                 }`}
                 style={{
                   clipPath: "polygon(0 0, 100% 0, 100% 100%, 50% 85%, 0 100%)",
@@ -180,7 +180,7 @@ export default function MobileOrdersView({
               </button>
 
               {countVal !== undefined && countVal > 0 && (
-                <div className="absolute bottom-0.5 left-1/2 transform -translate-x-1/2 w-5 h-5 bg-[#F5F3EE] text-[#004e2B] rounded-full flex items-center justify-center text-[11px] font-bold shadow-sm border border-[#004e2B] z-10">
+                <div className="absolute bottom-0.5 left-1/2 transform -translate-x-1/2 w-5 h-5 bg-[var(--background-elevated)] text-[var(--color-green)] rounded-full flex items-center justify-center text-[11px] font-bold shadow-sm border border-[var(--color-green)] z-10">
                   {countVal}
                 </div>
               )}
@@ -191,7 +191,7 @@ export default function MobileOrdersView({
 
       {/* Informational Notice */}
       {(activeTab === "add_review" || activeTab === "returns" || activeTab === "history") && (
-        <div className="text-center text-[13px] font-semibold text-[#242424] mb-4 bg-white/75 backdrop-blur-sm py-2 px-4 rounded-xl max-w-[392px] mx-auto shadow-sm border border-white/40">
+        <div className="text-center text-[13px] font-semibold text-[var(--foreground-primary)] mb-4 bg-[var(--background-elevated)]/75 backdrop-blur-sm py-2 px-4 rounded-xl max-w-[392px] mx-auto shadow-sm border border-white/40">
           {t("orders.autoRemoveNote")}
         </div>
       )}
@@ -200,13 +200,13 @@ export default function MobileOrdersView({
       <div className="w-full max-w-[392px] mx-auto flex flex-col gap-5">
         {loading ? (
           <div className="flex justify-center items-center py-16">
-            <div className="w-9 h-9 border-4 border-[#005b33] border-t-transparent rounded-full animate-spin"></div>
+            <div className="w-9 h-9 border-4 border-[var(--color-green)] border-t-transparent rounded-full animate-spin"></div>
           </div>
         ) : currentItems.length === 0 ? (
-          <div className="bg-[#e3be9b]/95 backdrop-blur-sm rounded-[15px] p-8 text-center border border-[#B7895E]/50 shadow-md my-4">
+          <div className="bg-[#e3be9b]/95 backdrop-blur-sm rounded-[15px] p-8 text-center border border-[var(--color-border-warm)]/50 shadow-md my-4">
             <span className="text-4xl block mb-2">📦</span>
-            <h3 className="text-lg font-bold text-[#242424] mb-1">{t("orders.emptyTitle")}</h3>
-            <p className="text-xs text-[#242424]/70">
+            <h3 className="text-lg font-bold text-[var(--foreground-primary)] mb-1">{t("orders.emptyTitle")}</h3>
+            <p className="text-xs text-[var(--color-muted-fg)]">
               {t("orders.emptyText")}
             </p>
           </div>
@@ -218,7 +218,7 @@ export default function MobileOrdersView({
             const outerBgClass = isCancelled
               ? "bg-[#E3C8C4] border-[#D1AFA9]"
               : isReturned
-              ? "bg-[#C2BCB1] border-[#B0AAA0]"
+              ? "bg-[var(--color-menu-separator)] border-[var(--color-menu-separator)]"
               : "bg-[#e3be9b] border-transparent";
 
             return (
@@ -231,18 +231,18 @@ export default function MobileOrdersView({
                   <div className="flex flex-col gap-0.5">
                     <h3
                       className="font-semibold text-[20px] leading-tight tracking-[-0.22px]"
-                      style={{ color: item.statusColor || "#005b33" }}
+                      style={{ color: item.statusColor || "var(--color-green)" }}
                     >
                       {localizedStatus(item.statusText)}
                     </h3>
                     <div className="flex items-center gap-1.5 mt-0.5">
-                      <span className="font-semibold text-[14px] text-[#242424] tracking-[-0.154px]">
+                      <span className="font-semibold text-[14px] text-[var(--foreground-primary)] tracking-[-0.154px]">
                         {item.orderNumber}
                       </span>
                       <button
                         type="button"
                         onClick={() => handleCopy(item.orderNumber, item.id)}
-                        className="p-1 text-[#242424] hover:opacity-75 transition-opacity active:scale-90"
+                        className="p-1 text-[var(--foreground-primary)] hover:opacity-75 transition-opacity active:scale-90"
                         title={t("orders.copyOrderNumber")}
                       >
                         {copiedId === item.id ? (
@@ -259,19 +259,19 @@ export default function MobileOrdersView({
                   </div>
 
                   <div className="flex flex-col items-end text-right ml-auto">
-                    <span className="text-[13px] sm:text-[14px] text-[rgba(36,36,36,0.5)] leading-tight tracking-[-0.154px]">
+                    <span className="text-[13px] sm:text-[14px] text-[var(--color-muted-fg)] leading-tight tracking-[-0.154px]">
                       {t("orders.lastStatusDate")}
                     </span>
-                    <span className="text-[13px] sm:text-[14px] text-[rgba(36,36,36,0.5)] leading-tight tracking-[-0.154px] mt-0.5">
+                    <span className="text-[13px] sm:text-[14px] text-[var(--color-muted-fg)] leading-tight tracking-[-0.154px] mt-0.5">
                       {item.lastStatusDate}
                     </span>
                   </div>
                 </div>
 
                 {/* Inner Book Item Card */}
-                <div className="bg-[#f5f3ee] border-[3px] sm:border-4 border-[#f5f3ee] rounded-[9px] drop-shadow-[0px_4px_2px_rgba(0,0,0,0.25)] min-h-[160px] w-full relative flex items-center p-2.5 sm:p-3 gap-2.5 sm:gap-3 my-1">
+                <div className="bg-[var(--background-elevated)] border-[3px] sm:border-4 border-[#f5f3ee] rounded-[9px] drop-shadow-[0px_4px_2px_rgba(0,0,0,0.25)] min-h-[160px] w-full relative flex items-center p-2.5 sm:p-3 gap-2.5 sm:gap-3 my-1">
                   {/* Bookmark Badge on Left Edge */}
-                  <div className="w-[30px] min-h-[105px] bg-[#C8C2B4]/80 rounded-r-[6px] -ml-2.5 sm:-ml-3 flex flex-col items-center justify-center gap-2 shrink-0 self-center py-2 shadow-sm">
+                  <div className="w-[30px] min-h-[105px] bg-[var(--color-menu-separator)]/80 rounded-r-[6px] -ml-2.5 sm:-ml-3 flex flex-col items-center justify-center gap-2 shrink-0 self-center py-2 shadow-sm">
                     {item.formats.includes("print") && (
                       <img
                         src={printIconSrc}
@@ -296,7 +296,7 @@ export default function MobileOrdersView({
                   </div>
 
                   {/* Book Cover */}
-                  <div className="w-[80px] sm:w-[84px] h-[126px] sm:h-[134px] relative rounded-[4px] overflow-hidden shadow shrink-0 bg-white flex items-center justify-center">
+                  <div className="w-[80px] sm:w-[84px] h-[126px] sm:h-[134px] relative rounded-[4px] overflow-hidden shadow shrink-0 bg-[var(--background-elevated)] flex items-center justify-center">
                     <img
                       src={item.bookImage || "/images/catalog/hunger_games.png"}
                       alt={item.bookTitle}
@@ -311,18 +311,18 @@ export default function MobileOrdersView({
                   {/* Title, Quantity & Price */}
                   <div className="flex-1 flex flex-col justify-between self-stretch py-1 min-w-0 pr-1">
                     <div>
-                      <h4 className="text-[17px] sm:text-[19px] font-normal text-[#242424] leading-tight tracking-[-0.22px] line-clamp-2">
+                      <h4 className="text-[17px] sm:text-[19px] font-normal text-[var(--foreground-primary)] leading-tight tracking-[-0.22px] line-clamp-2">
                         {item.bookTitle}
                       </h4>
                       <div className="flex items-center gap-1.5 flex-wrap mt-1">
-                        <span className="text-[12px] font-semibold text-[#555555] bg-[#EBE7DD] px-2 py-0.5 rounded-full border border-[#D5CFCE]">
+                        <span className="text-[12px] font-semibold text-[var(--color-muted-fg)] bg-[var(--color-menu-hover)] px-2 py-0.5 rounded-full border border-[var(--color-menu-separator)]">
                           {t("orders.qty").replace("{count}", String(item.quantity))}
                         </span>
                         {item.formats && item.formats.map((fmt, idx) => {
                           const f = String(fmt).toLowerCase();
                           let label = t("orders.formats.paper");
                           let icon = "📖";
-                          let badgeStyle = "bg-[#E2F0D9] text-[#005b33] border-[#B8E0A4]";
+                          let badgeStyle = "bg-[color-mix(in_srgb,var(--color-green)_18%,transparent)] text-[var(--color-green)] border-[color-mix(in_srgb,var(--color-green)_45%,transparent)]";
 
                           if (f === "ebook" || f.includes("елек")) {
                             label = t("orders.formats.ebook");
@@ -335,7 +335,7 @@ export default function MobileOrdersView({
                           } else if (f === "print" || f.includes("папер") || f === "paper") {
                             label = t("orders.formats.paper");
                             icon = "📖";
-                            badgeStyle = "bg-[#E2F0D9] text-[#005b33] border-[#B8E0A4]";
+                            badgeStyle = "bg-[color-mix(in_srgb,var(--color-green)_18%,transparent)] text-[var(--color-green)] border-[color-mix(in_srgb,var(--color-green)_45%,transparent)]";
                           } else {
                             label = fmt;
                           }
@@ -357,27 +357,27 @@ export default function MobileOrdersView({
                           onClick={() =>
                             onAction("confirm_receipt", item.id, item.dbOrderId)
                           }
-                          className="mt-2.5 px-3 py-1 rounded-full border border-[#005b33] text-[#005b33] font-semibold hover:bg-[#005b33] hover:text-white transition text-[12px] w-fit shadow-sm"
+                          className="mt-2.5 px-3 py-1 rounded-full border border-[var(--color-green)] text-[var(--color-green)] font-semibold hover:bg-[var(--color-green)] hover:text-white transition text-[12px] w-fit shadow-sm"
                         >
                           {t("orders.confirmReceipt")}
                         </button>
                       )}
                     </div>
 
-                    <div className="self-end font-semibold text-[18px] sm:text-[20px] text-[#242424] tracking-[-0.22px] mt-auto pt-2">
+                    <div className="self-end font-semibold text-[18px] sm:text-[20px] text-[var(--foreground-primary)] tracking-[-0.22px] mt-auto pt-2">
                       {formatPrice(item.price)}
                     </div>
                   </div>
                 </div>
 
                 {/* Card Action Buttons Row */}
-                <div className="flex flex-wrap items-center justify-end gap-2 mt-3 pt-2 border-t border-[#242424]/10">
+                <div className="flex flex-wrap items-center justify-end gap-2 mt-3 pt-2 border-t border-[color-mix(in_srgb,var(--foreground-primary)_10%,transparent)]">
                   {activeTab === "waiting_payment" && (
                     <>
                       <button
                         type="button"
                         onClick={() => onAction("pay_order", item.id, item.dbOrderId)}
-                        className="bg-[#005b33] hover:bg-[#004727] text-white px-3.5 py-2 rounded-xl font-bold transition text-xs sm:text-sm shadow-md active:scale-95"
+                        className="bg-[var(--color-green)] hover:bg-[color-mix(in_srgb,var(--color-green)_85%,black)] text-white px-3.5 py-2 rounded-xl font-bold transition text-xs sm:text-sm shadow-md active:scale-95"
                       >
                         {t("orders.payOrder")}
                       </button>
@@ -397,7 +397,7 @@ export default function MobileOrdersView({
                             onAction("complain", item.id, item.dbOrderId);
                           }
                         }}
-                        className="bg-[#f5f3ee] hover:bg-[#E5E0D5] border border-[#C8C2B4] text-[#242424] px-3 py-2 rounded-xl font-medium transition text-xs shadow-sm active:scale-95"
+                        className="bg-[var(--background-elevated)] hover:bg-[var(--color-menu-hover)] border border-[var(--color-menu-separator)] text-[var(--foreground-primary)] px-3 py-2 rounded-xl font-medium transition text-xs shadow-sm active:scale-95"
                       >
                         {t("orders.complain")}
                       </button>
@@ -429,7 +429,7 @@ export default function MobileOrdersView({
                             onAction("complain", item.id, item.dbOrderId);
                           }
                         }}
-                        className="bg-[#f5f3ee] hover:bg-[#E5E0D5] border border-[#C8C2B4] text-[#242424] px-3.5 py-2 rounded-xl font-medium transition text-xs sm:text-sm shadow-sm active:scale-95"
+                        className="bg-[var(--background-elevated)] hover:bg-[var(--color-menu-hover)] border border-[var(--color-menu-separator)] text-[var(--foreground-primary)] px-3.5 py-2 rounded-xl font-medium transition text-xs sm:text-sm shadow-sm active:scale-95"
                       >
                         {t("orders.complain")}
                       </button>
@@ -463,7 +463,7 @@ export default function MobileOrdersView({
                             onAction("complain", item.id, item.dbOrderId);
                           }
                         }}
-                        className="bg-[#f5f3ee] hover:bg-[#E5E0D5] border border-[#C8C2B4] text-[#242424] px-3.5 py-2 rounded-xl font-medium transition text-xs sm:text-sm shadow-sm active:scale-95"
+                        className="bg-[var(--background-elevated)] hover:bg-[var(--color-menu-hover)] border border-[var(--color-menu-separator)] text-[var(--foreground-primary)] px-3.5 py-2 rounded-xl font-medium transition text-xs sm:text-sm shadow-sm active:scale-95"
                       >
                         {t("orders.complain")}
                       </button>
@@ -495,7 +495,7 @@ export default function MobileOrdersView({
                             onAction("complain", item.id, item.dbOrderId);
                           }
                         }}
-                        className="bg-[#f5f3ee] hover:bg-[#E5E0D5] border border-[#C8C2B4] text-[#242424] px-3.5 py-2 rounded-xl font-medium transition text-xs sm:text-sm shadow-sm active:scale-95"
+                        className="bg-[var(--background-elevated)] hover:bg-[var(--color-menu-hover)] border border-[var(--color-menu-separator)] text-[var(--foreground-primary)] px-3.5 py-2 rounded-xl font-medium transition text-xs sm:text-sm shadow-sm active:scale-95"
                       >
                         {t("orders.complain")}
                       </button>
@@ -520,7 +520,7 @@ export default function MobileOrdersView({
                             onAction("complain", item.id, item.dbOrderId);
                           }
                         }}
-                        className="bg-[#f5f3ee] hover:bg-[#E5E0D5] border border-[#C8C2B4] text-[#242424] px-3.5 py-2 rounded-xl font-medium transition text-xs sm:text-sm shadow-sm active:scale-95"
+                        className="bg-[var(--background-elevated)] hover:bg-[var(--color-menu-hover)] border border-[var(--color-menu-separator)] text-[var(--foreground-primary)] px-3.5 py-2 rounded-xl font-medium transition text-xs sm:text-sm shadow-sm active:scale-95"
                       >
                         {t("orders.complain")}
                       </button>
