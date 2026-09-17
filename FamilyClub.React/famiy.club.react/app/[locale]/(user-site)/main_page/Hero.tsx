@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
 import { usePlatformSettingsOptional } from "@/lib/platformSettings/PlatformSettingsContext";
 import { mediaSrc } from "@/lib/platformSettings/platformSettingsApi";
 import type { Locale } from "@/lib/i18n/config";
@@ -31,6 +31,24 @@ const HERO_BACKGROUND_IMAGES = {
   uk: "/images/main_page/hero/hero-background-uk.png",
   en: "/images/main_page/hero/hero-background-en.png",
 } as const;
+
+function shuffle<T>(items: readonly T[]): T[] {
+  const shuffled = [...items];
+  for (let index = shuffled.length - 1; index > 0; index -= 1) {
+    const randomIndex = Math.floor(Math.random() * (index + 1));
+    [shuffled[index], shuffled[randomIndex]] = [
+      shuffled[randomIndex],
+      shuffled[index],
+    ];
+  }
+  return shuffled;
+}
+
+const INITIAL_BOOK_ORDER: readonly number[] = [0, 1, 2, 3];
+const CLIENT_BOOK_ORDER: readonly number[] = shuffle(INITIAL_BOOK_ORDER);
+const subscribeToBookOrder = () => () => {};
+const getClientBookOrder = (): readonly number[] => CLIENT_BOOK_ORDER;
+const getServerBookOrder = (): readonly number[] => INITIAL_BOOK_ORDER;
 
 function HeroBookStack({
   covers,
@@ -107,7 +125,15 @@ export default function Hero() {
     mediaSrc(settings.bannerData, settings.bannerContentType) ??
     HERO_BACKGROUND_IMAGES[locale];
 
-  const covers = HERO_BOOKS[locale] ?? HERO_BOOKS.uk;
+  const bookOrder = useSyncExternalStore(
+    subscribeToBookOrder,
+    getClientBookOrder,
+    getServerBookOrder,
+  );
+  const covers = useMemo(
+    () => bookOrder.map((index) => HERO_BOOKS[locale][index]),
+    [bookOrder, locale],
+  );
 
   useEffect(() => {
     covers.slice(1).forEach((src) => {
