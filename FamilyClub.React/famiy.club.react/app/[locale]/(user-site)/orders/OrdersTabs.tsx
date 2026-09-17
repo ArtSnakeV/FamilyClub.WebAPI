@@ -72,8 +72,8 @@ export default function OrdersTabs({ activeTab, onSelectTab, counts }: OrdersTab
               onClick={() => onSelectTab(tab.id)}
               className={`w-full flex flex-col items-center justify-start pt-4 px-2 transition-all duration-300 transform ${
                 isActive
-                  ? "bg-[#004e2B] pb-10 shadow-xl translate-y-1 scale-102"
-                  : "bg-[#006338] pb-7 hover:bg-[#005430] hover:translate-y-0.5"
+                  ? "bg-[color-mix(in_srgb,var(--color-green)_90%,black)] pb-10 shadow-xl translate-y-1 scale-102"
+                  : "bg-[var(--color-green)] pb-7 hover:bg-[color-mix(in_srgb,var(--color-green)_90%,black)] hover:translate-y-0.5"
               }`}
               style={{
                 clipPath: "polygon(0 0, 100% 0, 100% 100%, 50% 86%, 0 100%)",
@@ -87,7 +87,7 @@ export default function OrdersTabs({ activeTab, onSelectTab, counts }: OrdersTab
 
             {/* Badge Count Circle */}
             {countVal !== undefined && countVal > 0 && (
-              <div className="absolute bottom-1.5 left-1/2 transform -translate-x-1/2 w-6 h-6 bg-[#F5F3EE] text-[#004e2B] rounded-full flex items-center justify-center text-[12px] font-bold shadow-md border border-[#004e2B] z-10 animate-scale-in">
+              <div className="absolute bottom-1.5 left-1/2 transform -translate-x-1/2 w-6 h-6 bg-[var(--background-elevated)] text-[var(--color-green)] rounded-full flex items-center justify-center text-[12px] font-bold shadow-md border border-[var(--color-green)] z-10 animate-scale-in">
                 {countVal}
               </div>
             )}

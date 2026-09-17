@@ -7,7 +7,7 @@ import { getPersonalDataProtectionContent } from "@/lib/i18n/legal";
 
 function BulletList({ items }: { items: string[] }) {
   return (
-    <ul className="list-disc pl-5 space-y-1.5 marker:text-[#7E4D1E]">
+    <ul className="list-disc pl-5 space-y-1.5 marker:text-[var(--color-brown)]">
       {items.map((item) => (
         <li key={item}>{item}</li>
       ))}
@@ -25,12 +25,12 @@ function Section({
   return (
     <section className="mt-8 first:mt-0">
       <h2
-        className="text-[20px] md:text-[22px] font-bold text-[#1F1F1F] mb-3"
+        className="text-[20px] md:text-[22px] font-bold text-[var(--foreground-primary)] mb-3"
         style={{ fontFamily: "var(--font-lora), Georgia, serif" }}
       >
         {title}
       </h2>
-      <div className="text-[15px] md:text-[16px] leading-relaxed text-[#2A2A2A] space-y-2">
+      <div className="text-[15px] md:text-[16px] leading-relaxed text-[var(--foreground-primary)] space-y-2">
         {children}
       </div>
     </section>
@@ -63,7 +63,7 @@ export default function PersonalDataProtection() {
 
       <div className="relative mx-auto w-full max-w-[900px]">
         <article
-          className="relative text-[#242424] px-8 sm:px-12 md:px-16 lg:px-20 pt-10 md:pt-12 pb-12 md:pb-16"
+          className="relative text-[var(--foreground-primary)] px-8 sm:px-12 md:px-16 lg:px-20 pt-10 md:pt-12 pb-12 md:pb-16"
           style={{
             backgroundImage:
               "url('/images/Layout/Footer/long_background1.png')",
@@ -76,13 +76,13 @@ export default function PersonalDataProtection() {
             <button
               type="button"
               onClick={() => router.back()}
-              className="absolute left-0 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full flex items-center justify-center text-[22px] text-[#242424]/70 hover:bg-black/5 transition"
+              className="absolute left-0 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full flex items-center justify-center text-[22px] text-[var(--color-muted-fg)] hover:bg-black/5 transition"
               aria-label={content.backAria}
             >
               ←
             </button>
             <h1
-              className="text-[26px] sm:text-[32px] md:text-[40px] font-bold text-[#1F1F1F] tracking-tight text-center px-10"
+              className="text-[26px] sm:text-[32px] md:text-[40px] font-bold text-[var(--foreground-primary)] tracking-tight text-center px-10"
               style={{ fontFamily: "var(--font-lora), Georgia, serif" }}
             >
               {content.title}
@@ -120,7 +120,7 @@ export default function PersonalDataProtection() {
               {section.subsections?.map((subsection, index) => (
                 <div key={subsection.heading}>
                   <p
-                    className={`font-semibold text-[#1F1F1F]${index > 0 ? " pt-2" : ""}`}
+                    className={`font-semibold text-[var(--foreground-primary)]${index > 0 ? " pt-2" : ""}`}
                   >
                     {subsection.heading}
                   </p>
@@ -129,10 +129,10 @@ export default function PersonalDataProtection() {
               ))}
               {section.items ? <BulletList items={section.items} /> : null}
               {section.note ? (
-                <p className="pt-2 text-[14px] text-[#555]">{section.note}</p>
+                <p className="pt-2 text-[14px] text-[var(--color-muted-fg)]">{section.note}</p>
               ) : null}
               {section.noteBeforeEmail ? (
-                <p className="pt-3 text-[14px] text-[#555]">
+                <p className="pt-3 text-[14px] text-[var(--color-muted-fg)]">
                   {section.noteBeforeEmail}{" "}
                   <a
                     href={`mailto:${whoWeAre.email}`}

@@ -142,8 +142,9 @@ export default function Hero() {
     });
   }, [covers]);
 
+  // z-20 so vines paint over the shelf below (same as daytime composition)
   return (
-    <section className="relative overflow-visible bg-[var(--background-main)]">
+    <section className="relative z-20 overflow-visible bg-[var(--background-main)]">
       <div className="relative mx-auto hidden h-[700px] max-w-[1920px] overflow-visible min-[1600px]:block">
         <img
           alt=""

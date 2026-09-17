@@ -41,7 +41,7 @@ export default function ReviewCard({
                 <img
                     src={reviewerAvatarSrc}
                     alt={reviewerName}
-                    className="w-9 h-9 rounded-full object-cover shrink-0 border border-[#d4cbbd]"
+                    className="w-9 h-9 rounded-full object-cover shrink-0 border border-[var(--color-menu-separator)]"
                 />
             ) : (
                 <div className="w-9 h-9 rounded-full bg-black/10 text-black/60 flex items-center justify-center text-xs font-bold shrink-0">
@@ -66,7 +66,7 @@ export default function ReviewCard({
                 {resolvedActionLabel && (
                     <button
                         onClick={onAction}
-                        className="text-[13px] font-medium text-[#1e5631] hover:underline"
+                        className="text-[13px] font-medium text-[var(--color-green)] hover:underline"
                     >
                         {resolvedActionLabel}
                     </button>
@@ -77,7 +77,7 @@ export default function ReviewCard({
                 <img
                     src={coverSrc}
                     alt={bookTitle ?? ""}
-                    className="w-[44px] h-[62px] object-cover rounded shrink-0 shadow-sm border border-[#e5ded4]"
+                    className="w-[44px] h-[62px] object-cover rounded shrink-0 shadow-sm border border-[var(--color-menu-separator)]"
                 />
             )}
         </div>

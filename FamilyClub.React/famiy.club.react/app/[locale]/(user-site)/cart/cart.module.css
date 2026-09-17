@@ -5,7 +5,7 @@
 
 /* ---------- Page layout ---------- */
 .cartPage {
-  background-color: var(--background-main, #f5f3ee);
+  background-color: var(--background-main);
   min-height: 100vh;
   padding-top: 180px;
   padding-bottom: 60px;
@@ -27,8 +27,8 @@
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  background: var(--background-main, #f5f3ee);
-  border: 2px solid var(--color-black, #242424);
+  background: var(--background-main);
+  border: 2px solid var(--foreground-primary);
   cursor: pointer;
   transition: opacity 0.2s ease, transform 0.15s ease;
   flex-shrink: 0;
@@ -42,7 +42,7 @@
 .backButton svg {
   width: 24px;
   height: 24px;
-  color: var(--color-black, #242424);
+  color: var(--foreground-primary);
 }
 
 .cartTitle {
@@ -51,7 +51,7 @@
   font-size: 48px;
   line-height: 1.5;
   letter-spacing: -0.528px;
-  color: var(--color-black, #242424);
+  color: var(--foreground-primary);
   margin: 0;
 }
 
@@ -76,7 +76,7 @@
   padding: 80px 20px;
   font-family: var(--font-sans);
   font-size: 24px;
-  color: rgba(36, 36, 36, 0.5);
+  color: color-mix(in srgb, var(--foreground-primary) 50%, transparent);
 }
 
 .emptyCartIcon {
@@ -90,7 +90,7 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  background: #a97e56;
+  background: var(--color-wood);
   border-radius: 25px;
   padding: 4px 14px 4px 5px;
   height: 40px;
@@ -109,7 +109,7 @@
   font-family: var(--font-sans);
   font-weight: 600;
   font-size: 14px;
-  color: rgba(36, 36, 36, 0.5);
+  color: color-mix(in srgb, var(--foreground-primary) 50%, transparent);
   letter-spacing: -0.154px;
   line-height: 1;
 }
@@ -118,7 +118,7 @@
   font-family: var(--font-sans);
   font-weight: 600;
   font-size: 14px;
-  color: var(--color-black, #242424);
+  color: var(--foreground-primary);
   letter-spacing: -0.154px;
   line-height: 1;
 }
@@ -137,9 +137,9 @@
 /* ---------- Cart item card ---------- */
 .cartCard {
   position: relative;
-  background: var(--background-main, #f5f3ee);
+  background: var(--background-main);
   border-radius: 15px;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.35);
+  box-shadow: var(--shadow-card);
   padding: 30px;
   display: grid;
   grid-template-columns: 200px 1fr auto;
@@ -148,7 +148,7 @@
 }
 
 .cartCard:hover {
-  box-shadow: 0 0 12px rgba(0, 0, 0, 0.25);
+  box-shadow: var(--shadow-card-hover);
 }
 
 .cardImageWrap {
@@ -169,13 +169,13 @@
 .cardImagePlaceholder {
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg, #ddd 0%, #ccc 100%);
+  background: linear-gradient(135deg, var(--color-menu-hover) 0%, color-mix(in srgb, var(--color-menu-hover) 70%, var(--foreground-primary)) 100%);
   border-radius: 9px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 48px;
-  color: rgba(36, 36, 36, 0.2);
+  color: color-mix(in srgb, var(--foreground-primary) 20%, transparent);
 }
 
 /* ---------- Card info ---------- */
@@ -192,7 +192,7 @@
   font-size: 32px;
   line-height: 1.3;
   letter-spacing: -0.44px;
-  color: var(--color-black, #242424);
+  color: var(--foreground-primary);
   margin: 0;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -207,7 +207,7 @@
   font-size: 18px;
   line-height: 1.5;
   letter-spacing: -0.198px;
-  color: rgba(36, 36, 36, 0.5);
+  color: color-mix(in srgb, var(--foreground-primary) 50%, transparent);
   margin: 0;
 }
 
@@ -217,7 +217,7 @@
   font-size: 20px;
   line-height: 1.5;
   letter-spacing: -0.22px;
-  color: var(--color-green, #005b33);
+  color: var(--color-green);
 }
 
 .unavailable {
@@ -260,15 +260,15 @@
 }
 
 .formatPaper {
-  background: var(--color-green, #005b33);
+  background: var(--color-green);
 }
 
 .formatEbook {
-  background: var(--color-green, #005b33);
+  background: var(--color-green);
 }
 
 .formatAudio {
-  background: #a97e56;
+  background: var(--color-wood);
 }
 
 .quantityControls {
@@ -287,7 +287,7 @@
   cursor: pointer;
   border: none;
   background: transparent;
-  color: var(--color-black, #242424);
+  color: var(--foreground-primary);
   font-size: 18px;
   padding: 0;
   transition: opacity 0.15s ease;
@@ -303,8 +303,8 @@
 }
 
 .qtyValue {
-  background: var(--background-main, #f5f3ee);
-  box-shadow: 0 0 2.5px rgba(0, 0, 0, 0.25);
+  background: var(--background-main);
+  box-shadow: var(--shadow-control);
   border-radius: 7px;
   padding: 5px;
   width: 29px;
@@ -312,7 +312,7 @@
   font-family: var(--font-sans);
   font-weight: 400;
   font-size: 18px;
-  color: var(--color-black, #242424);
+  color: var(--foreground-primary);
   letter-spacing: -0.198px;
 }
 
@@ -322,7 +322,7 @@
   font-size: 32px;
   line-height: 1.5;
   letter-spacing: -0.352px;
-  color: var(--color-black, #242424);
+  color: var(--foreground-primary);
   white-space: nowrap;
   min-width: 120px;
   text-align: right;
@@ -365,20 +365,20 @@
 }
 
 .favoriteBtn svg {
-  color: var(--color-black, #242424);
+  color: var(--foreground-primary);
 }
 
 .deleteBtn svg {
-  color: rgba(36, 36, 36, 0.6);
+  color: color-mix(in srgb, var(--foreground-primary) 60%, transparent);
 }
 
 /* ---------- Summary sidebar ---------- */
 .summaryPanel {
   position: sticky;
   top: 80px;
-  background: var(--background-main, #f5f3ee);
+  background: var(--background-main);
   border-radius: 23px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  box-shadow: var(--shadow-panel);
   padding: 40px 50px;
   display: flex;
   flex-direction: column;
@@ -390,21 +390,21 @@
   align-items: center;
   justify-content: center;
   padding: 10px 30px;
-  background: rgba(0, 91, 51, 0.5);
+  background: color-mix(in srgb, var(--color-green) 50%, transparent);
   border-radius: 9px;
   border: none;
   cursor: pointer;
   font-family: var(--font-sans);
   font-weight: 400;
   font-size: 16px;
-  color: var(--background-main, #f5f3ee);
+  color: var(--color-cream);
   letter-spacing: -0.176px;
   transition: background 0.2s ease;
   width: 100%;
 }
 
 .applyPointsBtn:hover {
-  background: rgba(0, 91, 51, 0.7);
+  background: color-mix(in srgb, var(--color-green) 70%, transparent);
 }
 
 /* ---------- Summary lines ---------- */
@@ -435,7 +435,7 @@
   font-size: 18px;
   line-height: 1.5;
   letter-spacing: -0.198px;
-  color: var(--color-black, #242424);
+  color: var(--foreground-primary);
 }
 
 .discountValue {
@@ -451,7 +451,7 @@
 .summaryDivider {
   width: 100%;
   height: 1px;
-  background: rgba(36, 36, 36, 0.2);
+  background: color-mix(in srgb, var(--foreground-primary) 20%, transparent);
   margin: 10px 0;
 }
 
@@ -467,7 +467,7 @@
   height: 30px;
   flex-shrink: 0;
   cursor: pointer;
-  accent-color: var(--color-green, #005b33);
+  accent-color: var(--color-green);
 }
 
 .agreementText {
@@ -476,11 +476,11 @@
   font-size: 15px;
   line-height: 1.5;
   letter-spacing: -0.165px;
-  color: #000;
+  color: var(--foreground-primary);
 }
 
 .agreementLink {
-  color: var(--color-green, #005b33);
+  color: var(--color-green);
   text-decoration: none;
   cursor: pointer;
 }
@@ -495,7 +495,7 @@
   align-items: center;
   justify-content: center;
   padding: 10px 30px;
-  background: var(--color-green, #005b33);
+  background: var(--color-green);
   border-radius: 60px;
   border: none;
   cursor: pointer;
@@ -511,7 +511,7 @@
 }
 
 .checkoutBtn:hover {
-  background: #004a2a;
+  background: color-mix(in srgb, var(--color-green) 85%, black);
   transform: translateY(-1px);
 }
 
@@ -538,12 +538,12 @@
   font-size: 20px;
   line-height: 1.5;
   letter-spacing: -0.22px;
-  color: var(--color-black, #242424);
+  color: var(--foreground-primary);
 }
 
 .promoInput {
-  background: var(--background-main, #f5f3ee);
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+  background: var(--background-main);
+  box-shadow: var(--shadow-input);
   border-radius: 9px;
   border: none;
   padding: 10px 20px;
@@ -551,18 +551,18 @@
   font-weight: 400;
   font-size: 18px;
   letter-spacing: -0.198px;
-  color: var(--color-black, #242424);
+  color: var(--foreground-primary);
   width: 100%;
   outline: none;
   transition: box-shadow 0.2s ease;
 }
 
 .promoInput::placeholder {
-  color: rgba(36, 36, 36, 0.5);
+  color: color-mix(in srgb, var(--foreground-primary) 50%, transparent);
 }
 
 .promoInput:focus {
-  box-shadow: 0 0 8px rgba(0, 91, 51, 0.4);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--color-green) 40%, transparent);
 }
 
 /* ---------- Responsive ---------- */

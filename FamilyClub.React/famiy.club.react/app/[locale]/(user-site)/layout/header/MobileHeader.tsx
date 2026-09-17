@@ -111,7 +111,7 @@ export default function MobileHeader() {
             <Link
               href={lp("/categories")}
               aria-label={t("common.search")}
-              className="p-1.5 rounded-full hover:bg-[rgba(0,0,0,0.05)] transition-colors"
+              className="header-utility-icon p-1.5 rounded-full hover:bg-[color-mix(in_srgb,var(--foreground-primary)_5%,transparent)] transition-colors"
             >
               <img
                 src="/images/header/zoom_out_24px.svg"
@@ -124,10 +124,10 @@ export default function MobileHeader() {
             <Link
               href={lp("/categories")}
               aria-label={t("catalog.filtersButton")}
-              className="p-1.5 rounded-full hover:bg-[rgba(0,0,0,0.05)] transition-colors text-[#242424]"
+              className="p-1.5 rounded-full hover:bg-[color-mix(in_srgb,var(--foreground-primary)_5%,transparent)] transition-colors text-[var(--foreground-primary)]"
             >
               <svg
-                className="w-[22px] h-[22px] fill-current text-[#242424]"
+                className="w-[22px] h-[22px] fill-current text-[var(--foreground-primary)]"
                 viewBox="0 0 24 24"
               >
                 <path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z" />
@@ -138,10 +138,10 @@ export default function MobileHeader() {
             <button
               onClick={() => setMenuOpen(!menuOpen)}
               aria-label={t("common.menu")}
-              className="p-1.5 rounded-full hover:bg-[rgba(0,0,0,0.05)] transition-colors text-[#242424]"
+              className="p-1.5 rounded-full hover:bg-[color-mix(in_srgb,var(--foreground-primary)_5%,transparent)] transition-colors text-[var(--foreground-primary)]"
             >
               <svg
-                className="w-[26px] h-[26px] fill-current text-[#242424]"
+                className="w-[26px] h-[26px] fill-current text-[var(--foreground-primary)]"
                 viewBox="0 0 24 24"
               >
                 {menuOpen ? (
@@ -169,11 +169,11 @@ export default function MobileHeader() {
                 <div className="w-[36px] flex items-center justify-center shrink-0">
                   <img src="/images/header/add_24px.svg" alt="" className="w-[28px] h-[32px] object-contain brightness-0 invert pointer-events-none" />
                 </div>
-                <span className="font-sans font-semibold text-[26px] sm:text-[30px] text-white tracking-[-0.01em] group-hover:text-[#f5f3ee]/80 transition-colors">
+                <span className="font-sans font-semibold text-[26px] sm:text-[30px] text-white tracking-[-0.01em] group-hover:text-[var(--color-cream)]/80 transition-colors">
                   {t("notifications.title")}
                 </span>
               </div>
-              <div className="w-[32px] h-[32px] rounded-full bg-[#4C85B2] flex items-center justify-center text-[#f5f3ee] font-sans text-[16px] font-medium shadow-md">
+              <div className="w-[32px] h-[32px] rounded-full bg-[#4C85B2] flex items-center justify-center text-[var(--color-cream)] font-sans text-[16px] font-medium shadow-md">
                 {notificationsCount}
               </div>
             </Link>
@@ -188,11 +188,11 @@ export default function MobileHeader() {
                 <div className="w-[36px] flex items-center justify-center shrink-0">
                   <img src="/images/header/assignment_24px.svg" alt="" className="w-[28px] h-[28px] object-contain brightness-0 invert pointer-events-none" />
                 </div>
-                <span className="font-sans font-semibold text-[26px] sm:text-[30px] text-white tracking-[-0.01em] group-hover:text-[#f5f3ee]/80 transition-colors">
+                <span className="font-sans font-semibold text-[26px] sm:text-[30px] text-white tracking-[-0.01em] group-hover:text-[var(--color-cream)]/80 transition-colors">
                   {t("orders.title")}
                 </span>
               </div>
-              <div className="w-[32px] h-[32px] rounded-full bg-[#4C85B2] flex items-center justify-center text-[#f5f3ee] font-sans text-[16px] font-medium shadow-md">
+              <div className="w-[32px] h-[32px] rounded-full bg-[#4C85B2] flex items-center justify-center text-[var(--color-cream)] font-sans text-[16px] font-medium shadow-md">
                 {ordersCount}
               </div>
             </Link>
@@ -207,7 +207,7 @@ export default function MobileHeader() {
                 <div className="w-[36px] flex items-center justify-center shrink-0">
                   <img src="/images/header/favorite_border_24px.png" alt="" className="w-[30px] h-[30px] object-contain brightness-0 invert pointer-events-none" />
                 </div>
-                <span className="font-sans font-semibold text-[26px] sm:text-[30px] text-white tracking-[-0.01em] group-hover:text-[#f5f3ee]/80 transition-colors">
+                <span className="font-sans font-semibold text-[26px] sm:text-[30px] text-white tracking-[-0.01em] group-hover:text-[var(--color-cream)]/80 transition-colors">
                   {t("profile.tabs.favorite")}
                 </span>
               </div>
@@ -223,11 +223,11 @@ export default function MobileHeader() {
                 <div className="w-[36px] flex items-center justify-center shrink-0">
                   <img src="/images/header/shopping_basket_24px.png" alt="" className="w-[30px] h-[30px] object-contain brightness-0 invert pointer-events-none" />
                 </div>
-                <span className="font-sans font-semibold text-[26px] sm:text-[30px] text-white tracking-[-0.01em] group-hover:text-[#f5f3ee]/80 transition-colors">
+                <span className="font-sans font-semibold text-[26px] sm:text-[30px] text-white tracking-[-0.01em] group-hover:text-[var(--color-cream)]/80 transition-colors">
                   {t("cart.title")}
                 </span>
               </div>
-              <div className="w-[32px] h-[32px] rounded-full bg-[#4C85B2] flex items-center justify-center text-[#f5f3ee] font-sans text-[16px] font-medium shadow-md">
+              <div className="w-[32px] h-[32px] rounded-full bg-[#4C85B2] flex items-center justify-center text-[var(--color-cream)] font-sans text-[16px] font-medium shadow-md">
                 {cartCount}
               </div>
             </Link>
@@ -244,7 +244,7 @@ export default function MobileHeader() {
                     {nextLocale.toUpperCase()}
                   </span>
                 </div>
-                <span className="font-sans font-semibold text-[26px] sm:text-[30px] text-white tracking-[-0.01em] group-hover:text-[#f5f3ee]/80 transition-colors">
+                <span className="font-sans font-semibold text-[26px] sm:text-[30px] text-white tracking-[-0.01em] group-hover:text-[var(--color-cream)]/80 transition-colors">
                   {nextLocale === "uk" ? t("profileEdit.langUk") : t("profileEdit.langEn")}
                 </span>
               </div>
@@ -264,7 +264,7 @@ export default function MobileHeader() {
                     <path d="M12 2 A10 10 0 0 1 12 22 Z" fill="rgba(255,255,255,0.35)" />
                   </svg>
                 </div>
-                <span className="font-sans font-semibold text-[26px] sm:text-[30px] text-white tracking-[-0.01em] group-hover:text-[#f5f3ee]/80 transition-colors">
+                <span className="font-sans font-semibold text-[26px] sm:text-[30px] text-white tracking-[-0.01em] group-hover:text-[var(--color-cream)]/80 transition-colors">
                   {theme === "ink-night" ? t("common.lightTheme") : t("common.darkTheme")}
                 </span>
               </div>

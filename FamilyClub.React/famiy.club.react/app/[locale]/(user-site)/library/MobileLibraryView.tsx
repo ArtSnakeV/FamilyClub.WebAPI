@@ -233,14 +233,14 @@ export default function MobileLibraryView({
     const rows = splitIntoRows(books);
     if (rows.length === 0) {
       return (
-        <div className="py-8 text-center text-[#242424]/60 text-sm font-medium">
+        <div className="py-8 text-center text-[var(--color-muted-fg)] text-sm font-medium">
           {t("library.noBooks")}
         </div>
       );
     }
 
     return (
-      <div className="w-full pb-4 pt-4 px-3 sm:px-4 bg-[#c7a381]/25 rounded-b-[20px] border-x border-b border-[#c7a381]/40 shadow-inner flex flex-col gap-5">
+      <div className="w-full pb-4 pt-4 px-3 sm:px-4 bg-[var(--color-wood)]/25 rounded-b-[20px] border-x border-b border-[var(--color-wood)]/40 shadow-inner flex flex-col gap-5">
         {rows.map((row, rowIndex) => (
           <div key={rowIndex} className="w-full grid grid-cols-2 gap-4 sm:gap-5">
             {row.map((book, idx) => {
@@ -257,7 +257,7 @@ export default function MobileLibraryView({
                 <div
                   key={book.id ?? `${rowIndex}-${idx}`}
                   onClick={() => router.push(lp(`/products/${book.id}`))}
-                  className="relative w-full rounded-bl-[20px] rounded-br-[20px] rounded-t-none shadow-[0_10px_16px_rgba(36,36,36,0.4)] border-b border-x border-[#e0d8cc]/30 flex flex-col items-center transition-transform active:scale-[0.98] cursor-pointer overflow-hidden pb-4"
+                  className="relative w-full rounded-bl-[20px] rounded-br-[20px] rounded-t-none shadow-[0_10px_16px_rgba(36,36,36,0.4)] border-b border-x border-[var(--color-menu-separator)]/30 flex flex-col items-center transition-transform active:scale-[0.98] cursor-pointer overflow-hidden pb-4"
                   style={{ backgroundColor: cardColor }}
                 >
                   {/* Format Badges on Top-Left Edge (Group 2 exact placement) */}
@@ -291,7 +291,7 @@ export default function MobileLibraryView({
                   </button>
 
                   {/* Book Cover Image - exact aspect ratio & placement */}
-                  <div className="w-[100px] sm:w-[110px] aspect-[184/250] mt-[16px] rounded-[3px] overflow-hidden bg-[#e8e2d8] shadow-[0_6px_14px_rgba(0,0,0,0.4)] shrink-0 relative flex items-center justify-center">
+                  <div className="w-[100px] sm:w-[110px] aspect-[184/250] mt-[16px] rounded-[3px] overflow-hidden bg-[var(--background-elevated)] shadow-[0_6px_14px_rgba(0,0,0,0.4)] shrink-0 relative flex items-center justify-center">
                     {imageSrc ? (
                       <img
                         src={imageSrc}
@@ -299,7 +299,7 @@ export default function MobileLibraryView({
                         className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
                       />
                     ) : (
-                      <span className="text-xs text-[#242424]/60 px-1 text-center font-medium">
+                      <span className="text-xs text-[var(--color-muted-fg)] px-1 text-center font-medium">
                         {book.productName}
                       </span>
                     )}
@@ -314,12 +314,12 @@ export default function MobileLibraryView({
                       </div>
 
                       {/* Title in Lora Medium font */}
-                      <p className="font-['Lora',serif] font-medium text-[17px] sm:text-[19px] text-[#f5f3ee] leading-snug line-clamp-2 truncate drop-shadow-sm">
+                      <p className="font-['Lora',serif] font-medium text-[17px] sm:text-[19px] text-[var(--color-cream)] leading-snug line-clamp-2 truncate drop-shadow-sm">
                         {book.productName}
                       </p>
 
                       {/* Author in Source Sans 3 font */}
-                      <p className="font-['Source_Sans_3',sans-serif] text-[13.5px] sm:text-[14.5px] text-[#f5f3ee]/75 leading-tight mt-1 truncate">
+                      <p className="font-['Source_Sans_3',sans-serif] text-[13.5px] sm:text-[14.5px] text-[var(--color-cream)]/75 leading-tight mt-1 truncate">
                         {authorNames || t("profile.unknownAuthor")}
                       </p>
                     </div>
@@ -334,7 +334,7 @@ export default function MobileLibraryView({
   };
 
   return (
-    <div className="w-full min-h-screen bg-[#f5f3ee] flex flex-col font-['Source_Sans_3',sans-serif] pb-28 pt-[65px] select-none overflow-x-hidden">
+    <div className="w-full min-h-screen bg-[var(--background-elevated)] flex flex-col font-['Source_Sans_3',sans-serif] pb-28 pt-[65px] select-none overflow-x-hidden">
       {/* 1. Profile Header Banner (Group 896) exact match to MobileUserProfileView */}
       <div
         className="relative w-full pt-[35px] pb-[25px] px-4 sm:px-6 overflow-hidden min-h-[220px] sm:min-h-[240px] flex flex-col justify-end shadow-md"
@@ -349,7 +349,7 @@ export default function MobileLibraryView({
 
         <div className="relative z-10 flex flex-col w-full">
           <div className="flex items-start gap-3.5 sm:gap-4 w-full">
-            <div className="w-[60px] h-[60px] rounded-full overflow-hidden border border-[#f5f3ee]/50 shadow-lg shrink-0 bg-[#3c2a1e] flex items-center justify-center">
+            <div className="w-[60px] h-[60px] rounded-full overflow-hidden border border-[var(--color-cream)]/50 shadow-lg shrink-0 bg-[#3c2a1e] flex items-center justify-center">
               {avatarSrc ? (
                 <img src={avatarSrc} alt={displayName} className="w-full h-full object-cover" />
               ) : (
@@ -357,20 +357,20 @@ export default function MobileLibraryView({
               )}
             </div>
             <div className="flex flex-col min-w-0 flex-1 justify-center pt-0.5">
-              <span className="text-[20px] sm:text-[22px] font-bold text-[#f5f3ee] tracking-[-0.22px] leading-tight truncate">
+              <span className="text-[20px] sm:text-[22px] font-bold text-[var(--color-cream)] tracking-[-0.22px] leading-tight truncate">
                 {displayName}
               </span>
-              <p className="text-[13.5px] text-[#f5f3ee] font-bold tracking-[-0.154px] leading-snug truncate mt-1">
+              <p className="text-[13.5px] text-[var(--color-cream)] font-bold tracking-[-0.154px] leading-snug truncate mt-1">
                 @{user?.email?.split("@")[0] || t("common.userHandle")} · {!loadingMyBooks ? t("library.booksCount").replace("{count}", String(myBooks.length)) : "..."} · {!loadingUserReviews ? t("library.postsCount").replace("{count}", String(userReviews.length)) : "..."}
               </p>
-              <p className="text-[13px] text-[#f5f3ee]/95 leading-snug tracking-[-0.154px] truncate mt-0.5">
+              <p className="text-[13px] text-[var(--color-cream)]/95 leading-snug tracking-[-0.154px] truncate mt-0.5">
                 <span>{t("library.bio")} </span>
                 <span className="font-bold cursor-pointer underline">{t("library.details")}</span>
               </p>
             </div>
           </div>
 
-          <div className="flex items-center justify-between w-full mt-4 pt-3 border-t border-[#f5f3ee]/15 pr-1">
+          <div className="flex items-center justify-between w-full mt-4 pt-3 border-t border-[var(--color-cream)]/15 pr-1">
             <div className="flex items-center gap-5">
               {SOCIALS.map(({ name, href, icon }) => (
                 <a
@@ -389,7 +389,7 @@ export default function MobileLibraryView({
               <button
                 type="button"
                 onClick={() => router.push(lp("/userProfile"))}
-                className="px-3.5 py-1.5 rounded-full bg-[#3c2a1e] text-[#f5f3ee] text-[13px] font-semibold tracking-tight shadow-md flex items-center gap-1 hover:bg-[#4d3728] active:scale-95 transition-all"
+                className="px-3.5 py-1.5 rounded-full bg-[#3c2a1e] text-[var(--color-cream)] text-[13px] font-semibold tracking-tight shadow-md flex items-center gap-1 hover:bg-[#4d3728] active:scale-95 transition-all"
               >
                 <img src="/images/header/person_24px.png" alt="" className="w-3.5 h-3.5 object-contain brightness-0 invert opacity-90" />
                 <span>{t("nav.profile")}</span>
@@ -402,41 +402,41 @@ export default function MobileLibraryView({
       {/* 2. Full-Width Library Banner & Summary Bar (Group 1001 exact to Figma screenshot: no icon, continuous box, beige filter circle) */}
       <div className="relative z-30 -mt-[28px] w-full max-w-[440px] mx-auto px-4">
         <div
-          className="w-full rounded-t-[20px] rounded-b-[16px] shadow-[0px_8px_20px_rgba(0,0,0,0.22)] flex flex-col overflow-hidden border border-[#e0d8cc]/40"
+          className="w-full rounded-t-[20px] rounded-b-[16px] shadow-[0px_8px_20px_rgba(0,0,0,0.22)] flex flex-col overflow-hidden border border-[var(--color-menu-separator)]/40"
           style={{
-            backgroundColor: "#c7a381",
+            backgroundColor: "var(--color-wood)",
             backgroundImage: "url('/images/userProfile/Rectangle 589.png')",
             backgroundSize: "cover",
             backgroundPosition: "center",
           }}
         >
           {/* Top Title: "Бібліотека" full width (NO book icon, continuous box exact to Figma) */}
-          <div className="w-full py-3 sm:py-3.5 px-4 bg-[#c7a381]/85 backdrop-blur-[1px] flex items-center justify-center">
-            <span className="text-[#242424] font-['Roboto_Mono',monospace] text-[17px] sm:text-[19px] font-bold tracking-tight">
+          <div className="w-full py-3 sm:py-3.5 px-4 bg-[var(--color-wood)]/85 backdrop-blur-[1px] flex items-center justify-center">
+            <span className="text-[var(--foreground-primary)] font-['Roboto_Mono',monospace] text-[17px] sm:text-[19px] font-bold tracking-tight">
               {t("nav.library")}
             </span>
           </div>
 
           {/* Bottom Row: Light Beige Filter circular button (Group 819) and "У вас" stats (Frame 1031) */}
-          <div className="w-full px-4 sm:px-5 py-3.5 flex items-center justify-between bg-[#c7a381]/90 backdrop-blur-[1px]">
+          <div className="w-full px-4 sm:px-5 py-3.5 flex items-center justify-between bg-[var(--color-wood)]/90 backdrop-blur-[1px]">
             {/* Left: Light Beige Filter circular button exact to Figma */}
             <button
               type="button"
               onClick={() => setIsFilterOpen(!isFilterOpen)}
-              className="w-[42px] h-[42px] rounded-full bg-[#dfcfbf] text-[#242424] flex items-center justify-center shadow hover:bg-[#d4c3b2] active:scale-90 transition-all shrink-0 border border-[#242424]/10"
+              className="w-[42px] h-[42px] rounded-full bg-[var(--color-menu-hover)] text-[var(--foreground-primary)] flex items-center justify-center shadow hover:bg-[var(--color-menu-separator)] active:scale-90 transition-all shrink-0 border border-[color-mix(in_srgb,var(--foreground-primary)_10%,transparent)]"
               aria-label={t("library.filter")}
             >
-              <svg className="w-5 h-5 text-[#242424] -rotate-90" fill="currentColor" viewBox="0 0 24 24">
+              <svg className="w-5 h-5 text-[var(--foreground-primary)] -rotate-90" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z" />
               </svg>
             </button>
 
             {/* Right: Stats Summary (Frame 1031 & Frame 1030) */}
             <div className="flex items-center gap-4 sm:gap-5">
-              <span className="font-['Source_Sans_3',sans-serif] text-[20px] sm:text-[22px] font-bold text-[#242424] tracking-tight">
+              <span className="font-['Source_Sans_3',sans-serif] text-[20px] sm:text-[22px] font-bold text-[var(--foreground-primary)] tracking-tight">
                 {t("library.yourCollection")}
               </span>
-              <div className="flex flex-col text-right font-['Source_Sans_3',sans-serif] text-[14px] sm:text-[15px] font-medium text-[#242424] leading-snug">
+              <div className="flex flex-col text-right font-['Source_Sans_3',sans-serif] text-[14px] sm:text-[15px] font-medium text-[var(--foreground-primary)] leading-snug">
                 <span>{t("library.ebookCount").replace("{count}", String(ebookCount))}</span>
                 <span>{t("library.audioCount").replace("{count}", String(audioCount))}</span>
               </div>
@@ -448,14 +448,14 @@ export default function MobileLibraryView({
       {/* 3. Interactive Filter Drawer / Overlay (Group 1005 - Фільтр) */}
       {isFilterOpen && (
         <div className="fixed inset-0 z-50 flex flex-col justify-end bg-black/60 backdrop-blur-sm transition-opacity">
-          <div className="w-full max-h-[85vh] bg-[#f5f3ee] rounded-t-[28px] shadow-[0_-10px_25px_rgba(0,0,0,0.3)] flex flex-col overflow-hidden animate-in slide-in-from-bottom duration-300">
+          <div className="w-full max-h-[85vh] bg-[var(--background-elevated)] rounded-t-[28px] shadow-[0_-10px_25px_rgba(0,0,0,0.3)] flex flex-col overflow-hidden animate-in slide-in-from-bottom duration-300">
             {/* Modal Header */}
-            <div className="px-6 py-4 border-b border-[#e0d8cc] flex items-center justify-between shrink-0 bg-[#ebe5da]">
-              <span className="text-[24px] font-bold text-[#242424]">{t("library.filter")}</span>
+            <div className="px-6 py-4 border-b border-[var(--color-menu-separator)] flex items-center justify-between shrink-0 bg-[var(--color-menu-hover)]">
+              <span className="text-[24px] font-bold text-[var(--foreground-primary)]">{t("library.filter")}</span>
               <button
                 type="button"
                 onClick={() => setIsFilterOpen(false)}
-                className="w-9 h-9 rounded-full bg-black/10 flex items-center justify-center hover:bg-black/20 active:scale-90 transition-all text-[#242424] font-bold"
+                className="w-9 h-9 rounded-full bg-black/10 flex items-center justify-center hover:bg-black/20 active:scale-90 transition-all text-[var(--foreground-primary)] font-bold"
               >
                 ✕
               </button>
@@ -465,7 +465,7 @@ export default function MobileLibraryView({
             <div className="p-6 overflow-y-auto flex flex-col gap-6">
               {/* Genres Section (Group 826) */}
               <div>
-                <p className="text-[17px] font-bold text-[#242424] mb-3">{t("header.genres")}</p>
+                <p className="text-[17px] font-bold text-[var(--foreground-primary)] mb-3">{t("header.genres")}</p>
                 <div className="flex flex-wrap gap-2">
                   {genreList.map((genre) => {
                     const selected = selectedGenres.includes(genre);
@@ -476,8 +476,8 @@ export default function MobileLibraryView({
                         onClick={() => toggleGenre(genre)}
                         className={`px-3.5 py-1.5 rounded-full text-[14.5px] font-semibold transition-all border ${
                           selected
-                            ? "bg-[#005B33] text-white border-[#005B33] shadow-sm scale-[1.02]"
-                            : "bg-white/80 text-[#242424] border-[#d4b595] hover:bg-[#ebe5da]"
+                            ? "bg-[var(--color-green)] text-white border-[var(--color-green)] shadow-sm scale-[1.02]"
+                            : "bg-[var(--background-elevated)]/80 text-[var(--foreground-primary)] border-[var(--color-border-warm)] hover:bg-[var(--color-menu-hover)]"
                         }`}
                       >
                         {genre}
@@ -488,51 +488,51 @@ export default function MobileLibraryView({
               </div>
 
               {/* Publication Year (Group 815 & Group 596) */}
-              <div className="border-t border-[#e0d8cc] pt-5">
-                <p className="text-[17px] font-bold text-[#242424] mb-2.5">{t("library.publicationYear")}</p>
+              <div className="border-t border-[var(--color-menu-separator)] pt-5">
+                <p className="text-[17px] font-bold text-[var(--foreground-primary)] mb-2.5">{t("library.publicationYear")}</p>
                 <input
                   type="text"
                   value={yearFilter}
                   onChange={(e) => setYearFilter(e.target.value)}
                   placeholder={t("library.yearPlaceholder")}
-                  className="w-full px-4 py-2.5 rounded-xl bg-white border border-[#d4b595] text-[#242424] text-[15px] outline-none focus:border-[#005B33] shadow-inner"
+                  className="w-full px-4 py-2.5 rounded-xl bg-[var(--background-elevated)] border border-[var(--color-border-warm)] text-[var(--foreground-primary)] text-[15px] outline-none focus:border-[var(--color-green)] shadow-inner"
                 />
               </div>
 
               {/* Format Checkboxes (Frame 1034) */}
-              <div className="border-t border-[#e0d8cc] pt-5 flex flex-col gap-3.5">
+              <div className="border-t border-[var(--color-menu-separator)] pt-5 flex flex-col gap-3.5">
                 <label className="flex items-center justify-between cursor-pointer select-none">
-                  <span className="text-[16px] font-semibold text-[#242424]">{t("profile.filter.ebookOnly")}</span>
+                  <span className="text-[16px] font-semibold text-[var(--foreground-primary)]">{t("profile.filter.ebookOnly")}</span>
                   <input
                     type="checkbox"
                     checked={onlyEbooks}
                     onChange={(e) => setOnlyEbooks(e.target.checked)}
-                    className="w-6 h-6 accent-[#005B33] rounded cursor-pointer"
+                    className="w-6 h-6 accent-[var(--color-green)] rounded cursor-pointer"
                   />
                 </label>
 
                 <label className="flex items-center justify-between cursor-pointer select-none">
-                  <span className="text-[16px] font-semibold text-[#242424]">{t("profile.filter.audioOnly")}</span>
+                  <span className="text-[16px] font-semibold text-[var(--foreground-primary)]">{t("profile.filter.audioOnly")}</span>
                   <input
                     type="checkbox"
                     checked={onlyAudio}
                     onChange={(e) => setOnlyAudio(e.target.checked)}
-                    className="w-6 h-6 accent-[#005B33] rounded cursor-pointer"
+                    className="w-6 h-6 accent-[var(--color-green)] rounded cursor-pointer"
                   />
                 </label>
               </div>
 
               {/* Sorting (Group 816) */}
-              <div className="border-t border-[#e0d8cc] pt-5">
-                <p className="text-[17px] font-bold text-[#242424] mb-3">{t("profile.filter.alphabet")}</p>
+              <div className="border-t border-[var(--color-menu-separator)] pt-5">
+                <p className="text-[17px] font-bold text-[var(--foreground-primary)] mb-3">{t("profile.filter.alphabet")}</p>
                 <div className="flex gap-3">
                   <button
                     type="button"
                     onClick={() => setSortOrder(sortOrder === "asc" ? null : "asc")}
                     className={`flex-1 py-2.5 rounded-xl text-[15px] font-semibold border transition-all ${
                       sortOrder === "asc"
-                        ? "bg-[#005B33] text-white border-[#005B33] shadow-md"
-                        : "bg-white text-[#242424] border-[#d4b595] hover:bg-[#ebe5da]"
+                        ? "bg-[var(--color-green)] text-white border-[var(--color-green)] shadow-md"
+                        : "bg-[var(--background-elevated)] text-[var(--foreground-primary)] border-[var(--color-border-warm)] hover:bg-[var(--color-menu-hover)]"
                     }`}
                   >
                     {t("profile.filter.az")}
@@ -542,8 +542,8 @@ export default function MobileLibraryView({
                     onClick={() => setSortOrder(sortOrder === "desc" ? null : "desc")}
                     className={`flex-1 py-2.5 rounded-xl text-[15px] font-semibold border transition-all ${
                       sortOrder === "desc"
-                        ? "bg-[#005B33] text-white border-[#005B33] shadow-md"
-                        : "bg-white text-[#242424] border-[#d4b595] hover:bg-[#ebe5da]"
+                        ? "bg-[var(--color-green)] text-white border-[var(--color-green)] shadow-md"
+                        : "bg-[var(--background-elevated)] text-[var(--foreground-primary)] border-[var(--color-border-warm)] hover:bg-[var(--color-menu-hover)]"
                     }`}
                   >
                     {t("profile.filter.za")}
@@ -553,7 +553,7 @@ export default function MobileLibraryView({
             </div>
 
             {/* Modal Bottom Apply Button (Group 818/Default) */}
-            <div className="p-4 border-t border-[#e0d8cc] bg-[#ebe5da] flex justify-end gap-3 shrink-0">
+            <div className="p-4 border-t border-[var(--color-menu-separator)] bg-[var(--color-menu-hover)] flex justify-end gap-3 shrink-0">
               <button
                 type="button"
                 onClick={() => {
@@ -563,14 +563,14 @@ export default function MobileLibraryView({
                   setOnlyAudio(false);
                   setSortOrder(null);
                 }}
-                className="px-5 py-2.5 rounded-full text-sm font-semibold text-[#242424] hover:bg-black/10 transition-all"
+                className="px-5 py-2.5 rounded-full text-sm font-semibold text-[var(--foreground-primary)] hover:bg-black/10 transition-all"
               >
                 {t("library.reset")}
               </button>
               <button
                 type="button"
                 onClick={() => setIsFilterOpen(false)}
-                className="px-7 py-2.5 rounded-full bg-[#005B33] text-white text-sm font-bold shadow-md hover:bg-[#097E4B] active:scale-95 transition-all"
+                className="px-7 py-2.5 rounded-full bg-[var(--color-green)] text-white text-sm font-bold shadow-md hover:bg-[color-mix(in_srgb,var(--color-green)_85%,black)] active:scale-95 transition-all"
               >
                 {t("header.apply")}
               </button>
@@ -585,19 +585,19 @@ export default function MobileLibraryView({
         <div className="w-full flex flex-col mb-6">
           <div
             onClick={() => setIsRecentlyReadOpen(!isRecentlyReadOpen)}
-            className="w-full h-[60px] sm:h-[66px] rounded-t-[16px] rounded-b-[16px] shadow-md px-4 flex items-center justify-between cursor-pointer transition-all active:scale-[0.99] border border-[#e0d8cc]/20"
+            className="w-full h-[60px] sm:h-[66px] rounded-t-[16px] rounded-b-[16px] shadow-md px-4 flex items-center justify-between cursor-pointer transition-all active:scale-[0.99] border border-[var(--color-menu-separator)]/20"
             style={{
-              background: "linear-gradient(90deg, rgba(0, 91, 51, 0.45) 0%, rgba(0, 91, 51, 0.45) 100%), #c7a381",
+              background: "linear-gradient(90deg, color-mix(in srgb, var(--color-green) 45%, transparent) 0%, color-mix(in srgb, var(--color-green) 45%, transparent) 100%), var(--color-wood)",
               backgroundImage: "linear-gradient(90deg, rgba(0, 91, 51, 0.45) 0%, rgba(0, 91, 51, 0.45) 100%), url('/images/userProfile/Rectangle 589.png')",
               backgroundSize: "cover",
               backgroundPosition: "center",
             }}
           >
-            <span className="text-[18px] sm:text-[20px] font-bold text-[#f5f3ee] tracking-tight drop-shadow-sm">
+            <span className="text-[18px] sm:text-[20px] font-bold text-[var(--color-cream)] tracking-tight drop-shadow-sm">
               {t("library.recentlyRead")}
             </span>
             <div className={`transition-transform duration-300 ${isRecentlyReadOpen ? "rotate-0" : "rotate-180"}`}>
-              <svg className="w-6 h-6 text-[#f5f3ee] drop-shadow-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-6 h-6 text-[var(--color-cream)] drop-shadow-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.8} d="M5 15l7-7 7 7" />
               </svg>
             </div>
@@ -610,19 +610,19 @@ export default function MobileLibraryView({
         <div className="w-full flex flex-col mb-6">
           <div
             onClick={() => setIsFavoritesOpen(!isFavoritesOpen)}
-            className="w-full h-[60px] sm:h-[66px] rounded-t-[16px] rounded-b-[16px] shadow-md px-4 flex items-center justify-between cursor-pointer transition-all active:scale-[0.99] border border-[#e0d8cc]/20"
+            className="w-full h-[60px] sm:h-[66px] rounded-t-[16px] rounded-b-[16px] shadow-md px-4 flex items-center justify-between cursor-pointer transition-all active:scale-[0.99] border border-[var(--color-menu-separator)]/20"
             style={{
-              background: "linear-gradient(90deg, rgba(0, 91, 51, 0.45) 0%, rgba(0, 91, 51, 0.45) 100%), #c7a381",
+              background: "linear-gradient(90deg, color-mix(in srgb, var(--color-green) 45%, transparent) 0%, color-mix(in srgb, var(--color-green) 45%, transparent) 100%), var(--color-wood)",
               backgroundImage: "linear-gradient(90deg, rgba(0, 91, 51, 0.45) 0%, rgba(0, 91, 51, 0.45) 100%), url('/images/userProfile/Rectangle 589.png')",
               backgroundSize: "cover",
               backgroundPosition: "center",
             }}
           >
-            <span className="text-[18px] sm:text-[20px] font-bold text-[#f5f3ee] tracking-tight drop-shadow-sm">
+            <span className="text-[18px] sm:text-[20px] font-bold text-[var(--color-cream)] tracking-tight drop-shadow-sm">
               {t("profile.tabs.favorite")}
             </span>
             <div className={`transition-transform duration-300 ${isFavoritesOpen ? "rotate-0" : "rotate-180"}`}>
-              <svg className="w-6 h-6 text-[#f5f3ee] drop-shadow-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-6 h-6 text-[var(--color-cream)] drop-shadow-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.8} d="M5 15l7-7 7 7" />
               </svg>
             </div>
@@ -635,19 +635,19 @@ export default function MobileLibraryView({
         <div className="w-full flex flex-col mb-6">
           <div
             onClick={() => setIsAllOpen(!isAllOpen)}
-            className="w-full h-[60px] sm:h-[66px] rounded-t-[16px] rounded-b-[16px] shadow-md px-4 flex items-center justify-between cursor-pointer transition-all active:scale-[0.99] border border-[#e0d8cc]/20"
+            className="w-full h-[60px] sm:h-[66px] rounded-t-[16px] rounded-b-[16px] shadow-md px-4 flex items-center justify-between cursor-pointer transition-all active:scale-[0.99] border border-[var(--color-menu-separator)]/20"
             style={{
-              background: "linear-gradient(90deg, rgba(0, 91, 51, 0.45) 0%, rgba(0, 91, 51, 0.45) 100%), #c7a381",
+              background: "linear-gradient(90deg, color-mix(in srgb, var(--color-green) 45%, transparent) 0%, color-mix(in srgb, var(--color-green) 45%, transparent) 100%), var(--color-wood)",
               backgroundImage: "linear-gradient(90deg, rgba(0, 91, 51, 0.45) 0%, rgba(0, 91, 51, 0.45) 100%), url('/images/userProfile/Rectangle 589.png')",
               backgroundSize: "cover",
               backgroundPosition: "center",
             }}
           >
-            <span className="text-[18px] sm:text-[20px] font-bold text-[#f5f3ee] tracking-tight drop-shadow-sm">
+            <span className="text-[18px] sm:text-[20px] font-bold text-[var(--color-cream)] tracking-tight drop-shadow-sm">
               {t("library.all")}
             </span>
             <div className={`transition-transform duration-300 ${isAllOpen ? "rotate-0" : "rotate-180"}`}>
-              <svg className="w-6 h-6 text-[#f5f3ee] drop-shadow-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-6 h-6 text-[var(--color-cream)] drop-shadow-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.8} d="M5 15l7-7 7 7" />
               </svg>
             </div>

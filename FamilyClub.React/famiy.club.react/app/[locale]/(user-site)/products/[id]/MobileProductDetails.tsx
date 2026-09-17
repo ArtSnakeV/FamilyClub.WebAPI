@@ -107,9 +107,9 @@ export default function MobileProductDetails({
   const cardHref = (href?: string) => href && href !== "#" ? lp(href) : "#";
 
   return (
-    <div className="relative min-h-screen w-full bg-[#f5f3ee] pb-[100px] select-none text-[#242424] overflow-x-hidden font-sans">
+    <div className="relative min-h-screen w-full bg-[var(--background-elevated)] pb-[100px] select-none text-[var(--foreground-primary)] overflow-x-hidden font-sans">
       {/* Top Board Section (Figma Node 2298:4517 - Warm Wood/Tan Board #c7a381) */}
-      <div className="relative w-full bg-[#c7a381] pt-[85px] pb-10 shadow-[0_14px_40px_rgba(0,0,0,0.35)]">
+      <div className="relative w-full bg-[var(--color-wood)] pt-[85px] pb-10 shadow-[0_14px_40px_rgba(0,0,0,0.35)]">
         
         {/* 1. Book Info & Cover Header */}
         <div className="px-4 sm:px-6 flex gap-3 sm:gap-5 items-start">
@@ -139,7 +139,7 @@ export default function MobileProductDetails({
                     type="button"
                     onClick={() => setSelectedImage(img)}
                     className={`w-[36px] h-[50px] rounded-[4px] bg-white p-0.5 shadow-sm transition-transform ${
-                      displayImage === img ? "ring-2 ring-[#0e503f] scale-105" : "opacity-75 hover:opacity-100"
+                      displayImage === img ? "ring-2 ring-[var(--color-product-cta)] scale-105" : "opacity-75 hover:opacity-100"
                     }`}
                   >
                     <img src={img} alt="" className="w-full h-full object-contain rounded-[2px]" />
@@ -151,22 +151,22 @@ export default function MobileProductDetails({
 
           {/* Right Column: Title, Author, Price Box, Format Ribbons */}
           <div className="flex-1 flex flex-col justify-start min-w-0 pt-1">
-            <h1 className="font-sans font-bold text-[26px] sm:text-[30px] text-[#242424] leading-[1.2] tracking-tight">
+            <h1 className="font-sans font-bold text-[26px] sm:text-[30px] text-[var(--foreground-primary)] leading-[1.2] tracking-tight">
               {productTitle}
             </h1>
 
             {authorName && (
-              <div className="text-[14px] text-[#242424]/80 mt-1 font-medium">
-                {t("product.chars.author")} <span className="font-semibold text-[#242424]">{authorName}</span>
+              <div className="text-[14px] text-[var(--color-muted-fg)] mt-1 font-medium">
+                {t("product.chars.author")} <span className="font-semibold text-[var(--foreground-primary)]">{authorName}</span>
               </div>
             )}
 
             {/* Price Box with Heart & Cart Button */}
-            <div className="mt-3 bg-[#f5f3ee] rounded-[8px] border border-[#242424]/15 p-3 relative shadow-sm flex flex-col gap-3">
+            <div className="mt-3 bg-[var(--background-elevated)] rounded-[8px] border border-[color-mix(in_srgb,var(--foreground-primary)_15%,transparent)] p-3 relative shadow-sm flex flex-col gap-3">
               <div className="flex items-center justify-between">
                 <div>
-                  <div className="text-[12px] text-[#242424]/70">{t("product.priceAtLibria")}</div>
-                  <div className="text-[22px] sm:text-[24px] font-bold text-[#242424] leading-tight mt-0.5">
+                  <div className="text-[12px] text-[var(--color-muted-fg)]">{t("product.priceAtLibria")}</div>
+                  <div className="text-[22px] sm:text-[24px] font-bold text-[var(--foreground-primary)] leading-tight mt-0.5">
                     {priceText || t("product.zeroPrice")}
                   </div>
                 </div>
@@ -196,7 +196,7 @@ export default function MobileProductDetails({
                     await alertWarning(t("product.loginToAddCart"));
                   }
                 }}
-                className="w-full py-3 px-4 rounded-[10px] bg-[#0e503f] hover:bg-[#093529] active:scale-[0.98] transition-all text-white font-bold text-[16px] flex items-center justify-center gap-2 shadow-[0_4px_15px_rgba(14,80,63,0.35)] cursor-pointer"
+                className="w-full py-3 px-4 rounded-[10px] bg-[var(--color-product-cta)] hover:bg-[var(--color-product-cta-hover)] active:scale-[0.98] transition-all text-white font-bold text-[16px] flex items-center justify-center gap-2 shadow-[0_4px_15px_color-mix(in_srgb,var(--color-product-cta)_35%,transparent)] cursor-pointer"
               >
                 <img
                   src="/images/main_page/icons/rec-icon-basket.svg"
@@ -209,29 +209,29 @@ export default function MobileProductDetails({
 
             {/* Format Ribbons (Паперова, eBooks, Аудіо книга) */}
             <div className="flex flex-col gap-1.5 mt-3.5">
-              <div className="flex items-center justify-between bg-[#7e4d1e] text-white rounded-l-[6px] h-[30px] px-2.5 w-[125px] shadow-sm text-[13px] font-medium">
+              <div className="flex items-center justify-between bg-[var(--color-shelf)] text-white rounded-l-[6px] h-[30px] px-2.5 w-[125px] shadow-sm text-[13px] font-medium">
                 <span>{t("product.formats.paper")}</span>
                 <img src="/images/main_page/icons/rec-icon-paper.svg" alt="" className="w-4 h-4 brightness-200" />
               </div>
-              <div className="flex items-center justify-between bg-[#0e503f] text-white rounded-l-[6px] h-[30px] px-2.5 w-[115px] shadow-sm text-[13px] font-medium">
+              <div className="flex items-center justify-between bg-[var(--color-product-cta)] text-white rounded-l-[6px] h-[30px] px-2.5 w-[115px] shadow-sm text-[13px] font-medium">
                 <span>{t("product.formats.ebook")}</span>
                 <img src="/images/main_page/icons/rec-icon-ebook.svg" alt="" className="w-4 h-4 brightness-200" />
               </div>
-              <div className="flex items-center justify-between bg-[#7e4d1e] text-white rounded-l-[6px] h-[30px] px-2.5 w-[135px] shadow-sm text-[13px] font-medium">
+              <div className="flex items-center justify-between bg-[var(--color-shelf)] text-white rounded-l-[6px] h-[30px] px-2.5 w-[135px] shadow-sm text-[13px] font-medium">
                 <span>{t("product.formats.audio")}</span>
                 <img src="/images/main_page/icons/rec-icon-audio.svg" alt="" className="w-4 h-4 brightness-200" />
               </div>
             </div>
 
             {/* Page Count, Line, Genre & Rating */}
-            <div className="mt-3.5 text-[14px] text-[#242424]">
+            <div className="mt-3.5 text-[14px] text-[var(--foreground-primary)]">
               {pageCountText && <div className="font-medium">{pageCountText}</div>}
-              <div className="border-b border-[#242424]/25 my-1.5 w-full" />
-              {categoryLabel && <div className="font-semibold underline text-[#242424]">{categoryLabel}</div>}
-              <div className="text-[16px] text-[#7e4d1e] tracking-widest mt-1 font-bold">
+              <div className="border-b border-[color-mix(in_srgb,var(--foreground-primary)_25%,transparent)] my-1.5 w-full" />
+              {categoryLabel && <div className="font-semibold underline text-[var(--foreground-primary)]">{categoryLabel}</div>}
+              <div className="text-[16px] text-[var(--color-shelf)] tracking-widest mt-1 font-bold">
                 {ratingToStars(rating || 0)}
               </div>
-              <div className="text-[12px] text-[#242424]/65 mt-0.5">
+              <div className="text-[12px] text-[var(--color-muted-fg)] mt-0.5">
                 {t("product.ratings").replace("{count}", String(ratingCount))}
               </div>
             </div>
@@ -239,21 +239,21 @@ export default function MobileProductDetails({
         </div>
 
         {/* 2. Description Box ("Опис") */}
-        <div className="mx-4 sm:mx-6 mt-7 bg-[#f5f3ee] rounded-[16px] p-5 shadow-[0_6px_20px_rgba(0,0,0,0.18)] border border-[#242424]/10">
-          <h2 className="text-[22px] font-bold text-[#242424] mb-2.5">{t("product.description")}</h2>
-          <div className="text-[14px] text-[#242424] leading-[1.6] whitespace-pre-wrap">
+        <div className="mx-4 sm:mx-6 mt-7 bg-[var(--background-elevated)] rounded-[16px] p-5 shadow-[0_6px_20px_rgba(0,0,0,0.18)] border border-[color-mix(in_srgb,var(--foreground-primary)_10%,transparent)]">
+          <h2 className="text-[22px] font-bold text-[var(--foreground-primary)] mb-2.5">{t("product.description")}</h2>
+          <div className="text-[14px] text-[var(--foreground-primary)] leading-[1.6] whitespace-pre-wrap">
             {descriptionText}
           </div>
         </div>
 
         {/* 3. Author Banner ("Ві Кіланд") */}
         {authorName && (
-          <div className="mx-4 sm:mx-6 mt-6 bg-gradient-to-r from-[#5a3512] to-[#7e4d1e] rounded-[14px] p-4 shadow-md flex items-center justify-between text-[#f5f3ee] border border-white/10">
+          <div className="mx-4 sm:mx-6 mt-6 bg-gradient-to-r from-[var(--color-wood-gradient-from)] to-[var(--color-shelf)] rounded-[14px] p-4 shadow-md flex items-center justify-between text-[var(--color-cream)] border border-white/10">
             <div className="flex items-center gap-3.5">
               {authorPhoto ? (
-                <img src={authorPhoto} alt={authorName} className="w-[54px] h-[54px] rounded-full object-cover border-2 border-[#f5f3ee] shadow-sm" />
+                <img src={authorPhoto} alt={authorName} className="w-[54px] h-[54px] rounded-full object-cover border-2 border-[var(--color-cream)] shadow-sm" />
               ) : (
-                <div className="w-[54px] h-[54px] rounded-full bg-white/20 border-2 border-[#f5f3ee] flex items-center justify-center font-bold text-xl">
+                <div className="w-[54px] h-[54px] rounded-full bg-white/20 border-2 border-[var(--color-cream)] flex items-center justify-center font-bold text-xl">
                   {authorName.charAt(0)}
                 </div>
               )}
@@ -261,7 +261,7 @@ export default function MobileProductDetails({
             </div>
             <button
               type="button"
-              className="w-[42px] h-[42px] rounded-full bg-[#f5f3ee] text-[#242424] flex items-center justify-center text-2xl font-bold shadow-md hover:scale-105 transition-transform"
+              className="w-[42px] h-[42px] rounded-full bg-[var(--background-elevated)] text-[var(--foreground-primary)] flex items-center justify-center text-2xl font-bold shadow-md hover:scale-105 transition-transform"
               aria-label={t("product.moreAboutAuthor")}
             >
               +
@@ -272,12 +272,12 @@ export default function MobileProductDetails({
         {/* Books by Author Cards */}
         {booksByAuthorCards && booksByAuthorCards.length > 0 && (
           <div className="mt-5 px-4 sm:px-6">
-            <div className="text-[18px] font-bold text-[#242424] mb-3">{t("product.otherAuthorBooks")}</div>
+            <div className="text-[18px] font-bold text-[var(--foreground-primary)] mb-3">{t("product.otherAuthorBooks")}</div>
             <div className="flex gap-4 overflow-x-auto pb-4 no-scrollbar">
               {booksByAuthorCards.map((book, idx) => (
                 <div
                   key={idx}
-                  className="w-[160px] shrink-0 bg-gradient-to-b from-[#f5f3ee] to-[#e8e6e1] rounded-b-[16px] rounded-t-[6px] p-2.5 shadow-md border border-[#242424]/10 flex flex-col justify-between relative"
+                  className="w-[160px] shrink-0 bg-gradient-to-b from-[var(--background-elevated)] to-[var(--color-menu-hover)] rounded-b-[16px] rounded-t-[6px] p-2.5 shadow-md border border-[color-mix(in_srgb,var(--foreground-primary)_10%,transparent)] flex flex-col justify-between relative"
                 >
                   <Link href={cardHref(book.href)} className="w-[110px] h-[145px] mx-auto bg-white rounded-[4px] p-1 shadow-sm flex items-center justify-center mt-1">
                     {book.image ? (
@@ -291,13 +291,13 @@ export default function MobileProductDetails({
                   </Link>
 
                   <div className="mt-2.5">
-                    <Link href={cardHref(book.href)} className="font-bold text-[14px] text-[#242424] block truncate hover:underline">
+                    <Link href={cardHref(book.href)} className="font-bold text-[14px] text-[var(--foreground-primary)] block truncate hover:underline">
                       {book.title || ""}
                     </Link>
                   </div>
 
-                  <div className="flex items-center justify-between mt-2 pt-2 border-t border-[#242424]/10">
-                    <span className="font-bold text-[15px] text-[#242424]">{book.price || ""}</span>
+                  <div className="flex items-center justify-between mt-2 pt-2 border-t border-[color-mix(in_srgb,var(--foreground-primary)_10%,transparent)]">
+                    <span className="font-bold text-[15px] text-[var(--foreground-primary)]">{book.price || ""}</span>
                     <button
                       type="button"
                       onClick={async () => {
@@ -310,7 +310,7 @@ export default function MobileProductDetails({
                           await alertWarning(t("product.loginToAddCart"));
                         }
                       }}
-                      className="w-[32px] h-[32px] rounded-full bg-[#0e503f] text-white flex items-center justify-center shadow-sm hover:bg-[#093529] transition-colors"
+                      className="w-[32px] h-[32px] rounded-full bg-[var(--color-product-cta)] text-white flex items-center justify-center shadow-sm hover:bg-[var(--color-product-cta-hover)] transition-colors"
                     >
                       <img src="/images/main_page/icons/rec-icon-basket.svg" alt="" className="w-4 h-4 brightness-200" />
                     </button>
@@ -323,70 +323,70 @@ export default function MobileProductDetails({
 
         {/* 4. Characteristics Section ("Характеристика") */}
         <div className="mx-4 sm:mx-6 mt-8">
-          <h2 className="text-[28px] sm:text-[32px] font-bold text-[#242424] text-center mb-5">
+          <h2 className="text-[28px] sm:text-[32px] font-bold text-[var(--foreground-primary)] text-center mb-5">
             {t("product.characteristics")}
           </h2>
-          <div className="bg-white/40 backdrop-blur-sm rounded-[14px] p-4 sm:p-5 border border-[#242424]/10 shadow-sm">
+          <div className="bg-white/40 backdrop-blur-sm rounded-[14px] p-4 sm:p-5 border border-[color-mix(in_srgb,var(--foreground-primary)_10%,transparent)] shadow-sm">
             <div className="grid grid-cols-[130px_1fr] sm:grid-cols-[150px_1fr] gap-y-3 text-[15px] sm:text-[16px]">
-              <div className="text-[#242424]/75">{t("product.chars.productCode")}</div>
-              <div className="font-medium text-[#242424]">{product?.productCode ?? `#${product?.id ?? ""}`}</div>
+              <div className="text-[var(--foreground-primary)]/75">{t("product.chars.productCode")}</div>
+              <div className="font-medium text-[var(--foreground-primary)]">{product?.productCode ?? `#${product?.id ?? ""}`}</div>
 
-              <div className="text-[#242424]/75">{t("product.chars.bookTitle")}</div>
-              <div className="font-medium text-[#242424]">{productTitle}</div>
+              <div className="text-[var(--foreground-primary)]/75">{t("product.chars.bookTitle")}</div>
+              <div className="font-medium text-[var(--foreground-primary)]">{productTitle}</div>
 
               {pageCountValue && (
                 <>
-                  <div className="text-[#242424]/75">{t("product.chars.pages")}</div>
-                  <div className="font-medium text-[#242424]">{pageCountValue}</div>
+                  <div className="text-[var(--foreground-primary)]/75">{t("product.chars.pages")}</div>
+                  <div className="font-medium text-[var(--foreground-primary)]">{pageCountValue}</div>
                 </>
               )}
 
               {weightText && (
                 <>
-                  <div className="text-[#242424]/75">{t("product.chars.weight")}</div>
-                  <div className="font-medium text-[#242424]">{weightText}</div>
+                  <div className="text-[var(--foreground-primary)]/75">{t("product.chars.weight")}</div>
+                  <div className="font-medium text-[var(--foreground-primary)]">{weightText}</div>
                 </>
               )}
 
               {yearText && (
                 <>
-                  <div className="text-[#242424]/75">{t("product.chars.year")}</div>
-                  <div className="font-medium text-[#242424]">{yearText}</div>
+                  <div className="text-[var(--foreground-primary)]/75">{t("product.chars.year")}</div>
+                  <div className="font-medium text-[var(--foreground-primary)]">{yearText}</div>
                 </>
               )}
 
               {categoryLabel && (
                 <>
-                  <div className="text-[#242424]/75">{t("product.chars.genres")}</div>
-                  <div className="font-semibold underline text-[#242424]">{categoryLabel}</div>
+                  <div className="text-[var(--foreground-primary)]/75">{t("product.chars.genres")}</div>
+                  <div className="font-semibold underline text-[var(--foreground-primary)]">{categoryLabel}</div>
                 </>
               )}
 
               {authorName && (
                 <>
-                  <div className="text-[#242424]/75">{t("product.chars.author")}</div>
-                  <div className="font-semibold underline text-[#242424]">{authorName}</div>
+                  <div className="text-[var(--foreground-primary)]/75">{t("product.chars.author")}</div>
+                  <div className="font-semibold underline text-[var(--foreground-primary)]">{authorName}</div>
                 </>
               )}
 
               {languageName && (
                 <>
-                  <div className="text-[#242424]/75">{t("product.chars.language")}</div>
-                  <div className="font-medium text-[#242424]">{languageName}</div>
+                  <div className="text-[var(--foreground-primary)]/75">{t("product.chars.language")}</div>
+                  <div className="font-medium text-[var(--foreground-primary)]">{languageName}</div>
                 </>
               )}
 
               {publisherName && (
                 <>
-                  <div className="text-[#242424]/75">{t("product.chars.publisher")}</div>
-                  <div className="font-medium text-[#242424]">{publisherName}</div>
+                  <div className="text-[var(--foreground-primary)]/75">{t("product.chars.publisher")}</div>
+                  <div className="font-medium text-[var(--foreground-primary)]">{publisherName}</div>
                 </>
               )}
 
               {product?.coverType != null && (
                 <>
-                  <div className="text-[#242424]/75">{t("product.chars.cover")}</div>
-                  <div className="font-medium text-[#242424]">
+                  <div className="text-[var(--foreground-primary)]/75">{t("product.chars.cover")}</div>
+                  <div className="font-medium text-[var(--foreground-primary)]">
                     {product.coverType === CoverType.NUMBER_1 ? t("product.chars.softCover") : t("product.chars.hardCover")}
                   </div>
                 </>
@@ -394,8 +394,8 @@ export default function MobileProductDetails({
 
               {formatDisplay && (
                 <>
-                  <div className="text-[#242424]/75">{t("product.chars.format")}</div>
-                  <div className="font-medium text-[#242424]">{formatDisplay}</div>
+                  <div className="text-[var(--foreground-primary)]/75">{t("product.chars.format")}</div>
+                  <div className="font-medium text-[var(--foreground-primary)]">{formatDisplay}</div>
                 </>
               )}
             </div>
@@ -404,7 +404,7 @@ export default function MobileProductDetails({
 
         {/* 5. Similar Books Section ("Схожі:") */}
         <div className="mt-8">
-          <h2 className="text-[24px] font-bold text-[#242424] mx-4 sm:mx-6 mb-4">
+          <h2 className="text-[24px] font-bold text-[var(--foreground-primary)] mx-4 sm:mx-6 mb-4">
             {t("product.similar")}
           </h2>
           {similarBookCards.length > 0 ? (
@@ -412,14 +412,14 @@ export default function MobileProductDetails({
               {similarBookCards.map((sim, idx) => (
                 <div
                   key={idx}
-                  className="w-[170px] shrink-0 bg-gradient-to-b from-[#f5f3ee] to-[#e8e6e1] rounded-b-[18px] rounded-t-[6px] p-3 shadow-md border border-[#242424]/10 flex flex-col justify-between relative"
+                  className="w-[170px] shrink-0 bg-gradient-to-b from-[var(--background-elevated)] to-[var(--color-menu-hover)] rounded-b-[18px] rounded-t-[6px] p-3 shadow-md border border-[color-mix(in_srgb,var(--foreground-primary)_10%,transparent)] flex flex-col justify-between relative"
                 >
                   {/* Format Ribbons on card left */}
                   <div className="absolute left-0 top-3 flex flex-col gap-1 z-10">
-                    <div className="w-[22px] h-[18px] bg-[#7e4d1e] rounded-r-[3px] flex items-center justify-center">
+                    <div className="w-[22px] h-[18px] bg-[var(--color-shelf)] rounded-r-[3px] flex items-center justify-center">
                       <img src="/images/main_page/icons/rec-icon-paper.svg" alt="" className="w-3 h-3 brightness-200" />
                     </div>
-                    <div className="w-[22px] h-[18px] bg-[#0e503f] rounded-r-[3px] flex items-center justify-center">
+                    <div className="w-[22px] h-[18px] bg-[var(--color-product-cta)] rounded-r-[3px] flex items-center justify-center">
                       <img src="/images/main_page/icons/rec-icon-ebook.svg" alt="" className="w-3 h-3 brightness-200" />
                     </div>
                   </div>
@@ -442,16 +442,16 @@ export default function MobileProductDetails({
                   </Link>
 
                   <div className="mt-3">
-                    <Link href={cardHref(sim.href)} className="font-bold text-[15px] text-[#242424] block truncate hover:underline">
+                    <Link href={cardHref(sim.href)} className="font-bold text-[15px] text-[var(--foreground-primary)] block truncate hover:underline">
                       {sim.title || ""}
                     </Link>
-                    <div className="text-[13px] text-[#242424]/70 truncate mt-0.5">
+                    <div className="text-[13px] text-[var(--color-muted-fg)] truncate mt-0.5">
                       {sim.author || ""}
                     </div>
                   </div>
 
-                  <div className="flex items-center justify-between mt-3 pt-2 border-t border-[#242424]/10">
-                    <span className="font-bold text-[16px] text-[#242424]">{sim.price || ""}</span>
+                  <div className="flex items-center justify-between mt-3 pt-2 border-t border-[color-mix(in_srgb,var(--foreground-primary)_10%,transparent)]">
+                    <span className="font-bold text-[16px] text-[var(--foreground-primary)]">{sim.price || ""}</span>
                     <button
                       type="button"
                       onClick={async () => {
@@ -464,7 +464,7 @@ export default function MobileProductDetails({
                           await alertWarning(t("product.loginToAddCart"));
                         }
                       }}
-                      className="w-[32px] h-[32px] rounded-full bg-[#0e503f] text-white flex items-center justify-center shadow-sm hover:bg-[#093529] transition-colors"
+                      className="w-[32px] h-[32px] rounded-full bg-[var(--color-product-cta)] text-white flex items-center justify-center shadow-sm hover:bg-[var(--color-product-cta-hover)] transition-colors"
                     >
                       <img src="/images/main_page/icons/rec-icon-basket.svg" alt="" className="w-4 h-4 brightness-200" />
                     </button>
@@ -473,14 +473,14 @@ export default function MobileProductDetails({
               ))}
             </div>
           ) : (
-            <div className="mx-4 sm:mx-6 px-4 py-6 bg-white/40 backdrop-blur-sm rounded-[14px] text-center text-[14px] text-[#242424]/60 border border-[#242424]/10">
+            <div className="mx-4 sm:mx-6 px-4 py-6 bg-white/40 backdrop-blur-sm rounded-[14px] text-center text-[14px] text-[var(--color-muted-fg)] border border-[color-mix(in_srgb,var(--foreground-primary)_10%,transparent)]">
               {t("product.noSimilar")}
             </div>
           )}
         </div>
 
         {/* 6. Torn Paper Bottom Edge on the Board */}
-        <div className="absolute -bottom-[1px] left-0 right-0 w-full overflow-hidden leading-none text-[#c7a381]">
+        <div className="absolute -bottom-[1px] left-0 right-0 w-full overflow-hidden leading-none text-[var(--color-wood)]">
           <svg className="w-full h-[14px] block" viewBox="0 0 1200 10" fill="currentColor" preserveAspectRatio="none">
             <path d="M0,10 L0,5 C 15,2 30,7 45,4 S 75,1 90,5 S 120,2 135,6 S 165,1 180,4 S 210,7 225,3 S 255,1 270,5 S 300,2 315,6 S 345,1 360,4 S 390,7 405,3 S 435,1 450,5 S 480,2 495,6 S 525,1 540,4 S 570,7 585,3 S 615,1 630,5 S 660,2 675,6 S 705,1 720,4 S 750,7 765,3 S 795,1 810,5 S 840,2 855,6 S 885,1 900,4 S 930,7 945,3 S 975,1 990,5 S 1020,2 1035,6 S 1065,1 1080,4 S 1110,7 1125,3 S 1155,1 1170,5 S 1185,3 1200,4 L1200,10 Z" />
           </svg>
@@ -492,7 +492,7 @@ export default function MobileProductDetails({
         {/* 7. Community Banner Button ("Перейти до спільноти") */}
         <Link
           href={lp("/userProfile")}
-          className="bg-gradient-to-r from-[#5a3512] to-[#7e4d1e] rounded-[14px] p-4 shadow-[0_6px_20px_rgba(0,0,0,0.2)] flex items-center justify-between text-[#ffd9d9] border border-white/10 group mb-6"
+          className="bg-gradient-to-r from-[var(--color-wood-gradient-from)] to-[var(--color-shelf)] rounded-[14px] p-4 shadow-[0_6px_20px_rgba(0,0,0,0.2)] flex items-center justify-between text-[#ffd9d9] border border-white/10 group mb-6"
         >
           <div className="w-[50px] h-[60px] bg-white rounded-[4px] p-0.5 shrink-0 shadow-sm flex items-center justify-center">
             {displayImage ? (
@@ -516,28 +516,28 @@ export default function MobileProductDetails({
             reviews.map((rev, idx) => (
               <div
                 key={idx}
-                className="bg-white rounded-[18px] p-4 sm:p-5 shadow-[0_4px_15px_rgba(0,0,0,0.08)] border border-[#242424]/10 flex flex-col justify-between"
+                className="bg-white rounded-[18px] p-4 sm:p-5 shadow-[0_4px_15px_rgba(0,0,0,0.08)] border border-[color-mix(in_srgb,var(--foreground-primary)_10%,transparent)] flex flex-col justify-between"
               >
                 {/* Header: Avatar + Author */}
                 <div className="flex items-center gap-3">
                   {rev.avatar ? (
                     <img src={rev.avatar} alt="" className="w-[34px] h-[34px] rounded-full object-cover shadow-sm" />
                   ) : (
-                    <div className="w-[34px] h-[34px] rounded-full bg-[#e8e6e1] text-[#7e4d1e] font-mono font-bold flex items-center justify-center text-sm shadow-sm">
+                    <div className="w-[34px] h-[34px] rounded-full bg-[var(--color-menu-hover)] text-[var(--color-shelf)] font-mono font-bold flex items-center justify-center text-sm shadow-sm">
                       {rev.author ? rev.author.charAt(0).toUpperCase() : "?"}
                     </div>
                   )}
-                  <span className="font-mono font-bold text-[15px] text-[#242424]">
+                  <span className="font-mono font-bold text-[15px] text-[var(--foreground-primary)]">
                     {rev.author || t("common.user")}
                   </span>
                 </div>
 
                 {/* Body: Text + Book Thumbnail */}
                 <div className="flex gap-3.5 mt-3 items-start">
-                  <p className="flex-1 text-[14px] text-[#242424] leading-[1.6] font-sans">
+                  <p className="flex-1 text-[14px] text-[var(--foreground-primary)] leading-[1.6] font-sans">
                     {rev.text}
                   </p>
-                  <div className="w-[65px] h-[90px] rounded-[6px] bg-[#fcfbf8] border border-gray-200 p-1 shrink-0 flex items-center justify-center shadow-sm">
+                  <div className="w-[65px] h-[90px] rounded-[6px] bg-[var(--color-product-reviews-bg)] border border-gray-200 p-1 shrink-0 flex items-center justify-center shadow-sm">
                     {displayImage ? (
                       <img src={displayImage} alt="" className="w-full h-full object-contain" />
                     ) : (
@@ -550,13 +550,13 @@ export default function MobileProductDetails({
                 </div>
 
                 {/* Footer: Time + Actions */}
-                <div className="flex items-center justify-between text-[13px] text-[#242424]/60 mt-4 pt-2.5 border-t border-gray-100">
+                <div className="flex items-center justify-between text-[13px] text-[var(--color-muted-fg)] mt-4 pt-2.5 border-t border-gray-100">
                   <span>{rev.timeLabel || ""}</span>
                   <div className="flex items-center gap-4">
                     <button type="button" className="hover:text-black transition-colors" title={t("product.report")}>
                       <img src="/images/header/more_horiz_24px.svg" alt="" className="w-5 h-5 opacity-70" />
                     </button>
-                    <div className="flex items-center gap-1.5 font-medium text-[#242424]">
+                    <div className="flex items-center gap-1.5 font-medium text-[var(--foreground-primary)]">
                       <span>{rev.likesCount || 0}</span>
                       <button type="button" className="hover:scale-110 transition-transform">
                         <img src="/images/main_page/icons/rec-icon-favorite.svg" alt={t("product.like")} className="w-5 h-5 opacity-80" />
@@ -567,9 +567,9 @@ export default function MobileProductDetails({
               </div>
             ))
           ) : (
-            <div className="bg-white rounded-[18px] p-8 text-center shadow-sm border border-[#242424]/10 my-2">
-              <p className="font-serif text-lg text-[#242424]/70">{t("product.noReviews")}</p>
-              <p className="mt-1 text-xs text-[#242424]/50">{t("product.firstReview")}</p>
+            <div className="bg-white rounded-[18px] p-8 text-center shadow-sm border border-[color-mix(in_srgb,var(--foreground-primary)_10%,transparent)] my-2">
+              <p className="font-serif text-lg text-[var(--color-muted-fg)]">{t("product.noReviews")}</p>
+              <p className="mt-1 text-xs text-[var(--color-muted-fg)]">{t("product.firstReview")}</p>
             </div>
           )}
 
@@ -583,7 +583,7 @@ export default function MobileProductDetails({
         </div>
 
         {/* 9. Add Comment Input Bar */}
-        <div className="bg-white h-[56px] rounded-full shadow-[0_4px_20px_rgba(36,36,36,0.15)] px-5 flex items-center justify-between border border-[#242424]/15 mb-6">
+        <div className="bg-white h-[56px] rounded-full shadow-[0_4px_20px_rgba(36,36,36,0.15)] px-5 flex items-center justify-between border border-[color-mix(in_srgb,var(--foreground-primary)_15%,transparent)] mb-6">
           <input
             type="text"
             placeholder={t("product.addCommentPlaceholder")}
@@ -591,13 +591,13 @@ export default function MobileProductDetails({
             onChange={(e) => setNewComment?.(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && handleCommentSubmit?.()}
             disabled={isSubmittingComment}
-            className="bg-transparent text-[14px] text-[#242424] placeholder-[#242424]/50 focus:outline-none flex-1 pr-4 font-sans"
+            className="bg-transparent text-[14px] text-[var(--foreground-primary)] placeholder:text-[var(--color-muted-fg)] focus:outline-none flex-1 pr-4 font-sans"
           />
           <button
             type="button"
             onClick={handleCommentSubmit}
             disabled={isSubmittingComment || !newComment.trim()}
-            className="w-[42px] h-[42px] rounded-full bg-[#0e503f] text-white flex items-center justify-center shadow-md hover:bg-[#093529] transition-transform active:scale-95 shrink-0 disabled:opacity-50"
+            className="w-[42px] h-[42px] rounded-full bg-[var(--color-product-cta)] text-white flex items-center justify-center shadow-md hover:bg-[var(--color-product-cta-hover)] transition-transform active:scale-95 shrink-0 disabled:opacity-50"
             aria-label={t("product.sendCommentAria")}
           >
             {isSubmittingComment ? "..." : (
@@ -610,7 +610,7 @@ export default function MobileProductDetails({
       </div>
 
       {/* 10. Sticky / Fixed Bottom Action Bar for Mobile */}
-      <div className="fixed bottom-0 left-0 right-0 z-50 bg-[#f5f3ee]/95 backdrop-blur-md border-t border-[#242424]/15 px-4 py-2.5 shadow-[0_-4px_25px_rgba(0,0,0,0.18)] flex items-center justify-between gap-3 sm:gap-4 md:hidden">
+      <div className="fixed bottom-0 left-0 right-0 z-50 bg-[var(--background-elevated)]/95 backdrop-blur-md border-t border-[color-mix(in_srgb,var(--foreground-primary)_15%,transparent)] px-4 py-2.5 shadow-[0_-4px_25px_rgba(0,0,0,0.18)] flex items-center justify-between gap-3 sm:gap-4 md:hidden">
         <div className="flex items-center gap-2.5 min-w-0 flex-1">
           {displayImage ? (
             <img src={displayImage} alt="" className="w-[36px] h-[48px] object-contain rounded-[4px] bg-white p-0.5 shadow-xs shrink-0" />
@@ -618,8 +618,8 @@ export default function MobileProductDetails({
             <div className="w-[36px] h-[48px] rounded-[4px] bg-white flex items-center justify-center shrink-0">📖</div>
           )}
           <div className="min-w-0 flex-1">
-            <div className="font-bold text-[14px] text-[#242424] truncate">{productTitle}</div>
-            <div className="font-bold text-[15px] text-[#0e503f]">{priceText || t("product.zeroPrice")}</div>
+            <div className="font-bold text-[14px] text-[var(--foreground-primary)] truncate">{productTitle}</div>
+            <div className="font-bold text-[15px] text-[var(--color-product-cta)]">{priceText || t("product.zeroPrice")}</div>
           </div>
         </div>
         <button
@@ -633,7 +633,7 @@ export default function MobileProductDetails({
               await alertWarning(t("product.loginToAddCart"));
             }
           }}
-          className="bg-[#0e503f] hover:bg-[#093529] active:scale-95 text-white px-5 py-3 rounded-[12px] font-bold text-[15px] flex items-center gap-2 shadow-[0_4px_15px_rgba(14,80,63,0.4)] shrink-0 transition-all cursor-pointer"
+          className="bg-[var(--color-product-cta)] hover:bg-[var(--color-product-cta-hover)] active:scale-95 text-white px-5 py-3 rounded-[12px] font-bold text-[15px] flex items-center gap-2 shadow-[0_4px_15px_rgba(14,80,63,0.4)] shrink-0 transition-all cursor-pointer"
         >
           <img src="/images/main_page/icons/rec-icon-basket.svg" alt="" className="w-4 h-4 brightness-200" />
           <span>{t("product.addToCart")}</span>

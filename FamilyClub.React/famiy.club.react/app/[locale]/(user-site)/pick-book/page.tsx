@@ -156,25 +156,25 @@ export default function PickBookPage() {
         : t("pickBook.subtitleLoggedOut");
 
   return (
-    <main className="bg-[#f5f3ee] text-[#242424] min-h-screen overflow-x-hidden pb-16">
+    <main className="bg-[var(--background-elevated)] text-[var(--foreground-primary)] min-h-screen overflow-x-hidden pb-16">
       <section className="relative mx-auto max-w-[1180px] px-4 pt-[120px] md:pt-[180px] pb-6 lg:px-0">
-        <p className="font-mono text-[14px] text-[#005B33] mb-2">
+        <p className="font-mono text-[14px] text-[var(--color-green)] mb-2">
           <Link href={lp("/")} className="hover:underline">
             {t("pickBook.breadcrumbHome")}
           </Link>
-          <span className="mx-2 text-[#242424]/40">/</span>
+          <span className="mx-2 text-[var(--color-muted-fg)]">/</span>
           {t("pickBook.title")}
         </p>
         <h1 className="font-serif text-[36px] md:text-[48px] font-bold leading-tight">
           {t("pickBook.title")}
         </h1>
-        <p className="mt-3 max-w-[640px] text-[16px] md:text-[18px] text-[#242424]/80">
+        <p className="mt-3 max-w-[640px] text-[16px] md:text-[18px] text-[var(--color-muted-fg)]">
           {subtitle}
         </p>
         <div className="mt-6 flex flex-wrap gap-3">
           <Link
             href={lp("/products")}
-            className="inline-flex h-[48px] items-center rounded-full border border-[#005B33] px-6 text-[16px] font-semibold text-[#005B33] transition-transform hover:scale-105"
+            className="inline-flex h-[48px] items-center rounded-full border border-[var(--color-green)] px-6 text-[16px] font-semibold text-[var(--color-green)] transition-transform hover:scale-105"
           >
             {t("pickBook.allCatalog")}
           </Link>
@@ -182,7 +182,7 @@ export default function PickBookPage() {
       </section>
 
       {loading || userLoading ? (
-        <p className="mx-auto max-w-[1220px] px-4 py-16 text-[#6B6B6B]">
+        <p className="mx-auto max-w-[1220px] px-4 py-16 text-[var(--color-muted-fg)]">
           {t("pickBook.loading")}
         </p>
       ) : (
@@ -223,12 +223,12 @@ export default function PickBookPage() {
 
           {!loading && recommendedCards.length === 0 && newBookCards.length === 0 ? (
             <div className="mx-auto max-w-[1220px] px-4 py-20 text-center">
-              <p className="text-[18px] text-[#6B6B6B] mb-6">
+              <p className="text-[18px] text-[var(--color-muted-fg)] mb-6">
                 {t("pickBook.empty")}
               </p>
               <Link
                 href={lp("/products")}
-                className="inline-flex h-[56px] items-center gap-2 rounded-full bg-[#005B33] px-8 text-[18px] font-semibold text-[#f5f3ee] shadow-[0px_4px_12px_rgba(0,0,0,0.25)] transition-transform hover:scale-105"
+                className="inline-flex h-[56px] items-center gap-2 rounded-full bg-[var(--color-green)] px-8 text-[18px] font-semibold text-[var(--color-cream)] shadow-[0px_4px_12px_rgba(0,0,0,0.25)] transition-transform hover:scale-105"
               >
                 {t("pickBook.toCatalog")}
                 <span>→</span>

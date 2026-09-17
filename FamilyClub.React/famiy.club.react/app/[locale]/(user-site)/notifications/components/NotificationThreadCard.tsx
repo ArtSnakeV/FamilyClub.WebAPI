@@ -42,7 +42,7 @@ export default function NotificationThreadCard({
                             <img
                                 src={avatarSrc}
                                 alt={t("notifications.avatarAlt")}
-                                className="w-9 h-9 rounded-full object-cover border border-[#d4cbbd]"
+                                className="w-9 h-9 rounded-full object-cover border border-[var(--color-menu-separator)]"
                             />
                         ) : (
                             <div className="w-9 h-9 rounded-full bg-black/10 flex items-center justify-center text-sm font-bold text-black/70">
@@ -73,7 +73,7 @@ export default function NotificationThreadCard({
 
             {/* Bottom action link */}
             <div className="mt-1">
-                <span className="text-[13px] font-medium text-[#1e5631] hover:underline">
+                <span className="text-[13px] font-medium text-[var(--color-green)] hover:underline">
                     {t("notifications.view")}
                 </span>
             </div>

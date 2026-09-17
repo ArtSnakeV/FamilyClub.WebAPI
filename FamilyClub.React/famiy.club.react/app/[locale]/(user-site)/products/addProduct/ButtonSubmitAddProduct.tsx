@@ -45,10 +45,10 @@ export default function ButtonSubmitAddProduct({
           w-full h-[60px]
           rounded-[55px]
           border-2 border-[#005B3380]
-          text-[#005B33]
+          text-[var(--color-green)]
           bg-transparent
           transition-all duration-200
-          hover:bg-[#005B3310]
+          hover:bg-[color-mix(in_srgb,var(--color-green)_6%,transparent)]
           active:scale-[0.98]
         "
       >

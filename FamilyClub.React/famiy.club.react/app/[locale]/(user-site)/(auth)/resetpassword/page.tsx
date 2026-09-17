@@ -132,7 +132,7 @@ export default function ResetPasswordPage() {
             width: "50%",
             minWidth: "600px",
             background:
-              "linear-gradient(193.17deg, #C7A381 0%, #E0C3A9 54.33%, #B7895E 82.69%, #BF8D5D 100%)",
+              "linear-gradient(193.17deg, var(--color-wood-gradient-from) 0%, var(--color-wood-gradient-via) 54.33%, var(--color-border-warm) 82.69%, var(--color-wood-gradient-to, var(--color-border-warm)) 100%)",
             borderTopLeftRadius: "150px",
           }}
           className="relative h-screen shadow-[-20px_0_30px_rgba(0,0,0,0.3)] overflow-y-auto flex flex-col items-center px-8 py-12"
@@ -140,11 +140,11 @@ export default function ResetPasswordPage() {
           <button
             type="button"
             onClick={() => router.back()}
-            className="absolute z-10 w-[44px] h-[44px] rounded-full flex items-center justify-center text-[20px] transition-all hover:bg-[#F5F3EE] active:scale-95"
+            className="absolute z-10 w-[44px] h-[44px] rounded-full flex items-center justify-center text-[20px] transition-all hover:bg-[var(--background-elevated)] active:scale-95"
             style={{
               top: "70px",
               left: "65px",
-              backgroundColor: "#F5F3EE80",
+              backgroundColor: "color-mix(in srgb, var(--background-elevated) 50%, transparent)",
               color: "var(--color-black)",
               opacity: 0.5,
             }}
@@ -157,18 +157,18 @@ export default function ResetPasswordPage() {
             <AuthBrandLogo widthClassName="w-[180px]" />
 
             {error && (
-              <div className="bg-red-500/20 border border-red-500/50 rounded-[9px] px-4 py-2.5 text-center text-[#242424] font-medium text-[16px] w-full">
+              <div className="bg-red-500/20 border border-red-500/50 rounded-[9px] px-4 py-2.5 text-center text-[var(--foreground-primary)] font-medium text-[16px] w-full">
                 {error}
               </div>
             )}
             {info && !error && (
-              <div className="bg-[#005B33]/15 border border-[#005B33]/40 rounded-[9px] px-4 py-2.5 text-center text-[#242424] font-medium text-[16px] w-full">
+              <div className="bg-[color-mix(in_srgb,var(--color-green)_15%,transparent)] border border-[color-mix(in_srgb,var(--color-green)_40%,transparent)] rounded-[9px] px-4 py-2.5 text-center text-[var(--foreground-primary)] font-medium text-[16px] w-full">
                 {info}
               </div>
             )}
 
             <div className="flex flex-col gap-2 w-full">
-              <label className="text-[24px] font-semibold text-[#242424]">
+              <label className="text-[24px] font-semibold text-[var(--foreground-primary)]">
                 Email
               </label>
               <input
@@ -179,7 +179,7 @@ export default function ResetPasswordPage() {
                   setError("");
                 }}
                 placeholder={t("auth.emailOwnPlaceholder")}
-                className="bg-white h-[52px] w-full rounded-[9px] px-5 shadow-[0px_0px_10px_0px_rgba(0,0,0,0.2)] outline-none text-[18px] text-[#242424] placeholder:text-[#242424]/50"
+                className="bg-[var(--background-elevated)] h-[52px] w-full rounded-[9px] px-5 shadow-[0px_0px_10px_0px_rgba(0,0,0,0.2)] outline-none text-[18px] text-[var(--foreground-primary)] placeholder:text-[var(--color-muted-fg)]"
               />
             </div>
 
@@ -187,7 +187,7 @@ export default function ResetPasswordPage() {
               type="button"
               onClick={handleSendCode}
               disabled={loadingSend || !email.trim()}
-              className="bg-[#005B33] h-[52px] w-full rounded-[9px] shadow-[0px_0px_10px_0px_rgba(0,0,0,0.25)] text-[20px] text-white transition-all hover:brightness-110 active:scale-[0.98] disabled:opacity-70"
+              className="bg-[var(--color-green)] h-[52px] w-full rounded-[9px] shadow-[0px_0px_10px_0px_rgba(0,0,0,0.25)] text-[20px] text-white transition-all hover:brightness-110 active:scale-[0.98] disabled:opacity-70"
             >
               {loadingSend
                 ? t("auth.sending")
@@ -197,7 +197,7 @@ export default function ResetPasswordPage() {
             </button>
 
             <div className="flex flex-col items-center gap-4 w-full mt-2">
-              <label className="text-[24px] font-semibold text-[#242424]">
+              <label className="text-[24px] font-semibold text-[var(--foreground-primary)]">
                 {t("auth.enterCode")}
               </label>
               <div className="flex items-center justify-between gap-3 w-full max-w-[400px]">
@@ -214,14 +214,14 @@ export default function ResetPasswordPage() {
                     onChange={(e) => handleCodeChange(idx, e.target.value)}
                     onKeyDown={(e) => handleKeyDown(idx, e)}
                     onPaste={handlePaste}
-                    className="bg-white h-[72px] w-full max-w-[64px] rounded-[9px] shadow-[0px_0px_10px_0px_rgba(0,0,0,0.2)] text-center text-[28px] font-semibold text-[#242424] outline-none focus:ring-2 focus:ring-[#005b33]"
+                    className="bg-[var(--background-elevated)] h-[72px] w-full max-w-[64px] rounded-[9px] shadow-[0px_0px_10px_0px_rgba(0,0,0,0.2)] text-center text-[28px] font-semibold text-[var(--foreground-primary)] outline-none focus:ring-2 focus:ring-[var(--color-green)]"
                   />
                 ))}
               </div>
             </div>
 
             <div className="flex flex-col gap-2 w-full">
-              <label className="text-[24px] font-semibold text-[#242424]">
+              <label className="text-[24px] font-semibold text-[var(--foreground-primary)]">
                 {t("auth.newPassword")}
               </label>
               <input
@@ -232,12 +232,12 @@ export default function ResetPasswordPage() {
                   setError("");
                 }}
                 placeholder={t("auth.minSixChars")}
-                className="bg-white h-[52px] w-full rounded-[9px] px-5 shadow-[0px_0px_10px_0px_rgba(0,0,0,0.2)] outline-none text-[18px] text-[#242424] placeholder:text-[#242424]/50"
+                className="bg-[var(--background-elevated)] h-[52px] w-full rounded-[9px] px-5 shadow-[0px_0px_10px_0px_rgba(0,0,0,0.2)] outline-none text-[18px] text-[var(--foreground-primary)] placeholder:text-[var(--color-muted-fg)]"
               />
             </div>
 
             <div className="flex flex-col gap-2 w-full">
-              <label className="text-[24px] font-semibold text-[#242424]">
+              <label className="text-[24px] font-semibold text-[var(--foreground-primary)]">
                 {t("auth.confirmPassword")}
               </label>
               <input
@@ -248,7 +248,7 @@ export default function ResetPasswordPage() {
                   setError("");
                 }}
                 placeholder={t("auth.repeatPassword")}
-                className="bg-white h-[52px] w-full rounded-[9px] px-5 shadow-[0px_0px_10px_0px_rgba(0,0,0,0.2)] outline-none text-[18px] text-[#242424] placeholder:text-[#242424]/50"
+                className="bg-[var(--background-elevated)] h-[52px] w-full rounded-[9px] px-5 shadow-[0px_0px_10px_0px_rgba(0,0,0,0.2)] outline-none text-[18px] text-[var(--foreground-primary)] placeholder:text-[var(--color-muted-fg)]"
               />
             </div>
 
@@ -257,7 +257,7 @@ export default function ResetPasswordPage() {
                 type="button"
                 onClick={handleConfirm}
                 disabled={loadingConfirm}
-                className="bg-[#005B33] h-[52px] w-full rounded-[9px] shadow-[0px_0px_10px_0px_rgba(0,0,0,0.25)] text-[20px] text-white transition-all hover:brightness-110 active:scale-[0.98] disabled:opacity-70"
+                className="bg-[var(--color-green)] h-[52px] w-full rounded-[9px] shadow-[0px_0px_10px_0px_rgba(0,0,0,0.25)] text-[20px] text-white transition-all hover:brightness-110 active:scale-[0.98] disabled:opacity-70"
               >
                 {loadingConfirm ? t("auth.saving") : t("auth.changePassword")}
               </button>
@@ -266,17 +266,17 @@ export default function ResetPasswordPage() {
                 type="button"
                 onClick={() => router.push("/login")}
                 disabled={loadingConfirm}
-                className="border-2 border-[#005B33] bg-transparent h-[52px] w-full rounded-[9px] shadow-[0px_0px_10px_0px_rgba(0,0,0,0.2)] text-[20px] text-[#005B33] transition-all hover:bg-[#005B33]/10 active:scale-[0.98] disabled:opacity-70"
+                className="border-2 border-[var(--color-green)] bg-transparent h-[52px] w-full rounded-[9px] shadow-[0px_0px_10px_0px_rgba(0,0,0,0.2)] text-[20px] text-[var(--color-green)] transition-all hover:bg-[color-mix(in_srgb,var(--color-green)_10%,transparent)] active:scale-[0.98] disabled:opacity-70"
               >
                 {t("auth.cancel")}
               </button>
             </div>
 
-            <p className="text-[#242424] text-[18px] mt-4 text-center">
+            <p className="text-[var(--foreground-primary)] text-[18px] mt-4 text-center">
               {t("auth.rememberedPassword")}{" "}
               <Link
                 href={lp("/login")}
-                className="text-[#005B33] font-semibold hover:underline"
+                className="text-[var(--color-green)] font-semibold hover:underline"
               >
                 {t("auth.signIn")}
               </Link>

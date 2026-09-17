@@ -106,7 +106,7 @@ export default function Bookshelf({
 
                 <div
                   style={{ boxShadow: "0px 10px 10px 0px #2424244D" }}
-                  className="w-[250px] h-[460px] bg-white rounded-b-[30px] flex flex-col items-center"
+                  className="w-[250px] h-[460px] bg-[var(--background-elevated)] rounded-b-[30px] flex flex-col items-center"
                 >
                   {imageSrc ? (
                     <img

@@ -182,7 +182,15 @@ export default async function AdminLayout({
  
   return (
     
-    <html lang="uk" className={`${sourceSans.variable} ${robotoMono.variable}`}>
+    <html lang="uk" className={`${sourceSans.variable} ${robotoMono.variable}`} suppressHydrationWarning>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "(function(){try{var t=localStorage.getItem('librellis-theme');if(t==='ink-night')document.documentElement.setAttribute('data-theme','ink-night');}catch(e){}})();",
+          }}
+        />
+      </head>
       <body style={{ margin: 0, padding: 0, backgroundColor: "#DBD7CD" }}>
         <AdminProviders>
         <PresenceHeartbeatMount />

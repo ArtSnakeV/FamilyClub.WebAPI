@@ -69,12 +69,12 @@ export default function MobileAuthView() {
   };
 
   return (
-    <div className="flex md:hidden fixed inset-0 z-[100] bg-[#c7a381] flex-col justify-between items-center py-6 px-5 overflow-y-auto min-h-screen font-sans">
+    <div className="flex md:hidden fixed inset-0 z-[100] bg-[var(--color-wood)] flex-col justify-between items-center py-6 px-5 overflow-y-auto min-h-screen font-sans">
       <div className="w-full flex justify-start pt-2 px-1 max-w-[372px]">
         <button
           type="button"
           onClick={() => router.back()}
-          className="w-[40px] h-[40px] rounded-full bg-[#f5f3ee]/50 flex items-center justify-center text-[20px] text-[#242424] hover:bg-[#f5f3ee] transition-colors active:scale-95 shadow-sm"
+          className="w-[40px] h-[40px] rounded-full bg-[color-mix(in_srgb,var(--background-elevated)_50%,transparent)] flex items-center justify-center text-[20px] text-[var(--foreground-primary)] hover:bg-[var(--background-elevated)] transition-colors active:scale-95 shadow-sm"
           aria-label={t("auth.backAria")}
         >
           ←
@@ -88,16 +88,16 @@ export default function MobileAuthView() {
         className="w-full max-w-[372px] flex flex-col gap-[15px] my-auto"
       >
         {error && (
-          <div className="bg-red-500/20 border border-red-500/50 rounded-[9px] px-4 py-2.5 text-center text-[#242424] font-medium text-[15px]">
+          <div className="bg-red-500/20 border border-red-500/50 rounded-[9px] px-4 py-2.5 text-center text-[var(--foreground-primary)] font-medium text-[15px]">
             {error}
           </div>
         )}
 
         <div className="flex flex-col gap-[10px] w-full">
-          <label className="text-[20px] font-semibold text-[#242424]">
+          <label className="text-[20px] font-semibold text-[var(--foreground-primary)]">
             {t("auth.email")}
           </label>
-          <div className="bg-white h-[50px] w-full rounded-[9px] px-[20px] drop-shadow-[0px_0px_5px_rgba(0,0,0,0.25)] flex items-center">
+          <div className="bg-[var(--background-elevated)] h-[50px] w-full rounded-[9px] px-[20px] drop-shadow-[0px_0px_5px_rgba(0,0,0,0.25)] flex items-center">
             <input
               type="email"
               autoComplete="email"
@@ -106,24 +106,24 @@ export default function MobileAuthView() {
                 setFormData({ ...formData, login: e.target.value })
               }
               placeholder={t("auth.emailPlaceholder")}
-              className="w-full bg-transparent outline-none text-[16px] text-[#242424] placeholder:text-[#242424]/50"
+              className="w-full bg-transparent outline-none text-[16px] text-[var(--foreground-primary)] placeholder:text-[var(--color-muted-fg)]"
             />
           </div>
         </div>
 
         <div className="flex flex-col gap-[10px] w-full">
           <div className="flex items-end justify-between w-full">
-            <label className="text-[20px] font-semibold text-[#242424]">
+            <label className="text-[20px] font-semibold text-[var(--foreground-primary)]">
               {t("auth.password")}
             </label>
             <Link
               href={lp("/forgot-password")}
-              className="text-[14px] text-[#242424] hover:underline"
+              className="text-[14px] text-[var(--foreground-primary)] hover:underline"
             >
               {t("auth.forgotPassword")}
             </Link>
           </div>
-          <div className="bg-white h-[50px] w-full rounded-[9px] px-[20px] drop-shadow-[0px_0px_5px_rgba(0,0,0,0.25)] flex items-center justify-between gap-2">
+          <div className="bg-[var(--background-elevated)] h-[50px] w-full rounded-[9px] px-[20px] drop-shadow-[0px_0px_5px_rgba(0,0,0,0.25)] flex items-center justify-between gap-2">
             <input
               type={isPasswordVisible ? "text" : "password"}
               value={formData.password}
@@ -131,7 +131,7 @@ export default function MobileAuthView() {
                 setFormData({ ...formData, password: e.target.value })
               }
               placeholder={t("auth.passwordPlaceholder")}
-              className="w-full bg-transparent outline-none text-[16px] text-[#242424] placeholder:text-[#242424]/50"
+              className="w-full bg-transparent outline-none text-[16px] text-[var(--foreground-primary)] placeholder:text-[var(--color-muted-fg)]"
             />
             <button
               type="button"
@@ -163,47 +163,47 @@ export default function MobileAuthView() {
             type="checkbox"
             checked={rememberMe}
             onChange={(e) => setRememberMe(e.target.checked)}
-            className="w-4 h-4 accent-[#005b33]"
+            className="w-4 h-4 accent-[var(--color-green)]"
           />
-          <span className="text-[15px] text-[#242424]">{t("auth.rememberMe")}</span>
+          <span className="text-[15px] text-[var(--foreground-primary)]">{t("auth.rememberMe")}</span>
         </label>
 
         <button
           type="submit"
           disabled={loading}
-          className="mt-1 bg-[#005b33] h-[50px] w-full rounded-[9px] drop-shadow-[0px_0px_5px_rgba(0,0,0,0.25)] flex items-center justify-center text-[20px] text-white transition-all hover:brightness-110 active:scale-[0.98] disabled:opacity-70"
+          className="mt-1 bg-[var(--color-green)] h-[50px] w-full rounded-[9px] drop-shadow-[0px_0px_5px_rgba(0,0,0,0.25)] flex items-center justify-center text-[20px] text-white transition-all hover:brightness-110 active:scale-[0.98] disabled:opacity-70"
         >
           {loading ? t("auth.loading") : t("auth.signIn")}
         </button>
 
         <div className="flex items-center justify-between gap-4 w-full my-1">
-          <div className="flex-1 h-px bg-[#242424]" />
-          <span className="text-[18px] text-[#242424]">{t("auth.or")}</span>
-          <div className="flex-1 h-px bg-[#242424]" />
+          <div className="flex-1 h-px bg-[var(--foreground-primary)]" />
+          <span className="text-[18px] text-[var(--foreground-primary)]">{t("auth.or")}</span>
+          <div className="flex-1 h-px bg-[var(--foreground-primary)]" />
         </div>
 
         <button
           type="button"
           onClick={() => handleExternalLogin("Google")}
-          className="bg-white h-[50px] w-full rounded-[9px] drop-shadow-[0px_0px_5px_rgba(0,0,0,0.25)] flex items-center justify-center gap-[15px] hover:brightness-95 active:scale-[0.98]"
+          className="bg-[var(--background-elevated)] h-[50px] w-full rounded-[9px] drop-shadow-[0px_0px_5px_rgba(0,0,0,0.25)] flex items-center justify-center gap-[15px] hover:brightness-95 active:scale-[0.98]"
         >
           <img
             src="/images/Layout/Footer/GoogleBrandIcon.svg"
             alt="Google"
             className="w-[28px] h-[28px] object-contain"
           />
-          <span className="text-[18px] text-[#242424]">
+          <span className="text-[18px] text-[var(--foreground-primary)]">
             {t("auth.continueGoogle")}
           </span>
         </button>
       </form>
 
       <div className="w-full max-w-[392px] text-center mt-6 mb-4">
-        <p className="text-[#242424] text-[15px]">
+        <p className="text-[var(--foreground-primary)] text-[15px]">
           {t("auth.noAccount")}{" "}
           <Link
             href={lp("/register")}
-            className="text-[#005b33] font-semibold hover:underline"
+            className="text-[var(--color-green)] font-semibold hover:underline"
           >
             {t("auth.register")}
           </Link>

@@ -32,10 +32,10 @@ export default function BookSection({ title, books, showMore = false, showMoreHr
 
     return (
         <section
-            className="relative w-full overflow-hidden pt-0 pb-0"
+            className="relative z-0 w-full overflow-x-clip pt-0 pb-0"
             style={{
                 backgroundImage:
-                    "linear-gradient(180.074deg, rgba(36, 36, 36, 0.2) 0.24409%, rgba(36, 36, 36, 0) 17.892%), linear-gradient(180.074deg, rgba(36, 36, 36, 0.5) 9.5072%, rgba(36, 36, 36, 0) 49.996%), linear-gradient(90deg, var(--background-main) 0%, var(--background-main) 100%)",
+                    "linear-gradient(180.074deg, color-mix(in srgb, var(--foreground-primary) 12%, transparent) 0.24409%, transparent 17.892%), linear-gradient(180.074deg, color-mix(in srgb, var(--foreground-primary) 22%, transparent) 9.5072%, transparent 49.996%), linear-gradient(90deg, var(--background-main) 0%, var(--background-main) 100%)",
             }}
         >
             <div className="relative z-10 h-[105px] w-full shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] bg-[var(--color-shelf)]">

@@ -18,7 +18,7 @@ export default async function CatalogPage({
     <Suspense
       fallback={
         <div className="w-full min-h-screen bg-[var(--background-main)] pt-[200px] flex justify-center">
-          <p className="font-mono text-[#6B6B6B]">{dictionary.catalog.loadingPage}</p>
+          <p className="font-mono text-[var(--color-muted-fg)]">{dictionary.catalog.loadingPage}</p>
         </div>
       }
     >

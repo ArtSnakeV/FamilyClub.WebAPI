@@ -76,11 +76,11 @@ export default function DropDownPrice() {
           }}
           className="absolute pointer-events-auto inset-0 flex justify-center items-end mb-[56px] z-10"
         >
-          <span className="text-[#F5F3EE]">{t("header.price")}</span>
+          <span className="text-[var(--color-cream)]">{t("header.price")}</span>
         </button>
 
         {open && (
-          <div className="absolute pointer-events-auto z-20 top-[42px] w-full flex justify-center text-[var(--color-white)]">
+          <div className="absolute pointer-events-auto z-20 top-[42px] w-full flex justify-center text-[var(--color-cream)]">
             {/* MAIN CONTAINER */}
             <div className="mt-[40px] w-[100px] flex flex-col items-center gap-3">
               {/* FROM */}
@@ -96,7 +96,7 @@ export default function DropDownPrice() {
                   aria-label={t("header.priceFromAria")}
                   value={from}
                   onChange={(e) => setFrom(e.target.value)}
-                  className="absolute inset-0 w-full h-full bg-transparent px-4 text-[#272727] text-[12px]"
+                  className="absolute inset-0 w-full h-full bg-transparent px-4 text-[var(--color-black)] text-[12px]"
                 />
               </div>
 
@@ -113,7 +113,7 @@ export default function DropDownPrice() {
                   aria-label={t("header.priceToAria")}
                   value={to}
                   onChange={(e) => setTo(e.target.value)}
-                  className="absolute inset-0 w-full h-full bg-transparent px-4 text-[#272727] text-[12px]"
+                  className="absolute inset-0 w-full h-full bg-transparent px-4 text-[var(--color-black)] text-[12px]"
                 />
               </div>
 
@@ -140,7 +140,7 @@ export default function DropDownPrice() {
                   />
                 </button>
 
-                <span className="text-[13px] text-white"
+                <span className="text-[13px] text-[var(--color-cream)]"
                   onClick={goToPromotions}
                 >{t("header.promos")}
                 </span>

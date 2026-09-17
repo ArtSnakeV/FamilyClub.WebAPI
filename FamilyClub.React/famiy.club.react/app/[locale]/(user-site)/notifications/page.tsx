@@ -123,10 +123,10 @@ export default function NotificationsPage() {
         activeTab === "all" || activeTab === "messages";
 
     return (
-        <div className="w-full min-h-screen bg-[#f5f3ee] text-[#242424] font-sans overflow-x-hidden">
+        <div className="w-full min-h-screen bg-[var(--background-elevated)] text-[var(--foreground-primary)] font-sans overflow-x-hidden">
             {/* MOBILE NOTIFICATIONS VIEW (Figma Node 2199:4838 "Сповіщення" 1-to-1 spec) */}
             <div className="block md:hidden pt-[75px] pb-[100px] px-3 sm:px-4 max-w-[480px] mx-auto">
-                <h1 className="font-mono text-[28px] font-bold text-[#242424] mb-3 leading-tight">
+                <h1 className="font-mono text-[28px] font-bold text-[var(--foreground-primary)] mb-3 leading-tight">
                     {t("notifications.title")}
                 </h1>
 
@@ -139,8 +139,8 @@ export default function NotificationsPage() {
                             onClick={() => setActiveTab(tabId)}
                             className={`px-4 py-2 rounded-full font-sans text-[14px] font-semibold transition-all shrink-0 shadow-sm ${
                                 activeTab === tabId
-                                    ? "bg-[#005B33] text-white shadow-md"
-                                    : "bg-white/80 text-[#242424] border border-gray-300 hover:bg-white"
+                                    ? "bg-[var(--color-green)] text-white shadow-md"
+                                    : "bg-[var(--background-elevated)]/80 text-[var(--foreground-primary)] border border-gray-300 hover:bg-[var(--background-elevated)]"
                             }`}
                         >
                             {t(`notifications.tabs.${tabId}`)}
@@ -169,12 +169,12 @@ export default function NotificationsPage() {
                                 <button
                                     type="button"
                                     onClick={handleOpenThread}
-                                    className="w-full text-left p-4 rounded-2xl bg-white shadow-[0_2px_12px_rgba(0,0,0,0.1)] hover:bg-gray-50 transition border border-gray-200"
+                                    className="w-full text-left p-4 rounded-2xl bg-[var(--background-elevated)] shadow-[0_2px_12px_rgba(0,0,0,0.1)] hover:bg-gray-50 transition border border-gray-200"
                                 >
                                     <div className="flex items-center gap-3">
                                         <span className="text-2xl">✉️</span>
                                         <div>
-                                            <p className="font-bold text-[15px] text-[#242424]">{t("notifications.writeAdminShort")}</p>
+                                            <p className="font-bold text-[15px] text-[var(--foreground-primary)]">{t("notifications.writeAdminShort")}</p>
                                             <p className="text-[12px] text-gray-500">{t("notifications.writeAdminHint")}</p>
                                         </div>
                                     </div>
@@ -239,7 +239,7 @@ export default function NotificationsPage() {
                                             <button
                                                 type="button"
                                                 onClick={handleOpenThread}
-                                                className="text-left w-[80%] p-4 rounded-2xl bg-white/70 hover:bg-white shadow-[0_0_20px_rgba(80,137,190,0.6)] transition text-black/70"
+                                                className="text-left w-[80%] p-4 rounded-2xl bg-[var(--background-elevated)]/70 hover:bg-[var(--background-elevated)] shadow-[0_0_20px_rgba(80,137,190,0.6)] transition text-black/70"
                                             >
                                                 {t("notifications.writeAdmin")}
                                             </button>
@@ -275,7 +275,7 @@ export default function NotificationsPage() {
                                             <button
                                                 type="button"
                                                 onClick={handleOpenThread}
-                                                className="text-left w-[30%] p-4 rounded-2xl bg-white/70 hover:bg-white shadow-[0_0_20px_rgba(80,137,190,0.6)] transition text-black/70"
+                                                className="text-left w-[30%] p-4 rounded-2xl bg-[var(--background-elevated)]/70 hover:bg-[var(--background-elevated)] shadow-[0_0_20px_rgba(80,137,190,0.6)] transition text-black/70"
                                             >
                                                 {t("notifications.writeAdmin")}
                                             </button>

@@ -63,12 +63,12 @@ export default function DropDownFormat() {
           }}
           className="absolute pointer-events-auto inset-0 flex justify-center items-end mb-[56px] z-10"
         >
-          <span className="text-[var(--color-white)]">{t("header.formats")}</span>
+          <span className="text-[var(--color-cream)]">{t("header.formats")}</span>
         </button>
 
         {/* DROPDOWN */}
         {open && (
-          <div className="absolute pointer-events-auto z-20 items-center top-[42px] w-full flex justify-center text-[var(--color-white)]">
+          <div className="absolute pointer-events-auto z-20 items-center top-[42px] w-full flex justify-center text-[var(--color-cream)]">
             <div className="relative items-left mt-[50px] ml-2 w-[110px] flex flex-col gap-2">
               {formats.map((f) => {
                 const isSelected = selectedFormat === f.id;

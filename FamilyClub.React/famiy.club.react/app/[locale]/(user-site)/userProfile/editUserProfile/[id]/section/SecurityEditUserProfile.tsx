@@ -28,7 +28,7 @@ export default function SecurityEditUserProfile({ userId, userEmail }: Props) {
     const [showNewPassword, setShowNewPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-    const inputClass = "w-full h-[52px] px-4 rounded-[8px] border border-gray-200 bg-[#f5f5f5] text-[15px] outline-none focus:border-[#005B33]";
+    const inputClass = "w-full h-[52px] px-4 rounded-[8px] border border-gray-200 bg-[var(--background-elevated)] text-[15px] outline-none focus:border-[var(--color-green)]";
     const inputStyle = { boxShadow: "0px 0px 10px 0px #00000040" };
 
     return (
@@ -117,7 +117,7 @@ export default function SecurityEditUserProfile({ userId, userEmail }: Props) {
                 <button
                     type="button"
                     onClick={handleChangePassword}
-                    className="flex items-center justify-center gap-2 w-full h-[52px] bg-[#005B33] text-white text-[20px] font-semibold rounded-[8px] hover:bg-[#097E4B] transition-colors"
+                    className="flex items-center justify-center gap-2 w-full h-[52px] bg-[var(--color-green)] text-white text-[20px] font-semibold rounded-[8px] hover:bg-[color-mix(in_srgb,var(--color-green)_85%,black)] transition-colors"
                 >
                     <img
                         src="/images/userProfile/editUserProfile/lock-solid-full 1.png"
@@ -129,7 +129,7 @@ export default function SecurityEditUserProfile({ userId, userEmail }: Props) {
 
                 <button
                     type="button"
-                    className="flex items-center justify-center w-full h-[52px] border-2 border-[#005B33] text-[#005B33] text-[20px] font-semibold rounded-[8px] hover:bg-[#f0f9f4] transition-colors"
+                    className="flex items-center justify-center w-full h-[52px] border-2 border-[var(--color-green)] text-[var(--color-green)] text-[20px] font-semibold rounded-[8px] hover:bg-[color-mix(in_srgb,var(--color-green)_12%,transparent)] transition-colors"
                 >
                     {t("profileEdit.twoFactor")}
                 </button>

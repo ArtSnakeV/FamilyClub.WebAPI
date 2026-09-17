@@ -41,7 +41,7 @@ export default function PrivacyAndAgeUserProfile({ onDateChange, initialDate }: 
         date.setFullYear(Number(year));
         onDateChange(date);
     };
-    const inputClass = "w-[70px] h-[44px] text-center rounded-[8px] border border-gray-200 bg-[#f5f5f5] text-[18px] outline-none focus:border-[#005B33]";
+    const inputClass = "w-[70px] h-[44px] text-center rounded-[8px] border border-gray-200 bg-[var(--background-elevated)] text-[18px] outline-none focus:border-[var(--color-green)]";
     const inputStyle = { boxShadow: "0px 0px 10px 0px #00000040" };
 
     const ToggleCircle = ({ value, onToggle }: { value: boolean; onToggle: () => void }) => (
@@ -118,7 +118,7 @@ export default function PrivacyAndAgeUserProfile({ onDateChange, initialDate }: 
                                     const year = e.target.value.replace(/\D/g, "");
                                     handleDateChange({ ...dateOfBirth, year });
                                 }}
-                                className="w-[90px] h-[44px] text-center rounded-[8px] border border-gray-200 bg-[#f5f5f5] text-[18px] outline-none focus:border-[#005B33]"
+                                className="w-[90px] h-[44px] text-center rounded-[8px] border border-gray-200 bg-[var(--background-elevated)] text-[18px] outline-none focus:border-[var(--color-green)]"
                                 style={inputStyle}
                             />
                         </div>

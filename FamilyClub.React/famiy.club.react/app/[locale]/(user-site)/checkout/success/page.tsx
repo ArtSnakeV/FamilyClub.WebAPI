@@ -31,7 +31,7 @@ export default function CheckoutSuccessPage() {
           <span className={styles.successIcon}>✅</span>
           <h2 className={styles.successTitle}>{t("checkout.paidTitle")}</h2>
           <p className={styles.successText}>{paidText}</p>
-          <p className="text-sm text-[#666666] mt-2">{t("checkout.paidPendingNote")}</p>
+          <p className="text-sm text-[var(--color-muted-fg)] mt-2">{t("checkout.paidPendingNote")}</p>
           <div className="flex items-center gap-3 justify-center mt-4 flex-wrap">
             <button
               className={styles.successBtn}
@@ -41,7 +41,7 @@ export default function CheckoutSuccessPage() {
               {t("checkout.myOrders")}
             </button>
             <button
-              className="bg-[#E5E0D5] hover:bg-[#D8D2C5] text-[#242424] px-6 py-3 rounded-xl font-medium transition"
+              className="bg-[var(--color-menu-hover)] hover:bg-[var(--color-menu-hover)] text-[var(--foreground-primary)] px-6 py-3 rounded-xl font-medium transition"
               onClick={() => router.push(lp("/"))}
               type="button"
             >

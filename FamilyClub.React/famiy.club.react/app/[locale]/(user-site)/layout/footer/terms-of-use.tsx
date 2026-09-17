@@ -15,12 +15,12 @@ function Section({
   return (
     <section className="mt-8 first:mt-0">
       <h2
-        className="text-[20px] md:text-[24px] font-bold text-[#1F1F1F] mb-4 tracking-tight"
+        className="text-[20px] md:text-[24px] font-bold text-[var(--foreground-primary)] mb-4 tracking-tight"
         style={{ fontFamily: "var(--font-lora), Georgia, serif" }}
       >
         {title}
       </h2>
-      <div className="text-[15px] md:text-[16px] leading-relaxed text-[#2A2A2A] space-y-3">
+      <div className="text-[15px] md:text-[16px] leading-relaxed text-[var(--foreground-primary)] space-y-3">
         {children}
       </div>
     </section>
@@ -36,7 +36,7 @@ function Term({
 }) {
   return (
     <p>
-      <strong className="text-[#1F1F1F]">{name}</strong> — {children}
+      <strong className="text-[var(--foreground-primary)]">{name}</strong> — {children}
     </p>
   );
 }
@@ -65,7 +65,7 @@ export default function TermsOfUse() {
 
       <div className="relative mx-auto w-full max-w-[900px]">
         <article
-          className="relative text-[#242424] px-8 sm:px-12 md:px-16 lg:px-20 pt-10 md:pt-12 pb-12 md:pb-16"
+          className="relative text-[var(--foreground-primary)] px-8 sm:px-12 md:px-16 lg:px-20 pt-10 md:pt-12 pb-12 md:pb-16"
           style={{
             backgroundImage:
               "url('/images/Layout/Footer/long_background.png')",
@@ -78,13 +78,13 @@ export default function TermsOfUse() {
             <button
               type="button"
               onClick={() => router.back()}
-              className="absolute left-0 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full flex items-center justify-center text-[22px] text-[#242424]/70 hover:bg-black/5 transition"
+              className="absolute left-0 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full flex items-center justify-center text-[22px] text-[var(--color-muted-fg)] hover:bg-black/5 transition"
               aria-label={content.backAria}
             >
               ←
             </button>
             <h1
-              className="text-[26px] sm:text-[32px] md:text-[40px] font-bold text-[#1F1F1F] tracking-tight text-center px-10"
+              className="text-[26px] sm:text-[32px] md:text-[40px] font-bold text-[var(--foreground-primary)] tracking-tight text-center px-10"
               style={{ fontFamily: "var(--font-lora), Georgia, serif" }}
             >
               {content.title}

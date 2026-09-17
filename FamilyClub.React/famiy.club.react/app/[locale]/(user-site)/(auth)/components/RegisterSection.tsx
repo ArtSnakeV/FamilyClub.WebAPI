@@ -242,7 +242,7 @@ export default function RegisterSection({ onGoToLogin }: RegisterSectionProps) {
               height: "44px",
               borderTopLeftRadius: "9px",
               borderBottomLeftRadius: isDropdownOpen ? "0px" : "9px",
-              background: "#F5F3EE",
+              background: "var(--background-elevated)",
               boxShadow: "0px 0px 10px 0px #00000040",
               display: "flex",
               alignItems: "center",
@@ -263,7 +263,7 @@ export default function RegisterSection({ onGoToLogin }: RegisterSectionProps) {
                 height: 0,
                 borderLeft: "5px solid transparent",
                 borderRight: "5px solid transparent",
-                borderTop: "7px solid #242424",
+                borderTop: "7px solid var(--foreground-primary)",
                 transform: isDropdownOpen ? "rotate(180deg)" : "rotate(0deg)",
                 transition: "transform 0.2s",
               }}
@@ -280,7 +280,7 @@ export default function RegisterSection({ onGoToLogin }: RegisterSectionProps) {
               height: "44px",
               borderTopRightRadius: "9px",
               borderBottomRightRadius: "9px",
-              background: "#F5F3EE",
+              background: "var(--background-elevated)",
               boxShadow: "0px 0px 10px 0px #00000040",
               padding: "8px 16px",
               fontFamily: "var(--font-sans)",
@@ -303,7 +303,7 @@ export default function RegisterSection({ onGoToLogin }: RegisterSectionProps) {
                 top: "44px",
                 left: 0,
                 width: "118px",
-                backgroundColor: "#F5F3EE",
+                backgroundColor: "var(--background-elevated)",
                 borderBottomLeftRadius: "9px",
                 borderBottomRightRadius: "9px",
                 boxShadow: "0px 10px 10px 0px #00000040",
@@ -371,7 +371,7 @@ export default function RegisterSection({ onGoToLogin }: RegisterSectionProps) {
             height: "44px",
             borderRadius: "9px",
             padding: "8px 16px",
-            backgroundColor: "#F5F3EE",
+            backgroundColor: "var(--background-elevated)",
             boxShadow: "0px 0px 10px 0px #00000040",
             outline: "none",
             border: "none",
@@ -392,7 +392,7 @@ export default function RegisterSection({ onGoToLogin }: RegisterSectionProps) {
             fontWeight: 600,
             fontSize: "17px",
             lineHeight: "100%",
-            color: "#242424",
+            color: "var(--foreground-primary)",
           }}
         >
           {t("auth.passwordRequired")}
@@ -402,7 +402,7 @@ export default function RegisterSection({ onGoToLogin }: RegisterSectionProps) {
             fontWeight: 400,
             fontSize: "13px",
             lineHeight: "120%",
-            color: "#242424",
+            color: "var(--foreground-primary)",
             marginTop: "2px",
           }}
         >
@@ -416,7 +416,7 @@ export default function RegisterSection({ onGoToLogin }: RegisterSectionProps) {
               placeholder={t("auth.passwordPlaceholder")}
               value={formData.password}
               onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-              className="w-full h-full rounded-[9px] px-4 py-[8px] pr-[50px] bg-[#F5F3EE] shadow-[0px_0px_10px_0px_#00000040] outline-none text-[18px] leading-[150%] tracking-[-0.011em]"
+              className="w-full h-full rounded-[9px] px-4 py-[8px] pr-[50px] bg-[var(--background-elevated)] shadow-[0px_0px_10px_0px_#00000040] outline-none text-[18px] leading-[150%] tracking-[-0.011em]"
             />
             <button
               type="button"
@@ -449,7 +449,7 @@ export default function RegisterSection({ onGoToLogin }: RegisterSectionProps) {
               onChange={(e) =>
                 setFormData({ ...formData, confirmPassword: e.target.value })
               }
-              className="w-full h-full rounded-[9px] px-4 py-[8px] pr-[50px] bg-[#F5F3EE] shadow-[0px_0px_10px_0px_#00000040] outline-none text-[18px] leading-[150%] tracking-[-0.011em]"
+              className="w-full h-full rounded-[9px] px-4 py-[8px] pr-[50px] bg-[var(--background-elevated)] shadow-[0px_0px_10px_0px_#00000040] outline-none text-[18px] leading-[150%] tracking-[-0.011em]"
             />
             <button
               type="button"
@@ -500,7 +500,7 @@ export default function RegisterSection({ onGoToLogin }: RegisterSectionProps) {
               width: "18px",
               height: "18px",
               borderRadius: "50%",
-              border: "2.5px solid #242424",
+              border: "2.5px solid var(--foreground-primary)",
               backgroundColor: "transparent",
               display: "flex",
               alignItems: "center",
@@ -514,7 +514,7 @@ export default function RegisterSection({ onGoToLogin }: RegisterSectionProps) {
                   position: "absolute",
                   width: "8px",
                   height: "16px",
-                  border: "solid #242424",
+                  border: "solid var(--foreground-primary)",
                   borderWidth: "0 3px 3px 0",
                   transform: "rotate(45deg)",
                   top: "0px",
@@ -533,7 +533,7 @@ export default function RegisterSection({ onGoToLogin }: RegisterSectionProps) {
             fontSize: "17px",
             lineHeight: "140%",
             letterSpacing: "-0.011em",
-            color: "#242424",
+            color: "var(--foreground-primary)",
             cursor: "pointer",
             userSelect: "none",
           }}
@@ -551,7 +551,7 @@ export default function RegisterSection({ onGoToLogin }: RegisterSectionProps) {
           fontWeight: 400,
           fontSize: "13px",
           lineHeight: "125%",
-          color: "#242424",
+          color: "var(--foreground-primary)",
           opacity: 0.85,
         }}
       >
@@ -572,7 +572,7 @@ export default function RegisterSection({ onGoToLogin }: RegisterSectionProps) {
           width: "460px",
           height: "44px",
           marginTop: "8px",
-          backgroundColor: "#005B33",
+          backgroundColor: "var(--color-green)",
           borderRadius: "50px",
           padding: "8px 20px",
           display: "flex",
@@ -593,7 +593,7 @@ export default function RegisterSection({ onGoToLogin }: RegisterSectionProps) {
             fontSize: "19px",
             lineHeight: "150%",
             letterSpacing: "-0.011em",
-            color: "#F5F3EE",
+            color: "var(--color-cream)",
           }}
         >
           {loading ? t("auth.loading") : t("auth.registerSubmit")}
@@ -601,17 +601,17 @@ export default function RegisterSection({ onGoToLogin }: RegisterSectionProps) {
       </button>
 
       <div className="flex items-center justify-center w-full py-0.5 gap-4 my-1.5" style={{ width: "460px" }}>
-        <div className="flex-1 border-t border-[#242424]/40" />
-        <span className="font-sans text-[16px] text-[#242424] whitespace-nowrap">
+        <div className="flex-1 border-t border-[var(--foreground-primary)]/40" />
+        <span className="font-sans text-[16px] text-[var(--foreground-primary)] whitespace-nowrap">
           {t("auth.or")}
         </span>
-        <div className="flex-1 border-t border-[#242424]/40" />
+        <div className="flex-1 border-t border-[var(--foreground-primary)]/40" />
       </div>
 
       <button
         type="button"
         onClick={() => handleExternalLogin("Google")}
-        className="w-full rounded-[9px] bg-white shadow-[0px_0px_10px_0px_#00000033] flex items-center justify-center gap-3 border-0 cursor-pointer hover:brightness-95 active:scale-[0.98] transition"
+        className="w-full rounded-[9px] bg-[var(--background-elevated)] shadow-[0px_0px_10px_0px_#00000033] flex items-center justify-center gap-3 border-0 cursor-pointer hover:brightness-95 active:scale-[0.98] transition"
         style={{ width: "460px", height: "42px", marginBottom: "6px" }}
       >
         <img
@@ -619,7 +619,7 @@ export default function RegisterSection({ onGoToLogin }: RegisterSectionProps) {
           alt="Google"
           className="w-[20px] h-[20px] object-contain"
         />
-        <span className="font-sans text-[17px] text-[#242424]">
+        <span className="font-sans text-[17px] text-[var(--foreground-primary)]">
           {t("auth.continueGoogle")}
         </span>
       </button>
@@ -642,7 +642,7 @@ export default function RegisterSection({ onGoToLogin }: RegisterSectionProps) {
             lineHeight: "150%",
             letterSpacing: "-0.011em",
             textAlign: "center",
-            color: "#242424",
+            color: "var(--foreground-primary)",
             margin: 0,
           }}
         >
@@ -652,7 +652,7 @@ export default function RegisterSection({ onGoToLogin }: RegisterSectionProps) {
             onClick={onGoToLogin}
             style={{
               cursor: "pointer",
-              color: "#005B33",
+              color: "var(--color-green)",
               fontWeight: 700,
               background: "none",
               border: "none",
@@ -674,7 +674,7 @@ export default function RegisterSection({ onGoToLogin }: RegisterSectionProps) {
           opacity: 0.5;
         }
         .country-hover-item:hover {
-          background-color: #e0c3a9;
+          background-color: var(--color-menu-hover);
         }
         @keyframes tickPop {
           from {

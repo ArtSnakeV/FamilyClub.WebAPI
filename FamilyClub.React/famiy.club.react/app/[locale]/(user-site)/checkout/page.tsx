@@ -415,7 +415,7 @@ export default function CheckoutPage() {
                 {t("checkout.myOrders")}
               </button>
               <button
-                className="bg-[#E5E0D5] hover:bg-[#D8D2C5] text-[#242424] px-6 py-3 rounded-xl font-medium transition"
+                className="bg-[var(--color-menu-hover)] hover:bg-[var(--color-menu-hover)] text-[var(--foreground-primary)] px-6 py-3 rounded-xl font-medium transition"
                 onClick={() => router.push(lp("/"))}
                 id="success-home-btn"
               >
@@ -678,7 +678,7 @@ export default function CheckoutPage() {
                   <RadioBtn active={false} onClick={() => {}} />
                   <span className={styles.paymentOptionName}>
                     {t("checkout.payCardDia")}
-                    <span style={{ marginLeft: 8, fontSize: 12, fontWeight: 600, color: "#666" }}>
+                    <span style={{ marginLeft: 8, fontSize: 12, fontWeight: 600, color: "var(--color-muted-fg)" }}>
                       ({t("checkout.payComingSoon")})
                     </span>
                   </span>

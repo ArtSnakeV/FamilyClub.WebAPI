@@ -34,7 +34,7 @@ function CategoriesContent() {
   }, [isMobile, router, searchParams, lp]);
 
   if (isMobile === null) {
-    return <div className="min-h-screen bg-[#c7a381]" />;
+    return <div className="min-h-screen bg-[var(--color-wood)]" />;
   }
 
   if (!isMobile) {
@@ -50,7 +50,7 @@ function CategoriesContent() {
 
 export default function CategoriesClient() {
   return (
-    <Suspense fallback={<div className="min-h-screen bg-[#c7a381]" />}>
+    <Suspense fallback={<div className="min-h-screen bg-[var(--color-wood)]" />}>
       <CategoriesContent />
     </Suspense>
   );

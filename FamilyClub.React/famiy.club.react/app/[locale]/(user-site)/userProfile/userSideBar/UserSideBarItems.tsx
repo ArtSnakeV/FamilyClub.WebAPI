@@ -19,6 +19,10 @@ import { useFavorites } from "../../../../../lib/hooks/useFavorites";
 import { useMyBooks } from "../hooks/useMyBooks";
 import Paws from "../../paws/Paws";
 import { useLocalizedPath, useTranslations } from "@/lib/i18n/LocaleProvider";
+import { useTheme } from "@/lib/theme/ThemeProvider";
+
+const NIGHT_BG_FILTER = "invert(1) hue-rotate(180deg)";
+const NIGHT_EMPTY_ICON_FILTER = "brightness(0) invert(0.58)";
 
 type Props = {
   onLibrary?: () => void;
@@ -38,6 +42,8 @@ export default function UserSideBArProfile({
 }: Props) {
   const t = useTranslations();
   const lp = useLocalizedPath();
+  const { theme } = useTheme();
+  const isNight = theme === "ink-night";
   const [mounted, setMounted] = useState(false);
   useEffect(() => {
     setMounted(true);
@@ -119,17 +125,25 @@ export default function UserSideBArProfile({
       <Link href={lp("/paws")} className="w-[240px] h-[40px] relative ml-12 mt-14">
         <Paws userId={userId}/>
       </Link>
-      {/* Верхній блок */}
+      {/* Верхній блок — інвертуємо лише білий пергамент «Додати газету» */}
       <div
         className="w-[248px] left-0 -mt-20 relative"
         style={{
           top: "90px", width: "340px", height: "250px",
-          backgroundImage: "url('/images/userProfile/Rectangle 313.png')",
-          backgroundSize: "100% 100%", backgroundPosition: "center",
         }}
       >
+        <div
+          aria-hidden
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            backgroundImage: "url('/images/userProfile/Rectangle 313.png')",
+            backgroundSize: "100% 100%",
+            backgroundPosition: "center",
+            ...(isNight ? { filter: NIGHT_BG_FILTER } : {}),
+          }}
+        />
         <div className="relative flex flex-col top-[30px] items-center justify-center">
-          <p className="font-source-sans font-semibold text-[16px] leading-[150%] tracking-[-0.011em] text-center">
+          <p className="font-source-sans font-semibold text-[16px] leading-[150%] tracking-[-0.011em] text-center text-[var(--foreground-primary)]">
             {t("profile.addNewspaper")}
           </p>
           <div className="relative flex z-50 items-center justify-center mt-2">
@@ -141,13 +155,13 @@ export default function UserSideBArProfile({
         <div className="w-[260px] relative top-[30px] z-30" style={{ width: "100%", left: "-8px" }}>
           <Menu as="div" className="relative w-[99%]">
             {({ open: menuOpen }) => (
-              <div className="w-full bg-[#F5F3EE] rounded-2xl overflow-hidden transition-all duration-300 ease-in-out">
-                <MenuButton style={{ paddingLeft: "128px" }} className="w-[90%] flex items-center justify-between px-4 py-3 text-[22px] font-semibold text-black outline-none">
+              <div className="w-full bg-[var(--background-elevated)] rounded-2xl overflow-hidden transition-all duration-300 ease-in-out">
+                <MenuButton style={{ paddingLeft: "128px" }} className="w-[90%] flex items-center justify-between px-4 py-3 text-[22px] font-semibold text-[var(--foreground-primary)] outline-none">
                   <span>{t(`profile.menu.${selected}`)}</span>
-                  <img src="/images/header/Vector.svg" alt="arrow" className={`w-[14px] h-[8px] transition-transform duration-200 ${menuOpen ? "rotate-180" : ""}`} />
+                  <img src="/images/header/Vector.svg" alt="arrow" className={`user-menu-chevron w-[14px] h-[8px] transition-transform duration-200 ${menuOpen ? "rotate-180" : ""}`} />
                 </MenuButton>
                 <Transition as={Fragment} enter="transition ease-out duration-150" enterFrom="opacity-0 -translate-y-1" enterTo="opacity-100 translate-y-0" leave="transition ease-in duration-100" leaveFrom="opacity-100 translate-y-0" leaveTo="opacity-0 -translate-y-1">
-                  <MenuItems className="outline-none pb-4">
+                  <MenuItems className="outline-none pb-4 text-[var(--foreground-primary)]">
                     {[
                       { key: "subscriptions" as const, action: subscriptions },
                       { key: "communities" as const, action: community },
@@ -156,7 +170,7 @@ export default function UserSideBArProfile({
                         {({ active }) => (
                           <button
                             onClick={() => handleSelect(key, action)}
-                            className={`w-full px-4 py-4 text-center text-[16px] font-semibold ${active ? "bg-[#ECE7DF]" : ""} ${selected === key ? "font-bold text-[#A87E52]" : ""}`}
+                            className={`w-full px-4 py-4 text-center text-[16px] font-semibold text-[var(--foreground-primary)] ${active ? "bg-[var(--color-menu-hover)]" : ""} ${selected === key ? "font-bold text-[var(--foreground-accent)]" : ""}`}
                           >
                             {t(`profile.menu.${key}`)}
                           </button>
@@ -226,6 +240,7 @@ export default function UserSideBArProfile({
               className="w-[166px] h-[170px] object-contain"
               src="/images/userProfile/imgIko.png"
               alt=""
+              style={isNight ? { filter: NIGHT_EMPTY_ICON_FILTER } : undefined}
             />
           </div>
         ) : (
@@ -240,7 +255,7 @@ transition-transform duration-300 ease-in-out
 hover:translate-x-[8px]  hover:scale-x-[1.05] transform-gpu"
                 style={{ backgroundColor: colors[index % colors.length] }}
               >
-                <p className="text-[var(--color-white)] text-[15px] w-[200px] truncate">{book.productName}</p>
+                <p className="text-[var(--color-cream)] text-[15px] w-[200px] truncate">{book.productName}</p>
                 <div className="flex gap-2">
                   {hasAudio(book) && (
                     <Image src={audioIcon} alt="audio" width={24} height={28} />
