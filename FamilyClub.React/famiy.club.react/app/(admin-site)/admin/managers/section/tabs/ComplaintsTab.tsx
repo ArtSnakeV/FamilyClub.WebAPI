@@ -11,13 +11,13 @@ export default function ComplaintsTab({ user }: Props) {
     const { complaints, loading } = useUserComplaints(user.id);
 
     if (loading) {
-        return <p className="text-sm text-[var(--color-black)]">Завантаження...</p>;
+        return <p className="text-sm text-inherit">Завантаження...</p>;
     }
 
     if (complaints.length === 0) {
         return (
             <div className="flex flex-col items-center justify-center py-16 text-center">
-                <p className="text-[var(--color-black)] font-semibold text-[18px]">
+                <p className="text-inherit font-semibold text-[18px]">
                     Скарг поки немає
                 </p>
                 <p className="text-sm text-gray-500 mt-1">
@@ -35,7 +35,7 @@ export default function ComplaintsTab({ user }: Props) {
                     className="rounded-[9px] border border-[#8D8C89]/40 p-4 flex flex-col gap-2 max-w-full"
                 >
                     <div className="flex flex-wrap justify-between items-center gap-x-4 gap-y-1">
-                        <span className="font-semibold text-[16px] text-[var(--color-black)] truncate">
+                        <span className="font-semibold text-[16px] text-inherit truncate">
                             {complaint.complaintType}
                         </span>
                         <span
@@ -49,7 +49,7 @@ export default function ComplaintsTab({ user }: Props) {
                         </span>
                     </div>
 
-                    <p className="text-sm text-[var(--color-black)]">{complaint.complaintText}</p>
+                    <p className="text-sm text-inherit">{complaint.complaintText}</p>
 
                     <div className="flex flex-wrap justify-between gap-x-4 gap-y-1 text-sm">
                         <span className="text-gray-500 whitespace-nowrap">

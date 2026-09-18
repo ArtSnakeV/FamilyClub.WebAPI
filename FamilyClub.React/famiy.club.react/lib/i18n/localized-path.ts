@@ -30,5 +30,15 @@ export function localizedPath(path: string, locale: Locale = defaultLocale): str
 
 export function switchLocalePath(pathname: string, locale: Locale): string {
   const pathWithoutLocale = stripLocaleFromPathname(pathname);
+
+  // Admin lives outside `[locale]` (own root layout, UK-only).
+  // Prefixing `/uk|/en` produces a missing route and hits root not-found.
+  if (
+    pathWithoutLocale === "/admin" ||
+    pathWithoutLocale.startsWith("/admin/")
+  ) {
+    return pathWithoutLocale;
+  }
+
   return localizedPath(pathWithoutLocale, locale);
 }
