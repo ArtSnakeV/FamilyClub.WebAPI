@@ -195,18 +195,22 @@ export default function Desktop() {
         style={{ marginLeft: "-1rem", width: "calc(100% + 2rem)" }}
       >
         <div className="w-full flex-1 relative overflow-hidden m-0 p-0">
-          <img
-            src="/images/authorPageAdmin/Rectangle 675.png"
-            className="absolute top-0 left-0 w-full h-auto pointer-events-none"
-            alt=""
-          />
+          <div className="absolute top-0 left-0 w-full pointer-events-none" aria-hidden>
+            <div className="admin-shelf-surface relative w-full">
+              <img
+                src="/images/authorPageAdmin/Rectangle 675.png"
+                className="block w-full h-auto"
+                alt=""
+              />
+            </div>
+          </div>
 
-          <div className="relative z-10 flex flex-col gap-6 p-10">
+          <div className="relative z-10 flex flex-col gap-6 p-10 text-[var(--foreground-primary)]">
             {accessLoading ? (
-              <p className="text-[16px] text-[#6B6B6B]">Завантаження панелі...</p>
+              <p className="text-[16px] text-[var(--color-muted-fg)]">Завантаження панелі...</p>
             ) : isAdmin ? (
               <>
-                <h1 className="text-2xl font-bold mb-4">Панель адміністратора</h1>
+                <h1 className="text-2xl font-bold mb-4 text-[var(--foreground-primary)]">Панель адміністратора</h1>
                 <section className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-5 gap-4">
                   <StatCard
                     title="Менеджери"
@@ -273,7 +277,7 @@ export default function Desktop() {
               </>
             ) : (
               <>
-                <h1 className="text-2xl font-bold mb-4">Панель менеджера</h1>
+                <h1 className="text-2xl font-bold mb-4 text-[var(--foreground-primary)]">Панель менеджера</h1>
                 <section className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-5 gap-4">
                   <StatCard
                     title="Книги"

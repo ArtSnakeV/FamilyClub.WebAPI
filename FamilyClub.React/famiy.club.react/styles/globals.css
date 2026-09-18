@@ -54,6 +54,10 @@
   --shadow-panel: 0 0 20px color-mix(in srgb, var(--foreground-primary) 30%, transparent);
   --shadow-input: 0 0 5px color-mix(in srgb, var(--foreground-primary) 25%, transparent);
 
+  /* Admin shell (day parchment + wood rail) */
+  --admin-page-bg: #DBD7CD;
+  --admin-wood: #C7A381;
+
   /* Product page materials */
   --color-product-page-bg: #3a2618;
   --color-product-board: #c4a680;
@@ -160,6 +164,9 @@
   --shadow-panel: 0 0 24px color-mix(in srgb, var(--foreground-primary) 28%, transparent);
   --shadow-input: 0 0 8px color-mix(in srgb, var(--foreground-primary) 35%, transparent);
 
+  --admin-page-bg: #1A1814;
+  --admin-wood: #8B6F4E;
+
   --color-product-page-bg: #14110E;
   --color-product-board: #2A241C;
   --color-product-cta: #1A7A4A;
@@ -179,6 +186,16 @@
   z-index: 1;
 }
 
+/* Same gray wash for admin desktop shelf background */
+[data-theme="ink-night"] .admin-shelf-surface::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 8, 6, 0.68);
+  pointer-events: none;
+  z-index: 1;
+}
+
 /* Keep utility header icon glyphs readable on Ink Night chrome */
 [data-theme="ink-night"] .header-utility-icon img {
   filter: brightness(0) invert(0.92);
@@ -190,6 +207,15 @@
 
 [data-theme="ink-night"] .user-menu-chevron {
   filter: brightness(0) invert(0.88);
+}
+
+/* Admin parchment image layers — invert without resizing */
+[data-theme="ink-night"] .admin-parchment-bg {
+  filter: invert(1) hue-rotate(180deg) brightness(0.82) contrast(0.88) saturate(0.55);
+}
+
+[data-theme="ink-night"] .admin-parchment-bg-soft {
+  filter: invert(1) hue-rotate(180deg) brightness(0.78) contrast(0.82) saturate(0.45);
 }
 
 @media (prefers-color-scheme: white) {

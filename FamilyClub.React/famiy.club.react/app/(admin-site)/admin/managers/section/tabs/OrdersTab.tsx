@@ -35,13 +35,13 @@ export default function OrdersTab({ user }: Props) {
     };
 
     if (loading) {
-        return <p className="text-sm text-[var(--color-black)]">Завантаження...</p>;
+        return <p className="text-sm text-inherit">Завантаження...</p>;
     }
 
     if (orders.length === 0) {
         return (
             <div className="flex flex-col items-center justify-center py-16 text-center">
-                <p className="text-[var(--color-black)] font-semibold text-[18px]">
+                <p className="text-inherit font-semibold text-[18px]">
                     Замовлень поки немає
                 </p>
                 <p className="text-sm text-gray-500 mt-1">
@@ -60,7 +60,7 @@ export default function OrdersTab({ user }: Props) {
                         className="rounded-[9px] border border-[#8D8C89]/40 p-4 flex flex-col gap-2 max-w-full"
                     >
                         <div className="flex flex-wrap justify-between items-center gap-x-4 gap-y-1">
-                            <span className="font-semibold text-[16px] text-[var(--color-black)] truncate">
+                            <span className="font-semibold text-[16px] text-inherit truncate">
                                 Замовлення №{order.id}
                             </span>
                             <div className="flex items-center gap-2">
@@ -90,7 +90,7 @@ export default function OrdersTab({ user }: Props) {
                                     year: "numeric",
                                 })}
                             </span>
-                            <span className="font-medium text-[var(--color-black)] whitespace-nowrap">
+                            <span className="font-medium text-inherit whitespace-nowrap">
                                 {order.totalPrice.toLocaleString("uk-UA")} грн
                             </span>
                         </div>

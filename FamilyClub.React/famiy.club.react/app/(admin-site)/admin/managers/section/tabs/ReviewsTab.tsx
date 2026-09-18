@@ -20,13 +20,13 @@ export default function ReviewsTab({ user }: Props) {
     const { reviews, loading } = useUserReviews(user.id);
 
     if (loading) {
-        return <p className="text-sm text-[var(--color-black)]">Завантаження...</p>;
+        return <p className="text-sm text-inherit">Завантаження...</p>;
     }
 
     if (reviews.length === 0) {
         return (
             <div className="flex flex-col items-center justify-center py-16 text-center">
-                <p className="text-[var(--color-black)] font-semibold text-[18px]">
+                <p className="text-inherit font-semibold text-[18px]">
                     Відгуків поки немає
                 </p>
                 <p className="text-sm text-gray-500 mt-1">
@@ -44,14 +44,14 @@ export default function ReviewsTab({ user }: Props) {
                     className="rounded-[9px] border border-[#8D8C89]/40 p-4 flex flex-col gap-2 max-w-full"
                 >
                     <div className="flex flex-wrap justify-between items-center gap-x-4 gap-y-1">
-                        <span className="font-semibold text-[16px] text-[var(--color-black)] truncate">
+                        <span className="font-semibold text-[16px] text-inherit truncate">
                             {review.productName ?? `Товар #${review.productName}`}
                         </span>
                         <StarRating rating={review.rating} />
                     </div>
 
                     {review.comment && (
-                        <p className="text-sm text-[var(--color-black)]">{review.comment}</p>
+                        <p className="text-sm text-inherit">{review.comment}</p>
                     )}
 
                     <div className="flex flex-wrap justify-between gap-x-4 gap-y-1 text-sm">

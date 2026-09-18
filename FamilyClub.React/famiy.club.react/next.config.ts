@@ -6,6 +6,10 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   // Hide the Next.js route indicator (circle in the corner). To show again: { position: "bottom-left" }
   devIndicators: false,
+  // Multiple root layouts (admin + [locale]) — unmatched URLs need global-not-found.
+  experimental: {
+    globalNotFound: true,
+  },
   images: {
     unoptimized: true,
   },

@@ -36,13 +36,15 @@ export default function RecentComplaintsPanel({
   );
 
   return (
-    <div className="flex flex-col gap-4 px-5 py-5 bg-[var(--color-white)] rounded-[10px] shadow-[0px_0px_15px_0px_rgba(0,0,0,0.25)] min-h-[280px]">
+    <div className="flex flex-col gap-4 px-5 py-5 bg-[var(--background-elevated)] text-[var(--foreground-primary)] rounded-[10px] shadow-[var(--shadow-panel)] min-h-[280px]">
       <div className="flex items-center justify-between gap-2">
-        <h3 className="text-base font-bold text-[#242424]">Останні скарги</h3>
+        <h3 className="text-base font-bold text-[var(--foreground-primary)]">
+          Останні скарги
+        </h3>
         {href && (
           <Link
             href={href}
-            className="text-sm text-[#005b33] hover:underline shrink-0"
+            className="text-sm text-[var(--color-green)] hover:underline shrink-0"
           >
             Переглянути всі
           </Link>
@@ -51,18 +53,17 @@ export default function RecentComplaintsPanel({
 
       {isLoading ? (
         <div className="flex flex-1 items-center justify-center py-12">
-          <div className="w-8 h-8 border-4 border-[#005b33] border-t-transparent rounded-full animate-spin" />
+          <div className="w-8 h-8 border-4 border-[var(--color-green)] border-t-transparent rounded-full animate-spin" />
         </div>
       ) : recent.length === 0 ? (
-        <div className="flex flex-1 items-center justify-center py-12 text-sm text-[#777]">
-          {"Немає скарг"}
+        <div className="flex flex-1 items-center justify-center py-12 text-sm text-[var(--color-muted-fg)]">
+          Немає скарг
         </div>
       ) : (
-        <ul className="flex flex-col divide-y divide-[#E8E4DC]">
+        <ul className="flex flex-col divide-y divide-[color-mix(in_srgb,var(--foreground-primary)_12%,transparent)]">
           {recent.map((complaint) => {
             const badge = getComplaintBadge(complaint);
             const typeLabel = getComplaintTypeLabel(complaint.complaintType);
-            // const preview = truncateText(complaint.complaintText ?? "", 56);
             const preview = truncateText(complaint.complaintText ?? "", 100);
 
             return (
@@ -71,18 +72,18 @@ export default function RecentComplaintsPanel({
                 className="flex items-start gap-3 py-3 first:pt-0 last:pb-0"
               >
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-semibold text-[#242424] truncate">
+                  <p className="text-sm font-semibold text-[var(--foreground-primary)] truncate">
                     {typeLabel}
                   </p>
                   {preview && (
-                    <p className="text-xs text-[#666] mt-0.5 line-clamp-2">
+                    <p className="text-xs text-[var(--color-muted-fg)] mt-0.5 line-clamp-2">
                       {preview}
                     </p>
                   )}
                 </div>
 
                 <div className="flex flex-col items-end gap-1.5 shrink-0">
-                  <span className="text-xs text-[#888] whitespace-nowrap">
+                  <span className="text-xs text-[var(--color-muted-fg)] whitespace-nowrap">
                     {formatRelativeTimeUk(complaint.createdAt)}
                   </span>
                   <span
