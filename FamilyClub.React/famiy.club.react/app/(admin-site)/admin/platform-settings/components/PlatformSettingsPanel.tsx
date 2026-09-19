@@ -17,7 +17,7 @@ export default function PlatformSettingsPanel() {
 
     if (loading) {
         return (
-            <p className="text-[16px] text-[#6B6B6B]">
+            <p className="text-[16px] text-[var(--color-muted-fg)]">
                 Завантаження налаштувань...
             </p>
         );
@@ -26,10 +26,10 @@ export default function PlatformSettingsPanel() {
     return (
         <div className="flex flex-col gap-6">
             <div>
-                <h1 className="text-2xl font-bold text-[#1F1F1F]">
+                <h1 className="text-2xl font-bold text-[var(--foreground-primary)]">
                     Налаштування платформи
                 </h1>
-                <p className="text-[14px] text-[#6B6B6B] mt-1">
+                <p className="text-[14px] text-[var(--color-muted-fg)] mt-1">
                     Основна інформація, книжкові параметри, брендинг і режим
                     обслуговування
                 </p>

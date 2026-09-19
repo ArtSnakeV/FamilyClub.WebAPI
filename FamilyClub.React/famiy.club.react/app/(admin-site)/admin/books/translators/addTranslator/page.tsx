@@ -12,41 +12,47 @@ export default function AddPublisherPage() {
   const { handleSubmit, loading } = useSubmitTranslator({ form, router });
 
   return (
-    <div className="w-full min-h-screen flex flex-col">
+    <div className="w-full min-h-screen flex flex-col text-[var(--foreground-primary)]">
       <div
-        className="relative w-[1200px] pb-[60px] -mt-[68px] mx-auto bg-no-repeat"
-        style={{
-          backgroundImage: "url('/images/addProducts/Rectangle 312.svg')",
-          backgroundSize: "cover",
-          backgroundPosition: "top",
-          height: "1100px"
-        }}
+        className="relative w-[1200px] pb-[60px] -mt-[68px] mx-auto"
+        style={{ height: "1100px" }}
       >
-        <div className="flex z-20 relative top-[130px] ml-[64px]">
-          <ButtonReturn />
-        </div>
-        <div className="flex flex-col items-center mt-[120px]">
-          <h1 className="text-[var(--color-black)] w-[800px] font-['Roboto_Mono'] font-bold text-[64px] leading-[150%] tracking-[-0.011em] text-center">
-            Додати Перекладача
-          </h1>
-        </div>
-
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            handleSubmit();
+        <div
+          aria-hidden
+          className="absolute inset-0 pointer-events-none admin-parchment-bg bg-no-repeat"
+          style={{
+            backgroundImage: "url('/images/addProducts/Rectangle 312.svg')",
+            backgroundSize: "cover",
+            backgroundPosition: "top",
           }}
-        >
-          <div className="w-full flex mt-[48px] gap-[4vw] justify-center">
-            <div className="w-[645px] flex flex-col">
-              <BasicInfoSection
-                form={form}
-                setField={setField}
-                loading={loading}
-              />
-            </div>
+        />
+        <div className="relative z-10">
+          <div className="flex z-20 relative top-[130px] ml-[64px]">
+            <ButtonReturn />
           </div>
-        </form>
+          <div className="flex flex-col items-center mt-[120px]">
+            <h1 className="text-[var(--foreground-primary)] w-[800px] font-['Roboto_Mono'] font-bold text-[64px] leading-[150%] tracking-[-0.011em] text-center">
+              Додати Перекладача
+            </h1>
+          </div>
+
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleSubmit();
+            }}
+          >
+            <div className="w-full flex mt-[48px] gap-[4vw] justify-center">
+              <div className="w-[645px] flex flex-col">
+                <BasicInfoSection
+                  form={form}
+                  setField={setField}
+                  loading={loading}
+                />
+              </div>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );

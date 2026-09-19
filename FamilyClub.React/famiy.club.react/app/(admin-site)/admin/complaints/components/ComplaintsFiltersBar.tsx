@@ -14,7 +14,7 @@ type Props = {
 };
 
 const selectClass =
-    "rounded-[9px] border border-[#E0DCD3] bg-white px-3 py-2.5 text-[13px] text-[#2F2F2F] outline-none focus:border-[#005b33] min-w-0 w-full";
+    "rounded-[9px] border border-[color-mix(in_srgb,var(--foreground-primary)_18%,transparent)] bg-[var(--background-elevated)] px-3 py-2.5 text-[13px] text-[var(--foreground-primary)] outline-none focus:border-[var(--color-green)] min-w-0 w-full";
 
 export default function ComplaintsFiltersBar({
     filters,
@@ -27,25 +27,29 @@ export default function ComplaintsFiltersBar({
     ) => onChange({ ...filters, [key]: value });
 
     return (
-        <div className="rounded-[12px] bg-white px-4 py-4 shadow-[0_0_15px_rgba(0,0,0,0.12)]">
+        <div className="rounded-[12px] bg-[var(--background-elevated)] px-4 py-4 shadow-[var(--shadow-card)] border border-[color-mix(in_srgb,var(--foreground-primary)_12%,transparent)]">
             <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-6 gap-3 items-end">
                 <label className="xl:col-span-2 flex flex-col gap-1">
-                    <span className="text-[12px] text-[#777]">Пошук</span>
+                    <span className="text-[12px] text-[var(--color-muted-fg)]">
+                        Пошук
+                    </span>
                     <div className="relative">
                         <input
                             value={filters.search}
                             onChange={(e) => set("search", e.target.value)}
                             placeholder="Пошук за ключовим словом..."
-                            className={`${selectClass} pl-9`}
+                            className={`${selectClass} pl-9 placeholder:text-[var(--color-muted-fg)]`}
                         />
-                        <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[#999] text-[14px]">
+                        <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--color-muted-fg)] text-[14px]">
                             ⌕
                         </span>
                     </div>
                 </label>
 
                 <label className="flex flex-col gap-1">
-                    <span className="text-[12px] text-[#777]">Тип скарги</span>
+                    <span className="text-[12px] text-[var(--color-muted-fg)]">
+                        Тип скарги
+                    </span>
                     <select
                         value={filters.type}
                         onChange={(e) => set("type", e.target.value)}
@@ -61,13 +65,16 @@ export default function ComplaintsFiltersBar({
                 </label>
 
                 <label className="flex flex-col gap-1">
-                    <span className="text-[12px] text-[#777]">Статус</span>
+                    <span className="text-[12px] text-[var(--color-muted-fg)]">
+                        Статус
+                    </span>
                     <select
                         value={filters.status}
                         onChange={(e) =>
                             set(
                                 "status",
-                                e.target.value as ComplaintsFilterState["status"]
+                                e.target
+                                    .value as ComplaintsFilterState["status"]
                             )
                         }
                         className={selectClass}
@@ -86,7 +93,9 @@ export default function ComplaintsFiltersBar({
                 </label>
 
                 <label className="flex flex-col gap-1">
-                    <span className="text-[12px] text-[#777]">Пріоритет</span>
+                    <span className="text-[12px] text-[var(--color-muted-fg)]">
+                        Пріоритет
+                    </span>
                     <select
                         value={filters.priority}
                         onChange={(e) =>
@@ -112,7 +121,9 @@ export default function ComplaintsFiltersBar({
                 </label>
 
                 <label className="flex flex-col gap-1">
-                    <span className="text-[12px] text-[#777]">Період</span>
+                    <span className="text-[12px] text-[var(--color-muted-fg)]">
+                        Період
+                    </span>
                     <div className="flex gap-1">
                         <input
                             type="date"
@@ -136,7 +147,7 @@ export default function ComplaintsFiltersBar({
                 <button
                     type="button"
                     onClick={onReset}
-                    className="text-[13px] text-[#005b33] hover:underline"
+                    className="text-[13px] text-[var(--color-green)] hover:underline"
                 >
                     Скинути фільтри
                 </button>

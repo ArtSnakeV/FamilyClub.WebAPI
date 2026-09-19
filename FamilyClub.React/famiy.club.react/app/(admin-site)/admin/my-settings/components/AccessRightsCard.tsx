@@ -36,18 +36,20 @@ export default function AccessRightsCard() {
   );
 
   return (
-    <div className="rounded-[12px] bg-white px-5 py-5 shadow-[0_0_15px_rgba(0,0,0,0.12)] flex flex-col gap-4 h-full">
+    <div className="rounded-[12px] bg-[var(--background-elevated)] px-5 py-5 shadow-[var(--shadow-card)] border border-[color-mix(in_srgb,var(--foreground-primary)_12%,transparent)] flex flex-col gap-4 h-full">
       <div>
-        <h2 className="text-[18px] font-bold text-[#1F1F1F]">
+        <h2 className="text-[18px] font-bold text-[var(--foreground-primary)]">
           Доступи та права
         </h2>
-        <p className="text-[13px] text-[#6B6B6B] mt-1">
+        <p className="text-[13px] text-[var(--color-muted-fg)] mt-1">
           Роль: {loading ? "…" : roleLabels}
         </p>
       </div>
 
       {loading ? (
-        <p className="text-[14px] text-[#888]">Завантаження прав…</p>
+        <p className="text-[14px] text-[var(--color-muted-fg)]">
+          Завантаження прав…
+        </p>
       ) : (
         <ul className="flex flex-col gap-2.5">
           {items.map((item) => (
@@ -69,13 +71,13 @@ export default function AccessRightsCard() {
                 <span
                   className={
                     item.allowed
-                      ? "text-[#1F1F1F] font-medium"
-                      : "text-[#777]"
+                      ? "text-[var(--foreground-primary)] font-medium"
+                      : "text-[var(--color-muted-fg)]"
                   }
                 >
                   {item.title}
                 </span>
-                <span className="block text-[12px] text-[#888]">
+                <span className="block text-[12px] text-[var(--color-muted-fg)]">
                   {item.subtitle}
                 </span>
               </span>
@@ -86,14 +88,7 @@ export default function AccessRightsCard() {
 
       {/*
         MOCK / FUTURE — запит на розширення прав (потрібен бекенд заявок):
-        <button
-          type="button"
-          disabled
-          title="Потрібен бекенд для заявок на розширення прав"
-          className="mt-auto w-full rounded-[9px] bg-[#F3EFE7] px-4 py-2.5 text-[13px] font-semibold text-[#888] cursor-not-allowed"
-        >
-          Запит на розширення прав
-        </button>
+        ...
       */}
     </div>
   );

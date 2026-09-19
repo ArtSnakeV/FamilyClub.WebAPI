@@ -1,22 +1,28 @@
 "use client";
 
 import Image from "next/image";
-import useBlockReasons from "../../hooks/useBlockReasons"; 
+import useBlockReasons from "../../hooks/useBlockReasons";
+import { useTheme } from "@/lib/theme/ThemeProvider";
 
 interface Props {
     reason: string;
     onChange: (value: string) => void;
 }
 
+const selectClass =
+    "w-full h-[50px] rounded-[9px] border border-[color-mix(in_srgb,var(--foreground-primary)_28%,transparent)] bg-[var(--background-elevated)] px-4 pr-10 text-[15px] text-[var(--foreground-primary)] outline-none appearance-none cursor-pointer";
+
 export default function ReasonFilteredBlockedUsers({
     reason,
     onChange,
 }: Props) {
     const { blockReasons, loadingBlockReasons } = useBlockReasons();
+    const { theme } = useTheme();
+    const isNight = theme === "ink-night";
 
     return (
         <div className="relative w-[180px] ml-6">
-            <label className="block font-source-sans text-[18px] font-semibold leading-[150%] tracking-[-0.011em] text-[var(--color-black)]">
+            <label className="block font-source-sans text-[18px] font-semibold leading-[150%] tracking-[-0.011em] text-[var(--foreground-primary)]">
                 Причини блокування
             </label>
 
@@ -25,21 +31,7 @@ export default function ReasonFilteredBlockedUsers({
                     value={reason}
                     onChange={(e) => onChange(e.target.value)}
                     disabled={loadingBlockReasons}
-                    className="
-                        w-full
-                        h-[50px]
-                        rounded-[9px]
-                        border
-                        border-[#272727]
-                        bg-white
-                        px-4
-                        pr-10
-                        text-[15px]
-                        text-[#272727]
-                        outline-none
-                        appearance-none
-                        cursor-pointer
-                    "
+                    className={selectClass}
                 >
                     <option value="all">Всі типи</option>
                     {blockReasons.map((r) => (
@@ -54,7 +46,12 @@ export default function ReasonFilteredBlockedUsers({
                     alt=""
                     width={20}
                     height={20}
-                    className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2"
+                    className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 opacity-70"
+                    style={
+                        isNight
+                            ? { filter: "brightness(0) invert(0.88)" }
+                            : undefined
+                    }
                 />
             </div>
         </div>

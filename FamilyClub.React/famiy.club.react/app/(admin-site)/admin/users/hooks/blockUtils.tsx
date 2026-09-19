@@ -35,7 +35,8 @@ export function getBlockStatus(lockoutEnd?: string | null) {
             blocked,
             permanent,
             label: "Активний",
-            className: "bg-[#E3F5EA] text-[#1F5C3D]",
+            className:
+                "bg-[color-mix(in_srgb,var(--color-green)_18%,var(--background-elevated))] text-[var(--color-green)]",
         };
     }
 
@@ -44,7 +45,8 @@ export function getBlockStatus(lockoutEnd?: string | null) {
             blocked,
             permanent,
             label: "Заблокований назавжди",
-            className: "bg-[#F6D9D9] text-[#981717]",
+            className:
+                "bg-[color-mix(in_srgb,#981717_18%,var(--background-elevated))] text-[#981717]",
         };
     }
 
@@ -52,6 +54,7 @@ export function getBlockStatus(lockoutEnd?: string | null) {
         blocked,
         permanent,
         label: "Тимчасово заблокований",
-        className: "bg-[#FBE8C6] text-[#8A5A00]",
+        className:
+            "bg-[color-mix(in_srgb,#C9A227_20%,var(--background-elevated))] text-[#C9A227]",
     };
 }

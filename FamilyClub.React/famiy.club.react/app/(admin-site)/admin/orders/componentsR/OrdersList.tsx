@@ -35,8 +35,8 @@ export default function OrdersList({
         usePagination(orders, pageSize);
 
     return (
-        <div className="w-[600px] max-w-[700px] h-[880px] shadow-[0px_0px_15px_0px_#00000040] flex flex-col bg-[var(--color-white)] rounded-[20px] ml-3 px-6 py-4">
-            <div className="grid grid-cols-[1.2fr_1.5fr_1fr_1fr_1fr] gap-4 px-4 pb-3 border-b border-[#8D8C89] text-[14px] text-[var(--color-black)] shrink-0">
+        <div className="w-[600px] max-w-[700px] h-[880px] shadow-[var(--shadow-card)] flex flex-col bg-[var(--background-elevated)] border border-[color-mix(in_srgb,var(--foreground-primary)_12%,transparent)] rounded-[20px] ml-3 px-6 py-4">
+            <div className="grid grid-cols-[1.2fr_1.5fr_1fr_1fr_1fr] gap-4 px-4 pb-3 border-b border-[color-mix(in_srgb,var(--foreground-primary)_22%,transparent)] text-[14px] text-[var(--foreground-primary)] shrink-0">
                 <span>№ Замовлення</span>
                 <span>Клієнт</span>
                 <span>Сума</span>
@@ -47,35 +47,49 @@ export default function OrdersList({
             <div className="flex flex-col gap-4 mt-3 flex-1 p-2 overflow-y-auto">
                 {paginatedItems.map((order) => {
                     const isSelected = selectedId === order.id;
-                    const member = order.userId ? members.get(order.userId) : undefined;
+                    const member = order.userId
+                        ? members.get(order.userId)
+                        : undefined;
 
                     const cancellationRequest =
-                        order.id != null ? cancellationRequests?.[order.id] : undefined;
+                        order.id != null
+                            ? cancellationRequests?.[order.id]
+                            : undefined;
                     const showCancellationBadge =
                         cancellationRequest?.status === "pending";
                     return (
                         <button
                             key={order.id}
-                            onClick={() => onSelectOrder?.(isSelected ? null : order)}
-                            className={`grid grid-cols-[1.2fr_1.5fr_1fr_1fr_1fr] p-2 gap-4 shadow-[0px_0px_10px_0px_#00000040]
-                                items-center px-4 py-3 rounded-[9px] text-left text-sm transition-colors ${isSelected
-                                    ? "bg-[#F6DFC4]"
-                                    : "bg-white hover:bg-[#F0EDE3]"
+                            onClick={() =>
+                                onSelectOrder?.(isSelected ? null : order)
+                            }
+                            className={`grid grid-cols-[1.2fr_1.5fr_1fr_1fr_1fr] p-2 gap-4 shadow-[var(--shadow-card)]
+                                items-center px-4 py-3 rounded-[9px] text-left text-sm transition-colors border border-[color-mix(in_srgb,var(--foreground-primary)_10%,transparent)] ${
+                                    isSelected
+                                        ? "bg-[color-mix(in_srgb,var(--color-green)_18%,var(--background-elevated))]"
+                                        : "bg-[var(--background-elevated)] hover:bg-[color-mix(in_srgb,var(--color-green)_12%,var(--background-elevated))]"
                                 }`}
                         >
-                            <span className="text-[#2A2A2A]">{formatOrderNumber(order.id)}</span>
-                            <span className="text-[#2A2A2A] truncate">
+                            <span className="text-[var(--foreground-primary)]">
+                                {formatOrderNumber(order.id)}
+                            </span>
+                            <span className="text-[var(--foreground-primary)] truncate">
                                 {displayMemberName(member)}
                             </span>
-                            <span className="text-[#2A2A2A]">{formatMoney(order.totalPrice)}</span>
+                            <span className="text-[var(--foreground-primary)]">
+                                {formatMoney(order.totalPrice)}
+                            </span>
                             {showCancellationBadge ? (
                                 <div className="flex flex-col gap-0.5">
-                                    <CancellationStatusBadge status={cancellationRequest!.status} />
+                                    <CancellationStatusBadge
+                                        status={cancellationRequest!.status}
+                                    />
                                     <span
                                         className="text-[12px] font-medium leading-none"
                                         style={{
                                             color:
-                                                cancellationRequest!.type === "return"
+                                                cancellationRequest!.type ===
+                                                "return"
                                                     ? "#761283"
                                                     : "#AC3C3C",
                                         }}
@@ -88,7 +102,9 @@ export default function OrdersList({
                             ) : (
                                 <StatusBadge status={order.status ?? ""} />
                             )}
-                            <span className="text-[#6B6B6B]">{formatDate(order.orderDate)}</span>
+                            <span className="text-[var(--color-muted-fg)]">
+                                {formatDate(order.orderDate)}
+                            </span>
                         </button>
                     );
                 })}

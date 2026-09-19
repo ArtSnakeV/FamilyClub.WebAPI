@@ -40,11 +40,11 @@ export default function OrderDetail({
     if (!order) {
         return (
             <div
-                className="w-[500px] max-w-[500px] shadow-[0px_0px_15px_0px_#00000040] 
-                items-center flex flex-col bg-[var(--color-white)] rounded-[20px] px-6 py-4"
+                className="w-[500px] max-w-[500px] shadow-[var(--shadow-card)] 
+                items-center flex flex-col bg-[var(--background-elevated)] rounded-[20px] px-6 py-4"
                 style={{ height: 880 }}
             >
-                <p className="text-[14px] text-[#888]">
+                <p className="text-[14px] text-[var(--color-muted-fg)]">
                     Оберіть замовлення зі списку
                 </p>
             </div>
@@ -61,19 +61,18 @@ export default function OrderDetail({
 
     return (
         <div
-            className="rounded-[20px] w-[500px] max-w-[500px] bg-[var(--color-white)] shadow-[0px_0px_15px_0px_#00000040] px-5 py-5 
-        shadow-[0_0_15px_rgba(0,0,0,0.08)] flex flex-col gap-4 min-h-0"
+            className="rounded-[20px] w-[500px] max-w-[500px] bg-[var(--background-elevated)] shadow-[var(--shadow-card)] px-5 py-5 flex flex-col gap-4 min-h-0"
             style={{ height: 880 }}
         >
             {/* Header */}
             <div className="flex flex-row items-center justify-between gap-4 shrink-0">
-                <h2 className="text-[18px] font-bold text-[#1F1F1F] leading-tight">
+                <h2 className="text-[18px] font-bold text-[var(--foreground-primary)] leading-tight">
                     Деталі замовлення {formatOrderNumber(order.id)}
                 </h2>
                 <button
                     type="button"
                     onClick={handlePrint}
-                    className="inline-flex items-center gap-2 rounded-[10px] bg-transparent border-1 border-[var(--color-black)] px-3 py-2 text-[13px] font-semibold text-[#2F2F2F] hover:bg-[#F5F3EE] shrink-0"
+                    className="inline-flex items-center gap-2 rounded-[10px] bg-transparent border-1 border-[var(--foreground-primary)] px-3 py-2 text-[13px] font-semibold text-[var(--foreground-primary)] hover:bg-[color-mix(in_srgb,var(--color-green)_16%,var(--background-elevated))] shrink-0"
                 >
                     <Image src="/images/ordersAdminPage/printer.png" alt="printer" width={20} height={20} />
                     Друк
@@ -81,14 +80,14 @@ export default function OrderDetail({
             </div>
 
             {/* Status / dates / delivery card */}
-            <section className="rounded-[9px] bg-[var(--color-white)] shadow-[0_0_10px_0_#00000040] text-[13px]
+            <section className="rounded-[9px] bg-[var(--background-elevated)] shadow-[var(--shadow-card)] text-[13px]
             flex flex-row gap-6 px-5 py-4 shrink-0">
                 <div className="flex flex-col gap-3 flex-1 min-w-0 ">
                      <InfoRowInline label="Статус">
                         <select
                             value={order.status ?? "Pending"}
                             onChange={(e) => onStatusChange?.(e.target.value)}
-                            className="bg-[#F5F3EE] w-[150px] border border-[#C8C2B4] rounded-[6px] px-2 py-0.5 text-[13px] font-bold text-[#005b33] outline-none cursor-pointer hover:border-[#005B33] transition"
+                            className="bg-[color-mix(in_srgb,var(--foreground-primary)_6%,var(--background-elevated))] w-[150px] border border-[color-mix(in_srgb,var(--foreground-primary)_28%,transparent)] rounded-[6px] px-2 py-0.5 text-[13px] font-bold text-[var(--color-green)] outline-none cursor-pointer hover:border-[var(--color-green)] transition"
                         >
                             <option value="Pending">Нове (Pending)</option>
                             <option value="Paid">Прийнято (Paid)</option>
@@ -101,7 +100,7 @@ export default function OrderDetail({
                     </InfoRowInline>
 
                     <InfoRowInline label="ТТН">
-                        <span className="font-medium text-[#1F1F1F]">
+                        <span className="font-medium text-[var(--foreground-primary)]">
                             {extras.ttn ?? "—"}
                         </span>
                     </InfoRowInline>
@@ -127,9 +126,9 @@ export default function OrderDetail({
             </section>
 
             {/* Customer info */}
-            <section className="rounded-[9px] bg-[var(--color-white)] shadow-[0_0_10px_0_#00000040] text-[13px]
+            <section className="rounded-[9px] bg-[var(--background-elevated)] shadow-[var(--shadow-card)] text-[13px]
             flex flex-col gap-6 px-5 py-4 shrink-0">
-                <h3 className="flex items-center gap-2 text-[14px] font-bold text-[#1F1F1F]">
+                <h3 className="flex items-center gap-2 text-[14px] font-bold text-[var(--foreground-primary)]">
                     <Image src={userImg} alt="" width={16} height={16} />
                     Інформація про клієнта
                 </h3>
@@ -154,16 +153,16 @@ export default function OrderDetail({
             </section>
 
             {/* Products */}
-            <section className="rounded-[9px] shadow-[0_0_10px_0_#00000040] bg-[#F7F4EE] px-4 py-3 flex flex-col gap-4 flex-1 min-h-0">
+            <section className="rounded-[9px] shadow-[var(--shadow-card)] bg-[color-mix(in_srgb,var(--foreground-primary)_6%,var(--background-elevated))] px-4 py-3 flex flex-col gap-4 flex-1 min-h-0">
                 <div className="flex items-center justify-between gap-2 shrink-0">
-                    <h3 className="flex items-center gap-2 text-[14px] font-bold text-[#1F1F1F]">
+                    <h3 className="flex items-center gap-2 text-[14px] font-bold text-[var(--foreground-primary)]">
                         <Image src={shopingCart} alt="" width={16} height={16} />
                         Товари в замовленні
                     </h3>
                     {items.length > 4 && (
                         <button
                             type="button"
-                            className="text-[12px] font-semibold text-[#005b33] hover:underline"
+                            className="text-[12px] font-semibold text-[var(--color-green)] hover:underline"
                         >
                             Переглянути все
                         </button>
@@ -171,7 +170,7 @@ export default function OrderDetail({
                 </div>
 
                 {visibleItems.length === 0 ? (
-                    <p className="text-[13px] text-[#888]">Немає товарів</p>
+                    <p className="text-[13px] text-[var(--color-muted-fg)]">Немає товарів</p>
                 ) : (
                     <ul className="flex flex-col gap-3 overflow-y-auto min-h-0">
                         {visibleItems.map((item, idx) => {
@@ -194,18 +193,18 @@ export default function OrderDetail({
                             return (
                                 <li
                                     key={item.id ?? `${item.productId}-${idx}`}
-                                    className="flex items-center gap-3 border-b pb-2 border-[#8D8C89]"
+                                    className="flex items-center gap-3 border-b pb-2 border-[color-mix(in_srgb,var(--foreground-primary)_22%,transparent)]"
                                 >
                                     <img
                                         src={cover}
                                         alt=""
-                                        className="w-12 h-16 object-cover rounded-[6px] bg-white shrink-0"
+                                        className="w-12 h-16 object-cover rounded-[6px] bg-[var(--background-elevated)] shrink-0"
                                     />
                                     <div className="min-w-0 flex-1">
-                                        <p className="text-[13px] font-semibold text-[#1F1F1F] truncate">
+                                        <p className="text-[13px] font-semibold text-[var(--foreground-primary)] truncate">
                                             {title}
                                         </p>
-                                        <p className="text-[12px] text-[#777] truncate">
+                                        <p className="text-[12px] text-[var(--color-muted-fg)] truncate">
                                             {authorName !== "—"
                                                 ? authorName
                                                 : item.format
@@ -213,10 +212,10 @@ export default function OrderDetail({
                                                   : "Книга"}
                                         </p>
                                     </div>
-                                    <span className="text-[13px] text-[#555] whitespace-nowrap shrink-0 w-12 text-center">
+                                    <span className="text-[13px] text-[var(--color-muted-fg)] whitespace-nowrap shrink-0 w-12 text-center">
                                         {item.quantity ?? 1} шт.
                                     </span>
-                                    <span className="text-[13px] font-semibold text-[#1F1F1F] whitespace-nowrap shrink-0 p-2">
+                                    <span className="text-[13px] font-semibold text-[var(--foreground-primary)] whitespace-nowrap shrink-0 p-2">
                                         {formatMoney(lineTotal)}
                                     </span>
                                 </li>
@@ -225,11 +224,11 @@ export default function OrderDetail({
                     </ul>
                 )}
 
-                <div className="mt-auto pt-3 border-t border-[#8D8C89] flex items-center justify-between shrink-0">
-                    <span className="text-[14px] font-bold text-[var(--color-black)]">
+                <div className="mt-auto pt-3 border-t border-[color-mix(in_srgb,var(--foreground-primary)_22%,transparent)] flex items-center justify-between shrink-0">
+                    <span className="text-[14px] font-bold text-[var(--foreground-primary)]">
                         Разом:
                     </span>
-                    <span className="text-[16px] font-bold text-[var(--color-black)]">
+                    <span className="text-[16px] font-bold text-[var(--foreground-primary)]">
                         {formatMoney(order.totalPrice)}
                     </span>
                 </div>

@@ -11,13 +11,12 @@ type PageItem = number | "ellipsis-left" | "ellipsis-right";
 function getPageItems(currentPage: number, totalPages: number): PageItem[] {
     const items: PageItem[] = [];
 
-    // Мало сторінок — показуємо всі без крапок
     if (totalPages <= 7) {
         for (let i = 1; i <= totalPages; i++) items.push(i);
         return items;
     }
 
-    const siblings = 1; // скільки сторінок показувати навколо поточної
+    const siblings = 1;
 
     const left = Math.max(2, currentPage - siblings);
     const right = Math.min(totalPages - 1, currentPage + siblings);
@@ -55,7 +54,9 @@ export default function PaginationBlockedUser({
     const pageItems = getPageItems(currentPage, totalPages);
 
     const hasCountInfo = totalItems != null && itemsPerPage != null;
-    const startIndex = hasCountInfo ? (currentPage - 1) * itemsPerPage! + 1 : null;
+    const startIndex = hasCountInfo
+        ? (currentPage - 1) * itemsPerPage! + 1
+        : null;
     const endIndex = hasCountInfo
         ? Math.min(currentPage * itemsPerPage!, totalItems!)
         : null;
@@ -63,13 +64,12 @@ export default function PaginationBlockedUser({
     return (
         <div className="w-full flex items-center justify-center gap-4 flex-wrap">
             {hasCountInfo && (
-                <p className="font-['Source_Sans_Pro'] text-[16px] ml-4 text-[#4b4b4b]">
+                <p className="font-['Source_Sans_Pro'] text-[16px] ml-4 text-[var(--color-muted-fg)]">
                     Показано {startIndex}-{endIndex} з {totalItems}
                 </p>
             )}
 
             <ul className="flex items-center gap-2 mx-auto">
-                {/* Prev */}
                 <li>
                     <button
                         onClick={() => onPageChange(currentPage - 1)}
@@ -77,7 +77,7 @@ export default function PaginationBlockedUser({
                         className="
                             w-10 h-10
                             flex items-center justify-center
-                            text-[var(--color-black)]
+                            text-[var(--foreground-primary)]
                             disabled:opacity-40
                         "
                         aria-label="Попередня сторінка"
@@ -86,7 +86,6 @@ export default function PaginationBlockedUser({
                     </button>
                 </li>
 
-                {/* Pages */}
                 {pageItems.map((item, idx) =>
                     item === "ellipsis-left" || item === "ellipsis-right" ? (
                         <li key={item + idx}>
@@ -96,7 +95,7 @@ export default function PaginationBlockedUser({
                                     flex items-center justify-center
                                     text-[18px]
                                     font-['Source_Sans_Pro']
-                                    text-[#a3a19e]
+                                    text-[var(--color-muted-fg)]
                                 "
                             >
                                 …
@@ -115,8 +114,8 @@ export default function PaginationBlockedUser({
                                     transition
                                     ${
                                         item === currentPage
-                                            ? "bg-[var(--color-brand-green,#1f4d3d)] text-[var(--color-white)]"
-                                            : "bg-transparent text-[var(--color-black)] hover:bg-[#ececec] hover:text-[var(--color-black)]"
+                                            ? "bg-[var(--color-green)] text-[var(--color-cream)]"
+                                            : "bg-transparent text-[var(--foreground-primary)] hover:bg-[var(--color-menu-hover)]"
                                     }
                                 `}
                             >
@@ -126,7 +125,6 @@ export default function PaginationBlockedUser({
                     )
                 )}
 
-                {/* Next */}
                 <li>
                     <button
                         onClick={() => onPageChange(currentPage + 1)}
@@ -134,7 +132,7 @@ export default function PaginationBlockedUser({
                         className="
                             w-10 h-10
                             flex items-center justify-center
-                            text-[var(--color-black)]
+                            text-[var(--foreground-primary)]
                             disabled:opacity-40
                         "
                         aria-label="Наступна сторінка"
@@ -144,7 +142,9 @@ export default function PaginationBlockedUser({
                 </li>
             </ul>
 
-            {hasCountInfo && <div className="invisible hidden sm:block w-[160px]" aria-hidden />}
+            {hasCountInfo && (
+                <div className="invisible hidden sm:block w-[160px]" aria-hidden />
+            )}
         </div>
     );
 }

@@ -20,7 +20,7 @@ type Props = {
 
 function RankBadge({ rank }: { rank: number }) {
   return (
-    <span className="flex items-center justify-center w-7 h-10 rounded-md bg-[#E8E4DC] text-sm font-semibold text-[#5C4A3A] shrink-0">
+    <span className="flex items-center justify-center w-7 h-10 rounded-md bg-[color-mix(in_srgb,var(--foreground-primary)_10%,var(--background-elevated))] text-sm font-semibold text-[var(--foreground-primary)] shrink-0">
       {rank}
     </span>
   );
@@ -32,14 +32,14 @@ function BookCover({ src, name }: { src: string | null; name: string }) {
       <img
         src={src}
         alt={name}
-        className="w-10 h-14 rounded object-cover shrink-0 bg-[#E8E4DC]"
+        className="w-10 h-14 rounded object-cover shrink-0 bg-[color-mix(in_srgb,var(--foreground-primary)_10%,transparent)]"
       />
     );
   }
 
   return (
     <div
-      className="w-10 h-14 rounded shrink-0 bg-[#E8E4DC] flex items-center justify-center text-[10px] font-semibold text-[#888] text-center px-0.5"
+      className="w-10 h-14 rounded shrink-0 bg-[color-mix(in_srgb,var(--foreground-primary)_10%,transparent)] flex items-center justify-center text-[10px] font-semibold text-[var(--color-muted-fg)] text-center px-0.5"
       aria-hidden
     >
       ?
@@ -63,16 +63,16 @@ export default function TopBooksList({
 
   return (
     <div
-      className={`flex flex-col gap-4 px-5 py-5 bg-[var(--color-white)] rounded-[10px] shadow-[0px_0px_15px_0px_rgba(0,0,0,0.25)] min-h-[280px] ${className}`}
+      className={`flex flex-col gap-4 px-5 py-5 bg-[var(--background-elevated)] text-[var(--foreground-primary)] rounded-[10px] shadow-[var(--shadow-panel)] min-h-[280px] ${className}`}
     >
       <div className="flex items-center justify-between gap-2">
-        <h3 className="text-base font-bold text-[#242424] leading-snug">
+        <h3 className="text-base font-bold text-[var(--foreground-primary)] leading-snug">
           Топ найпопулярніших книг
         </h3>
         {href && (
           <Link
             href={href}
-            className="text-sm text-[#005b33] hover:underline shrink-0"
+            className="text-sm text-[var(--color-green)] hover:underline shrink-0"
           >
             Переглянути всі
           </Link>
@@ -81,14 +81,14 @@ export default function TopBooksList({
 
       {isLoading ? (
         <div className="flex flex-1 items-center justify-center py-12">
-          <div className="w-8 h-8 border-4 border-[#005b33] border-t-transparent rounded-full animate-spin" />
+          <div className="w-8 h-8 border-4 border-[var(--color-green)] border-t-transparent rounded-full animate-spin" />
         </div>
       ) : topBooks.length === 0 ? (
-        <div className="flex flex-1 items-center justify-center py-12 text-sm text-[#777]">
+        <div className="flex flex-1 items-center justify-center py-12 text-sm text-[var(--color-muted-fg)]">
           Немає даних про продажі
         </div>
       ) : (
-        <ul className="flex flex-col divide-y divide-[#E8E4DC]">
+        <ul className="flex flex-col divide-y divide-[color-mix(in_srgb,var(--foreground-primary)_12%,transparent)]">
           {topBooks.map((book) => (
             <li
               key={book.productId}
@@ -99,17 +99,17 @@ export default function TopBooksList({
               <BookCover src={book.coverSrc} name={book.name} />
 
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-semibold text-[#242424] truncate">
+                <p className="text-sm font-semibold text-[var(--foreground-primary)] truncate">
                   {book.name}
                 </p>
                 {book.authorName && (
-                  <p className="text-xs text-[#888] mt-0.5 truncate">
+                  <p className="text-xs text-[var(--color-muted-fg)] mt-0.5 truncate">
                     {book.authorName}
                   </p>
                 )}
               </div>
 
-              <span className="text-xs text-[#242424] whitespace-nowrap shrink-0 self-start pt-0.5">
+              <span className="text-xs text-[var(--foreground-primary)] whitespace-nowrap shrink-0 self-start pt-0.5">
                 {formatSalesCount(book.salesCount)}
               </span>
             </li>
