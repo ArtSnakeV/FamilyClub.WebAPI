@@ -31,7 +31,8 @@ export default function AboutSection() {
                     <img
                         alt=""
                         className="absolute inset-0 h-full w-full object-cover opacity-20"
-                        src="/images/body/Rectangle%20287.webp"
+                        // src="/images/body/Rectangle%20287.webp"
+                        src="/images/body/Rectangle287.png"
                     />
                     <div className="relative px-6 py-10 md:px-[85px] text-[var(--foreground-primary)]">
                         <div className="grid gap-10 md:grid-cols-[460px_460px] md:gap-[170px]">

@@ -16,7 +16,7 @@ const CHART_WIDTH = 520;
 const CHART_HEIGHT = 240;
 const PAD = { top: 16, right: 12, bottom: 36, left: 44 };
 const BAR_COLOR = "#005b33";
-const GRID = "#E8E4DC";
+const GRID = "color-mix(in srgb, var(--foreground-primary) 18%, transparent)";
 
 export default function ManagerSalesBarChart({
     title = "Продажі (грн)",
@@ -32,11 +32,11 @@ export default function ManagerSalesBarChart({
     const barW = Math.max(8, slot * (1 - gap));
 
     return (
-        <div className="rounded-[12px] bg-white px-5 py-5 shadow-[0_0_15px_rgba(0,0,0,0.12)] min-h-[300px]">
-            <h3 className="text-[16px] font-bold text-[#1F1F1F] mb-3">{title}</h3>
+        <div className="rounded-[12px] bg-[var(--background-elevated)] px-5 py-5 shadow-[var(--shadow-card)] min-h-[300px]">
+            <h3 className="text-[16px] font-bold text-[var(--foreground-primary)] mb-3">{title}</h3>
             {isLoading ? (
                 <div className="flex h-[200px] items-center justify-center">
-                    <div className="w-8 h-8 border-4 border-[#005b33] border-t-transparent rounded-full animate-spin" />
+                    <div className="w-8 h-8 border-4 border-[var(--color-green)] border-t-transparent rounded-full animate-spin" />
                 </div>
             ) : (
                 <svg
@@ -62,7 +62,7 @@ export default function ManagerSalesBarChart({
                                     x={PAD.left - 8}
                                     y={y + 4}
                                     textAnchor="end"
-                                    className="fill-[#888] text-[10px]"
+                                    className="fill-[var(--color-muted-fg)] text-[10px]"
                                 >
                                     {formatSalesAxis(value)}
                                 </text>
@@ -88,7 +88,7 @@ export default function ManagerSalesBarChart({
                                         x={x + barW / 2}
                                         y={CHART_HEIGHT - 8}
                                         textAnchor="middle"
-                                        className="fill-[#777] text-[9px]"
+                                        className="fill-[var(--color-muted-fg)] text-[9px]"
                                     >
                                         {point.label}
                                     </text>

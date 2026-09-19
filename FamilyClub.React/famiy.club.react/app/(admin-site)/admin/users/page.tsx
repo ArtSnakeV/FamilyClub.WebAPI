@@ -11,7 +11,6 @@ import QuickActionsBar from "./section/QuickActionsBar";
 import { useRouter } from "next/navigation";
 import { useLockUserFlow } from "./hooks/useLockUserFlow";
 import LockUserModal from "./blockedUsers/ui/LockUserModal";
-import { usePagination } from "./hooks/usePagination";
 import useNotifications from "@/app/(user-site)/notifications/hooks/useNotifications";
 import NotificationThread from "@/app/(user-site)/notifications/components/NotificationThread";
 import { useCurrentUser } from "@/app/(user-site)/userProfile/hooks/useCurrentUser";
@@ -46,23 +45,6 @@ export default function Page() {
         }
     }, [localUsers, selectedUserId]);
 
-    useEffect(() => {
-        document.body.style.backgroundImage =
-            "url('/images/usersPageAdmin/Rectangle326.png')";
-        document.body.style.backgroundSize = "cover";
-        document.body.style.backgroundAttachment = "fixed";
-        document.body.style.backgroundPosition = "center";
-        document.body.style.backgroundRepeat = "no-repeat";
-
-        return () => {
-            document.body.style.backgroundImage = "";
-            document.body.style.backgroundSize = "";
-            document.body.style.backgroundAttachment = "";
-            document.body.style.backgroundPosition = "";
-            document.body.style.backgroundRepeat = "";
-        };
-    }, []);
-
     const handleDeleteUser = async (user: UserInfo) => {
         await deleteUser(user.id);
 
@@ -74,30 +56,38 @@ export default function Page() {
     };
 
     const selectedUser = localUsers.find((u) => u.id === selectedUserId) ?? null;
-    const {
-        notifications,
-        loadingNotifications,
-        sendMessage,
-    } = useNotifications(messageUser?.id);
+    const { notifications, sendMessage } = useNotifications(messageUser?.id);
+
     return (
-        <div className="w-full min-h-screen overflow-hidden relative m-0 p-0">
+        <div className="w-full min-h-screen overflow-hidden relative m-0 p-0 text-[var(--foreground-primary)]">
             <div className="w-[100vw] min-h-screen relative">
-                <img
-                    src="/images/usersPageAdmin/Rectangle 675.png"
-                    className="absolute"
-                    style={{ width: "100vw", height: "auto", top: "-40px", left: "-20px" }}
-                    alt=""
-                />
-                <div className="flex flex-row relative items-center mt-24 ml-4 gap-4">
-                    {loading || !stats
-                        ? <p>Завантаження...</p>
-                        : stats.map((stat) => (
-                            <BlockForUsersInfo key={stat.title} {...stat} />
-                        ))}
+                <div
+                    className="absolute pointer-events-none"
+                    style={{ width: "100vw", top: "-40px", left: "-20px" }}
+                    aria-hidden
+                >
+                    <div className="admin-shelf-surface relative w-full">
+                        <img
+                            src="/images/usersPageAdmin/Rectangle 675.png"
+                            className="block w-full h-auto"
+                            alt=""
+                        />
+                    </div>
                 </div>
+
+                <div className="flex flex-row relative items-center mt-24 ml-4 gap-4">
+                    {loading || !stats ? (
+                        <p className="text-[var(--color-muted-fg)]">Завантаження...</p>
+                    ) : (
+                        stats.map((stat) => (
+                            <BlockForUsersInfo key={stat.title} {...stat} />
+                        ))
+                    )}
+                </div>
+
                 <div className="flex flex-row relative mt-2 mx-4 gap-6 items-start">
                     {loadingUsersInfo ? (
-                        <p>Завантаження...</p>
+                        <p className="text-[var(--color-muted-fg)]">Завантаження...</p>
                     ) : (
                         <AllUsersInfo
                             users={localUsers}
@@ -118,7 +108,9 @@ export default function Page() {
                 </div>
 
                 <QuickActionsBar
-                    onAddManager={() => router.push(`/admin/managers/addEditManager`)}
+                    onAddManager={() =>
+                        router.push(`/admin/managers/addEditManager`)
+                    }
                 />
 
                 {userToLock && (
@@ -128,7 +120,6 @@ export default function Page() {
                         onCancel={() => setUserToLock(null)}
                     />
                 )}
-
 
                 {messageUser && (
                     <NotificationThread
@@ -145,12 +136,9 @@ export default function Page() {
                                     : `data:image/jpeg;base64,${messageUser.avatarData}`
                                 : undefined
                         }
-                        avatarFallback={
-                            messageUser.name?.[0] ?? "👤"
-                        }
+                        avatarFallback={messageUser.name?.[0] ?? "👤"}
                         formatDate={(date?: Date) => {
                             if (!date) return "";
-
                             return new Date(date).toLocaleString("uk-UA", {
                                 day: "2-digit",
                                 month: "2-digit",
@@ -160,11 +148,7 @@ export default function Page() {
                             });
                         }}
                         onSend={(text) =>
-                            sendMessage(
-                                text,
-                                messageUser.id,
-                                admin?.id ?? ""
-                            )
+                            sendMessage(text, messageUser.id, admin?.id ?? "")
                         }
                     />
                 )}

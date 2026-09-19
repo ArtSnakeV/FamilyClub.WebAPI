@@ -51,7 +51,7 @@ export default function EntitiesSearchSorting({
           onChange={(e) => onSearchChange(e.target.value)}
           onClick={(e) => e.stopPropagation()}
           placeholder={searchPlaceholder}
-          className="w-full pl-4 pr-10 h-[36px] bg-[var(--color-white)] rounded-[9px] text-[15px] px-2 text-[#272727] outline-none border-[1px]"
+          className="w-full pl-4 pr-10 h-[36px] bg-[var(--background-elevated)] rounded-[9px] text-[15px] px-2 text-[var(--foreground-primary)] outline-none border border-[color-mix(in_srgb,var(--foreground-primary)_18%,transparent)] placeholder:text-[var(--color-muted-fg)]"
         />
         <span className="absolute right-2 top-1/2 -translate-y-1/2 w-[22px] h-[22px] flex items-center justify-center pointer-events-none">
           <Image
@@ -68,7 +68,7 @@ export default function EntitiesSearchSorting({
       {/* 2. Dynamic Add Button */}
       <button
         type="button"
-        className="transition-all duration-200 hover:opacity-90 hover:shadow-[0px_0px_20px_0px_#00000080] active:scale-[0.98] px-4 cursor-pointer h-[36px] rounded-[9px] bg-[var(--color-green)] text-[var(--color-white)] flex items-center gap-2 text-[14px] flex-shrink-0"
+        className="transition-all duration-200 hover:opacity-90 hover:shadow-[var(--shadow-panel)] active:scale-[0.98] px-4 cursor-pointer h-[36px] rounded-[9px] bg-[var(--color-green)] text-[var(--color-cream)] flex items-center gap-2 text-[14px] flex-shrink-0"
         onClick={() => router.push(addButtonHref)}
       >
         <img
@@ -95,13 +95,13 @@ export default function EntitiesSearchSorting({
 
       {/* 3. Dynamic Sorting Dropdown */}
       <div className="flex flex-row items-center gap-2 ml-auto">
-        <p className="text-[14px] text-[var(--color-black)] whitespace-nowrap">
+        <p className="text-[14px] text-[var(--foreground-primary)] whitespace-nowrap">
           Сортування:
         </p>
         <select
           value={sortValue}
           onChange={(e) => onSortChange(e.target.value)}
-          className="h-[30px] bg-[var(--color-white)] rounded-[9px] text-[14px] px-2 text-[var(--color-black)] outline-none border-[1px]"
+          className="h-[30px] bg-[var(--background-elevated)] rounded-[9px] text-[14px] px-2 text-[var(--foreground-primary)] outline-none border border-[color-mix(in_srgb,var(--foreground-primary)_18%,transparent)]"
         >
           {sortOptions.map((option) => (
             <option key={option.value} value={option.value}>

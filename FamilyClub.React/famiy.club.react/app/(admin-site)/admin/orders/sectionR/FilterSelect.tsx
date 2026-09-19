@@ -18,12 +18,14 @@ export default function FilterSelect({
 }: FilterSelectProps) {
     return (
         <div className="flex flex-col gap-1 w-[220px]">
-            <label className="text-[16px] text-[var(--color-black)]">{label}</label>
+            <label className="text-[16px] text-[var(--foreground-primary)]">
+                {label}
+            </label>
             <div className="relative">
                 <select
                     value={value}
                     onChange={(e) => onChange(e.target.value)}
-                    className="w-full h-[36px] appearance-none bg-[var(--color-white)] rounded-[9px] text-[15px] pl-3 pr-9 text-[#272727] outline-none shadow-[0_0_10px_0_#00000040] cursor-pointer"
+                    className="w-full h-[36px] appearance-none bg-[var(--background-elevated)] rounded-[9px] text-[15px] pl-3 pr-9 text-[var(--foreground-primary)] outline-none shadow-[var(--shadow-card)] border border-[color-mix(in_srgb,var(--foreground-primary)_18%,transparent)] cursor-pointer"
                 >
                     {options.map((opt) => (
                         <option key={opt.value} value={opt.value}>
@@ -40,7 +42,8 @@ export default function FilterSelect({
                 >
                     <path
                         d="M1 1.5L6 6.5L11 1.5"
-                        stroke="#272727"
+                        stroke="currentColor"
+                        className="text-[var(--foreground-primary)]"
                         strokeWidth="1.5"
                         strokeLinecap="round"
                         strokeLinejoin="round"

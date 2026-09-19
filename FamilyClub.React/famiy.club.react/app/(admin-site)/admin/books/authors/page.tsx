@@ -78,14 +78,21 @@ export default function ManagerAuthorPage() {
   }
 
   return (
-    <div className="w-full min-h-screen overflow-hidden relative m-0 p-0">
+    <div className="w-full min-h-screen overflow-hidden relative m-0 p-0 text-[var(--foreground-primary)]">
       <div className="w-[100vw] min-h-screen relative">
-        <img
-          src="/images/authorPageAdmin/Rectangle 675.png"
-          className="absolute"
-          style={{ width: "100vw", height: "auto", top: "36px", left: "-20px" }}
-          alt=""
-        />
+        <div
+                    className="absolute pointer-events-none"
+                    style={{ width: "100vw", top: "36px", left: "-20px" }}
+                    aria-hidden
+                >
+                    <div className="admin-shelf-surface relative w-full">
+                        <img
+                            src="/images/authorPageAdmin/Rectangle 675.png"
+                            className="block w-full h-auto"
+                            alt=""
+                        />
+                    </div>
+                </div>
 
         <div className="flex w-full flex-col">
           <div
@@ -103,13 +110,17 @@ export default function ManagerAuthorPage() {
               minHeight: "740px",
             }}
           >
-            <img
-              src="/images/authorPageAdmin/Rectangle 708.png"
-              alt=""
-              className="absolute top-0 left-0 w-full h-full object-fill"
-            />
+            <div
+                            aria-hidden
+                            className="absolute inset-0 pointer-events-none admin-parchment-bg"
+                            style={{
+                                backgroundImage:
+                                    "url('/images/authorPageAdmin/Rectangle 708.png')",
+                                backgroundSize: "100% 100%",
+                            }}
+                        />
 
-            <div className="absolute inset-[25px] overflow-auto p-[10px]">
+            <div className="absolute inset-[25px] overflow-auto p-[10px] z-10">
               <EntitiesSearchSorting
                 searchPlaceholder="Пошук автора"
                 searchValue={search}
@@ -127,15 +138,15 @@ export default function ManagerAuthorPage() {
 
               <div className="grid gap-4 mt-4">
                 {isLoading ? (
-                  <div className="text-[20px] opacity-60">Завантаження...</div>
+                  <div className="text-[20px] text-[var(--color-muted-fg)]">Завантаження...</div>
                 ) : currentPaginatedItems.length > 0 ? (
                   currentPaginatedItems.map((author) => (
                     <div
                       key={author.id}
-                      className="max-w-[1464px] w-full bg-[#F5F3EE] rounded-[9px] shadow-[0_0_10px_0_rgba(0,0,0,0.25)] px-[24px] py-3 flex items-center justify-between gap-4"
+                      className="max-w-[1464px] w-full bg-[var(--background-elevated)] rounded-[9px] shadow-[var(--shadow-card)] border border-[color-mix(in_srgb,var(--foreground-primary)_12%,transparent)] px-[24px] py-3 flex items-center justify-between gap-4"
                     >
                       {/* <div className="flex items-center gap-4 min-w-0 flex-1">
-                        <div className="w-[80px] h-[80px] flex-shrink-0 rounded-[8px] overflow-hidden bg-gray-100">
+                        <div className="w-[80px] h-[80px] flex-shrink-0 rounded-[8px] overflow-hidden bg-[color-mix(in_srgb,var(--foreground-primary)_10%,var(--background-elevated))]">
                           {author.photoUrl ? (
                             <img
                               src={`${apiBasePath}${author.photoUrl}`}
@@ -143,18 +154,18 @@ export default function ManagerAuthorPage() {
                               className="w-full h-full object-cover"
                             />
                           ) : (
-                            <div className="w-full h-full flex items-center justify-center text-gray-400 text-[12px]">
+                            <div className="w-full h-full flex items-center justify-center text-[var(--color-muted-fg)] text-[12px]">
                               Немає фото
                             </div>
                           )}
                         </div>
 
                         <div className="flex flex-col gap-1 min-w-0">
-                          <p className="font-sanspro font-semibold text-[20px] leading-[150%] tracking-[-0.011em] text-[var(--color-black)] truncate">
+                          <p className="font-sanspro font-semibold text-[20px] leading-[150%] tracking-[-0.011em] text-[var(--foreground-primary)] truncate">
                             {author.authorName}
                           </p>
                           {author.biography && (
-                            <p className="text-[13px] text-[var(--color-black)] line-clamp-2 opacity-70">
+                            <p className="text-[13px] text-[var(--foreground-primary)] line-clamp-2 opacity-70">
                               {author.biography}
                             </p>
                           )}
@@ -164,7 +175,7 @@ export default function ManagerAuthorPage() {
                         href={`/authors/${author.id}`}
                         className="flex items-center gap-4 min-w-0 flex-1 hover:opacity-80 transition-opacity"
                       >
-                        <div className="w-[80px] h-[80px] flex-shrink-0 rounded-[8px] overflow-hidden bg-gray-100">
+                        <div className="w-[80px] h-[80px] flex-shrink-0 rounded-[8px] overflow-hidden bg-[color-mix(in_srgb,var(--foreground-primary)_10%,var(--background-elevated))]">
                           {author.photoUrl ? (
                             <img
                               src={`${apiBasePath}${author.photoUrl}`}
@@ -172,19 +183,19 @@ export default function ManagerAuthorPage() {
                               className="w-full h-full object-cover"
                             />
                           ) : (
-                            <div className="w-full h-full flex items-center justify-center text-gray-400 text-[12px]">
+                            <div className="w-full h-full flex items-center justify-center text-[var(--color-muted-fg)] text-[12px]">
                               Немає фото
                             </div>
                           )}
                         </div>
 
                         <div className="flex flex-col gap-1 min-w-0">
-                          <p className="font-sanspro font-semibold text-[20px] leading-[150%] tracking-[-0.011em] text-[var(--color-black)] truncate">
+                          <p className="font-sanspro font-semibold text-[20px] leading-[150%] tracking-[-0.011em] text-[var(--foreground-primary)] truncate">
                             {author.authorName}
                           </p>
 
                           {author.biography && (
-                            <p className="text-[13px] text-[var(--color-black)] line-clamp-2 opacity-70">
+                            <p className="text-[13px] text-[var(--foreground-primary)] line-clamp-2 opacity-70">
                               {author.biography}
                             </p>
                           )}
@@ -224,7 +235,7 @@ export default function ManagerAuthorPage() {
                     </div>
                   ))
                 ) : (
-                  <div className="text-[20px] opacity-60">
+                  <div className="text-[20px] text-[var(--color-muted-fg)]">
                     Авторів не знайдено
                   </div>
                 )}

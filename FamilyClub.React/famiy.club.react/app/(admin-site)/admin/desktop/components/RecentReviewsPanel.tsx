@@ -39,14 +39,14 @@ function Avatar({ member }: { member?: ClubMemberReadDto | null }) {
       <img
         src={src}
         alt=""
-        className="w-10 h-10 rounded-full object-cover shrink-0 bg-[#E8E4DC]"
+        className="w-10 h-10 rounded-full object-cover shrink-0 bg-[color-mix(in_srgb,var(--foreground-primary)_10%,transparent)]"
       />
     );
   }
 
   return (
     <div
-      className="w-10 h-10 rounded-full shrink-0 bg-[#E8E4DC] flex items-center justify-center text-xs font-semibold text-[#555]"
+      className="w-10 h-10 rounded-full shrink-0 bg-[color-mix(in_srgb,var(--foreground-primary)_10%,transparent)] flex items-center justify-center text-xs font-semibold text-[var(--color-muted-fg)]"
       aria-hidden
     >
       {initials || "?"}
@@ -70,13 +70,15 @@ export default function RecentReviewsPanel({
   );
 
   return (
-    <div className="flex flex-col gap-4 px-5 py-5 bg-[var(--color-white)] rounded-[10px] shadow-[0px_0px_15px_0px_rgba(0,0,0,0.25)] min-h-[280px]">
+    <div className="flex flex-col gap-4 px-5 py-5 bg-[var(--background-elevated)] text-[var(--foreground-primary)] rounded-[10px] shadow-[var(--shadow-panel)] min-h-[280px]">
       <div className="flex items-center justify-between gap-2">
-        <h3 className="text-base font-bold text-[#242424]">Відгуки</h3>
+        <h3 className="text-base font-bold text-[var(--foreground-primary)]">
+          Відгуки
+        </h3>
         {href && (
           <Link
             href={href}
-            className="text-sm text-[#005b33] hover:underline shrink-0"
+            className="text-sm text-[var(--color-green)] hover:underline shrink-0"
           >
             Переглянути всі
           </Link>
@@ -85,14 +87,14 @@ export default function RecentReviewsPanel({
 
       {isLoading ? (
         <div className="flex flex-1 items-center justify-center py-12">
-          <div className="w-8 h-8 border-4 border-[#005b33] border-t-transparent rounded-full animate-spin" />
+          <div className="w-8 h-8 border-4 border-[var(--color-green)] border-t-transparent rounded-full animate-spin" />
         </div>
       ) : recent.length === 0 ? (
-        <div className="flex flex-1 items-center justify-center py-12 text-sm text-[#777]">
+        <div className="flex flex-1 items-center justify-center py-12 text-sm text-[var(--color-muted-fg)]">
           Немає відгуків
         </div>
       ) : (
-        <ul className="flex flex-col divide-y divide-[#E8E4DC]">
+        <ul className="flex flex-col divide-y divide-[color-mix(in_srgb,var(--foreground-primary)_12%,transparent)]">
           {recent.map((review) => {
             const member = review.userId
               ? memberMap.get(review.userId)
@@ -108,21 +110,21 @@ export default function RecentReviewsPanel({
 
                 <div className="flex-1 min-w-0">
                   <div className="flex items-start justify-between gap-2">
-                    <p className="text-sm font-semibold text-[#242424] truncate">
+                    <p className="text-sm font-semibold text-[var(--foreground-primary)] truncate">
                       {getMemberDisplayName(member)}
                     </p>
-                    <span className="text-xs text-[#888] whitespace-nowrap shrink-0">
+                    <span className="text-xs text-[var(--color-muted-fg)] whitespace-nowrap shrink-0">
                       {formatRelativeTimeUk(review.createdAt)}
                     </span>
                   </div>
 
-                  <p className="text-xs text-[#666] mt-1 truncate">
-                    <span className="text-[#888]">Товар: </span>
+                  <p className="text-xs text-[var(--color-muted-fg)] mt-1 truncate">
+                    <span>Товар: </span>
                     {productName}
                   </p>
 
                   {review.comment && (
-                    <p className="text-sm text-[#242424] mt-1 line-clamp-2">
+                    <p className="text-sm text-[var(--foreground-primary)] mt-1 line-clamp-2">
                       {review.comment}
                     </p>
                   )}

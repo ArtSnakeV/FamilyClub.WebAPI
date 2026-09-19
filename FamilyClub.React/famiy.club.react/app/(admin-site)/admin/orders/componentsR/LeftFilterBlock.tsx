@@ -38,7 +38,10 @@ const DELIVERY_SELECT_OPTIONS = [
     ...DELIVERY_OPTIONS.map((d) => ({ value: d.value, label: d.label })),
 ];
 
-export default function LeftFilterBlock({ onApply, onReset }: LeftFilterBlockProps) {
+export default function LeftFilterBlock({
+    onApply,
+    onReset,
+}: LeftFilterBlockProps) {
     const {
         values,
         setSearch,
@@ -52,19 +55,20 @@ export default function LeftFilterBlock({ onApply, onReset }: LeftFilterBlockPro
     } = useOrdersFilterForm({ onApply, onReset });
 
     return (
-        <div className="w-[330px] max-w-[400px] flex flex-col -mt-2 gap-10">
+        <div className="relative w-[330px] max-w-[400px] -mt-2">
+            {/* Раніше було height: 610px — контент вищий, кнопки вилазили за малюнок */}
             <img
                 src="/images/ordersAdminPage/Rectangle 705.png"
-                className="absolute"
-                style={{ width: "330px", height: "610px", maxHeight: "630px" }}
                 alt=""
+                aria-hidden
+                className="absolute inset-0 w-full h-full object-fill pointer-events-none admin-parchment-bg"
             />
 
-            <p className="relative text-[20px] text-[var(--color-black)] p-2 mt-6 ml-7 font-bold">
-                Фільтри
-            </p>
+            <div className="relative z-10 flex flex-col items-center gap-3 px-7 pt-8 pb-8">
+                <p className="w-full text-[20px] text-[var(--foreground-primary)] font-bold pl-1">
+                    Фільтри
+                </p>
 
-            <div className="relative flex flex-col items-center gap-3 px-7 -mt-7 pb-2">
                 <SearchOrders
                     searchPlaceholder="№ замовлення, ім’я, email..."
                     searchValue={values.search}
@@ -92,8 +96,8 @@ export default function LeftFilterBlock({ onApply, onReset }: LeftFilterBlockPro
                     options={DELIVERY_SELECT_OPTIONS}
                 />
 
-                <div className="flex  w-[220px] flex-col gap-2">
-                    <label className="text-[16px] text-[var(--color-black)]">
+                <div className="flex w-[220px] flex-col gap-2">
+                    <label className="text-[16px] text-[var(--foreground-primary)]">
                         Дата створення
                     </label>
                     <div className="flex items-center gap-2">
@@ -109,12 +113,12 @@ export default function LeftFilterBlock({ onApply, onReset }: LeftFilterBlockPro
                         />
                     </div>
                 </div>
+
                 <div className="flex flex-col gap-2 mt-2">
                     <button
                         type="button"
                         onClick={handleApply}
-                        className="mt-2 h-[42px] w-[220px] rounded-[10px] bg-[#0B3D2E] text-[var(--color-white)] text-[15px] 
-                    font-semibold shadow-[0_0_10px_0_#00000040] hover:opacity-90 transition-opacity"
+                        className="h-[42px] w-[220px] rounded-[10px] bg-[var(--color-green)] text-[var(--color-cream)] text-[15px] font-semibold shadow-[var(--shadow-card)] hover:opacity-90 transition-opacity"
                     >
                         Застосувати фільтри
                     </button>
@@ -122,8 +126,7 @@ export default function LeftFilterBlock({ onApply, onReset }: LeftFilterBlockPro
                     <button
                         type="button"
                         onClick={handleReset}
-                        className="h-[36px]  w-[220px] rounded-[10px] bg-transparent border border-[#0B3D2E] text-[#0B3D2E]
-                     text-[14px] font-semibold hover:bg-[#0B3D2E]/5 transition-colors"
+                        className="h-[36px] w-[220px] rounded-[10px] bg-transparent border border-[var(--color-green)] text-[var(--color-green)] text-[14px] font-semibold hover:bg-[color-mix(in_srgb,var(--color-green)_22%,var(--background-elevated))] transition-colors"
                     >
                         Скинути фільтри
                     </button>

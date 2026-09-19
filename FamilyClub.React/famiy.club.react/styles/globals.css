@@ -57,6 +57,8 @@
   /* Admin shell (day parchment + wood rail) */
   --admin-page-bg: #DBD7CD;
   --admin-wood: #C7A381;
+  --admin-matrix-surface: #F5F2EB;
+  --admin-matrix-surface-alt: #FAF8F3;
 
   /* Product page materials */
   --color-product-page-bg: #3a2618;
@@ -166,6 +168,8 @@
 
   --admin-page-bg: #1A1814;
   --admin-wood: #8B6F4E;
+  --admin-matrix-surface: #221F1A;
+  --admin-matrix-surface-alt: #2A2620;
 
   --color-product-page-bg: #14110E;
   --color-product-board: #2A241C;

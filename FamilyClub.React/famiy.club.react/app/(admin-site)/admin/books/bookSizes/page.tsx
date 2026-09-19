@@ -81,14 +81,21 @@ export default function BookSizesPage() {
   }
 
   return (
-    <div className="w-full min-h-screen overflow-hidden relative m-0 p-0">
+    <div className="w-full min-h-screen overflow-hidden relative m-0 p-0 text-[var(--foreground-primary)]">
       <div className="w-[100vw] min-h-screen relative">
-        <img
-          src="/images/authorPageAdmin/Rectangle 675.png"
-          className="absolute"
-          style={{ width: "100vw", height: "auto", top: "36px", left: "-20px" }}
-          alt=""
-        />
+        <div
+                    className="absolute pointer-events-none"
+                    style={{ width: "100vw", top: "36px", left: "-20px" }}
+                    aria-hidden
+                >
+                    <div className="admin-shelf-surface relative w-full">
+                        <img
+                            src="/images/authorPageAdmin/Rectangle 675.png"
+                            className="block w-full h-auto"
+                            alt=""
+                        />
+                    </div>
+                </div>
 
         <div className="flex w-full flex-col">
           <div
@@ -106,13 +113,17 @@ export default function BookSizesPage() {
               minHeight: "740px",
             }}
           >
-            <img
-              src="/images/authorPageAdmin/Rectangle 708.png"
-              alt=""
-              className="absolute top-0 left-0 w-full h-full object-fill"
-            />
+            <div
+                            aria-hidden
+                            className="absolute inset-0 pointer-events-none admin-parchment-bg"
+                            style={{
+                                backgroundImage:
+                                    "url('/images/authorPageAdmin/Rectangle 708.png')",
+                                backgroundSize: "100% 100%",
+                            }}
+                        />
 
-            <div className="absolute inset-[25px] overflow-auto p-[10px]">
+            <div className="absolute inset-[25px] overflow-auto p-[10px] z-10">
               <EntitiesSearchSorting
                 searchPlaceholder="Пошук розміру..."
                 searchValue={search}
@@ -130,19 +141,19 @@ export default function BookSizesPage() {
 
               <div className="grid gap-4 mt-4">
                 {isLoading ? (
-                  <div className="text-[20px] opacity-60">Завантаження...</div>
+                  <div className="text-[20px] text-[var(--color-muted-fg)]">Завантаження...</div>
                 ) : currentPaginatedItems.length > 0 ? (
                   currentPaginatedItems.map((bookSize) => (
                     <div
                       key={bookSize.id}
-                      className="max-w-[1464px] w-full min-h-[50px] bg-[#F5F3EE] rounded-[9px] shadow-[0_0_10px_0_rgba(0,0,0,0.25)] px-[24px] py-3 flex items-center justify-between"
+                      className="max-w-[1464px] w-full min-h-[50px] bg-[var(--background-elevated)] rounded-[9px] shadow-[var(--shadow-card)] border border-[color-mix(in_srgb,var(--foreground-primary)_12%,transparent)] px-[24px] py-3 flex items-center justify-between"
                     >
                       <div className="min-w-0">
                         <p className="font-sanspro font-semibold text-[20px] leading-[150%] tracking-[-0.011em] align-middle">
                           {bookSize.name || "Unnamed Book Size"}
                         </p>
                         {bookSize.code && (
-                          <p className="text-[14px] text-[var(--color-black)] opacity-70 mt-0.5">
+                          <p className="text-[14px] text-[var(--foreground-primary)] opacity-70 mt-0.5">
                             Код: {bookSize.code}
                           </p>
                         )}
@@ -181,7 +192,7 @@ export default function BookSizesPage() {
                     </div>
                   ))
                 ) : (
-                  <div className="text-[20px] opacity-60">
+                  <div className="text-[20px] text-[var(--color-muted-fg)]">
                     Розмірів не знайдено
                   </div>
                 )}

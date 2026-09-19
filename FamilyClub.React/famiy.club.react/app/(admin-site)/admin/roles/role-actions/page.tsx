@@ -61,18 +61,29 @@ export default function RoleActionsPage() {
     );
 
     if (error) {
-        return <div className="p-[35px]">Не вдалося завантажити ролі: {error}</div>;
+        return (
+            <div className="p-[35px] text-[var(--foreground-primary)]">
+                Не вдалося завантажити ролі: {error}
+            </div>
+        );
     }
 
     return (
-        <div className="w-full min-h-screen overflow-hidden relative m-0 p-0">
+        <div className="w-full min-h-screen overflow-hidden relative m-0 p-0 text-[var(--foreground-primary)]">
             <div className="w-[100vw] min-h-screen relative">
-                <img
-                    src="/images/authorPageAdmin/Rectangle 675.png"
-                    className="absolute"
-                    style={{ width: "100vw", height: "auto", top: "36px", left: "-20px" }}
-                    alt=""
-                />
+                <div
+                    className="absolute pointer-events-none"
+                    style={{ width: "100vw", top: "36px", left: "-20px" }}
+                    aria-hidden
+                >
+                    <div className="admin-shelf-surface relative w-full">
+                        <img
+                            src="/images/authorPageAdmin/Rectangle 675.png"
+                            className="block w-full h-auto"
+                            alt=""
+                        />
+                    </div>
+                </div>
 
                 <div className="flex w-full flex-col">
                     <div
@@ -90,13 +101,17 @@ export default function RoleActionsPage() {
                             minHeight: "740px",
                         }}
                     >
-                        <img
-                            src="/images/authorPageAdmin/Rectangle 708.png"
-                            alt=""
-                            className="absolute top-0 left-0 w-full h-full object-fill"
+                        <div
+                            aria-hidden
+                            className="absolute inset-0 pointer-events-none admin-parchment-bg"
+                            style={{
+                                backgroundImage:
+                                    "url('/images/authorPageAdmin/Rectangle 708.png')",
+                                backgroundSize: "100% 100%",
+                            }}
                         />
 
-                        <div className="absolute inset-[25px] overflow-auto p-[10px]">
+                        <div className="absolute inset-[25px] overflow-auto p-[10px] z-10">
                             <EntitiesSearchSorting
                                 searchPlaceholder="Пошук ролі"
                                 searchValue={search}
@@ -108,20 +123,20 @@ export default function RoleActionsPage() {
                                 sortOptions={ROLE_SORT_OPTIONS}
                             />
 
-                            <p className="font-[Source_Sans_Pro] font-semibold text-[36px] leading-[150%] tracking-[-0.011em] align-middle mt-4">
+                            <p className="font-[Source_Sans_Pro] font-semibold text-[36px] leading-[150%] tracking-[-0.011em] align-middle mt-4 text-[var(--foreground-primary)]">
                                 Ролі:
                             </p>
 
                             <div className="grid gap-4 mt-4">
                                 {isLoading ? (
-                                    <div className="text-[20px] opacity-60">
+                                    <div className="text-[20px] text-[var(--color-muted-fg)]">
                                         Завантаження...
                                     </div>
                                 ) : currentPaginatedItems.length > 0 ? (
                                     currentPaginatedItems.map((role) => (
                                         <div
                                             key={role.id}
-                                            className="max-w-[1464px] w-full bg-[#F5F3EE] rounded-[9px] shadow-[0_0_10px_0_rgba(0,0,0,0.25)] px-[24px] py-3 flex items-center justify-between gap-4"
+                                            className="max-w-[1464px] w-full bg-[var(--background-elevated)] rounded-[9px] shadow-[var(--shadow-card)] px-[24px] py-3 flex items-center justify-between gap-4 border border-[color-mix(in_srgb,var(--foreground-primary)_12%,transparent)]"
                                         >
                                             <div className="flex items-center gap-4 min-w-0 flex-1">
                                                 <div className="w-[56px] h-[56px] flex-shrink-0 rounded-full bg-[var(--color-green)]/15 flex items-center justify-center">
@@ -132,10 +147,10 @@ export default function RoleActionsPage() {
                                                     />
                                                 </div>
                                                 <div className="flex flex-col gap-0.5 min-w-0">
-                                                    <p className="font-sanspro font-semibold text-[20px] leading-[150%] tracking-[-0.011em] text-[var(--color-black)] truncate">
+                                                    <p className="font-sanspro font-semibold text-[20px] leading-[150%] tracking-[-0.011em] text-[var(--foreground-primary)] truncate">
                                                         {role.name}
                                                     </p>
-                                                    <p className="text-[12px] text-[var(--color-black)] opacity-50 truncate">
+                                                    <p className="text-[12px] text-[var(--color-muted-fg)] truncate">
                                                         ID: {role.id}
                                                     </p>
                                                 </div>
@@ -175,7 +190,7 @@ export default function RoleActionsPage() {
                                         </div>
                                     ))
                                 ) : (
-                                    <div className="text-[20px] opacity-60">
+                                    <div className="text-[20px] text-[var(--color-muted-fg)]">
                                         Ролей не знайдено.{" "}
                                         <Link
                                             href="/admin/roles/role-actions/addRole"

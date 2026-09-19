@@ -151,15 +151,22 @@ export default function Page() {
     ];
 
     return (
-        <div className="w-full min-h-screen overflow-hidden relative m-0 p-0 pb-8">
+        <div className="w-full min-h-screen overflow-hidden relative m-0 p-0 pb-8 text-[var(--foreground-primary)]">
             <div className="w-[100vw] min-h-screen relative">
-                <img
-                    src="/images/usersPageAdmin/Rectangle 675.png"
-                    className="absolute"
-                    style={{ width: "100vw", height: "auto", top: "40px", left: "-20px" }}
-                    alt=""
-                />
-                <div className="flex relative mt-[1vh] ml-3 gap-2 items-start">
+                <div
+                    className="absolute pointer-events-none"
+                    style={{ width: "100vw", top: "40px", left: "-20px" }}
+                    aria-hidden
+                >
+                    <div className="admin-shelf-surface relative w-full">
+                        <img
+                            src="/images/usersPageAdmin/Rectangle 675.png"
+                            className="block w-full h-auto"
+                            alt=""
+                        />
+                    </div>
+                </div>
+                <div className="flex relative mt-[1vh] ml-3 gap-2 items-start z-10">
                     <OrderTabsStatus
                         tabs={tabs}
                         activeTab={status}
@@ -185,7 +192,7 @@ export default function Page() {
                 <div className="flex flex-row gap-0">
                     <div className="relative mt-2 mx-3">
                         {loading ? (
-                            <p className="text-center text-[#6B6B6B] py-10">
+                            <p className="text-center text-[var(--color-muted-fg)] py-10">
                                 Завантаження...
                             </p>
                         ) : (
