@@ -21,7 +21,7 @@ export default function SettingsUserProfile() {
         messages: false,
     });
 
-    const inputClass = "w-full h-[52px] px-4 rounded-[8px] border border-gray-200 bg-[var(--background-elevated)] text-[15px] outline-none focus:border-[var(--color-green)]";
+    const inputClass = "w-full h-[52px] px-4 rounded-[8px] border border-[var(--color-menu-separator)] bg-[var(--background-elevated)] text-[15px] outline-none focus:border-[var(--color-green)]";
     const inputStyle = { boxShadow: "0px 0px 10px 0px #00000040" };
     return (
         <div className="w-[560px] h-[526px]"

@@ -147,7 +147,7 @@ export default function MobileOrdersView({
           </h1>
         </div>
         {paws > 0 && (
-          <div className="flex items-center gap-1.5 bg-[#ECE8DE]/95 px-3 py-1 rounded-full border border-[var(--color-menu-separator)] shadow-sm text-xs">
+          <div className="flex items-center gap-1.5 bg-[color-mix(in_srgb,var(--background-elevated)_95%,transparent)] px-3 py-1 rounded-full border border-[var(--color-menu-separator)] shadow-sm text-xs">
             <span className="text-sm">🐾</span>
             <span className="font-bold text-[var(--foreground-primary)] text-[13px]">{paws}</span>
           </div>
@@ -203,7 +203,7 @@ export default function MobileOrdersView({
             <div className="w-9 h-9 border-4 border-[var(--color-green)] border-t-transparent rounded-full animate-spin"></div>
           </div>
         ) : currentItems.length === 0 ? (
-          <div className="bg-[#e3be9b]/95 backdrop-blur-sm rounded-[15px] p-8 text-center border border-[var(--color-border-warm)]/50 shadow-md my-4">
+          <div className="bg-[color-mix(in_srgb,var(--color-wood)_92%,transparent)] backdrop-blur-sm rounded-[15px] p-8 text-center border border-[var(--color-border-warm)]/50 shadow-md my-4">
             <span className="text-4xl block mb-2">📦</span>
             <h3 className="text-lg font-bold text-[var(--foreground-primary)] mb-1">{t("orders.emptyTitle")}</h3>
             <p className="text-xs text-[var(--color-muted-fg)]">
@@ -216,10 +216,10 @@ export default function MobileOrdersView({
             const isCancelled = normalizedStatus === "скасовано" || normalizedStatus === "cancelled";
             const isReturned = normalizedStatus === "повернено" || normalizedStatus === "returned";
             const outerBgClass = isCancelled
-              ? "bg-[#E3C8C4] border-[#D1AFA9]"
+              ? "bg-[color-mix(in_srgb,#C0392B_18%,var(--background-elevated))] border-[color-mix(in_srgb,#C0392B_35%,transparent)]"
               : isReturned
               ? "bg-[var(--color-menu-separator)] border-[var(--color-menu-separator)]"
-              : "bg-[#e3be9b] border-transparent";
+              : "bg-[var(--color-wood)] border-transparent";
 
             return (
               <div
@@ -269,7 +269,7 @@ export default function MobileOrdersView({
                 </div>
 
                 {/* Inner Book Item Card */}
-                <div className="bg-[var(--background-elevated)] border-[3px] sm:border-4 border-[#f5f3ee] rounded-[9px] drop-shadow-[0px_4px_2px_rgba(0,0,0,0.25)] min-h-[160px] w-full relative flex items-center p-2.5 sm:p-3 gap-2.5 sm:gap-3 my-1">
+                <div className="bg-[var(--background-elevated)] border-[3px] sm:border-4 border-[var(--background-elevated)] rounded-[9px] drop-shadow-[0px_4px_2px_rgba(0,0,0,0.25)] min-h-[160px] w-full relative flex items-center p-2.5 sm:p-3 gap-2.5 sm:gap-3 my-1">
                   {/* Bookmark Badge on Left Edge */}
                   <div className="w-[30px] min-h-[105px] bg-[var(--color-menu-separator)]/80 rounded-r-[6px] -ml-2.5 sm:-ml-3 flex flex-col items-center justify-center gap-2 shrink-0 self-center py-2 shadow-sm">
                     {item.formats.includes("print") && (
@@ -327,11 +327,11 @@ export default function MobileOrdersView({
                           if (f === "ebook" || f.includes("елек")) {
                             label = t("orders.formats.ebook");
                             icon = "📱";
-                            badgeStyle = "bg-[#E3F2FD] text-[#0277BD] border-[#B3E5FC]";
+                            badgeStyle = "bg-[color-mix(in_srgb,#0277BD_16%,var(--background-elevated))] text-[#4FC3F7] border-[color-mix(in_srgb,#0277BD_30%,transparent)]";
                           } else if (f === "audio" || f.includes("аудіо")) {
                             label = t("orders.formats.audio");
                             icon = "🎧";
-                            badgeStyle = "bg-[#F3E5F5] text-[#7B1FA2] border-[#E1BEE7]";
+                            badgeStyle = "bg-[color-mix(in_srgb,#7B1FA2_16%,var(--background-elevated))] text-[#CE93D8] border-[color-mix(in_srgb,#7B1FA2_30%,transparent)]";
                           } else if (f === "print" || f.includes("папер") || f === "paper") {
                             label = t("orders.formats.paper");
                             icon = "📖";

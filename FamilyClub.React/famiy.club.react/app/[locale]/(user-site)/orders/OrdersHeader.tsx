@@ -32,7 +32,7 @@ export default function OrdersHeader({
       </div>
 
       {/* Right Group: Balance & Discount Widget */}
-      <div className="flex items-center gap-3 bg-[#ECE8DE] px-4 py-2 rounded-full border border-[var(--color-menu-separator)] shadow-sm">
+      <div className="flex items-center gap-3 bg-[var(--background-elevated)] px-4 py-2 rounded-full border border-[var(--color-menu-separator)] shadow-sm">
         <div className="flex items-center gap-1.5 border-r border-[var(--color-menu-separator)] pr-3">
           <span className="text-lg">🐾</span>
           <div className="flex flex-col text-[11px] leading-tight text-[var(--color-muted-fg)]">
@@ -47,7 +47,7 @@ export default function OrdersHeader({
               {t("orders.discountAmount").replace("{value}", String(discount))}
             </span>
           </div>
-          <div className="w-[26px] h-[20px] bg-[#D4A373] rounded flex items-center justify-center text-white text-[10px] font-bold shadow-inner">
+          <div className="w-[26px] h-[20px] bg-[var(--color-wood)] rounded flex items-center justify-center text-white text-[10px] font-bold shadow-inner">
             💳
           </div>
         </div>

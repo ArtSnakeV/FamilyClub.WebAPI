@@ -426,7 +426,7 @@
   font-size: 20px;
   line-height: 1.5;
   letter-spacing: -0.22px;
-  color: rgba(155, 158, 175, 0.5);
+  color: color-mix(in srgb, var(--color-muted-fg) 70%, transparent);
 }
 
 .summaryValue {

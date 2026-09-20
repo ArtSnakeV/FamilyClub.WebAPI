@@ -38,7 +38,7 @@ export function BasicInfoSection({
         backgroundImage="/images/addProducts/Rectangle 313.svg"
       >
         <div className="flex w-[418px] flex-col gap-0">
-          <p className="text-[var(--color-black)] font-sans-pro font-normal text-[18px] leading-[150%] tracking-[-0.011em]">
+          <p className="text-[var(--foreground-primary)] font-sans-pro font-normal text-[18px] leading-[150%] tracking-[-0.011em]">
             {t("sellerProduct.bookName")}
           </p>
           <input
@@ -61,7 +61,7 @@ export function BasicInfoSection({
           />
 
           <div className="flex flex-col gap-0 pt-3">
-            <p className="text-[var(--color-black)] font-sans-pro font-normal text-[18px] leading-[150%] tracking-[-0.011em]">
+            <p className="text-[var(--foreground-primary)] font-sans-pro font-normal text-[18px] leading-[150%] tracking-[-0.011em]">
               {t("sellerProduct.description")}
             </p>
             <textarea

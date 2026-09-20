@@ -338,12 +338,16 @@ export default function MobileLibraryView({
       {/* 1. Profile Header Banner (Group 896) exact match to MobileUserProfileView */}
       <div
         className="relative w-full pt-[35px] pb-[25px] px-4 sm:px-6 overflow-hidden min-h-[220px] sm:min-h-[240px] flex flex-col justify-end shadow-md"
-        style={{
-          backgroundImage: "url('/images/userProfile/Rectangle 326.png')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
       >
+        <div
+          aria-hidden
+          className="absolute inset-0 pointer-events-none admin-parchment-bg"
+          style={{
+            backgroundImage: "url('/images/userProfile/Rectangle 326.png')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        />
         <div className="absolute inset-0 bg-black/35 backdrop-blur-[2px] pointer-events-none" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/50 to-transparent pointer-events-none" />
 
@@ -402,14 +406,19 @@ export default function MobileLibraryView({
       {/* 2. Full-Width Library Banner & Summary Bar (Group 1001 exact to Figma screenshot: no icon, continuous box, beige filter circle) */}
       <div className="relative z-30 -mt-[28px] w-full max-w-[440px] mx-auto px-4">
         <div
-          className="w-full rounded-t-[20px] rounded-b-[16px] shadow-[0px_8px_20px_rgba(0,0,0,0.22)] flex flex-col overflow-hidden border border-[var(--color-menu-separator)]/40"
-          style={{
-            backgroundColor: "var(--color-wood)",
-            backgroundImage: "url('/images/userProfile/Rectangle 589.png')",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
+          className="relative w-full rounded-t-[20px] rounded-b-[16px] shadow-[0px_8px_20px_rgba(0,0,0,0.22)] flex flex-col overflow-hidden border border-[var(--color-menu-separator)]/40"
+          style={{ backgroundColor: "var(--color-wood)" }}
         >
+          <div
+            aria-hidden
+            className="absolute inset-0 pointer-events-none admin-parchment-bg"
+            style={{
+              backgroundImage: "url('/images/userProfile/Rectangle 589.png')",
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }}
+          />
+          <div className="relative z-10 flex flex-col">
           {/* Top Title: "Бібліотека" full width (NO book icon, continuous box exact to Figma) */}
           <div className="w-full py-3 sm:py-3.5 px-4 bg-[var(--color-wood)]/85 backdrop-blur-[1px] flex items-center justify-center">
             <span className="text-[var(--foreground-primary)] font-['Roboto_Mono',monospace] text-[17px] sm:text-[19px] font-bold tracking-tight">
@@ -442,6 +451,7 @@ export default function MobileLibraryView({
               </div>
             </div>
           </div>
+          </div>
         </div>
       </div>
 
@@ -455,7 +465,7 @@ export default function MobileLibraryView({
               <button
                 type="button"
                 onClick={() => setIsFilterOpen(false)}
-                className="w-9 h-9 rounded-full bg-black/10 flex items-center justify-center hover:bg-black/20 active:scale-90 transition-all text-[var(--foreground-primary)] font-bold"
+                className="w-9 h-9 rounded-full bg-[color-mix(in_srgb,var(--foreground-primary)_10%,transparent)] flex items-center justify-center hover:bg-black/20 active:scale-90 transition-all text-[var(--foreground-primary)] font-bold"
               >
                 ✕
               </button>
@@ -563,7 +573,7 @@ export default function MobileLibraryView({
                   setOnlyAudio(false);
                   setSortOrder(null);
                 }}
-                className="px-5 py-2.5 rounded-full text-sm font-semibold text-[var(--foreground-primary)] hover:bg-black/10 transition-all"
+                className="px-5 py-2.5 rounded-full text-sm font-semibold text-[var(--foreground-primary)] hover:bg-[color-mix(in_srgb,var(--foreground-primary)_10%,transparent)] transition-all"
               >
                 {t("library.reset")}
               </button>

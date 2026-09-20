@@ -22,7 +22,7 @@ export default function AuthorPageBio({ author }: AuthorPageBioProps) {
 
   return (
     <div className="flex w-full max-w-[1100px] flex-col md:flex-row gap-8 text-[var(--color-white)] items-center p-8 mb-12 ml-[1%]">
-      <div className="w-[240px] h-[240px] flex-shrink-0 rounded-[12px] overflow-hidden bg-gray-100">
+      <div className="w-[240px] h-[240px] flex-shrink-0 rounded-[12px] overflow-hidden bg-[var(--color-menu-hover)]">
         {author.photoUrl ? (
           <img
             src={`${apiBasePath}${author.photoUrl}`}
@@ -30,7 +30,7 @@ export default function AuthorPageBio({ author }: AuthorPageBioProps) {
             className="w-full h-full object-cover"
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center text-gray-400 text-[13px]">
+          <div className="w-full h-full flex items-center justify-center text-[var(--color-muted-fg)] text-[13px]">
             {t("authors.noPhoto")}
           </div>
         )}
@@ -57,7 +57,7 @@ export default function AuthorPageBio({ author }: AuthorPageBioProps) {
             )}
           </>
         ) : (
-          <p className="text-[15px] text-[var(--color-black)] opacity-50">
+          <p className="text-[15px] text-[var(--foreground-primary)] opacity-50">
             {t("authors.noBio")}
           </p>
         )}

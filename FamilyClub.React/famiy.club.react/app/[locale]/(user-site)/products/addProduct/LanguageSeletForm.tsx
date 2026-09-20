@@ -14,7 +14,7 @@ export default function LanguageSelectForm({ languages, value, onChange }: Props
 
   return (
     <>
-      <p className="text-[var(--color-black)] font-sans-pro font-normal text-[18px] leading-[150%] tracking-[-0.011em]">
+      <p className="text-[var(--foreground-primary)] font-sans-pro font-normal text-[18px] leading-[150%] tracking-[-0.011em]">
         {t("sellerProduct.language")}
       </p>
       <select

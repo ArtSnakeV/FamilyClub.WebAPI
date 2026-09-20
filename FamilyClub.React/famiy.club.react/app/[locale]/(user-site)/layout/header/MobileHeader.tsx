@@ -70,11 +70,11 @@ export default function MobileHeader() {
     <>
       <header className="fixed top-0 left-0 right-0 z-[100] block md:hidden h-[65px] bg-transparent">
         {/* Figma Rectangle 56 / Group 895 (hand-drawn textured cream paper background and border) */}
-        <div className="absolute -top-[10px] -left-[15px] -right-[15px] -bottom-[18px] z-0 pointer-events-none">
+        <div className="absolute -top-[10px] -left-[15px] -right-[15px] -bottom-[18px] z-0 pointer-events-none drop-shadow-[0px_4px_10px_rgba(0,0,0,0.15)]">
           <img
             src="/images/header/Rectangle 56.svg"
             alt=""
-            className="w-full h-full object-fill drop-shadow-[0px_4px_10px_rgba(0,0,0,0.15)]"
+            className="w-full h-full object-fill admin-parchment-bg"
           />
         </div>
 
@@ -97,7 +97,7 @@ export default function MobileHeader() {
                 src={logoSrc}
                 alt={logoAlt}
                 className={`relative z-10 w-full h-full object-contain p-[4px_6px_10px] drop-shadow-[0px_4px_8px_rgba(0,0,0,0.3)] ${
-                  logoSrc === "/images/main_page/logo.png"
+                  logoSrc === "/images/main_page/logo.png" && theme !== "ink-night"
                     ? "mix-blend-screen"
                     : ""
                 }`}

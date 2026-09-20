@@ -27,7 +27,7 @@ export default function NextLevelBlock({ paws }: Props) {
   const progressPercent = Math.min(100, (paws / LEVEL_MAX) * 100);
 
   const ink = isNight ? "text-[var(--color-cream)]" : "text-[var(--color-black)]";
-  const muted = isNight ? "text-[var(--color-cream)]/75" : "text-black/60";
+  const muted = isNight ? "text-[var(--color-cream)]/75" : "text-[var(--color-muted-fg)]";
   const nightFilter = isNight ? { filter: NIGHT_BG_FILTER } : undefined;
 
   return (
@@ -52,7 +52,7 @@ export default function NextLevelBlock({ paws }: Props) {
           </div>
 
           <div className="flex-1 min-w-0">
-            <div className="flex justify-between text-xs text-black/60 mb-1">
+            <div className="flex justify-between text-xs text-[var(--color-muted-fg)] mb-1">
               <span>{t("paws.pawsCount").replace("{count}", String(paws))}</span>
               <span>{t("paws.pawsCount").replace("{count}", String(LEVEL_MAX))}</span>
             </div>

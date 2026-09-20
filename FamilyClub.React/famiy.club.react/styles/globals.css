@@ -235,9 +235,13 @@ body {
   font-family: var(--font-sans);
 }
 
-html,
+html {
+  overflow-x: clip;
+}
+
 body {
-  overflow-x: hidden;
+  /* clip avoids a second vertical scrollport (hidden on both html+body does) */
+  overflow-x: clip;
 }
 
 

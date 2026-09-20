@@ -112,7 +112,7 @@ export default function DropDownAuthors() {
                       w-full
                       bg-transparent
                       outline-none
-                      text-[var(--color-black)]
+                      text-[var(--foreground-primary)]
                       text-xs
                       pr-5
                       -mt-1

@@ -44,7 +44,7 @@ export default function ReviewCard({
                     className="w-9 h-9 rounded-full object-cover shrink-0 border border-[var(--color-menu-separator)]"
                 />
             ) : (
-                <div className="w-9 h-9 rounded-full bg-black/10 text-black/60 flex items-center justify-center text-xs font-bold shrink-0">
+                <div className="w-9 h-9 rounded-full bg-[color-mix(in_srgb,var(--foreground-primary)_10%,transparent)] text-[var(--color-muted-fg)] flex items-center justify-center text-xs font-bold shrink-0">
                     {reviewerName?.[0]?.toUpperCase() ?? "👤"}
                 </div>
             )}
@@ -54,12 +54,12 @@ export default function ReviewCard({
                     <h3 className="font-bold text-[15px] text-black truncate">
                         {reviewerName}
                     </h3>
-                    <span className="text-[11px] font-medium text-black/50 shrink-0">
+                    <span className="text-[11px] font-medium text-[var(--color-muted-fg)] shrink-0">
                         {time}
                     </span>
                 </div>
 
-                <p className="text-[13px] text-black/75 leading-snug line-clamp-3 mb-2 font-sans">
+                <p className="text-[13px] text-[var(--color-muted-fg)] leading-snug line-clamp-3 mb-2 font-sans">
                     {text}
                 </p>
 

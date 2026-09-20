@@ -58,7 +58,7 @@ export function SaleSection({
               label={t("sellerProduct.price")}
               value={form.price}
               onChange={(v) => setField("price", v)}
-              className="w-[200px] text-[var(--color-black)]"
+              className="w-[200px] text-[var(--foreground-primary)]"
             />
 
             <div className="flex flex-col items-center w-[200px] mt-4">
@@ -67,7 +67,7 @@ export function SaleSection({
                 placeholder="0"
                 value={form.discountPrice}
                 onChange={(v) => setField("discountPrice", v)}
-                className="w-[200px] mt-4  text-[var(--color-black)]"
+                className="w-[200px] mt-4  text-[var(--foreground-primary)]"
               />
               {form.discountPrice != null &&
                 form.price != null &&

@@ -127,7 +127,7 @@ export default function DropDownYearOfPublication() {
                   w-full h-full
                   bg-transparent
                   outline-none
-                  text-[var(--color-black)]
+                  text-[var(--foreground-primary)]
                   text-xs
                   px-4 pr-7
                 "

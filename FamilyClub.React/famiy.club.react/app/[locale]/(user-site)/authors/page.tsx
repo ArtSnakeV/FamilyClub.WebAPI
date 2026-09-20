@@ -21,9 +21,9 @@ const ENG_ALPHABET = [
 ];
 
 function getLetterButtonClass(hasAuthors: boolean, isActive: boolean) {
-  if (!hasAuthors) return "text-[var(--color-black)] opacity-60 cursor-default";
+  if (!hasAuthors) return "text-[var(--foreground-primary)] opacity-60 cursor-default";
   if (isActive) return "text-[var(--color-green)] cursor-pointer";
-  return "text-[var(--color-black)] hover:opacity-70 cursor-pointer";
+  return "text-[var(--foreground-primary)] hover:opacity-70 cursor-pointer";
 }
 
 export default function AuthorsPage() {
@@ -34,22 +34,6 @@ export default function AuthorsPage() {
   const [authors, setAuthors] = useState<AuthorDTO[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeLetter, setActiveLetter] = useState<string | null>(null);
-
-  useEffect(() => {
-    document.body.style.backgroundImage = "url('/images/authorsUserPage/Rectangle 326.png')";
-    document.body.style.backgroundSize = "cover";
-    document.body.style.backgroundAttachment = "fixed";
-    document.body.style.backgroundPosition = "center";
-    document.body.style.backgroundRepeat = "no-repeat";
-
-    return () => {
-      document.body.style.backgroundImage = "";
-      document.body.style.backgroundSize = "";
-      document.body.style.backgroundAttachment = "";
-      document.body.style.backgroundPosition = "";
-      document.body.style.backgroundRepeat = "";
-    };
-  }, []);
 
   useEffect(() => {
     authorService
@@ -105,38 +89,42 @@ export default function AuthorsPage() {
     }
   }, [locale, activeLetter]);
 
-  if (loading) {
-    return (
-      <div className="w-full min-h-screen flex items-center justify-center">
-        <p className="text-[var(--color-black)] opacity-60">{t("authors.loading")}</p>
-      </div>
-    );
-  }
-
   const activeAuthors = activeLetter ? groupedByLetter[activeLetter] ?? [] : [];
 
   return (
-    <div
-      className="
-        w-full 
-        mt-28
-        min-h-screen
-        relative
-        bg-no-repeat
-        bg-top
-        bg-center
-        bg-cover
-    "
-      style={{
-        backgroundImage: "url('/images/authorsUserPage/Rectangle 473.png')",
-      }}
-    >
+    <div className="relative w-full mt-28 min-h-screen overflow-hidden">
+      <div
+        aria-hidden
+        className="absolute inset-0 pointer-events-none admin-parchment-bg"
+        style={{
+          backgroundImage: "url('/images/authorsUserPage/Rectangle 326.png')",
+          backgroundSize: "cover",
+          backgroundAttachment: "fixed",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+        }}
+      />
+      <div className="relative z-10 w-full min-h-screen bg-no-repeat bg-top bg-center bg-cover overflow-hidden">
+        <div
+          aria-hidden
+          className="absolute inset-0 pointer-events-none admin-parchment-bg"
+          style={{
+            backgroundImage: "url('/images/authorsUserPage/Rectangle 473.png')",
+            backgroundSize: "cover",
+            backgroundPosition: "top center",
+          }}
+        />
+      {loading ? (
+        <div className="relative z-10 w-full min-h-screen flex items-center justify-center">
+          <p className="text-[var(--foreground-primary)] opacity-60">{t("authors.loading")}</p>
+        </div>
+      ) : (
       <div className="relative z-10 max-w-[1200px] mx-auto px-6 pt-16 pb-24">
-        <h1 className="text-[36px] text-center font-bold text-[var(--color-black)] mb-8">
+        <h1 className="text-[36px] text-center font-bold text-[var(--foreground-primary)] mb-8">
           {t("authors.title")}
         </h1>
 
-        <div className="flex flex-col gap-2 mb-4 border-y border-[var(--color-black)]/10 py-4">
+        <div className="flex flex-col gap-2 mb-4 border-y border-[var(--foreground-primary)]/10 py-4">
           {locale === "uk" && (
             <nav className="flex flex-wrap gap-3">
               {UKR_ALPHABET.map((letter) => {
@@ -200,16 +188,16 @@ export default function AuthorsPage() {
         </div>
 
         {sortedAuthors.length === 0 ? (
-          <p className="text-[var(--color-black)] opacity-60">
+          <p className="text-[var(--foreground-primary)] opacity-60">
             {t("authors.empty")}
           </p>
         ) : !activeLetter ? (
-          <p className="text-[var(--color-black)] opacity-40 mt-6">
+          <p className="text-[var(--foreground-primary)] opacity-40 mt-6">
             {t("authors.pickLetter")}
           </p>
         ) : (
           <div className="mt-6">
-            <h3 className="text-[24px] font-bold text-[var(--color-black)]/40 mb-4">
+            <h3 className="text-[24px] font-bold text-[var(--foreground-primary)]/40 mb-4">
               {activeLetter}
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-3">
@@ -218,7 +206,7 @@ export default function AuthorsPage() {
                   key={author.id}
                   type="button"
                   onClick={() => router.push(lp(`/authors/${author.id}`))}
-                  className="text-left text-[16px] text-[var(--color-black)] hover:text-[var(--color-green)] transition truncate"
+                  className="text-left text-[16px] text-[var(--foreground-primary)] hover:text-[var(--color-green)] transition truncate"
                 >
                   {author.authorName}
                 </button>
@@ -226,6 +214,8 @@ export default function AuthorsPage() {
             </div>
           </div>
         )}
+      </div>
+      )}
       </div>
     </div>
   );

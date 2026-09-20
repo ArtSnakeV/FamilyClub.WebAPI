@@ -14,7 +14,7 @@ export default function AgeRestrictions({ value, onChange, ageRestrictions }: Pr
 
   return (
     <div className="flex flex-col gap-0 w-full">
-      <p className="text-[var(--color-black)] font-sans-pro font-normal text-[18px] leading-[150%] tracking-[-0.011em]">
+      <p className="text-[var(--foreground-primary)] font-sans-pro font-normal text-[18px] leading-[150%] tracking-[-0.011em]">
         {t("sellerProduct.ageRestrictions")}
       </p>
       <select

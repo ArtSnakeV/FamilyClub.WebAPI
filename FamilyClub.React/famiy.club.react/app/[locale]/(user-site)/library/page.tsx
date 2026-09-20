@@ -136,14 +136,17 @@ function LibraryContent() {
       </div>
 
       {/* Desktop view */}
-      <div
-        className="hidden md:block relative min-h-screen"
-        style={{
-          backgroundImage: "url('/images/userProfile/Rectangle 326.png')",
-          backgroundSize: "100% 100%",
-          backgroundPosition: "center",
-        }}
-      >
+      <div className="hidden md:block relative min-h-screen overflow-hidden">
+        <div
+          aria-hidden
+          className="absolute inset-0 pointer-events-none admin-parchment-bg"
+          style={{
+            backgroundImage: "url('/images/userProfile/Rectangle 326.png')",
+            backgroundSize: "100% 100%",
+            backgroundPosition: "center",
+          }}
+        />
+        <div className="relative z-10">
         <div className="w-[calc(100%-700px)] h-[200px] items-center ml-[400px] mt-[160px] flex absolute">
           <InfoUserSection member={user} userId={user?.id} />
         </div>
@@ -156,15 +159,17 @@ function LibraryContent() {
             userId={user?.id}
           />
         </div>
-        <div
-          className="relative h-[200px] w-full top-[41vh]"
-          style={{
-            backgroundImage: "url('/images/userProfile/Rectangle 194.png')",
-            backgroundSize: "100% 100%",
-            backgroundPosition: "center",
-          }}
-        >
-          <div className="flex items-center ml-[328px]">
+        <div className="relative h-[200px] w-full top-[41vh] overflow-hidden">
+          <div
+            aria-hidden
+            className="absolute inset-0 pointer-events-none admin-parchment-bg"
+            style={{
+              backgroundImage: "url('/images/userProfile/Rectangle 194.png')",
+              backgroundSize: "100% 100%",
+              backgroundPosition: "center",
+            }}
+          />
+          <div className="relative z-10 flex items-center ml-[328px]">
             <BtnSection activeTab={activeTab} onTabChange={setActiveTab} />
           </div>
         </div>
@@ -176,6 +181,7 @@ function LibraryContent() {
             favorites={favorites}
             toggleFavorite={toggleFavorite}
           />
+        </div>
         </div>
       </div>
     </>

@@ -108,7 +108,7 @@ export default function BookCard({
           decoding="async"
         />
       ) : (
-        <div className="absolute left-1/2 top-[20px] h-[190px] w-[140px] -translate-x-1/2 flex flex-col items-center justify-center text-gray-400 text-center p-2 bg-white/80 rounded-[6px] shadow-sm border border-gray-200">
+        <div className="absolute left-1/2 top-[20px] h-[190px] w-[140px] -translate-x-1/2 flex flex-col items-center justify-center text-[var(--color-muted-fg)] text-center p-2 bg-[color-mix(in_srgb,var(--foreground-primary)_8%,var(--background-elevated))] rounded-[6px] shadow-sm border border-[color-mix(in_srgb,var(--foreground-primary)_14%,transparent)]">
           <span className="text-3xl mb-1">📖</span>
           <span className="text-xs font-serif">{t("product.noPhoto")}</span>
         </div>

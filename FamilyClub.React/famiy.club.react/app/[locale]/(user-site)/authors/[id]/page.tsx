@@ -27,22 +27,6 @@ export default function AuthorDetailPage() {
   const authorId = Number(id);
 
   useEffect(() => {
-    document.body.style.backgroundImage = "url('/images/authorsUserPage/Rectangle 326.png')";
-    document.body.style.backgroundSize = "cover";
-    document.body.style.backgroundAttachment = "fixed";
-    document.body.style.backgroundPosition = "center";
-    document.body.style.backgroundRepeat = "no-repeat";
-
-    return () => {
-      document.body.style.backgroundImage = "";
-      document.body.style.backgroundSize = "";
-      document.body.style.backgroundAttachment = "";
-      document.body.style.backgroundPosition = "";
-      document.body.style.backgroundRepeat = "";
-    };
-  }, []);
-
-  useEffect(() => {
     if (!authorId) return;
 
     Promise.all([
@@ -87,29 +71,34 @@ export default function AuthorDetailPage() {
   };
   const getImageSrc = (book: ProductDto) => getProductCoverUrl(book);
 
-  if (loading) {
-    return (
-      <div className="w-full min-h-screen flex items-center justify-center">
-        <p className="text-[var(--color-black)] opacity-60">{t("authors.loading")}</p>
-      </div>
-    );
-  }
-
-  if (!author) {
-    return (
-      <div className="w-full min-h-screen flex items-center justify-center">
-        <p className="text-[var(--color-black)] opacity-60">{t("authors.notFound")}</p>
-      </div>
-    );
-  }
-
   const rows: ProductDto[][] = [];
   for (let i = 0; i < books.length; i += 3) {
     rows.push(books.slice(i, i + 3));
   }
 
   return (
-    <div className="relative w-full -mb-2 gap-0 items-center">
+    <div className="relative w-full min-h-screen overflow-hidden -mb-2">
+      <div
+        aria-hidden
+        className="absolute inset-0 pointer-events-none admin-parchment-bg"
+        style={{
+          backgroundImage: "url('/images/authorsUserPage/Rectangle 326.png')",
+          backgroundSize: "cover",
+          backgroundAttachment: "fixed",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+        }}
+      />
+      {loading ? (
+        <div className="relative z-10 w-full min-h-screen flex items-center justify-center">
+          <p className="text-[var(--foreground-primary)] opacity-60">{t("authors.loading")}</p>
+        </div>
+      ) : !author ? (
+        <div className="relative z-10 w-full min-h-screen flex items-center justify-center">
+          <p className="text-[var(--foreground-primary)] opacity-60">{t("authors.notFound")}</p>
+        </div>
+      ) : (
+    <div className="relative z-10 w-full gap-0 items-center">
       <div className="flex w-[100vw] items-start justify-center text-left flex-wrap mt-[16vh]">
         <AuthorPageBio author={author} />
       </div>
@@ -134,6 +123,8 @@ export default function AuthorDetailPage() {
           favorites={favorites}
           isFav={isFav}
         />
+      )}
+    </div>
       )}
     </div>
   );

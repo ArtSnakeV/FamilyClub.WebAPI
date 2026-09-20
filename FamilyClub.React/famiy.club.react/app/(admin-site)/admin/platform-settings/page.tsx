@@ -4,25 +4,25 @@ import PlatformSettingsPanel from "./components/PlatformSettingsPanel";
 
 export default function PlatformSettingsPage() {
     return (
-        <div className="w-full min-h-screen overflow-x-hidden relative m-0 p-0 text-[var(--foreground-primary)]">
+        <div className="w-full min-h-full overflow-x-clip relative m-0 p-0 text-[var(--foreground-primary)]">
             <div
-                className="relative min-h-screen pb-10"
+                className="relative min-h-full pb-10"
                 style={{ marginLeft: "-1rem", width: "calc(100% + 2rem)" }}
             >
                 <div
-                    className="absolute pointer-events-none"
+                    className="absolute pointer-events-none overflow-hidden"
                     style={{
-                        width: "calc(100% + 20px)",
                         top: "-40px",
                         left: "-20px",
+                        right: "-20px",
+                        bottom: 0,
                     }}
                     aria-hidden
                 >
-                    <div className="admin-shelf-surface relative w-full h-full min-h-screen">
+                    <div className="admin-shelf-surface absolute inset-0">
                         <img
                             src="/images/usersPageAdmin/Rectangle 675.png"
-                            className="block w-full h-full object-fill min-h-screen"
-                            style={{ height: "calc(100% + 40px)" }}
+                            className="absolute inset-0 w-full h-full object-cover object-bottom"
                             alt=""
                         />
                     </div>

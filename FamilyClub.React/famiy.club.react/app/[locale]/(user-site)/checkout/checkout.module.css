@@ -108,7 +108,7 @@
   background: var(--background-main);
   border: none;
   border-radius: 9px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+  box-shadow: var(--shadow-input);
   padding: 18px 34px;
   font-family: var(--font-sans);
   font-weight: 400;
@@ -125,7 +125,7 @@
 }
 
 .formInput:focus {
-  box-shadow: 0 0 10px rgba(0, 91, 51, 0.4);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--color-green) 40%, transparent);
 }
 
 .phoneInputWrap {
@@ -170,7 +170,7 @@
 }
 
 .deliveryOption:hover {
-  background: rgba(0, 91, 51, 0.03);
+  background: color-mix(in srgb, var(--color-green) 3%, transparent);
 }
 
 .deliveryOptionLeft {
@@ -264,7 +264,7 @@
   background: var(--background-main);
   border: none;
   border-radius: 9px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+  box-shadow: var(--shadow-input);
   padding: 18px 60px 18px 31px;
   font-family: var(--font-sans);
   font-weight: 400;
@@ -278,7 +278,7 @@
 }
 
 .deliverySelectInput:focus {
-  box-shadow: 0 0 10px rgba(0, 91, 51, 0.4);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--color-green) 40%, transparent);
 }
 
 .deliverySelectIcon {
@@ -314,7 +314,7 @@
 }
 
 .paymentOption:hover {
-  background: rgba(0, 91, 51, 0.03);
+  background: color-mix(in srgb, var(--color-green) 3%, transparent);
 }
 
 .paymentOptionLeft {
@@ -378,7 +378,7 @@
   background: var(--background-main);
   border: none;
   border-radius: 20px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+  box-shadow: var(--shadow-input);
   padding: 20px 24px;
   font-family: var(--font-sans);
   font-weight: 400;
@@ -396,7 +396,7 @@
 }
 
 .commentTextarea:focus {
-  box-shadow: 0 0 10px rgba(0, 91, 51, 0.4);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--color-green) 40%, transparent);
 }
 
 .commentFooter {
@@ -449,7 +449,7 @@
   top: 80px;
   background: var(--background-main);
   border-radius: 23px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  box-shadow: var(--shadow-panel);
   padding: 40px 50px;
   display: flex;
   flex-direction: column;
@@ -461,7 +461,7 @@
   align-items: center;
   justify-content: center;
   padding: 10px 30px;
-  background: rgba(0, 91, 51, 0.5);
+  background: color-mix(in srgb, var(--color-green) 50%, transparent);
   border-radius: 9px;
   border: none;
   cursor: pointer;
@@ -475,7 +475,7 @@
 }
 
 .applyPointsBtn:hover {
-  background: rgba(0, 91, 51, 0.7);
+  background: color-mix(in srgb, var(--color-green) 70%, transparent);
 }
 
 .summaryLines {
@@ -496,7 +496,7 @@
   font-size: 20px;
   line-height: 1.5;
   letter-spacing: -0.22px;
-  color: rgba(155, 158, 175, 0.5);
+  color: color-mix(in srgb, var(--color-muted-fg) 70%, transparent);
 }
 
 .summaryValue {
@@ -612,7 +612,7 @@
 
 .promoInput {
   background: var(--background-main);
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+  box-shadow: var(--shadow-control);
   border-radius: 9px;
   border: none;
   padding: 10px 20px;
@@ -631,7 +631,7 @@
 }
 
 .promoInput:focus {
-  box-shadow: 0 0 8px rgba(0, 91, 51, 0.4);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--color-green) 40%, transparent);
 }
 
 /* ---------- Success overlay ---------- */
@@ -649,7 +649,7 @@
 .successCard {
   background: var(--background-main);
   border-radius: 20px;
-  box-shadow: 0 0 40px rgba(0, 0, 0, 0.3);
+  box-shadow: var(--shadow-card-hover);
   padding: 60px 80px;
   text-align: center;
   max-width: 500px;

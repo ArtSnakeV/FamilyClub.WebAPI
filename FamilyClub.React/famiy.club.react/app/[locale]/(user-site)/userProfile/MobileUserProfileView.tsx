@@ -15,7 +15,6 @@ import FormatBadge from "./section/FormatBadge";
 import { useLocale, useLocalizedPath, useTranslations } from "@/lib/i18n/LocaleProvider";
 import { useTheme } from "@/lib/theme/ThemeProvider";
 
-const NIGHT_BG_FILTER = "invert(1) hue-rotate(180deg)";
 const NIGHT_EMPTY_ICON_FILTER = "brightness(0) invert(0.58)";
 
 const FORMAT_CONFIG = [
@@ -147,12 +146,16 @@ export default function MobileUserProfileView({
     <div className="w-full min-h-screen bg-[var(--background-elevated)] flex flex-col font-['Source_Sans_3',sans-serif] pb-28 pt-[65px] select-none overflow-x-hidden">
       <div
         className="relative w-full pt-[24px] pb-[20px] px-4 sm:px-6 overflow-hidden min-h-[210px] sm:min-h-[220px] flex flex-col justify-end shadow-md"
-        style={{
-          backgroundImage: "url('/images/userProfile/Rectangle 326.png')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
       >
+        <div
+          aria-hidden
+          className="absolute inset-0 pointer-events-none admin-parchment-bg"
+          style={{
+            backgroundImage: "url('/images/userProfile/Rectangle 326.png')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        />
         <div className="absolute inset-0 bg-black/35 backdrop-blur-[2px] pointer-events-none" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/50 to-transparent pointer-events-none" />
 
@@ -228,17 +231,22 @@ export default function MobileUserProfileView({
               key={label}
               type="button"
               onClick={() => setActiveTab(activeTab === tab ? null : tab)}
-              className={`w-[32%] relative flex flex-col items-center justify-start pt-3 cursor-pointer transition-all duration-300 select-none ${
+              className={`w-[32%] relative overflow-hidden flex flex-col items-center justify-start pt-3 cursor-pointer transition-all duration-300 select-none ${
                 isSelected
                   ? "h-[113px] pb-8 -mb-[13px] translate-y-[2px] scale-[1.02] brightness-105 drop-shadow-[0_10px_16px_rgba(0,0,0,0.35)] z-30"
                   : "h-[100px] pb-5 opacity-90 hover:opacity-100 drop-shadow-[0_6px_10px_rgba(0,0,0,0.25)] z-20 hover:-translate-y-0.5"
               }`}
-              style={{
-                backgroundImage: "url('/images/userProfile/recGr.svg')",
-                backgroundSize: "100% 100%",
-                backgroundRepeat: "no-repeat",
-              }}
             >
+              <div
+                aria-hidden
+                className="absolute inset-0 pointer-events-none admin-parchment-bg"
+                style={{
+                  backgroundImage: "url('/images/userProfile/recGr.svg')",
+                  backgroundSize: "100% 100%",
+                  backgroundRepeat: "no-repeat",
+                }}
+              />
+              <div className="relative z-10 flex flex-col items-center w-full">
               {iconType === "books" && (
                 <svg className="w-[22px] h-[22px] text-[var(--color-cream)] drop-shadow-sm shrink-0" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M19 3H7C5.89543 3 5 3.89543 5 5V19C5 20.1046 5.89543 21 7 21H19C20.1046 21 21 20.1046 21 19V5C21 3.89543 20.1046 3 19 3ZM19 19H7V5H19V19ZM9 7H17V9H9V7ZM9 11H17V13H9V11Z"/>
@@ -259,6 +267,7 @@ export default function MobileUserProfileView({
               <span className="text-[var(--color-cream)] text-[13px] font-bold mt-1.5 tracking-tight truncate px-1 w-full text-center">
                 {label}
               </span>
+              </div>
             </button>
           );
         })}
@@ -267,15 +276,19 @@ export default function MobileUserProfileView({
       <div className="mt-8 px-2 sm:px-4 flex flex-col w-full max-w-[440px] mx-auto">
         {bookRows.length === 0 ? (
           <div
-            className="flex min-h-[380px] relative flex-col items-center justify-center w-full px-4 text-center mt-4 rounded-3xl"
-            style={{
-              backgroundImage: "url('/images/userProfile/Frame 627.png')",
-              backgroundRepeat: "no-repeat",
-              backgroundSize: "100% 100%",
-              backgroundPosition: "center",
-            }}
+            className="flex min-h-[380px] relative overflow-hidden flex-col items-center justify-center w-full px-4 text-center mt-4 rounded-3xl"
           >
-            <div className="bg-[color-mix(in_srgb,var(--background-elevated)_90%,transparent)] backdrop-blur-sm p-6 rounded-2xl flex flex-col items-center max-w-[280px] shadow-lg border border-[var(--color-border-warm)]">
+            <div
+              aria-hidden
+              className="absolute inset-0 pointer-events-none admin-parchment-bg"
+              style={{
+                backgroundImage: "url('/images/userProfile/Frame 627.png')",
+                backgroundRepeat: "no-repeat",
+                backgroundSize: "100% 100%",
+                backgroundPosition: "center",
+              }}
+            />
+            <div className="relative z-10 bg-[color-mix(in_srgb,var(--background-elevated)_90%,transparent)] backdrop-blur-sm p-6 rounded-2xl flex flex-col items-center max-w-[280px] shadow-lg border border-[var(--color-border-warm)]">
               <img
                 src="/images/userProfile/imgIko.png"
                 alt={t("profile.emptyAlt")}
@@ -336,7 +349,7 @@ export default function MobileUserProfileView({
                           e.stopPropagation();
                           if (book.id) toggleFavorite(book.id);
                         }}
-                        className="absolute top-[14px] right-[6px] z-30 p-1 rounded-full hover:bg-black/10 transition-all active:scale-90"
+                        className="absolute top-[14px] right-[6px] z-30 p-1 rounded-full hover:bg-[color-mix(in_srgb,var(--foreground-primary)_10%,transparent)] transition-all active:scale-90"
                         aria-label={t("profile.ariaFavorite")}
                       >
                         <img

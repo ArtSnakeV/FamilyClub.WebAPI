@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect } from "react";
 import { usePaws } from "../hooks/usePaws";
 import Image from "next/image";
 import { useCurrentUser } from "../../userProfile/hooks/useCurrentUser";
@@ -23,51 +22,47 @@ export default function HistoryPaws({ userId }: { userId?: string }) {
     setCurrentPage,
   } = usePagination(history, 1);
 
-  useEffect(() => {
-    document.body.style.backgroundImage = "url('/images/authorsUserPage/Rectangle 326.png')";
-    document.body.style.backgroundSize = "cover";
-    document.body.style.backgroundAttachment = "fixed";
-    document.body.style.backgroundPosition = "center";
-    document.body.style.backgroundRepeat = "no-repeat";
-
-    return () => {
-      document.body.style.backgroundImage = "";
-      document.body.style.backgroundSize = "";
-      document.body.style.backgroundAttachment = "";
-      document.body.style.backgroundPosition = "";
-      document.body.style.backgroundRepeat = "";
-    };
-  }, []);
-
   return (
-    <div className="min-h-screen w-[1000px] flex flex-col ml-[24vw] px-10 py-8" style={{ backgroundColor: "#C7A381" }}>
+    <div className="relative min-h-screen w-full overflow-hidden">
+      <div
+        aria-hidden
+        className="absolute inset-0 pointer-events-none admin-parchment-bg"
+        style={{
+          backgroundImage: "url('/images/authorsUserPage/Rectangle 326.png')",
+          backgroundSize: "cover",
+          backgroundAttachment: "fixed",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+        }}
+      />
+    <div className="relative z-10 min-h-screen w-[1000px] flex flex-col ml-[24vw] px-10 py-8" style={{ backgroundColor: "#C7A381" }}>
       <div className="flex items-center gap-4 mt-36 mb-8 relative z-10">
         <Link href={lp("/paws")} className="w-10 h-10 cursor-pointer flex items-center justify-center">
           <ButtonReturn />
         </Link>
-        <h2 className="text-[48px] font-bold text-[var(--color-black)] px-4">
+        <h2 className="text-[48px] font-bold text-[var(--foreground-primary)] px-4">
           {t("paws.historyTitle")}
         </h2>
       </div>
-      <div className="w-[1110px] -mt-12 -ml-24 h-[800px] relative flex flex-col text-[var(--color-black)]">
+      <div className="w-[1110px] -mt-12 -ml-24 h-[800px] relative flex flex-col text-[var(--foreground-primary)]">
         <Image
           src="/images/pawsUser/Rectangle 513.png"
           alt=""
           width={1110}
           height={800}
-          className="absolute inset-0 object-cover"
+          className="absolute inset-0 object-cover admin-parchment-bg"
         />
 
         <div className="relative w-full flex-1 min-h-0 flex flex-col items-center text-left justify-center p-2">
-          <p className="text-[24px] -mt-110 font-semibold text-[var(--color-black)] mb-6">
+          <p className="text-[24px] -mt-110 font-semibold text-[var(--foreground-primary)] mb-6">
             {t("paws.historyHint")}
           </p>
 
           <div className="flex flex-col space-y-4 ml-6 w-[82%] mt-4 overflow-y-auto max-h-[600px] pr-4">
             {loading ? (
-              <div className="text-center py-8 text-gray-600">{t("paws.historyLoading")}</div>
+              <div className="text-center py-8 text-[var(--color-muted-fg)]">{t("paws.historyLoading")}</div>
             ) : paginatedPawsHistory.length === 0 ? (
-              <div className="text-center py-8 text-gray-600">{t("paws.historyEmpty")}</div>
+              <div className="text-center py-8 text-[var(--color-muted-fg)]">{t("paws.historyEmpty")}</div>
             ) : (
               paginatedPawsHistory.map((item) => {
                 const isPositive = item.amount >= 0;
@@ -78,17 +73,17 @@ export default function HistoryPaws({ userId }: { userId?: string }) {
                   >
                     <div className="flex w-full flex-row items-center justify-between gap-4">
                       <div className="flex flex-col">
-                        <span className="font-medium text-[var(--color-black)]">{item.title}</span>
-                        <span className="text-[14px] text-[var(--color-black)] mt-0.5">{item.date}</span>
+                        <span className="font-medium text-[var(--foreground-primary)]">{item.title}</span>
+                        <span className="text-[14px] text-[var(--foreground-primary)] mt-0.5">{item.date}</span>
                       </div>
                       <div className="flex items-center gap-2 font-bold text-[20px]">
-                        <span className={isPositive ? "text-[var(--color-black)]" : "text-[var(--color-red)]"}>
+                        <span className={isPositive ? "text-[var(--foreground-primary)]" : "text-[var(--color-red)]"}>
                           {isPositive ? `+${item.amount}` : item.amount}
                         </span>
                         <Image src="/images/pawsUser/Лапка.png" width={34} height={34} alt="" />
                       </div>
                     </div>
-                    <div className="border-b border-[var(--color-black)]/50 w-[90%] -ml-22"></div>
+                    <div className="border-b border-[var(--foreground-primary)]/50 w-[90%] -ml-22"></div>
                   </div>
                 );
               })
@@ -104,6 +99,7 @@ export default function HistoryPaws({ userId }: { userId?: string }) {
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
 }

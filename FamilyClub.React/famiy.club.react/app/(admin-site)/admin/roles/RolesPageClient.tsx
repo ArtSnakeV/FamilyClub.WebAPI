@@ -138,11 +138,15 @@ export default function RolesPageClient() {
     const pageLoading = countsLoading || rolesLoading;
 
     return (
-        <div className="w-full min-h-screen overflow-x-hidden relative m-0 p-0 text-[var(--foreground-primary)]">
-            <div className="w-[100vw] min-h-screen relative pb-10">
+        <div className="w-full min-h-full overflow-x-clip relative m-0 p-0 text-[var(--foreground-primary)]">
+            <div className="w-full min-h-full relative pb-10">
                 <div
                     className="absolute pointer-events-none"
-                    style={{ width: "100vw", top: "-40px", left: "-20px" }}
+                    style={{
+                        width: "calc(100% + 20px)",
+                        top: "-40px",
+                        left: "-20px",
+                    }}
                     aria-hidden
                 >
                     <div className="admin-shelf-surface relative w-full">
@@ -154,13 +158,7 @@ export default function RolesPageClient() {
                     </div>
                 </div>
 
-                <div
-                    className="relative z-10 mt-24 px-4 box-border"
-                    style={{
-                        width: "min(1480px, calc(100vw - 440px))",
-                        maxWidth: "calc(100vw - 440px)",
-                    }}
-                >
+                <div className="relative z-10 mt-24 px-4 box-border w-full max-w-[1480px]">
                     <RolesNav />
 
                     <div className="flex flex-wrap gap-3 mt-4">

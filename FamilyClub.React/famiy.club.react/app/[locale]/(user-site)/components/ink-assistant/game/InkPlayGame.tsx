@@ -273,7 +273,7 @@ export default function InkPlayGame({ onExit, onPlayAgain }: InkPlayGameProps) {
       role="dialog"
       aria-label={t("ink.game.aria")}
     >
-      <div className="absolute inset-0 bg-black/10" />
+      <div className="absolute inset-0 bg-[color-mix(in_srgb,var(--foreground-primary)_10%,transparent)]" />
 
       <div className="pointer-events-none absolute left-1/2 top-4 z-10 -translate-x-1/2 rounded-full bg-[var(--color-green)]/90 px-4 py-1.5 font-serif text-sm text-[var(--color-cream)] shadow-[var(--shadow-card)]">
         {statusText}

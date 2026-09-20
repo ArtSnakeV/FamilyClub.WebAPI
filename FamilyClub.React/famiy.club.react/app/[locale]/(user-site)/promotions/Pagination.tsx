@@ -122,7 +122,7 @@ export default function Pagination({
                                     ${
                                       item === currentPage
                                         ? "bg-[var(--color-brand-green,#1f4d3d)] text-[var(--color-white)]"
-                                        : "bg-transparent text-[var(--color-white)] hover:bg-[var(--color-menu-hover)] hover:text-[var(--color-black)]"
+                                        : "bg-transparent text-[var(--color-white)] hover:bg-[var(--color-menu-hover)] hover:text-[var(--foreground-primary)]"
                                     }
                                 `}
               >
