@@ -136,7 +136,7 @@ export default function RegisterSection({ onGoToLogin }: RegisterSectionProps) {
             fontWeight: 600,
             fontSize: "17px",
             lineHeight: "100%",
-            color: "var(--color-black)",
+            color: "var(--foreground-primary)",
           }}
         >
           {t("auth.firstName")}
@@ -152,7 +152,7 @@ export default function RegisterSection({ onGoToLogin }: RegisterSectionProps) {
             height: "44px",
             borderRadius: "9px",
             padding: "8px 16px",
-            backgroundColor: "var(--color-white)",
+            backgroundColor: "var(--background-elevated)",
             boxShadow: "0px 0px 10px 0px #00000040",
             outline: "none",
             border: "none",
@@ -161,7 +161,7 @@ export default function RegisterSection({ onGoToLogin }: RegisterSectionProps) {
             fontSize: "18px",
             lineHeight: "150%",
             letterSpacing: "-0.011em",
-            color: "var(--color-black)",
+            color: "var(--foreground-primary)",
           }}
         />
       </div>
@@ -181,7 +181,7 @@ export default function RegisterSection({ onGoToLogin }: RegisterSectionProps) {
             fontWeight: 600,
             fontSize: "17px",
             lineHeight: "100%",
-            color: "var(--color-black)",
+            color: "var(--foreground-primary)",
           }}
         >
           {t("auth.lastName")}
@@ -198,7 +198,7 @@ export default function RegisterSection({ onGoToLogin }: RegisterSectionProps) {
             height: "44px",
             borderRadius: "9px",
             padding: "8px 16px",
-            backgroundColor: "var(--color-white)",
+            backgroundColor: "var(--background-elevated)",
             boxShadow: "0px 0px 10px 0px #00000040",
             outline: "none",
             border: "none",
@@ -207,7 +207,7 @@ export default function RegisterSection({ onGoToLogin }: RegisterSectionProps) {
             fontSize: "18px",
             lineHeight: "150%",
             letterSpacing: "-0.011em",
-            color: "var(--color-black)",
+            color: "var(--foreground-primary)",
           }}
         />
       </div>
@@ -228,7 +228,7 @@ export default function RegisterSection({ onGoToLogin }: RegisterSectionProps) {
             fontWeight: 600,
             fontSize: "17px",
             lineHeight: "100%",
-            color: "var(--color-black)",
+            color: "var(--foreground-primary)",
           }}
         >
           {t("auth.phone")}
@@ -287,6 +287,7 @@ export default function RegisterSection({ onGoToLogin }: RegisterSectionProps) {
               fontSize: "18px",
               border: "none",
               outline: "none",
+              color: "var(--foreground-primary)",
             }}
           />
         </div>
@@ -354,7 +355,7 @@ export default function RegisterSection({ onGoToLogin }: RegisterSectionProps) {
             fontWeight: 600,
             fontSize: "17px",
             lineHeight: "100%",
-            color: "var(--color-black)",
+            color: "var(--foreground-primary)",
           }}
         >
           {t("auth.emailRequired")}
@@ -380,7 +381,7 @@ export default function RegisterSection({ onGoToLogin }: RegisterSectionProps) {
             fontSize: "18px",
             lineHeight: "150%",
             letterSpacing: "-0.011em",
-            color: "var(--color-black)",
+            color: "var(--foreground-primary)",
           }}
         />
       </div>

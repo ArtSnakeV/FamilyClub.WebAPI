@@ -12,11 +12,14 @@ const Footer = () => {
     return (
         <footer style={{ zIndex: "3" }} className="w-full flex flex-col justify-end overflow-visible">
             <div
-                className="footer-surface relative w-full h-[593.35px] border-x-[10px] border-b-[10px] border-footer-inner drop-shadow-[0_-8px_30px_rgba(0,0,0,0.5)] bg-top bg-cover bg-no-repeat flex flex-col"
-                style={{
-                    backgroundImage: "url('/images/Layout/Footer/Rectangle198.png')",
-                }}
+                className="footer-surface relative w-full h-[593.35px] flex flex-col"
             >
+                <img
+                    src="/images/Layout/Footer/Rectangle198.png"
+                    alt=""
+                    aria-hidden
+                    className="footer-surface-bg absolute inset-0 h-full w-full object-cover object-top pointer-events-none select-none"
+                />
                 <div className="relative z-10 container mx-auto flex-grow flex justify-center items-start pt-[50px]">
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-[40px] md:gap-[80px] items-start w-full max-w-[1000px]">
                         <div className="flex flex-col items-center w-full md:w-[222px]">
