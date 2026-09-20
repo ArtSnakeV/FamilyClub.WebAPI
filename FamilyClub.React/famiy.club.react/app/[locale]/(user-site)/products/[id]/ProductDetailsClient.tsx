@@ -4,7 +4,7 @@ import BookCard from "@/app/(user-site)/main_page/BookCard";
 import MobileProductDetails from "./MobileProductDetails";
 import ReviewPagination from "./ReviewPagination";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, type CSSProperties } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { getProductCoverApiUrl, getProductCoverUrl, getProductImageUrl } from "@/lib/products/productCoverUrl";
@@ -123,22 +123,38 @@ const formatWeight = (value?: number | null) => {
   return `${kilograms.toFixed(2)} кг`;
 };
 
+const TORN_PAPER_SRC = "/images/body/Rectangle287.png";
+
 function TornPaperBox({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+  // Real torn-edge parchment asset (not CSS zigzags). Luminance mask
+  // keeps the deckle silhouette and drops the black padding of the PNG.
+  const tornMaskStyle: CSSProperties = {
+    WebkitMaskImage: `url('${TORN_PAPER_SRC}')`,
+    maskImage: `url('${TORN_PAPER_SRC}')`,
+    WebkitMaskSize: "100% 100%",
+    maskSize: "100% 100%",
+    WebkitMaskRepeat: "no-repeat",
+    maskRepeat: "no-repeat",
+    WebkitMaskPosition: "center",
+    maskPosition: "center",
+    // bright paper = visible, black frame = transparent
+    maskMode: "luminance",
+    // Safari
+    WebkitMaskSourceType: "luminance",
+  } as CSSProperties;
+
   return (
-    <div className={`relative w-full drop-shadow-[0_8px_12px_rgba(36,36,36,0.15)] ${className}`}>
-      <div className="w-full overflow-hidden leading-none text-[var(--color-cream)] -mb-[1px]">
-        <svg className="w-full h-[10px] block" viewBox="0 0 1200 10" fill="currentColor" preserveAspectRatio="none">
-          <path d="M0,10 L0,5 C 15,2 30,7 45,4 S 75,1 90,5 S 120,2 135,6 S 165,1 180,4 S 210,7 225,3 S 255,1 270,5 S 300,2 315,6 S 345,1 360,4 S 390,7 405,3 S 435,1 450,5 S 480,2 495,6 S 525,1 540,4 S 570,7 585,3 S 615,1 630,5 S 660,2 675,6 S 705,1 720,4 S 750,7 765,3 S 795,1 810,5 S 840,2 855,6 S 885,1 900,4 S 930,7 945,3 S 975,1 990,5 S 1020,2 1035,6 S 1065,1 1080,4 S 1110,7 1125,3 S 1155,1 1170,5 S 1185,3 1200,4 L1200,10 Z" />
-        </svg>
-      </div>
-      <div className="bg-[var(--background-elevated)] px-6 py-6">
-        {children}
-      </div>
-      <div className="w-full overflow-hidden leading-none text-[var(--color-cream)] -mt-[1px]">
-        <svg className="w-full h-[10px] block rotate-180" viewBox="0 0 1200 10" fill="currentColor" preserveAspectRatio="none">
-          <path d="M0,10 L0,5 C 15,2 30,7 45,4 S 75,1 90,5 S 120,2 135,6 S 165,1 180,4 S 210,7 225,3 S 255,1 270,5 S 300,2 315,6 S 345,1 360,4 S 390,7 405,3 S 435,1 450,5 S 480,2 495,6 S 525,1 540,4 S 570,7 585,3 S 615,1 630,5 S 660,2 675,6 S 705,1 720,4 S 750,7 765,3 S 795,1 810,5 S 840,2 855,6 S 885,1 900,4 S 930,7 945,3 S 975,1 990,5 S 1020,2 1035,6 S 1065,1 1080,4 S 1110,7 1125,3 S 1155,1 1170,5 S 1185,3 1200,4 L1200,10 Z" />
-        </svg>
-      </div>
+    <div
+      className={`relative w-full drop-shadow-[0_8px_12px_rgba(36,36,36,0.25)] ${className}`}
+      style={tornMaskStyle}
+    >
+      <img
+        src={TORN_PAPER_SRC}
+        alt=""
+        aria-hidden
+        className="absolute inset-0 h-full w-full object-fill pointer-events-none admin-parchment-bg"
+      />
+      <div className="relative z-10 px-6 py-8 sm:px-8 sm:py-10">{children}</div>
     </div>
   );
 }

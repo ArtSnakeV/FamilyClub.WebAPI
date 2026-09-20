@@ -1,20 +1,18 @@
+"use client";
+
 import Image from "next/image";
+import HeaderUtilityIcon from "./HeaderUtilityIcon";
 
 export default function UserLoginButton() {
   return (
-    <div className="group flex items-center justify-center">
-      <div
-        className="header-utility-icon flex h-[34px] w-[34px] items-center justify-center rounded-full transition-all duration-300 group-hover:bg-[var(--color-white)] group-hover:shadow-[0px_0px_15px_0px_#242424CC]"
-      >
-        <Image
-          src="/images/header/person_24px.png"
-          alt="person"
-          className="object-contain"
-          priority
-          width={34}
-          height={34}
-        />
-      </div>
-    </div>
+    <HeaderUtilityIcon size={34}>
+      <Image
+        src="/images/header/person_24px.png"
+        alt="person"
+        priority
+        width={34}
+        height={34}
+      />
+    </HeaderUtilityIcon>
   );
 }

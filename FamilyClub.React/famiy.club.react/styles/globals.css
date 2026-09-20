@@ -171,8 +171,9 @@
   --admin-matrix-surface: #221F1A;
   --admin-matrix-surface-alt: #2A2620;
 
-  --color-product-page-bg: #14110E;
-  --color-product-board: #2A241C;
+  /* Product page — keep board clearly lighter than page so torn SVG edges read */
+  --color-product-page-bg: #100E0B;
+  --color-product-board: #3A3228;
   --color-product-cta: #1A7A4A;
   --color-product-cta-hover: #14663C;
   --color-product-reviews-bg: #1A1814;
@@ -180,14 +181,16 @@
   color-scheme: dark;
 }
 
-/* Darken footer parchment image so text stays readable in Ink Night */
-[data-theme="ink-night"] .footer-surface::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(10, 8, 6, 0.68);
-  pointer-events: none;
-  z-index: 1;
+/* Footer upward shadow — dark in day, light glow in Ink Night.
+   Applied on the parchment img so alpha (torn top edge) stays transparent. */
+.footer-surface-bg {
+  filter: drop-shadow(0 -8px 30px rgba(0, 0, 0, 0.5));
+}
+
+[data-theme="ink-night"] .footer-surface-bg {
+  /* Darken parchment without a solid overlay that fills transparent torn edge */
+  filter: brightness(0.42) contrast(1.05)
+    drop-shadow(0 -8px 30px rgba(245, 243, 238, 0.45));
 }
 
 /* Same gray wash for admin desktop shelf background */
@@ -200,9 +203,177 @@
   z-index: 1;
 }
 
-/* Keep utility header icon glyphs readable on Ink Night chrome */
-[data-theme="ink-night"] .header-utility-icon img {
-  filter: brightness(0) invert(0.92);
+/* Book card shelf motion — shared timing for plate + content */
+.book-card-shell {
+  --book-card-motion: 1s cubic-bezier(0.22, 1, 0.36, 1);
+  --book-card-drop: 12px;
+}
+
+.book-card-bg {
+  transition:
+    transform var(--book-card-motion),
+    box-shadow var(--book-card-motion);
+}
+
+.book-card-shell:hover .book-card-bg {
+  transform: scaleY(1.055);
+  box-shadow: 0px 16px 18px 0px rgba(36, 36, 36, 0.35);
+}
+
+.book-card-content {
+  transition: transform var(--book-card-motion);
+}
+
+.book-card-shell:hover .book-card-content {
+  transform: translateY(var(--book-card-drop));
+}
+
+/* Book card action icons — full black (day) / white (night) instantly on icon hover */
+.book-card-action-icon {
+  transition: filter 0s, opacity 0s;
+}
+
+.book-card-action-icon--day {
+  filter: none;
+  opacity: 0.5;
+}
+
+.book-card-action-icon--day:hover,
+button:hover > .book-card-action-icon--day {
+  filter: brightness(0);
+  opacity: 1;
+}
+
+.book-card-action-icon--night {
+  filter: brightness(0) invert(0.88);
+  opacity: 0.85;
+}
+
+.book-card-action-icon--night:hover,
+button:hover > .book-card-action-icon--night {
+  filter: brightness(0) invert(1);
+  opacity: 1;
+}
+
+.book-card-favorite-icon--night {
+  filter: brightness(0) invert(1);
+  opacity: 1;
+}
+
+.book-card-star-icon--night {
+  filter: brightness(0) invert(0.88);
+}
+
+/* Format ribbons — one fill via ::before; body + tip masks meet edge-to-edge */
+.book-format-ribbon {
+  --ribbon-tip: 9px;
+  --ribbon-motion: 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  position: relative;
+  height: 30px;
+  width: 35px;
+  overflow: visible;
+  cursor: default;
+  transition: width var(--ribbon-motion);
+}
+
+.book-format-ribbon::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-color: var(--ribbon-fill, transparent);
+  transition: background-color var(--ribbon-motion);
+  -webkit-mask-image:
+    linear-gradient(#000 0 0),
+    url("/images/main_page/icons/rec-icon-ebook-tip-mask.svg");
+  mask-image:
+    linear-gradient(#000 0 0),
+    url("/images/main_page/icons/rec-icon-ebook-tip-mask.svg");
+  -webkit-mask-size: calc(100% - var(--ribbon-tip)) 100%, var(--ribbon-tip) 100%;
+  mask-size: calc(100% - var(--ribbon-tip)) 100%, var(--ribbon-tip) 100%;
+  -webkit-mask-position: left center, right center;
+  mask-position: left center, right center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-composite: source-over;
+  mask-composite: add;
+}
+
+.book-format-ribbon--paper {
+  --ribbon-fill: color-mix(in srgb, #7e4d1e 50%, transparent);
+}
+
+.book-format-ribbon--paper:hover {
+  --ribbon-fill: #7e4d1e;
+  width: 118px;
+}
+
+.book-format-ribbon--ebook {
+  --ribbon-fill: color-mix(in srgb, var(--color-green) 50%, transparent);
+}
+
+.book-format-ribbon--ebook:hover {
+  --ribbon-fill: var(--color-green);
+  width: 112px;
+}
+
+.book-format-ribbon--audio {
+  --ribbon-fill: color-mix(in srgb, #7d6317 50%, transparent);
+}
+
+.book-format-ribbon--audio:hover {
+  --ribbon-fill: #7d6317;
+  width: 138px;
+}
+
+.book-format-ribbon__icon {
+  position: absolute;
+  left: 7px;
+  top: 50%;
+  z-index: 1;
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  object-fit: contain;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.book-format-ribbon__label {
+  position: absolute;
+  left: 30px;
+  top: 50%;
+  z-index: 1;
+  transform: translateY(-50%);
+  color: #f5f3ee;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  opacity: 0;
+  max-width: 0;
+  overflow: hidden;
+  pointer-events: none;
+  transition:
+    opacity 0.35s ease 0.05s,
+    max-width var(--ribbon-motion);
+}
+
+.book-format-ribbon--paper:hover .book-format-ribbon__label {
+  opacity: 1;
+  max-width: 78px;
+}
+
+.book-format-ribbon--ebook:hover .book-format-ribbon__label {
+  opacity: 1;
+  max-width: 64px;
+}
+
+.book-format-ribbon--audio:hover .book-format-ribbon__label {
+  opacity: 1;
+  max-width: 98px;
 }
 
 [data-theme="ink-night"] .user-menu-panel img {
@@ -220,6 +391,15 @@
 
 [data-theme="ink-night"] .admin-parchment-bg-soft {
   filter: invert(1) hue-rotate(180deg) brightness(0.78) contrast(0.82) saturate(0.45);
+}
+
+/* Profile header text/icons — match inverted parchment */
+[data-theme="ink-night"] .user-profile-header-fg {
+  filter: invert(1) hue-rotate(180deg);
+}
+
+[data-theme="ink-night"] .user-profile-social-icon {
+  filter: invert(1) hue-rotate(180deg);
 }
 
 @media (prefers-color-scheme: white) {

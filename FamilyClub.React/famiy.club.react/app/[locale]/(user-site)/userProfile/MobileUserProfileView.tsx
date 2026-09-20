@@ -192,7 +192,7 @@ export default function MobileUserProfileView({
                   rel="noopener noreferrer"
                   className="active:scale-90 transition-transform"
                 >
-                  <img src={icon} alt={name} className="w-[36px] h-[36px] object-contain drop-shadow" />
+                  <img src={icon} alt={name} className="user-profile-social-icon w-[36px] h-[36px] object-contain drop-shadow" />
                 </a>
               ))}
             </div>
