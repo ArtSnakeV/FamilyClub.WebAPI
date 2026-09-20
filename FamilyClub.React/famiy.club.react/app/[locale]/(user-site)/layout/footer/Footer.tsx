@@ -12,7 +12,7 @@ const Footer = () => {
     return (
         <footer style={{ zIndex: "3" }} className="w-full flex flex-col justify-end overflow-visible">
             <div
-                className="relative w-full h-[593.35px] border-x-[10px] border-b-[10px] border-footer-inner drop-shadow-[0_-8px_30px_rgba(0,0,0,0.5)] bg-top bg-cover bg-no-repeat flex flex-col"
+                className="footer-surface relative w-full h-[593.35px] border-x-[10px] border-b-[10px] border-footer-inner drop-shadow-[0_-8px_30px_rgba(0,0,0,0.5)] bg-top bg-cover bg-no-repeat flex flex-col"
                 style={{
                     backgroundImage: "url('/images/Layout/Footer/Rectangle198.png')",
                 }}
@@ -148,7 +148,7 @@ const Footer = () => {
 
                 <div className="relative z-10 w-full h-[102.66px] flex items-center px-4">
                     <div className="max-w-[1220px] mx-auto w-full h-[61.59px] border-t-2 border-footer-divider flex items-center justify-center">
-                        <p className="footer-text text-brand-black tracking-[-0.011em] w-[283px] text-center">
+                        <p className="footer-text tracking-[-0.011em] w-[283px] text-center">
                             {t("footer.copyright").replace("{year}", String(currentYear))}
                         </p>
                     </div>

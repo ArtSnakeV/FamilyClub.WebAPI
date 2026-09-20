@@ -14,49 +14,57 @@ export default function AddAuthorPage() {
   const { handleSubmit, loading } = useSubmitAuthor({ form, router, mainImage: images.mainImage });
 
   return (
-    <div
-      className="w-full min-h-screen overflow-hidden relative m-0 p-0 flex flex-col"
-      style={{
-        backgroundImage: "url('/images/authorPageAdmin/Rectangle 326.png')",
-        backgroundSize: "100% 100%",
-      }}
-    >
+    <div className="relative w-full min-h-screen overflow-hidden m-0 p-0 flex flex-col text-[var(--foreground-primary)]">
       <div
-        className="relative w-[1200px] pb-[60px] -mt-[68px] mx-auto bg-no-repeat"
+        aria-hidden
+        className="absolute inset-0 pointer-events-none admin-parchment-bg"
         style={{
-          backgroundImage: "url('/images/addProducts/Rectangle 312.svg')",
-          backgroundSize: "cover",
-          backgroundPosition: "top",
+          backgroundImage: "url('/images/authorPageAdmin/Rectangle 326.png')",
+          backgroundSize: "100% 100%",
         }}
-      >
-        <div className="flex z-20 relative top-[130px] ml-[64px]">
-          <ButtonReturn />
-        </div>
-        <div className="flex flex-col items-center mt-[120px]">
-          <h1 className="text-[var(--color-black)] w-[800px] font-['Roboto_Mono'] font-bold text-[34px] leading-[150%] tracking-[-0.011em] text-center">
-            Додати автора
-          </h1>
-        </div>
-
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            handleSubmit();
-          }}
-        >
-          <div className="w-full flex mt-[48px] gap-[4vw] justify-center">
-            <div className="w-[645px] flex flex-col">
-              <BasicInfoSection
-                form={form}
-                setField={setField}
-                loading={loading}
-                mainPreview={images.mainPreview}
-                onMainChange={images.handleMainChange}
-              />
+      />
+      <div className="relative z-10">
+        <div className="relative w-[1200px] pb-[60px] -mt-[68px] mx-auto">
+          <div
+            aria-hidden
+            className="absolute inset-0 pointer-events-none admin-parchment-bg bg-no-repeat"
+            style={{
+              backgroundImage: "url('/images/addProducts/Rectangle 312.svg')",
+              backgroundSize: "cover",
+              backgroundPosition: "top",
+            }}
+          />
+          <div className="relative z-10">
+            <div className="flex z-20 relative top-[130px] ml-[64px]">
+              <ButtonReturn />
             </div>
+            <div className="flex flex-col items-center mt-[120px]">
+              <h1 className="text-[var(--foreground-primary)] w-[800px] font-['Roboto_Mono'] font-bold text-[34px] leading-[150%] tracking-[-0.011em] text-center">
+                Додати автора
+              </h1>
+            </div>
+
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                handleSubmit();
+              }}
+            >
+              <div className="w-full flex mt-[48px] gap-[4vw] justify-center">
+                <div className="w-[645px] flex flex-col">
+                  <BasicInfoSection
+                    form={form}
+                    setField={setField}
+                    loading={loading}
+                    mainPreview={images.mainPreview}
+                    onMainChange={images.handleMainChange}
+                  />
+                </div>
+              </div>
+            </form>
           </div>
-        </form>
+        </div>
       </div>
-    </div >
+    </div>
   );
 }

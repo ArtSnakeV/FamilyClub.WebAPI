@@ -11,6 +11,7 @@ import UserMenuDrop from "./userMenu/UserMenuDrop";
 import UserAuthorizationButton from "./UserAuthorizationButton";
 import { useEffect, useState } from "react";
 import UserLoginButton from "./UserLoginButton";
+import ThemeToggle from "./ThemeToggle";
 import { useRouter } from "next/navigation";
 import { apiBasePath } from "@/lib/api/services";
 import { clearAuthSession, getAuthToken } from "@/lib/auth/tokenStorage";
@@ -104,8 +105,9 @@ export default function UpNavigation() {
       <div className="max-w-[1100px] mx-auto flex items-center h-full ml-[92px] relative flex-nowrap justify-between">
         <Logo />
         <div className="flex items-center w-[800px] relative ml-[140px] gap-1 mt-[2px]">
-          <div className="w-[80px] gap-5 h-[50px] flex items-center justify-center">
+          <div className="flex h-[50px] items-center justify-center gap-1">
             <UaCircle />
+            <ThemeToggle />
           </div>
           <div className="group flex items-center justify-center">
             <div

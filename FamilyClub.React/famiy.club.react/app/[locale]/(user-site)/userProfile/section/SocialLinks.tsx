@@ -56,7 +56,7 @@ export default function SocialLinks({ userId }: Props) {
                 left: pos.left,
                 zIndex: 19,
             }}
-            className="hidden md:block px-4 py-2 text-[var(--color-white)] cursor-pointer rounded-[20px] text-[16px] bg-[#005B33] font-semibold hover:bg-[#097E4B] transition-colors duration-200"
+            className="hidden md:block px-4 py-2 text-[var(--color-white)] cursor-pointer rounded-[20px] text-[16px] bg-[var(--color-green)] font-semibold hover:bg-[color-mix(in_srgb,var(--color-green)_85%,white)] transition-colors duration-200"
             onClick={() => router.push(lp(`/userProfile/editUserProfile/${userId}`))}
         >
             {t("profile.editProfile")}

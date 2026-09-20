@@ -201,23 +201,6 @@ export default function Page() {
         }
     }, [localUsers, selectedUserId]);
 
-    useEffect(() => {
-        document.body.style.backgroundImage =
-            "url('/images/usersPageAdmin/Rectangle326.png')";
-        document.body.style.backgroundSize = "cover";
-        document.body.style.backgroundAttachment = "fixed";
-        document.body.style.backgroundPosition = "center";
-        document.body.style.backgroundRepeat = "no-repeat";
-
-        return () => {
-            document.body.style.backgroundImage = "";
-            document.body.style.backgroundSize = "";
-            document.body.style.backgroundAttachment = "";
-            document.body.style.backgroundPosition = "";
-            document.body.style.backgroundRepeat = "";
-        };
-    }, []);
-
     const handleLockToggle = async (user: UserInfo) => {
         const blocked =
             !!user.lockoutEnd && new Date(user.lockoutEnd).getTime() > Date.now();
@@ -270,24 +253,31 @@ export default function Page() {
     const selectedUser = localUsers.find((u) => u.id === selectedUserId) ?? null;
 
     return (
-        <div className="w-full min-h-screen overflow-hidden relative m-0 p-0">
+        <div className="w-full min-h-screen overflow-hidden relative m-0 p-0 text-[var(--foreground-primary)]">
             <div className="w-[100vw] min-h-screen relative">
-                <img
-                    src="/images/usersPageAdmin/Rectangle 675.png"
-                    className="absolute"
-                    style={{ width: "100vw", height: "auto", top: "-40px", left: "-20px" }}
-                    alt=""
-                />
+                <div
+                    className="absolute pointer-events-none"
+                    style={{ width: "100vw", top: "-40px", left: "-20px" }}
+                    aria-hidden
+                >
+                    <div className="admin-shelf-surface relative w-full">
+                        <img
+                            src="/images/usersPageAdmin/Rectangle 675.png"
+                            className="block w-full h-auto"
+                            alt=""
+                        />
+                    </div>
+                </div>
                 <div className="flex flex-row relative items-center mt-24 ml-4 gap-4">
                     {loading || !stats
-                        ? <p>Завантаження...</p>
+                        ? <p className="text-[var(--color-muted-fg)]">Завантаження...</p>
                         : stats.map((stat) => (
                             <BlockForUsersInfo key={stat.title} {...stat} />
                         ))}
                 </div>
                 <div className="flex flex-row relative mt-2 mx-4 gap-6 items-start">
                     {loadingUsersInfo ? (
-                        <p>Завантаження...</p>
+                        <p className="text-[var(--color-muted-fg)]">Завантаження...</p>
                     ) : (
                         <AllUsersInfo
                             users={visibleUsers}

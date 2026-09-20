@@ -37,7 +37,7 @@ export default function AdminSidebarUserCard() {
             borderRadius: "50%",
             overflow: "hidden",
             flexShrink: 0,
-            backgroundColor: "#fff",
+            backgroundColor: "var(--background-elevated)",
           }}
         >
           <img
@@ -79,7 +79,7 @@ export default function AdminSidebarUserCard() {
 
         {settings.slogan ? (
           <div
-            className="truncate text-[13px] text-black/45"
+            className="truncate text-[13px] text-[var(--color-muted-fg)]"
             title={settings.slogan}
           >
             {settings.slogan}
@@ -93,7 +93,7 @@ export default function AdminSidebarUserCard() {
             fontSize: "16px",
             lineHeight: "150%",
             letterSpacing: "-1.1%",
-            color: "rgba(0,0,0,0.5)",
+            color: "var(--color-muted-fg)",
           }}
           className="truncate"
         >

@@ -9,7 +9,7 @@ export default function ButtonReturn() {
         <button
             type="button"
             onClick={() => router.push("/admin/roles/role-actions")}
-            className="w-10 h-10 flex items-center justify-center rounded-full bg-white/70 hover:bg-white transition"
+            className="header-utility-icon w-10 h-10 flex items-center justify-center rounded-full bg-[color-mix(in_srgb,var(--background-elevated)_70%,transparent)] hover:bg-[var(--background-elevated)] transition"
             aria-label="Назад до списку ролей"
         >
             <img

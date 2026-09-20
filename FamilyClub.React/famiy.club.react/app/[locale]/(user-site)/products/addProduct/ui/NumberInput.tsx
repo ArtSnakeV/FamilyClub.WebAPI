@@ -10,7 +10,7 @@ type Props = {
 export function NumberInput({ label, placeholder, value, onChange, className,textSize }: Props) {
   return (
     <div className={`flex flex-col gap-0 ${className ?? ""}`}>
-      <p className={`text-[var(--color-black)] font-sans-pro font-normal ${textSize} leading-[150%] tracking-[-0.011em]`}>
+      <p className={`text-[var(--foreground-primary)] font-sans-pro font-normal ${textSize} leading-[150%] tracking-[-0.011em]`}>
         {label}
       </p>
       <input

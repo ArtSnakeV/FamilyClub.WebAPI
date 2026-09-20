@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
@@ -9,7 +11,7 @@ export default function ButtonReturn() {
       <button
         type="button"
          onClick={() => {router.push("/admin/books/authors");}}
-        className="relative w-[36px] h-[36px] flex items-center justify-center cursor-pointer"
+        className="header-utility-icon relative w-[36px] h-[36px] flex items-center justify-center cursor-pointer"
       >
         <Image
           src="/images/addProducts/Ellipse 9.png"

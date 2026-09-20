@@ -118,12 +118,12 @@ export default function MobileResetPasswordView() {
   };
 
   return (
-    <div className="flex md:hidden fixed inset-0 z-[100] bg-[#c7a381] flex-col justify-between items-center py-6 px-5 overflow-y-auto min-h-screen font-sans">
+    <div className="flex md:hidden fixed inset-0 z-[100] bg-[var(--color-wood)] flex-col justify-between items-center py-6 px-5 overflow-y-auto min-h-screen font-sans">
       <div className="w-full flex justify-start pt-2 px-1 max-w-[372px]">
         <button
           type="button"
           onClick={() => router.back()}
-          className="w-[40px] h-[40px] rounded-full bg-[#f5f3ee]/50 flex items-center justify-center text-[20px] text-[#242424] hover:bg-[#f5f3ee] transition-colors active:scale-95 shadow-sm"
+          className="w-[40px] h-[40px] rounded-full bg-[color-mix(in_srgb,var(--background-elevated)_50%,transparent)] flex items-center justify-center text-[20px] text-[var(--foreground-primary)] hover:bg-[var(--background-elevated)] transition-colors active:scale-95 shadow-sm"
           aria-label={t("auth.backAria")}
         >
           ←
@@ -134,21 +134,21 @@ export default function MobileResetPasswordView() {
 
       <div className="w-full max-w-[372px] flex flex-col gap-4 my-auto">
         {error && (
-          <div className="bg-red-500/20 border border-red-500/50 rounded-[9px] px-4 py-2.5 text-center text-[#242424] font-medium text-[15px]">
+          <div className="bg-red-500/20 border border-red-500/50 rounded-[9px] px-4 py-2.5 text-center text-[var(--foreground-primary)] font-medium text-[15px]">
             {error}
           </div>
         )}
         {info && !error && (
-          <div className="bg-[#005b33]/15 border border-[#005b33]/40 rounded-[9px] px-4 py-2.5 text-center text-[#242424] font-medium text-[15px]">
+          <div className="bg-[color-mix(in_srgb,var(--color-green)_15%,transparent)] border border-[color-mix(in_srgb,var(--color-green)_40%,transparent)] rounded-[9px] px-4 py-2.5 text-center text-[var(--foreground-primary)] font-medium text-[15px]">
             {info}
           </div>
         )}
 
         <div className="flex flex-col gap-2.5 w-full">
-          <label className="text-[20px] font-semibold text-[#242424]">
+          <label className="text-[20px] font-semibold text-[var(--foreground-primary)]">
             {t("auth.email")}
           </label>
-          <div className="bg-white h-[50px] w-full rounded-[9px] px-5 drop-shadow-[0px_0px_5px_rgba(0,0,0,0.25)] flex items-center">
+          <div className="bg-[var(--background-elevated)] h-[50px] w-full rounded-[9px] px-5 drop-shadow-[0px_0px_5px_rgba(0,0,0,0.25)] flex items-center">
             <input
               type="email"
               value={email}
@@ -157,7 +157,7 @@ export default function MobileResetPasswordView() {
                 setError("");
               }}
               placeholder={t("auth.emailOwnPlaceholder")}
-              className="w-full bg-transparent outline-none text-[16px] text-[#242424] placeholder:text-[#242424]/50"
+              className="w-full bg-transparent outline-none text-[16px] text-[var(--foreground-primary)] placeholder:text-[var(--color-muted-fg)]"
             />
           </div>
         </div>
@@ -166,7 +166,7 @@ export default function MobileResetPasswordView() {
           type="button"
           onClick={() => handleSendCode()}
           disabled={loadingSend || !email.trim()}
-          className="bg-[#005b33] h-[50px] w-full rounded-[9px] drop-shadow-[0px_0px_5px_rgba(0,0,0,0.25)] text-[18px] text-white hover:brightness-110 active:scale-[0.98] disabled:opacity-70"
+          className="bg-[var(--color-green)] h-[50px] w-full rounded-[9px] drop-shadow-[0px_0px_5px_rgba(0,0,0,0.25)] text-[18px] text-white hover:brightness-110 active:scale-[0.98] disabled:opacity-70"
         >
           {loadingSend
             ? t("auth.sending")
@@ -176,7 +176,7 @@ export default function MobileResetPasswordView() {
         </button>
 
         <div className="flex flex-col items-center gap-3 w-full mt-2">
-          <label className="text-[20px] font-semibold text-[#242424]">
+          <label className="text-[20px] font-semibold text-[var(--foreground-primary)]">
             {t("auth.enterCode")}
           </label>
           <div className="flex items-center justify-between gap-2 w-full max-w-[355px]">
@@ -193,17 +193,17 @@ export default function MobileResetPasswordView() {
                 onChange={(e) => handleCodeChange(idx, e.target.value)}
                 onKeyDown={(e) => handleKeyDown(idx, e)}
                 onPaste={handlePaste}
-                className="bg-white h-[64px] w-full max-w-[55px] rounded-[9px] drop-shadow-[0px_0px_5px_rgba(0,0,0,0.25)] text-center text-[24px] font-semibold text-[#242424] outline-none focus:ring-2 focus:ring-[#005b33]"
+                className="bg-[var(--background-elevated)] h-[64px] w-full max-w-[55px] rounded-[9px] drop-shadow-[0px_0px_5px_rgba(0,0,0,0.25)] text-center text-[24px] font-semibold text-[var(--foreground-primary)] outline-none focus:ring-2 focus:ring-[var(--color-green)]"
               />
             ))}
           </div>
         </div>
 
         <div className="flex flex-col gap-2.5 w-full">
-          <label className="text-[20px] font-semibold text-[#242424]">
+          <label className="text-[20px] font-semibold text-[var(--foreground-primary)]">
             {t("auth.newPassword")}
           </label>
-          <div className="bg-white h-[50px] w-full rounded-[9px] px-5 drop-shadow-[0px_0px_5px_rgba(0,0,0,0.25)] flex items-center">
+          <div className="bg-[var(--background-elevated)] h-[50px] w-full rounded-[9px] px-5 drop-shadow-[0px_0px_5px_rgba(0,0,0,0.25)] flex items-center">
             <input
               type="password"
               value={newPassword}
@@ -212,16 +212,16 @@ export default function MobileResetPasswordView() {
                 setError("");
               }}
               placeholder={t("auth.minSixChars")}
-              className="w-full bg-transparent outline-none text-[16px] text-[#242424] placeholder:text-[#242424]/50"
+              className="w-full bg-transparent outline-none text-[16px] text-[var(--foreground-primary)] placeholder:text-[var(--color-muted-fg)]"
             />
           </div>
         </div>
 
         <div className="flex flex-col gap-2.5 w-full">
-          <label className="text-[20px] font-semibold text-[#242424]">
+          <label className="text-[20px] font-semibold text-[var(--foreground-primary)]">
             {t("auth.confirmPassword")}
           </label>
-          <div className="bg-white h-[50px] w-full rounded-[9px] px-5 drop-shadow-[0px_0px_5px_rgba(0,0,0,0.25)] flex items-center">
+          <div className="bg-[var(--background-elevated)] h-[50px] w-full rounded-[9px] px-5 drop-shadow-[0px_0px_5px_rgba(0,0,0,0.25)] flex items-center">
             <input
               type="password"
               value={confirmPassword}
@@ -230,7 +230,7 @@ export default function MobileResetPasswordView() {
                 setError("");
               }}
               placeholder={t("auth.repeatPassword")}
-              className="w-full bg-transparent outline-none text-[16px] text-[#242424] placeholder:text-[#242424]/50"
+              className="w-full bg-transparent outline-none text-[16px] text-[var(--foreground-primary)] placeholder:text-[var(--color-muted-fg)]"
             />
           </div>
         </div>
@@ -240,7 +240,7 @@ export default function MobileResetPasswordView() {
             type="button"
             onClick={() => handleConfirm()}
             disabled={loadingConfirm}
-            className="bg-[#005b33] h-[50px] w-full rounded-[9px] drop-shadow-[0px_0px_5px_rgba(0,0,0,0.25)] text-[18px] text-white hover:brightness-110 active:scale-[0.98] disabled:opacity-70"
+            className="bg-[var(--color-green)] h-[50px] w-full rounded-[9px] drop-shadow-[0px_0px_5px_rgba(0,0,0,0.25)] text-[18px] text-white hover:brightness-110 active:scale-[0.98] disabled:opacity-70"
           >
             {loadingConfirm ? t("auth.saving") : t("auth.changePassword")}
           </button>
@@ -249,7 +249,7 @@ export default function MobileResetPasswordView() {
             type="button"
             onClick={() => router.push(lp("/login"))}
             disabled={loadingConfirm}
-            className="border-2 border-[#005b33] bg-transparent h-[50px] w-full rounded-[9px] shadow-[0px_0px_10px_0px_rgba(0,0,0,0.25)] text-[18px] text-[#005b33] hover:bg-[#005b33]/10 active:scale-[0.98] disabled:opacity-70"
+            className="border-2 border-[var(--color-green)] bg-transparent h-[50px] w-full rounded-[9px] shadow-[0px_0px_10px_0px_rgba(0,0,0,0.25)] text-[18px] text-[var(--color-green)] hover:bg-[color-mix(in_srgb,var(--color-green)_10%,transparent)] active:scale-[0.98] disabled:opacity-70"
           >
             {t("auth.cancel")}
           </button>
@@ -257,11 +257,11 @@ export default function MobileResetPasswordView() {
       </div>
 
       <div className="w-full max-w-[392px] text-center mt-6 mb-4">
-        <p className="text-[#242424] text-[16px]">
+        <p className="text-[var(--foreground-primary)] text-[16px]">
           {t("auth.rememberedPassword")}{" "}
           <Link
             href={lp("/login")}
-            className="text-[#005b33] font-semibold hover:underline"
+            className="text-[var(--color-green)] font-semibold hover:underline"
           >
             {t("auth.signIn")}
           </Link>

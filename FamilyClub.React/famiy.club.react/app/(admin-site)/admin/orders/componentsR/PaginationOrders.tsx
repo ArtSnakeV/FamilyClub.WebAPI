@@ -11,13 +11,12 @@ type PageItem = number | "ellipsis-left" | "ellipsis-right";
 function getPageItems(currentPage: number, totalPages: number): PageItem[] {
     const items: PageItem[] = [];
 
-    // Мало сторінок — показуємо всі без крапок
     if (totalPages <= 7) {
         for (let i = 1; i <= totalPages; i++) items.push(i);
         return items;
     }
 
-    const siblings = 1; // скільки сторінок показувати навколо поточної
+    const siblings = 1;
 
     const left = Math.max(2, currentPage - siblings);
     const right = Math.min(totalPages - 1, currentPage + siblings);
@@ -55,15 +54,10 @@ export default function PaginationOrders({
     const pageItems = getPageItems(currentPage, totalPages);
 
     const hasCountInfo = totalItems != null && itemsPerPage != null;
-    const startIndex = hasCountInfo ? (currentPage - 1) * itemsPerPage! + 1 : null;
-    const endIndex = hasCountInfo
-        ? Math.min(currentPage * itemsPerPage!, totalItems!)
-        : null;
 
     return (
         <div className="w-full flex items-center justify-center gap-4 flex-wrap">
             <ul className="flex items-center gap-2 mx-auto">
-                {/* Prev */}
                 <li>
                     <button
                         onClick={() => onPageChange(currentPage - 1)}
@@ -71,7 +65,7 @@ export default function PaginationOrders({
                         className="
                             w-10 h-10
                             flex items-center justify-center
-                            text-[var(--color-black)]
+                            text-[var(--foreground-primary)]
                             disabled:opacity-40
                         "
                         aria-label="Попередня сторінка"
@@ -80,7 +74,6 @@ export default function PaginationOrders({
                     </button>
                 </li>
 
-                {/* Pages */}
                 {pageItems.map((item, idx) =>
                     item === "ellipsis-left" || item === "ellipsis-right" ? (
                         <li key={item + idx}>
@@ -90,7 +83,7 @@ export default function PaginationOrders({
                                     flex items-center justify-center
                                     text-[18px]
                                     font-['Source_Sans_Pro']
-                                    text-[#a3a19e]
+                                    text-[var(--color-muted-fg)]
                                 "
                             >
                                 …
@@ -109,8 +102,8 @@ export default function PaginationOrders({
                                     transition
                                     ${
                                         item === currentPage
-                                            ? "bg-[var(--color-brand-green,#1f4d3d)] text-[var(--color-white)]"
-                                            : "bg-transparent text-[var(--color-black)] hover:bg-[#ececec] hover:text-[var(--color-black)]"
+                                            ? "bg-[var(--color-green)] text-[var(--color-cream)]"
+                                            : "bg-[var(--background-elevated)] text-[var(--foreground-primary)] border border-[color-mix(in_srgb,var(--foreground-primary)_18%,transparent)] hover:bg-[color-mix(in_srgb,var(--color-green)_22%,var(--background-elevated))]"
                                     }
                                 `}
                             >
@@ -120,7 +113,6 @@ export default function PaginationOrders({
                     )
                 )}
 
-                {/* Next */}
                 <li>
                     <button
                         onClick={() => onPageChange(currentPage + 1)}
@@ -128,7 +120,7 @@ export default function PaginationOrders({
                         className="
                             w-10 h-10
                             flex items-center justify-center
-                            text-[var(--color-black)]
+                            text-[var(--foreground-primary)]
                             disabled:opacity-40
                         "
                         aria-label="Наступна сторінка"
@@ -138,7 +130,9 @@ export default function PaginationOrders({
                 </li>
             </ul>
 
-            {hasCountInfo && <div className="invisible hidden sm:block w-[160px]" aria-hidden />}
+            {hasCountInfo && (
+                <div className="invisible hidden sm:block w-[160px]" aria-hidden />
+            )}
         </div>
     );
 }

@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useLocale, useTranslations } from "@/lib/i18n/LocaleProvider";
+import { useTheme } from "@/lib/theme/ThemeProvider";
 
 const LEVEL_MAX = 300;
 
@@ -10,6 +11,9 @@ const GROUP_727_IMAGES = {
   en: "/images/pawsUser/Group 727-en.png",
 } as const;
 
+/** Same daytime asset; night flips parchment → dark without resizing. */
+const NIGHT_BG_FILTER = "invert(1) hue-rotate(180deg)";
+
 type Props = {
   paws: number;
 };
@@ -17,11 +21,18 @@ type Props = {
 export default function NextLevelBlock({ paws }: Props) {
   const { locale } = useLocale();
   const t = useTranslations();
+  const { theme } = useTheme();
+  const isNight = theme === "ink-night";
   const group727Src = GROUP_727_IMAGES[locale];
   const progressPercent = Math.min(100, (paws / LEVEL_MAX) * 100);
 
+  const ink = isNight ? "text-[var(--color-cream)]" : "text-[var(--color-black)]";
+  const muted = isNight ? "text-[var(--color-cream)]/75" : "text-[var(--color-muted-fg)]";
+  const nightFilter = isNight ? { filter: NIGHT_BG_FILTER } : undefined;
+
   return (
     <div className="w-full flex flex-col gap-4">
+      {/* Daytime look kept for "next level" in both themes */}
       <div
         className="relative px-5 py-4"
         style={{
@@ -41,7 +52,7 @@ export default function NextLevelBlock({ paws }: Props) {
           </div>
 
           <div className="flex-1 min-w-0">
-            <div className="flex justify-between text-xs text-black/60 mb-1">
+            <div className="flex justify-between text-xs text-[var(--color-muted-fg)] mb-1">
               <span>{t("paws.pawsCount").replace("{count}", String(paws))}</span>
               <span>{t("paws.pawsCount").replace("{count}", String(LEVEL_MAX))}</span>
             </div>
@@ -74,29 +85,38 @@ export default function NextLevelBlock({ paws }: Props) {
             height={189}
             alt={t("paws.exchangeAlt")}
             className="object-contain max-h-full w-auto"
+            style={nightFilter}
             priority
           />
         </button>
 
         <button
-          className="relative flex-1 flex items-center gap-2 bg-cover w-[340px] h-[142px] p-2 text-left overflow-hidden"
-          style={{
-            backgroundImage: "url('/images/pawsUser/Rectangle 471.png')",
-            backgroundSize: "cover",
-            width: "340px",
-            height: "142px",
-          }}
+          type="button"
+          className="relative flex-1 flex items-center gap-2 w-[340px] h-[142px] p-2 text-left overflow-hidden border-0 cursor-pointer bg-transparent"
+          style={{ width: "340px", height: "142px" }}
         >
+          <div
+            aria-hidden
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              backgroundImage: "url('/images/pawsUser/Rectangle 471.png')",
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              ...nightFilter,
+            }}
+          />
           <Image
             src="/images/userProfile/Tags.png"
             width={50}
             height={50}
             alt=""
-            className="ml-5"
+            className={`relative z-10 ml-5 ${isNight ? "brightness-0 invert" : ""}`}
           />
-          <div>
-            <p className="font-bold text-[14px] leading-tight">{t("paws.applyToPurchase")}</p>
-            <p className="text-black/60 text-xs w-[150px] mt-1.5 leading-snug">
+          <div className="relative z-10">
+            <p className={`font-bold text-[14px] leading-tight ${ink}`}>
+              {t("paws.applyToPurchase")}
+            </p>
+            <p className={`text-xs w-[150px] mt-1.5 leading-snug ${muted}`}>
               {t("paws.applyHint")}
             </p>
           </div>
@@ -104,15 +124,20 @@ export default function NextLevelBlock({ paws }: Props) {
       </div>
 
       <div
-        className="relative w-[560px] h-[152px] -mt-8 bg-cover p-2 sm:p-5 text-[15px] sm:text-[16px]"
-        style={{
-          backgroundImage: "url('/images/pawsUser/Rectangle 471.svg')",
-          backgroundSize: "cover",
-          width: "560px",
-          height: "152px",
-        }}
+        className={`relative w-[560px] h-[152px] -mt-8 overflow-hidden p-2 sm:p-5 text-[15px] sm:text-[16px] ${ink}`}
+        style={{ width: "560px", height: "152px" }}
       >
-        <ul className="relative mt-5 space-y-4 sm:space-y-6 list-disc pl-8">
+        <div
+          aria-hidden
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            backgroundImage: "url('/images/pawsUser/Rectangle 471.svg')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            ...nightFilter,
+          }}
+        />
+        <ul className="relative z-10 mt-5 space-y-4 sm:space-y-6 list-disc pl-8">
           <li>{t("paws.ruleCheckout")}</li>
           <li>{t("paws.ruleDeduct")}</li>
         </ul>

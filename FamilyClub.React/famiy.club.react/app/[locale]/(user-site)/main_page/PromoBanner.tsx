@@ -77,14 +77,14 @@ export default function PromoBanner({
                             <div className="absolute inset-0 bg-gradient-to-t from-[rgba(0,0,0,0.8)] via-[rgba(0,0,0,0.3)] to-transparent" />
                             <div className="absolute bottom-[30px] left-[30px] right-[30px] md:bottom-[40px] md:left-[40px]">
                                 <h3
-                                    className="font-mono text-[28px] font-bold text-[#f5f3ee] md:text-[36px] lg:text-[42px] leading-tight"
+                                    className="font-mono text-[28px] font-bold text-[var(--color-cream)] md:text-[36px] lg:text-[42px] leading-tight"
                                     style={{ textShadow: "0px 2px 10px rgba(0,0,0,0.8)" }}
                                 >
                                     {banner.title}
                                 </h3>
                                 {banner.subtitle ? (
                                     <p
-                                        className="mt-2 text-[16px] text-[#f5f3ee] md:text-[18px] opacity-90 font-sans"
+                                        className="mt-2 text-[16px] text-[var(--color-cream)] md:text-[18px] opacity-90 font-sans"
                                         style={{ textShadow: "0px 2px 10px rgba(0,0,0,0.8)" }}
                                     >
                                         {banner.subtitle}

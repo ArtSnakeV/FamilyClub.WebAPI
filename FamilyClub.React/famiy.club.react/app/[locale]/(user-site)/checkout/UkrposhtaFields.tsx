@@ -381,16 +381,16 @@ export default function UkrposhtaFields({
         onClick={() => handleSelectBranch(w)}
         className={`px-4 ${
           mobile ? "py-3" : "py-2.5"
-        } hover:bg-[#E5E0D5] active:bg-[#DCD7CC] cursor-pointer text-[#242424] transition-colors flex items-start justify-between gap-2 border-b border-[#242424]/5 last:border-0`}
+        } hover:bg-[var(--color-menu-hover)] active:bg-[var(--color-menu-hover)] cursor-pointer text-[var(--foreground-primary)] transition-colors flex items-start justify-between gap-2 border-b border-[var(--foreground-primary)]/5 last:border-0`}
       >
         <div className="flex flex-col">
           <span className={`font-semibold ${mobile ? "text-[15px]" : "text-sm"}`}>{w.description}</span>
           {w.shortAddress && w.shortAddress !== w.description && (
-            <span className="text-xs text-[#666666]">{w.shortAddress}</span>
+            <span className="text-xs text-[var(--color-muted-fg)]">{w.shortAddress}</span>
           )}
         </div>
         {dist != null && (
-          <span className="text-xs font-medium text-[#005b33] whitespace-nowrap shrink-0">
+          <span className="text-xs font-medium text-[var(--color-green)] whitespace-nowrap shrink-0">
             {dist < 1 ? `${Math.round(dist * 1000)} м` : `${dist.toFixed(1)} км`}
           </span>
         )}
@@ -404,13 +404,13 @@ export default function UkrposhtaFields({
       onClick={handleFindNearest}
       disabled={geoLoading}
       className={`flex items-center gap-1.5 text-xs font-medium ${
-        sortByDistance ? "text-[#005b33]" : "text-[#666666]"
-      } hover:text-[#005b33] transition-colors disabled:opacity-50 ${
+        sortByDistance ? "text-[var(--color-green)]" : "text-[var(--color-muted-fg)]"
+      } hover:text-[var(--color-green)] transition-colors disabled:opacity-50 ${
         mobile ? "px-4 py-2" : "px-2 py-1.5"
       }`}
     >
       {geoLoading ? (
-        <span className="inline-block size-3 border-2 border-[#005b33] border-t-transparent rounded-full animate-spin" />
+        <span className="inline-block size-3 border-2 border-[var(--color-green)] border-t-transparent rounded-full animate-spin" />
       ) : (
         <LocationIcon />
       )}
@@ -442,10 +442,10 @@ export default function UkrposhtaFields({
           </div>
 
           {isCityOpen && (
-            <div className="absolute top-full left-0 right-0 z-50 mt-1.5 max-h-64 overflow-y-auto rounded-xl bg-[#F5F3EE] shadow-2xl border border-[#B7895E]/40 py-1.5 animate-fade-in">
+            <div className="absolute top-full left-0 right-0 z-50 mt-1.5 max-h-64 overflow-y-auto rounded-xl bg-[var(--background-elevated)] shadow-2xl border border-[var(--color-border-warm)]/40 py-1.5 animate-fade-in">
               {loadingCities ? (
-                <div className="px-4 py-3 text-sm text-[#666666] flex items-center gap-2">
-                  <span className="inline-block size-3.5 border-2 border-[#005b33] border-t-transparent rounded-full animate-spin" />
+                <div className="px-4 py-3 text-sm text-[var(--color-muted-fg)] flex items-center gap-2">
+                  <span className="inline-block size-3.5 border-2 border-[var(--color-green)] border-t-transparent rounded-full animate-spin" />
                   Пошук населених пунктів...
                 </div>
               ) : cities.length > 0 ? (
@@ -453,14 +453,14 @@ export default function UkrposhtaFields({
                   <div
                     key={item.ref + item.name}
                     onClick={() => handleSelectCity(item)}
-                    className="px-4 py-2.5 hover:bg-[#E5E0D5] cursor-pointer text-sm text-[#242424] transition-colors flex flex-col border-b border-[#242424]/5 last:border-0"
+                    className="px-4 py-2.5 hover:bg-[var(--color-menu-hover)] cursor-pointer text-sm text-[var(--foreground-primary)] transition-colors flex flex-col border-b border-[var(--foreground-primary)]/5 last:border-0"
                   >
                     <span className="font-semibold">{item.short}</span>
-                    <span className="text-xs text-[#666666]">{item.name}</span>
+                    <span className="text-xs text-[var(--color-muted-fg)]">{item.name}</span>
                   </div>
                 ))
               ) : (
-                <div className="px-4 py-3 text-sm text-[#666666]">
+                <div className="px-4 py-3 text-sm text-[var(--color-muted-fg)]">
                   Населений пункт не знайдено. Спробуйте ввести індекс або іншу назву.
                 </div>
               )}
@@ -492,10 +492,10 @@ export default function UkrposhtaFields({
           {geoError && <p className="text-xs text-red-600 mt-1">{geoError}</p>}
 
           {isBranchOpen && (
-            <div className="absolute top-full left-0 right-0 z-50 mt-1.5 max-h-64 overflow-y-auto rounded-xl bg-[#F5F3EE] shadow-2xl border border-[#B7895E]/40 py-1.5 animate-fade-in">
+            <div className="absolute top-full left-0 right-0 z-50 mt-1.5 max-h-64 overflow-y-auto rounded-xl bg-[var(--background-elevated)] shadow-2xl border border-[var(--color-border-warm)]/40 py-1.5 animate-fade-in">
               {loadingWarehouses ? (
-                <div className="px-4 py-3 text-sm text-[#666666] flex items-center gap-2">
-                  <span className="inline-block size-3.5 border-2 border-[#005b33] border-t-transparent rounded-full animate-spin" />
+                <div className="px-4 py-3 text-sm text-[var(--color-muted-fg)] flex items-center gap-2">
+                  <span className="inline-block size-3.5 border-2 border-[var(--color-green)] border-t-transparent rounded-full animate-spin" />
                   Завантаження відділень Укрпошти...
                 </div>
               ) : filteredWarehouses.length > 0 ? (
@@ -505,7 +505,7 @@ export default function UkrposhtaFields({
                   Будь ласка, спочатку оберіть населений пункт або введіть 5-значний індекс (наприклад 70-450).
                 </div>
               ) : (
-                <div className="px-4 py-3 text-sm text-[#666666]">
+                <div className="px-4 py-3 text-sm text-[var(--color-muted-fg)]">
                   Відділення не знайдені. Спробуйте ввести точний індекс (наприклад 70-450).
                 </div>
               )}
@@ -519,26 +519,26 @@ export default function UkrposhtaFields({
   return (
     <div ref={containerRef} className="flex flex-col gap-3 mt-2">
       <div className="relative">
-        <div className="bg-[#f5f3ee] h-[65px] rounded-[9px] shadow-[0px_0px_10px_0px_rgba(0,0,0,0.25)] flex items-center justify-between px-5">
+        <div className="bg-[var(--background-elevated)] h-[65px] rounded-[9px] shadow-[0px_0px_10px_0px_rgba(0,0,0,0.25)] flex items-center justify-between px-5">
           <input
             type="text"
             placeholder="Оберіть населений пункт *"
             value={cityQuery}
             onChange={handleCityChange}
             onFocus={handleCityFocus}
-            className="w-full bg-transparent text-[18px] sm:text-[20px] text-[#242424] placeholder:text-[#242424]/70 focus:outline-none"
+            className="w-full bg-transparent text-[18px] sm:text-[20px] text-[var(--foreground-primary)] placeholder:text-[var(--color-muted-fg)] focus:outline-none"
             autoComplete="off"
           />
-          <div onClick={() => setIsCityOpen((prev) => !prev)} className="cursor-pointer text-[#242424] shrink-0">
+          <div onClick={() => setIsCityOpen((prev) => !prev)} className="cursor-pointer text-[var(--foreground-primary)] shrink-0">
             <ChevronDownIcon />
           </div>
         </div>
 
         {isCityOpen && (
-          <div className="absolute top-full left-0 right-0 z-50 mt-1 max-h-60 overflow-y-auto rounded-xl bg-[#F5F3EE] shadow-2xl border border-[#B7895E]/40 py-1.5">
+          <div className="absolute top-full left-0 right-0 z-50 mt-1 max-h-60 overflow-y-auto rounded-xl bg-[var(--background-elevated)] shadow-2xl border border-[var(--color-border-warm)]/40 py-1.5">
             {loadingCities ? (
-              <div className="px-4 py-3 text-sm text-[#666666] flex items-center gap-2">
-                <span className="inline-block size-3.5 border-2 border-[#005b33] border-t-transparent rounded-full animate-spin" />
+              <div className="px-4 py-3 text-sm text-[var(--color-muted-fg)] flex items-center gap-2">
+                <span className="inline-block size-3.5 border-2 border-[var(--color-green)] border-t-transparent rounded-full animate-spin" />
                 Пошук населених пунктів...
               </div>
             ) : cities.length > 0 ? (
@@ -546,31 +546,31 @@ export default function UkrposhtaFields({
                 <div
                   key={item.ref + item.name}
                   onClick={() => handleSelectCity(item)}
-                  className="px-4 py-3 hover:bg-[#E5E0D5] active:bg-[#DCD7CC] cursor-pointer text-[#242424] transition-colors flex flex-col border-b border-[#242424]/5 last:border-0"
+                  className="px-4 py-3 hover:bg-[var(--color-menu-hover)] active:bg-[var(--color-menu-hover)] cursor-pointer text-[var(--foreground-primary)] transition-colors flex flex-col border-b border-[var(--foreground-primary)]/5 last:border-0"
                 >
                   <span className="font-semibold text-[15px]">{item.short}</span>
-                  <span className="text-xs text-[#666666]">{item.name}</span>
+                  <span className="text-xs text-[var(--color-muted-fg)]">{item.name}</span>
                 </div>
               ))
             ) : (
-              <div className="px-4 py-3 text-sm text-[#666666]">Населений пункт не знайдено</div>
+              <div className="px-4 py-3 text-sm text-[var(--color-muted-fg)]">Населений пункт не знайдено</div>
             )}
           </div>
         )}
       </div>
 
       <div className="relative">
-        <div className="bg-[#f5f3ee] h-[65px] rounded-[9px] shadow-[0px_0px_10px_0px_rgba(0,0,0,0.25)] flex items-center justify-between px-5">
+        <div className="bg-[var(--background-elevated)] h-[65px] rounded-[9px] shadow-[0px_0px_10px_0px_rgba(0,0,0,0.25)] flex items-center justify-between px-5">
           <input
             type="text"
             placeholder={branchPlaceholder}
             value={branchQuery}
             onChange={handleBranchChange}
             onFocus={handleBranchFocus}
-            className="w-full bg-transparent text-[18px] sm:text-[20px] text-[#242424] placeholder:text-[#242424]/70 focus:outline-none"
+            className="w-full bg-transparent text-[18px] sm:text-[20px] text-[var(--foreground-primary)] placeholder:text-[var(--color-muted-fg)] focus:outline-none"
             autoComplete="off"
           />
-          <div onClick={() => setIsBranchOpen((prev) => !prev)} className="cursor-pointer text-[#242424] shrink-0">
+          <div onClick={() => setIsBranchOpen((prev) => !prev)} className="cursor-pointer text-[var(--foreground-primary)] shrink-0">
             <ChevronDownIcon />
           </div>
         </div>
@@ -581,10 +581,10 @@ export default function UkrposhtaFields({
         {geoError && <p className="text-xs text-red-600 mt-1 px-1">{geoError}</p>}
 
         {isBranchOpen && (
-          <div className="absolute top-full left-0 right-0 z-50 mt-1 max-h-60 overflow-y-auto rounded-xl bg-[#F5F3EE] shadow-2xl border border-[#B7895E]/40 py-1.5">
+          <div className="absolute top-full left-0 right-0 z-50 mt-1 max-h-60 overflow-y-auto rounded-xl bg-[var(--background-elevated)] shadow-2xl border border-[var(--color-border-warm)]/40 py-1.5">
             {loadingWarehouses ? (
-              <div className="px-4 py-3 text-sm text-[#666666] flex items-center gap-2">
-                <span className="inline-block size-3.5 border-2 border-[#005b33] border-t-transparent rounded-full animate-spin" />
+              <div className="px-4 py-3 text-sm text-[var(--color-muted-fg)] flex items-center gap-2">
+                <span className="inline-block size-3.5 border-2 border-[var(--color-green)] border-t-transparent rounded-full animate-spin" />
                 Завантаження відділень Укрпошти...
               </div>
             ) : filteredWarehouses.length > 0 ? (
@@ -594,7 +594,7 @@ export default function UkrposhtaFields({
                 Будь ласка, спочатку оберіть населений пункт або введіть 5-значний індекс (наприклад 70-450).
               </div>
             ) : (
-              <div className="px-4 py-3 text-sm text-[#666666]">
+              <div className="px-4 py-3 text-sm text-[var(--color-muted-fg)]">
                 Відділення не знайдені. Введіть точний індекс (наприклад 70-450).
               </div>
             )}

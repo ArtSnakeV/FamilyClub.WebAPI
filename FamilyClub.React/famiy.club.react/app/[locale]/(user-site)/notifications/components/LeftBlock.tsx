@@ -33,7 +33,7 @@ export default function LeftBlock({ label, count, active, onClick }: LeftBlockPr
             >
                 {label}
                 {typeof count === "number" && (
-                    <span className="ml-2 text-xs bg-white/20 rounded-full px-2 py-0.5">
+                    <span className="ml-2 text-xs bg-[var(--background-elevated)]/20 rounded-full px-2 py-0.5">
                         {count}
                     </span>
                 )}

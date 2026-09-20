@@ -34,13 +34,13 @@ function CategoriesContent() {
   }, [isMobile, router, searchParams, lp]);
 
   if (isMobile === null) {
-    return <div className="min-h-screen bg-[#c7a381]" />;
+    return <div className="min-h-screen bg-[var(--color-wood)]" />;
   }
 
   if (!isMobile) {
     return (
       <div className="min-h-screen bg-[var(--background-main)] pt-[200px] pb-12 flex justify-center items-center">
-        <p className="text-gray-600 font-mono">{t("catalog.redirecting")}</p>
+        <p className="text-[var(--color-muted-fg)] font-mono">{t("catalog.redirecting")}</p>
       </div>
     );
   }
@@ -50,7 +50,7 @@ function CategoriesContent() {
 
 export default function CategoriesClient() {
   return (
-    <Suspense fallback={<div className="min-h-screen bg-[#c7a381]" />}>
+    <Suspense fallback={<div className="min-h-screen bg-[var(--color-wood)]" />}>
       <CategoriesContent />
     </Suspense>
   );

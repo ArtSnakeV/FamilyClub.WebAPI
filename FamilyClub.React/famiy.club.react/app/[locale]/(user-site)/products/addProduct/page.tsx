@@ -11,7 +11,6 @@ import { GenresSection } from "./sections/GenresSection";
 import { ImageUploadSection } from "./sections/ImageUploadSection";
 import { SaleSection } from "./sections/SaleSection";
 import { useISBNLookup } from "./hooks/useISBNLookup";
-import { useEffect } from "react";
 import ButtonReturn from "./ui/ButtonReturn";
 import {
   useLocalizedPath,
@@ -36,38 +35,39 @@ export default function AddProductPage() {
     form,
     setField,
   });
-  useEffect(() => {
-    document.body.style.backgroundImage =
-      "url('/images/addProducts/Rectangle 326.png')";
-    document.body.style.backgroundSize = "cover";
-    document.body.style.backgroundAttachment = "fixed";
-    document.body.style.backgroundPosition = "center";
-    document.body.style.backgroundRepeat = "no-repeat";
-
-    return () => {
-      document.body.style.backgroundImage = "";
-      document.body.style.backgroundSize = "";
-      document.body.style.backgroundAttachment = "";
-      document.body.style.backgroundPosition = "";
-      document.body.style.backgroundRepeat = "";
-    };
-  }, []);
   return (
-    <div className="w-full min-h-screen flex flex-col">
+    <div className="relative w-full min-h-screen flex flex-col overflow-hidden">
       <div
-        className="relative w-[900px] ml-[27vw] -mt-[4px] mx-auto bg-cover bg-center bg-no-repeat"
+        aria-hidden
+        className="absolute inset-0 pointer-events-none admin-parchment-bg"
         style={{
-          backgroundImage: "url('/images/addProducts/Rectangle 312.svg')",
+          backgroundImage: "url('/images/addProducts/Rectangle 326.png')",
+          backgroundSize: "cover",
+          backgroundAttachment: "fixed",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
         }}
-      >
+      />
+      <div className="relative z-10 w-full min-h-screen flex flex-col">
+      <div className="relative overflow-hidden w-[900px] ml-[27vw] -mt-[4px] mx-auto">
+        <div
+          aria-hidden
+          className="absolute inset-0 pointer-events-none admin-parchment-bg"
+          style={{
+            backgroundImage: "url('/images/addProducts/Rectangle 312.svg')",
+            backgroundSize: "cover",
+            backgroundPosition: "top center",
+          }}
+        />
+        <div className="relative z-10">
         <div className="flex z-40 relative top-[130px] ml-[64px]">
           <ButtonReturn />
         </div>
         <div className="flex flex-col items-center mt-[100px]">
-          <h1 className="text-[var(--color-black)] w-[600px] font-['Roboto_Mono'] font-bold text-[44px] leading-[150%] tracking-[-0.011em] text-center">
+          <h1 className="text-[var(--foreground-primary)] w-[600px] font-['Roboto_Mono'] font-bold text-[44px] leading-[150%] tracking-[-0.011em] text-center">
             {t("sellerProduct.addTitle")}
           </h1>
-          <p className="text-[var(--color-black)] -mt-2 font-sans font-normal text-[22px] leading-[150%] tracking-[-0.011em] text-center">
+          <p className="text-[var(--foreground-primary)] -mt-2 font-sans font-normal text-[22px] leading-[150%] tracking-[-0.011em] text-center">
             {t("sellerProduct.addSubtitle")}
           </p>
         </div>
@@ -120,6 +120,8 @@ export default function AddProductPage() {
             </div>
           </div>
         </form>
+        </div>
+      </div>
       </div>
     </div>
   );

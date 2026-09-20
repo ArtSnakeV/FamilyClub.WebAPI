@@ -42,10 +42,10 @@ export default function MySettingsPanel() {
   return (
     <div className="flex flex-col gap-6">
       <div>
-        <h1 className="text-2xl font-bold text-[#1F1F1F]">
+        <h1 className="text-2xl font-bold text-[var(--foreground-primary)]">
           Мої налаштування
         </h1>
-        <p className="text-[14px] text-[#6B6B6B] mt-1">
+        <p className="text-[14px] text-[var(--color-muted-fg)] mt-1">
           Профіль, безпека та права доступу
         </p>
       </div>
@@ -76,21 +76,21 @@ export default function MySettingsPanel() {
 
       <div className="flex flex-wrap items-center justify-end gap-3 pt-2">
         {savedFlash && (
-          <span className="text-[13px] text-[#005b33] mr-auto">
+          <span className="text-[13px] text-[var(--color-green)] mr-auto">
             Локальні налаштування збережено
           </span>
         )}
         <button
           type="button"
           onClick={applyCancel}
-          className="rounded-[9px] bg-[#F3EFE7] px-5 py-2.5 text-[14px] font-semibold text-[#2F2F2F] hover:bg-[#E8E4DC]"
+          className="rounded-[9px] bg-[color-mix(in_srgb,var(--foreground-primary)_8%,var(--background-elevated))] px-5 py-2.5 text-[14px] font-semibold text-[var(--foreground-primary)] hover:bg-[color-mix(in_srgb,var(--color-green)_22%,var(--background-elevated))] transition"
         >
           Скасувати
         </button>
         <button
           type="button"
           onClick={applySave}
-          className="rounded-[9px] bg-[var(--color-green)] px-5 py-2.5 text-[14px] font-semibold text-white hover:opacity-95"
+          className="rounded-[9px] bg-[var(--color-green)] px-5 py-2.5 text-[14px] font-semibold text-[var(--color-cream)] hover:opacity-95 transition"
         >
           Зберегти зміни
         </button>

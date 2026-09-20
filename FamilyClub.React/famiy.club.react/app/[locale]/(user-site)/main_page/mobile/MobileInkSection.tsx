@@ -2,6 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
+import MobileSectionArrow from "./MobileSectionArrow";
 import { useLocalizedPath, useTranslations } from "@/lib/i18n/LocaleProvider";
 
 export type GazetteItem = {
@@ -33,27 +34,14 @@ export default function MobileInkSection({ items }: MobileInkSectionProps) {
     <section className="relative w-full py-4">
       {/* Title "Газета" & Arrow Button (Figma Node 2199:2774 / 2199:2982) */}
       <div className="flex items-center justify-between px-4 mb-3">
-        <h2 className="font-mono text-[32px] sm:text-[36px] font-bold text-[#242424] leading-none tracking-tight">
+        <h2 className="font-mono text-[32px] sm:text-[36px] font-bold text-[var(--foreground-primary)] leading-none tracking-tight">
           {t("home.mobile.gazette")}
         </h2>
-        <Link
+        <MobileSectionArrow
           href={lp("/categories")}
-          aria-label={t("home.mobile.moreGazette")}
-          className="relative w-[40px] h-[40px] shrink-0 block transition-transform hover:scale-105 active:scale-95"
-        >
-          <img
-            src="/images/main_page/mobile/arrow-circle.svg"
-            alt=""
-            className="absolute inset-0 w-full h-full object-contain drop-shadow-[0px_0px_2.5px_rgba(0,0,0,0.4)]"
-          />
-          <div className="absolute inset-0 flex items-center justify-center">
-            <img
-              src="/images/main_page/mobile/arrow-icon.svg"
-              alt={t("home.mobile.goTo")}
-              className="w-[18px] h-[18px] rotate-90 object-contain"
-            />
-          </div>
-        </Link>
+          ariaLabel={t("home.mobile.moreGazette")}
+          goToAlt={t("home.mobile.goTo")}
+        />
       </div>
 
       {/* Horizontal Scroll of Gazette Cards (Figma Node 2199:2799) */}
@@ -62,15 +50,15 @@ export default function MobileInkSection({ items }: MobileInkSectionProps) {
           <Link
             key={item.id}
             href={item.href && !item.href.startsWith("/") ? item.href : lp(item.href || "/categories")}
-            className="group relative h-[205px] w-[186px] shrink-0 snap-start rounded-[10px] bg-[#f5f3ee] p-3 shadow-[0px_0px_20px_0px_rgba(0,0,0,0.4)] border-[10px] border-[#f5f3ee] flex flex-col justify-between transition-transform active:scale-[0.98]"
+            className="group relative h-[205px] w-[186px] shrink-0 snap-start rounded-[10px] bg-[var(--background-elevated)] p-3 shadow-[0px_0px_20px_0px_rgba(0,0,0,0.4)] border-[10px] border-[var(--background-elevated)] flex flex-col justify-between transition-transform active:scale-[0.98]"
           >
             {/* Background texture (Figma imgRectangle438) */}
             <div className="absolute inset-0 rounded-[10px] -z-10 overflow-hidden pointer-events-none">
-              <div className="absolute bg-[#f5f3ee] inset-0" />
+              <div className="absolute bg-[var(--background-elevated)] inset-0" />
               <img
                 src="/images/main_page/mobile/gazette-bg.png"
                 alt=""
-                className="absolute inset-0 w-full h-full object-cover opacity-20 pointer-events-none"
+                className="absolute inset-0 w-full h-full object-cover opacity-20 pointer-events-none admin-parchment-bg-soft"
               />
             </div>
 
@@ -85,21 +73,21 @@ export default function MobileInkSection({ items }: MobileInkSectionProps) {
                   />
                 </div>
                 <div className="flex flex-col leading-none overflow-hidden">
-                  <span className="font-sans font-bold text-[16px] text-[#242424] truncate leading-tight">
+                  <span className="font-sans font-bold text-[16px] text-[var(--foreground-primary)] truncate leading-tight">
                     {item.authorName}
                   </span>
-                  <span className="font-sans font-bold text-[14px] text-[rgba(36,36,36,0.5)] truncate">
+                  <span className="font-sans font-bold text-[14px] text-[var(--color-muted-fg)] truncate">
                     {item.authorHandle}
                   </span>
                 </div>
               </div>
-              <span className="font-sans font-bold text-[14px] text-[rgba(36,36,36,0.5)] mt-1 block">
+              <span className="font-sans font-bold text-[14px] text-[var(--color-muted-fg)] mt-1 block">
                 {item.tag}
               </span>
             </div>
 
             {/* Middle Image (Figma Node 2199:2782) */}
-            <div className="h-[79px] w-full rounded-[5px] overflow-hidden my-1 bg-[rgba(0,0,0,0.05)] flex items-center justify-center">
+            <div className="h-[79px] w-full rounded-[5px] overflow-hidden my-1 bg-[color-mix(in_srgb,var(--foreground-primary)_6%,transparent)] flex items-center justify-center">
               {item.image ? (
                 <img
                   src={item.image}
@@ -107,8 +95,10 @@ export default function MobileInkSection({ items }: MobileInkSectionProps) {
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                 />
               ) : (
-                <div className="flex flex-col items-center justify-center text-gray-400 text-center p-1 bg-white/60 w-full h-full">
-                  <span className="text-lg">📖</span>
+                <div className="flex flex-col items-center justify-center text-[var(--color-muted-fg)] text-center p-1 bg-[color-mix(in_srgb,var(--foreground-primary)_8%,var(--background-elevated))] w-full h-full">
+                  <span className="text-lg" aria-hidden>
+                    📖
+                  </span>
                   <span className="text-[8px] font-serif">{t("product.noPhoto")}</span>
                 </div>
               )}
@@ -116,7 +106,7 @@ export default function MobileInkSection({ items }: MobileInkSectionProps) {
 
             {/* Bottom Title / Action Text (Figma Node 2199:2783) */}
             <div className="text-center">
-              <span className="font-sans font-bold text-[20px] text-[#242424] leading-tight block truncate tracking-[-0.22px]">
+              <span className="font-sans font-bold text-[20px] text-[var(--foreground-primary)] leading-tight block truncate tracking-[-0.22px]">
                 {item.title}
               </span>
             </div>

@@ -3,9 +3,14 @@
 import { useMemo } from "react";
 import { UserInfo } from "../../hooks/useAllUsersInfo";
 import UserCardBlockedUser from "./UserCardBlockedUser";
-import { isBlocked, isPermanentBlock, daysLeft, formatDate, getBlockStatus } from "../../hooks/blockUtils";
+import {
+    daysLeft,
+    formatDate,
+    getBlockStatus,
+} from "../../hooks/blockUtils";
 import { usePagination } from "../../hooks/usePagination";
 import PaginationBlockedUser from "../PaginationBlockedUser";
+import { useTheme } from "@/lib/theme/ThemeProvider";
 
 interface Props {
     users: UserInfo[];
@@ -23,17 +28,26 @@ const GRID_COLS =
     "grid-cols-[minmax(80px,2fr)_minmax(100px,1fr)_minmax(100px,1.4fr)_minmax(90px,1fr)_minmax(90px,1fr)_minmax(120px,auto)]";
 
 export default function AllBlockedUsersInfo({
-    users, search, status, sort, reason, onSelectUser, onLockToggle, selectedUserId, onDelete
+    users,
+    search,
+    sort,
+    reason,
+    onSelectUser,
+    onLockToggle,
 }: Props) {
+    const { theme } = useTheme();
+    const isNight = theme === "ink-night";
+    const ink = isNight ? "var(--color-cream)" : "var(--color-black)";
 
     const filteredUsers = useMemo(() => {
         let result = [...users];
 
-        // пошук
         const q = search.trim().toLowerCase();
         if (q) {
             result = result.filter((u) => {
-                const fullName = `${u.name ?? ""} ${u.surname ?? ""}`.trim().toLowerCase();
+                const fullName = `${u.name ?? ""} ${u.surname ?? ""}`
+                    .trim()
+                    .toLowerCase();
                 return (
                     fullName.includes(q) ||
                     u.email?.toLowerCase().includes(q) ||
@@ -42,12 +56,10 @@ export default function AllBlockedUsersInfo({
             });
         }
 
-        // фільтр по причині блокування
         if (reason !== "all") {
             result = result.filter((u) => String(u.lockoutReason) === reason);
         }
 
-        // сортування
         switch (sort) {
             case "nameAsc":
                 result.sort((a, b) =>
@@ -99,110 +111,136 @@ export default function AllBlockedUsersInfo({
     } = usePagination(filteredUsers, 6);
 
     return (
-        <div
-            className="w-[78.3vw] max-w-full flex flex-col h-auto min-h-[820px] rounded-1xl overflow-hidden"
-            style={{
-                backgroundImage: "url('/images/usersPageAdmin/Rectangle 793.png')",
-                backgroundSize: "100% 100%",
-            }}
-        >
-            {/* HEADER */}
-            <div className={`grid ${GRID_COLS} gap-x-1 mt-[4vh] mx-16 text-[20px] font-semibold`}>
-                <span className="whitespace-nowrap text-left ml-2">Користувач</span>
-                <span className="whitespace-nowrap text-left">Статус</span>
-                <span className="whitespace-nowrap text-left">Причина блокування</span>
-                <span className="whitespace-nowrap text-left">Заблоковано</span>
-                <span className="whitespace-nowrap text-left">Дійсно до</span>
-                <span className="whitespace-nowrap text-left -ml-3">Дії</span>
-            </div>
+        <div className="relative w-[78.3vw] max-w-full flex flex-col h-auto min-h-[820px] rounded-1xl overflow-hidden">
+            <div
+                aria-hidden
+                className="absolute inset-0 pointer-events-none admin-parchment-bg"
+                style={{
+                    backgroundImage: "url('/images/usersPageAdmin/Rectangle 793.png')",
+                    backgroundSize: "100% 100%",
+                }}
+            />
+            <div className="relative z-10 flex flex-col flex-1" style={{ color: ink }}>
+                <div
+                    className={`grid ${GRID_COLS} gap-x-1 mt-[4vh] mx-16 text-[20px] font-semibold`}
+                >
+                    <span className="whitespace-nowrap text-left ml-2">
+                        Користувач
+                    </span>
+                    <span className="whitespace-nowrap text-left">Статус</span>
+                    <span className="whitespace-nowrap text-left">
+                        Причина блокування
+                    </span>
+                    <span className="whitespace-nowrap text-left">Заблоковано</span>
+                    <span className="whitespace-nowrap text-left">Дійсно до</span>
+                    <span className="whitespace-nowrap text-left -ml-3">Дії</span>
+                </div>
 
-            <div className="mx-7 h-px bg-[#8D8C89] mt-3 mb-4" />
-
-            {/* ROWS */}
-            <div className="flex-1">
-                {filteredUsers.length === 0 ? (
-                    <p className="ml-12 mt-6 opacity-60">Нічого не знайдено</p>
-                ) : (
-                    // filteredUsers.map((user) => {
-                    paginatedUsers.map((user) => {
-                        const left = daysLeft(user.lockoutEnd);
-                        const status = getBlockStatus(user.lockoutEnd);
-                        return (
-                            <div
-                                key={user.id}
-                                onClick={() => onSelectUser(user)}
-                                className={`grid ${GRID_COLS} ml-8 w-[95%] gap-x-13 relative px-8 py-4 items-center`}
-                            >
-                                {/* USER */}
-                                <div className="min-w-0">
-                                    <UserCardBlockedUser user={user} variant="row" />
-                                </div>
-
-                                {/* STATUS */}
-                                <div className="min-w-0 h-[60px] w-[130px] ml-4">
-                                    <span
-                                        className={`inline-block rounded-[9px] w-full px-3 py-1 text-[16px] font-medium whitespace-wrap ${status.className}`}
-                                    >
-                                        {status.label}
-                                    </span>
-                                </div>
-
-                                {/* BLOCK REASON */}
-                                <div className="min-w-0 text-sm ml-7">
-                                    <p className="font-medium truncate">{user.lockoutReason ?? ""}</p>
-                                    {user.lockoutReasonDetail && (
-                                        <p className="opacity-60 truncate">{user.lockoutReasonDetail}</p>
-                                    )}
-                                </div>
-
-                                {/* BLOCKED BY / AT */}
-                                <div className="min-w-0 text-sm">
-                                    <p className="font-medium truncate">{user.lockedBy ?? ""}</p>
-                                    <p className="opacity-60 truncate">{formatDate(user.lockedAt)}</p>
-                                </div>
-
-                                {/* VALID UNTIL */}
-                                <div className="min-w-0 text-sm">
-                                    <p className="font-medium truncate">
-                                        {status.permanent
-                                            ? ""
-                                            : formatDate(user.lockoutEnd)}
-                                    </p>
-                                    <p className="opacity-60 truncate">
-                                        {status.permanent
-                                            ? "Назавжди"
-                                            : left !== null
-                                                ? `Залишилося ${left} днів`
-                                                : ""}
-                                    </p>
-                                </div>
-
-                                {/* ACTIONS */}
-                                <div
-                                    className="flex items-center w-[120px] h-[60px] gap-2 justify-self-center"
-                                    onClick={(e) => e.stopPropagation()}
-                                >
-                                    <button
-                                        onClick={() => onLockToggle(user)}
-                                        className="px-3 py-2 rounded-[9px] w-full bg-[#1F5C3D] text-[var(--color-white)] text-[16px]
-                                     font-medium whitespace-wrap hover:bg-[#164529] transition"
-                                    >
-                                        {status.blocked ? "Розблокувати" : "Заблокувати"}
-                                    </button>
-                                </div>
-                            </div>
-                        );
-                    })
-                )}
-            </div>
-            <div className="w-full flex justify-center pt-2 pb-10 mt-auto shrink-0 px-8">
-                <PaginationBlockedUser
-                    currentPage={currentPage}
-                    totalPages={totalPages}
-                    onPageChange={setCurrentPage}
-                    totalItems={filteredUsers.length}
-                    itemsPerPage={6}
+                <div
+                    className="mx-7 h-px mt-3 mb-4"
+                    style={{
+                        backgroundColor: isNight
+                            ? "rgba(237,232,223,0.25)"
+                            : "#8D8C89",
+                    }}
                 />
+
+                <div className="flex-1">
+                    {filteredUsers.length === 0 ? (
+                        <p className="ml-12 mt-6 text-[var(--color-muted-fg)]">
+                            Нічого не знайдено
+                        </p>
+                    ) : (
+                        paginatedUsers.map((user) => {
+                            const left = daysLeft(user.lockoutEnd);
+                            const status = getBlockStatus(user.lockoutEnd);
+                            return (
+                                <div
+                                    key={user.id}
+                                    onClick={() => onSelectUser(user)}
+                                    className={`grid ${GRID_COLS} ml-8 w-[95%] gap-x-13 relative px-8 py-4 items-center transition ${
+                                        isNight
+                                            ? "hover:bg-white/5"
+                                            : "hover:bg-black/[0.03]"
+                                    }`}
+                                >
+                                    <div className="min-w-0">
+                                        <UserCardBlockedUser
+                                            user={user}
+                                            variant="row"
+                                        />
+                                    </div>
+
+                                    <div className="min-w-0 h-[60px] w-[130px] ml-4">
+                                        <span
+                                            className={`inline-block rounded-[9px] w-full px-3 py-1 text-[16px] font-medium whitespace-wrap ${status.className}`}
+                                        >
+                                            {status.label}
+                                        </span>
+                                    </div>
+
+                                    <div className="min-w-0 text-sm ml-7">
+                                        <p className="font-medium truncate">
+                                            {user.lockoutReason ?? ""}
+                                        </p>
+                                        {user.lockoutReasonDetail && (
+                                            <p className="text-[var(--color-muted-fg)] truncate">
+                                                {user.lockoutReasonDetail}
+                                            </p>
+                                        )}
+                                    </div>
+
+                                    <div className="min-w-0 text-sm">
+                                        <p className="font-medium truncate">
+                                            {user.lockedBy ?? ""}
+                                        </p>
+                                        <p className="text-[var(--color-muted-fg)] truncate">
+                                            {formatDate(user.lockedAt)}
+                                        </p>
+                                    </div>
+
+                                    <div className="min-w-0 text-sm">
+                                        <p className="font-medium truncate">
+                                            {status.permanent
+                                                ? ""
+                                                : formatDate(user.lockoutEnd)}
+                                        </p>
+                                        <p className="text-[var(--color-muted-fg)] truncate">
+                                            {status.permanent
+                                                ? "Назавжди"
+                                                : left !== null
+                                                  ? `Залишилося ${left} днів`
+                                                  : ""}
+                                        </p>
+                                    </div>
+
+                                    <div
+                                        className="flex items-center w-[120px] h-[60px] gap-2 justify-self-center"
+                                        onClick={(e) => e.stopPropagation()}
+                                    >
+                                        <button
+                                            onClick={() => onLockToggle(user)}
+                                            className="px-3 py-2 rounded-[9px] w-full bg-[var(--color-green)] text-[var(--color-cream)] text-[16px] font-medium whitespace-wrap hover:opacity-90 transition"
+                                        >
+                                            {status.blocked
+                                                ? "Розблокувати"
+                                                : "Заблокувати"}
+                                        </button>
+                                    </div>
+                                </div>
+                            );
+                        })
+                    )}
+                </div>
+                <div className="w-full flex justify-center pt-2 pb-10 mt-auto shrink-0 px-8">
+                    <PaginationBlockedUser
+                        currentPage={currentPage}
+                        totalPages={totalPages}
+                        onPageChange={setCurrentPage}
+                        totalItems={filteredUsers.length}
+                        itemsPerPage={6}
+                    />
+                </div>
             </div>
         </div>
     );

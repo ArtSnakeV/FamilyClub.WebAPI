@@ -347,7 +347,7 @@ export function useAddManagerForm() {
     };
    
     const updateExistingUserProfile = async (userId: string) => {
-        const token = localStorage.getItem("token");
+        const token = getAuthToken();
 
         const formData = new FormData();
         formData.append("name", form.firstName ?? "");
@@ -364,11 +364,14 @@ export function useAddManagerForm() {
             formData.append("avatar", base64ToBlob(form.avatarData, "image/jpeg"), "avatar.jpg");
         }
 
-        await fetch(`${apiBasePath}/api/ClubMember/${userId}/form`, {
+        const res = await fetch(`${apiBasePath}/api/ClubMember/${userId}/form`, {
             method: "PUT",
-            headers: { Authorization: `Bearer ${token}` },
+            headers: token ? { Authorization: `Bearer ${token}` } : {},
             body: formData,
         });
+        if (!res.ok) {
+            throw new Error(`Failed to update profile: ${res.status}`);
+        }
     };
 
     const handleSubmit = async () => {

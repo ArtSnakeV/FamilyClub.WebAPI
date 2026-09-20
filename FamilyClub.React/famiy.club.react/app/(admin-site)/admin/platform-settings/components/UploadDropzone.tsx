@@ -24,7 +24,7 @@ export default function UploadDropzone({
     return (
         <div className="flex flex-col gap-2">
             <div
-                className={`relative rounded-[12px] border-2 border-dashed border-[var(--color-green)] bg-[#FAFAF7] overflow-hidden flex items-center justify-center ${aspectClass}`}
+                className={`relative rounded-[12px] border-2 border-dashed border-[var(--color-green)] bg-[color-mix(in_srgb,var(--foreground-primary)_6%,var(--background-elevated))] overflow-hidden flex items-center justify-center ${aspectClass}`}
             >
                 {previewSrc ? (
                     <img
@@ -37,14 +37,16 @@ export default function UploadDropzone({
                         <p className="text-[28px] text-[var(--color-green)] leading-none mb-2">
                             +
                         </p>
-                        <p className="text-[13px] text-[#666]">{hint}</p>
+                        <p className="text-[13px] text-[var(--color-muted-fg)]">
+                            {hint}
+                        </p>
                     </div>
                 )}
             </div>
             <button
                 type="button"
                 onClick={() => inputRef.current?.click()}
-                className="w-full rounded-[9px] border border-[var(--color-green)] bg-white px-4 py-2.5 text-[14px] font-semibold text-[var(--color-green)] hover:bg-[#E3FEE5] transition"
+                className="w-full rounded-[9px] border border-[var(--color-green)] bg-[var(--background-elevated)] px-4 py-2.5 text-[14px] font-semibold text-[var(--color-green)] hover:bg-[color-mix(in_srgb,var(--color-green)_22%,var(--background-elevated))] transition"
             >
                 {buttonLabel}
             </button>

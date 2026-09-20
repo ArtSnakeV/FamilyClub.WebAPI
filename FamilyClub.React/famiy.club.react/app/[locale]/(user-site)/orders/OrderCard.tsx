@@ -34,10 +34,10 @@ export default function OrderCard({ item, activeTab, onAction }: OrderCardProps)
   const isCancelled = item.statusText === "Скасовано";
   const isReturned = item.statusText === "Повернено";
   const cardBgClass = isCancelled
-    ? "bg-[#E3C8C4] border-[#D1AFA9]"
+    ? "bg-[color-mix(in_srgb,#C0392B_18%,var(--background-elevated))] border-[color-mix(in_srgb,#C0392B_35%,transparent)]"
     : isReturned
-    ? "bg-[#C2BCB1] border-[#B0AAA0]"
-    : "bg-[#D8D3C8] border-[#C8C2B4]";
+    ? "bg-[var(--color-menu-separator)] border-[var(--color-menu-separator)]"
+    : "bg-[var(--color-menu-hover)] border-[var(--color-menu-separator)]";
 
   const displayStatus = translateListStatus(item.statusText, t);
   const displayDate =
@@ -73,9 +73,11 @@ export default function OrderCard({ item, activeTab, onAction }: OrderCardProps)
 
   const formatBadgeStyle = (fmt: string) => {
     const f = String(fmt).toLowerCase();
-    if (f === "ebook" || f.includes("елек")) return "bg-[#E3F2FD] text-[#0277BD] border-[#B3E5FC]";
-    if (f === "audio" || f.includes("аудіо")) return "bg-[#F3E5F5] text-[#7B1FA2] border-[#E1BEE7]";
-    return "bg-[#E2F0D9] text-[#005b33] border-[#B8E0A4]";
+    if (f === "ebook" || f.includes("елек"))
+      return "bg-[color-mix(in_srgb,#0277BD_16%,var(--background-elevated))] text-[#4FC3F7] border-[color-mix(in_srgb,#0277BD_30%,transparent)]";
+    if (f === "audio" || f.includes("аудіо"))
+      return "bg-[color-mix(in_srgb,#7B1FA2_16%,var(--background-elevated))] text-[#CE93D8] border-[color-mix(in_srgb,#7B1FA2_30%,transparent)]";
+    return "bg-[color-mix(in_srgb,var(--color-green)_18%,transparent)] text-[var(--color-green)] border-[color-mix(in_srgb,var(--color-green)_45%,transparent)]";
   };
 
   const deleteBtn = (
@@ -91,7 +93,7 @@ export default function OrderCard({ item, activeTab, onAction }: OrderCardProps)
   const complainBtn = (
     <button
       onClick={goToComplaints}
-      className="bg-[#E5E0D5] hover:bg-[#D8D2C5] border border-[#C8C2B4] text-[#777777] hover:text-black px-5 py-2.5 rounded-xl font-medium transition text-sm shadow-sm"
+      className="bg-[var(--color-menu-hover)] hover:bg-[var(--color-menu-separator)] border border-[var(--color-menu-separator)] text-[var(--color-muted-fg)] hover:text-[var(--foreground-primary)] px-5 py-2.5 rounded-xl font-medium transition text-sm shadow-sm"
     >
       {t("orders.complain")}
     </button>
@@ -123,17 +125,17 @@ export default function OrderCard({ item, activeTab, onAction }: OrderCardProps)
             {item.dbOrderId && (
               <button
                 onClick={goToOrder}
-                className="text-xs font-bold text-[#005b33] bg-[#E2F0D9] hover:bg-[#D4EACC] px-2.5 py-1 rounded-lg border border-[#B8E0A4] transition"
+                className="text-xs font-bold text-[var(--color-green)] bg-[color-mix(in_srgb,var(--color-green)_18%,transparent)] hover:bg-[color-mix(in_srgb,var(--color-green)_28%,transparent)] px-2.5 py-1 rounded-lg border border-[color-mix(in_srgb,var(--color-green)_45%,transparent)] transition"
               >
                 {t("orders.viewDetails")}
               </button>
             )}
           </div>
           <div className="flex items-center gap-2 mt-1">
-            <span className="text-sm font-semibold text-[#242424]">{item.orderNumber}</span>
+            <span className="text-sm font-semibold text-[var(--foreground-primary)]">{item.orderNumber}</span>
             <button
               onClick={handleCopy}
-              className="text-[#555555] hover:text-black transition p-1"
+              className="text-[var(--color-muted-fg)] hover:text-[var(--foreground-primary)] transition p-1"
               title={t("orders.copyOrderNumber")}
             >
               {copied ? (
@@ -147,18 +149,18 @@ export default function OrderCard({ item, activeTab, onAction }: OrderCardProps)
           </div>
         </div>
 
-        <div className="text-xs md:text-sm text-[#555555] md:text-right font-medium">
+        <div className="text-xs md:text-sm text-[var(--color-muted-fg)] md:text-right font-medium">
           {t("orders.lastStatusDate")} <br className="hidden md:inline" />
-          <span className="text-[#242424] font-semibold">{displayDate}</span>
+          <span className="text-[var(--foreground-primary)] font-semibold">{displayDate}</span>
         </div>
       </div>
 
       {/* Inner Book Item Card (Ragged Paper Style) */}
-      <div className="bg-[#F7F5F0] rounded-2xl p-4 my-4 shadow-sm border border-[#E0DBD2] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 relative overflow-hidden">
+      <div className="bg-[var(--background-elevated)] rounded-2xl p-4 my-4 shadow-sm border border-[var(--color-menu-separator)] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 relative overflow-hidden">
         {/* Left Side: Format Bookmark & Cover & Info */}
         <div className="flex items-center gap-4">
           {/* Format Bookmark Badge */}
-          <div className="flex flex-col gap-2 items-center justify-center bg-[#C8C2B4] px-2 py-2.5 rounded-r-lg -ml-4 self-stretch min-w-[32px]">
+          <div className="flex flex-col gap-2 items-center justify-center bg-[var(--color-menu-separator)] px-2 py-2.5 rounded-r-lg -ml-4 self-stretch min-w-[32px]">
             {item.formats.includes("print") && (
               <img src={printIconSrc} alt="print" className="w-4 h-auto object-contain" style={{ width: "auto", height: "auto", maxHeight: "18px" }} />
             )}
@@ -171,7 +173,7 @@ export default function OrderCard({ item, activeTab, onAction }: OrderCardProps)
           </div>
 
           {/* Book Cover */}
-          <div className="w-[65px] h-[95px] relative rounded overflow-hidden shadow shrink-0 border border-gray-200 bg-white flex items-center justify-center">
+          <div className="w-[65px] h-[95px] relative rounded overflow-hidden shadow shrink-0 border border-[var(--color-menu-separator)] bg-[var(--background-elevated)] flex items-center justify-center">
             <img
               src={item.bookImage || "/images/catalog/hunger_games.png"}
               alt={item.bookTitle}
@@ -184,12 +186,12 @@ export default function OrderCard({ item, activeTab, onAction }: OrderCardProps)
 
           {/* Book Title, Qty & Formats */}
           <div className="flex flex-col gap-1">
-            <h4 className="text-lg md:text-xl font-bold text-[#242424] leading-snug">
+            <h4 className="text-lg md:text-xl font-bold text-[var(--foreground-primary)] leading-snug">
               {item.bookTitle}
             </h4>
 
             <div className="flex items-center gap-2 flex-wrap mt-0.5">
-              <span className="text-xs font-semibold text-[#555555] bg-[#EBE7DD] px-2.5 py-0.5 rounded-full border border-[#D5CFCE]">
+              <span className="text-xs font-semibold text-[var(--color-muted-fg)] bg-[var(--color-menu-hover)] px-2.5 py-0.5 rounded-full border border-[var(--color-menu-separator)]">
                 {t("orders.qty").replace("{count}", String(item.quantity))}
               </span>
 
@@ -207,7 +209,7 @@ export default function OrderCard({ item, activeTab, onAction }: OrderCardProps)
             {item.showConfirmReceiptBtn && (
               <button
                 onClick={() => onAction && onAction("confirm_receipt", item.id, item.dbOrderId)}
-                className="mt-2.5 px-4 py-1.5 rounded-full border-2 border-[#005b33] text-[#005b33] font-semibold hover:bg-[#005b33] hover:text-white transition text-xs sm:text-sm w-fit shadow-sm"
+                className="mt-2.5 px-4 py-1.5 rounded-full border-2 border-[var(--color-green)] text-[var(--color-green)] font-semibold hover:bg-[var(--color-green)] hover:text-white transition text-xs sm:text-sm w-fit shadow-sm"
               >
                 {t("orders.confirmReceipt")}
               </button>
@@ -216,7 +218,7 @@ export default function OrderCard({ item, activeTab, onAction }: OrderCardProps)
         </div>
 
         {/* Right Side: Price */}
-        <div className="text-xl sm:text-2xl font-bold text-[#242424] self-end sm:self-center">
+        <div className="text-xl sm:text-2xl font-bold text-[var(--foreground-primary)] self-end sm:self-center">
           {priceLabel}
         </div>
       </div>
@@ -227,7 +229,7 @@ export default function OrderCard({ item, activeTab, onAction }: OrderCardProps)
           <>
             <button
               onClick={() => onAction && onAction("pay_order", item.id, item.dbOrderId)}
-              className="bg-[#005b33] hover:bg-[#004727] text-white px-6 py-2.5 rounded-xl font-bold transition text-sm shadow-md"
+              className="bg-[var(--color-green)] hover:bg-[color-mix(in_srgb,var(--color-green)_85%,black)] text-white px-6 py-2.5 rounded-xl font-bold transition text-sm shadow-md"
             >
               {t("orders.payOrder")}
             </button>

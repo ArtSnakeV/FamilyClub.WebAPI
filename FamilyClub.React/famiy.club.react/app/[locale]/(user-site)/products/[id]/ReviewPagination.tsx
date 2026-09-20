@@ -39,7 +39,7 @@ export default function ReviewPagination({ currentPage, totalPages, onPageChange
       <button
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
-        className="w-9 h-9 flex items-center justify-center rounded-full bg-[#f5f3ee] text-[#242424] shadow-sm disabled:opacity-50 hover:bg-[#e8e6e1] transition"
+        className="w-9 h-9 flex items-center justify-center rounded-full bg-[var(--background-elevated)] text-[var(--foreground-primary)] shadow-sm disabled:opacity-50 hover:bg-[var(--color-menu-hover)] transition"
       >
         ‹
       </button>
@@ -50,8 +50,8 @@ export default function ReviewPagination({ currentPage, totalPages, onPageChange
           onClick={() => onPageChange(page)}
           className={`w-9 h-9 flex items-center justify-center rounded-full transition shadow-sm font-semibold text-sm ${
             currentPage === page 
-              ? "bg-[#0e503f] text-white" 
-              : "bg-[#f5f3ee] text-[#242424] hover:bg-[#e8e6e1]"
+              ? "bg-[var(--color-product-cta)] text-white" 
+              : "bg-[var(--background-elevated)] text-[var(--foreground-primary)] hover:bg-[var(--color-menu-hover)]"
           }`}
         >
           {page}
@@ -61,7 +61,7 @@ export default function ReviewPagination({ currentPage, totalPages, onPageChange
       <button
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
-        className="w-9 h-9 flex items-center justify-center rounded-full bg-[#f5f3ee] text-[#242424] shadow-sm disabled:opacity-50 hover:bg-[#e8e6e1] transition"
+        className="w-9 h-9 flex items-center justify-center rounded-full bg-[var(--background-elevated)] text-[var(--foreground-primary)] shadow-sm disabled:opacity-50 hover:bg-[var(--color-menu-hover)] transition"
       >
         ›
       </button>

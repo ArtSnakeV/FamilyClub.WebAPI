@@ -13,8 +13,8 @@
   padding: 24px 24px 48px;
   border-radius: 24px;
   min-height: 400px;
-  border: 1px solid rgba(183, 137, 94, 0.4);
-  box-shadow: 0 8px 32px rgba(36, 36, 36, 0.12);
+  border: 1px solid color-mix(in srgb, var(--color-border-warm) 40%, transparent);
+  box-shadow: var(--shadow-card);
 }
 
 .headerRow {
@@ -28,7 +28,7 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: #e6e2d8;
+  background: var(--color-menu-hover);
   border: none;
   cursor: pointer;
   display: flex;
@@ -36,20 +36,20 @@
   justify-content: center;
   font-size: 20px;
   font-weight: 700;
-  color: #242424;
+  color: var(--foreground-primary);
   flex-shrink: 0;
   transition: background 0.2s;
 }
 
 .backButton:hover {
-  background: #dcd7cc;
+  background: var(--color-menu-separator);
 }
 
 .title {
   font-family: var(--font-mono);
   font-weight: 700;
   font-size: clamp(28px, 4vw, 40px);
-  color: #242424;
+  color: var(--foreground-primary);
   letter-spacing: -0.02em;
 }
 
@@ -59,17 +59,17 @@
 }
 
 .card {
-  background: #fff;
+  background: var(--background-elevated);
   border-radius: 16px;
   padding: 20px 24px;
   margin-bottom: 16px;
-  box-shadow: 0 2px 12px rgba(36, 36, 36, 0.06);
+  box-shadow: var(--shadow-card);
 }
 
 .sectionLabel {
   font-size: 18px;
   font-weight: 600;
-  color: #242424;
+  color: var(--foreground-primary);
   margin-bottom: 16px;
   text-align: center;
   width: 100%;
@@ -88,8 +88,8 @@
   display: flex;
   align-items: center;
   gap: 16px;
-  background: #005b33;
-  color: #fff;
+  background: var(--color-green);
+  color: var(--color-cream);
   padding: 14px 20px;
   border-radius: 12px;
   margin-bottom: 16px;
@@ -99,7 +99,7 @@
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  background: #fff;
+  background: var(--background-elevated);
   object-fit: cover;
   flex-shrink: 0;
 }
@@ -125,19 +125,19 @@
 
 .orderMeta {
   font-size: 14px;
-  color: #555;
+  color: var(--color-muted-fg);
 }
 
 .orderNumber {
   font-weight: 700;
-  color: #242424;
+  color: var(--foreground-primary);
   font-size: 16px;
 }
 
 .statusBadge {
   display: inline-block;
-  background: #e8f5e9;
-  color: #005b33;
+  background: color-mix(in srgb, var(--color-green) 12%, transparent);
+  color: var(--color-green);
   font-size: 13px;
   font-weight: 600;
   padding: 4px 12px;
@@ -147,7 +147,7 @@
 
 .chevron {
   font-size: 24px;
-  color: #555;
+  color: var(--color-muted-fg);
   transition: transform 0.2s;
   flex-shrink: 0;
 }
@@ -159,14 +159,14 @@
 .orderBody {
   margin-top: 16px;
   padding-top: 16px;
-  border-top: 1px solid #eee;
+  border-top: 1px solid var(--color-menu-separator);
 }
 
 .bookRow {
   display: flex;
   align-items: center;
   gap: 16px;
-  background: #f7f5f0;
+  background: var(--background-elevated);
   border-radius: 12px;
   padding: 12px 16px;
   margin-bottom: 8px;
@@ -177,19 +177,19 @@
   height: 80px;
   object-fit: cover;
   border-radius: 4px;
-  border: 1px solid #e0dbd2;
+  border: 1px solid var(--color-menu-separator);
   flex-shrink: 0;
 }
 
 .bookTitle {
   font-weight: 700;
   font-size: 16px;
-  color: #242424;
+  color: var(--foreground-primary);
 }
 
 .bookQty {
   font-size: 13px;
-  color: #777;
+  color: var(--color-muted-fg);
   margin-top: 4px;
 }
 
@@ -211,7 +211,7 @@
   width: 28px;
   height: 28px;
   border-radius: 50%;
-  border: 2px solid rgba(36, 36, 36, 0.35);
+  border: 2px solid color-mix(in srgb, var(--foreground-primary) 35%, transparent);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -220,14 +220,14 @@
 }
 
 .radioActive {
-  border-color: #005b33;
+  border-color: var(--color-green);
 }
 
 .radioInner {
   width: 14px;
   height: 14px;
   border-radius: 50%;
-  background: #005b33;
+  background: var(--color-green);
   transform: scale(0);
   transition: transform 0.15s;
 }
@@ -238,49 +238,49 @@
 
 .reasonLabel {
   font-size: 16px;
-  color: #242424;
+  color: var(--foreground-primary);
 }
 
 .textarea {
   width: 100%;
   min-height: 160px;
-  border: 1px solid #e0dbd2;
+  border: 1px solid var(--color-menu-separator);
   border-radius: 12px;
   padding: 16px;
   font-size: 16px;
   font-family: inherit;
-  color: #242424;
+  color: var(--foreground-primary);
   resize: vertical;
   outline: none;
-  background: #faf9f7;
+  background: var(--background-elevated);
   transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 .textarea:focus {
-  border-color: #005b33;
-  box-shadow: 0 0 0 3px rgba(0, 91, 51, 0.12);
+  border-color: var(--color-green);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-green) 12%, transparent);
 }
 
 .charCount {
   text-align: right;
   font-size: 14px;
-  color: #777;
+  color: var(--color-muted-fg);
   margin-top: 6px;
 }
 
 .uploadZone {
-  border: 2px dashed #c8c2b4;
+  border: 2px dashed var(--color-menu-separator);
   border-radius: 16px;
   padding: 32px 24px;
   text-align: center;
   cursor: pointer;
-  background: #faf9f7;
+  background: var(--background-elevated);
   transition: border-color 0.2s, background 0.2s;
 }
 
 .uploadZone:hover {
-  border-color: #005b33;
-  background: #f5f3ee;
+  border-color: var(--color-green);
+  background: var(--background-elevated);
 }
 
 .uploadIconWrap {
@@ -296,12 +296,12 @@
 .uploadTitle {
   font-weight: 600;
   font-size: 16px;
-  color: #242424;
+  color: var(--foreground-primary);
 }
 
 .uploadHint {
-  background: #c8dcc8;
-  color: #242424;
+  background: color-mix(in srgb, var(--color-green) 25%, transparent);
+  color: var(--foreground-primary);
   font-size: 13px;
   padding: 10px 16px;
   border-radius: 8px;
@@ -311,7 +311,7 @@
 
 .uploadNote {
   font-size: 13px;
-  color: #777;
+  color: var(--color-muted-fg);
   margin-top: 12px;
   line-height: 1.5;
 }
@@ -329,7 +329,7 @@
   height: 80px;
   border-radius: 8px;
   overflow: hidden;
-  border: 1px solid #e0dbd2;
+  border: 1px solid var(--color-menu-separator);
 }
 
 .previewImg {
@@ -345,8 +345,8 @@
   width: 22px;
   height: 22px;
   border-radius: 50%;
-  background: rgba(36, 36, 36, 0.75);
-  color: #fff;
+  background: color-mix(in srgb, var(--foreground-primary) 75%, transparent);
+  color: var(--color-cream);
   border: none;
   cursor: pointer;
   font-size: 14px;
@@ -362,27 +362,27 @@
 
 .emailInput {
   width: 100%;
-  border: 1px solid #e0dbd2;
+  border: 1px solid var(--color-menu-separator);
   border-radius: 12px;
   padding: 14px 16px;
   font-size: 16px;
   font-family: inherit;
-  color: #242424;
-  background: #faf9f7;
+  color: var(--foreground-primary);
+  background: var(--background-elevated);
   outline: none;
   transition: border-color 0.2s;
 }
 
 .emailInput:focus {
-  border-color: #005b33;
+  border-color: var(--color-green);
 }
 
 .submitBtn {
   width: 100%;
   margin-top: 24px;
   padding: 16px 24px;
-  background: #005b33;
-  color: #fff;
+  background: var(--color-green);
+  color: var(--color-cream);
   font-size: 18px;
   font-weight: 700;
   border: none;
@@ -392,7 +392,7 @@
 }
 
 .submitBtn:hover:not(:disabled) {
-  background: #004727;
+  background: color-mix(in srgb, var(--color-green) 85%, black);
 }
 
 .submitBtn:disabled {
@@ -410,7 +410,7 @@
 .successOverlay {
   position: fixed;
   inset: 0;
-  background: rgba(36, 36, 36, 0.45);
+  background: color-mix(in srgb, var(--foreground-primary) 45%, transparent);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -418,12 +418,12 @@
 }
 
 .successCard {
-  background: #fff;
+  background: var(--background-elevated);
   border-radius: 20px;
   padding: 40px 48px;
   text-align: center;
   max-width: 400px;
-  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.2);
+  box-shadow: var(--shadow-card-hover);
 }
 
 .successIcon {
@@ -435,17 +435,17 @@
 .successTitle {
   font-size: 22px;
   font-weight: 700;
-  color: #242424;
+  color: var(--foreground-primary);
   margin-bottom: 8px;
 }
 
 .successText {
   font-size: 15px;
-  color: #555;
+  color: var(--color-muted-fg);
 }
 
 .loading {
   text-align: center;
   padding: 48px;
-  color: #555;
+  color: var(--color-muted-fg);
 }

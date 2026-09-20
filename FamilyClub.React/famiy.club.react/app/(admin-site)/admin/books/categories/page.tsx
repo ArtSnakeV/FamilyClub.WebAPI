@@ -110,12 +110,12 @@
 //                 {/* Список категорій із підтримкою пагінації */}
 //                 <div className="grid gap-4 mt-4">
 //                     {isLoading ? (
-//                         <div className="text-[20px] opacity-60">Завантаження...</div>
+//                         <div className="text-[20px] text-[var(--color-muted-fg)]">Завантаження...</div>
 //                     ) : currentPaginatedItems.length > 0 ? (
 //                         currentPaginatedItems.map((category) => (
 //                             <div
 //                                 key={category.id}
-//                                 className="max-w-[1464px] w-full h-[50px] bg-[#F5F3EE] rounded-[9px] shadow-[0_0_10px_0_rgba(0,0,0,0.25)] px-[24px] flex items-center justify-between"
+//                                 className="max-w-[1464px] w-full h-[50px] bg-[var(--background-elevated)] rounded-[9px] shadow-[var(--shadow-card)] border border-[color-mix(in_srgb,var(--foreground-primary)_12%,transparent)] px-[24px] flex items-center justify-between"
 //                             >
 //                                 {/* Left side: Category name */}
 //                                 <p className="font-sanspro font-semibold text-[20px] leading-[150%] tracking-[-0.011em] align-middle">
@@ -152,7 +152,7 @@
 //                             </div>
 //                         ))
 //                     ) : (
-//                         <div className="text-[20px] opacity-60">Категорій не знайдено</div>
+//                         <div className="text-[20px] text-[var(--color-muted-fg)]">Категорій не знайдено</div>
 //                     )}
 //                 </div>
 
@@ -249,14 +249,21 @@ export default function CategoriesPage() {
 
     return (
         <div
-            className="w-full min-h-screen overflow-hidden relative m-0 p-0">
+            className="w-full min-h-screen overflow-hidden relative m-0 p-0 text-[var(--foreground-primary)]">
             <div className="w-[100vw] min-h-screen relative">
-                <img
-                    src="/images/authorPageAdmin/Rectangle 675.png"
-                    className="absolute"
-                    style={{ width: "100vw", height: "auto", top: "36px", left: "-20px" }}
-                    alt=""
-                />
+                <div
+                    className="absolute pointer-events-none"
+                    style={{ width: "100vw", top: "36px", left: "-20px" }}
+                    aria-hidden
+                >
+                    <div className="admin-shelf-surface relative w-full">
+                        <img
+                            src="/images/authorPageAdmin/Rectangle 675.png"
+                            className="block w-full h-auto"
+                            alt=""
+                        />
+                    </div>
+                </div>
 
                 <div className="flex w-full flex-col">
                     <div
@@ -276,12 +283,16 @@ export default function CategoriesPage() {
                             minHeight: "740px",
                         }}
                     >
-                        <img
-                            src="/images/authorPageAdmin/Rectangle 708.png"
-                            alt=""
-                            className="absolute top-0 left-0 w-full h-full object-fill"
+                        <div
+                            aria-hidden
+                            className="absolute inset-0 pointer-events-none admin-parchment-bg"
+                            style={{
+                                backgroundImage:
+                                    "url('/images/authorPageAdmin/Rectangle 708.png')",
+                                backgroundSize: "100% 100%",
+                            }}
                         />
-                        <div className="absolute inset-[25px] overflow-auto p-[10px]">
+                        <div className="absolute inset-[25px] overflow-auto p-[10px] z-10">
 
 
                             <EntitiesSearchSorting
@@ -302,12 +313,12 @@ export default function CategoriesPage() {
                             {/* Список категорій із підтримкою пагінації */}
                             <div className="grid gap-4 mt-4">
                                 {isLoading ? (
-                                    <div className="text-[20px] opacity-60">Завантаження...</div>
+                                    <div className="text-[20px] text-[var(--color-muted-fg)]">Завантаження...</div>
                                 ) : currentPaginatedItems.length > 0 ? (
                                     currentPaginatedItems.map((category) => (
                                         <div
                                             key={category.id}
-                                            className="max-w-[1464px] w-full h-[50px] bg-[#F5F3EE] rounded-[9px] shadow-[0_0_10px_0_rgba(0,0,0,0.25)] px-[24px] flex items-center justify-between"
+                                            className="max-w-[1464px] w-full h-[50px] bg-[var(--background-elevated)] rounded-[9px] shadow-[var(--shadow-card)] border border-[color-mix(in_srgb,var(--foreground-primary)_12%,transparent)] px-[24px] flex items-center justify-between"
                                         >
                                             {/* Left side: Category name */}
                                             <p className="font-sanspro font-semibold text-[20px] leading-[150%] tracking-[-0.011em] align-middle">
@@ -344,7 +355,7 @@ export default function CategoriesPage() {
                                         </div>
                                     ))
                                 ) : (
-                                    <div className="text-[20px] opacity-60">Категорій не знайдено</div>
+                                    <div className="text-[20px] text-[var(--color-muted-fg)]">Категорій не знайдено</div>
                                 )}
                             </div>
 

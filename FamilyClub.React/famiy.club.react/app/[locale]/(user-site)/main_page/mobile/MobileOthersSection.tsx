@@ -27,13 +27,13 @@ export default function MobileOthersSection({ books }: MobileOthersSectionProps)
     <section className="relative w-full py-2">
       {/* Title "Інші" left-aligned (Figma Node 2199:3282) */}
       <div className="px-4 mb-2">
-        <h2 className="font-mono text-[32px] sm:text-[36px] font-bold text-[#242424] leading-none tracking-tight">
+        <h2 className="font-mono text-[32px] sm:text-[36px] font-bold text-[var(--foreground-primary)] leading-none tracking-tight">
           {t("home.mobile.others")}
         </h2>
       </div>
 
       {/* Wooden Bookshelf Bar (Figma Node 2199:2725 / Rectangle 139 / Rectangle 140 / Rectangle 141) */}
-      <div className="relative z-20 h-[40px] w-full shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] bg-[#7e4d1e] mb-6">
+      <div className="relative z-20 h-[40px] w-full shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] bg-[var(--color-shelf)] mb-6">
         <img
           src="/images/catalog/shelf_tex1.png"
           className="absolute inset-0 w-full h-full object-cover mix-blend-multiply opacity-50 pointer-events-none"

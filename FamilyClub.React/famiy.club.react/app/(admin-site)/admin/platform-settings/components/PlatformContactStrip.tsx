@@ -18,18 +18,22 @@ export default function PlatformContactStrip() {
     if (parts.length === 0) return null;
 
     return (
-        <div className="rounded-[12px] bg-white/90 px-5 py-3 shadow-[0_0_10px_rgba(0,0,0,0.08)] text-[13px] text-[#2F2F2F]">
-            <p className="font-semibold text-[#1F1F1F]">
+        <div className="rounded-[12px] bg-[var(--background-elevated)] px-5 py-3 shadow-[var(--shadow-card)] text-[13px] text-[var(--foreground-primary)] border border-[color-mix(in_srgb,var(--foreground-primary)_12%,transparent)]">
+            <p className="font-semibold text-[var(--foreground-primary)]">
                 {settings.companyName}
                 {settings.slogan ? (
-                    <span className="font-normal text-[#777]">
+                    <span className="font-normal text-[var(--color-muted-fg)]">
                         {" "}
                         — {settings.slogan}
                     </span>
                 ) : null}
             </p>
-            <p className="mt-1 text-[#555] break-words">
-                {[settings.supportEmail, settings.supportPhone, settings.companyAddress]
+            <p className="mt-1 text-[var(--color-muted-fg)] break-words">
+                {[
+                    settings.supportEmail,
+                    settings.supportPhone,
+                    settings.companyAddress,
+                ]
                     .filter(Boolean)
                     .join(" · ")}
             </p>

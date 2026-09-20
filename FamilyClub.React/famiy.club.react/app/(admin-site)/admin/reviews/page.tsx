@@ -106,22 +106,28 @@ export default function Page() {
     return (
         <div
             ref={shelfRef}
-            className="w-full min-h-screen overflow-hidden relative m-0 p-0"
+            className="w-full min-h-screen overflow-hidden relative m-0 p-0 text-[var(--foreground-primary)]"
         >
             <div className="w-[100vw] min-h-screen relative">
-                <img
-                    src="/images/usersPageAdmin/Rectangle 675.png"
-                    className="absolute"
+                <div
+                    className="absolute pointer-events-none"
                     style={{
                         width: "100vw",
-                        height: "auto",
                         top: "40px",
                         left: "-20px",
                     }}
-                    alt=""
-                />
+                    aria-hidden
+                >
+                    <div className="admin-shelf-surface relative w-full">
+                        <img
+                            src="/images/usersPageAdmin/Rectangle 675.png"
+                            className="block w-full h-auto"
+                            alt=""
+                        />
+                    </div>
+                </div>
 
-                <div className="relative pt-20 px-2 flex flex-col gap-4">
+                <div className="relative z-10 pt-20 px-2 flex flex-col gap-4">
                     <ReviewsFilterBar
                         search={search}
                         book={book}
@@ -135,7 +141,9 @@ export default function Page() {
 
                     <div className="flex gap-4 items-center px-5 -mt-4">
                         {loadingReviews ? (
-                            <p>Завантаження...</p>
+                            <p className="text-[var(--color-muted-fg)]">
+                                Завантаження...
+                            </p>
                         ) : (
                             <ReviewsList
                                 reviews={filtered}

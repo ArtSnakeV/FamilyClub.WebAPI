@@ -13,13 +13,13 @@ type Props = {
 
 export default function ManagerPeriodPicker({ period, onPeriodChange }: Props) {
     return (
-        <label className="relative inline-flex items-center gap-2 rounded-[10px] bg-white px-4 py-2.5 shadow-[0_0_10px_rgba(0,0,0,0.1)] cursor-pointer min-w-[260px]">
+        <label className="relative inline-flex items-center gap-2 rounded-[10px] bg-[var(--background-elevated)] px-4 py-2.5 shadow-[var(--shadow-card)] cursor-pointer min-w-[260px]">
             <img
                 src="/images/admin_manager/desktop/calendar-check-solid-full 1.svg"
                 alt=""
                 className="w-5 h-5 opacity-70 flex-shrink-0"
             />
-            <span className="text-[13px] text-[#2F2F2F] truncate flex-1">
+            <span className="text-[13px] text-[var(--foreground-primary)] truncate flex-1">
                 {formatPeriodRangeLabel(period)}
             </span>
             <select
@@ -36,7 +36,7 @@ export default function ManagerPeriodPicker({ period, onPeriodChange }: Props) {
                     </option>
                 ))}
             </select>
-            <span className="text-[#777] text-[12px] flex-shrink-0" aria-hidden>
+            <span className="text-[var(--color-muted-fg)] text-[12px] flex-shrink-0" aria-hidden>
                 ▾
             </span>
         </label>

@@ -1,53 +1,9 @@
-// interface UserSearchBlockProps {
-//     searchEmail: string;
-//     onSearchEmailChange: (value: string) => void;
-//     searching: boolean;
-//     userFound: boolean;
-//     onSearch: () => void;
-// }
+"use client";
 
-// export default function UserSearchBlock({
-//     searchEmail,
-//     onSearchEmailChange,
-//     searching,
-//     userFound,
-//     onSearch,
-// }: UserSearchBlockProps) {
-//     return (
-//         <div className="flex flex-col gap-1">
-//             <label className="font-semibold text-sm text-[var(--color-black)]">
-//                 Пошук користувача за email
-//             </label>
-//             <div className="flex gap-2">
-//                 <input
-//                     type="email"
-//                     value={searchEmail}
-//                     onChange={(e) => onSearchEmailChange(e.target.value)}
-//                     placeholder="Введіть email для пошуку..."
-//                     className="flex-1 rounded-[10px] bg-[#F0EDE7] px-5 py-3 text-sm outline-none 
-//                     shadow-[0_0_10px_0_#00000040]
-//                     focus:ring-2 focus:ring-[var(--color-green)]"
-//                 />
-//                 <button
-//                     type="button"
-//                     onClick={onSearch}
-//                     disabled={searching}
-//                     className="px-5 rounded-full bg-[var(--color-green)] text-white text-sm font-medium hover:opacity-90 transition disabled:opacity-50"
-//                 >
-//                     {searching ? "Пошук..." : "Знайти"}
-//                 </button>
-//             </div>
-//             {userFound && (
-//                 <span className="text-xs text-[var(--color-green)]">
-//                     Користувача знайдено — дані підтягнуто нижче
-//                 </span>
-//             )}
-//         </div>
-//     );
-// }
 import { useEffect, useRef, useState } from "react";
 import { clubMemberService } from "@/lib/api/services";
 import { ClubMemberReadDto } from "@/lib/api/generated";
+import { managerFieldClass } from "../ui/fieldClass";
 
 interface UserSearchBlockProps {
     searchEmail: string;
@@ -88,25 +44,29 @@ export default function UserSearchBlock({
         };
     }, []);
 
-    // закриваємо підказки при кліку поза блоком
     useEffect(() => {
         function handleClickOutside(e: MouseEvent) {
-            if (wrapperRef.current && !wrapperRef.current.contains(e.target as Node)) {
+            if (
+                wrapperRef.current &&
+                !wrapperRef.current.contains(e.target as Node)
+            ) {
                 setShowSuggestions(false);
             }
         }
         document.addEventListener("mousedown", handleClickOutside);
-        return () => document.removeEventListener("mousedown", handleClickOutside);
+        return () =>
+            document.removeEventListener("mousedown", handleClickOutside);
     }, []);
 
     const query = searchEmail.trim().toLowerCase();
     const filteredUsers =
         query.length > 0
             ? allUsers
-                  .filter((u) =>
-                      u.email?.toLowerCase().includes(query) ||
-                      u.name?.toLowerCase().includes(query) ||
-                      u.surname?.toLowerCase().includes(query)
+                  .filter(
+                      (u) =>
+                          u.email?.toLowerCase().includes(query) ||
+                          u.name?.toLowerCase().includes(query) ||
+                          u.surname?.toLowerCase().includes(query)
                   )
                   .slice(0, 6)
             : [];
@@ -120,7 +80,7 @@ export default function UserSearchBlock({
 
     return (
         <div className="flex flex-col gap-1 relative" ref={wrapperRef}>
-            <label className="font-semibold text-sm text-[var(--color-black)]">
+            <label className="font-semibold text-sm text-[var(--foreground-primary)]">
                 Пошук користувача за email
             </label>
             <div className="flex flex-row gap-2 relative">
@@ -134,31 +94,31 @@ export default function UserSearchBlock({
                     onFocus={() => setShowSuggestions(true)}
                     placeholder="Введіть email для пошуку..."
                     autoComplete="off"
-                    className="flex-1 h-[40px] rounded-[10px] bg-[#F0EDE7] px-5 py-3 text-sm outline-none 
-                    shadow-[0_0_10px_0_#00000040]
-                    focus:ring-2 focus:ring-[var(--color-green)]"
+                    className={`${managerFieldClass} flex-1 h-[40px]`}
                 />
                 <button
                     type="button"
                     onClick={onSearch}
                     disabled={searching}
-                    className="px-5 h-[40px] rounded-[9px] bg-[var(--color-green)] text-[var(--color-white)]  text-sm font-medium hover:opacity-90 transition disabled:opacity-50"
+                    className="px-5 h-[40px] rounded-[9px] bg-[var(--color-green)] text-[var(--color-cream)] text-sm font-medium hover:opacity-90 transition disabled:opacity-50"
                 >
                     {searching ? "Пошук..." : "Знайти"}
                 </button>
 
                 {showSuggestions && filteredUsers.length > 0 && (
-                    <ul className="absolute top-full left-0 right-[92px] mt-1 bg-white rounded-[10px] shadow-[0_0_10px_0_#00000040] max-h-60 overflow-y-auto z-20">
+                    <ul className="absolute top-full left-0 right-[92px] mt-1 bg-[var(--background-elevated)] text-[var(--foreground-primary)] rounded-[10px] shadow-[var(--shadow-panel)] max-h-60 overflow-y-auto z-20 border border-[color-mix(in_srgb,var(--foreground-primary)_14%,transparent)]">
                         {filteredUsers.map((u) => (
                             <li
                                 key={u.id ?? u.email}
                                 onClick={() => handleSelectSuggestion(u.email)}
-                                className="px-4 py-2 text-sm cursor-pointer hover:bg-[#F0EDE7] flex flex-col"
+                                className="px-4 py-2 text-sm cursor-pointer hover:bg-[color-mix(in_srgb,var(--foreground-primary)_8%,transparent)] flex flex-col"
                             >
-                                <span className="font-medium text-[var(--color-black)]">
+                                <span className="font-medium">
                                     {u.name} {u.surname}
                                 </span>
-                                <span className="text-xs text-gray-500">{u.email}</span>
+                                <span className="text-xs text-[var(--color-muted-fg)]">
+                                    {u.email}
+                                </span>
                             </li>
                         ))}
                     </ul>

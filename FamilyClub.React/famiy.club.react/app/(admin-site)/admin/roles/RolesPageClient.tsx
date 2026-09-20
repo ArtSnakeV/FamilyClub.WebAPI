@@ -138,34 +138,38 @@ export default function RolesPageClient() {
     const pageLoading = countsLoading || rolesLoading;
 
     return (
-        <div className="w-full min-h-screen overflow-x-hidden relative m-0 p-0">
-            <div className="w-[100vw] min-h-screen relative pb-10">
-                <img
-                    src="/images/usersPageAdmin/Rectangle 675.png"
+        <div className="w-full min-h-full overflow-x-clip relative m-0 p-0 text-[var(--foreground-primary)]">
+            <div className="w-full min-h-full relative pb-10">
+                <div
                     className="absolute pointer-events-none"
                     style={{
-                        width: "100vw",
-                        height: "auto",
+                        width: "calc(100% + 20px)",
                         top: "-40px",
                         left: "-20px",
                     }}
-                    alt=""
-                />
-
-                <div
-                    className="relative z-10 mt-24 px-4 box-border"
-                    style={{
-                        width: "min(1480px, calc(100vw - 440px))",
-                        maxWidth: "calc(100vw - 440px)",
-                    }}
+                    aria-hidden
                 >
+                    <div className="admin-shelf-surface relative w-full">
+                        <img
+                            src="/images/usersPageAdmin/Rectangle 675.png"
+                            className="block w-full h-auto"
+                            alt=""
+                        />
+                    </div>
+                </div>
+
+                <div className="relative z-10 mt-24 px-4 box-border w-full max-w-[1480px]">
                     <RolesNav />
 
                     <div className="flex flex-wrap gap-3 mt-4">
                         {pageLoading ? (
-                            <p>Завантаження...</p>
+                            <p className="text-[var(--color-muted-fg)]">
+                                Завантаження...
+                            </p>
                         ) : summaryCards.length === 0 ? (
-                            <p className="text-[#6B6B6B]">Ролей поки немає.</p>
+                            <p className="text-[var(--color-muted-fg)]">
+                                Ролей поки немає.
+                            </p>
                         ) : (
                             summaryCards.map((card) => (
                                 <RoleSummaryCard
@@ -196,8 +200,8 @@ export default function RolesPageClient() {
                             onClick={() => setActiveTab("matrix")}
                             className={`rounded-full px-5 py-2 text-[15px] font-semibold transition ${
                                 activeTab === "matrix"
-                                    ? "bg-[var(--color-green)] text-white"
-                                    : "bg-white/80 text-[#2F2F2F] hover:bg-white"
+                                    ? "bg-[var(--color-green)] text-[var(--color-cream)]"
+                                    : "bg-[var(--background-elevated)] text-[var(--foreground-primary)] hover:bg-[var(--color-menu-hover)]"
                             }`}
                         >
                             Матриця доступів
@@ -207,12 +211,12 @@ export default function RolesPageClient() {
                             onClick={() => setActiveTab("requests")}
                             className={`rounded-full px-5 py-2 text-[15px] font-semibold transition flex items-center gap-2 ${
                                 activeTab === "requests"
-                                    ? "bg-[var(--color-green)] text-white"
-                                    : "bg-white/80 text-[#2F2F2F] hover:bg-white"
+                                    ? "bg-[var(--color-green)] text-[var(--color-cream)]"
+                                    : "bg-[var(--background-elevated)] text-[var(--foreground-primary)] hover:bg-[var(--color-menu-hover)]"
                             }`}
                         >
                             Запит на доступ
-                            <span className="rounded-full bg-[#4A4A4A] px-2 py-0.5 text-[12px] text-white">
+                            <span className="rounded-full bg-[var(--color-menu-separator)] px-2 py-0.5 text-[12px] text-[var(--foreground-primary)]">
                                 215
                             </span>
                         </button>
@@ -222,7 +226,9 @@ export default function RolesPageClient() {
                         <div className="mt-4 flex flex-row flex-nowrap gap-4 items-start w-full">
                             <div className="flex-1 min-w-0">
                                 {rolesLoading ? (
-                                    <p>Завантаження матриці...</p>
+                                    <p className="text-[var(--color-muted-fg)]">
+                                        Завантаження матриці...
+                                    </p>
                                 ) : (
                                     <AccessMatrixTable
                                         rows={matrixRows}
@@ -251,13 +257,25 @@ export default function RolesPageClient() {
                             </aside>
                         </div>
                     ) : (
-                        <div className="mt-4 rounded-2xl px-8 py-10 text-center bg-[#F5F2EB] shadow-sm w-full">
-                            <p className="text-[18px] font-semibold text-[#2F2F2F]">
-                                Запити на доступ
-                            </p>
-                            <p className="mt-2 text-[14px] text-[#6B6B6B]">
-                                Розділ у розробці. Наразі доступна матриця доступів.
-                            </p>
+                        <div className="relative mt-4 rounded-2xl overflow-hidden w-full">
+                            <div
+                                aria-hidden
+                                className="absolute inset-0 pointer-events-none admin-parchment-bg"
+                                style={{
+                                    backgroundImage:
+                                        "url('/images/usersPageAdmin/Rectangle 793.png')",
+                                    backgroundSize: "100% 100%",
+                                }}
+                            />
+                            <div className="relative z-10 px-8 py-10 text-center">
+                                <p className="text-[18px] font-semibold text-[var(--foreground-primary)]">
+                                    Запити на доступ
+                                </p>
+                                <p className="mt-2 text-[14px] text-[var(--color-muted-fg)]">
+                                    Розділ у розробці. Наразі доступна матриця
+                                    доступів.
+                                </p>
+                            </div>
                         </div>
                     )}
                 </div>

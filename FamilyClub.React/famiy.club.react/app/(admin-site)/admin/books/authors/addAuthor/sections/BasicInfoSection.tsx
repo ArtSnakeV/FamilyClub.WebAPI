@@ -28,30 +28,30 @@ export function BasicInfoSection({
         backgroundSize="100% 100%"
       >
         <div className="flex w-[560px] flex-col gap-1">
-          <p className="text-[var(--color-black)] font-sans-pro font-normal text-[24px] leading-[150%] tracking-[-0.011em]">
+          <p className="text-[var(--foreground-primary)] font-sans-pro font-normal text-[24px] leading-[150%] tracking-[-0.011em]">
             Ім`я автора *
           </p>
           <input
             placeholder="Ім`я та прізвище"
             value={form.authorName}
             onChange={(e) => setField("authorName", e.target.value)}
-            className="input rounded-[9px] px-3 bg-[var(--color-white)] shadow-[0px_0px_10px_0px_#00000040] h-[44px]"
+            className="input rounded-[9px] px-3 bg-[var(--background-elevated)] text-[var(--foreground-primary)] shadow-[var(--shadow-input)] border border-[color-mix(in_srgb,var(--foreground-primary)_14%,transparent)] outline-none h-[44px]"
           />
 
           <div className="flex flex-col gap-1 pt-2">
-            <p className="text-[var(--color-black)] font-sans-pro font-normal text-[24px] leading-[150%] tracking-[-0.011em]">
+            <p className="text-[var(--foreground-primary)] font-sans-pro font-normal text-[24px] leading-[150%] tracking-[-0.011em]">
               Біографія *
             </p>
             <textarea
               placeholder="Біографія"
               value={form.biography ?? ""}
               onChange={(e) => setField("biography", e.target.value)}
-              className="px-2 h-[120px] resize-none input rounded-[9px] bg-[var(--color-white)] shadow-[0px_0px_10px_0px_#00000040]"
+              className="px-2 h-[120px] resize-none input rounded-[9px] bg-[var(--background-elevated)] text-[var(--foreground-primary)] shadow-[var(--shadow-input)] border border-[color-mix(in_srgb,var(--foreground-primary)_14%,transparent)] outline-none"
             />
           </div>
 
           <div className="flex flex-col justify-center items-center gap-1 pt-2">
-            <p className="text-[var(--color-black)] font-sans-pro font-normal text-[24px] leading-[150%] tracking-[-0.011em]">
+            <p className="text-[var(--foreground-primary)] font-sans-pro font-normal text-[24px] leading-[150%] tracking-[-0.011em]">
               Фото автора
             </p>
             <label
@@ -86,7 +86,7 @@ export function BasicInfoSection({
             <button
               type="submit"
               disabled={loading}
-              className="w-full h-[60px] rounded-[55px] bg-[var(--color-green)] text-[var(--color-white)] text-[20px] font-medium transition-all duration-200 hover:opacity-90 hover:shadow-[0px_0px_20px_0px_#00000080] active:scale-[0.98] disabled:opacity-50"
+              className="w-full h-[60px] rounded-[55px] bg-[var(--color-green)] text-[var(--color-cream)] text-[20px] font-medium transition-all duration-200 hover:opacity-90 hover:opacity-90 active:scale-[0.98] disabled:opacity-50"
             >
               {loading ? "Збереження..." : "Додати автора"}
             </button>

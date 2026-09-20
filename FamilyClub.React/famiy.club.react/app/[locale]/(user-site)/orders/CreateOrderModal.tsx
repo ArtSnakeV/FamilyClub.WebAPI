@@ -36,7 +36,7 @@ export default function CreateOrderModal({
 
     let statusString = "Pending";
     let statusText = "Оформлено";
-    let statusColor = "#005b33";
+    let statusColor = "var(--color-green)";
     let showConfirmBtn = false;
 
     switch (targetTab) {
@@ -117,12 +117,12 @@ export default function CreateOrderModal({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in">
       <div
-        className="bg-[#F5F3EE] rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl border border-[#B7895E]/40 relative overflow-hidden"
+        className="bg-[var(--background-elevated)] rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl border border-[var(--color-border-warm)]/40 relative overflow-hidden"
         onClick={(e) => e.stopPropagation()}
       >
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 w-9 h-9 rounded-full bg-[#E5E0D5] hover:bg-[#D8D2C5] text-[#242424] font-bold flex items-center justify-center transition"
+          className="absolute top-4 right-4 w-9 h-9 rounded-full bg-[var(--color-menu-hover)] hover:bg-[var(--color-menu-separator)] text-[var(--foreground-primary)] font-bold flex items-center justify-center transition"
           title="Закрити"
         >
           ✕
@@ -130,18 +130,18 @@ export default function CreateOrderModal({
 
         <div className="text-center mb-6">
           <span className="text-3xl mb-1 block">➕📦</span>
-          <h2 className="text-2xl font-bold text-[#242424]">Додати замовлення</h2>
-          <p className="text-sm text-[#555555]">Створити нову картку товару на обраній вкладці</p>
+          <h2 className="text-2xl font-bold text-[var(--foreground-primary)]">Додати замовлення</h2>
+          <p className="text-sm text-[var(--color-muted-fg)]">Створити нову картку товару на обраній вкладці</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Target Tab Selection */}
           <div className="flex flex-col gap-1.5">
-            <label className="text-xs font-bold text-[#242424] uppercase tracking-wider">Оберіть вкладку / статус:</label>
+            <label className="text-xs font-bold text-[var(--foreground-primary)] uppercase tracking-wider">Оберіть вкладку / статус:</label>
             <select
               value={targetTab}
               onChange={(e) => setTargetTab(e.target.value as OrderTabId)}
-              className="w-full rounded-2xl border border-[#C8C2B4] p-3 text-sm bg-white text-[#242424] font-semibold focus:outline-none focus:ring-2 focus:ring-[#005b33]"
+              className="w-full rounded-2xl border border-[var(--color-menu-separator)] p-3 text-sm bg-[var(--background-elevated)] text-[var(--foreground-primary)] font-semibold focus:outline-none focus:ring-2 focus:ring-[var(--color-green)]"
             >
               {ORDERS_TABS.map((t) => (
                 <option key={t.id} value={t.id}>
@@ -153,70 +153,70 @@ export default function CreateOrderModal({
 
           {/* Book Title */}
           <div className="flex flex-col gap-1.5">
-            <label className="text-xs font-bold text-[#242424] uppercase tracking-wider">Назва книги:</label>
+            <label className="text-xs font-bold text-[var(--foreground-primary)] uppercase tracking-wider">Назва книги:</label>
             <input
               type="text"
               required
               value={bookTitle}
               onChange={(e) => setBookTitle(e.target.value)}
               placeholder="напр. Маленький принц"
-              className="w-full rounded-2xl border border-[#C8C2B4] p-3 text-sm bg-white text-[#242424] focus:outline-none focus:ring-2 focus:ring-[#005b33]"
+              className="w-full rounded-2xl border border-[var(--color-menu-separator)] p-3 text-sm bg-[var(--background-elevated)] text-[var(--foreground-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--color-green)]"
             />
           </div>
 
           {/* Price & Qty Row */}
           <div className="grid grid-cols-2 gap-3">
             <div className="flex flex-col gap-1.5">
-              <label className="text-xs font-bold text-[#242424] uppercase tracking-wider">Ціна (грн):</label>
+              <label className="text-xs font-bold text-[var(--foreground-primary)] uppercase tracking-wider">Ціна (грн):</label>
               <input
                 type="number"
                 min={1}
                 value={price}
                 onChange={(e) => setPrice(Number(e.target.value))}
-                className="w-full rounded-2xl border border-[#C8C2B4] p-3 text-sm bg-white text-[#242424] focus:outline-none focus:ring-2 focus:ring-[#005b33]"
+                className="w-full rounded-2xl border border-[var(--color-menu-separator)] p-3 text-sm bg-[var(--background-elevated)] text-[var(--foreground-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--color-green)]"
               />
             </div>
             <div className="flex flex-col gap-1.5">
-              <label className="text-xs font-bold text-[#242424] uppercase tracking-wider">Кількість (шт):</label>
+              <label className="text-xs font-bold text-[var(--foreground-primary)] uppercase tracking-wider">Кількість (шт):</label>
               <input
                 type="number"
                 min={1}
                 max={99}
                 value={quantity}
                 onChange={(e) => setQuantity(Number(e.target.value))}
-                className="w-full rounded-2xl border border-[#C8C2B4] p-3 text-sm bg-white text-[#242424] focus:outline-none focus:ring-2 focus:ring-[#005b33]"
+                className="w-full rounded-2xl border border-[var(--color-menu-separator)] p-3 text-sm bg-[var(--background-elevated)] text-[var(--foreground-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--color-green)]"
               />
             </div>
           </div>
 
           {/* Formats Checkboxes */}
           <div className="flex flex-col gap-1.5">
-            <label className="text-xs font-bold text-[#242424] uppercase tracking-wider">Формат книги:</label>
-            <div className="flex items-center gap-4 bg-white/80 p-3 rounded-2xl border border-[#C8C2B4]">
-              <label className="flex items-center gap-1.5 text-xs text-[#242424] font-medium cursor-pointer">
+            <label className="text-xs font-bold text-[var(--foreground-primary)] uppercase tracking-wider">Формат книги:</label>
+            <div className="flex items-center gap-4 bg-[var(--background-elevated)]/80 p-3 rounded-2xl border border-[var(--color-menu-separator)]">
+              <label className="flex items-center gap-1.5 text-xs text-[var(--foreground-primary)] font-medium cursor-pointer">
                 <input
                   type="checkbox"
                   checked={formatPrint}
                   onChange={(e) => setFormatPrint(e.target.checked)}
-                  className="accent-[#005b33] w-4 h-4"
+                  className="accent-[var(--color-green)] w-4 h-4"
                 />
                 Паперова
               </label>
-              <label className="flex items-center gap-1.5 text-xs text-[#242424] font-medium cursor-pointer">
+              <label className="flex items-center gap-1.5 text-xs text-[var(--foreground-primary)] font-medium cursor-pointer">
                 <input
                   type="checkbox"
                   checked={formatEbook}
                   onChange={(e) => setFormatEbook(e.target.checked)}
-                  className="accent-[#005b33] w-4 h-4"
+                  className="accent-[var(--color-green)] w-4 h-4"
                 />
                 eBook
               </label>
-              <label className="flex items-center gap-1.5 text-xs text-[#242424] font-medium cursor-pointer">
+              <label className="flex items-center gap-1.5 text-xs text-[var(--foreground-primary)] font-medium cursor-pointer">
                 <input
                   type="checkbox"
                   checked={formatAudio}
                   onChange={(e) => setFormatAudio(e.target.checked)}
-                  className="accent-[#005b33] w-4 h-4"
+                  className="accent-[var(--color-green)] w-4 h-4"
                 />
                 Аудіо
               </label>
@@ -228,14 +228,14 @@ export default function CreateOrderModal({
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2.5 rounded-xl border border-[#C8C2B4] bg-[#E5E0D5] hover:bg-[#D8D2C5] text-[#242424] text-xs font-semibold transition"
+              className="px-4 py-2.5 rounded-xl border border-[var(--color-menu-separator)] bg-[var(--color-menu-hover)] hover:bg-[var(--color-menu-separator)] text-[var(--foreground-primary)] text-xs font-semibold transition"
             >
               Скасувати
             </button>
             <button
               type="submit"
               disabled={submitting}
-              className="px-6 py-2.5 rounded-xl bg-[#005b33] hover:bg-[#004727] text-white text-xs font-bold shadow-md transition disabled:opacity-50"
+              className="px-6 py-2.5 rounded-xl bg-[var(--color-green)] hover:bg-[color-mix(in_srgb,var(--color-green)_85%,black)] text-white text-xs font-bold shadow-md transition disabled:opacity-50"
             >
               Створити замовлення
             </button>

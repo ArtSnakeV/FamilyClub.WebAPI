@@ -90,7 +90,7 @@ export function BasicInfoSection({ settings, onSave }: SectionProps) {
                 />
             </SettingsField>
             {message && (
-                <p className="text-[13px] text-[#005b33]">{message}</p>
+                <p className="text-[13px] text-[var(--color-green)]">{message}</p>
             )}
         </SettingsCard>
     );
@@ -182,7 +182,7 @@ export function BookSettingsSection({ settings, onSave }: SectionProps) {
                 </select>
             </SettingsField>
             {message && (
-                <p className="text-[13px] text-[#005b33]">{message}</p>
+                <p className="text-[13px] text-[var(--color-green)]">{message}</p>
             )}
         </SettingsCard>
     );
@@ -283,10 +283,10 @@ export function BrandingMaintenanceSection({ settings, onSave }: SectionProps) {
 
                     <div className="flex items-start justify-between gap-3">
                         <div className="min-w-0">
-                            <p className="text-[14px] font-semibold text-[#1F1F1F]">
+                            <p className="text-[14px] font-semibold text-[var(--foreground-primary)]">
                                 Режим обслуговування
                             </p>
-                            <p className="text-[12px] text-[#777] mt-1 break-words">
+                            <p className="text-[12px] text-[var(--color-muted-fg)] mt-1 break-words">
                                 Увімкніть режим обслуговування, щоб тимчасово
                                 закрити доступ до сайту для користувачів.
                             </p>
@@ -301,7 +301,7 @@ export function BrandingMaintenanceSection({ settings, onSave }: SectionProps) {
                     </div>
 
                     <label className="flex flex-col gap-1.5">
-                        <span className="text-[14px] font-semibold text-[#1F1F1F]">
+                        <span className="text-[14px] font-semibold text-[var(--foreground-primary)]">
                             Повідомлення для користувачів
                         </span>
                         <textarea
@@ -316,7 +316,7 @@ export function BrandingMaintenanceSection({ settings, onSave }: SectionProps) {
                             }
                             placeholder="Ми проводимо технічні роботи. Скоро сервіс знову запрацює!"
                         />
-                        <span className="text-[12px] text-[#888]">
+                        <span className="text-[12px] text-[var(--color-muted-fg)]">
                             {draft.maintenanceMessage.length}/2000 символів
                         </span>
                     </label>
@@ -326,7 +326,7 @@ export function BrandingMaintenanceSection({ settings, onSave }: SectionProps) {
                 <p
                     className={`text-[13px] ${
                         message === "Збережено"
-                            ? "text-[#005b33]"
+                            ? "text-[var(--color-green)]"
                             : "text-[#B42318]"
                     }`}
                 >
