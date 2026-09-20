@@ -171,8 +171,9 @@
   --admin-matrix-surface: #221F1A;
   --admin-matrix-surface-alt: #2A2620;
 
-  --color-product-page-bg: #14110E;
-  --color-product-board: #2A241C;
+  /* Product page — keep board clearly lighter than page so torn SVG edges read */
+  --color-product-page-bg: #100E0B;
+  --color-product-board: #3A3228;
   --color-product-cta: #1A7A4A;
   --color-product-cta-hover: #14663C;
   --color-product-reviews-bg: #1A1814;
@@ -200,10 +201,8 @@
   z-index: 1;
 }
 
-/* Keep utility header icon glyphs readable on Ink Night chrome */
-[data-theme="ink-night"] .header-utility-icon img {
-  filter: brightness(0) invert(0.92);
-}
+/* Header utility icons: glyph invert is applied via HeaderUtilityIcon
+   inline styles so hover can reliably switch to dark glyphs on the white pill. */
 
 [data-theme="ink-night"] .user-menu-panel img {
   filter: brightness(0) invert(0.88);
