@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import LeftBlock from "./components/LeftBlock";
 import NotificationThreadCard from "./components/NotificationThreadCard";
 import NotificationThread from "./components/NotificationThread";
@@ -41,22 +41,6 @@ export default function NotificationsPage() {
             minute: "2-digit",
         });
     };
-
-    useEffect(() => {
-        document.body.style.backgroundImage = "url('/images/authorsUserPage/Rectangle 326.png')";
-        document.body.style.backgroundSize = "cover";
-        document.body.style.backgroundAttachment = "fixed";
-        document.body.style.backgroundPosition = "center";
-        document.body.style.backgroundRepeat = "no-repeat";
-
-        return () => {
-            document.body.style.backgroundImage = "";
-            document.body.style.backgroundSize = "";
-            document.body.style.backgroundAttachment = "";
-            document.body.style.backgroundPosition = "";
-            document.body.style.backgroundRepeat = "";
-        };
-    }, []);
 
     const isLoading = loadingReviews || loadingNotifications;
 
@@ -123,10 +107,22 @@ export default function NotificationsPage() {
         activeTab === "all" || activeTab === "messages";
 
     return (
-        <div className="w-full min-h-screen bg-[#f5f3ee] text-[#242424] font-sans overflow-x-hidden">
+        <div className="relative w-full min-h-screen text-[var(--foreground-primary)] font-sans overflow-x-hidden overflow-hidden">
+            <div
+                aria-hidden
+                className="absolute inset-0 pointer-events-none admin-parchment-bg"
+                style={{
+                    backgroundImage: "url('/images/authorsUserPage/Rectangle 326.png')",
+                    backgroundSize: "cover",
+                    backgroundAttachment: "fixed",
+                    backgroundPosition: "center",
+                    backgroundRepeat: "no-repeat",
+                }}
+            />
+            <div className="relative z-10 w-full min-h-screen bg-[var(--background-elevated)]">
             {/* MOBILE NOTIFICATIONS VIEW (Figma Node 2199:4838 "Сповіщення" 1-to-1 spec) */}
             <div className="block md:hidden pt-[75px] pb-[100px] px-3 sm:px-4 max-w-[480px] mx-auto">
-                <h1 className="font-mono text-[28px] font-bold text-[#242424] mb-3 leading-tight">
+                <h1 className="font-mono text-[28px] font-bold text-[var(--foreground-primary)] mb-3 leading-tight">
                     {t("notifications.title")}
                 </h1>
 
@@ -139,8 +135,8 @@ export default function NotificationsPage() {
                             onClick={() => setActiveTab(tabId)}
                             className={`px-4 py-2 rounded-full font-sans text-[14px] font-semibold transition-all shrink-0 shadow-sm ${
                                 activeTab === tabId
-                                    ? "bg-[#005B33] text-white shadow-md"
-                                    : "bg-white/80 text-[#242424] border border-gray-300 hover:bg-white"
+                                    ? "bg-[var(--color-green)] text-white shadow-md"
+                                    : "bg-[var(--background-elevated)]/80 text-[var(--foreground-primary)] border border-[var(--color-menu-separator)] hover:bg-[var(--background-elevated)]"
                             }`}
                         >
                             {t(`notifications.tabs.${tabId}`)}
@@ -150,7 +146,7 @@ export default function NotificationsPage() {
 
                 {/* Mobile Notification Cards Stack */}
                 {isLoading ? (
-                    <div className="text-center py-12 text-black/60 font-mono">
+                    <div className="text-center py-12 text-[var(--color-muted-fg)] font-mono">
                         {t("notifications.loading")}
                     </div>
                 ) : (
@@ -169,13 +165,13 @@ export default function NotificationsPage() {
                                 <button
                                     type="button"
                                     onClick={handleOpenThread}
-                                    className="w-full text-left p-4 rounded-2xl bg-white shadow-[0_2px_12px_rgba(0,0,0,0.1)] hover:bg-gray-50 transition border border-gray-200"
+                                    className="w-full text-left p-4 rounded-2xl bg-[var(--background-elevated)] shadow-[var(--shadow-card)] hover:bg-[var(--color-menu-hover)] transition border border-[var(--color-menu-separator)]"
                                 >
                                     <div className="flex items-center gap-3">
                                         <span className="text-2xl">✉️</span>
                                         <div>
-                                            <p className="font-bold text-[15px] text-[#242424]">{t("notifications.writeAdminShort")}</p>
-                                            <p className="text-[12px] text-gray-500">{t("notifications.writeAdminHint")}</p>
+                                            <p className="font-bold text-[15px] text-[var(--foreground-primary)]">{t("notifications.writeAdminShort")}</p>
+                                            <p className="text-[12px] text-[var(--color-muted-fg)]">{t("notifications.writeAdminHint")}</p>
                                         </div>
                                     </div>
                                 </button>
@@ -187,7 +183,7 @@ export default function NotificationsPage() {
                         ))}
 
                         {!showThreadCard && visibleItems.length === 0 && (
-                            <div className="text-center py-12 text-black/60 font-serif">
+                            <div className="text-center py-12 text-[var(--color-muted-fg)] font-serif">
                                 {t("notifications.emptyNone")}
                             </div>
                         )}
@@ -219,7 +215,7 @@ export default function NotificationsPage() {
 
                         <div className="flex-1 ml-14">
                             {isLoading ? (
-                                <div className="text-center py-8 text-black/60">
+                                <div className="text-center py-8 text-[var(--color-muted-fg)]">
                                     {t("notifications.loadingShort")}
                                 </div>
                             ) : activeTab === "all" ? (
@@ -239,7 +235,7 @@ export default function NotificationsPage() {
                                             <button
                                                 type="button"
                                                 onClick={handleOpenThread}
-                                                className="text-left w-[80%] p-4 rounded-2xl bg-white/70 hover:bg-white shadow-[0_0_20px_rgba(80,137,190,0.6)] transition text-black/70"
+                                                className="text-left w-[80%] p-4 rounded-2xl bg-[var(--background-elevated)]/70 hover:bg-[var(--background-elevated)] shadow-[0_0_20px_rgba(80,137,190,0.6)] transition text-[var(--color-muted-fg)]"
                                             >
                                                 {t("notifications.writeAdmin")}
                                             </button>
@@ -253,7 +249,7 @@ export default function NotificationsPage() {
                                         ))}
 
                                         {reviewItems.length === 0 && (
-                                            <div className="text-center py-8 text-black/60">
+                                            <div className="text-center py-8 text-[var(--color-muted-fg)]">
                                                 {t("notifications.empty")}
                                             </div>
                                         )}
@@ -275,7 +271,7 @@ export default function NotificationsPage() {
                                             <button
                                                 type="button"
                                                 onClick={handleOpenThread}
-                                                className="text-left w-[30%] p-4 rounded-2xl bg-white/70 hover:bg-white shadow-[0_0_20px_rgba(80,137,190,0.6)] transition text-black/70"
+                                                className="text-left w-[30%] p-4 rounded-2xl bg-[var(--background-elevated)]/70 hover:bg-[var(--background-elevated)] shadow-[0_0_20px_rgba(80,137,190,0.6)] transition text-[var(--color-muted-fg)]"
                                             >
                                                 {t("notifications.writeAdmin")}
                                             </button>
@@ -287,7 +283,7 @@ export default function NotificationsPage() {
                                     ))}
 
                                     {!showThreadCard && visibleItems.length === 0 && (
-                                        <div className="text-center py-8 text-black/60">
+                                        <div className="text-center py-8 text-[var(--color-muted-fg)]">
                                             {t("notifications.empty")}
                                         </div>
                                     )}
@@ -309,6 +305,7 @@ export default function NotificationsPage() {
                 formatDate={formatDate}
                 onSend={(text) => sendMessage(text, user?.id ?? "", user?.id ?? "")}
             />
+            </div>
         </div>
     );
 }

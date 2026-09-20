@@ -78,75 +78,12 @@
 //                     height: "60px",
 //                     backgroundImage: "url('/images/admin_manager_layout/cat_circle.svg')",
 //                     backgroundSize: "cover",
-//                     backgroundPosition: "center",
-//                     backgroundRepeat: "no-repeat",
-//                     boxShadow: "0px 0px 10px 0px #24242400",
 //                   }}
-//                 ></div>
-//                 {/* RIGHT PART — TEXT */}
-//                 <div className="flex flex-col justify-center">
-//                   {/* FIRST LINE */}
-//                   <div
-//                     style={{
-//                       width: "106px",
-//                       height: "36px",
-//                       fontFamily: "var(--font-sans)",
-//                       fontWeight: 600,
-//                       fontSize: "24px",
-//                       lineHeight: "150%",
-//                       letterSpacing: "-1.1%",
-//                       background: "bg-[var(--background-main)]",
-//                       color: "text-foreground",
-//                       display: "flex",
-//                       alignItems: "center",
-//                     }}
-//                   >
-//                     Ink & Echo
-//                   </div>
-//                   {/* SECOND LINE */}
-//                   <div
-//                     style={{
-//                       width: "106px",
-//                       height: "24px",
-//                       fontFamily: "var(--font-sans)",
-//                       fontWeight: 600,
-//                       fontSize: "16px",
-//                       lineHeight: "150%",
-//                       letterSpacing: "-1.1%",
-//                       background: "bg-[var(--background-main)]",
-//                       color: "var(--font-sans)",
-//                       display: "flex",
-//                       alignItems: "center",
-//                       opacity: "0.5",
-//                     }}
-//                   >
-//                     Адміністратор
-//                   </div>
-//                 </div>
+//                 />
 //               </div>
-
-//               {/*List of items in sidebar*/}
-//               <AdminLayoutSidebarItems/>
-
 //             </div>
 //           </div>
 //         </aside>
-
-//         {/* RIGHT PART (Main Content Area) */}
-//         <main
-//           className="flex-1 min-h-screen overflow-y-auto overflow-x-hidden flex flex-col"
-//           style={{
-//             marginLeft: '369px', // Pushes content to the right of the fixed sidebar
-//             backgroundColor: '#DBD7CD',
-//             border: '10px solid transparent', // Creates the 10px border space
-//             boxShadow: '0px 0px 10px 0px rgba(0, 0, 0, 0.50)', // #00000080 in RGBA
-//           }}
-//         >
-//           {/* Inner container to hold our actual page views */}
-//           <div className="w-full flex-1 p-6">
-//             {children}
-//           </div>
-//         </main>
 
 //         {/* <footer></footer> */}
 //       </body>
@@ -179,99 +116,128 @@ export default async function AdminLayout({
 }: {
   children: React.ReactNode;
 }) {
- 
   return (
-    
-    <html lang="uk" className={`${sourceSans.variable} ${robotoMono.variable}`}>
-      <body style={{ margin: 0, padding: 0, backgroundColor: "#DBD7CD" }}>
-        <AdminProviders>
-        <PresenceHeartbeatMount />
-        {/* HEADER — fixed */}
-        <header
-          className="bg-[var(--background-main)] flex flex-row z-30"
-          style={{
-            position: "fixed",
-            top: 0,
-            left: 0,
-            right: 0,
-            height: "62px",
-            boxShadow: "0px 0px 15px 0px #24242499",
-          }}
-        >
-          <div className="max-w-[1220px] mx-auto flex items-center lg:px-0">
-            <UpNavigation />
-          </div>
-        </header>
-
-        <div
-          className="fixed"
-          style={{
-            top: "62px",
-            left: 0,
-            bottom: 0,
-            width: "20px",
-            backgroundColor: "#C7A381",
-            zIndex: 19,
+    <html
+      lang="uk"
+      className={`${sourceSans.variable} ${robotoMono.variable}`}
+      suppressHydrationWarning
+    >
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "(function(){try{var t=localStorage.getItem('librellis-theme');if(t==='ink-night')document.documentElement.setAttribute('data-theme','ink-night');}catch(e){}})();",
           }}
         />
-
-        {/* SIDEBAR — fixed */}
-        <aside
-          className="fixed z-20 flex flex-col"
-          style={{
-            top: "62px",
-            left: "20px",
-            bottom: 0,
-            width: "389px",
-            backgroundColor: "#C7A381",
-            /* overflowX: clip дозволяє y-scroll без неявного кліпінгу x */
-            overflowY: "auto",
-            overflowX: "clip",
-          }}
-        >
-          <div className="relative box-border" style={{ padding: "24px 24px 24px 34px" }}>
-            <div
-              className="absolute"
-              style={{
-                top: 0,
-                right: 0,
-                bottom: 0,
-                left: 0,
-                backgroundImage:
-                  "url('/images/admin_manager_layout/sidebar_bg.png')",
-                backgroundSize: "100% 100%",
-                backgroundPosition: "center",
-                backgroundRepeat: "no-repeat",
-              }}
-            />
-            <div className="relative">
-              <AdminSidebarUserCard />
-
-              <div className="flex-1">
-                <AdminLayoutSidebarItems />
-              </div>
-              {/* Portal root for sidebar selection (non-scrolling) */}
-              <div id="sidebar-selection-root" className="absolute top-0 left-0 right-0 bottom-0 pointer-events-none" />
+      </head>
+      <body
+        style={{
+          margin: 0,
+          padding: 0,
+          backgroundColor: "var(--admin-page-bg)",
+          color: "var(--foreground-primary)",
+        }}
+      >
+        <AdminProviders>
+          <PresenceHeartbeatMount />
+          {/* HEADER — fixed (ThemeToggle already in UpNavigation) */}
+          <header
+            className="bg-[var(--background-main)] flex flex-row z-30"
+            style={{
+              position: "fixed",
+              top: 0,
+              left: 0,
+              right: 0,
+              height: "62px",
+              boxShadow: "var(--shadow-panel)",
+            }}
+          >
+            <div className="max-w-[1220px] mx-auto flex items-center lg:px-0">
+              <UpNavigation />
             </div>
-          </div>
-        </aside>
+          </header>
 
-        <main
-          className="min-h-screen flex flex-col bg-cover bg-center bg-no-repeat bg-fixed"
-          style={{
-            marginLeft: "409px",
-            marginTop: "62px",
-            width: "calc(100% - 409px)",
-            minHeight: "calc(100vh - 62px)",
-            backgroundColor: "#DBD7CD",
-            backgroundImage: "url('/images/usersPageAdmin/Rectangle326.png')",
-            boxShadow: "0px 0px 10px 0px rgba(0, 0, 0, 0.50)",
-          }}
-        >
-          <div className="w-full flex-1">
+          <div
+            className="fixed"
+            style={{
+              top: "62px",
+              left: 0,
+              bottom: 0,
+              width: "20px",
+              backgroundColor: "var(--admin-wood)",
+              zIndex: 19,
+            }}
+          />
+
+          {/* SIDEBAR — fixed */}
+          <aside
+            className="fixed z-20 flex flex-col"
+            style={{
+              top: "62px",
+              left: "20px",
+              bottom: 0,
+              width: "389px",
+              backgroundColor: "var(--admin-wood)",
+              overflowY: "auto",
+              overflowX: "clip",
+            }}
+          >
+            <div
+              className="relative box-border"
+              style={{ padding: "24px 24px 24px 34px" }}
+            >
+              <div
+                aria-hidden
+                className="absolute inset-0 pointer-events-none admin-parchment-bg"
+                style={{
+                  backgroundImage:
+                    "url('/images/admin_manager_layout/sidebar_bg.png')",
+                  backgroundSize: "100% 100%",
+                  backgroundPosition: "center",
+                  backgroundRepeat: "no-repeat",
+                }}
+              />
+              <div className="relative z-10">
+                <AdminSidebarUserCard />
+
+                <div className="flex-1">
+                  <AdminLayoutSidebarItems />
+                </div>
+                <div
+                  id="sidebar-selection-root"
+                  className="absolute top-0 left-0 right-0 bottom-0 pointer-events-none"
+                />
+              </div>
+            </div>
+          </aside>
+
+          <main
+            className="relative flex flex-col bg-fixed"
+            style={{
+              marginLeft: "409px",
+              marginTop: "62px",
+              width: "calc(100% - 409px)",
+              minHeight: "calc(100vh - 62px)",
+              backgroundColor: "var(--admin-page-bg)",
+              boxShadow: "var(--shadow-panel)",
+            }}
+          >
+            <div
+              aria-hidden
+              className="admin-shelf-surface absolute inset-0 pointer-events-none"
+            >
+              <div
+                className="absolute inset-0 bg-cover bg-center bg-no-repeat bg-fixed"
+                style={{
+                  backgroundImage:
+                    "url('/images/usersPageAdmin/Rectangle326.png')",
+                }}
+              />
+            </div>
+            <div className="relative z-10 w-full flex-1">
               <AdminAccessGuard>{children}</AdminAccessGuard>
-          </div>
-        </main>
+            </div>
+          </main>
         </AdminProviders>
       </body>
     </html>

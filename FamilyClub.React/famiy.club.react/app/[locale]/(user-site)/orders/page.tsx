@@ -92,7 +92,7 @@ export default function OrdersPage() {
         
         let targetTab: OrderTabId = "waiting_payment";
         let statusText = "Оформлено";
-        let statusColor = "#005b33";
+        let statusColor = "var(--color-green)";
         let showConfirmBtn = false;
 
         if (statusStr.includes("paid") || statusStr.includes("processing") || statusStr.includes("waitingdispatch") || statusStr.includes("очікувана") || statusStr.includes("відправк")) {
@@ -181,7 +181,7 @@ export default function OrdersPage() {
           if (isDigital && (targetTab === "waiting_dispatch" || targetTab === "order_sent")) {
             itemTargetTab = "add_review";
             itemStatusText = "Доставлено";
-            itemStatusColor = "#005b33";
+            itemStatusColor = "var(--color-green)";
             itemShowConfirmBtn = false;
           }
 
@@ -381,7 +381,7 @@ export default function OrdersPage() {
     <>
       {/* Toast Notification */}
       {toastMessage && (
-        <div className="fixed top-24 right-6 z-50 bg-[#242424] text-white px-6 py-3 rounded-2xl shadow-2xl flex items-center gap-3 animate-fade-in border border-gray-700">
+        <div className="fixed top-24 right-6 z-50 bg-[var(--background-dark)] text-white px-6 py-3 rounded-2xl shadow-2xl flex items-center gap-3 animate-fade-in border border-[color-mix(in_srgb,var(--foreground-primary)_25%,transparent)]">
           <span className="text-green-400 text-lg">✓</span>
           <span className="text-sm font-medium">{toastMessage}</span>
         </div>
@@ -429,16 +429,18 @@ export default function OrdersPage() {
 
       {/* Десктопна версія */}
       <div className="hidden md:block">
-        <div
-          className="relative min-h-screen pt-[160px] md:pt-[210px] pb-20 font-sans"
-          style={{
-            backgroundImage: "url('/images/userProfile/Rectangle 326.png')",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            backgroundAttachment: "fixed",
-          }}
-        >
-          <div className="max-w-[1100px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="relative min-h-screen pt-[160px] md:pt-[210px] pb-20 font-sans overflow-hidden">
+          <div
+            aria-hidden
+            className="absolute inset-0 pointer-events-none admin-parchment-bg"
+            style={{
+              backgroundImage: "url('/images/userProfile/Rectangle 326.png')",
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              backgroundAttachment: "fixed",
+            }}
+          />
+          <div className="relative z-10 max-w-[1100px] mx-auto px-4 sm:px-6 lg:px-8">
             {/* Header Block */}
             <OrdersHeader
               paws={paws}
@@ -446,14 +448,17 @@ export default function OrdersPage() {
             />
 
             {/* Brown Background Board Container under cards */}
-            <div
-              className="relative w-full pt-4 pb-20 px-4 sm:px-8 rounded-3xl min-h-[680px] shadow-xl border border-[#B7895E]/40 mt-4"
-              style={{
-                backgroundImage: "url('/images/addProducts/Rectangle 312.svg')",
-                backgroundSize: "cover",
-                backgroundPosition: "top center",
-              }}
-            >
+            <div className="relative w-full pt-4 pb-20 px-4 sm:px-8 rounded-3xl min-h-[680px] shadow-xl border border-[var(--color-border-warm)]/40 mt-4 overflow-hidden">
+              <div
+                aria-hidden
+                className="absolute inset-0 pointer-events-none admin-parchment-bg"
+                style={{
+                  backgroundImage: "url('/images/addProducts/Rectangle 312.svg')",
+                  backgroundSize: "cover",
+                  backgroundPosition: "top center",
+                }}
+              />
+              <div className="relative z-10">
               {/* Tabs Bar */}
               <div className="-mt-2 mb-6">
                 <OrdersTabs activeTab={activeTab} onSelectTab={handleTabChange} counts={counts} />
@@ -461,7 +466,7 @@ export default function OrdersPage() {
 
               {/* Informational Text Under Tabs for Certain States */}
               {(activeTab === "add_review" || activeTab === "returns" || activeTab === "history") && (
-                <div className="text-center text-sm md:text-base font-semibold text-[#242424] my-4 tracking-wide bg-white/70 backdrop-blur-sm py-2.5 px-6 rounded-2xl max-w-md mx-auto shadow-sm border border-white/40">
+                <div className="text-center text-sm md:text-base font-semibold text-[var(--foreground-primary)] my-4 tracking-wide bg-[var(--background-elevated)]/70 backdrop-blur-sm py-2.5 px-6 rounded-2xl max-w-md mx-auto shadow-sm border border-[color-mix(in_srgb,var(--foreground-primary)_12%,transparent)]">
                   {t("orders.autoRemoveNote")}
                 </div>
               )}
@@ -470,16 +475,16 @@ export default function OrdersPage() {
               <div className="mt-8">
                 {loading ? (
                   <div className="flex justify-center items-center py-20">
-                    <div className="w-10 h-10 border-4 border-[#005b33] border-t-transparent rounded-full animate-spin"></div>
+                    <div className="w-10 h-10 border-4 border-[var(--color-green)] border-t-transparent rounded-full animate-spin"></div>
                   </div>
                 ) : currentItems.length === 0 ? (
-                  <div className="bg-[#D8D3C8]/90 backdrop-blur-sm rounded-3xl p-12 text-center border border-[#C8C2B4] shadow-md my-6 max-w-xl mx-auto flex flex-col items-center gap-3">
+                  <div className="bg-[color-mix(in_srgb,var(--color-menu-hover)_90%,transparent)] backdrop-blur-sm rounded-3xl p-12 text-center border border-[var(--color-menu-separator)] shadow-md my-6 max-w-xl mx-auto flex flex-col items-center gap-3">
                     <span className="text-4xl block mb-1">📦</span>
-                    <h3 className="text-xl font-bold text-[#242424]">{t("orders.emptyTitle")}</h3>
-                    <p className="text-sm text-[#555555]">{t("orders.emptyText")}</p>
+                    <h3 className="text-xl font-bold text-[var(--foreground-primary)]">{t("orders.emptyTitle")}</h3>
+                    <p className="text-sm text-[var(--color-muted-fg)]">{t("orders.emptyText")}</p>
                     <button
                       onClick={() => router.push(lp("/categories"))}
-                      className="mt-2 bg-[#005b33] hover:bg-[#004727] text-white px-6 py-2.5 rounded-xl font-semibold text-sm transition shadow-sm"
+                      className="mt-2 bg-[var(--color-green)] hover:bg-[color-mix(in_srgb,var(--color-green)_85%,black)] text-white px-6 py-2.5 rounded-xl font-semibold text-sm transition shadow-sm"
                     >
                       {t("orders.goToCatalog")}
                     </button>
@@ -501,6 +506,7 @@ export default function OrdersPage() {
                     />
                   </>
                 )}
+              </div>
               </div>
             </div>
           </div>

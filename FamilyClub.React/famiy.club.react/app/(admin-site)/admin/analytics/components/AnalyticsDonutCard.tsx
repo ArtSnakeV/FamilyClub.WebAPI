@@ -49,12 +49,12 @@ export default function AnalyticsDonutCard({
     let offset = 0;
 
     return (
-        <div className="rounded-[12px] bg-white px-5 py-5 shadow-[0_0_15px_rgba(0,0,0,0.12)] min-h-[320px] flex flex-col">
-            <h3 className="text-[16px] font-bold text-[#1F1F1F] mb-4">{title}</h3>
+        <div className="rounded-[12px] bg-[var(--background-elevated)] px-5 py-5 shadow-[var(--shadow-card)] min-h-[320px] flex flex-col">
+            <h3 className="text-[16px] font-bold text-[var(--foreground-primary)] mb-4">{title}</h3>
 
             {isLoading ? (
                 <div className="flex flex-1 items-center justify-center py-10">
-                    <div className="w-8 h-8 border-4 border-[#005b33] border-t-transparent rounded-full animate-spin" />
+                    <div className="w-8 h-8 border-4 border-[var(--color-green)] border-t-transparent rounded-full animate-spin" />
                 </div>
             ) : (
                 <div className="flex flex-col sm:flex-row gap-5 items-center flex-1">
@@ -66,7 +66,7 @@ export default function AnalyticsDonutCard({
                                     cy={SIZE / 2}
                                     r={R}
                                     fill="none"
-                                    stroke="#E8E4DC"
+                                    stroke="color-mix(in srgb, var(--foreground-primary) 18%, transparent)"
                                     strokeWidth={STROKE}
                                 />
                             ) : (
@@ -93,11 +93,11 @@ export default function AnalyticsDonutCard({
                             )}
                         </svg>
                         <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
-                            <p className="text-[15px] font-bold text-[#1F1F1F] leading-tight">
+                            <p className="text-[15px] font-bold text-[var(--foreground-primary)] leading-tight">
                                 {centerPrimary}
                             </p>
                             {centerSecondary && (
-                                <p className="text-[11px] text-[#777] mt-0.5">
+                                <p className="text-[11px] text-[var(--color-muted-fg)] mt-0.5">
                                     {centerSecondary}
                                 </p>
                             )}
@@ -115,32 +115,32 @@ export default function AnalyticsDonutCard({
                                         className="w-2.5 h-2.5 rounded-full flex-shrink-0"
                                         style={{ backgroundColor: seg.color }}
                                     />
-                                    <span className="truncate text-[#2F2F2F]">
+                                    <span className="truncate text-[var(--foreground-primary)]">
                                         {seg.label}
                                     </span>
                                 </span>
-                                <span className="text-[#555] whitespace-nowrap">
+                                <span className="text-[var(--color-muted-fg)] whitespace-nowrap">
                                     {valueAsMoney
                                         ? formatUah(seg.count)
                                         : formatNumber(seg.count)}{" "}
-                                    <span className="text-[#888]">
+                                    <span className="text-[var(--color-muted-fg)]">
                                         ({seg.percent.toFixed(1)}%)
                                     </span>
                                 </span>
                             </li>
                         ))}
                         {chartSegments.length === 0 && (
-                            <li className="text-[13px] text-[#888]">Немає даних</li>
+                            <li className="text-[13px] text-[var(--color-muted-fg)]">Немає даних</li>
                         )}
                     </ul>
                 </div>
             )}
 
             {footerHref && footerLabel && (
-                <div className="mt-4 pt-3 border-t border-[#E8E4DC]">
+                <div className="mt-4 pt-3 border-t border-[color-mix(in_srgb,var(--foreground-primary)_18%,transparent)]">
                     <Link
                         href={footerHref}
-                        className="inline-flex w-full items-center justify-center rounded-[9px] bg-[#F3EFE7] px-4 py-2.5 text-[14px] font-medium text-[#005b33] hover:bg-[#E8E4DC] transition"
+                        className="inline-flex w-full items-center justify-center rounded-[9px] bg-[color-mix(in_srgb,var(--color-green)_16%,var(--background-elevated))] px-4 py-2.5 text-[14px] font-medium text-[var(--color-green)] hover:bg-[color-mix(in_srgb,var(--color-green)_28%,var(--background-elevated))] transition"
                     >
                         {footerLabel}
                     </Link>

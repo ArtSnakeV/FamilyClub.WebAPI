@@ -77,7 +77,7 @@ export default function Pagination({
                         className="
                             w-10 h-10
                             flex items-center justify-center
-                            text-[var(--color-black)]
+                            text-[var(--foreground-primary)]
                             disabled:opacity-40
                         "
                         aria-label="Попередня сторінка"
@@ -96,7 +96,7 @@ export default function Pagination({
                                     flex items-center justify-center
                                     text-[18px]
                                     font-['Source_Sans_Pro']
-                                    text-[#a3a19e]
+                                    text-[var(--color-muted-fg)]
                                 "
                             >
                                 …
@@ -115,8 +115,8 @@ export default function Pagination({
                                     transition
                                     ${
                                         item === currentPage
-                                            ? "bg-[var(--color-brand-green,#1f4d3d)] text-[var(--color-white)]"
-                                            : "bg-transparent text-[var(--color-black)] hover:bg-[#ececec] hover:text-[var(--color-black)]"
+                                            ? "bg-[var(--color-green)] text-[var(--color-cream)]"
+                                            : "bg-transparent text-[var(--foreground-primary)] hover:bg-[var(--color-menu-hover)]"
                                     }
                                 `}
                             >
@@ -134,7 +134,7 @@ export default function Pagination({
                         className="
                             w-10 h-10
                             flex items-center justify-center
-                            text-[var(--color-black)]
+                            text-[var(--foreground-primary)]
                             disabled:opacity-40
                         "
                         aria-label="Наступна сторінка"

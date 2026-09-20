@@ -3,31 +3,38 @@
 import React from "react";
 import Link from "next/link";
 import { useLocalizedPath, useTranslations } from "@/lib/i18n/LocaleProvider";
+import { useTheme } from "@/lib/theme/ThemeProvider";
 
 export default function MobileBanner() {
   const t = useTranslations();
   const lp = useLocalizedPath();
+  const { theme } = useTheme();
+  const isNight = theme === "ink-night";
 
   return (
-    <section className="relative w-full h-[380px] sm:h-[420px] pt-[65px] overflow-hidden bg-[#f5f3ee] select-none">
+    <section className="relative w-full h-[380px] sm:h-[420px] pt-[65px] overflow-hidden bg-[var(--background-main)] select-none">
       {/* 1. Background Room Photo (blurred: blur-[10px] with scale-110) */}
       <img
         src="/images/main_page/hero/hero-background-uk.png"
         alt=""
         className="absolute inset-0 w-full h-full object-cover blur-[10px] scale-110 opacity-95 pointer-events-none z-0"
       />
-      {/* Subtle gradient overlay for depth */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[rgba(255,255,255,0.2)] via-transparent to-[rgba(0,0,0,0.3)] pointer-events-none z-0" />
+      {/* Subtle gradient overlay for depth — darker wash in Ink Night */}
+      <div
+        className={`absolute inset-0 pointer-events-none z-0 ${
+          isNight
+            ? "bg-gradient-to-b from-[rgba(10,8,6,0.45)] via-[rgba(10,8,6,0.15)] to-[rgba(0,0,0,0.55)]"
+            : "bg-gradient-to-b from-[rgba(255,255,255,0.2)] via-transparent to-[rgba(0,0,0,0.3)]"
+        }`}
+      />
 
-      {/* 2. Foreground Scratching Post & Shelf (reduced scale to 125% and shifted bottom to -28px for slim, exact Figma proportions) */}
+      {/* 2. Foreground Scratching Post & Shelf */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none z-10">
-        {/* Copy 1: Positions scratching post on the right and slim bottom green shelf */}
         <img
           src="/images/main_page/mobile/banner-bg.png"
           alt=""
           className="absolute bottom-[-28px] left-[-1%] w-[102%] h-[125%] max-w-none object-cover object-bottom select-none"
         />
-        {/* Copy 2: Extends green shelf to the left */}
         <img
           src="/images/main_page/mobile/banner-bg.png"
           alt=""

@@ -17,10 +17,13 @@ import {
 } from "@/lib/actionLog/actionLogApi";
 
 const cardClass =
-  "rounded-[12px] bg-white px-5 py-5 shadow-[0_0_15px_rgba(0,0,0,0.12)]";
+  "rounded-[12px] bg-[var(--background-elevated)] px-5 py-5 shadow-[var(--shadow-card)] border border-[color-mix(in_srgb,var(--foreground-primary)_12%,transparent)]";
 
 const filterClass =
-  "rounded-[9px] border border-[#E0DCD3] bg-[#FAFAF7] px-3 py-2.5 text-[14px] text-[#2F2F2F] outline-none focus:border-[#005b33] disabled:opacity-70 disabled:cursor-not-allowed";
+  "rounded-[9px] border border-[color-mix(in_srgb,var(--foreground-primary)_18%,transparent)] bg-[var(--background-elevated)] px-3 py-2.5 text-[14px] text-[var(--foreground-primary)] outline-none focus:border-[var(--color-green)] disabled:opacity-70 disabled:cursor-not-allowed placeholder:text-[var(--color-muted-fg)]";
+
+const borderSubtle =
+  "border-[color-mix(in_srgb,var(--foreground-primary)_12%,transparent)]";
 
 type LogLevel = "info" | "success" | "warning" | "error";
 
@@ -36,11 +39,11 @@ function KpiCard({
   return (
     <div className={`${cardClass} relative overflow-hidden min-h-[108px]`}>
       <div className="absolute left-0 top-3 bottom-3 w-[4px] rounded-full bg-[var(--color-green)]" />
-      <p className="text-[13px] text-[#6B6B6B] pl-2">{title}</p>
-      <p className="mt-2 text-[28px] font-bold leading-none tracking-tight pl-2 text-[#1F1F1F]">
+      <p className="text-[13px] text-[var(--color-muted-fg)] pl-2">{title}</p>
+      <p className="mt-2 text-[28px] font-bold leading-none tracking-tight pl-2 text-[var(--foreground-primary)]">
         {value}
       </p>
-      <p className="mt-2 text-[12px] pl-2 text-[#888]">{hint}</p>
+      <p className="mt-2 text-[12px] pl-2 text-[var(--color-muted-fg)]">{hint}</p>
     </div>
   );
 }
@@ -73,14 +76,17 @@ function toneClass(action: string) {
   const tone = actionTone(action);
   if (tone === "success") return "text-[var(--color-green)] font-semibold";
   if (tone === "warning") return "text-[#B54708] font-semibold";
-  return "text-[#2F2F2F]";
+  return "text-[var(--foreground-primary)]";
 }
 
 function formatCount(n: number): string {
   return n.toLocaleString("uk-UA");
 }
 
-function buildPageNumbers(current: number, totalPages: number): Array<number | "…"> {
+function buildPageNumbers(
+  current: number,
+  totalPages: number
+): Array<number | "…"> {
   if (totalPages <= 7) {
     return Array.from({ length: totalPages }, (_, i) => i + 1);
   }
@@ -141,7 +147,8 @@ export default function ActionLogPanel() {
     } catch (e) {
       console.error(e);
       setError(
-        e instanceof Error && (e.message.includes("401") || e.message.includes("403"))
+        e instanceof Error &&
+          (e.message.includes("401") || e.message.includes("403"))
           ? "Немає доступу. Увійдіть як Admin."
           : "Не вдалося завантажити журнал дій."
       );
@@ -171,8 +178,10 @@ export default function ActionLogPanel() {
   return (
     <div className="flex flex-col gap-6">
       <div>
-        <h1 className="text-2xl font-bold text-[#1F1F1F]">Журнал дій</h1>
-        <p className="text-[14px] text-[#6B6B6B] mt-1">
+        <h1 className="text-2xl font-bold text-[var(--foreground-primary)]">
+          Журнал дій
+        </h1>
+        <p className="text-[14px] text-[var(--color-muted-fg)] mt-1">
           Живий журнал зберігається 90 днів. Старіші записи архівуються; при
           новому архіві попередній замінюється.
         </p>
@@ -181,16 +190,18 @@ export default function ActionLogPanel() {
       <section className={`${cardClass} flex flex-col gap-3`}>
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
           <div>
-            <h2 className="text-[16px] font-bold text-[#1F1F1F]">Архів</h2>
+            <h2 className="text-[16px] font-bold text-[var(--foreground-primary)]">
+              Архів
+            </h2>
             {archiveInfo ? (
-              <p className="text-[13px] text-[#666] mt-1">
+              <p className="text-[13px] text-[var(--color-muted-fg)] mt-1">
                 Останній архів: {formatLogDate(archiveInfo.createdAt)} ·{" "}
                 {archiveInfo.recordCount} записів · період{" "}
                 {formatLogDate(archiveInfo.periodFromUtc)} —{" "}
                 {formatLogDate(archiveInfo.periodToUtc)}
               </p>
             ) : (
-              <p className="text-[13px] text-[#888] mt-1">
+              <p className="text-[13px] text-[var(--color-muted-fg)] mt-1">
                 Архіву ще немає (немає записів старших за 90 днів).
               </p>
             )}
@@ -213,7 +224,7 @@ export default function ActionLogPanel() {
                   setArchiving(false);
                 }
               }}
-              className="rounded-[9px] border border-[var(--color-green)] bg-transparent px-4 py-2 text-[14px] font-semibold text-[var(--color-green)] hover:bg-[#E3FEE5] disabled:opacity-60"
+              className="rounded-[9px] border border-[var(--color-green)] bg-transparent px-4 py-2 text-[14px] font-semibold text-[var(--color-green)] hover:bg-[color-mix(in_srgb,var(--color-green)_22%,var(--background-elevated))] disabled:opacity-60 transition"
             >
               {archiving ? "Архівування..." : "Архівувати зараз"}
             </button>
@@ -227,7 +238,7 @@ export default function ActionLogPanel() {
                     setArchiveMessage("Не вдалося завантажити архів.");
                   }
                 }}
-                className="rounded-[9px] bg-[var(--color-green)] px-4 py-2 text-[14px] font-semibold text-white hover:opacity-90"
+                className="rounded-[9px] bg-[var(--color-green)] px-4 py-2 text-[14px] font-semibold text-[var(--color-cream)] hover:opacity-90 transition"
               >
                 Завантажити архів
               </button>
@@ -235,7 +246,9 @@ export default function ActionLogPanel() {
           </div>
         </div>
         {archiveMessage && (
-          <p className="text-[13px] text-[#555]">{archiveMessage}</p>
+          <p className="text-[13px] text-[var(--color-muted-fg)]">
+            {archiveMessage}
+          </p>
         )}
       </section>
 
@@ -330,12 +343,14 @@ export default function ActionLogPanel() {
       </section>
 
       <section className={`${cardClass} overflow-x-auto`}>
-        <h2 className="text-[18px] font-bold text-[#1F1F1F] mb-4">
+        <h2 className="text-[18px] font-bold text-[var(--foreground-primary)] mb-4">
           Журнал дій
         </h2>
         <table className="w-full min-w-[960px] text-left border-collapse">
           <thead>
-            <tr className="border-b border-[#E8E4DC] text-[12px] uppercase tracking-wide text-[#888]">
+            <tr
+              className={`border-b ${borderSubtle} text-[12px] uppercase tracking-wide text-[var(--color-muted-fg)]`}
+            >
               <th className="pb-3 pr-3 font-semibold">Дата і час</th>
               <th className="pb-3 pr-3 font-semibold">Користувач</th>
               <th className="pb-3 pr-3 font-semibold">Дія</th>
@@ -350,7 +365,7 @@ export default function ActionLogPanel() {
               <tr>
                 <td
                   colSpan={7}
-                  className="py-12 text-center text-[14px] text-[#999]"
+                  className="py-12 text-center text-[14px] text-[var(--color-muted-fg)]"
                 >
                   Завантаження...
                 </td>
@@ -359,7 +374,7 @@ export default function ActionLogPanel() {
               <tr>
                 <td
                   colSpan={7}
-                  className="py-12 text-center text-[14px] text-[#999]"
+                  className="py-12 text-center text-[14px] text-[var(--color-muted-fg)]"
                 >
                   Записів немає. Вони зʼявляться після створення/видалення
                   сутностей, зміни ролей або режиму обслуговування.
@@ -369,29 +384,31 @@ export default function ActionLogPanel() {
               items.map((row) => (
                 <tr
                   key={row.id}
-                  className="border-b border-[#F0EDE6] last:border-0 align-top"
+                  className={`border-b ${borderSubtle} last:border-0 align-top`}
                 >
-                  <td className="py-3 pr-3 text-[14px] text-[#2F2F2F] whitespace-nowrap">
+                  <td className="py-3 pr-3 text-[14px] text-[var(--foreground-primary)] whitespace-nowrap">
                     {formatLogDate(row.createdAt)}
                   </td>
                   <td className="py-3 pr-3">
-                    <p className="text-[14px] font-semibold text-[#1F1F1F]">
+                    <p className="text-[14px] font-semibold text-[var(--foreground-primary)]">
                       {row.userName || "Система"}
                     </p>
-                    <p className="text-[12px] text-[#888]">
+                    <p className="text-[12px] text-[var(--color-muted-fg)]">
                       {row.userRoleHint || "—"}
                     </p>
                   </td>
-                  <td className={`py-3 pr-3 text-[14px] ${toneClass(row.action)}`}>
+                  <td
+                    className={`py-3 pr-3 text-[14px] ${toneClass(row.action)}`}
+                  >
                     {ACTION_LABELS_UK[row.action] ?? row.action}
                   </td>
-                  <td className="py-3 pr-3 text-[14px] text-[#2F2F2F]">
+                  <td className="py-3 pr-3 text-[14px] text-[var(--foreground-primary)]">
                     {MODULE_LABELS_UK[row.module] ?? row.module}
                   </td>
-                  <td className="py-3 pr-3 text-[14px] text-[#555] max-w-[260px]">
+                  <td className="py-3 pr-3 text-[14px] text-[var(--color-muted-fg)] max-w-[260px]">
                     {row.details || "—"}
                   </td>
-                  <td className="py-3 pr-3 text-[14px] text-[#2F2F2F] whitespace-nowrap">
+                  <td className="py-3 pr-3 text-[14px] text-[var(--foreground-primary)] whitespace-nowrap">
                     {row.ipAddress || "—"}
                   </td>
                   <td className="py-3">
@@ -403,15 +420,20 @@ export default function ActionLogPanel() {
           </tbody>
         </table>
 
-        <div className="mt-5 pt-4 border-t border-[#F0EDE6] flex flex-col lg:flex-row lg:items-center gap-4 justify-between">
-          <p className="text-[13px] text-[#888]">
+        <div
+          className={`mt-5 pt-4 border-t ${borderSubtle} flex flex-col lg:flex-row lg:items-center gap-4 justify-between`}
+        >
+          <p className="text-[13px] text-[var(--color-muted-fg)]">
             Показано {from}–{to} з {formatCount(totalCount)}
           </p>
 
           <div className="flex flex-wrap items-center gap-2">
             {buildPageNumbers(page, totalPages).map((p, i) =>
               p === "…" ? (
-                <span key={`e-${i}`} className="px-1 text-[#888]">
+                <span
+                  key={`e-${i}`}
+                  className="px-1 text-[var(--color-muted-fg)]"
+                >
                   …
                 </span>
               ) : (
@@ -419,10 +441,10 @@ export default function ActionLogPanel() {
                   key={p}
                   type="button"
                   onClick={() => setPage(p)}
-                  className={`min-w-9 h-9 rounded-[8px] text-[13px] font-semibold ${
+                  className={`min-w-9 h-9 rounded-[8px] text-[13px] font-semibold transition ${
                     p === page
-                      ? "bg-[var(--color-green)] text-white"
-                      : "bg-[#F5F2EB] text-[#2F2F2F] hover:bg-[#EBE6DC]"
+                      ? "bg-[var(--color-green)] text-[var(--color-cream)]"
+                      : "bg-[color-mix(in_srgb,var(--foreground-primary)_8%,var(--background-elevated))] text-[var(--foreground-primary)] hover:bg-[color-mix(in_srgb,var(--color-green)_22%,var(--background-elevated))]"
                   }`}
                 >
                   {p}
@@ -432,7 +454,7 @@ export default function ActionLogPanel() {
           </div>
 
           <div className="flex flex-wrap items-center gap-3">
-            <label className="flex items-center gap-2 text-[13px] text-[#666]">
+            <label className="flex items-center gap-2 text-[13px] text-[var(--color-muted-fg)]">
               Показувати:
               <select
                 value={pageSize}
@@ -451,7 +473,7 @@ export default function ActionLogPanel() {
               type="button"
               disabled
               title="Експорт буде додано пізніше"
-              className="rounded-[9px] bg-[var(--color-green)] px-5 py-2.5 text-[14px] font-semibold text-white opacity-60 cursor-not-allowed"
+              className="rounded-[9px] bg-[var(--color-green)] px-5 py-2.5 text-[14px] font-semibold text-[var(--color-cream)] opacity-60 cursor-not-allowed"
             >
               Експорт звіту
             </button>

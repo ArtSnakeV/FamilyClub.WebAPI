@@ -24,19 +24,25 @@ export default function RolesNav() {
         `;
 
     return (
-        <div
-            className="w-screen relative left-1/2 -translate-x-1/2 bg-center bg-no-repeat py-8 flex justify-center items-center gap-5"
-            style={{
-                backgroundImage: "url('/images/entities/books/top_frame.svg')",
-                backgroundSize: "125% 125%",
-                backgroundPosition: "center",
-                backgroundRepeat: "no-repeat",
-            }}
-        >
-            <Link href="/admin/roles" className={linkClass(isMatrix)}>
+        <div className="relative w-screen left-1/2 -translate-x-1/2 py-8 flex justify-center items-center gap-5">
+            {/* Separate layer so invert does not affect tab labels */}
+            <div
+                aria-hidden
+                className="absolute inset-0 pointer-events-none admin-parchment-bg bg-center bg-no-repeat"
+                style={{
+                    backgroundImage: "url('/images/entities/books/top_frame.svg')",
+                    backgroundSize: "125% 125%",
+                    backgroundPosition: "center",
+                    backgroundRepeat: "no-repeat",
+                }}
+            />
+            <Link href="/admin/roles" className={`relative z-10 ${linkClass(isMatrix)}`}>
                 Матриця доступів
             </Link>
-            <Link href="/admin/roles/role-actions" className={linkClass(isActions)}>
+            <Link
+                href="/admin/roles/role-actions"
+                className={`relative z-10 ${linkClass(isActions)}`}
+            >
                 Керування ролями
             </Link>
         </div>

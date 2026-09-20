@@ -25,8 +25,8 @@ const PERIOD_OPTIONS: { value: SalesPeriod; label: string }[] = [
 const CHART_WIDTH = 560;
 const CHART_HEIGHT = 200;
 const PAD = { top: 12, right: 16, bottom: 32, left: 40 };
-const LINE_COLOR = "#005b33";
-const GRID_COLOR = "#E8E4DC";
+const LINE_COLOR = "var(--color-green)";
+const GRID_COLOR = "color-mix(in srgb, var(--foreground-primary) 14%, transparent)";
 
 function SalesLineChart({ points }: { points: SalesPoint[] }) {
   const plotW = CHART_WIDTH - PAD.left - PAD.right;
@@ -71,7 +71,7 @@ function SalesLineChart({ points }: { points: SalesPoint[] }) {
               x={PAD.left - 8}
               y={y + 4}
               textAnchor="end"
-              className="fill-[#888] text-[10px]"
+              className="fill-[var(--color-muted-fg)] text-[10px]"
             >
               {formatSalesAxis(value)}
             </text>
@@ -98,7 +98,7 @@ function SalesLineChart({ points }: { points: SalesPoint[] }) {
               x={point.x}
               y={CHART_HEIGHT - 8}
               textAnchor="middle"
-              className="fill-[#666] text-[9px]"
+              className="fill-[var(--color-muted-fg)] text-[9px]"
             >
               {point.label}
             </text>
@@ -125,14 +125,16 @@ export default function SalesChartPanel({
 
   return (
     <div
-      className={`flex flex-col gap-4 px-5 py-5 bg-[var(--color-white)] rounded-[10px] shadow-[0px_0px_15px_0px_rgba(0,0,0,0.25)] min-h-[280px] ${className}`}
+      className={`flex flex-col gap-4 px-5 py-5 bg-[var(--background-elevated)] text-[var(--foreground-primary)] rounded-[10px] shadow-[var(--shadow-panel)] min-h-[280px] ${className}`}
     >
       <div className="flex items-center justify-between gap-4">
-        <h3 className="text-base font-bold text-[#242424]">Продажі</h3>
+        <h3 className="text-base font-bold text-[var(--foreground-primary)]">
+          Продажі
+        </h3>
         <select
           value={period}
           onChange={(e) => setPeriod(e.target.value as SalesPeriod)}
-          className="text-sm text-[#242424] border border-[#242424]/25 rounded-lg px-3 py-1.5 bg-white cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#005b33]/30"
+          className="text-sm text-[var(--foreground-primary)] border border-[color-mix(in_srgb,var(--foreground-primary)_18%,transparent)] rounded-lg px-3 py-1.5 bg-[var(--background-elevated)] cursor-pointer focus:outline-none focus:ring-2 focus:ring-[color-mix(in_srgb,var(--color-green)_30%,transparent)]"
           aria-label="Період продажів"
         >
           {PERIOD_OPTIONS.map((option) => (
@@ -145,10 +147,10 @@ export default function SalesChartPanel({
 
       {isLoading ? (
         <div className="flex flex-1 items-center justify-center py-12">
-          <div className="w-8 h-8 border-4 border-[#005b33] border-t-transparent rounded-full animate-spin" />
+          <div className="w-8 h-8 border-4 border-[var(--color-green)] border-t-transparent rounded-full animate-spin" />
         </div>
       ) : !hasData ? (
-        <div className="flex flex-1 items-center justify-center py-12 text-sm text-[#777]">
+        <div className="flex flex-1 items-center justify-center py-12 text-sm text-[var(--color-muted-fg)]">
           Немає даних за обраний період
         </div>
       ) : (
