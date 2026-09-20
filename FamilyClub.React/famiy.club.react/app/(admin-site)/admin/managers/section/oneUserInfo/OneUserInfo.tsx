@@ -90,6 +90,7 @@ import { lockUser, unlockUser } from "../../api/ActionUsers";
 import ComplaintsTab from "../tabs/ComplaintsTab";
 import { useUserComplaints } from "../../hooks/useUserComplaints";
 import { useRouter } from "next/navigation";
+import { useTheme } from "@/lib/theme/ThemeProvider";
 
 
 interface Props {
@@ -108,6 +109,8 @@ const TABS: { key: TabKey; label: string }[] = [
 
 export default function OneUserInfo({ user, onLockToggle }: Props) {
     const router = useRouter();
+    const { theme } = useTheme();
+    const isNight = theme === "ink-night";
     const [activeTab, setActiveTab] = useState<TabKey>("overview");
 
     const { ordersCount, spentAmount } = useUserOrderStats(user.id);
@@ -117,11 +120,19 @@ export default function OneUserInfo({ user, onLockToggle }: Props) {
     const { complaints } = useUserComplaints(user.id);
 
     return (
-        <div className="w-[560px] max-w-full -ml-8 h-[900px] rounded-2xl overflow-hidden"
-            style={{
-                backgroundImage: "url('/images/usersPageAdmin/Rectangle 795.png')",
-                backgroundSize: "100% 100%",
-            }}>
+        <div className="relative w-[560px] max-w-full -ml-8 h-[900px] rounded-2xl overflow-hidden">
+            <div
+                aria-hidden
+                className="absolute inset-0 pointer-events-none admin-parchment-bg"
+                style={{
+                    backgroundImage: "url('/images/usersPageAdmin/Rectangle 795.png')",
+                    backgroundSize: "100% 100%",
+                }}
+            />
+            <div
+                className="relative z-10"
+                style={{ color: isNight ? "var(--color-cream)" : "var(--color-black)" }}
+            >
             <div className="w-[490px] max-w-full ml-4 px-6 py-4">
                 <OneUserInfoCard user={user} />
             </div>
@@ -133,15 +144,25 @@ export default function OneUserInfo({ user, onLockToggle }: Props) {
                         onClick={() => setActiveTab(tab.key)}
                         className={`pb-2 transition whitespace-nowrap ${activeTab === tab.key
                             ? "text-[var(--color-green)] hover:text-[var(--color-green)] border-b-2 border-[var(--color-green)]"
-                            : "text-black "
+                            : ""
                             }`}
+                        style={
+                            activeTab === tab.key
+                                ? undefined
+                                : { color: isNight ? "var(--color-cream)" : "var(--color-black)" }
+                        }
                     >
                         {tab.label}
 
                     </button>
                 ))}
             </div>
-            <div className="w-[490px] max-w-full h-[2px] bg-[#D2D2D2] -mt-[2px] ml-7 mb-4" />
+            <div
+                className="w-[490px] max-w-full h-[2px] -mt-[2px] ml-7 mb-4"
+                style={{
+                    backgroundColor: isNight ? "rgba(237,232,223,0.2)" : "#D2D2D2",
+                }}
+            />
 
             <div className="px-9 overflow-y-hidden overflow-x-hidden w-[520px] ml-5 max-w-full" style={{ maxHeight: "800px" }}>
                 {activeTab === "overview" &&
@@ -158,7 +179,7 @@ export default function OneUserInfo({ user, onLockToggle }: Props) {
                 {activeTab === "complaints" && <ComplaintsTab user={user} />}
                 {activeTab === "reviews" && <ReviewsTab user={user} />}
             </div>
-
+            </div>
         </div>
     );
 }

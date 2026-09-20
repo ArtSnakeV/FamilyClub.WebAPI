@@ -29,14 +29,14 @@ export default function CheckoutCancelPage() {
               {t("checkout.tryAgain")}
             </button>
             <button
-              className="bg-[#E5E0D5] hover:bg-[#D8D2C5] text-[#242424] px-6 py-3 rounded-xl font-medium transition"
+              className="bg-[var(--color-menu-hover)] hover:bg-[var(--color-menu-hover)] text-[var(--foreground-primary)] px-6 py-3 rounded-xl font-medium transition"
               onClick={() => router.push(lp("/orders"))}
               type="button"
             >
               {t("checkout.myOrders")}
             </button>
             <button
-              className="bg-[#E5E0D5] hover:bg-[#D8D2C5] text-[#242424] px-6 py-3 rounded-xl font-medium transition"
+              className="bg-[var(--color-menu-hover)] hover:bg-[var(--color-menu-hover)] text-[var(--foreground-primary)] px-6 py-3 rounded-xl font-medium transition"
               onClick={() => router.push(lp("/"))}
               type="button"
             >

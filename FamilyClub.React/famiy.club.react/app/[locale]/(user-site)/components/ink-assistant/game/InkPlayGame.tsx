@@ -273,9 +273,9 @@ export default function InkPlayGame({ onExit, onPlayAgain }: InkPlayGameProps) {
       role="dialog"
       aria-label={t("ink.game.aria")}
     >
-      <div className="absolute inset-0 bg-black/10" />
+      <div className="absolute inset-0 bg-[color-mix(in_srgb,var(--foreground-primary)_10%,transparent)]" />
 
-      <div className="pointer-events-none absolute left-1/2 top-4 z-10 -translate-x-1/2 rounded-full bg-[#005B33]/90 px-4 py-1.5 font-serif text-sm text-white shadow-md">
+      <div className="pointer-events-none absolute left-1/2 top-4 z-10 -translate-x-1/2 rounded-full bg-[var(--color-green)]/90 px-4 py-1.5 font-serif text-sm text-[var(--color-cream)] shadow-[var(--shadow-card)]">
         {statusText}
       </div>
 
@@ -325,11 +325,11 @@ export default function InkPlayGame({ onExit, onPlayAgain }: InkPlayGameProps) {
       </div>
 
       {phase === "done" && (
-        <div className="absolute left-1/2 top-1/2 z-40 w-[340px] -translate-x-1/2 -translate-y-1/2 rounded-[14px] border border-[#005B33]/25 bg-[#F5F3EE] p-5 text-center shadow-[0_12px_40px_rgba(36,36,36,0.35)]">
-          <p className="font-serif text-lg font-semibold text-[#005B33]">
+        <div className="absolute left-1/2 top-1/2 z-40 w-[340px] -translate-x-1/2 -translate-y-1/2 rounded-[14px] border border-[var(--color-green)]/25 bg-[var(--background-elevated)] p-5 text-center shadow-[var(--shadow-panel)]">
+          <p className="font-serif text-lg font-semibold text-[var(--color-green)]">
             {t("ink.game.thanks")}
           </p>
-          <p className="mt-2 text-sm leading-snug text-[#242424]">
+          <p className="mt-2 text-sm leading-snug text-[var(--foreground-primary)]">
             {prey === "mouse"
               ? t("ink.game.caughtMouse")
               : t("ink.game.caughtLaser")}
@@ -338,14 +338,14 @@ export default function InkPlayGame({ onExit, onPlayAgain }: InkPlayGameProps) {
             <button
               type="button"
               onClick={onPlayAgain}
-              className="rounded-[8px] bg-[#005B33] px-4 py-2 text-sm font-semibold text-white hover:bg-[#004d2b]"
+              className="rounded-[8px] bg-[var(--color-green)] px-4 py-2 text-sm font-semibold text-[var(--color-cream)] hover:bg-[color-mix(in_srgb,var(--color-green)_85%,black)]"
             >
               {t("ink.game.playAgain")}
             </button>
             <button
               type="button"
               onClick={onExit}
-              className="rounded-[8px] border border-[#005B33]/40 bg-white px-4 py-2 text-sm font-semibold text-[#005B33] hover:bg-[#E8F5EF]"
+              className="rounded-[8px] border border-[var(--color-green)]/40 bg-[var(--background-main)] px-4 py-2 text-sm font-semibold text-[var(--color-green)] hover:bg-[color-mix(in_srgb,var(--color-green)_18%,transparent)]"
             >
               {t("ink.game.exit")}
             </button>
@@ -358,7 +358,7 @@ export default function InkPlayGame({ onExit, onPlayAgain }: InkPlayGameProps) {
           <button
             type="button"
             onClick={onExit}
-            className="rounded-full border border-white/40 bg-[#242424]/80 px-5 py-2 text-sm font-medium text-white shadow-md backdrop-blur-sm hover:bg-[#242424]"
+            className="rounded-full border border-[var(--color-cream)]/40 bg-[var(--background-dark)]/80 px-5 py-2 text-sm font-medium text-[var(--color-cream)] shadow-[var(--shadow-card)] backdrop-blur-sm hover:bg-[var(--background-dark)]"
           >
             {t("ink.game.exitEsc")}
           </button>

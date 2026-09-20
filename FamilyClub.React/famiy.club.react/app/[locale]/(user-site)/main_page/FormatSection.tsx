@@ -24,17 +24,17 @@ export default function FormatSection() {
     return (
         <section className="relative w-full overflow-hidden pt-10 pb-0">
             <div className="mx-auto max-w-[1220px] px-4 lg:px-0">
-                <div className="flex flex-wrap justify-around text-center font-sans text-[20px] font-semibold text-[#242424] mb-12">
+                <div className="flex flex-wrap justify-around text-center font-sans text-[20px] font-semibold text-[var(--foreground-primary)] mb-12">
                     {formats.items.map((item) => (
                         <span key={item.label} className="w-[260px]">{item.label}</span>
                     ))}
                 </div>
 
-                <h2 className="text-center font-mono text-[40px] font-bold text-[#242424] md:text-[56px] mb-8">
+                <h2 className="text-center font-mono text-[40px] font-bold text-[var(--foreground-primary)] md:text-[56px] mb-8">
                     {formats.heading}
                 </h2>
 
-                <div className="flex flex-wrap justify-around text-center font-sans text-[16px] font-medium text-[#242424] mb-8 gap-4">
+                <div className="flex flex-wrap justify-around text-center font-sans text-[16px] font-medium text-[var(--foreground-primary)] mb-8 gap-4">
                     {formats.items.map((item) => (
                         <p key={item.title} className="w-[260px]">{item.title}</p>
                     ))}
@@ -67,7 +67,7 @@ export default function FormatSection() {
                 </div>
             </div>
 
-            <div className="relative z-20 h-[80px] w-full shadow-[0px_4px_8px_0px_rgba(0,0,0,0.35)] bg-[#7e4d1e]">
+            <div className="relative z-20 h-[80px] w-full shadow-[0px_4px_8px_0px_rgba(0,0,0,0.35)] bg-[var(--color-shelf)]">
                 <img src="/images/catalog/shelf_tex1.png" className="absolute inset-0 w-full h-full object-cover mix-blend-multiply opacity-50 pointer-events-none" alt="" />
                 <div className="absolute inset-0 bg-[rgba(0,0,0,0.27)] pointer-events-none" />
                 <div className="absolute left-0 right-0 bottom-0 h-[60px]">

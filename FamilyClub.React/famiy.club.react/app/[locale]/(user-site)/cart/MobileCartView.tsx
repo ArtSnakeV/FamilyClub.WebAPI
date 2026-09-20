@@ -158,41 +158,41 @@ export default function MobileCartView({
   };
 
   return (
-    <div className="w-full min-h-screen bg-[#c7a381] pt-[110px] pb-10 select-none font-['Source_Sans_3',sans-serif] text-[#242424] overflow-x-hidden">
+    <div className="w-full min-h-screen bg-[var(--color-wood)] pt-[110px] pb-10 select-none font-['Source_Sans_3',sans-serif] text-[var(--foreground-primary)] overflow-x-hidden">
       {/* Заголовок */}
-      <h1 className="font-['Lora',serif] font-semibold text-[24px] sm:text-[26px] text-[#242424] text-center tracking-[-0.264px] mb-6 px-4">
+      <h1 className="font-['Lora',serif] font-semibold text-[24px] sm:text-[26px] text-[var(--foreground-primary)] text-center tracking-[-0.264px] mb-6 px-4">
         {t("cart.title")}
       </h1>
 
       {/* Контент верхньої частини кошика (карточки товарів) */}
       <div className="px-3 sm:px-4 w-full max-w-[430px] mx-auto">
         {loading ? (
-          <div className="bg-[#f5f3ee] rounded-[9px] shadow-[0px_0px_5px_rgba(0,0,0,0.35)] p-8 text-center my-6 flex flex-col items-center justify-center">
+          <div className="bg-[var(--background-elevated)] rounded-[9px] shadow-[var(--shadow-card)] p-8 text-center my-6 flex flex-col items-center justify-center">
             <span className="text-3xl mb-2 animate-spin">⏳</span>
-            <p className="text-[16px] text-[#242424]">{t("cart.loadingCart")}</p>
+            <p className="text-[16px] text-[var(--foreground-primary)]">{t("cart.loadingCart")}</p>
           </div>
         ) : fetchError && !hasItems ? (
-          <div className="bg-[#f5f3ee] rounded-[9px] shadow-[0px_0px_5px_rgba(0,0,0,0.35)] p-8 text-center my-6 flex flex-col items-center justify-center">
+          <div className="bg-[var(--background-elevated)] rounded-[9px] shadow-[var(--shadow-card)] p-8 text-center my-6 flex flex-col items-center justify-center">
             <span className="text-3xl mb-2">⚠️</span>
-            <p className="text-[16px] text-[#242424] mb-4">{t("cart.loadError")}</p>
+            <p className="text-[16px] text-[var(--foreground-primary)] mb-4">{t("cart.loadError")}</p>
             <button
               type="button"
               onClick={() => window.location.reload()}
-              className="px-6 py-2 rounded-full bg-[#005b33] text-white font-medium hover:bg-[#004e2b] transition"
+              className="px-6 py-2 rounded-full bg-[var(--color-green)] text-white font-medium hover:bg-[color-mix(in_srgb,var(--color-green)_85%,black)] transition"
             >
               {t("cart.retry")}
             </button>
           </div>
         ) : !hasItems ? (
-          <div className="bg-[#f5f3ee] rounded-[9px] shadow-[0px_0px_5px_rgba(0,0,0,0.35)] p-8 text-center my-6 flex flex-col items-center justify-center">
+          <div className="bg-[var(--background-elevated)] rounded-[9px] shadow-[var(--shadow-card)] p-8 text-center my-6 flex flex-col items-center justify-center">
             <span className="text-5xl mb-3">🛒</span>
-            <h3 className="text-xl font-bold text-[#242424] mb-2 font-['Lora',serif]">{t("cart.empty")}</h3>
-            <p className="text-sm text-[rgba(36,36,36,0.6)] mb-6">
+            <h3 className="text-xl font-bold text-[var(--foreground-primary)] mb-2 font-['Lora',serif]">{t("cart.empty")}</h3>
+            <p className="text-sm text-[var(--color-muted-fg)] mb-6">
               {t("cart.emptyHint")}
             </p>
             <Link
               href={lp("/categories")}
-              className="px-7 py-3 rounded-full bg-[#005b33] text-white font-medium hover:bg-[#004e2b] transition shadow-sm"
+              className="px-7 py-3 rounded-full bg-[var(--color-green)] text-white font-medium hover:bg-[color-mix(in_srgb,var(--color-green)_85%,black)] transition shadow-sm"
             >
               {t("orders.goToCatalog")}
             </Link>
@@ -213,14 +213,14 @@ export default function MobileCartView({
             return (
               <div
                 key={item.productId}
-                className="relative w-full bg-[#f5f3ee] rounded-[9px] p-3.5 sm:p-4 shadow-[0px_0px_5px_rgba(0,0,0,0.35)] mb-6 transition-transform"
+                className="relative w-full bg-[var(--background-elevated)] rounded-[9px] p-3.5 sm:p-4 shadow-[var(--shadow-card)] mb-6 transition-transform"
               >
                 {/* Верхня частина карточки: обкладинка, назва, автор, кнопки улюбленого та видалення */}
                 <div className="flex items-start">
                   {/* Обкладинка */}
                   <Link
                     href={lp(`/products/${item.productId}`)}
-                    className="relative w-[85px] sm:w-[95px] h-[130px] sm:h-[145px] shrink-0 rounded-[6px] overflow-hidden bg-white shadow-sm flex items-center justify-center block"
+                    className="relative w-[85px] sm:w-[95px] h-[130px] sm:h-[145px] shrink-0 rounded-[6px] overflow-hidden bg-[var(--background-elevated)] shadow-sm flex items-center justify-center block"
                   >
                     <img
                       src={imageSrc || "/images/catalog/hunger_games.png"}
@@ -236,16 +236,16 @@ export default function MobileCartView({
                   <div className="flex-1 ml-3.5 sm:ml-4 flex flex-col justify-between self-stretch py-0.5">
                     <div>
                       <Link href={lp(`/products/${item.productId}`)} className="block">
-                        <h3 className="text-[16px] sm:text-[17px] font-semibold text-[#242424] leading-[1.3] line-clamp-2">
+                        <h3 className="text-[16px] sm:text-[17px] font-semibold text-[var(--foreground-primary)] leading-[1.3] line-clamp-2">
                           {title}
                         </h3>
                       </Link>
-                      <p className="text-[14px] text-[rgba(36,36,36,0.5)] leading-[1.3] mt-1 line-clamp-1">
+                      <p className="text-[14px] text-[var(--color-muted-fg)] leading-[1.3] mt-1 line-clamp-1">
                         {author ?? t("product.authorNotSpecified")}
                       </p>
                       <p
                         className={`text-[14px] font-medium leading-[1.3] mt-1 ${
-                          isAvailable ? "text-[#005b33]" : "text-[#c81e1e]"
+                          isAvailable ? "text-[var(--color-green)]" : "text-[#c81e1e]"
                         }`}
                       >
                         {isAvailable ? t("cart.inStock") : t("cart.outOfStock")}
@@ -258,7 +258,7 @@ export default function MobileCartView({
                         type="button"
                         onClick={() => handleToggleFavorite(item.productId)}
                         aria-label={t("cart.addToFavoritesAria")}
-                        className="w-[38px] h-[38px] flex items-center justify-center rounded-full hover:bg-black/5 active:scale-90 transition text-[#242424]"
+                        className="w-[38px] h-[38px] flex items-center justify-center rounded-full hover:bg-[color-mix(in_srgb,var(--foreground-primary)_5%,transparent)] active:scale-90 transition text-[var(--foreground-primary)]"
                       >
                         <img
                           src="/images/main_page/icons/rec-icon-favorite.svg"
@@ -273,7 +273,7 @@ export default function MobileCartView({
                         type="button"
                         onClick={() => removeFromCart(item.productId)}
                         aria-label={t("cart.removeAria")}
-                        className="w-[38px] h-[38px] flex items-center justify-center rounded-full hover:bg-black/5 active:scale-90 transition text-[rgba(36,36,36,0.7)] hover:text-red-600 ml-auto"
+                        className="w-[38px] h-[38px] flex items-center justify-center rounded-full hover:bg-[color-mix(in_srgb,var(--foreground-primary)_5%,transparent)] active:scale-90 transition text-[var(--color-muted-fg)] hover:text-red-600 ml-auto"
                       >
                         <svg viewBox="0 0 24 24" fill="none" className="w-[24px] h-[24px]">
                           <path
@@ -287,7 +287,7 @@ export default function MobileCartView({
                 </div>
 
                 {/* Нижня частина: 3 рядки форматів (Паперова, eBooks, Аудіо книга) */}
-                <div className="mt-4 pt-3 border-t border-[rgba(0,0,0,0.08)] flex flex-col gap-3.5">
+                <div className="mt-4 pt-3 border-t border-[color-mix(in_srgb,var(--foreground-primary)_12%,transparent)] flex flex-col gap-3.5">
                   {(["paper", "ebook", "audio"] as FormatType[]).map((type) => {
                     const cfg = FORMAT_ICONS[type];
                     const formatLabel = t(cfg.labelKey);
@@ -312,14 +312,14 @@ export default function MobileCartView({
                             type="button"
                             onClick={() => updateFormatQuantity(item.productId, type, Math.max(0, qty - 1))}
                             aria-label={t("cart.decreaseQtyAria").replace("{format}", formatLabel)}
-                            className="w-7 h-7 flex items-center justify-center text-[#242424] active:scale-90 transition font-bold"
+                            className="w-7 h-7 flex items-center justify-center text-[var(--foreground-primary)] active:scale-90 transition font-bold"
                           >
                             <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
                               <path d="M5 11H17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
                             </svg>
                           </button>
 
-                          <div className="w-[30px] sm:w-[34px] h-[28px] sm:h-[30px] bg-[#f5f3ee] rounded-[7px] shadow-[0px_0px_2.5px_rgba(0,0,0,0.25)] flex items-center justify-center text-[17px] sm:text-[18px] font-medium text-[#242424]">
+                          <div className="w-[30px] sm:w-[34px] h-[28px] sm:h-[30px] bg-[var(--background-elevated)] rounded-[7px] shadow-[var(--shadow-control)] flex items-center justify-center text-[17px] sm:text-[18px] font-medium text-[var(--foreground-primary)]">
                             {qty}
                           </div>
 
@@ -327,7 +327,7 @@ export default function MobileCartView({
                             type="button"
                             onClick={() => updateFormatQuantity(item.productId, type, qty + 1)}
                             aria-label={t("cart.increaseQtyAria").replace("{format}", formatLabel)}
-                            className="w-7 h-7 flex items-center justify-center text-[#242424] active:scale-90 transition font-bold"
+                            className="w-7 h-7 flex items-center justify-center text-[var(--foreground-primary)] active:scale-90 transition font-bold"
                           >
                             <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
                               <path d="M11 5V17M5 11H17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
@@ -336,7 +336,7 @@ export default function MobileCartView({
                         </div>
 
                         {/* Ціна рядка формату */}
-                        <span className="text-[18px] sm:text-[20px] font-semibold text-[#242424] text-right min-w-[70px] ml-auto">
+                        <span className="text-[18px] sm:text-[20px] font-semibold text-[var(--foreground-primary)] text-right min-w-[70px] ml-auto">
                           {formatPrice(linePrice)}
                         </span>
                       </div>
@@ -351,19 +351,19 @@ export default function MobileCartView({
         {/* Віджет балансу лапок (показується тільки коли є товари) */}
         {hasItems && (
           <>
-            <div className="w-full max-w-[260px] sm:max-w-[280px] h-[44px] bg-[#a97e56] mx-auto rounded-[25px] flex items-center justify-between px-4 shadow-md mb-6 text-[#242424]">
+            <div className="w-full max-w-[260px] sm:max-w-[280px] h-[44px] bg-[var(--color-wood)] mx-auto rounded-[25px] flex items-center justify-between px-4 shadow-md mb-6 text-[var(--foreground-primary)]">
               <div className="flex items-center gap-2">
                 <span className="text-xl sm:text-2xl select-none">🐾</span>
                 <div className="flex flex-col text-left leading-none">
-                  <span className="text-[12px] text-[rgba(36,36,36,0.6)] font-semibold">{t("orders.pawsLabel")}</span>
-                  <span className="text-[14px] font-bold text-[#242424] mt-0.5">{pawsBalance}</span>
+                  <span className="text-[12px] text-[var(--color-muted-fg)] font-semibold">{t("orders.pawsLabel")}</span>
+                  <span className="text-[14px] font-bold text-[var(--foreground-primary)] mt-0.5">{pawsBalance}</span>
                 </div>
               </div>
-              <div className="text-[rgba(36,36,36,0.6)] font-bold">→</div>
+              <div className="text-[var(--color-muted-fg)] font-bold">→</div>
               <div className="flex items-center gap-2">
                 <div className="flex flex-col text-left leading-none">
-                  <span className="text-[12px] text-[rgba(36,36,36,0.6)] font-semibold">{t("orders.discountLabel")}</span>
-                  <span className="text-[14px] font-bold text-[#242424] mt-0.5">{formatPrice(pawsDiscountAmount)}</span>
+                  <span className="text-[12px] text-[var(--color-muted-fg)] font-semibold">{t("orders.discountLabel")}</span>
+                  <span className="text-[14px] font-bold text-[var(--foreground-primary)] mt-0.5">{formatPrice(pawsDiscountAmount)}</span>
                 </div>
                 <img
                   src="/images/header/account_balance_wallet_24px.svg"
@@ -379,7 +379,7 @@ export default function MobileCartView({
             <button
               type="button"
               onClick={() => setPawsApplied(!pawsApplied)}
-              className="block w-fit mx-auto px-7 py-2.5 rounded-[9px] bg-[rgba(0,91,51,0.55)] hover:bg-[rgba(0,91,51,0.7)] active:scale-95 transition-all text-[#f5f3ee] text-[16px] font-normal shadow-sm cursor-pointer mb-8 select-none"
+              className="block w-fit mx-auto px-7 py-2.5 rounded-[9px] bg-[color-mix(in_srgb,var(--color-green)_55%,transparent)] hover:bg-[color-mix(in_srgb,var(--color-green)_70%,transparent)] active:scale-95 transition-all text-[var(--color-cream)] text-[16px] font-normal shadow-sm cursor-pointer mb-8 select-none"
             >
               {pawsApplied ? t("cart.cancelPoints") : t("cart.applyPoints")}
             </button>
@@ -389,22 +389,22 @@ export default function MobileCartView({
 
       {/* Нижній кремовий блок підсумку (завжди відображається, коли кошик завантажений) */}
       {hasItems && (
-        <div className="relative w-full bg-[#f5f3ee] pt-6 pb-[130px] px-4 sm:px-6 shadow-[0px_-8px_25px_rgba(0,0,0,0.15)] rounded-t-[14px]">
+        <div className="relative w-full bg-[var(--background-elevated)] pt-6 pb-[130px] px-4 sm:px-6 shadow-[0_-8px_25px_color-mix(in_srgb,var(--foreground-primary)_20%,transparent)] rounded-t-[14px]">
           {/* Торцевий відривний папір на межі блоків */}
           <div
             className="absolute -top-[12px] left-0 right-0 h-[12px] pointer-events-none overflow-hidden"
             style={{
-              background: "radial-gradient(circle, transparent, transparent 4px, #f5f3ee 4px, #f5f3ee)",
+              background: "radial-gradient(circle, transparent, transparent 4px, var(--background-elevated) 4px, var(--background-elevated))",
               backgroundSize: "16px 16px",
               backgroundPosition: "0 6px",
             }}
           />
 
           {/* Підсумок замовлення */}
-          <div className="flex flex-col gap-3 w-full max-w-[392px] mx-auto text-[#242424]">
+          <div className="flex flex-col gap-3 w-full max-w-[392px] mx-auto text-[var(--foreground-primary)]">
             <div className="flex items-center justify-between">
               <span className="text-[18px] sm:text-[20px] text-[rgba(155,158,175,0.7)] font-normal">{t("cart.subtotal")}</span>
-              <span className="text-[18px] sm:text-[20px] font-semibold text-[#242424]">
+              <span className="text-[18px] sm:text-[20px] font-semibold text-[var(--foreground-primary)]">
                 {formatPrice(subtotal)}
               </span>
             </div>
@@ -416,7 +416,7 @@ export default function MobileCartView({
             </div>
             <div className="flex items-center justify-between">
               <span className="text-[18px] sm:text-[20px] text-[rgba(155,158,175,0.7)] font-normal">{t("cart.delivery")}</span>
-              <span className="text-[18px] sm:text-[20px] font-semibold text-[#242424]">
+              <span className="text-[18px] sm:text-[20px] font-semibold text-[var(--foreground-primary)]">
                 {formatPrice(deliveryCost)}
               </span>
             </div>
@@ -429,7 +429,7 @@ export default function MobileCartView({
           </div>
 
           {/* Розділювач */}
-          <div className="w-full max-w-[392px] mx-auto border-b border-[#DCD7CC] my-5" />
+          <div className="w-full max-w-[392px] mx-auto border-b border-[var(--color-menu-hover)] my-5" />
 
           {/* Чекбокс угоди користувача */}
           <div className="flex items-start gap-3 w-full max-w-[392px] mx-auto mb-6">
@@ -440,22 +440,22 @@ export default function MobileCartView({
               aria-label={t("cart.agreeAria")}
             >
               {agreed ? (
-                <div className="w-[28px] h-[28px] rounded-full bg-[#005b33] border-2 border-[#005b33] flex items-center justify-center shadow-xs transition-all">
+                <div className="w-[28px] h-[28px] rounded-full bg-[var(--color-green)] border-2 border-[var(--color-green)] flex items-center justify-center shadow-xs transition-all">
                   <svg viewBox="0 0 16 16" fill="none" className="w-4 h-4 text-white stroke-white stroke-2">
                     <path d="M3.5 8.5L6.5 11.5L12.5 4.5" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 </div>
               ) : (
-                <div className="w-[28px] h-[28px] rounded-full border-2 border-[#242424] hover:border-[#005b33] transition-colors bg-white/50" />
+                <div className="w-[28px] h-[28px] rounded-full border-2 border-[var(--foreground-primary)] hover:border-[var(--color-green)] transition-colors bg-[color-mix(in_srgb,var(--background-elevated)_50%,transparent)]" />
               )}
             </button>
-            <p className="text-[14px] sm:text-[15px] text-[#242424] leading-[1.4] pt-1.5 select-none">
+            <p className="text-[14px] sm:text-[15px] text-[var(--foreground-primary)] leading-[1.4] pt-1.5 select-none">
               {t("cart.agreePrefix")}{" "}
-              <Link href={lp("/personal-data-protection")} className="text-[#005b33] font-medium hover:underline">
+              <Link href={lp("/personal-data-protection")} className="text-[var(--color-green)] font-medium hover:underline">
                 {t("cart.privacyPolicy")}
               </Link>{" "}
               {t("cart.agreeAnd")}{" "}
-              <Link href={lp("/terms-of-use")} className="text-[#005b33] font-medium hover:underline">
+              <Link href={lp("/terms-of-use")} className="text-[var(--color-green)] font-medium hover:underline">
                 {t("cart.termsOfService")}
               </Link>
             </p>
@@ -463,10 +463,10 @@ export default function MobileCartView({
 
           {/* Промокод */}
           <div className="flex flex-col gap-2.5 w-full max-w-[392px] mx-auto mb-7">
-            <label htmlFor="mobile-promo-code" className="text-[18px] sm:text-[20px] font-normal text-[#242424]">
+            <label htmlFor="mobile-promo-code" className="text-[18px] sm:text-[20px] font-normal text-[var(--foreground-primary)]">
               {t("cart.hasPromo")}
             </label>
-            <div className="w-full bg-[#f5f3ee] rounded-[9px] shadow-[0px_0px_5px_rgba(0,0,0,0.25)] flex items-center px-4 py-2.5 border border-transparent focus-within:border-[#005b33] transition">
+            <div className="w-full bg-[var(--background-elevated)] rounded-[9px] shadow-[var(--shadow-input)] flex items-center px-4 py-2.5 border border-transparent focus-within:border-[var(--color-green)] transition">
               <input
                 id="mobile-promo-code"
                 type="text"
@@ -474,7 +474,7 @@ export default function MobileCartView({
                 onChange={(e) => setPromoCode(e.target.value)}
                 placeholder={t("cart.promoPlaceholder")}
                 aria-label={t("cart.promoAria")}
-                className="w-full bg-transparent text-[16px] sm:text-[18px] text-[#242424] placeholder:text-[rgba(36,36,36,0.5)] focus:outline-none"
+                className="w-full bg-transparent text-[16px] sm:text-[18px] text-[var(--foreground-primary)] placeholder:text-[var(--color-muted-fg)] focus:outline-none"
               />
             </div>
           </div>
@@ -492,8 +492,8 @@ export default function MobileCartView({
             }}
             className={`w-full max-w-[392px] mx-auto py-3.5 px-6 rounded-[60px] font-medium text-[18px] sm:text-[20px] text-white text-center transition-all shadow-md flex items-center justify-center ${
               subtotal > 0
-                ? "bg-[#005b33] hover:bg-[#004e2b] active:scale-[0.98] cursor-pointer"
-                : "bg-[#005b33]/50 cursor-not-allowed"
+                ? "bg-[var(--color-green)] hover:bg-[color-mix(in_srgb,var(--color-green)_85%,black)] active:scale-[0.98] cursor-pointer"
+                : "bg-[color-mix(in_srgb,var(--color-green)_50%,transparent)] cursor-not-allowed"
             }`}
           >
             {t("cart.checkout")}

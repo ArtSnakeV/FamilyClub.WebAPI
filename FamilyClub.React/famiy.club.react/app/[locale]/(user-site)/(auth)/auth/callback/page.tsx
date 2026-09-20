@@ -46,7 +46,7 @@ function AuthCallbackContent() {
           <h2 className="text-2xl font-bold text-red-600 mb-4">
             {t("auth.callbackErrorTitle")}
           </h2>
-          <p className="text-gray-700 mb-6">{error}</p>
+          <p className="text-[var(--foreground-primary)] mb-6">{error}</p>
           <Link
             href={lp("/login")}
             className="inline-block bg-[var(--color-green)] text-white font-medium px-6 py-3 rounded-lg hover:brightness-110 transition shadow-md"
@@ -61,7 +61,7 @@ function AuthCallbackContent() {
   return (
     <div className="flex flex-col items-center justify-center min-h-[60vh] font-sans">
       <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[var(--color-green)] mb-4"></div>
-      <p className="text-lg text-gray-700">{t("auth.callbackAuthorizing")}</p>
+      <p className="text-lg text-[var(--foreground-primary)]">{t("auth.callbackAuthorizing")}</p>
     </div>
   );
 }
@@ -74,7 +74,7 @@ export default function AuthCallbackPage() {
       fallback={
         <div className="flex flex-col items-center justify-center min-h-[60vh] font-sans">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[var(--color-green)] mb-4"></div>
-          <p className="text-lg text-gray-700">{t("auth.callbackLoading")}</p>
+          <p className="text-lg text-[var(--foreground-primary)]">{t("auth.callbackLoading")}</p>
         </div>
       }
     >

@@ -18,7 +18,7 @@ export default function BookSizeSelectForm({
 
   return (
     <div className="flex flex-col gap-0 w-full">
-      <p className="text-[var(--color-black)] font-sans-pro font-normal text-[18px] leading-[150%] tracking-[-0.011em]">
+      <p className="text-[var(--foreground-primary)] font-sans-pro font-normal text-[18px] leading-[150%] tracking-[-0.011em]">
         {t("sellerProduct.printFormat")}
       </p>
       <select
@@ -28,14 +28,14 @@ export default function BookSizeSelectForm({
         }
         className={`input rounded-[9px] text-[12.5px] bg-[var(--color-white)] shadow-[0px_0px_10px_0px_#00000040] h-[40px]`}
       >
-        <option value="" className="text-gray-400">
+        <option value="" className="text-[var(--color-muted-fg)]">
           {t("sellerProduct.selectPrintFormat")}
         </option>
         {formats.map((size) => (
           <option
             key={size.id}
             value={size.id}
-            className="text-[var(--color-black)]"
+            className="text-[var(--foreground-primary)]"
           >
             {size.name}
           </option>

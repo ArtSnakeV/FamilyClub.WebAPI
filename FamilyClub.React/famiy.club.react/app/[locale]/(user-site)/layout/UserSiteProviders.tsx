@@ -3,6 +3,7 @@
 import { PlatformSettingsProvider } from "@/lib/platformSettings/PlatformSettingsContext";
 import PlatformSettingsEffects from "@/lib/platformSettings/PlatformSettingsEffects";
 import MaintenanceGate from "@/lib/platformSettings/MaintenanceGate";
+import { ThemeProvider } from "@/lib/theme/ThemeProvider";
 
 export default function UserSiteProviders({
     children,
@@ -10,9 +11,11 @@ export default function UserSiteProviders({
     children: React.ReactNode;
 }) {
     return (
-        <PlatformSettingsProvider>
-            <PlatformSettingsEffects />
-            <MaintenanceGate>{children}</MaintenanceGate>
-        </PlatformSettingsProvider>
+        <ThemeProvider>
+            <PlatformSettingsProvider>
+                <PlatformSettingsEffects />
+                <MaintenanceGate>{children}</MaintenanceGate>
+            </PlatformSettingsProvider>
+        </ThemeProvider>
     );
 }

@@ -88,7 +88,7 @@ export default function LoginSection({ onGoToRegister }: LoginSectionProps) {
         className="flex flex-col gap-5 items-center"
       >
         <div className="w-full flex flex-col gap-2.5">
-          <label className="font-sans font-semibold text-[24px] text-[#242424]">
+          <label className="font-sans font-semibold text-[24px] text-[var(--foreground-primary)]">
             {t("auth.email")}
           </label>
           <input
@@ -99,19 +99,19 @@ export default function LoginSection({ onGoToRegister }: LoginSectionProps) {
               setFormData({ ...formData, login: e.target.value })
             }
             placeholder={t("auth.emailPlaceholder")}
-            className="outline-none transition-shadow focus:shadow-md w-full rounded-[9px] px-4 bg-white shadow-[0px_0px_10px_0px_#00000033] font-sans text-[18px] text-[#242424] placeholder:text-[#242424]/50"
+            className="outline-none transition-shadow focus:shadow-md w-full rounded-[9px] px-4 bg-[var(--background-elevated)] shadow-[0px_0px_10px_0px_#00000033] font-sans text-[18px] text-[var(--foreground-primary)] placeholder:text-[var(--color-muted-fg)]"
             style={{ height: INPUT_HEIGHT }}
           />
         </div>
 
         <div className="w-full flex flex-col gap-2.5">
           <div className="flex justify-between items-center w-full gap-2">
-            <label className="font-sans font-semibold text-[24px] text-[#242424]">
+            <label className="font-sans font-semibold text-[24px] text-[var(--foreground-primary)]">
               {t("auth.password")}
             </label>
             <Link
               href={lp("/forgot-password")}
-              className="text-[16px] text-[#242424] hover:underline whitespace-nowrap"
+              className="text-[16px] text-[var(--foreground-primary)] hover:underline whitespace-nowrap"
             >
               {t("auth.forgotPassword")}
             </Link>
@@ -128,7 +128,7 @@ export default function LoginSection({ onGoToRegister }: LoginSectionProps) {
               onChange={(e) =>
                 setFormData({ ...formData, password: e.target.value })
               }
-              className="outline-none w-full h-full rounded-[9px] pl-4 pr-12 bg-white shadow-[0px_0px_10px_0px_#00000033] font-sans text-[18px] text-[#242424] placeholder:text-[#242424]/50"
+              className="outline-none w-full h-full rounded-[9px] pl-4 pr-12 bg-[var(--background-elevated)] shadow-[0px_0px_10px_0px_#00000033] font-sans text-[18px] text-[var(--foreground-primary)] placeholder:text-[var(--color-muted-fg)]"
             />
             <button
               type="button"
@@ -167,7 +167,7 @@ export default function LoginSection({ onGoToRegister }: LoginSectionProps) {
             onChange={(e) => setRememberMe(e.target.checked)}
             className="w-4 h-4 accent-[var(--color-green)]"
           />
-          <span className="text-[16px] text-[#242424]">{t("auth.rememberMe")}</span>
+          <span className="text-[16px] text-[var(--foreground-primary)]">{t("auth.rememberMe")}</span>
         </label>
 
         <button
@@ -182,17 +182,17 @@ export default function LoginSection({ onGoToRegister }: LoginSectionProps) {
         </button>
 
         <div className="flex items-center justify-center w-full py-1 gap-5">
-          <div className="flex-1 border-t border-[#242424]" />
-          <span className="font-sans text-[18px] text-[#242424] whitespace-nowrap">
+          <div className="flex-1 border-t border-[var(--foreground-primary)]" />
+          <span className="font-sans text-[18px] text-[var(--foreground-primary)] whitespace-nowrap">
             {t("auth.or")}
           </span>
-          <div className="flex-1 border-t border-[#242424]" />
+          <div className="flex-1 border-t border-[var(--foreground-primary)]" />
         </div>
 
         <button
           type="button"
           onClick={() => handleExternalLogin("Google")}
-          className="w-full rounded-[9px] bg-white shadow-[0px_0px_10px_0px_#00000033] flex items-center justify-center gap-3 border-0 cursor-pointer hover:brightness-95 active:scale-[0.98] transition"
+          className="w-full rounded-[9px] bg-[var(--background-elevated)] shadow-[0px_0px_10px_0px_#00000033] flex items-center justify-center gap-3 border-0 cursor-pointer hover:brightness-95 active:scale-[0.98] transition"
           style={{ height: INPUT_HEIGHT }}
         >
           <img
@@ -200,12 +200,12 @@ export default function LoginSection({ onGoToRegister }: LoginSectionProps) {
             alt="Google"
             className="w-[22px] h-[22px] object-contain"
           />
-          <span className="font-sans text-[18px] text-[#242424]">
+          <span className="font-sans text-[18px] text-[var(--foreground-primary)]">
             {t("auth.continueGoogle")}
           </span>
         </button>
 
-        <span className="mt-1 font-sans text-[18px] text-[#242424] inline-flex whitespace-nowrap gap-1.5">
+        <span className="mt-1 font-sans text-[18px] text-[var(--foreground-primary)] inline-flex whitespace-nowrap gap-1.5">
           {t("auth.noAccount")}{" "}
           <button
             type="button"

@@ -42,10 +42,10 @@ export default function NotificationThreadCard({
                             <img
                                 src={avatarSrc}
                                 alt={t("notifications.avatarAlt")}
-                                className="w-9 h-9 rounded-full object-cover border border-[#d4cbbd]"
+                                className="w-9 h-9 rounded-full object-cover border border-[var(--color-menu-separator)]"
                             />
                         ) : (
-                            <div className="w-9 h-9 rounded-full bg-black/10 flex items-center justify-center text-sm font-bold text-black/70">
+                            <div className="w-9 h-9 rounded-full bg-[color-mix(in_srgb,var(--foreground-primary)_10%,transparent)] flex items-center justify-center text-sm font-bold text-[var(--color-muted-fg)]">
                                 {avatarFallback ?? "👤"}
                             </div>
                         )}
@@ -60,20 +60,20 @@ export default function NotificationThreadCard({
                     </h3>
                 </div>
                 {lastMessageTime && (
-                    <span className="text-[11px] font-medium text-black/50 shrink-0">
+                    <span className="text-[11px] font-medium text-[var(--color-muted-fg)] shrink-0">
                         {lastMessageTime}
                     </span>
                 )}
             </div>
 
             {/* Message preview text */}
-            <p className="text-[13px] text-black/75 leading-snug my-1.5 line-clamp-2 w-full">
+            <p className="text-[13px] text-[var(--color-muted-fg)] leading-snug my-1.5 line-clamp-2 w-full">
                 {lastMessageText || t("notifications.cardEmptyPreview")}
             </p>
 
             {/* Bottom action link */}
             <div className="mt-1">
-                <span className="text-[13px] font-medium text-[#1e5631] hover:underline">
+                <span className="text-[13px] font-medium text-[var(--color-green)] hover:underline">
                     {t("notifications.view")}
                 </span>
             </div>

@@ -59,7 +59,7 @@ export default function SocialLinkEditUserProfile({ links, setLinks }: Props) {
 
                         {/* Назва */}
                         <div className="flex flex-col gap-0.5 w-[236px]">
-                            <label className="text-[11px] text-gray-400 px-1">
+                            <label className="text-[11px] text-[var(--color-muted-fg)] px-1">
                                 {t("profileEdit.linkNameLabel")}
                             </label>
                             <input
@@ -68,14 +68,14 @@ export default function SocialLinkEditUserProfile({ links, setLinks }: Props) {
                                 type="text"
                                 value={link.name}
                                 onChange={(e) => updateLink(link.id, "name", e.target.value)}
-                                className="w-full h-[52px] px-4 rounded-[8px] border border-gray-200 bg-[#f5f5f5] text-[15px] outline-none focus:border-[#005B33]"
+                                className="w-full h-[52px] px-4 rounded-[8px] border border-[var(--color-menu-separator)] bg-[var(--background-elevated)] text-[15px] outline-none focus:border-[var(--color-green)]"
                                 style={{ boxShadow: "0px 0px 10px 0px #00000040" }}
                             />
                         </div>
 
                         {/* URL */}
                         <div className="flex w-[700px] flex-col gap-0.5 flex-1">
-                            <label className="text-[11px] text-gray-400 px-1">
+                            <label className="text-[11px] text-[var(--color-muted-fg)] px-1">
                                 {t("profileEdit.linkUrlLabel")}
                             </label>
                             <input
@@ -84,7 +84,7 @@ export default function SocialLinkEditUserProfile({ links, setLinks }: Props) {
                                 placeholder="https://"
                                 value={link.url}
                                 onChange={(e) => updateLink(link.id, "url", e.target.value)}
-                                className="w-full h-[52px] px-4 rounded-[8px] border border-gray-200 bg-[#f5f5f5] text-[15px] outline-none focus:border-[#005B33]"
+                                className="w-full h-[52px] px-4 rounded-[8px] border border-[var(--color-menu-separator)] bg-[var(--background-elevated)] text-[15px] outline-none focus:border-[var(--color-green)]"
                                 style={{ boxShadow: "0px 0px 10px 0px #00000040" }}
                             />
                         </div>
@@ -97,7 +97,7 @@ export default function SocialLinkEditUserProfile({ links, setLinks }: Props) {
                 <button
                     type="button"
                     onClick={addLink}
-                    className="flex items-center gap-2 px-6 py-2 bg-[#005B33] text-[var(--color-white)] text-[18px] rounded-[48px] font-semibold hover:bg-[#097E4B] transition-colors h-[52px]"
+                    className="flex items-center gap-2 px-6 py-2 bg-[var(--color-green)] text-[var(--color-white)] text-[18px] rounded-[48px] font-semibold hover:bg-[color-mix(in_srgb,var(--color-green)_85%,black)] transition-colors h-[52px]"
                 >
                     <img
                         src="/images/userProfile/editUserProfile/plus-solid-user.png"
@@ -111,7 +111,7 @@ export default function SocialLinkEditUserProfile({ links, setLinks }: Props) {
                 <button
                     type="button"
                     onClick={() => removeLink(links[links.length - 1]?.id)}
-                    className="text-gray-400 hover:text-red-500 transition-colors"
+                    className="text-[var(--color-muted-fg)] hover:text-[#981717] transition-colors"
                     aria-label={t("profileEdit.deleteLinkAria")}
                 >
                     <img

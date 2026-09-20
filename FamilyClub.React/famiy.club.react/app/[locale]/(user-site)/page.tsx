@@ -398,7 +398,7 @@ export default function Home() {
     }, [reviewCards]);
 
     return (
-        <main className="bg-[#f5f3ee] text-[#242424] overflow-x-hidden">
+        <main className="bg-[var(--background-main)] text-[var(--foreground-primary)] overflow-x-hidden">
             {/* Mobile Home Page Version (1-to-1 Figma Node 2119:32862) */}
             <div className="block md:hidden">
                 <MobileHome

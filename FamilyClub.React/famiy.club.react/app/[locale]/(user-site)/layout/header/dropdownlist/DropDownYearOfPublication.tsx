@@ -101,12 +101,12 @@ export default function DropDownYearOfPublication() {
           }}
           className="absolute pointer-events-auto inset-0 flex justify-center items-end mb-[46px] z-10"
         >
-          <span className="text-white">{t("header.publicationYear")}</span>
+          <span className="text-[var(--color-cream)]">{t("header.publicationYear")}</span>
         </button>
 
         {/* DROPDOWN */}
         {open && (
-          <div className="absolute ml-2 pointer-events-auto z-20 top-[42px] w-full flex flex-col items-start text-[var(--color-white)]">
+          <div className="absolute ml-2 pointer-events-auto z-20 top-[42px] w-full flex flex-col items-start text-[var(--color-cream)]">
             {/* SEARCH */}
             <div className="relative mt-[40px] ml-2 w-[90px] h-[40px]">
               <Image
@@ -127,7 +127,7 @@ export default function DropDownYearOfPublication() {
                   w-full h-full
                   bg-transparent
                   outline-none
-                  text-[#272727]
+                  text-[var(--foreground-primary)]
                   text-xs
                   px-4 pr-7
                 "

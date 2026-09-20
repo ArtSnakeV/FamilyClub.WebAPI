@@ -34,7 +34,7 @@ function DonutRing({ segments }: { segments: ReturnType<typeof withPercentages> 
           cy={SIZE / 2}
           r={R}
           fill="none"
-          stroke="#E8E4DC"
+          stroke="color-mix(in srgb, var(--foreground-primary) 18%, transparent)"
           strokeWidth={STROKE}
         />
       </svg>
@@ -78,21 +78,18 @@ export default function DonutDiagramChart({
   emptyLabel = "Немає даних",
   totalLabel = "Всього",
 }: Props) {
-  const chartSegments = useMemo(
-    () => withPercentages(segments),
-    [segments]
-  );
+  const chartSegments = useMemo(() => withPercentages(segments), [segments]);
 
   const total = chartSegments.reduce((sum, s) => sum + s.count, 0);
 
   return (
-    <div className="flex flex-col gap-4 px-5 py-5 bg-[var(--color-white)] rounded-[10px] shadow-[0px_0px_15px_0px_rgba(0,0,0,0.25)] min-h-[280px]">
+    <div className="flex flex-col gap-4 px-5 py-5 bg-[var(--background-elevated)] text-[var(--foreground-primary)] rounded-[10px] shadow-[var(--shadow-panel)] min-h-[280px]">
       <div className="flex items-center justify-between gap-2">
-        <h3 className="text-base font-bold text-[#242424]">{title}</h3>
+        <h3 className="text-base font-bold text-[var(--foreground-primary)]">{title}</h3>
         {href && (
           <Link
             href={href}
-            className="text-sm text-[#005b33] hover:underline shrink-0"
+            className="text-sm text-[var(--color-green)] hover:underline shrink-0"
           >
             Детальніше →
           </Link>
@@ -101,10 +98,10 @@ export default function DonutDiagramChart({
 
       {isLoading ? (
         <div className="flex flex-1 items-center justify-center py-12">
-          <div className="w-8 h-8 border-4 border-[#005b33] border-t-transparent rounded-full animate-spin" />
+          <div className="w-8 h-8 border-4 border-[var(--color-green)] border-t-transparent rounded-full animate-spin" />
         </div>
       ) : total === 0 ? (
-        <div className="flex flex-1 items-center justify-center py-12 text-sm text-[#777]">
+        <div className="flex flex-1 items-center justify-center py-12 text-sm text-[var(--color-muted-fg)]">
           {emptyLabel}
         </div>
       ) : (
@@ -112,10 +109,10 @@ export default function DonutDiagramChart({
           <div className="relative shrink-0" style={{ width: SIZE, height: SIZE }}>
             <DonutRing segments={chartSegments} />
             <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-              <span className="text-2xl font-bold text-[#242424] leading-none">
+              <span className="text-2xl font-bold text-[var(--foreground-primary)] leading-none">
                 {total.toLocaleString("uk-UA")}
               </span>
-              <span className="text-xs text-[#777] mt-1">{totalLabel}</span>
+              <span className="text-xs text-[var(--color-muted-fg)] mt-1">{totalLabel}</span>
             </div>
           </div>
 
@@ -123,7 +120,7 @@ export default function DonutDiagramChart({
             {chartSegments.map((seg) => (
               <li
                 key={seg.id}
-                className="flex items-center gap-2 text-sm text-[#242424]"
+                className="flex items-center gap-2 text-sm text-[var(--foreground-primary)]"
               >
                 <span
                   className="w-3 h-3 rounded-sm shrink-0"
@@ -131,7 +128,7 @@ export default function DonutDiagramChart({
                   aria-hidden
                 />
                 <span className="truncate flex-1">{seg.label}</span>
-                <span className="text-[#555] shrink-0 tabular-nums">
+                <span className="text-[var(--color-muted-fg)] shrink-0 tabular-nums">
                   {seg.count} ({seg.percent.toFixed(1)}%)
                 </span>
               </li>

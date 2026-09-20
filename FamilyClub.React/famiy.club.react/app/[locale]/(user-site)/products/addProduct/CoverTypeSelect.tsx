@@ -17,7 +17,7 @@ export default function CoverTypeSelect({ value, onChange }: Props) {
 
   return (
     <div>
-      <p className="text-[var(--color-black)] font-sans-pro font-normal text-[18px]">
+      <p className="text-[var(--foreground-primary)] font-sans-pro font-normal text-[18px]">
         {t("sellerProduct.coverType")}
       </p>
 

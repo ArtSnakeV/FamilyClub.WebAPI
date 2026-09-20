@@ -58,11 +58,11 @@ export default function DropDownLanguage() {
           }}
           className="absolute pointer-events-auto inset-0 flex justify-center items-end mb-[56px] z-10 focus:outline-none"
         >
-          <span className="text-[var(--color-white)]">{t("header.languages")}</span>
+          <span className="text-[var(--color-cream)]">{t("header.languages")}</span>
         </button>
 
         {open && (
-          <div className="absolute pointer-events-auto z-20 top-[12px] w-full flex flex-col items-center gap-2 text-[var(--color-white)]">
+          <div className="absolute pointer-events-auto z-20 top-[12px] w-full flex flex-col items-center gap-2 text-[var(--color-cream)]">
             <div className="relative top-[40px] w-[110px] h-[40px]">
               <div
                 className="custom-scrollbar relative mt-[50px] flex flex-col items-center gap-4"
@@ -81,7 +81,7 @@ export default function DropDownLanguage() {
                       key={l.id}
                       href={lp(`/products?languageId=${l.id}`)}
                       onClick={() => setOpen(false)}
-                      className="flex items-center justify-center text-center text-[13px] rounded-[15px] border-[2px] border-transparent hover:border-[#27272780] transition-all duration-200"
+                      className="flex items-center justify-center text-center text-[13px] rounded-[15px] border-[2px] border-transparent hover:border-[color-mix(in_srgb,var(--color-cream)_50%,transparent)] transition-all duration-200"
                       style={{ width: "80px", height: "30px", flexShrink: 0 }}
                     >
                       {l.languageName}

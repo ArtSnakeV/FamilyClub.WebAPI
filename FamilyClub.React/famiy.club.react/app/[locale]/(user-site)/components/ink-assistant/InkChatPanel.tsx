@@ -225,18 +225,18 @@ export default function InkChatPanel({ onClose, onPlayGame }: InkChatPanelProps)
     <div
       role="dialog"
       aria-label={t("ink.dialogAria")}
-      className="ink-panel-in flex w-[300px] flex-col overflow-hidden rounded-[12px] border border-[#005B33]/30 bg-[#F5F3EE] shadow-[0_8px_28px_rgba(36,36,36,0.28)]"
+      className="ink-panel-in flex w-[300px] flex-col overflow-hidden rounded-[12px] border border-[var(--color-green)]/30 bg-[var(--background-elevated)] shadow-[var(--shadow-panel)]"
     >
-      <div className="flex items-center justify-between bg-[#005B33] px-3 py-2 text-white">
+      <div className="flex items-center justify-between bg-[var(--color-green)] px-3 py-2 text-[var(--color-cream)]">
         <div className="flex items-center gap-2">
           <span className="inline-block h-2.5 w-2.5 rounded-full bg-[#F5C542]" aria-hidden />
-          <p className="font-serif text-sm font-semibold tracking-wide">Ink</p>
+          <p className="font-serif text-sm font-semibold tracking-wide text-[var(--color-cream)]">Ink</p>
         </div>
         <button
           type="button"
           onClick={onClose}
           aria-label={t("ink.closeAria")}
-          className="rounded px-2 py-0.5 text-lg leading-none text-white/90 transition-colors hover:bg-white/15 hover:text-white"
+          className="rounded px-2 py-0.5 text-lg leading-none text-[var(--color-cream)]/90 transition-colors hover:bg-[var(--color-cream)]/15 hover:text-[var(--color-cream)]"
         >
           ×
         </button>
@@ -251,14 +251,14 @@ export default function InkChatPanel({ onClose, onPlayGame }: InkChatPanelProps)
             key={m.id}
             className={`max-w-[90%] rounded-[10px] px-2.5 py-1.5 text-[13px] leading-snug ${
               m.from === "ink"
-                ? "self-start bg-white text-[#242424] shadow-sm"
-                : "self-end bg-[#E8F5EF] text-[#005B33]"
+                ? "self-start bg-[var(--background-main)] text-[var(--foreground-primary)] shadow-[var(--shadow-control)]"
+                : "self-end bg-[color-mix(in_srgb,var(--color-green)_18%,transparent)] text-[var(--color-green)]"
             }`}
           >
             <p className="whitespace-pre-wrap">{m.text}</p>
             {m.from === "ink" && m.books && m.books.length > 0 ? (
-              <div className="mt-2 border-t border-[#005B33]/15 pt-1.5">
-                <p className="mb-1 text-[10px] font-medium uppercase tracking-wide text-[#005B33]/70">
+              <div className="mt-2 border-t border-[var(--color-green)]/15 pt-1.5">
+                <p className="mb-1 text-[10px] font-medium uppercase tracking-wide text-[var(--color-green)]/70">
                   {t("ink.bookLinksLabel")}
                 </p>
                 <ul className="flex flex-col gap-1">
@@ -266,7 +266,7 @@ export default function InkChatPanel({ onClose, onPlayGame }: InkChatPanelProps)
                     <li key={book.id}>
                       <Link
                         href={lp(`/products/${book.id}`)}
-                        className="text-[12px] font-medium text-[#005B33] underline decoration-[#005B33]/35 underline-offset-2 transition-colors hover:decoration-[#005B33]"
+                        className="text-[12px] font-medium text-[var(--color-green)] underline decoration-[var(--color-green)]/35 underline-offset-2 transition-colors hover:decoration-[var(--color-green)]"
                       >
                         {book.title}
                       </Link>
@@ -279,7 +279,7 @@ export default function InkChatPanel({ onClose, onPlayGame }: InkChatPanelProps)
         ))}
         {thinking ? (
           <div
-            className="ink-thinking self-start max-w-[90%] rounded-[10px] bg-white px-2.5 py-1.5 text-[13px] leading-snug text-[#005B33]/80 shadow-sm"
+            className="ink-thinking self-start max-w-[90%] rounded-[10px] bg-[var(--background-main)] px-2.5 py-1.5 text-[13px] leading-snug text-[var(--color-green)]/80 shadow-[var(--shadow-control)]"
             aria-live="polite"
           >
             {t("ink.thinking")}
@@ -287,7 +287,7 @@ export default function InkChatPanel({ onClose, onPlayGame }: InkChatPanelProps)
         ) : null}
       </div>
 
-      <div className="flex flex-wrap gap-1.5 border-t border-[#005B33]/15 px-3 py-2">
+      <div className="flex flex-wrap gap-1.5 border-t border-[var(--color-green)]/15 px-3 py-2">
         {quickReplies.map((item) =>
           item.href ? (
             <Link
@@ -301,7 +301,7 @@ export default function InkChatPanel({ onClose, onPlayGame }: InkChatPanelProps)
                 handleQuick(item);
               }}
               aria-disabled={thinking}
-              className={`rounded-full border border-[#005B33]/35 bg-white px-2.5 py-1 text-[11px] font-medium text-[#005B33] transition-colors hover:border-[#005B33] hover:bg-[#E8F5EF] ${
+              className={`rounded-full border border-[var(--color-green)]/35 bg-[var(--background-main)] px-2.5 py-1 text-[11px] font-medium text-[var(--color-green)] transition-colors hover:border-[var(--color-green)] hover:bg-[color-mix(in_srgb,var(--color-green)_18%,transparent)] ${
                 thinking ? "pointer-events-none opacity-50" : ""
               }`}
             >
@@ -313,7 +313,7 @@ export default function InkChatPanel({ onClose, onPlayGame }: InkChatPanelProps)
               type="button"
               onClick={() => handleQuick(item)}
               disabled={thinking}
-              className="rounded-full border border-[#005B33]/35 bg-white px-2.5 py-1 text-[11px] font-medium text-[#005B33] transition-colors hover:border-[#005B33] hover:bg-[#E8F5EF] disabled:cursor-not-allowed disabled:opacity-50"
+              className="rounded-full border border-[var(--color-green)]/35 bg-[var(--background-main)] px-2.5 py-1 text-[11px] font-medium text-[var(--color-green)] transition-colors hover:border-[var(--color-green)] hover:bg-[color-mix(in_srgb,var(--color-green)_18%,transparent)] disabled:cursor-not-allowed disabled:opacity-50"
             >
               {item.label}
             </button>
@@ -323,7 +323,7 @@ export default function InkChatPanel({ onClose, onPlayGame }: InkChatPanelProps)
 
       <form
         onSubmit={handleSubmit}
-        className="flex items-center gap-1.5 border-t border-[#005B33]/15 px-2 py-2"
+        className="flex items-center gap-1.5 border-t border-[var(--color-green)]/15 px-2 py-2"
       >
         <input
           value={draft}
@@ -331,12 +331,12 @@ export default function InkChatPanel({ onClose, onPlayGame }: InkChatPanelProps)
           placeholder={t("ink.placeholder")}
           aria-label={t("ink.messageAria")}
           disabled={thinking}
-          className="min-w-0 flex-1 rounded-[8px] border border-gray-300 bg-white px-2.5 py-1.5 text-[13px] text-[#242424] outline-none focus:border-[#005B33] disabled:cursor-not-allowed disabled:opacity-60"
+          className="min-w-0 flex-1 rounded-[8px] border border-[var(--color-menu-separator)] bg-[var(--background-main)] px-2.5 py-1.5 text-[13px] text-[var(--foreground-primary)] caret-[var(--foreground-primary)] placeholder:text-[var(--color-muted-fg)] outline-none focus:border-[var(--color-green)] disabled:cursor-not-allowed disabled:opacity-60"
         />
         <button
           type="submit"
           disabled={thinking || !draft.trim()}
-          className="rounded-[8px] bg-[#005B33] px-3 py-1.5 text-[12px] font-semibold text-white transition-colors hover:bg-[#004d2b] disabled:cursor-not-allowed disabled:opacity-50"
+          className="rounded-[8px] bg-[var(--color-green)] px-3 py-1.5 text-[12px] font-semibold text-[var(--color-cream)] transition-colors hover:bg-[color-mix(in_srgb,var(--color-green)_85%,black)] disabled:cursor-not-allowed disabled:opacity-50"
         >
           {t("ink.send")}
         </button>

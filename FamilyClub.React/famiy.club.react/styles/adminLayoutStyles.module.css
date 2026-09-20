@@ -147,3 +147,13 @@
   line-height: 150%;
   transition: color 0.2s ease-in-out;
 }
+
+/* Ink Night: inactive icons stay readable on dark parchment */
+:global([data-theme="ink-night"]) .customTabLink {
+  --icon-filter: brightness(0) invert(0.88);
+}
+
+:global([data-theme="ink-night"]) .customTabLink:hover,
+:global([data-theme="ink-night"]) .customTabLink.active {
+  --icon-filter: invert(100%) brightness(100%);
+}

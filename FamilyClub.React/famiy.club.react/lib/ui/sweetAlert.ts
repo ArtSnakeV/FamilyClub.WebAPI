@@ -20,9 +20,9 @@ type PromptOptions = ConfirmOptions & {
 const baseOptions: SweetAlertOptions = {
   customClass: { popup: "librellis-swal" },
   buttonsStyling: true,
-  confirmButtonColor: "#005B33",
-  cancelButtonColor: "#7E4D1E",
-  backdrop: "rgba(36, 36, 36, 0.45)",
+  // Colors come from styles/sweetalert-theme.css (theme tokens).
+  // Avoid hardcoded hex so Ink Night / light stay in sync.
+  backdrop: "color-mix(in srgb, var(--foreground-primary) 45%, transparent)",
 };
 
 /** Replaces window.alert() */

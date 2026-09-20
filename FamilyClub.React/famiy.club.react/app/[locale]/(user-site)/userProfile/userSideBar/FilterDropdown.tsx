@@ -62,7 +62,7 @@ export default function FilterDropdown({
       w-[680px]
       h-[440px]
       rounded-[0px_26px_26px_26px]
-      bg-white
+      bg-[var(--background-elevated)]
       p-6
       z-50
       shadow-[0px_0px_15px_0px_#24242433]
@@ -72,7 +72,7 @@ export default function FilterDropdown({
 
       {/* Жанри */}
       <div className="text-center mb-4">
-        <Link href={lp("/products")} onClick={onClose} className="text-[22px] font-semibold text-[var(--color-black)]">
+        <Link href={lp("/products")} onClick={onClose} className="text-[22px] font-semibold text-[var(--foreground-primary)]">
           {t("header.genres")}
         </Link>
       </div>
@@ -84,8 +84,8 @@ export default function FilterDropdown({
             key={category.id}
             onClick={() => handleCategoryToggle(category.id!)}
             className={`text-left rounded-full transition-all duration-200 border text-[15px] w-fit font-source-sans ${currentIds.includes(category.id!)
-              ? "border-[#242424] text-[#242424] bg-[#F5F3EE]"
-              : "border-transparent text-[#242424] hover:border-[#D9D4C7] hover:bg-[#F5F3EE]"
+              ? "border-[var(--foreground-primary)] text-[var(--foreground-primary)] bg-[var(--background-elevated)]"
+              : "border-transparent text-[var(--foreground-primary)] hover:border-[var(--color-border-warm)] hover:bg-[var(--background-elevated)]"
               }`}
             style={{ padding: "1px 2px" }}
           >
@@ -109,7 +109,7 @@ export default function FilterDropdown({
             { label: t("profile.filter.audioOnly"), key: "audio", active: audioSelected },
           ].map(({ label, key, active }) => (
             <div key={key} className="flex flex-row gap-4 items-center justify-center w-[48%]">
-              <p className="font-semibold text-[19px]">{label}</p>
+              <p className="font-semibold text-[19px] text-[var(--foreground-primary)]">{label}</p>
               <button
                 type="button"
                 onClick={() => updateParam(key, !!active)}
@@ -144,17 +144,17 @@ function YearSearch({ onClose }: { onClose: () => void }) {
 
   return (
     <div className="flex flex-col items-center w-[48%]">
-      <p className="font-semibold text-[19px]">{t("header.publicationYear")}</p>
-      <div className="flex items-center bg-[var(--color-white)] rounded-[10px] px-2 h-[40px] w-[280px] shadow-[0px_0px_10px_0px_#24242466] hover:shadow-[0px_0px_15px_0px_#242424CC] transition-all duration-300">
+      <p className="font-semibold text-[19px] text-[var(--foreground-primary)]">{t("header.publicationYear")}</p>
+      <div className="flex items-center bg-[var(--background-main)] rounded-[10px] px-2 h-[40px] w-[280px] shadow-[var(--shadow-input)] hover:shadow-[var(--shadow-card)] transition-all duration-300">
         <input
           type="number"
           value={searchYear}
           onChange={(e) => setSearchYear(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && go()}
           onClick={(e) => e.stopPropagation()}
-          className="w-full h-full bg-transparent text-[18px] text-[#272727] outline-none px-2"
+          className="w-full h-full bg-transparent text-[18px] text-[var(--foreground-primary)] caret-[var(--foreground-primary)] outline-none px-2"
         />
-        <button onClick={(e) => { e.stopPropagation(); go(); }} className="w-[22px] h-[22px] flex items-center justify-center flex-shrink-0">
+        <button onClick={(e) => { e.stopPropagation(); go(); }} className="header-utility-icon w-[22px] h-[22px] flex items-center justify-center flex-shrink-0">
           <Image src="/images/header/zoom_out_24px.png" alt="search" width={22} height={22} className="object-contain cursor-pointer" priority />
         </button>
       </div>
@@ -180,14 +180,14 @@ function AlphabetSort({ onClose }: { onClose: () => void }) {
 
   return (
     <div className="flex flex-col items-center w-[48%]">
-      <p className="font-semibold text-[19px]">{t("profile.filter.alphabet")}</p>
+      <p className="font-semibold text-[19px] text-[var(--foreground-primary)]">{t("profile.filter.alphabet")}</p>
       <div className="flex flex-row gap-4 justify-around w-[280px]">
         {(["name-asc", "name-desc"] as const).map((dir) => (
           <button
             key={dir}
             className={`text-left text-[22px] rounded-full transition-all duration-200 border-2 w-fit font-source-sans ${sortNameProduct === dir
-              ? "border-[#242424] text-[#242424] bg-[#F5F3EE]"
-              : "border-transparent text-[#242424] hover:border-[#D9D4C7] hover:bg-[#F5F3EE]"
+              ? "border-[var(--foreground-primary)] text-[var(--foreground-primary)] bg-[var(--background-elevated)]"
+              : "border-transparent text-[var(--foreground-primary)] hover:border-[var(--color-border-warm)] hover:bg-[var(--background-elevated)]"
               }`}
             style={{ padding: "3px 4px" }}
             onClick={() => handleSort(dir)}

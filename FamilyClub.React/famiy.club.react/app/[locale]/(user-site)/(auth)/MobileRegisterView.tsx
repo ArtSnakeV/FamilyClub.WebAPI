@@ -130,13 +130,13 @@ export default function MobileRegisterView() {
   };
 
   return (
-    <div className="flex md:hidden fixed inset-0 z-[100] bg-[#c7a381] flex-col justify-between items-center py-6 px-5 overflow-y-auto min-h-screen font-['Source_Sans_Pro',sans-serif]">
+    <div className="flex md:hidden fixed inset-0 z-[100] bg-[var(--color-wood)] flex-col justify-between items-center py-6 px-5 overflow-y-auto min-h-screen font-['Source_Sans_Pro',sans-serif]">
       {/* Back Button */}
       <div className="w-full flex justify-start pt-2 px-1 max-w-[372px]">
         <button
           type="button"
           onClick={() => router.back()}
-          className="w-[40px] h-[40px] rounded-full bg-[#f5f3ee]/50 flex items-center justify-center text-[20px] text-[#242424] hover:bg-[#f5f3ee] transition-colors active:scale-95"
+          className="w-[40px] h-[40px] rounded-full bg-[color-mix(in_srgb,var(--background-elevated)_50%,transparent)] flex items-center justify-center text-[20px] text-[var(--foreground-primary)] hover:bg-[var(--background-elevated)] transition-colors active:scale-95"
           aria-label={t("auth.backAria")}
         >
           ←
@@ -159,17 +159,17 @@ export default function MobileRegisterView() {
       >
         {/* Error message if any */}
         {error && (
-          <div className="bg-red-500/20 border border-red-500/50 rounded-[9px] px-4 py-2.5 text-center text-[#242424] font-medium text-[15px]">
+          <div className="bg-red-500/20 border border-red-500/50 rounded-[9px] px-4 py-2.5 text-center text-[var(--foreground-primary)] font-medium text-[15px]">
             {error}
           </div>
         )}
 
         {/* First Name Input */}
         <div className="flex flex-col gap-[8px] w-full">
-          <label className="text-[20px] font-semibold text-[#242424] leading-normal">
+          <label className="text-[20px] font-semibold text-[var(--foreground-primary)] leading-normal">
             {t("auth.firstName")}
           </label>
-          <div className="bg-[#f5f3ee] h-[50px] w-full rounded-[9px] px-[20px] py-[10px] drop-shadow-[0px_0px_5px_rgba(0,0,0,0.25)] flex items-center">
+          <div className="bg-[var(--background-elevated)] h-[50px] w-full rounded-[9px] px-[20px] py-[10px] drop-shadow-[0px_0px_5px_rgba(0,0,0,0.25)] flex items-center">
             <input
               type="text"
               value={formData.firstName}
@@ -177,17 +177,17 @@ export default function MobileRegisterView() {
                 setFormData({ ...formData, firstName: e.target.value })
               }
               placeholder={t("auth.firstNamePlaceholderAlt")}
-              className="w-full bg-transparent outline-none text-[16px] text-[#242424] placeholder:text-[#242424]/50 tracking-[-0.176px]"
+              className="w-full bg-transparent outline-none text-[16px] text-[var(--foreground-primary)] placeholder:text-[var(--color-muted-fg)] tracking-[-0.176px]"
             />
           </div>
         </div>
 
         {/* Last Name Input */}
         <div className="flex flex-col gap-[8px] w-full">
-          <label className="text-[20px] font-semibold text-[#242424] leading-normal">
+          <label className="text-[20px] font-semibold text-[var(--foreground-primary)] leading-normal">
             {t("auth.lastName")}
           </label>
-          <div className="bg-[#f5f3ee] h-[50px] w-full rounded-[9px] px-[20px] py-[10px] drop-shadow-[0px_0px_5px_rgba(0,0,0,0.25)] flex items-center">
+          <div className="bg-[var(--background-elevated)] h-[50px] w-full rounded-[9px] px-[20px] py-[10px] drop-shadow-[0px_0px_5px_rgba(0,0,0,0.25)] flex items-center">
             <input
               type="text"
               value={formData.lastName}
@@ -195,23 +195,23 @@ export default function MobileRegisterView() {
                 setFormData({ ...formData, lastName: e.target.value })
               }
               placeholder={t("auth.lastNamePlaceholderAlt")}
-              className="w-full bg-transparent outline-none text-[16px] text-[#242424] placeholder:text-[#242424]/50 tracking-[-0.176px]"
+              className="w-full bg-transparent outline-none text-[16px] text-[var(--foreground-primary)] placeholder:text-[var(--color-muted-fg)] tracking-[-0.176px]"
             />
           </div>
         </div>
 
         {/* Phone Input with Country Dropdown */}
         <div className="flex flex-col gap-[8px] w-full relative">
-          <label className="text-[20px] font-semibold text-[#242424] leading-normal">
+          <label className="text-[20px] font-semibold text-[var(--foreground-primary)] leading-normal">
             {t("auth.phone")}
           </label>
           <div className="flex w-full h-[50px] relative drop-shadow-[0px_0px_5px_rgba(0,0,0,0.25)]">
             {/* Left Country Flag Box */}
             <div
               onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-              className="w-[85px] h-[50px] bg-[#f5f3ee] rounded-l-[9px] flex items-center justify-center cursor-pointer border-r border-[#242424]/10 select-none z-20"
+              className="w-[85px] h-[50px] bg-[var(--background-elevated)] rounded-l-[9px] flex items-center justify-center cursor-pointer border-r border-[color-mix(in_srgb,var(--foreground-primary)_10%,transparent)] select-none z-20"
             >
-              <div className="w-[26px] h-[18px] rounded-[2px] overflow-hidden bg-gray-200 flex-shrink-0">
+              <div className="w-[26px] h-[18px] rounded-[2px] overflow-hidden bg-[var(--color-menu-hover)] flex-shrink-0">
                 {hasMatch && (
                   <span
                     className={`fi fi-${detectedCountry}`}
@@ -220,7 +220,7 @@ export default function MobileRegisterView() {
                 )}
               </div>
               <span
-                className="ml-2 w-0 h-0 border-l-[4px] border-l-transparent border-r-[4px] border-r-transparent border-t-[5px] border-t-[#242424] transition-transform duration-200"
+                className="ml-2 w-0 h-0 border-l-[4px] border-l-transparent border-r-[4px] border-r-transparent border-t-[5px] border-t-[var(--foreground-primary)] transition-transform duration-200"
                 style={{
                   transform: isDropdownOpen ? "rotate(180deg)" : "rotate(0deg)",
                 }}
@@ -233,7 +233,7 @@ export default function MobileRegisterView() {
               value={phone}
               onChange={handlePhoneChange}
               placeholder={t("auth.phonePlaceholder")}
-              className="flex-1 h-[50px] bg-[#f5f3ee] rounded-r-[9px] px-[15px] outline-none text-[16px] text-[#242424] placeholder:text-[#242424]/50 tracking-[-0.176px]"
+              className="flex-1 h-[50px] bg-[var(--background-elevated)] rounded-r-[9px] px-[15px] outline-none text-[16px] text-[var(--foreground-primary)] placeholder:text-[var(--color-muted-fg)] tracking-[-0.176px]"
             />
           </div>
 
@@ -244,7 +244,7 @@ export default function MobileRegisterView() {
                 className="fixed inset-0 z-10"
                 onClick={() => setIsDropdownOpen(false)}
               />
-              <div className="absolute top-[82px] left-0 w-[120px] bg-[#f5f3ee] rounded-b-[9px] shadow-xl z-20 py-1 border-t border-[#242424]/10 max-h-[160px] overflow-y-auto">
+              <div className="absolute top-[82px] left-0 w-[120px] bg-[var(--background-elevated)] rounded-b-[9px] shadow-xl z-20 py-1 border-t border-[color-mix(in_srgb,var(--foreground-primary)_10%,transparent)] max-h-[160px] overflow-y-auto">
                 {manualCountries.map((c) => (
                   <div
                     key={c.code}
@@ -253,9 +253,9 @@ export default function MobileRegisterView() {
                       setPhone(c.dial);
                       setIsDropdownOpen(false);
                     }}
-                    className="h-[40px] px-3 flex items-center gap-2 cursor-pointer hover:bg-[#e0c3a9] transition-colors"
+                    className="h-[40px] px-3 flex items-center gap-2 cursor-pointer hover:bg-[var(--color-menu-hover)] transition-colors"
                   >
-                    <div className="w-[22px] h-[16px] rounded-[2px] overflow-hidden bg-gray-200 flex-shrink-0">
+                    <div className="w-[22px] h-[16px] rounded-[2px] overflow-hidden bg-[var(--color-menu-hover)] flex-shrink-0">
                       <span
                         className={`fi fi-${c.code}`}
                         style={{
@@ -265,7 +265,7 @@ export default function MobileRegisterView() {
                         }}
                       />
                     </div>
-                    <span className="text-[14px] text-[#242424] font-medium">
+                    <span className="text-[14px] text-[var(--foreground-primary)] font-medium">
                       {c.dial}
                     </span>
                   </div>
@@ -277,10 +277,10 @@ export default function MobileRegisterView() {
 
         {/* Email Input */}
         <div className="flex flex-col gap-[8px] w-full">
-          <label className="text-[20px] font-semibold text-[#242424] leading-normal">
+          <label className="text-[20px] font-semibold text-[var(--foreground-primary)] leading-normal">
             {t("auth.emailRequired")}
           </label>
-          <div className="bg-[#f5f3ee] h-[50px] w-full rounded-[9px] px-[20px] py-[10px] drop-shadow-[0px_0px_5px_rgba(0,0,0,0.25)] flex items-center">
+          <div className="bg-[var(--background-elevated)] h-[50px] w-full rounded-[9px] px-[20px] py-[10px] drop-shadow-[0px_0px_5px_rgba(0,0,0,0.25)] flex items-center">
             <input
               type="email"
               value={formData.email}
@@ -288,7 +288,7 @@ export default function MobileRegisterView() {
                 setFormData({ ...formData, email: e.target.value })
               }
               placeholder={t("auth.emailPlaceholder")}
-              className="w-full bg-transparent outline-none text-[16px] text-[#242424] placeholder:text-[#242424]/50 tracking-[-0.176px]"
+              className="w-full bg-transparent outline-none text-[16px] text-[var(--foreground-primary)] placeholder:text-[var(--color-muted-fg)] tracking-[-0.176px]"
             />
           </div>
         </div>
@@ -296,16 +296,16 @@ export default function MobileRegisterView() {
         {/* Password Inputs Section */}
         <div className="flex flex-col gap-[8px] w-full mt-1">
           <div className="flex flex-col">
-            <label className="text-[20px] font-semibold text-[#242424] leading-normal">
+            <label className="text-[20px] font-semibold text-[var(--foreground-primary)] leading-normal">
               {t("auth.passwordRequired")}
             </label>
-            <span className="text-[13px] text-[#242424]/80 leading-snug mt-[2px]">
+            <span className="text-[13px] text-[var(--color-muted-fg)] leading-snug mt-[2px]">
               {t("auth.passwordHint")}
             </span>
           </div>
 
           {/* Enter Password */}
-          <div className="bg-[#f5f3ee] h-[50px] w-full rounded-[9px] px-[20px] py-[10px] drop-shadow-[0px_0px_5px_rgba(0,0,0,0.25)] flex items-center justify-between gap-2 mt-1">
+          <div className="bg-[var(--background-elevated)] h-[50px] w-full rounded-[9px] px-[20px] py-[10px] drop-shadow-[0px_0px_5px_rgba(0,0,0,0.25)] flex items-center justify-between gap-2 mt-1">
             <input
               type={isPasswordVisible ? "text" : "password"}
               value={formData.password}
@@ -313,7 +313,7 @@ export default function MobileRegisterView() {
                 setFormData({ ...formData, password: e.target.value })
               }
               placeholder={t("auth.passwordPlaceholder")}
-              className="w-full bg-transparent outline-none text-[16px] text-[#242424] placeholder:text-[#242424]/50 tracking-[-0.176px]"
+              className="w-full bg-transparent outline-none text-[16px] text-[var(--foreground-primary)] placeholder:text-[var(--color-muted-fg)] tracking-[-0.176px]"
             />
             <button
               type="button"
@@ -340,7 +340,7 @@ export default function MobileRegisterView() {
           </div>
 
           {/* Confirm Password */}
-          <div className="bg-[#f5f3ee] h-[50px] w-full rounded-[9px] px-[20px] py-[10px] drop-shadow-[0px_0px_5px_rgba(0,0,0,0.25)] flex items-center justify-between gap-2 mt-2">
+          <div className="bg-[var(--background-elevated)] h-[50px] w-full rounded-[9px] px-[20px] py-[10px] drop-shadow-[0px_0px_5px_rgba(0,0,0,0.25)] flex items-center justify-between gap-2 mt-2">
             <input
               type={isPasswordVisible ? "text" : "password"}
               value={formData.confirmPassword}
@@ -348,7 +348,7 @@ export default function MobileRegisterView() {
                 setFormData({ ...formData, confirmPassword: e.target.value })
               }
               placeholder={t("auth.confirmPasswordPlaceholder")}
-              className="w-full bg-transparent outline-none text-[16px] text-[#242424] placeholder:text-[#242424]/50 tracking-[-0.176px]"
+              className="w-full bg-transparent outline-none text-[16px] text-[var(--foreground-primary)] placeholder:text-[var(--color-muted-fg)] tracking-[-0.176px]"
             />
             <button
               type="button"
@@ -382,10 +382,10 @@ export default function MobileRegisterView() {
                 agreeToTerms: !formData.agreeToTerms,
               })
             }
-            className="w-[24px] h-[24px] rounded-full border-[2.5px] border-[#242424] flex items-center justify-center flex-shrink-0 mt-[2px] transition-all hover:bg-[#242424]/5"
+            className="w-[24px] h-[24px] rounded-full border-[2.5px] border-[var(--foreground-primary)] flex items-center justify-center flex-shrink-0 mt-[2px] transition-all hover:bg-[color-mix(in_srgb,var(--foreground-primary)_5%,transparent)]"
           >
             {formData.agreeToTerms && (
-              <div className="w-[7px] h-[13px] border-r-[3px] border-b-[3px] border-[#242424] rotate-45 -mt-1" />
+              <div className="w-[7px] h-[13px] border-r-[3px] border-b-[3px] border-[var(--foreground-primary)] rotate-45 -mt-1" />
             )}
           </div>
           <span
@@ -395,14 +395,14 @@ export default function MobileRegisterView() {
                 agreeToTerms: !formData.agreeToTerms,
               })
             }
-            className="text-[16px] text-[#242424] font-normal leading-snug"
+            className="text-[16px] text-[var(--foreground-primary)] font-normal leading-snug"
           >
             {t("auth.agreeTerms")}
           </span>
         </div>
 
         {/* Legal Disclaimer */}
-        <p className="text-[13px] text-[#242424]/80 leading-snug mt-[2px]">
+        <p className="text-[13px] text-[var(--color-muted-fg)] leading-snug mt-[2px]">
           {t("auth.privacyNotice")}
         </p>
 
@@ -410,43 +410,43 @@ export default function MobileRegisterView() {
         <button
           type="submit"
           disabled={loading}
-          className="mt-2 bg-[#005b33] h-[50px] w-full rounded-[9px] px-[20px] py-[10px] drop-shadow-[0px_0px_5px_rgba(0,0,0,0.25)] flex items-center justify-center text-[24px] text-white tracking-[-0.264px] transition-all hover:brightness-110 active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed"
+          className="mt-2 bg-[var(--color-green)] h-[50px] w-full rounded-[9px] px-[20px] py-[10px] drop-shadow-[0px_0px_5px_rgba(0,0,0,0.25)] flex items-center justify-center text-[24px] text-white tracking-[-0.264px] transition-all hover:brightness-110 active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed"
         >
           {loading ? t("auth.loading") : t("auth.registerSubmit")}
         </button>
 
         {/* Divider "або" */}
         <div className="flex items-center justify-between gap-4 w-full my-[6px]">
-          <div className="flex-1 h-[1px] bg-[#242424]" />
-          <span className="text-[20px] text-[#242424] tracking-[-0.22px]">
+          <div className="flex-1 h-[1px] bg-[var(--foreground-primary)]" />
+          <span className="text-[20px] text-[var(--foreground-primary)] tracking-[-0.22px]">
             {t("auth.or")}
           </span>
-          <div className="flex-1 h-[1px] bg-[#242424]" />
+          <div className="flex-1 h-[1px] bg-[var(--foreground-primary)]" />
         </div>
 
         {/* Google Login Button */}
         <button
           type="button"
           onClick={() => handleExternalLogin("Google")}
-          className="bg-[#f5f3ee] h-[54px] w-full rounded-[9px] px-[20px] py-[10px] drop-shadow-[0px_0px_5px_rgba(0,0,0,0.25)] flex items-center justify-center gap-[15px] transition-all hover:brightness-95 active:scale-[0.98]"
+          className="bg-[var(--background-elevated)] h-[54px] w-full rounded-[9px] px-[20px] py-[10px] drop-shadow-[0px_0px_5px_rgba(0,0,0,0.25)] flex items-center justify-center gap-[15px] transition-all hover:brightness-95 active:scale-[0.98]"
         >
           <img
             src="/images/Layout/Footer/GoogleBrandIcon.svg"
             alt="Google"
             className="w-[34px] h-[34px] object-contain flex-shrink-0"
           />
-          <span className="text-[20px] text-[#242424] tracking-[-0.22px] font-normal whitespace-nowrap">
+          <span className="text-[20px] text-[var(--foreground-primary)] tracking-[-0.22px] font-normal whitespace-nowrap">
             {t("auth.continueGoogle")}
           </span>
         </button>
 
         {/* Bottom Navigation */}
         <div className="w-full text-center mt-3 mb-4">
-          <p className="text-[#242424] text-[18px] leading-normal font-normal">
+          <p className="text-[var(--foreground-primary)] text-[18px] leading-normal font-normal">
             {t("auth.haveAccount")}{" "}
             <Link
               href={lp("/login")}
-              className="text-[#005b33] font-bold underline hover:opacity-80"
+              className="text-[var(--color-green)] font-bold underline hover:opacity-80"
             >
               {t("auth.signIn")}
             </Link>

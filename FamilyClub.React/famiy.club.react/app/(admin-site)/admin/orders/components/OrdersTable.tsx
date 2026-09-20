@@ -42,7 +42,7 @@ export default function OrdersTable({
         <div className="flex flex-col min-h-0 h-full">
             {isLoading ? (
                 <div className="flex justify-center py-16">
-                    <div className="w-8 h-8 border-4 border-[#005b33] border-t-transparent rounded-full animate-spin" />
+                    <div className="w-8 h-8 border-4 border-[var(--color-green)] border-t-transparent rounded-full animate-spin" />
                 </div>
             ) : slice.length === 0 ? (
                 <p className="text-center text-[14px] text-[#888] py-12">
@@ -53,7 +53,7 @@ export default function OrdersTable({
                     <div className="overflow-x-auto">
                         <table className="w-full min-w-[520px] text-left border-separate border-spacing-y-2">
                             <thead>
-                                <tr className="text-[12px] text-[#777]">
+                                <tr className="text-[12px] text-[var(--color-muted-fg)]">
                                     <th className="font-semibold px-3 pb-1">
                                         № Замовлення
                                     </th>
@@ -89,16 +89,16 @@ export default function OrdersTable({
                                             className={`cursor-pointer transition ${
                                                 selected
                                                     ? "bg-[#F3D9C4]"
-                                                    : "bg-[#F5F3EE] hover:bg-[#EFEAE2]"
+                                                    : "bg-[var(--background-elevated)] hover:bg-[var(--color-menu-hover)]"
                                             }`}
                                         >
-                                            <td className="rounded-l-[10px] px-3 py-3 text-[13px] font-semibold text-[#1F1F1F] whitespace-nowrap">
+                                            <td className="rounded-l-[10px] px-3 py-3 text-[13px] font-semibold text-[var(--foreground-primary)] whitespace-nowrap">
                                                 {formatOrderNumber(id)}
                                             </td>
-                                            <td className="px-3 py-3 text-[13px] text-[#2F2F2F] max-w-[140px] truncate">
+                                            <td className="px-3 py-3 text-[13px] text-[var(--foreground-primary)] max-w-[140px] truncate">
                                                 {displayMemberName(member)}
                                             </td>
-                                            <td className="px-3 py-3 text-[13px] font-medium text-[#1F1F1F] whitespace-nowrap">
+                                            <td className="px-3 py-3 text-[13px] font-medium text-[var(--foreground-primary)] whitespace-nowrap">
                                                 {formatMoney(order.totalPrice)}
                                             </td>
                                             <td className="px-3 py-3 text-[13px] font-semibold whitespace-nowrap">
@@ -110,7 +110,7 @@ export default function OrdersTable({
                                                     {status.badgeLabel}
                                                 </span>
                                             </td>
-                                            <td className="rounded-r-[10px] px-3 py-3 text-[13px] text-[#2F2F2F] whitespace-nowrap">
+                                            <td className="rounded-r-[10px] px-3 py-3 text-[13px] text-[var(--foreground-primary)] whitespace-nowrap">
                                                 {formatDate(order.orderDate)}
                                             </td>
                                         </tr>
