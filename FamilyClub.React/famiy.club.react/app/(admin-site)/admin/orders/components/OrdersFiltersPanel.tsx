@@ -15,7 +15,7 @@ type Props = {
 };
 
 const selectClass =
-    "rounded-[10px] border border-[#E0DCD3] bg-white px-3 py-2.5 text-[13px] text-[#2F2F2F] outline-none focus:border-[#005b33] w-full";
+    "rounded-[10px] border border-[var(--color-menu-separator)] bg-[var(--background-elevated)] px-3 py-2.5 text-[13px] text-[var(--foreground-primary)] outline-none focus:border-[var(--color-green)] w-full";
 
 export default function OrdersFiltersPanel({
     draft,
@@ -28,11 +28,11 @@ export default function OrdersFiltersPanel({
     ) => onChange({ ...draft, [key]: value });
 
     return (
-        <div className="rounded-[12px] bg-white/90 px-4 py-4 shadow-[0_0_15px_rgba(0,0,0,0.08)] flex flex-col gap-3">
-            <h3 className="text-[15px] font-bold text-[#1F1F1F]">Фільтри</h3>
+        <div className="rounded-[12px] bg-[var(--background-elevated)]/90 px-4 py-4 shadow-[var(--shadow-card)] flex flex-col gap-3">
+            <h3 className="text-[15px] font-bold text-[var(--foreground-primary)]">Фільтри</h3>
 
             <label className="flex flex-col gap-1">
-                <span className="text-[12px] text-[#777]">Пошук</span>
+                <span className="text-[12px] text-[var(--color-muted-fg)]">Пошук</span>
                 <div className="relative">
                     <input
                         value={draft.search}
@@ -40,14 +40,14 @@ export default function OrdersFiltersPanel({
                         placeholder="№ замовлення, ім'я або email"
                         className={`${selectClass} pl-9`}
                     />
-                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[#999] text-[14px]">
+                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--color-muted-fg)] text-[14px]">
                         ⌕
                     </span>
                 </div>
             </label>
 
             <label className="flex flex-col gap-1">
-                <span className="text-[12px] text-[#777]">Статус</span>
+                <span className="text-[12px] text-[var(--color-muted-fg)]">Статус</span>
                 <select
                     value={draft.status}
                     onChange={(e) =>
@@ -71,7 +71,7 @@ export default function OrdersFiltersPanel({
 
             {/* Немає в OrderDTO — тимчасово приховано
             <label className="flex flex-col gap-1">
-                <span className="text-[12px] text-[#777]">Спосіб оплати</span>
+                <span className="text-[12px] text-[var(--color-muted-fg)]">Спосіб оплати</span>
                 <select
                     value={draft.payment}
                     onChange={(e) => set("payment", e.target.value)}
@@ -87,7 +87,7 @@ export default function OrdersFiltersPanel({
             </label>
 
             <label className="flex flex-col gap-1">
-                <span className="text-[12px] text-[#777]">Спосіб доставки</span>
+                <span className="text-[12px] text-[var(--color-muted-fg)]">Спосіб доставки</span>
                 <select
                     value={draft.delivery}
                     onChange={(e) => set("delivery", e.target.value)}
@@ -104,10 +104,10 @@ export default function OrdersFiltersPanel({
             */}
 
             <div className="flex flex-col gap-1">
-                <span className="text-[12px] text-[#777]">Дата створення</span>
+                <span className="text-[12px] text-[var(--color-muted-fg)]">Дата створення</span>
                 <div className="grid grid-cols-2 gap-2">
                     <label className="flex flex-col gap-1">
-                        <span className="text-[11px] text-[#999]">Від</span>
+                        <span className="text-[11px] text-[var(--color-muted-fg)]">Від</span>
                         <input
                             type="date"
                             value={draft.dateFrom}
@@ -116,7 +116,7 @@ export default function OrdersFiltersPanel({
                         />
                     </label>
                     <label className="flex flex-col gap-1">
-                        <span className="text-[11px] text-[#999]">До</span>
+                        <span className="text-[11px] text-[var(--color-muted-fg)]">До</span>
                         <input
                             type="date"
                             value={draft.dateTo}

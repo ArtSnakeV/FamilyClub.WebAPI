@@ -166,7 +166,7 @@ export default function ReturnOrderModal({
           <div className="space-y-5 animate-fade-in">
             <h3 className="text-sm font-bold text-[var(--foreground-primary)]">{t("orders.returnModal.step1Title")}</h3>
             <div className="flex items-center gap-4 bg-[var(--color-menu-hover)] p-4 rounded-2xl border border-[var(--color-menu-separator)]">
-              <div className="w-14 h-20 relative rounded overflow-hidden shadow shrink-0 bg-[var(--background-elevated)] border border-gray-200">
+              <div className="w-14 h-20 relative rounded overflow-hidden shadow shrink-0 bg-[var(--background-elevated)] border border-[var(--color-menu-separator)]">
                 <img
                   src={item.bookImage || "/images/catalog/hunger_games.png"}
                   alt={item.bookTitle}

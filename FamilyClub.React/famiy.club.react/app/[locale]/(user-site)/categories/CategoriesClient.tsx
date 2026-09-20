@@ -40,7 +40,7 @@ function CategoriesContent() {
   if (!isMobile) {
     return (
       <div className="min-h-screen bg-[var(--background-main)] pt-[200px] pb-12 flex justify-center items-center">
-        <p className="text-gray-600 font-mono">{t("catalog.redirecting")}</p>
+        <p className="text-[var(--color-muted-fg)] font-mono">{t("catalog.redirecting")}</p>
       </div>
     );
   }

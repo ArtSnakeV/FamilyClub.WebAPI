@@ -142,7 +142,7 @@ export default function WriteReviewModal({
 
         {/* Book Summary Card */}
         <div className="flex items-center gap-4 bg-[var(--color-menu-hover)] p-4 rounded-2xl mb-6 border border-[var(--color-menu-separator)]">
-          <div className="w-14 h-20 relative rounded overflow-hidden shadow shrink-0 bg-[var(--background-elevated)] border border-gray-200">
+          <div className="w-14 h-20 relative rounded overflow-hidden shadow shrink-0 bg-[var(--background-elevated)] border border-[var(--color-menu-separator)]">
             <img
               src={item.bookImage || "/images/catalog/hunger_games.png"}
               alt={item.bookTitle}
@@ -175,7 +175,7 @@ export default function WriteReviewModal({
                     onMouseLeave={() => setHoverRating(0)}
                     className="text-3xl sm:text-4xl transition-transform hover:scale-125 focus:outline-none"
                   >
-                    <span className={isFilled ? "text-amber-500" : "text-gray-300"}>★</span>
+                    <span className={isFilled ? "text-amber-500" : "text-[var(--color-muted-fg)]"}>★</span>
                   </button>
                 );
               })}

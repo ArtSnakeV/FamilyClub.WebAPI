@@ -115,7 +115,7 @@ export default function Bookshelf({
                       className="w-[150px] h-[230px] mt-[8vh] object-cover"
                     />
                   ) : (
-                    <div className="w-[150px] h-[230px] mt-8 flex items-center justify-center text-sm text-gray-400 text-center px-2">
+                    <div className="w-[150px] h-[230px] mt-8 flex items-center justify-center text-sm text-[var(--color-muted-fg)] text-center px-2">
                       {book.productName}
                     </div>
                   )}
@@ -125,7 +125,7 @@ export default function Bookshelf({
                       <span className="text-[#D9A441] text-sm">
                         {ratingToStars(rating)}
                       </span>
-                      <span className="text-xs text-gray-500">
+                      <span className="text-xs text-[var(--color-muted-fg)]">
                         ({rating.toFixed(1)})
                       </span>
                     </div>
@@ -134,7 +134,7 @@ export default function Bookshelf({
                       {book.productName}
                     </p>
 
-                    <p className="text-sm text-gray-500 mt-1">
+                    <p className="text-sm text-[var(--color-muted-fg)] mt-1">
                       {authorName}
                     </p>
 

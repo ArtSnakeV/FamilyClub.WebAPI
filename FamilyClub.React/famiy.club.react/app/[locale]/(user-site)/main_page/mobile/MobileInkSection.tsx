@@ -2,6 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
+import MobileSectionArrow from "./MobileSectionArrow";
 import { useLocalizedPath, useTranslations } from "@/lib/i18n/LocaleProvider";
 
 export type GazetteItem = {
@@ -36,24 +37,11 @@ export default function MobileInkSection({ items }: MobileInkSectionProps) {
         <h2 className="font-mono text-[32px] sm:text-[36px] font-bold text-[var(--foreground-primary)] leading-none tracking-tight">
           {t("home.mobile.gazette")}
         </h2>
-        <Link
+        <MobileSectionArrow
           href={lp("/categories")}
-          aria-label={t("home.mobile.moreGazette")}
-          className="relative w-[40px] h-[40px] shrink-0 block transition-transform hover:scale-105 active:scale-95"
-        >
-          <img
-            src="/images/main_page/mobile/arrow-circle.svg"
-            alt=""
-            className="absolute inset-0 w-full h-full object-contain drop-shadow-[0px_0px_2.5px_rgba(0,0,0,0.4)]"
-          />
-          <div className="absolute inset-0 flex items-center justify-center">
-            <img
-              src="/images/main_page/mobile/arrow-icon.svg"
-              alt={t("home.mobile.goTo")}
-              className="w-[18px] h-[18px] rotate-90 object-contain"
-            />
-          </div>
-        </Link>
+          ariaLabel={t("home.mobile.moreGazette")}
+          goToAlt={t("home.mobile.goTo")}
+        />
       </div>
 
       {/* Horizontal Scroll of Gazette Cards (Figma Node 2199:2799) */}
@@ -70,7 +58,7 @@ export default function MobileInkSection({ items }: MobileInkSectionProps) {
               <img
                 src="/images/main_page/mobile/gazette-bg.png"
                 alt=""
-                className="absolute inset-0 w-full h-full object-cover opacity-20 pointer-events-none"
+                className="absolute inset-0 w-full h-full object-cover opacity-20 pointer-events-none admin-parchment-bg-soft"
               />
             </div>
 
@@ -99,7 +87,7 @@ export default function MobileInkSection({ items }: MobileInkSectionProps) {
             </div>
 
             {/* Middle Image (Figma Node 2199:2782) */}
-            <div className="h-[79px] w-full rounded-[5px] overflow-hidden my-1 bg-[rgba(0,0,0,0.05)] flex items-center justify-center">
+            <div className="h-[79px] w-full rounded-[5px] overflow-hidden my-1 bg-[color-mix(in_srgb,var(--foreground-primary)_6%,transparent)] flex items-center justify-center">
               {item.image ? (
                 <img
                   src={item.image}
@@ -107,8 +95,10 @@ export default function MobileInkSection({ items }: MobileInkSectionProps) {
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                 />
               ) : (
-                <div className="flex flex-col items-center justify-center text-gray-400 text-center p-1 bg-white/60 w-full h-full">
-                  <span className="text-lg">📖</span>
+                <div className="flex flex-col items-center justify-center text-[var(--color-muted-fg)] text-center p-1 bg-[color-mix(in_srgb,var(--foreground-primary)_8%,var(--background-elevated))] w-full h-full">
+                  <span className="text-lg" aria-hidden>
+                    📖
+                  </span>
                   <span className="text-[8px] font-serif">{t("product.noPhoto")}</span>
                 </div>
               )}

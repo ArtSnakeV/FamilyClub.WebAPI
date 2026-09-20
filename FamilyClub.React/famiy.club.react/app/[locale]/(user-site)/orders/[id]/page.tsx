@@ -178,15 +178,17 @@ export default function OrderDetailPage() {
   const complaintsPath = lp(`/complaints?orderId=${dbOrder?.id || orderId}`);
 
   return (
-    <div
-      className="min-h-screen pt-[160px] md:pt-[210px] pb-16 px-4 sm:px-6 relative text-[var(--foreground-primary)]"
-      style={{
-        backgroundImage: "url('/images/userProfile/Rectangle 326.png')",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundAttachment: "fixed",
-      }}
-    >
+    <div className="min-h-screen pt-[160px] md:pt-[210px] pb-16 px-4 sm:px-6 relative text-[var(--foreground-primary)] overflow-hidden">
+      <div
+        aria-hidden
+        className="absolute inset-0 pointer-events-none admin-parchment-bg"
+        style={{
+          backgroundImage: "url('/images/userProfile/Rectangle 326.png')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundAttachment: "fixed",
+        }}
+      />
       {/* Toast Notification */}
       {toastMessage && (
         <div className="fixed top-24 right-6 z-50 bg-[var(--color-green)] text-white px-6 py-3 rounded-2xl shadow-xl border border-white/20 animate-fade-in font-medium text-sm">
@@ -194,16 +196,19 @@ export default function OrderDetailPage() {
         </div>
       )}
 
-      <div className="max-w-4xl mx-auto">
+      <div className="relative z-10 max-w-4xl mx-auto">
         {/* Main Board Container (Matching Figma parchment style) */}
-        <div
-          className="rounded-3xl p-6 sm:p-10 shadow-2xl border border-[var(--color-border-warm)]/40 relative overflow-hidden"
-          style={{
-            backgroundImage: "url('/images/addProducts/Rectangle 312.svg')",
-            backgroundSize: "cover",
-            backgroundPosition: "top center",
-          }}
-        >
+        <div className="rounded-3xl p-6 sm:p-10 shadow-2xl border border-[var(--color-border-warm)]/40 relative overflow-hidden">
+          <div
+            aria-hidden
+            className="absolute inset-0 pointer-events-none admin-parchment-bg"
+            style={{
+              backgroundImage: "url('/images/addProducts/Rectangle 312.svg')",
+              backgroundSize: "cover",
+              backgroundPosition: "top center",
+            }}
+          />
+          <div className="relative z-10">
           {/* Back Header */}
           <div className="flex items-center justify-between mb-8 pb-4 border-b border-[var(--color-menu-separator)]">
             <button
@@ -235,7 +240,7 @@ export default function OrderDetailPage() {
               {t("orders.detail.loading")}
             </div>
           ) : error ? (
-            <div className="text-center py-12 text-red-600 font-semibold bg-red-50 rounded-2xl border border-red-200">
+            <div className="text-center py-12 text-red-600 dark:text-[#ef9a9a] font-semibold bg-[color-mix(in_srgb,#c0392b_10%,var(--background-elevated))] rounded-2xl border border-[color-mix(in_srgb,#c0392b_25%,transparent)]">
               {error}
             </div>
           ) : (
@@ -382,7 +387,7 @@ export default function OrderDetailPage() {
                         className="bg-[var(--background-elevated)] rounded-2xl p-4 border border-[var(--color-menu-separator)] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-2xs"
                       >
                         <div className="flex items-center gap-4">
-                          <div className="w-16 h-24 relative rounded overflow-hidden shadow shrink-0 bg-gray-100 border border-gray-200">
+                          <div className="w-16 h-24 relative rounded overflow-hidden shadow shrink-0 bg-[var(--color-menu-hover)] border border-[var(--color-menu-separator)]">
                             <img
                               src={mockItem.bookImage}
                               alt={mockItem.bookTitle}
@@ -426,7 +431,7 @@ export default function OrderDetailPage() {
                           </button>
                           <button
                             onClick={() => router.push(complaintsPath)}
-                            className="px-4 py-2 rounded-xl bg-[#F0E6DF] hover:bg-[#E4D7CF] text-[#C0392B] border border-[#D1AFA9] text-xs font-semibold transition"
+                            className="px-4 py-2 rounded-xl bg-[color-mix(in_srgb,#C0392B_12%,var(--background-elevated))] hover:bg-[color-mix(in_srgb,#C0392B_18%,var(--background-elevated))] text-[#C0392B] border border-[#D1AFA9] text-xs font-semibold transition"
                           >
                             {t("orders.detail.complaintsBtn")}
                           </button>
@@ -438,6 +443,7 @@ export default function OrderDetailPage() {
               </div>
             </div>
           )}
+          </div>
         </div>
       </div>
 

@@ -320,7 +320,7 @@ export default function MobileFiltersView() {
                 {/* Bottom title inside expanded banner */}
                 <div
                   onClick={() => setActiveSection(null)}
-                  className="w-full flex justify-center items-center pt-3 pb-4 border-t border-white/10 cursor-pointer hover:bg-black/10 transition-colors"
+                  className="w-full flex justify-center items-center pt-3 pb-4 border-t border-white/10 cursor-pointer hover:bg-[color-mix(in_srgb,var(--foreground-primary)_10%,transparent)] transition-colors"
                 >
                   <span className="font-mono font-medium text-[var(--color-cream)] text-[28px] sm:text-[32px] tracking-[-0.35px]">
                     {t("header.genres")}
@@ -392,7 +392,7 @@ export default function MobileFiltersView() {
 
                   <div
                     onClick={() => setActiveSection(null)}
-                    className="w-full flex justify-center items-center pt-2 pb-4 border-t border-white/10 cursor-pointer hover:bg-black/10 transition-colors"
+                    className="w-full flex justify-center items-center pt-2 pb-4 border-t border-white/10 cursor-pointer hover:bg-[color-mix(in_srgb,var(--foreground-primary)_10%,transparent)] transition-colors"
                   >
                     <span className="font-mono font-medium text-[var(--color-cream)] text-[26px] sm:text-[30px] tracking-[-0.35px]">
                       {t("header.authors")}
@@ -445,7 +445,7 @@ export default function MobileFiltersView() {
 
                   <div
                     onClick={() => setActiveSection(null)}
-                    className="w-full flex justify-center items-center pt-2 pb-4 border-t border-white/10 cursor-pointer hover:bg-black/10 transition-colors"
+                    className="w-full flex justify-center items-center pt-2 pb-4 border-t border-white/10 cursor-pointer hover:bg-[color-mix(in_srgb,var(--foreground-primary)_10%,transparent)] transition-colors"
                   >
                     <span className="font-mono font-medium text-[var(--color-cream)] text-[26px] sm:text-[30px] tracking-[-0.35px]">
                       {t("header.formats")}
@@ -515,7 +515,7 @@ export default function MobileFiltersView() {
 
                   <div
                     onClick={() => setActiveSection(null)}
-                    className="w-full flex justify-center items-center pt-2 pb-4 border-t border-white/10 cursor-pointer hover:bg-black/10 transition-colors"
+                    className="w-full flex justify-center items-center pt-2 pb-4 border-t border-white/10 cursor-pointer hover:bg-[color-mix(in_srgb,var(--foreground-primary)_10%,transparent)] transition-colors"
                   >
                     <span className="font-mono font-medium text-[var(--color-cream)] text-[24px] sm:text-[28px] tracking-[-0.35px]">
                       {t("header.publicationYear")}
@@ -571,7 +571,7 @@ export default function MobileFiltersView() {
 
                   <div
                     onClick={() => setActiveSection(null)}
-                    className="w-full flex justify-center items-center pt-2 pb-4 border-t border-white/10 cursor-pointer hover:bg-black/10 transition-colors"
+                    className="w-full flex justify-center items-center pt-2 pb-4 border-t border-white/10 cursor-pointer hover:bg-[color-mix(in_srgb,var(--foreground-primary)_10%,transparent)] transition-colors"
                   >
                     <span className="font-mono font-medium text-[var(--color-cream)] text-[26px] sm:text-[30px] tracking-[-0.35px]">
                       {t("header.languages")}
@@ -640,7 +640,7 @@ export default function MobileFiltersView() {
 
                   <div
                     onClick={() => setActiveSection(null)}
-                    className="w-full flex justify-center items-center pt-2 pb-4 border-t border-white/10 cursor-pointer hover:bg-black/10 transition-colors"
+                    className="w-full flex justify-center items-center pt-2 pb-4 border-t border-white/10 cursor-pointer hover:bg-[color-mix(in_srgb,var(--foreground-primary)_10%,transparent)] transition-colors"
                   >
                     <span className="font-mono font-medium text-[var(--color-cream)] text-[26px] sm:text-[30px] tracking-[-0.35px]">
                       {t("header.price")}
@@ -693,7 +693,7 @@ export default function MobileFiltersView() {
 
                   <div
                     onClick={() => setActiveSection(null)}
-                    className="w-full flex justify-center items-center pt-2 pb-4 border-t border-white/10 cursor-pointer hover:bg-black/10 transition-colors"
+                    className="w-full flex justify-center items-center pt-2 pb-4 border-t border-white/10 cursor-pointer hover:bg-[color-mix(in_srgb,var(--foreground-primary)_10%,transparent)] transition-colors"
                   >
                     <span className="font-mono font-medium text-[var(--color-cream)] text-[26px] sm:text-[30px] tracking-[-0.35px]">
                       {t("catalog.mobileFilters.rating")}

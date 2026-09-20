@@ -62,24 +62,29 @@ export default function ComplaintsPageClient() {
     orderContext?.publisher?.publisherName || t("complaints.defaultPublisher");
 
   return (
-    <div
-      className={styles.page}
-      style={{
-        backgroundImage: "url('/images/userProfile/Rectangle 326.png')",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundAttachment: "fixed",
-      }}
-    >
-      <div className="max-w-[720px] mx-auto px-4 sm:px-6 pt-[160px] md:pt-[210px] pb-12">
-        <div
-          className={styles.board}
-          style={{
-            backgroundImage: "url('/images/addProducts/Rectangle 312.svg')",
-            backgroundSize: "cover",
-            backgroundPosition: "top center",
-          }}
-        >
+    <div className={`${styles.page} relative overflow-hidden`}>
+      <div
+        aria-hidden
+        className="absolute inset-0 pointer-events-none admin-parchment-bg"
+        style={{
+          backgroundImage: "url('/images/userProfile/Rectangle 326.png')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundAttachment: "fixed",
+        }}
+      />
+      <div className="relative z-10 max-w-[720px] mx-auto px-4 sm:px-6 pt-[160px] md:pt-[210px] pb-12">
+        <div className={`${styles.board} relative overflow-hidden`}>
+          <div
+            aria-hidden
+            className="absolute inset-0 pointer-events-none admin-parchment-bg"
+            style={{
+              backgroundImage: "url('/images/addProducts/Rectangle 312.svg')",
+              backgroundSize: "cover",
+              backgroundPosition: "top center",
+            }}
+          />
+          <div className="relative z-10">
           <ComplaintPageHeader />
 
           {orderLoading && orderId && (
@@ -149,7 +154,7 @@ export default function ComplaintsPageClient() {
                   </div>
                 </div>
 
-                <div className="pt-3 border-t border-[#EBE7DD] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <div className="pt-3 border-t border-[var(--color-menu-separator)] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                   <div>
                     <span className="text-xs text-[var(--color-muted-fg)] block">
                       {t("complaints.managerPhone")}
@@ -256,6 +261,7 @@ export default function ComplaintsPageClient() {
               )}
             </form>
           )}
+          </div>
         </div>
       </div>
 

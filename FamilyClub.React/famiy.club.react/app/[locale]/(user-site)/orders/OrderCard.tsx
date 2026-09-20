@@ -34,7 +34,7 @@ export default function OrderCard({ item, activeTab, onAction }: OrderCardProps)
   const isCancelled = item.statusText === "Скасовано";
   const isReturned = item.statusText === "Повернено";
   const cardBgClass = isCancelled
-    ? "bg-[#E3C8C4] border-[#D1AFA9]"
+    ? "bg-[color-mix(in_srgb,#C0392B_18%,var(--background-elevated))] border-[color-mix(in_srgb,#C0392B_35%,transparent)]"
     : isReturned
     ? "bg-[var(--color-menu-separator)] border-[var(--color-menu-separator)]"
     : "bg-[var(--color-menu-hover)] border-[var(--color-menu-separator)]";
@@ -73,8 +73,10 @@ export default function OrderCard({ item, activeTab, onAction }: OrderCardProps)
 
   const formatBadgeStyle = (fmt: string) => {
     const f = String(fmt).toLowerCase();
-    if (f === "ebook" || f.includes("елек")) return "bg-[#E3F2FD] text-[#0277BD] border-[#B3E5FC]";
-    if (f === "audio" || f.includes("аудіо")) return "bg-[#F3E5F5] text-[#7B1FA2] border-[#E1BEE7]";
+    if (f === "ebook" || f.includes("елек"))
+      return "bg-[color-mix(in_srgb,#0277BD_16%,var(--background-elevated))] text-[#4FC3F7] border-[color-mix(in_srgb,#0277BD_30%,transparent)]";
+    if (f === "audio" || f.includes("аудіо"))
+      return "bg-[color-mix(in_srgb,#7B1FA2_16%,var(--background-elevated))] text-[#CE93D8] border-[color-mix(in_srgb,#7B1FA2_30%,transparent)]";
     return "bg-[color-mix(in_srgb,var(--color-green)_18%,transparent)] text-[var(--color-green)] border-[color-mix(in_srgb,var(--color-green)_45%,transparent)]";
   };
 
@@ -171,7 +173,7 @@ export default function OrderCard({ item, activeTab, onAction }: OrderCardProps)
           </div>
 
           {/* Book Cover */}
-          <div className="w-[65px] h-[95px] relative rounded overflow-hidden shadow shrink-0 border border-gray-200 bg-[var(--background-elevated)] flex items-center justify-center">
+          <div className="w-[65px] h-[95px] relative rounded overflow-hidden shadow shrink-0 border border-[var(--color-menu-separator)] bg-[var(--background-elevated)] flex items-center justify-center">
             <img
               src={item.bookImage || "/images/catalog/hunger_games.png"}
               alt={item.bookTitle}

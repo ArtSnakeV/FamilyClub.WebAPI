@@ -6,6 +6,7 @@ import Link from "next/link";
 import { ProductDto, CoverType } from "@/lib/api/generated";
 import ReviewPagination from "./ReviewPagination";
 import { useLocalizedPath, useTranslations } from "@/lib/i18n/LocaleProvider";
+import { useTheme } from "@/lib/theme/ThemeProvider";
 
 type ReviewCardData = {
   id: number | string;
@@ -101,10 +102,15 @@ export default function MobileProductDetails({
 }: MobileProductDetailsProps) {
   const t = useTranslations();
   const lp = useLocalizedPath();
+  const { theme } = useTheme();
+  const isNight = theme === "ink-night";
   const productTitle = product?.productName ?? "";
   const descriptionText = product?.description ?? t("product.descriptionMissing");
   const thumbnails = galleryImages.slice(0, 4);
   const cardHref = (href?: string) => href && href !== "#" ? lp(href) : "#";
+  const monoIconFilter = isNight
+    ? { filter: "brightness(0) invert(0.88)" }
+    : undefined;
 
   return (
     <div className="relative min-h-screen w-full bg-[var(--background-elevated)] pb-[100px] select-none text-[var(--foreground-primary)] overflow-x-hidden font-sans">
@@ -115,7 +121,7 @@ export default function MobileProductDetails({
         <div className="px-4 sm:px-6 flex gap-3 sm:gap-5 items-start">
           {/* Left Column: Cover + Thumbnails */}
           <div className="w-[160px] sm:w-[180px] shrink-0 flex flex-col items-center">
-            <div className="w-full h-[230px] sm:h-[250px] bg-white rounded-[6px] p-1.5 shadow-[0_6px_15px_rgba(0,0,0,0.3)] relative flex items-center justify-center">
+            <div className="w-full h-[230px] sm:h-[250px] bg-[var(--background-elevated)] rounded-[6px] p-1.5 shadow-[0_6px_15px_rgba(0,0,0,0.3)] relative flex items-center justify-center">
               {displayImage ? (
                 <img
                   src={displayImage}
@@ -123,7 +129,7 @@ export default function MobileProductDetails({
                   className="w-full h-full object-contain rounded-[4px]"
                 />
               ) : (
-                <div className="flex flex-col items-center justify-center text-gray-400 text-center p-2">
+                <div className="flex flex-col items-center justify-center text-[var(--color-muted-fg)] text-center p-2">
                   <span className="text-3xl mb-1">📖</span>
                   <span className="text-xs font-serif">{t("product.noPhoto")}</span>
                 </div>
@@ -138,7 +144,7 @@ export default function MobileProductDetails({
                     key={idx}
                     type="button"
                     onClick={() => setSelectedImage(img)}
-                    className={`w-[36px] h-[50px] rounded-[4px] bg-white p-0.5 shadow-sm transition-transform ${
+                    className={`w-[36px] h-[50px] rounded-[4px] bg-[var(--background-elevated)] p-0.5 shadow-sm transition-transform ${
                       displayImage === img ? "ring-2 ring-[var(--color-product-cta)] scale-105" : "opacity-75 hover:opacity-100"
                     }`}
                   >
@@ -173,13 +179,14 @@ export default function MobileProductDetails({
                 <button
                   type="button"
                   onClick={toggleFavorite}
-                  className="w-[38px] h-[38px] rounded-full flex items-center justify-center hover:bg-black/5 active:scale-90 transition-all"
+                  className="w-[38px] h-[38px] rounded-full flex items-center justify-center hover:bg-[color-mix(in_srgb,var(--foreground-primary)_8%,transparent)] active:scale-90 transition-all"
                   aria-label={t("product.favoriteAria")}
                 >
                   <img
                     src="/images/main_page/icons/rec-icon-favorite.svg"
                     alt=""
                     className={`w-[26px] h-[26px] transition-transform ${isFavorite ? "filter invert-[0.2] sepia-[1] saturate-[5] hue-rotate-[320deg] scale-110" : "opacity-80"}`}
+                    style={isFavorite ? undefined : monoIconFilter}
                   />
                 </button>
               </div>
@@ -253,7 +260,7 @@ export default function MobileProductDetails({
               {authorPhoto ? (
                 <img src={authorPhoto} alt={authorName} className="w-[54px] h-[54px] rounded-full object-cover border-2 border-[var(--color-cream)] shadow-sm" />
               ) : (
-                <div className="w-[54px] h-[54px] rounded-full bg-white/20 border-2 border-[var(--color-cream)] flex items-center justify-center font-bold text-xl">
+                <div className="w-[54px] h-[54px] rounded-full bg-[color-mix(in_srgb,var(--color-cream)_22%,transparent)] border-2 border-[var(--color-cream)] flex items-center justify-center font-bold text-xl">
                   {authorName.charAt(0)}
                 </div>
               )}
@@ -279,11 +286,11 @@ export default function MobileProductDetails({
                   key={idx}
                   className="w-[160px] shrink-0 bg-gradient-to-b from-[var(--background-elevated)] to-[var(--color-menu-hover)] rounded-b-[16px] rounded-t-[6px] p-2.5 shadow-md border border-[color-mix(in_srgb,var(--foreground-primary)_10%,transparent)] flex flex-col justify-between relative"
                 >
-                  <Link href={cardHref(book.href)} className="w-[110px] h-[145px] mx-auto bg-white rounded-[4px] p-1 shadow-sm flex items-center justify-center mt-1">
+                  <Link href={cardHref(book.href)} className="w-[110px] h-[145px] mx-auto bg-[var(--background-elevated)] rounded-[4px] p-1 shadow-sm flex items-center justify-center mt-1">
                     {book.image ? (
                       <img src={book.image} alt={book.title} className="w-full h-full object-contain" />
                     ) : (
-                      <div className="flex flex-col items-center justify-center text-gray-400 text-center p-1">
+                      <div className="flex flex-col items-center justify-center text-[var(--color-muted-fg)] text-center p-1">
                         <span className="text-xl">📖</span>
                         <span className="text-[9px] font-serif">{t("product.noPhoto")}</span>
                       </div>
@@ -326,7 +333,7 @@ export default function MobileProductDetails({
           <h2 className="text-[28px] sm:text-[32px] font-bold text-[var(--foreground-primary)] text-center mb-5">
             {t("product.characteristics")}
           </h2>
-          <div className="bg-white/40 backdrop-blur-sm rounded-[14px] p-4 sm:p-5 border border-[color-mix(in_srgb,var(--foreground-primary)_10%,transparent)] shadow-sm">
+          <div className="bg-[color-mix(in_srgb,var(--background-elevated)_78%,transparent)] backdrop-blur-sm rounded-[14px] p-4 sm:p-5 border border-[color-mix(in_srgb,var(--foreground-primary)_10%,transparent)] shadow-sm">
             <div className="grid grid-cols-[130px_1fr] sm:grid-cols-[150px_1fr] gap-y-3 text-[15px] sm:text-[16px]">
               <div className="text-[var(--foreground-primary)]/75">{t("product.chars.productCode")}</div>
               <div className="font-medium text-[var(--foreground-primary)]">{product?.productCode ?? `#${product?.id ?? ""}`}</div>
@@ -430,11 +437,11 @@ export default function MobileProductDetails({
                   </button>
 
                   {/* Book Cover */}
-                  <Link href={cardHref(sim.href)} className="w-[120px] h-[160px] mx-auto bg-white rounded-[4px] p-1 shadow-sm flex items-center justify-center mt-2">
+                  <Link href={cardHref(sim.href)} className="w-[120px] h-[160px] mx-auto bg-[var(--background-elevated)] rounded-[4px] p-1 shadow-sm flex items-center justify-center mt-2">
                     {sim.image ? (
                       <img src={sim.image} alt={sim.title} className="w-full h-full object-contain" />
                     ) : (
-                      <div className="flex flex-col items-center justify-center text-gray-400 text-center p-1">
+                      <div className="flex flex-col items-center justify-center text-[var(--color-muted-fg)] text-center p-1">
                         <span className="text-xl">📖</span>
                         <span className="text-[10px] font-serif">{t("product.noPhoto")}</span>
                       </div>
@@ -473,7 +480,7 @@ export default function MobileProductDetails({
               ))}
             </div>
           ) : (
-            <div className="mx-4 sm:mx-6 px-4 py-6 bg-white/40 backdrop-blur-sm rounded-[14px] text-center text-[14px] text-[var(--color-muted-fg)] border border-[color-mix(in_srgb,var(--foreground-primary)_10%,transparent)]">
+            <div className="mx-4 sm:mx-6 px-4 py-6 bg-[color-mix(in_srgb,var(--background-elevated)_78%,transparent)] backdrop-blur-sm rounded-[14px] text-center text-[14px] text-[var(--color-muted-fg)] border border-[color-mix(in_srgb,var(--foreground-primary)_10%,transparent)]">
               {t("product.noSimilar")}
             </div>
           )}
@@ -494,11 +501,11 @@ export default function MobileProductDetails({
           href={lp("/userProfile")}
           className="bg-gradient-to-r from-[var(--color-wood-gradient-from)] to-[var(--color-shelf)] rounded-[14px] p-4 shadow-[0_6px_20px_rgba(0,0,0,0.2)] flex items-center justify-between text-[#ffd9d9] border border-white/10 group mb-6"
         >
-          <div className="w-[50px] h-[60px] bg-white rounded-[4px] p-0.5 shrink-0 shadow-sm flex items-center justify-center">
+          <div className="w-[50px] h-[60px] bg-[var(--background-elevated)] rounded-[4px] p-0.5 shrink-0 shadow-sm flex items-center justify-center">
             {displayImage ? (
               <img src={displayImage} alt="" className="w-full h-full object-contain" />
             ) : (
-              <div className="flex flex-col items-center justify-center text-gray-400 text-center p-0.5">
+              <div className="flex flex-col items-center justify-center text-[var(--color-muted-fg)] text-center p-0.5">
                 <span className="text-sm">📖</span>
                 <span className="text-[8px] font-serif">{t("product.noPhoto")}</span>
               </div>
@@ -516,7 +523,7 @@ export default function MobileProductDetails({
             reviews.map((rev, idx) => (
               <div
                 key={idx}
-                className="bg-white rounded-[18px] p-4 sm:p-5 shadow-[0_4px_15px_rgba(0,0,0,0.08)] border border-[color-mix(in_srgb,var(--foreground-primary)_10%,transparent)] flex flex-col justify-between"
+                className="bg-[var(--background-elevated)] rounded-[18px] p-4 sm:p-5 shadow-[var(--shadow-card)] border border-[color-mix(in_srgb,var(--foreground-primary)_10%,transparent)] flex flex-col justify-between"
               >
                 {/* Header: Avatar + Author */}
                 <div className="flex items-center gap-3">
@@ -537,11 +544,11 @@ export default function MobileProductDetails({
                   <p className="flex-1 text-[14px] text-[var(--foreground-primary)] leading-[1.6] font-sans">
                     {rev.text}
                   </p>
-                  <div className="w-[65px] h-[90px] rounded-[6px] bg-[var(--color-product-reviews-bg)] border border-gray-200 p-1 shrink-0 flex items-center justify-center shadow-sm">
+                  <div className="w-[65px] h-[90px] rounded-[6px] bg-[var(--color-product-reviews-bg)] border border-[var(--color-menu-separator)] p-1 shrink-0 flex items-center justify-center shadow-sm">
                     {displayImage ? (
                       <img src={displayImage} alt="" className="w-full h-full object-contain" />
                     ) : (
-                      <div className="flex flex-col items-center justify-center text-gray-400 text-center p-0.5">
+                      <div className="flex flex-col items-center justify-center text-[var(--color-muted-fg)] text-center p-0.5">
                         <span className="text-xl">📖</span>
                         <span className="text-[8px] font-serif">{t("product.noPhoto")}</span>
                       </div>
@@ -550,7 +557,7 @@ export default function MobileProductDetails({
                 </div>
 
                 {/* Footer: Time + Actions */}
-                <div className="flex items-center justify-between text-[13px] text-[var(--color-muted-fg)] mt-4 pt-2.5 border-t border-gray-100">
+                <div className="flex items-center justify-between text-[13px] text-[var(--color-muted-fg)] mt-4 pt-2.5 border-t border-[var(--color-menu-separator)]">
                   <span>{rev.timeLabel || ""}</span>
                   <div className="flex items-center gap-4">
                     <button type="button" className="hover:text-black transition-colors" title={t("product.report")}>
@@ -567,7 +574,7 @@ export default function MobileProductDetails({
               </div>
             ))
           ) : (
-            <div className="bg-white rounded-[18px] p-8 text-center shadow-sm border border-[color-mix(in_srgb,var(--foreground-primary)_10%,transparent)] my-2">
+            <div className="bg-[var(--background-elevated)] rounded-[18px] p-8 text-center shadow-sm border border-[color-mix(in_srgb,var(--foreground-primary)_10%,transparent)] my-2">
               <p className="font-serif text-lg text-[var(--color-muted-fg)]">{t("product.noReviews")}</p>
               <p className="mt-1 text-xs text-[var(--color-muted-fg)]">{t("product.firstReview")}</p>
             </div>
@@ -583,7 +590,7 @@ export default function MobileProductDetails({
         </div>
 
         {/* 9. Add Comment Input Bar */}
-        <div className="bg-white h-[56px] rounded-full shadow-[0_4px_20px_rgba(36,36,36,0.15)] px-5 flex items-center justify-between border border-[color-mix(in_srgb,var(--foreground-primary)_15%,transparent)] mb-6">
+        <div className="bg-[var(--background-elevated)] h-[56px] rounded-full shadow-[var(--shadow-panel)] px-5 flex items-center justify-between border border-[color-mix(in_srgb,var(--foreground-primary)_15%,transparent)] mb-6">
           <input
             type="text"
             placeholder={t("product.addCommentPlaceholder")}
@@ -613,9 +620,9 @@ export default function MobileProductDetails({
       <div className="fixed bottom-0 left-0 right-0 z-50 bg-[var(--background-elevated)]/95 backdrop-blur-md border-t border-[color-mix(in_srgb,var(--foreground-primary)_15%,transparent)] px-4 py-2.5 shadow-[0_-4px_25px_rgba(0,0,0,0.18)] flex items-center justify-between gap-3 sm:gap-4 md:hidden">
         <div className="flex items-center gap-2.5 min-w-0 flex-1">
           {displayImage ? (
-            <img src={displayImage} alt="" className="w-[36px] h-[48px] object-contain rounded-[4px] bg-white p-0.5 shadow-xs shrink-0" />
+            <img src={displayImage} alt="" className="w-[36px] h-[48px] object-contain rounded-[4px] bg-[var(--background-elevated)] p-0.5 shadow-xs shrink-0" />
           ) : (
-            <div className="w-[36px] h-[48px] rounded-[4px] bg-white flex items-center justify-center shrink-0">📖</div>
+            <div className="w-[36px] h-[48px] rounded-[4px] bg-[var(--background-elevated)] flex items-center justify-center shrink-0">📖</div>
           )}
           <div className="min-w-0 flex-1">
             <div className="font-bold text-[14px] text-[var(--foreground-primary)] truncate">{productTitle}</div>

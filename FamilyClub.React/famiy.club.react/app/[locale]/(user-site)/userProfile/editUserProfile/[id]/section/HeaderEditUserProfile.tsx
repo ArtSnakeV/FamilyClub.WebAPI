@@ -74,7 +74,7 @@ export default function HeaderEditUserProfile({ form, setField, avatarData, setA
                     <button
                         type="button"
                         onClick={() => setAvatarData(null)}
-                        className="flex relative items-center w-full h-[36px] gap-2 text-center text-[20px] text-[var(--color-black)] hover:text-red-500 transition-colors"
+                        className="flex relative items-center w-full h-[36px] gap-2 text-center text-[20px] text-[var(--foreground-primary)] hover:text-[#981717] transition-colors"
                     >
                         <Image
                             src={iconDeleteAvatar.src}
@@ -90,24 +90,24 @@ export default function HeaderEditUserProfile({ form, setField, avatarData, setA
             {/* Поля */}
             <div className="flex w-full flex-col gap-6 flex-1">
                 <div className="flex w-[760px] flex-col gap-1">
-                    <label className="text-[22px] font-medium text-[var(--color-black)]">{t("profileEdit.username")}</label>
+                    <label className="text-[22px] font-medium text-[var(--foreground-primary)]">{t("profileEdit.username")}</label>
                     <input
                         type="text"
                         placeholder={t("profileEdit.firstNamePlaceholder")}
                         value={form.name ?? ""}
                         onChange={(e) => setField("name", e.target.value)}
-                        className="w-full h-[52px] px-4 rounded-[8px] border border-gray-200 bg-[var(--background-elevated)] text-[15px] outline-none focus:border-[var(--color-green)]"
+                        className="w-full h-[52px] px-4 rounded-[8px] border border-[var(--color-menu-separator)] bg-[var(--background-elevated)] text-[15px] outline-none focus:border-[var(--color-green)]"
                         style={{ boxShadow: "0px 0px 10px 0px #00000040" }}
                     />
                 </div>
                 <div className="flex w-[760px] flex-col gap-1">
-                    <label className="text-[22px] font-medium text-[var(--color-black)]">{t("profileEdit.surname")}</label>
+                    <label className="text-[22px] font-medium text-[var(--foreground-primary)]">{t("profileEdit.surname")}</label>
                     <input
                         type="text"
                         placeholder={t("profileEdit.surnamePlaceholder")}
                         value={form.surname ?? ""}
                         onChange={(e) => setField("surname", e.target.value)}
-                        className="w-full h-[52px] px-4 rounded-[8px] border border-gray-200 bg-[var(--background-elevated)] text-[15px] outline-none focus:border-[var(--color-green)]"
+                        className="w-full h-[52px] px-4 rounded-[8px] border border-[var(--color-menu-separator)] bg-[var(--background-elevated)] text-[15px] outline-none focus:border-[var(--color-green)]"
                         style={{ boxShadow: "0px 0px 10px 0px #00000040" }}
                     />
                 </div>

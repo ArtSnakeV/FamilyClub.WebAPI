@@ -211,7 +211,7 @@ export default function MobileRegisterView() {
               onClick={() => setIsDropdownOpen(!isDropdownOpen)}
               className="w-[85px] h-[50px] bg-[var(--background-elevated)] rounded-l-[9px] flex items-center justify-center cursor-pointer border-r border-[color-mix(in_srgb,var(--foreground-primary)_10%,transparent)] select-none z-20"
             >
-              <div className="w-[26px] h-[18px] rounded-[2px] overflow-hidden bg-gray-200 flex-shrink-0">
+              <div className="w-[26px] h-[18px] rounded-[2px] overflow-hidden bg-[var(--color-menu-hover)] flex-shrink-0">
                 {hasMatch && (
                   <span
                     className={`fi fi-${detectedCountry}`}
@@ -255,7 +255,7 @@ export default function MobileRegisterView() {
                     }}
                     className="h-[40px] px-3 flex items-center gap-2 cursor-pointer hover:bg-[var(--color-menu-hover)] transition-colors"
                   >
-                    <div className="w-[22px] h-[16px] rounded-[2px] overflow-hidden bg-gray-200 flex-shrink-0">
+                    <div className="w-[22px] h-[16px] rounded-[2px] overflow-hidden bg-[var(--color-menu-hover)] flex-shrink-0">
                       <span
                         className={`fi fi-${c.code}`}
                         style={{

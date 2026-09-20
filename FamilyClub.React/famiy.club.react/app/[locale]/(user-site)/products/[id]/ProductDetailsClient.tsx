@@ -861,7 +861,7 @@ export default function ProductDetailsClient({ id }: { id: string }) {
                         <button
                           key={`thumb-${index}`}
                           type="button"
-                          className={`flex h-[120px] w-[88px] items-center justify-center rounded-[8px] bg-white p-1.5 shadow-md transition-all ${isActive ? "ring-2 ring-[var(--color-product-cta)] scale-105" : "opacity-80 hover:opacity-100"}`}
+                          className={`flex h-[120px] w-[88px] items-center justify-center rounded-[8px] bg-[var(--background-elevated)] p-1.5 shadow-md transition-all ${isActive ? "ring-2 ring-[var(--color-product-cta)] scale-105" : "opacity-80 hover:opacity-100"}`}
                           onClick={() => setSelectedImage(image)}
                         >
                           <img alt="" className="h-full w-full object-contain" src={image} />
@@ -952,7 +952,7 @@ export default function ProductDetailsClient({ id }: { id: string }) {
                         {authorPhoto ? (
                           <img alt={authorName || t("product.authorAlt")} className="h-[44px] w-[44px] rounded-full object-cover border-2 border-white shadow-sm" src={authorPhoto} />
                         ) : (
-                          <div className="flex h-[44px] w-[44px] items-center justify-center rounded-full bg-white/20 font-bold text-lg">
+                          <div className="flex h-[44px] w-[44px] items-center justify-center rounded-full bg-[color-mix(in_srgb,var(--color-cream)_22%,transparent)] font-bold text-lg">
                             {authorName ? authorName.charAt(0) : "A"}
                           </div>
                         )}
@@ -960,7 +960,7 @@ export default function ProductDetailsClient({ id }: { id: string }) {
                       </div>
                       <button
                         type="button"
-                        className="flex h-[36px] w-[36px] items-center justify-center rounded-full bg-white/20 text-2xl font-bold hover:bg-white/30 transition-colors"
+                        className="flex h-[36px] w-[36px] items-center justify-center rounded-full bg-[color-mix(in_srgb,var(--color-cream)_22%,transparent)] text-2xl font-bold hover:bg-[color-mix(in_srgb,var(--color-cream)_32%,transparent)] transition-colors"
                         title={t("product.subscribeMore")}
                       >
                         +
@@ -1114,7 +1114,7 @@ export default function ProductDetailsClient({ id }: { id: string }) {
                   className="flex cursor-pointer items-center gap-4 rounded-l-[30px] bg-[var(--color-shelf)] px-8 py-5 text-[#ffd9d9] shadow-2xl transition-transform hover:translate-x-[-8px]"
                   onClick={() => router.push(lp("/community"))}
                 >
-                  <div className="flex h-[40px] w-[40px] items-center justify-center rounded-full bg-white/20 text-2xl font-bold text-white">
+                  <div className="flex h-[40px] w-[40px] items-center justify-center rounded-full bg-[color-mix(in_srgb,var(--color-cream)_22%,transparent)] text-2xl font-bold text-white">
                     📖
                   </div>
                   <span className="font-serif text-[24px] font-bold">{t("product.goToCommunity")}</span>

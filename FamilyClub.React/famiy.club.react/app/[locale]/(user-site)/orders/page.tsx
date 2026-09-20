@@ -381,7 +381,7 @@ export default function OrdersPage() {
     <>
       {/* Toast Notification */}
       {toastMessage && (
-        <div className="fixed top-24 right-6 z-50 bg-[var(--background-dark)] text-white px-6 py-3 rounded-2xl shadow-2xl flex items-center gap-3 animate-fade-in border border-gray-700">
+        <div className="fixed top-24 right-6 z-50 bg-[var(--background-dark)] text-white px-6 py-3 rounded-2xl shadow-2xl flex items-center gap-3 animate-fade-in border border-[color-mix(in_srgb,var(--foreground-primary)_25%,transparent)]">
           <span className="text-green-400 text-lg">✓</span>
           <span className="text-sm font-medium">{toastMessage}</span>
         </div>
@@ -429,16 +429,18 @@ export default function OrdersPage() {
 
       {/* Десктопна версія */}
       <div className="hidden md:block">
-        <div
-          className="relative min-h-screen pt-[160px] md:pt-[210px] pb-20 font-sans"
-          style={{
-            backgroundImage: "url('/images/userProfile/Rectangle 326.png')",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            backgroundAttachment: "fixed",
-          }}
-        >
-          <div className="max-w-[1100px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="relative min-h-screen pt-[160px] md:pt-[210px] pb-20 font-sans overflow-hidden">
+          <div
+            aria-hidden
+            className="absolute inset-0 pointer-events-none admin-parchment-bg"
+            style={{
+              backgroundImage: "url('/images/userProfile/Rectangle 326.png')",
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              backgroundAttachment: "fixed",
+            }}
+          />
+          <div className="relative z-10 max-w-[1100px] mx-auto px-4 sm:px-6 lg:px-8">
             {/* Header Block */}
             <OrdersHeader
               paws={paws}
@@ -446,14 +448,17 @@ export default function OrdersPage() {
             />
 
             {/* Brown Background Board Container under cards */}
-            <div
-              className="relative w-full pt-4 pb-20 px-4 sm:px-8 rounded-3xl min-h-[680px] shadow-xl border border-[var(--color-border-warm)]/40 mt-4"
-              style={{
-                backgroundImage: "url('/images/addProducts/Rectangle 312.svg')",
-                backgroundSize: "cover",
-                backgroundPosition: "top center",
-              }}
-            >
+            <div className="relative w-full pt-4 pb-20 px-4 sm:px-8 rounded-3xl min-h-[680px] shadow-xl border border-[var(--color-border-warm)]/40 mt-4 overflow-hidden">
+              <div
+                aria-hidden
+                className="absolute inset-0 pointer-events-none admin-parchment-bg"
+                style={{
+                  backgroundImage: "url('/images/addProducts/Rectangle 312.svg')",
+                  backgroundSize: "cover",
+                  backgroundPosition: "top center",
+                }}
+              />
+              <div className="relative z-10">
               {/* Tabs Bar */}
               <div className="-mt-2 mb-6">
                 <OrdersTabs activeTab={activeTab} onSelectTab={handleTabChange} counts={counts} />
@@ -461,7 +466,7 @@ export default function OrdersPage() {
 
               {/* Informational Text Under Tabs for Certain States */}
               {(activeTab === "add_review" || activeTab === "returns" || activeTab === "history") && (
-                <div className="text-center text-sm md:text-base font-semibold text-[var(--foreground-primary)] my-4 tracking-wide bg-[var(--background-elevated)]/70 backdrop-blur-sm py-2.5 px-6 rounded-2xl max-w-md mx-auto shadow-sm border border-white/40">
+                <div className="text-center text-sm md:text-base font-semibold text-[var(--foreground-primary)] my-4 tracking-wide bg-[var(--background-elevated)]/70 backdrop-blur-sm py-2.5 px-6 rounded-2xl max-w-md mx-auto shadow-sm border border-[color-mix(in_srgb,var(--foreground-primary)_12%,transparent)]">
                   {t("orders.autoRemoveNote")}
                 </div>
               )}
@@ -501,6 +506,7 @@ export default function OrdersPage() {
                     />
                   </>
                 )}
+              </div>
               </div>
             </div>
           </div>

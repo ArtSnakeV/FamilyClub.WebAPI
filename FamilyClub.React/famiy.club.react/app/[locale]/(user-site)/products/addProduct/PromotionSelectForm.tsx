@@ -31,7 +31,7 @@ export default function PromotionSelectForm({
 
   return (
     <div className="w-[200px]" style={{ width: 200 }}>
-      <p className="pt-3 text-[var(--color-black)] font-sans-pro font-normal text-[18px] leading-[150%] tracking-[-0.011em]">
+      <p className="pt-3 text-[var(--foreground-primary)] font-sans-pro font-normal text-[18px] leading-[150%] tracking-[-0.011em]">
         {t("sellerProduct.promotion")}
       </p>
       <select
@@ -52,7 +52,7 @@ export default function PromotionSelectForm({
           }
         }}
         className={`w-[200px] rounded-[9px] text-[14px] px-2 bg-[var(--color-white)] shadow-[0px_0px_10px_0px_#00000040] h-[40px]
-          ${!value ? "text-gray-500" : "text-[var(--color-black)]"}
+          ${!value ? "text-[var(--color-muted-fg)]" : "text-[var(--foreground-primary)]"}
         `}
       >
         <option value="" style={{ width: 200 }}>

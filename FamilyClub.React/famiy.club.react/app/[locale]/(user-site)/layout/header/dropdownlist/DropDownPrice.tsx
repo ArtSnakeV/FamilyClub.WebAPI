@@ -96,7 +96,7 @@ export default function DropDownPrice() {
                   aria-label={t("header.priceFromAria")}
                   value={from}
                   onChange={(e) => setFrom(e.target.value)}
-                  className="absolute inset-0 w-full h-full bg-transparent px-4 text-[var(--color-black)] text-[12px]"
+                  className="absolute inset-0 w-full h-full bg-transparent px-4 text-[var(--foreground-primary)] text-[12px]"
                 />
               </div>
 
@@ -113,7 +113,7 @@ export default function DropDownPrice() {
                   aria-label={t("header.priceToAria")}
                   value={to}
                   onChange={(e) => setTo(e.target.value)}
-                  className="absolute inset-0 w-full h-full bg-transparent px-4 text-[var(--color-black)] text-[12px]"
+                  className="absolute inset-0 w-full h-full bg-transparent px-4 text-[var(--foreground-primary)] text-[12px]"
                 />
               </div>
 

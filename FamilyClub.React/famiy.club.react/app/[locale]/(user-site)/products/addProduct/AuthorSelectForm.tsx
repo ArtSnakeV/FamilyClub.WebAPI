@@ -36,7 +36,7 @@ export default function AuthorSelectForm({
 
   return (
     <>
-      <p className="pt-3 text-[var(--color-black)] font-sans-pro font-normal text-[18px] leading-[150%] tracking-[-0.011em]">
+      <p className="pt-3 text-[var(--foreground-primary)] font-sans-pro font-normal text-[18px] leading-[150%] tracking-[-0.011em]">
         {t("sellerProduct.authors")}
       </p>
       <div className="relative w-full">
@@ -44,7 +44,7 @@ export default function AuthorSelectForm({
           type="button"
           onClick={() => setOpen((o) => !o)}
           className={`w-full text-left rounded-[9px] bg-[var(--color-white)] shadow-[0px_0px_10px_0px_#00000040] h-[40px] px-3 truncate
-    ${value.length > 0 ? "text-[var(--color-black)]" : "text-gray-500"}
+    ${value.length > 0 ? "text-[var(--foreground-primary)]" : "text-[var(--color-muted-fg)]"}
   `}
         >
           {displayText}
@@ -55,7 +55,7 @@ export default function AuthorSelectForm({
             {authors.map((a) => (
               <label
                 key={a.id}
-                className="flex items-center gap-2 px-3 py-2 cursor-pointer hover:bg-gray-100 text-[16px]"
+                className="flex items-center gap-2 px-3 py-2 cursor-pointer hover:bg-[var(--color-menu-hover)] text-[16px]"
               >
                 <input
                   type="checkbox"

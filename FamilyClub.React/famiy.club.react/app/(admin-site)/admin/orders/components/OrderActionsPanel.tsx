@@ -66,8 +66,8 @@ export default function OrderActionsPanel({
     };
 
     return (
-        <div className="rounded-[12px] bg-white/90 px-4 py-4 shadow-[0_0_15px_rgba(0,0,0,0.08)] flex flex-col gap-3">
-            <h3 className="text-[15px] font-bold text-[#1F1F1F]">
+        <div className="rounded-[12px] bg-[var(--background-elevated)]/90 px-4 py-4 shadow-[var(--shadow-card)] flex flex-col gap-3">
+            <h3 className="text-[15px] font-bold text-[var(--foreground-primary)]">
                 Дії із замовленням
             </h3>
 

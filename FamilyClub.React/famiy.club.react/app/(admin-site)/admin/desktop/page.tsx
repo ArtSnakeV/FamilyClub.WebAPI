@@ -184,31 +184,39 @@ export default function Desktop() {
   );
 
   return (
-    <div className="relative w-full min-h-screen flex flex-col">
+    <div className="relative w-full min-h-full flex flex-col">
       {/* A. Привітання — для всіх */}
-      <div className="px-6 pt-6">
+      <div className="px-6 pt-6 relative z-20">
         <GreetingBanner />
       </div>
 
       <div
-        className="min-h-screen overflow-hidden relative m-0 p-0"
+        className="relative min-h-full overflow-x-clip m-0 p-0 flex-1"
         style={{ marginLeft: "-1rem", width: "calc(100% + 2rem)" }}
       >
-        <div className="w-full flex-1 relative overflow-hidden m-0 p-0">
-          <div className="absolute top-0 left-0 w-full pointer-events-none" aria-hidden>
-            <div className="admin-shelf-surface relative w-full">
-              <img
-                src="/images/authorPageAdmin/Rectangle 675.png"
-                className="block w-full h-auto"
-                alt=""
-              />
-            </div>
+        <div
+          className="absolute pointer-events-none overflow-hidden"
+          style={{
+            top: 0,
+            left: "-20px",
+            right: "-20px",
+            bottom: 0,
+          }}
+          aria-hidden
+        >
+          <div className="admin-shelf-surface absolute inset-0">
+            <img
+              src="/images/authorPageAdmin/Rectangle 675.png"
+              className="absolute inset-0 w-full h-full object-fill"
+              alt=""
+            />
           </div>
+        </div>
 
-          <div className="relative z-10 flex flex-col gap-6 p-10 text-[var(--foreground-primary)]">
-            {accessLoading ? (
-              <p className="text-[16px] text-[var(--color-muted-fg)]">Завантаження панелі...</p>
-            ) : isAdmin ? (
+        <div className="relative z-10 flex flex-col gap-6 p-10 text-[var(--foreground-primary)]">
+          {accessLoading ? (
+            <p className="text-[16px] text-[var(--color-muted-fg)]">Завантаження панелі...</p>
+          ) : isAdmin ? (
               <>
                 <h1 className="text-2xl font-bold mb-4 text-[var(--foreground-primary)]">Панель адміністратора</h1>
                 <section className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-5 gap-4">
@@ -346,7 +354,6 @@ export default function Desktop() {
               </>
             )}
           </div>
-        </div>
       </div>
     </div>
   );

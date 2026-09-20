@@ -212,7 +212,7 @@ export default async function AdminLayout({
           </aside>
 
           <main
-            className="relative min-h-screen flex flex-col bg-fixed"
+            className="relative flex flex-col bg-fixed"
             style={{
               marginLeft: "409px",
               marginTop: "62px",

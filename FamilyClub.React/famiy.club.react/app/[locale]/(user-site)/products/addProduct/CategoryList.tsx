@@ -26,7 +26,7 @@ export default function CategoryList({
     ${
       selectedIds.includes(category.id!)
         ? "border-[1px] border-[var(--foreground-primary)] text-[var(--foreground-primary)]"
-        : "border-transparent text-[var(--foreground-primary)] hover:border-gray-400 hover:bg-gray-100"
+        : "border-transparent text-[var(--foreground-primary)] hover:border-[var(--color-menu-separator)] hover:bg-[var(--color-menu-hover)]"
     }
   `}
             >

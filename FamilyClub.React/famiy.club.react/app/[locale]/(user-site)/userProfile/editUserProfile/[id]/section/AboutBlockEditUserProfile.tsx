@@ -42,13 +42,13 @@ export default function AboutBlockEditUserProfile({ about, setAbout }: Props) {
                     }}
                     placeholder="..."
                     rows={7}
-                    className="mt-6 w-full px-4 py-3 rounded-[12px] border border-gray-200 bg-[var(--background-elevated)] text-[15px] outline-none focus:border-[var(--color-green)] resize-none"
+                    className="mt-6 w-full px-4 py-3 rounded-[12px] border border-[var(--color-menu-separator)] bg-[var(--background-elevated)] text-[15px] outline-none focus:border-[var(--color-green)] resize-none"
                     style={{ boxShadow: "0px 0px 10px 0px #00000040" }}
                 />
 
                 {/* Лічильник і кнопки */}
                 <div className="flex items-center justify-between mt-2">
-                    <span className="text-[18px] text-[var(--color-black)]">
+                    <span className="text-[18px] text-[var(--foreground-primary)]">
                         {t("profileEdit.charCount")
                             .replace("{count}", String(about.length))
                             .replace("{max}", String(MAX_LENGTH))}
@@ -57,7 +57,7 @@ export default function AboutBlockEditUserProfile({ about, setAbout }: Props) {
                         <button
                             type="button"
                             onClick={() => setAbout("")}
-                            className="text-[18px] font-medium text-[var(--color-black)]-600 hover:text-[var(--color-black)]-1000 transition-colors"
+                            className="text-[18px] font-medium text-[var(--foreground-primary)]-600 hover:text-[var(--foreground-primary)]-1000 transition-colors"
                         >
                             {t("profileEdit.cancel")}
                         </button>

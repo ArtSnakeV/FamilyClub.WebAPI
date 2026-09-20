@@ -36,7 +36,7 @@ function Avatar({
             className="w-8 h-8 rounded-full object-cover shrink-0"
         />
     ) : (
-        <div className="w-8 h-8 rounded-full bg-black/10 flex items-center justify-center text-sm shrink-0">
+        <div className="w-8 h-8 rounded-full bg-[color-mix(in_srgb,var(--foreground-primary)_10%,transparent)] flex items-center justify-center text-sm shrink-0">
             {fallback ?? "👤"}
         </div>
     );
@@ -157,7 +157,7 @@ export default function NotificationThread({
                                     onClick={onClose}
                                     className="
                                         ml-auto
-                                        text-black/50
+                                        text-[var(--color-muted-fg)]
                                         hover:text-black
                                         text-xl
                                         leading-none
@@ -173,7 +173,7 @@ export default function NotificationThread({
                             <div className="flex-1 overflow-y-auto px-5 py-4 flex flex-col gap-3">
 
                                 {sorted.length === 0 ? (
-                                    <p className="text-black/50 text-sm text-center py-6">
+                                    <p className="text-[var(--color-muted-fg)] text-sm text-center py-6">
                                         {t("notifications.threadEmpty")}
                                     </p>
                                 ) : (
@@ -205,7 +205,7 @@ export default function NotificationThread({
                                             >
 
                                                 {label && (
-                                                    <span className="text-xs font-medium text-black/50 mb-1 px-1">
+                                                    <span className="text-xs font-medium text-[var(--color-muted-fg)] mb-1 px-1">
                                                         {label}
                                                     </span>
                                                 )}
@@ -253,7 +253,7 @@ export default function NotificationThread({
                                                             ${
                                                                 isMine
                                                                     ? "bg-[var(--color-green)] text-white rounded-br-sm"
-                                                                    : "bg-[var(--background-elevated)] text-black/80 rounded-tl-sm"
+                                                                    : "bg-[var(--background-elevated)] text-[var(--foreground-primary)] rounded-tl-sm"
                                                             }
                                                         `}
                                                     >
@@ -269,7 +269,7 @@ export default function NotificationThread({
                                                                 ${
                                                                     isMine
                                                                         ? "text-white/70"
-                                                                        : "text-black/40"
+                                                                        : "text-[var(--color-muted-fg)]"
                                                                 }
                                                             `}
                                                         >
