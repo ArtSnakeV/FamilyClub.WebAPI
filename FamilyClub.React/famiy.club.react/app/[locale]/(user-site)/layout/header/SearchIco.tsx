@@ -92,7 +92,6 @@ export default function SearchIco() {
           setOpen((v) => !v);
         }}
         className="
-          header-utility-icon
           relative
           right-[1vw]
           w-[22px]

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useTranslations } from "@/lib/i18n/LocaleProvider";
+import { useTheme } from "@/lib/theme/ThemeProvider";
 
 type BookCardProps = {
   title: string;
@@ -46,6 +47,11 @@ export default function BookCard({
   productId,
 }: BookCardProps) {
   const t = useTranslations();
+  const { theme } = useTheme();
+  const isNight = theme === "ink-night";
+  const monoIconFilter = isNight
+    ? { filter: "brightness(0) invert(0.88)" }
+    : undefined;
   const roundedRating = clampRating(Math.round(rating ?? 0));
   const activeFormatTags = formatTags?.length ? formatTags : [];
 
@@ -96,6 +102,7 @@ export default function BookCard({
               ? "/images/userProfile/heart-filled.svg"
               : "/images/main_page/icons/rec-icon-favorite.svg"
           }
+          style={isFavorite ? undefined : monoIconFilter}
         />
       </button>
 
@@ -125,6 +132,7 @@ export default function BookCard({
               src="/images/main_page/icons/rec-icon-star.svg"
               className={`h-[18px] w-[18px] ${index < roundedRating ? "opacity-100" : "opacity-30"}`}
               alt=""
+              style={monoIconFilter}
             />
           ))}
         </div>
@@ -148,6 +156,7 @@ export default function BookCard({
             alt={t("product.cartAria")}
             className="h-[30px] w-[30px] cursor-pointer"
             src="/images/main_page/icons/rec-icon-basket.svg"
+            style={monoIconFilter}
           />
         </div>
       </div>

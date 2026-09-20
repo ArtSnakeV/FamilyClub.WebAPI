@@ -108,10 +108,15 @@ export default function MobileHeader() {
           {/* Right: Search, Filter, Menu Icons (Dark grey #242424 on cream background) */}
           <div className="flex items-center gap-4 pl-[90px]">
             {/* Search Button */}
+            {/* Search Button */}
             <Link
               href={lp("/categories")}
               aria-label={t("common.search")}
-              className="header-utility-icon p-1.5 rounded-full hover:bg-[color-mix(in_srgb,var(--foreground-primary)_5%,transparent)] transition-colors"
+              className={`flex h-[40px] w-[40px] items-center justify-center rounded-full transition-all duration-300 ${
+                theme === "ink-night"
+                  ? "hover:shadow-[0px_0px_16px_0px_rgba(245,243,238,0.65)]"
+                  : "hover:bg-[var(--color-white)] hover:shadow-[0px_0px_15px_0px_#242424CC]"
+              }`}
             >
               <img
                 src="/images/header/zoom_out_24px.svg"
