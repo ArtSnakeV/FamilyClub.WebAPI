@@ -186,7 +186,7 @@ function BookCover({
   }
 
   return (
-    <div className="w-full h-full flex items-center justify-center text-[11px] text-[#888] text-center px-1">
+    <div className="w-full h-full flex items-center justify-center text-[11px] text-[var(--color-muted-fg)] text-center px-1">
       Немає фото
     </div>
   );
@@ -302,15 +302,21 @@ export default function AllBooks() {
     }
 
     return (
-        <div
-            className="w-full min-h-screen overflow-hidden relative m-0 p-0">
+        <div className="w-full min-h-screen overflow-hidden relative m-0 p-0 text-[var(--foreground-primary)]">
             <div className="w-[100vw] min-h-screen relative">
-                <img
-                    src="/images/authorPageAdmin/Rectangle 675.png"
-                    className="absolute"
-                    style={{ width: "100vw", height: "auto", top: "36px", left: "-20px" }}
-                    alt=""
-                />
+                <div
+                    className="absolute pointer-events-none"
+                    style={{ width: "100vw", top: "36px", left: "-20px" }}
+                    aria-hidden
+                >
+                    <div className="admin-shelf-surface relative w-full">
+                        <img
+                            src="/images/authorPageAdmin/Rectangle 675.png"
+                            className="block w-full h-auto"
+                            alt=""
+                        />
+                    </div>
+                </div>
 
                 <div className="flex w-full flex-col">
                     <div
@@ -320,8 +326,6 @@ export default function AllBooks() {
                         <BooksNav />
                     </div>
 
-
-                    {/* Main content part*/}
                     <div
                         className="relative self-center mt-[90px]"
                         style={{
@@ -330,12 +334,16 @@ export default function AllBooks() {
                             minHeight: "740px",
                         }}
                     >
-                        <img
-                            src="/images/authorPageAdmin/Rectangle 708.png"
-                            alt=""
-                            className="absolute top-0 left-0 w-full h-full object-fill"
+                        <div
+                            aria-hidden
+                            className="absolute inset-0 pointer-events-none admin-parchment-bg"
+                            style={{
+                                backgroundImage:
+                                    "url('/images/authorPageAdmin/Rectangle 708.png')",
+                                backgroundSize: "100% 100%",
+                            }}
                         />
-                        <div className="absolute inset-[25px] overflow-auto p-[10px]">
+                        <div className="absolute inset-[25px] overflow-auto p-[10px] z-10">
 
                             {/* Наш уніфікований блок пошуку, сортування та кнопки "Додати" */}
                             <EntitiesSearchSorting
@@ -357,18 +365,19 @@ export default function AllBooks() {
                             {/* Table Section */}
                             <div className="mt-8 px-[20px] w-full text-left">
                                 <div className="flex border-none pb-4">
-                                    <div className="flex-1 font-['Source_Sans_Pro'] font-semibold text-[20px] leading-[150%] tracking-[-0.011em] text-[#242424]">
+                                    <div className="flex-1 font-['Source_Sans_Pro'] font-semibold text-[20px] leading-[150%] tracking-[-0.011em] text-[var(--foreground-primary)]">
                                         Товари
                                     </div>
-                                    <div className="w-[338px] text-center font-['Source_Sans_Pro'] font-semibold text-[20px] leading-[150%] tracking-[-0.011em] text-[#242424]">
+                                    <div className="w-[338px] text-center font-['Source_Sans_Pro'] font-semibold text-[20px] leading-[150%] tracking-[-0.011em] text-[var(--foreground-primary)]">
                                         Дії
                                     </div>
                                 </div>
 
-                                {/* Список усіх наявних продуктів */}
                                 <div className="grid gap-4">
                                     {isLoading ? (
-                                        <div className="text-[20px] opacity-60">Завантаження...</div>
+                                        <div className="text-[20px] text-[var(--color-muted-fg)]">
+                                            Завантаження...
+                                        </div>
                                     ) : currentPaginatedItems.length > 0 ? (
                                         currentPaginatedItems.map((product) => {
                                             const title =
@@ -382,27 +391,27 @@ export default function AllBooks() {
                                             return (
                                             <div
                                                 key={product.id}
-                                                className="max-w-[1464px] w-full bg-[#F5F3EE] rounded-[9px] shadow-[0_0_10px_0_rgba(0,0,0,0.25)] px-[24px] py-4 flex items-center justify-between gap-4"
+                                                className="max-w-[1464px] w-full bg-[var(--background-elevated)] rounded-[9px] shadow-[var(--shadow-card)] border border-[color-mix(in_srgb,var(--foreground-primary)_12%,transparent)] px-[24px] py-4 flex items-center justify-between gap-4"
                                             >
                                                 <div className="flex items-center gap-5 min-w-0 flex-1">
-                                                    <div className="w-[72px] h-[100px] flex-shrink-0 rounded-[6px] overflow-hidden bg-[#E8E4DC]">
+                                                    <div className="w-[72px] h-[100px] flex-shrink-0 rounded-[6px] overflow-hidden bg-[color-mix(in_srgb,var(--foreground-primary)_10%,var(--background-elevated))]">
                                                         <BookCover src={coverSrc} title={title} />
                                                     </div>
 
                                                     <div className="flex flex-col min-h-[100px] min-w-0 flex-1 py-0.5">
-                                                        <p className="font-['Source_Sans_Pro'] font-bold text-[18px] leading-[140%] tracking-[-0.01em] text-[#1F1F1F] truncate">
+                                                        <p className="font-['Source_Sans_Pro'] font-bold text-[18px] leading-[140%] tracking-[-0.01em] text-[var(--foreground-primary)] truncate">
                                                             {title}
                                                         </p>
                                                         {authorName && (
-                                                            <p className="font-['Source_Sans_Pro'] font-normal text-[15px] leading-[140%] text-[#767676] mt-1.5 truncate">
+                                                            <p className="font-['Source_Sans_Pro'] font-normal text-[15px] leading-[140%] text-[var(--color-muted-fg)] mt-1.5 truncate">
                                                                 {authorName}
                                                             </p>
                                                         )}
                                                         <p className="font-['Source_Sans_Pro'] text-[15px] leading-[140%] mt-auto pt-5">
-                                                            <span className="font-normal text-[#767676]">
+                                                            <span className="font-normal text-[var(--color-muted-fg)]">
                                                                 Ціна:{" "}
                                                             </span>
-                                                            <span className="font-semibold text-[#1F1F1F]">
+                                                            <span className="font-semibold text-[var(--foreground-primary)]">
                                                                 {getProductPriceAmount(product)} грн
                                                             </span>
                                                         </p>
@@ -443,7 +452,9 @@ export default function AllBooks() {
                                             );
                                         })
                                     ) : (
-                                        <div className="text-[20px] opacity-60">Книг не знайдено</div>
+                                        <div className="text-[20px] text-[var(--color-muted-fg)]">
+                                            Книг не знайдено
+                                        </div>
                                     )}
                                 </div>
                             </div>

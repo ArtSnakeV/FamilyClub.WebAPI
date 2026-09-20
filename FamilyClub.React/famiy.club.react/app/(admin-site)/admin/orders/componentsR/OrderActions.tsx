@@ -6,7 +6,6 @@ import { type AdminOrderStatusId } from "../utilsR/OrderDisplay";
 interface OrderActionItem {
     status: AdminOrderStatusId;
     label: string;
-    /** Колір кнопки дії — окремий набір від кольору тексту статусу в OrderDetail/StatusBadge. */
     color: string;
 }
 
@@ -27,31 +26,33 @@ export default function OrderActions({ order, onAction }: OrderActionsProps) {
     const disabled = !order;
 
     return (
-        <div className="relative w-[330px] items-center max-w-[400px] mt-4 flex flex-col">
+        <div className="relative w-[330px] max-w-[400px] mt-4">
             <img
                 src="/images/ordersAdminPage/Rectangle 705.png"
-                className="absolute"
-                style={{ width: "330px", height:"290px", maxHeight: "310px" }}
                 alt=""
+                aria-hidden
+                className="absolute inset-0 w-full h-full object-fill pointer-events-none admin-parchment-bg"
             />
 
-            <p className="relative text-[20px] text-[var(--color-black)] p-2 mt-3 font-bold">
-                Дії із замовленням
-            </p>
+            <div className="relative z-10 flex flex-col items-center gap-3 px-10 pt-6 pb-7">
+                <p className="w-full text-[20px] text-[var(--foreground-primary)] font-bold text-center">
+                    Дії із замовленням
+                </p>
 
-            <div className="relative w-[290px] flex flex-col gap-3 px-7 pb-7">
-                {ACTIONS.map((action) => (
-                    <button
-                        key={action.status}
-                        type="button"
-                        disabled={disabled}
-                        onClick={() => onAction?.(action.status)}
-                        className="h-[30px] rounded-[10px] text-[var(--color-white)] text-[15px] font-semibold shadow-[0_0_10px_0_#00000040] hover:opacity-90 transition-opacity disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:opacity-40"
-                        style={{ backgroundColor: action.color }}
-                    >
-                        {action.label}
-                    </button>
-                ))}
+                <div className="w-full flex flex-col gap-3">
+                    {ACTIONS.map((action) => (
+                        <button
+                            key={action.status}
+                            type="button"
+                            disabled={disabled}
+                            onClick={() => onAction?.(action.status)}
+                            className="h-[30px] w-full rounded-[10px] text-[var(--color-cream)] text-[15px] font-semibold shadow-[var(--shadow-card)] hover:opacity-90 transition-opacity disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:opacity-40"
+                            style={{ backgroundColor: action.color }}
+                        >
+                            {action.label}
+                        </button>
+                    ))}
+                </div>
             </div>
         </div>
     );

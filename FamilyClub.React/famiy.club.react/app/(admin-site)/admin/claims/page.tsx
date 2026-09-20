@@ -10,6 +10,7 @@ import {
     claimRowKey,
     fetchAllClaims,
 } from "./api/claimsApi";
+import { useTheme } from "@/lib/theme/ThemeProvider";
 
 const CLAIM_SORT_OPTIONS = [
     { value: "email_asc", label: "Email (А→Я)" },
@@ -37,6 +38,8 @@ function matchesSearch(c: ClaimWithMemberDto, q: string): boolean {
 }
 
 export default function ClaimsPage() {
+    const { theme } = useTheme();
+    const isNight = theme === "ink-night";
     const [claims, setClaims] = useState<ClaimWithMemberDto[]>([]);
     const [search, setSearch] = useState("");
     const [sortOrder, setSortOrder] = useState("email_asc");
@@ -87,21 +90,28 @@ export default function ClaimsPage() {
 
     if (error) {
         return (
-            <div className="p-[35px]">
+            <div className="p-[35px] text-[var(--foreground-primary)]">
                 Не вдалося завантажити claims: {error}
             </div>
         );
     }
 
     return (
-        <div className="w-full min-h-screen overflow-hidden relative m-0 p-0">
+        <div className="w-full min-h-screen overflow-hidden relative m-0 p-0 text-[var(--foreground-primary)]">
             <div className="w-[100vw] min-h-screen relative">
-                <img
-                    src="/images/authorPageAdmin/Rectangle 675.png"
-                    className="absolute"
-                    style={{ width: "100vw", height: "auto", top: "36px", left: "-20px" }}
-                    alt=""
-                />
+                <div
+                    className="absolute pointer-events-none"
+                    style={{ width: "100vw", top: "36px", left: "-20px" }}
+                    aria-hidden
+                >
+                    <div className="admin-shelf-surface relative w-full">
+                        <img
+                            src="/images/authorPageAdmin/Rectangle 675.png"
+                            className="block w-full h-auto"
+                            alt=""
+                        />
+                    </div>
+                </div>
 
                 <div className="flex w-full flex-col">
                     <div
@@ -112,13 +122,17 @@ export default function ClaimsPage() {
                             minHeight: "740px",
                         }}
                     >
-                        <img
-                            src="/images/authorPageAdmin/Rectangle 708.png"
-                            alt=""
-                            className="absolute top-0 left-0 w-full h-full object-fill"
+                        <div
+                            aria-hidden
+                            className="absolute inset-0 pointer-events-none admin-parchment-bg"
+                            style={{
+                                backgroundImage:
+                                    "url('/images/authorPageAdmin/Rectangle 708.png')",
+                                backgroundSize: "100% 100%",
+                            }}
                         />
 
-                        <div className="absolute inset-[25px] overflow-auto p-[10px]">
+                        <div className="absolute inset-[25px] overflow-auto p-[10px] z-10">
                             <EntitiesSearchSorting
                                 searchPlaceholder="Пошук: email, login, id, телефон, type, value"
                                 searchValue={search}
@@ -130,20 +144,20 @@ export default function ClaimsPage() {
                                 sortOptions={CLAIM_SORT_OPTIONS}
                             />
 
-                            <p className="font-[Source_Sans_Pro] font-semibold text-[36px] leading-[150%] tracking-[-0.011em] align-middle mt-4">
+                            <p className="font-[Source_Sans_Pro] font-semibold text-[36px] leading-[150%] tracking-[-0.011em] align-middle mt-4 text-[var(--foreground-primary)]">
                                 Claims:
                             </p>
 
                             <div className="grid gap-4 mt-4">
                                 {isLoading ? (
-                                    <div className="text-[20px] opacity-60">
+                                    <div className="text-[20px] text-[var(--color-muted-fg)]">
                                         Завантаження...
                                     </div>
                                 ) : currentPaginatedItems.length > 0 ? (
                                     currentPaginatedItems.map((claim) => (
                                         <div
                                             key={claimRowKey(claim)}
-                                            className="max-w-[1464px] w-full bg-[#F5F3EE] rounded-[9px] shadow-[0_0_10px_0_rgba(0,0,0,0.25)] px-[24px] py-3 flex items-center justify-between gap-4"
+                                            className="max-w-[1464px] w-full bg-[var(--background-elevated)] rounded-[9px] shadow-[var(--shadow-card)] px-[24px] py-3 flex items-center justify-between gap-4 border border-[color-mix(in_srgb,var(--foreground-primary)_12%,transparent)]"
                                         >
                                             <div className="flex items-center gap-4 min-w-0 flex-1">
                                                 <div className="w-[56px] h-[56px] flex-shrink-0 rounded-full bg-[var(--color-green)]/15 flex items-center justify-center">
@@ -151,21 +165,29 @@ export default function ClaimsPage() {
                                                         src="/images/admin_manager_layout/claims.svg"
                                                         alt=""
                                                         className="w-7 h-7 object-contain"
+                                                        style={
+                                                            isNight
+                                                                ? {
+                                                                      filter:
+                                                                          "brightness(0) invert(0.88)",
+                                                                  }
+                                                                : undefined
+                                                        }
                                                     />
                                                 </div>
                                                 <div className="flex flex-col gap-0.5 min-w-0">
-                                                    <p className="font-sanspro font-semibold text-[20px] leading-[150%] tracking-[-0.011em] text-[var(--color-black)] truncate">
+                                                    <p className="font-sanspro font-semibold text-[20px] leading-[150%] tracking-[-0.011em] text-[var(--foreground-primary)] truncate">
                                                         {claim.claimType}{" "}
-                                                        <span className="font-normal opacity-70">
+                                                        <span className="font-normal text-[var(--color-muted-fg)]">
                                                             = {claim.claimValue}
                                                         </span>
                                                     </p>
-                                                    <p className="text-[13px] text-[var(--color-black)] opacity-70 truncate">
+                                                    <p className="text-[13px] text-[var(--color-muted-fg)] truncate">
                                                         {claim.email ?? "—"} · login:{" "}
                                                         {claim.userName ?? "—"} · тел:{" "}
                                                         {claim.phoneNumber ?? "—"}
                                                     </p>
-                                                    <p className="text-[12px] text-[var(--color-black)] opacity-50 truncate">
+                                                    <p className="text-[12px] text-[var(--color-muted-fg)] truncate">
                                                         ID: {claim.memberId}
                                                     </p>
                                                 </div>
@@ -199,7 +221,7 @@ export default function ClaimsPage() {
                                         </div>
                                     ))
                                 ) : (
-                                    <div className="text-[20px] opacity-60">
+                                    <div className="text-[20px] text-[var(--color-muted-fg)]">
                                         Claims не знайдено.{" "}
                                         <Link
                                             href="/admin/claims/addClaim"

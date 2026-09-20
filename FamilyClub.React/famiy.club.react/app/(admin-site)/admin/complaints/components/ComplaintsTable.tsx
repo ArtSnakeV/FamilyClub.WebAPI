@@ -3,9 +3,7 @@
 import type { ClubMemberReadDto, ComplaintsReadDto } from "@/lib/api/generated";
 import { getComplaintTypeLabel } from "@/lib/constants/complaintTypes";
 import { truncateText } from "@/app/(admin-site)/admin/desktop/utils/formatRelativeTime";
-import {
-    assignManagerName,
-} from "../utils/buildComplaintsMetrics";
+import { assignManagerName } from "../utils/buildComplaintsMetrics";
 import {
     displayMemberName,
     formatComplaintDate,
@@ -25,6 +23,11 @@ type Props = {
     isLoading?: boolean;
     variant?: "admin" | "manager";
 };
+
+const borderSubtle =
+    "border-[color-mix(in_srgb,var(--foreground-primary)_12%,transparent)]";
+const surfaceMuted =
+    "bg-[color-mix(in_srgb,var(--foreground-primary)_8%,var(--background-elevated))]";
 
 export default function ComplaintsTable({
     complaints,
@@ -48,24 +51,28 @@ export default function ComplaintsTable({
     );
 
     return (
-        <div className="rounded-[12px] bg-white px-5 py-5 shadow-[0_0_15px_rgba(0,0,0,0.12)]">
-            <h3 className="text-[16px] font-bold text-[#1F1F1F] mb-4">
+        <div
+            className={`rounded-[12px] bg-[var(--background-elevated)] px-5 py-5 shadow-[var(--shadow-card)] border ${borderSubtle}`}
+        >
+            <h3 className="text-[16px] font-bold text-[var(--foreground-primary)] mb-4">
                 {variant === "admin" ? "Останні скарги" : "Список скарг"}
             </h3>
 
             {isLoading ? (
                 <div className="flex justify-center py-16">
-                    <div className="w-8 h-8 border-4 border-[#005b33] border-t-transparent rounded-full animate-spin" />
+                    <div className="w-8 h-8 border-4 border-[var(--color-green)] border-t-transparent rounded-full animate-spin" />
                 </div>
             ) : slice.length === 0 ? (
-                <p className="text-center text-[14px] text-[#888] py-12">
+                <p className="text-center text-[14px] text-[var(--color-muted-fg)] py-12">
                     Скарг за обраними фільтрами немає
                 </p>
             ) : (
                 <div className="overflow-x-auto">
                     <table className="w-full min-w-[900px] text-left border-collapse">
                         <thead>
-                            <tr className="text-[12px] text-[#777] border-b border-[#E8E4DC]">
+                            <tr
+                                className={`text-[12px] text-[var(--color-muted-fg)] border-b ${borderSubtle}`}
+                            >
                                 {variant === "admin" ? (
                                     <>
                                         <th className="pb-3 font-semibold pr-3">
@@ -144,11 +151,13 @@ export default function ComplaintsTable({
                                     return (
                                         <tr
                                             key={c.id}
-                                            className="border-b border-[#F0EBE3] last:border-0 align-top"
+                                            className={`border-b ${borderSubtle} last:border-0 align-top`}
                                         >
                                             <td className="py-3 pr-3">
                                                 <div className="flex gap-3 items-start min-w-0">
-                                                    <div className="w-10 h-12 rounded bg-[#E8E4DC] overflow-hidden flex-shrink-0">
+                                                    <div
+                                                        className={`w-10 h-12 rounded ${surfaceMuted} overflow-hidden flex-shrink-0`}
+                                                    >
                                                         {cover ? (
                                                             <img
                                                                 src={cover}
@@ -158,44 +167,44 @@ export default function ComplaintsTable({
                                                         ) : null}
                                                     </div>
                                                     <div className="min-w-0">
-                                                        <p className="text-[13px] font-semibold text-[#1F1F1F] break-words">
+                                                        <p className="text-[13px] font-semibold text-[var(--foreground-primary)] break-words">
                                                             {preview ||
                                                                 typeLabel}
                                                         </p>
-                                                        <p className="text-[11px] text-[#888] mt-0.5">
+                                                        <p className="text-[11px] text-[var(--color-muted-fg)] mt-0.5">
                                                             ID: #{c.id ?? "—"}
                                                         </p>
                                                     </div>
                                                 </div>
                                             </td>
                                             <td className="py-3 pr-3">
-                                                <p className="text-[13px] font-semibold text-[#1F1F1F]">
+                                                <p className="text-[13px] font-semibold text-[var(--foreground-primary)]">
                                                     {typeLabel}
                                                 </p>
-                                                <p className="text-[11px] text-[#888] line-clamp-2 break-words max-w-[160px]">
+                                                <p className="text-[11px] text-[var(--color-muted-fg)] line-clamp-2 break-words max-w-[160px]">
                                                     {c.complaintText?.trim() ||
                                                         "—"}
                                                 </p>
                                             </td>
                                             <td className="py-3 pr-3">
-                                                <p className="text-[13px] font-semibold text-[#1F1F1F]">
+                                                <p className="text-[13px] font-semibold text-[var(--foreground-primary)]">
                                                     {displayMemberName(
                                                         member?.name,
                                                         member?.surname,
                                                         member?.email
                                                     )}
                                                 </p>
-                                                <p className="text-[11px] text-[#888] truncate max-w-[140px]">
+                                                <p className="text-[11px] text-[var(--color-muted-fg)] truncate max-w-[140px]">
                                                     {member?.email
                                                         ? `@${member.email.split("@")[0]}`
                                                         : "—"}
                                                 </p>
                                             </td>
                                             <td className="py-3 pr-3 whitespace-nowrap">
-                                                <p className="text-[13px] text-[#2F2F2F]">
+                                                <p className="text-[13px] text-[var(--foreground-primary)]">
                                                     {when.date}
                                                 </p>
-                                                <p className="text-[11px] text-[#888]">
+                                                <p className="text-[11px] text-[var(--color-muted-fg)]">
                                                     {when.time}
                                                 </p>
                                             </td>
@@ -210,7 +219,7 @@ export default function ComplaintsTable({
                                             <td className="py-3">
                                                 <button
                                                     type="button"
-                                                    className="w-8 h-8 rounded-full bg-[#F3EFE7] text-[#555] hover:bg-[#E8E4DC]"
+                                                    className={`w-8 h-8 rounded-full ${surfaceMuted} text-[var(--foreground-primary)] hover:bg-[color-mix(in_srgb,var(--color-green)_22%,var(--background-elevated))] transition`}
                                                     aria-label="Дії"
                                                 >
                                                     ⋯
@@ -223,28 +232,28 @@ export default function ComplaintsTable({
                                 return (
                                     <tr
                                         key={c.id}
-                                        className="border-b border-[#F0EBE3] last:border-0 align-top"
+                                        className={`border-b ${borderSubtle} last:border-0 align-top`}
                                     >
-                                        <td className="py-3 pr-3 text-[13px] font-semibold text-[#1F1F1F] whitespace-nowrap">
+                                        <td className="py-3 pr-3 text-[13px] font-semibold text-[var(--foreground-primary)] whitespace-nowrap">
                                             #{c.id ?? "—"}
                                         </td>
-                                        <td className="py-3 pr-3 text-[13px] text-[#2F2F2F] max-w-[140px] break-words">
+                                        <td className="py-3 pr-3 text-[13px] text-[var(--foreground-primary)] max-w-[140px] break-words">
                                             {typeLabel}
                                         </td>
-                                        <td className="py-3 pr-3 text-[13px] text-[#2F2F2F] max-w-[180px] break-words">
+                                        <td className="py-3 pr-3 text-[13px] text-[var(--foreground-primary)] max-w-[180px] break-words">
                                             {preview || "—"}
                                         </td>
-                                        <td className="py-3 pr-3 text-[13px] text-[#2F2F2F] whitespace-nowrap">
+                                        <td className="py-3 pr-3 text-[13px] text-[var(--foreground-primary)] whitespace-nowrap">
                                             {displayMemberName(
                                                 member?.name,
                                                 member?.surname,
                                                 member?.email
                                             )}
                                         </td>
-                                        <td className="py-3 pr-3 text-[13px] text-[#2F2F2F] whitespace-nowrap">
+                                        <td className="py-3 pr-3 text-[13px] text-[var(--foreground-primary)] whitespace-nowrap">
                                             {assignManagerName(c, managers)}
                                         </td>
-                                        <td className="py-3 pr-3 text-[13px] text-[#2F2F2F] whitespace-nowrap">
+                                        <td className="py-3 pr-3 text-[13px] text-[var(--foreground-primary)] whitespace-nowrap">
                                             {when.date}
                                         </td>
                                         <td className="py-3 pr-3">

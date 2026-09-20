@@ -16,19 +16,37 @@ interface Props {
     onReasonChange: (value: string) => void;
 }
 
-export default function BlockFilteredBlockedUsers({ search, status, reason, sort, onSearchChange, onStatusChange, onReasonChange, onSortChange }: Props) {
+export default function BlockFilteredBlockedUsers({
+    search,
+    status,
+    reason,
+    sort,
+    onSearchChange,
+    onStatusChange,
+    onReasonChange,
+    onSortChange,
+}: Props) {
     return (
-        <div
-            className="w-[77vw] max-w-full h-[134px] rounded-1xl overflow-hidden"
-            style={{
-                backgroundImage: "url('/images/blockedUsersPageAdmin/Rectangle 832.png')",
-                backgroundSize: "100% 100%",
-            }}
-        >
-            <div className="mt-[3vh] flex gap-4 items-center justify-start">
+        <div className="relative w-[77vw] max-w-full h-[134px] rounded-1xl overflow-hidden">
+            <div
+                aria-hidden
+                className="absolute inset-0 pointer-events-none admin-parchment-bg"
+                style={{
+                    backgroundImage:
+                        "url('/images/blockedUsersPageAdmin/Rectangle 832.png')",
+                    backgroundSize: "100% 100%",
+                }}
+            />
+            <div className="relative z-10 mt-[3vh] flex gap-4 items-center justify-start">
                 <SearchBlockedUsers value={search} onChange={onSearchChange} />
-                <StatusFilteredBlockedUsers status={status} onChange={onStatusChange} />
-                <ReasonFilteredBlockedUsers reason={reason} onChange={onReasonChange} />
+                <StatusFilteredBlockedUsers
+                    status={status}
+                    onChange={onStatusChange}
+                />
+                <ReasonFilteredBlockedUsers
+                    reason={reason}
+                    onChange={onReasonChange}
+                />
                 <SortFilteredBlockedUsers sort={sort} onChange={onSortChange} />
             </div>
         </div>

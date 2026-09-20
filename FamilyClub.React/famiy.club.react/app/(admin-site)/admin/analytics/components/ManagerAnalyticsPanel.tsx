@@ -97,10 +97,10 @@ export default function ManagerAnalyticsPanel({
         <div className="flex flex-col gap-6">
             <div className="flex flex-wrap items-start justify-between gap-4">
                 <div>
-                    <h1 className="text-2xl font-bold text-[#1F1F1F]">
+                    <h1 className="text-2xl font-bold text-[var(--foreground-primary)]">
                         Аналітика
                     </h1>
-                    <p className="text-[14px] text-[#6B6B6B] mt-1 max-w-xl">
+                    <p className="text-[14px] text-[var(--color-muted-fg)] mt-1 max-w-xl">
                         Огляд ключових показників магазину та активності
                         користувачів
                     </p>

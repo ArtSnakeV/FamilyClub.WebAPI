@@ -57,23 +57,6 @@ export default function EditProductClient({ id }: { id: string }) {
     return `data:image/jpeg;base64,${img.imageData}`;
   };
   useEffect(() => {
-    document.body.style.backgroundImage =
-      "url('/images/addProducts/Rectangle 326.png')";
-    document.body.style.backgroundSize = "cover";
-    document.body.style.backgroundAttachment = "fixed";
-    document.body.style.backgroundPosition = "center";
-    document.body.style.backgroundRepeat = "no-repeat";
-
-    return () => {
-      document.body.style.backgroundImage = "";
-      document.body.style.backgroundSize = "";
-      document.body.style.backgroundAttachment = "";
-      document.body.style.backgroundPosition = "";
-      document.body.style.backgroundRepeat = "";
-    };
-  }, []);
-
-  useEffect(() => {
     if (!form.productImages?.length) return;
 
     const imgs = form.productImages;
@@ -87,32 +70,46 @@ export default function EditProductClient({ id }: { id: string }) {
     ]);
   }, [form.productImages]);
 
-  if (formLoading) {
-    return (
-      <div className="w-full min-h-screen flex items-center justify-center">
-        <p className="text-[var(--color-black)] text-[24px]">
-          {t("sellerProduct.loading")}
-        </p>
-      </div>
-    );
-  }
-
   return (
-    <div className="w-full min-h-screen flex flex-col">
+    <div className="relative w-full min-h-screen flex flex-col overflow-hidden">
       <div
-        className="relative w-[900px] pb-[60px] ml-[27vw] -mt-[4px] mx-auto bg-cover bg-center bg-no-repeat"
+        aria-hidden
+        className="absolute inset-0 pointer-events-none admin-parchment-bg"
         style={{
-          backgroundImage: "url('/images/addProducts/Rectangle 312.svg')",
+          backgroundImage: "url('/images/addProducts/Rectangle 326.png')",
+          backgroundSize: "cover",
+          backgroundAttachment: "fixed",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
         }}
-      >
+      />
+      {formLoading ? (
+        <div className="relative z-10 w-full min-h-screen flex items-center justify-center">
+          <p className="text-[var(--foreground-primary)] text-[24px]">
+            {t("sellerProduct.loading")}
+          </p>
+        </div>
+      ) : (
+      <div className="relative z-10 w-full min-h-screen flex flex-col">
+      <div className="relative overflow-hidden w-[900px] pb-[60px] ml-[27vw] -mt-[4px] mx-auto">
+        <div
+          aria-hidden
+          className="absolute inset-0 pointer-events-none admin-parchment-bg"
+          style={{
+            backgroundImage: "url('/images/addProducts/Rectangle 312.svg')",
+            backgroundSize: "cover",
+            backgroundPosition: "top center",
+          }}
+        />
+        <div className="relative z-10">
         <div className="flex z-40 relative top-[130px] ml-[64px]">
           <ButtonReturn />
         </div>
         <div className="flex flex-col items-center mt-[100px]">
-          <h1 className="text-[var(--color-black)] w-[600px] font-['Roboto_Mono'] font-bold text-[44px] leading-[150%] tracking-[-0.011em] text-center">
+          <h1 className="text-[var(--foreground-primary)] w-[600px] font-['Roboto_Mono'] font-bold text-[44px] leading-[150%] tracking-[-0.011em] text-center">
             {t("sellerProduct.editTitle")}
           </h1>
-          <p className="text-[var(--color-black)] -mt-2 font-sans font-normal text-[22px] leading-[150%] tracking-[-0.011em] text-center">
+          <p className="text-[var(--foreground-primary)] -mt-2 font-sans font-normal text-[22px] leading-[150%] tracking-[-0.011em] text-center">
             {t("sellerProduct.editSubtitle")}
           </p>
         </div>
@@ -162,7 +159,10 @@ export default function EditProductClient({ id }: { id: string }) {
             </div>
           </div>
         </form>
+        </div>
       </div>
+      </div>
+      )}
     </div>
   );
 }

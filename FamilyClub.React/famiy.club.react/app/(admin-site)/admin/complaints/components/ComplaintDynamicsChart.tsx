@@ -15,7 +15,6 @@ type Props = {
 const CHART_WIDTH = 560;
 const CHART_HEIGHT = 240;
 const PAD = { top: 16, right: 16, bottom: 36, left: 40 };
-const GRID = "#E8E4DC";
 
 const SERIES: {
     key: keyof Pick<
@@ -47,7 +46,12 @@ export default function ComplaintDynamicsChart({ points, isLoading }: Props) {
     const plotW = CHART_WIDTH - PAD.left - PAD.right;
     const plotH = CHART_HEIGHT - PAD.top - PAD.bottom;
     const maxRaw = Math.max(
-        ...points.flatMap((p) => [p.all, p.under_review, p.resolved, p.overdue]),
+        ...points.flatMap((p) => [
+            p.all,
+            p.under_review,
+            p.resolved,
+            p.overdue,
+        ]),
         0
     );
     const yMax = getNiceYMax(maxRaw);
@@ -65,12 +69,12 @@ export default function ComplaintDynamicsChart({ points, isLoading }: Props) {
             .join(" ");
 
     return (
-        <div className="rounded-[12px] bg-white px-5 py-5 shadow-[0_0_15px_rgba(0,0,0,0.12)] min-h-[300px]">
+        <div className="rounded-[12px] bg-[var(--background-elevated)] px-5 py-5 shadow-[var(--shadow-card)] min-h-[300px] border border-[color-mix(in_srgb,var(--foreground-primary)_12%,transparent)]">
             <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
-                <h3 className="text-[16px] font-bold text-[#1F1F1F]">
+                <h3 className="text-[16px] font-bold text-[var(--foreground-primary)]">
                     Динаміка скарг
                 </h3>
-                <div className="flex flex-wrap gap-3 text-[11px] text-[#555]">
+                <div className="flex flex-wrap gap-3 text-[11px] text-[var(--color-muted-fg)]">
                     {SERIES.map((s) => (
                         <span key={s.key} className="flex items-center gap-1.5">
                             <span
@@ -85,7 +89,7 @@ export default function ComplaintDynamicsChart({ points, isLoading }: Props) {
 
             {isLoading ? (
                 <div className="flex h-[200px] items-center justify-center">
-                    <div className="w-8 h-8 border-4 border-[#005b33] border-t-transparent rounded-full animate-spin" />
+                    <div className="w-8 h-8 border-4 border-[var(--color-green)] border-t-transparent rounded-full animate-spin" />
                 </div>
             ) : (
                 <svg
@@ -104,14 +108,14 @@ export default function ComplaintDynamicsChart({ points, isLoading }: Props) {
                                     y1={y}
                                     x2={CHART_WIDTH - PAD.right}
                                     y2={y}
-                                    stroke={GRID}
+                                    stroke="color-mix(in srgb, var(--foreground-primary) 18%, transparent)"
                                     strokeWidth={1}
                                 />
                                 <text
                                     x={PAD.left - 6}
                                     y={y + 4}
                                     textAnchor="end"
-                                    className="fill-[#888] text-[10px]"
+                                    className="fill-[var(--color-muted-fg)] text-[10px]"
                                 >
                                     {formatSalesAxis(value)}
                                 </text>
@@ -142,7 +146,7 @@ export default function ComplaintDynamicsChart({ points, isLoading }: Props) {
                                 x={x}
                                 y={CHART_HEIGHT - 8}
                                 textAnchor="middle"
-                                className="fill-[#777] text-[9px]"
+                                className="fill-[var(--color-muted-fg)] text-[9px]"
                             >
                                 {p.label}
                             </text>

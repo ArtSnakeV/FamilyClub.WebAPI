@@ -39,7 +39,7 @@ export default function ComplaintsPagination({
 
     return (
         <div className="flex flex-wrap items-center justify-between gap-3 pt-4">
-            <p className="text-[12px] text-[#777]">
+            <p className="text-[12px] text-[var(--color-muted-fg)]">
                 Показано {from}–{to} з {totalItems}
             </p>
             <div className="flex items-center gap-1.5">
@@ -47,7 +47,7 @@ export default function ComplaintsPagination({
                     p === "…" ? (
                         <span
                             key={`e-${idx}`}
-                            className="w-8 text-center text-[#888]"
+                            className="w-8 text-center text-[var(--color-muted-fg)]"
                         >
                             …
                         </span>
@@ -58,8 +58,8 @@ export default function ComplaintsPagination({
                             onClick={() => onPageChange(p)}
                             className={`w-8 h-8 rounded-[6px] text-[13px] font-semibold transition ${
                                 p === page
-                                    ? "bg-[var(--color-green)] text-white"
-                                    : "bg-[#F3EFE7] text-[#2F2F2F] hover:bg-[#E8E4DC]"
+                                    ? "bg-[var(--color-green)] text-[var(--color-cream)]"
+                                    : "bg-[color-mix(in_srgb,var(--foreground-primary)_8%,var(--background-elevated))] text-[var(--foreground-primary)] hover:bg-[color-mix(in_srgb,var(--color-green)_22%,var(--background-elevated))]"
                             }`}
                         >
                             {p}

@@ -16,14 +16,14 @@ export default function TopBooksRevenueList({
     href = "/admin/books",
 }: Props) {
     return (
-        <div className="rounded-[12px] bg-white px-5 py-5 shadow-[0_0_15px_rgba(0,0,0,0.12)]">
+        <div className="rounded-[12px] bg-[var(--background-elevated)] px-5 py-5 shadow-[var(--shadow-card)]">
             <div className="flex items-center justify-between gap-3 mb-4">
-                <h3 className="text-[16px] font-bold text-[#1F1F1F]">
+                <h3 className="text-[16px] font-bold text-[var(--foreground-primary)]">
                     Топ книг за продажами
                 </h3>
                 <Link
                     href={href}
-                    className="text-[13px] text-[#005b33] hover:underline whitespace-nowrap"
+                    className="text-[13px] text-[var(--color-green)] hover:underline whitespace-nowrap"
                 >
                     Показати більше
                 </Link>
@@ -31,15 +31,15 @@ export default function TopBooksRevenueList({
 
             {isLoading ? (
                 <div className="flex justify-center py-10">
-                    <div className="w-8 h-8 border-4 border-[#005b33] border-t-transparent rounded-full animate-spin" />
+                    <div className="w-8 h-8 border-4 border-[var(--color-green)] border-t-transparent rounded-full animate-spin" />
                 </div>
             ) : items.length === 0 ? (
-                <p className="text-[14px] text-[#888] py-6 text-center">
+                <p className="text-[14px] text-[var(--color-muted-fg)] py-6 text-center">
                     Немає продажів за обраний період
                 </p>
             ) : (
                 <div className="space-y-3">
-                    <div className="hidden sm:grid grid-cols-[40px_1fr_100px_120px] gap-3 px-2 text-[12px] font-semibold text-[#777]">
+                    <div className="hidden sm:grid grid-cols-[40px_1fr_100px_120px] gap-3 px-2 text-[12px] font-semibold text-[var(--color-muted-fg)]">
                         <span>#</span>
                         <span>Книга</span>
                         <span className="text-right">Продано</span>
@@ -48,13 +48,13 @@ export default function TopBooksRevenueList({
                     {items.map((book) => (
                         <div
                             key={book.productId}
-                            className="grid grid-cols-[40px_1fr] sm:grid-cols-[40px_1fr_100px_120px] gap-3 items-center rounded-[9px] bg-[#F7F4EE] px-2 py-2"
+                            className="grid grid-cols-[40px_1fr] sm:grid-cols-[40px_1fr_100px_120px] gap-3 items-center rounded-[9px] bg-[color-mix(in_srgb,var(--foreground-primary)_6%,var(--background-elevated))] px-2 py-2"
                         >
-                            <span className="text-[15px] font-bold text-[#1F1F1F] text-center">
+                            <span className="text-[15px] font-bold text-[var(--foreground-primary)] text-center">
                                 {book.rank}
                             </span>
                             <div className="flex items-center gap-3 min-w-0">
-                                <div className="w-11 h-14 rounded-[6px] overflow-hidden bg-[#E8E4DC] flex-shrink-0">
+                                <div className="w-11 h-14 rounded-[6px] overflow-hidden bg-[color-mix(in_srgb,var(--foreground-primary)_14%,transparent)] flex-shrink-0">
                                     {book.coverSrc ? (
                                         <img
                                             src={book.coverSrc}
@@ -64,20 +64,20 @@ export default function TopBooksRevenueList({
                                     ) : null}
                                 </div>
                                 <div className="min-w-0">
-                                    <p className="text-[14px] font-semibold text-[#1F1F1F] truncate">
+                                    <p className="text-[14px] font-semibold text-[var(--foreground-primary)] truncate">
                                         {book.name}
                                     </p>
-                                    <p className="text-[12px] text-[#777] truncate">
+                                    <p className="text-[12px] text-[var(--color-muted-fg)] truncate">
                                         {book.authorName || "Автор невідомий"}
                                     </p>
                                 </div>
                             </div>
-                            <p className="text-[13px] text-[#2F2F2F] sm:text-right">
-                                <span className="sm:hidden text-[#777]">Продано: </span>
+                            <p className="text-[13px] text-[var(--foreground-primary)] sm:text-right">
+                                <span className="sm:hidden text-[var(--color-muted-fg)]">Продано: </span>
                                 {formatNumber(book.salesCount)}
                             </p>
-                            <p className="text-[13px] font-semibold text-[#005b33] sm:text-right">
-                                <span className="sm:hidden text-[#777] font-normal">
+                            <p className="text-[13px] font-semibold text-[var(--color-green)] sm:text-right">
+                                <span className="sm:hidden text-[var(--color-muted-fg)] font-normal">
                                     Дохід:{" "}
                                 </span>
                                 {formatUah(book.revenue)}

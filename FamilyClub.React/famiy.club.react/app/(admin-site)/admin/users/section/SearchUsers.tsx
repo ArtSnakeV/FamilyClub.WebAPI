@@ -16,7 +16,7 @@ export default function SearchUsers({ value, onChange }: Props) {
                 onChange={(e) => onChange(e.target.value)}
                 onClick={(e) => e.stopPropagation()}
                 placeholder="Пошук за ім'ям, роллю, email..."
-                className="w-full pl-4 pr-10 h-[36px] bg-[var(--color-white)] rounded-[9px] text-[15px] px-2 text-[#272727] outline-none border-[1px]"
+                className="w-full pl-4 pr-10 h-[36px] bg-[var(--background-elevated)] rounded-[9px] text-[15px] px-2 text-[var(--foreground-primary)] outline-none border border-[color-mix(in_srgb,var(--foreground-primary)_18%,transparent)]"
             />
             <button
                 onClick={(e) => e.stopPropagation()}

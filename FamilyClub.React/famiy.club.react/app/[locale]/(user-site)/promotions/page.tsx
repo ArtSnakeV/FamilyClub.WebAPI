@@ -36,22 +36,6 @@ export default function PromotionsPage() {
   const [selectedPromotionId, setSelectedPromotionId] = useState<number | null>(null);
 
   useEffect(() => {
-    document.body.style.backgroundImage = "url('/images/authorsUserPage/Rectangle 326.png')";
-    document.body.style.backgroundSize = "cover";
-    document.body.style.backgroundAttachment = "fixed";
-    document.body.style.backgroundPosition = "center";
-    document.body.style.backgroundRepeat = "no-repeat";
-
-    return () => {
-      document.body.style.backgroundImage = "";
-      document.body.style.backgroundSize = "";
-      document.body.style.backgroundAttachment = "";
-      document.body.style.backgroundPosition = "";
-      document.body.style.backgroundRepeat = "";
-    };
-  }, []);
-
-  useEffect(() => {
     Promise.all([
       promotionService.apiPromotionsGet(),
       productService.apiProductsGet(),
@@ -121,14 +105,6 @@ export default function PromotionsPage() {
   };
   const getImageSrc = (book: ProductDto) => getProductCoverUrl(book);
 
-  if (loading) {
-    return (
-      <div className="w-full min-h-screen flex items-center justify-center">
-        <p className="text-[var(--color-black)] opacity-60">{t("promotions.loading")}</p>
-      </div>
-    );
-  }
-
   const rows: ProductDto[][] = [];
   for (let i = 0; i < paginatedBooks.length; i += 3) {
     rows.push(paginatedBooks.slice(i, i + 3));
@@ -138,25 +114,47 @@ export default function PromotionsPage() {
   }
 
   return (
+    <div className="relative w-full min-h-screen overflow-hidden">
+      <div
+        aria-hidden
+        className="absolute inset-0 pointer-events-none admin-parchment-bg"
+        style={{
+          backgroundImage: "url('/images/authorsUserPage/Rectangle 326.png')",
+          backgroundSize: "cover",
+          backgroundAttachment: "fixed",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+        }}
+      />
+      {loading ? (
+        <div className="relative z-10 w-full min-h-screen flex items-center justify-center">
+          <p className="text-[var(--foreground-primary)] opacity-60">{t("promotions.loading")}</p>
+        </div>
+      ) : (
     <div
       ref={shelfRef}
       key={currentPage}
-      className="transition-opacity mt-40 duration-300 ease-in-out animate-[fadeIn_0.3s_ease-in-out]"
+      className="relative z-10 transition-opacity mt-40 duration-300 ease-in-out animate-[fadeIn_0.3s_ease-in-out]"
     >
       {activePromotionsList.length > 0 && (
         <div
           className="
-                    w-screen relative left-1/2 -translate-x-1/2
-                    bg-center bg-no-repeat py-8
+                    w-screen relative left-1/2 -translate-x-1/2 overflow-hidden
+                    py-8
                     flex justify-center items-center gap-5 mb-8
                 "
-          style={{
-            backgroundImage: "url('/images/entities/books/top_frame.svg')",
-            backgroundSize: "100% 100%",
-            backgroundPosition: "center",
-            backgroundRepeat: "no-repeat",
-          }}
         >
+          <div
+            aria-hidden
+            className="absolute inset-0 pointer-events-none admin-parchment-bg"
+            style={{
+              backgroundImage: "url('/images/entities/books/top_frame.svg')",
+              backgroundSize: "100% 100%",
+              backgroundPosition: "center",
+              backgroundRepeat: "no-repeat",
+            }}
+          />
+          <div className="relative z-10 flex justify-center items-center gap-5 w-full">
           <button
             type="button"
             onClick={() => {
@@ -203,6 +201,7 @@ export default function PromotionsPage() {
                 .replace("{percent}", String(p.discountPercent ?? 0))}
             </button>
           ))}
+          </div>
         </div>
       )}
       <BookShelf
@@ -224,6 +223,8 @@ export default function PromotionsPage() {
           onPageChange={setCurrentPage}
         />
       </div>
+    </div>
+      )}
     </div>
   );
 }

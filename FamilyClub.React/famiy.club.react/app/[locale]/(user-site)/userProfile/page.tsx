@@ -14,8 +14,12 @@ import { useFavorites } from "../../../../lib/hooks/useFavorites";
 import { useMyBooks } from "./hooks/useMyBooks";
 import MobileUserProfileView from "./MobileUserProfileView";
 import { useLocale, useTranslations } from "@/lib/i18n/LocaleProvider";
+import { useTheme } from "@/lib/theme/ThemeProvider";
 
 export type TabType = "myBooks" | "favorite" | "myPosts";
+
+const NIGHT_TAB_STRIP_FILTER =
+  "invert(1) hue-rotate(180deg) brightness(0.78) contrast(0.82) saturate(0.45)";
 
 function UserProfileContent() {
   const searchParams = useSearchParams();
@@ -25,6 +29,8 @@ function UserProfileContent() {
   const ebookParam = searchParams.get("ebook");
   const audioParam = searchParams.get("audio");
   const { locale } = useLocale();
+  const { theme } = useTheme();
+  const isNight = theme === "ink-night";
 
   const { user } = useCurrentUser();
   const { favorites, loadingFavorites, toggleFavorite } = useFavorites(user?.id);
@@ -157,11 +163,17 @@ function UserProfileContent() {
         />
       </div>
 
-      <div className="hidden md:block relative min-h-screen" style={{
-        backgroundImage: "url('/images/userProfile/Rectangle 326.png')",
-        backgroundSize: "100% 100%",
-        backgroundPosition: "center",
-      }}>
+      <div className="hidden md:block relative min-h-screen overflow-hidden">
+        <div
+          aria-hidden
+          className="absolute inset-0 pointer-events-none admin-parchment-bg"
+          style={{
+            backgroundImage: "url('/images/userProfile/Rectangle 326.png')",
+            backgroundSize: "100% 100%",
+            backgroundPosition: "center",
+          }}
+        />
+        <div className="relative z-10">
         <div className="w-[calc(100%-700px)] h-[200px] items-center ml-[400px] mt-[160px] flex absolute" >
           <InfoUserSection member={user} userId={user?.id} />
         </div>
@@ -176,12 +188,28 @@ function UserProfileContent() {
           />
 
         </div>
-        <div className="relative h-[200px] w-full top-[41vh]" style={{
-          backgroundImage: "url('/images/userProfile/Rectangle 194.png')",
-          backgroundSize: "100% 100%",
-          backgroundPosition: "center",
-        }}>
-          <div className="flex items-center ml-[328px]">
+        <div className="relative h-[200px] w-full top-[41vh]">
+          <div
+            aria-hidden
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              backgroundImage: "url('/images/userProfile/Rectangle 194.png')",
+              backgroundSize: "100% 100%",
+              backgroundPosition: "center",
+              ...(isNight ? { filter: NIGHT_TAB_STRIP_FILTER } : {}),
+            }}
+          />
+          {isNight && (
+            <div
+              aria-hidden
+              className="absolute inset-0 pointer-events-none"
+              style={{
+                background:
+                  "linear-gradient(180deg, rgba(48,46,42,0.28) 0%, rgba(32,30,27,0.48) 55%, rgba(24,22,20,0.58) 100%)",
+              }}
+            />
+          )}
+          <div className="relative z-10 flex items-center ml-[328px]">
             <BtnSection activeTab={activeTab} onTabChange={setActiveTab} />
           </div>
         </div>
@@ -193,6 +221,7 @@ function UserProfileContent() {
             toggleFavorite={toggleFavorite} />
         </div>
 
+        </div>
       </div>
     </>
   );

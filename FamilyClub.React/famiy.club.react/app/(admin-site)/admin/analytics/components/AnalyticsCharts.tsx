@@ -9,7 +9,7 @@ import type { ChartPoint, DualChartPoint } from "../utils/buildAnalyticsMetrics"
 const CHART_WIDTH = 560;
 const CHART_HEIGHT = 220;
 const PAD = { top: 16, right: 16, bottom: 36, left: 44 };
-const GRID = "#E8E4DC";
+const GRID = "color-mix(in srgb, var(--foreground-primary) 18%, transparent)";
 
 type LineChartCardProps = {
     title: string;
@@ -45,11 +45,11 @@ export function LineChartCard({
             : "";
 
     return (
-        <div className="rounded-[12px] bg-white px-5 py-5 shadow-[0_0_15px_rgba(0,0,0,0.12)] min-h-[300px]">
+        <div className="rounded-[12px] bg-[var(--background-elevated)] px-5 py-5 shadow-[var(--shadow-card)] min-h-[300px]">
             <div className="flex items-center justify-between gap-2 mb-3">
-                <h3 className="text-[16px] font-bold text-[#1F1F1F]">{title}</h3>
+                <h3 className="text-[16px] font-bold text-[var(--foreground-primary)]">{title}</h3>
                 {legend && (
-                    <span className="flex items-center gap-2 text-[12px] text-[#555]">
+                    <span className="flex items-center gap-2 text-[12px] text-[var(--color-muted-fg)]">
                         <span
                             className="inline-block w-3 h-3 rounded-full"
                             style={{ backgroundColor: color }}
@@ -60,7 +60,7 @@ export function LineChartCard({
             </div>
             {isLoading ? (
                 <div className="flex h-[200px] items-center justify-center">
-                    <div className="w-8 h-8 border-4 border-[#005b33] border-t-transparent rounded-full animate-spin" />
+                    <div className="w-8 h-8 border-4 border-[var(--color-green)] border-t-transparent rounded-full animate-spin" />
                 </div>
             ) : (
                 <svg
@@ -86,7 +86,7 @@ export function LineChartCard({
                                     x={PAD.left - 8}
                                     y={y + 4}
                                     textAnchor="end"
-                                    className="fill-[#888] text-[10px]"
+                                    className="fill-[var(--color-muted-fg)] text-[10px]"
                                 >
                                     {formatSalesAxis(value)}
                                 </text>
@@ -111,7 +111,7 @@ export function LineChartCard({
                                 x={c.x}
                                 y={CHART_HEIGHT - 8}
                                 textAnchor="middle"
-                                className="fill-[#777] text-[9px]"
+                                className="fill-[var(--color-muted-fg)] text-[9px]"
                             >
                                 {c.label}
                             </text>
@@ -168,10 +168,10 @@ export function DualLineChartCard({
             : "";
 
     return (
-        <div className="rounded-[12px] bg-white px-5 py-5 shadow-[0_0_15px_rgba(0,0,0,0.12)] min-h-[300px]">
+        <div className="rounded-[12px] bg-[var(--background-elevated)] px-5 py-5 shadow-[var(--shadow-card)] min-h-[300px]">
             <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
-                <h3 className="text-[16px] font-bold text-[#1F1F1F]">{title}</h3>
-                <div className="flex items-center gap-4 text-[12px] text-[#555]">
+                <h3 className="text-[16px] font-bold text-[var(--foreground-primary)]">{title}</h3>
+                <div className="flex items-center gap-4 text-[12px] text-[var(--color-muted-fg)]">
                     <span className="flex items-center gap-2">
                         <span
                             className="inline-block w-3 h-3 rounded-full"
@@ -190,7 +190,7 @@ export function DualLineChartCard({
             </div>
             {isLoading ? (
                 <div className="flex h-[200px] items-center justify-center">
-                    <div className="w-8 h-8 border-4 border-[#005b33] border-t-transparent rounded-full animate-spin" />
+                    <div className="w-8 h-8 border-4 border-[var(--color-green)] border-t-transparent rounded-full animate-spin" />
                 </div>
             ) : (
                 <svg
@@ -216,7 +216,7 @@ export function DualLineChartCard({
                                     x={PAD.left - 8}
                                     y={y + 4}
                                     textAnchor="end"
-                                    className="fill-[#888] text-[10px]"
+                                    className="fill-[var(--color-muted-fg)] text-[10px]"
                                 >
                                     {formatSalesAxis(value)}
                                 </text>
@@ -252,7 +252,7 @@ export function DualLineChartCard({
                                 x={c.x}
                                 y={CHART_HEIGHT - 8}
                                 textAnchor="middle"
-                                className="fill-[#777] text-[9px]"
+                                className="fill-[var(--color-muted-fg)] text-[9px]"
                             >
                                 {c.label}
                             </text>

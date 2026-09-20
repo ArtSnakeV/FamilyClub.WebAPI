@@ -98,7 +98,7 @@ export default function AdminAnalyticsPanel({
 
     return (
         <div className="flex flex-col gap-6">
-            <h1 className="text-2xl font-bold text-[#1F1F1F]">Аналітика</h1>
+            <h1 className="text-2xl font-bold text-[var(--foreground-primary)]">Аналітика</h1>
 
             <section className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-5 gap-4">
                 <AnalyticsKpiCard

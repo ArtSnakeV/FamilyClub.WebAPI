@@ -1,6 +1,5 @@
 "use client"
 
-import { useEffect } from "react";
 import HeaderEditUserProfile from "./section/HeaderEditUserProfile";
 import SocialLinkEditUserProfile from "./section/SocialLinkEditUserProfile";
 import AboutBlockEditUserProfile from "./section/AboutBlockEditUserProfile";
@@ -34,22 +33,6 @@ export default function EditUserClient({ id }: { id: string }) {
         setSelectedCategories } = useEditForm(id);
     const { user } = useCurrentUser();
     const router = useRouter();
-    useEffect(() => {
-        document.body.style.backgroundImage =
-            "url('/images/userProfile/editUserProfile/Rectangle 326.png')";
-        document.body.style.backgroundSize = "cover";
-        document.body.style.backgroundAttachment = "fixed";
-        document.body.style.backgroundPosition = "center";
-        document.body.style.backgroundRepeat = "no-repeat";
-
-        return () => {
-            document.body.style.backgroundImage = "";
-            document.body.style.backgroundSize = "";
-            document.body.style.backgroundAttachment = "";
-            document.body.style.backgroundPosition = "";
-            document.body.style.backgroundRepeat = "";
-        };
-    }, []);
     const handleSave = async () => {
         const token = getAuthToken();
 
@@ -98,16 +81,32 @@ export default function EditUserClient({ id }: { id: string }) {
     };
 
     return (
+        <div className="relative min-h-screen w-full overflow-hidden">
+            <div
+                aria-hidden
+                className="absolute inset-0 pointer-events-none admin-parchment-bg"
+                style={{
+                    backgroundImage: "url('/images/userProfile/editUserProfile/Rectangle 326.png')",
+                    backgroundSize: "cover",
+                    backgroundAttachment: "fixed",
+                    backgroundPosition: "center",
+                    backgroundRepeat: "no-repeat",
+                }}
+            />
         <div
-            className="relative min-h-screen w-full mt-[40vh] flex flex-col items-center"
-            style={{
-                backgroundImage: "url('/images/userProfile/editUserProfile/Rectangle194.png')",
-                backgroundSize: "100% auto",
-                backgroundPosition: "top center",
-                backgroundRepeat: "no-repeat",
-                minHeight: "100vh",
-            }}
+            className="relative z-10 min-h-screen w-full mt-[40vh] flex flex-col items-center overflow-hidden"
         >
+            <div
+                aria-hidden
+                className="absolute inset-0 pointer-events-none admin-parchment-bg"
+                style={{
+                    backgroundImage: "url('/images/userProfile/editUserProfile/Rectangle194.png')",
+                    backgroundSize: "100% auto",
+                    backgroundPosition: "top center",
+                    backgroundRepeat: "no-repeat",
+                }}
+            />
+            <div className="relative z-10 w-full flex flex-col items-center min-h-screen">
             <div className="w-full flex flex-col text-left -top-[28vh] gap-2 ml-[53vw] justify-center relative">
                 <h2 className="text-[48px] text-[var(--color-white)]">{t("profileEdit.title")}</h2>
                 <p className="text-[18px] text-[var(--color-white)] w-[600px]">{t("profileEdit.subtitle")}</p>
@@ -153,6 +152,8 @@ export default function EditUserClient({ id }: { id: string }) {
                         loading={loading} />
                 </div>
             </div>
+            </div>
+        </div>
         </div>
     )
 }

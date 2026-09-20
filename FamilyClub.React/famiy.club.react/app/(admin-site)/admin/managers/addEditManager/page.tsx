@@ -1,12 +1,13 @@
 "use client";
 
+import { Suspense } from "react";
 import ButtonReturn from "./ui/ButtonReturn";
 import ManagerInfoFields from "./sections/ManagerInfoFields";
 import ManagerPasswordFields from "./sections/ManagerPasswordFields";
 import RolesInfoCard from "./ui/RolesInfoCard";
 import { useAddManagerForm } from "./hooks/useAddManagerForm";
 
-export default function AddManagerPage() {
+function AddManagerForm() {
     const {
         form,
         updateField,
@@ -22,69 +23,100 @@ export default function AddManagerPage() {
     } = useAddManagerForm();
 
     return (
-        <div
-            className="w-full min-h-screen overflow-hidden relative m-0 p-0 flex flex-col"
-            style={{
-                backgroundImage: "url('/images/authorPageAdmin/Rectangle 326.png')",
-                backgroundSize: "100% 100%",
-            }}
-        >
-            <div className="w-[1600px] h-[1400px] relative top-[36px] left-[-20px]"
-                style={{
-                    backgroundImage: "url('/images/authorPageAdmin/Rectangle 675.png')",
-                    backgroundSize: "cover",
-                    backgroundPosition: "top",
-                }}>
-                <div className="top-10 left-16 relative z-10 flex flex-col gap-7">
-                    <div className="flex relative top-0 ml-0">
-                        <ButtonReturn />
+        <div className="w-full min-h-screen overflow-hidden relative m-0 p-0 text-[var(--foreground-primary)]">
+            <div className="w-[100vw] min-h-screen relative">
+                <div
+                    className="absolute pointer-events-none"
+                    style={{ width: "100vw", top: "-40px", left: "-20px" }}
+                    aria-hidden
+                >
+                    <div className="admin-shelf-surface relative w-full">
+                        <img
+                            src="/images/authorPageAdmin/Rectangle 675.png"
+                            className="block w-full h-auto"
+                            alt=""
+                        />
                     </div>
+                </div>
+
+                <div className="relative z-10 top-10 left-16 flex flex-col gap-7 pb-16 pr-16">
+                    <ButtonReturn />
 
                     <div className="flex flex-wrap gap-6 items-start">
-                        {/* Ліва картка — форма */}
-                        <div className="bg-[var(--color-white,#F7F5F1)] rounded-[10px] p-8 flex-1 min-w-[360px] max-w-[740px] flex flex-col gap-6">
-                            <h2 className="text-[32px] font-semibold text-[var(--color-black)]">
-                                Основна інформація
-                            </h2>
-
-                            <ManagerInfoFields form={form}
-                                updateField={updateField}
-                                disabled={submitting || searching}
-                                emailDisabled={userFound}
-                                searchEmail={searchEmail}
-                                setSearchEmail={setSearchEmail}
-                                searching={searching}
-                                userFound={userFound}
-                                handleSearch={handleSearch}
-                                roleOptions={roleOptions}
+                        <div className="relative flex-1 min-w-[360px] max-w-[740px] rounded-[10px] overflow-hidden">
+                            <div
+                                aria-hidden
+                                className="absolute inset-0 pointer-events-none admin-parchment-bg"
+                                style={{
+                                    backgroundImage:
+                                        "url('/images/usersPageAdmin/Rectangle 793.png')",
+                                    backgroundSize: "100% 100%",
+                                }}
                             />
+                            <div className="relative z-10 p-8 flex flex-col gap-6">
+                                <h2 className="text-[32px] font-semibold text-[var(--foreground-primary)]">
+                                    Основна інформація
+                                </h2>
 
-                            {/* Пароль показуємо тільки для нового користувача */}
-                            {!userFound && (
-                                <ManagerPasswordFields form={form} updateField={updateField} />
-                            )}
+                                <ManagerInfoFields
+                                    form={form}
+                                    updateField={updateField}
+                                    disabled={submitting || searching}
+                                    emailDisabled={userFound}
+                                    searchEmail={searchEmail}
+                                    setSearchEmail={setSearchEmail}
+                                    searching={searching}
+                                    userFound={userFound}
+                                    handleSearch={handleSearch}
+                                    roleOptions={roleOptions}
+                                />
 
-                            {error && <p className="text-sm text-[#981717]">{error}</p>}
+                                {!userFound && (
+                                    <ManagerPasswordFields
+                                        form={form}
+                                        updateField={updateField}
+                                    />
+                                )}
 
-                            <button
-                                type="button"
-                                onClick={handleSubmit}
-                                disabled={submitting}
-                                className="mt-2 h-[50px] rounded-[9px] bg-[var(--color-green)] text-white font-medium text-[18px] hover:opacity-90 transition disabled:opacity-50"
-                            >
-                                {submitting
-                                    ? "Обробка..."
-                                    : userFound
-                                        ? "Оновити профіль користувача"
-                                        : "Додати користувача"}
-                            </button>
+                                {error && (
+                                    <p className="text-sm text-[#981717]">
+                                        {error}
+                                    </p>
+                                )}
+
+                                <button
+                                    type="button"
+                                    onClick={handleSubmit}
+                                    disabled={submitting}
+                                    className="mt-2 h-[50px] rounded-[9px] bg-[var(--color-green)] text-[var(--color-cream)] font-medium text-[18px] hover:opacity-90 transition disabled:opacity-50"
+                                >
+                                    {submitting
+                                        ? "Обробка..."
+                                        : userFound
+                                          ? "Оновити профіль користувача"
+                                          : "Додати менеджера"}
+                                </button>
+                            </div>
                         </div>
 
-                        {/* Права картка — інфо про ролі */}
                         <RolesInfoCard />
                     </div>
                 </div>
             </div>
         </div>
+    );
+}
+
+export default function AddManagerPage() {
+    return (
+        <Suspense
+            fallback={
+                <div className="p-10 text-[20px] text-[var(--color-muted-fg)]">
+                    Завантаження...
+                </div>
+            }
+        >
+            <AddManagerForm />
+        </Suspense>
     );
 }

@@ -3,6 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { useLocalizedPath, useTranslations } from "@/lib/i18n/LocaleProvider";
+import { useTheme } from "@/lib/theme/ThemeProvider";
 
 type MobileBookCardProps = {
   title: string;
@@ -42,16 +43,21 @@ export default function MobileBookCard({
 }: MobileBookCardProps) {
   const t = useTranslations();
   const lp = useLocalizedPath();
+  const { theme } = useTheme();
+  const isNight = theme === "ink-night";
+  const iconFilter = isNight
+    ? { filter: "brightness(0) invert(0.88)" }
+    : undefined;
   const activeFormatTags = formatTags?.length ? formatTags : [];
 
   const cardContent = (
-    <div className="relative h-[258px] w-full max-w-[186px] block overflow-hidden rounded-bl-[20px] rounded-br-[20px] shadow-[0px_8px_15px_rgba(36,36,36,0.25)] bg-[#f5f3ee] transition-transform duration-300 active:scale-[0.98]">
+    <div className="relative h-[258px] w-full max-w-[186px] block overflow-hidden rounded-bl-[20px] rounded-br-[20px] shadow-[var(--shadow-card)] bg-[var(--background-elevated)] transition-transform duration-300 active:scale-[0.98]">
       {/* Background Gradient overlay matching Figma Node 2190:2466 */}
       <div
         className="absolute inset-0 rounded-bl-[20px] rounded-br-[20px] pointer-events-none z-0"
         style={{
           backgroundImage:
-            "linear-gradient(0deg, rgba(245, 243, 238, 0.3) 89.6%, rgba(0, 0, 0, 0.15) 100%), linear-gradient(90deg, rgb(245, 243, 238) 0%, rgb(245, 243, 238) 100%)",
+            "linear-gradient(0deg, color-mix(in srgb, var(--background-elevated) 30%, transparent) 89.6%, rgba(0, 0, 0, 0.15) 100%), linear-gradient(90deg, var(--background-elevated) 0%, var(--background-elevated) 100%)",
         }}
       />
 
@@ -86,12 +92,13 @@ export default function MobileBookCard({
           e.preventDefault();
           e.stopPropagation();
         }}
-        className="absolute right-[8px] top-[12px] z-20 h-[32px] w-[32px] flex items-center justify-center rounded-full hover:bg-[rgba(0,0,0,0.05)] transition-colors"
+        className="absolute right-[8px] top-[12px] z-20 h-[32px] w-[32px] flex items-center justify-center rounded-full hover:bg-[color-mix(in_srgb,var(--foreground-primary)_8%,transparent)] transition-colors"
       >
         <img
           alt=""
           className="h-[20px] w-[20px] object-contain"
           src="/images/main_page/icons/rec-icon-favorite.svg"
+          style={iconFilter}
         />
       </button>
 
@@ -104,8 +111,10 @@ export default function MobileBookCard({
             src={image}
           />
         ) : (
-          <div className="flex flex-col items-center justify-center text-gray-400 text-center p-1 bg-white/80 rounded-[4px] w-full h-full shadow-sm border border-gray-200">
-            <span className="text-xl">📖</span>
+          <div className="flex flex-col items-center justify-center text-[var(--color-muted-fg)] text-center p-1 bg-[color-mix(in_srgb,var(--foreground-primary)_8%,var(--background-elevated))] rounded-[4px] w-full h-full shadow-sm border border-[color-mix(in_srgb,var(--foreground-primary)_14%,transparent)]">
+            <span className="text-xl" aria-hidden>
+              📖
+            </span>
             <span className="text-[8px] font-serif">{t("product.noPhoto")}</span>
           </div>
         )}
@@ -113,7 +122,7 @@ export default function MobileBookCard({
 
       {/* Title Container */}
       <div className="absolute top-[154px] left-[8px] right-[8px] z-10 h-[38px] flex items-center justify-center">
-        <p className="font-serif text-[14px] sm:text-[15px] font-medium leading-snug text-[#242424] text-center line-clamp-2 overflow-hidden text-ellipsis">
+        <p className="font-serif text-[14px] sm:text-[15px] font-medium leading-snug text-[var(--foreground-primary)] text-center line-clamp-2 overflow-hidden text-ellipsis">
           {title}
         </p>
       </div>
@@ -122,13 +131,13 @@ export default function MobileBookCard({
       <div className="absolute bottom-[10px] left-[8px] right-[8px] z-10 flex items-end justify-between gap-1">
         <div className="flex flex-col justify-end min-w-0 flex-1 overflow-hidden">
           {author ? (
-            <p className="text-[12px] sm:text-[13px] text-[rgba(36,36,36,0.7)] leading-tight truncate block">
+            <p className="text-[12px] sm:text-[13px] text-[var(--color-muted-fg)] leading-tight truncate block">
               {author}
             </p>
           ) : (
             <div className="h-[14px]" />
           )}
-          <p className="text-[15px] sm:text-[16px] font-bold text-[#242424] leading-tight mt-0.5 truncate block">
+          <p className="text-[15px] sm:text-[16px] font-bold text-[var(--foreground-primary)] leading-tight mt-0.5 truncate block">
             {price}
           </p>
         </div>
@@ -141,12 +150,13 @@ export default function MobileBookCard({
             e.preventDefault();
             e.stopPropagation();
           }}
-          className="h-[32px] w-[32px] sm:h-[34px] sm:w-[34px] flex items-center justify-center rounded-full bg-[#005B33]/10 hover:bg-[#005B33]/20 transition-colors shrink-0"
+          className="h-[32px] w-[32px] sm:h-[34px] sm:w-[34px] flex items-center justify-center rounded-full bg-[color-mix(in_srgb,var(--color-green)_10%,transparent)] hover:bg-[color-mix(in_srgb,var(--color-green)_20%,transparent)] transition-colors shrink-0"
         >
           <img
             alt=""
             className="h-[18px] w-[18px] sm:h-[20px] sm:w-[20px] object-contain"
             src="/images/main_page/icons/rec-icon-basket.svg"
+            style={iconFilter}
           />
         </button>
       </div>

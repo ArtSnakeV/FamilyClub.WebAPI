@@ -40,16 +40,16 @@ export default function ManagerComplaintTypeTabs({
                         onClick={() => onChange(tab.id)}
                         className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-[13px] font-semibold transition ${
                             active
-                                ? "bg-[var(--color-green)] text-white"
-                                : "bg-white/90 text-[#2F2F2F] hover:bg-white"
+                                ? "bg-[var(--color-green)] text-[var(--color-cream)]"
+                                : "bg-[var(--background-elevated)] text-[var(--foreground-primary)] hover:bg-[color-mix(in_srgb,var(--color-green)_22%,var(--background-elevated))] border border-[color-mix(in_srgb,var(--foreground-primary)_12%,transparent)]"
                         }`}
                     >
                         <span className="break-words text-left">{tab.label}</span>
                         <span
                             className={`rounded-full px-2 py-0.5 text-[11px] font-bold ${
                                 active
-                                    ? "bg-white text-[#005b33]"
-                                    : "bg-[#E8E4DC] text-[#555]"
+                                    ? "bg-[var(--color-cream)] text-[var(--color-green)]"
+                                    : "bg-[color-mix(in_srgb,var(--foreground-primary)_10%,var(--background-elevated))] text-[var(--color-muted-fg)]"
                             }`}
                         >
                             {tab.count}

@@ -55,7 +55,7 @@ export default function BookCard({
         className="absolute inset-0 rounded-bl-[30px] rounded-br-[30px] shadow-[0px_10px_10px_0px_rgba(36,36,36,0.3)]"
         style={{
           backgroundImage:
-            "linear-gradient(0deg, rgba(245, 243, 238, 0.2) 84.667%, rgba(0, 0, 0, 0.2) 100%), linear-gradient(90deg, rgb(245, 243, 238) 0%, rgb(245, 243, 238) 100%)",
+            "linear-gradient(0deg, color-mix(in srgb, var(--background-elevated) 20%, transparent) 84.667%, rgba(0, 0, 0, 0.2) 100%), linear-gradient(90deg, var(--background-elevated) 0%, var(--background-elevated) 100%)",
         }}
       />
 
@@ -108,7 +108,7 @@ export default function BookCard({
           decoding="async"
         />
       ) : (
-        <div className="absolute left-1/2 top-[20px] h-[190px] w-[140px] -translate-x-1/2 flex flex-col items-center justify-center text-gray-400 text-center p-2 bg-white/80 rounded-[6px] shadow-sm border border-gray-200">
+        <div className="absolute left-1/2 top-[20px] h-[190px] w-[140px] -translate-x-1/2 flex flex-col items-center justify-center text-[var(--color-muted-fg)] text-center p-2 bg-[color-mix(in_srgb,var(--foreground-primary)_8%,var(--background-elevated))] rounded-[6px] shadow-sm border border-[color-mix(in_srgb,var(--foreground-primary)_14%,transparent)]">
           <span className="text-3xl mb-1">📖</span>
           <span className="text-xs font-serif">{t("product.noPhoto")}</span>
         </div>
@@ -130,11 +130,11 @@ export default function BookCard({
         </div>
 
         <div className="mb-3">
-          <p className="font-serif text-[18px] font-medium leading-[1.2] text-[#242424] line-clamp-2 overflow-hidden text-ellipsis h-[48px]">
+          <p className="font-serif text-[18px] font-medium leading-[1.2] text-[var(--foreground-primary)] line-clamp-2 overflow-hidden text-ellipsis h-[48px]">
             {title}
           </p>
           {author ? (
-            <p className="text-[14px] text-[rgba(36,36,36,0.7)] overflow-hidden text-ellipsis whitespace-nowrap">
+            <p className="text-[14px] text-[var(--color-muted-fg)] overflow-hidden text-ellipsis whitespace-nowrap">
               {author}
             </p>
           ) : (
@@ -143,7 +143,7 @@ export default function BookCard({
         </div>
 
         <div className="flex items-center justify-between">
-          <span className="text-[24px] text-[#242424]">{price}</span>
+          <span className="text-[24px] text-[var(--foreground-primary)]">{price}</span>
           <img
             alt={t("product.cartAria")}
             className="h-[30px] w-[30px] cursor-pointer"
