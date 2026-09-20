@@ -38,7 +38,7 @@ export default function InfoUserSection({ member, userId }: Props) {
                     </span>
                 )}
             </div>
-            <div className="flex flex-col -mt-[20px] text-left">
+            <div className="user-profile-header-fg flex flex-col -mt-[20px] text-left">
                 <span className="flex-1 text-[42px] text-left weight-700 h-[46px] font-semibold text-[var(--color-cream)]">
                     {displayName}
                 </span>
