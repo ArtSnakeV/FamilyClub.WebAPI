@@ -9,7 +9,7 @@ export default function Paws({ userId }: { userId?: string }) {
   const { paws, discountInUah } = usePaws(userId);
 
   return (
-    <div className="w-[240px] items-center justify-center gap-2 flex flex-row h-[42px] bg-[#A97E56] rounded-[25px]">
+    <div className="w-[240px] items-center justify-center gap-2 flex flex-row h-[42px] bg-[var(--color-wood)] rounded-[25px]">
       <Image src="/images/userProfile/Лапка.png" width={36} height={26} alt="" />
       <p className="text-[13px]">
         {t("paws.widgetPaws").replace("{count}", String(paws))}

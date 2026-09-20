@@ -14,7 +14,7 @@ export default function PublisherSelectForm({ publishers, value, onChange }: Pro
 
   return (
     <>
-      <p className="pt-3 text-[var(--color-black)] font-sans-pro font-normal text-[18px] leading-[150%] tracking-[-0.011em]">
+      <p className="pt-3 text-[var(--foreground-primary)] font-sans-pro font-normal text-[18px] leading-[150%] tracking-[-0.011em]">
         {t("sellerProduct.publisher")}
       </p>
       <select
@@ -23,7 +23,7 @@ export default function PublisherSelectForm({ publishers, value, onChange }: Pro
           onChange(e.target.value ? Number(e.target.value) : undefined)
         }
         className={`input rounded-[9px] px-2 bg-[var(--color-white)] shadow-[0px_0px_10px_0px_#00000040] h-[40px]
-          ${!value ? "text-gray-500" : "text-[var(--color-black)]"}
+          ${!value ? "text-[var(--color-muted-fg)]" : "text-[var(--foreground-primary)]"}
         `}
       >
         <option value="">{t("sellerProduct.selectPublisher")}</option>

@@ -9,6 +9,10 @@ import { useCart } from "@/lib/hooks/useCart";
 import { FavoriteBook } from "@/lib/hooks/useFavorites";
 import FormatBadge from "../section/FormatBadge";
 import { useLocalizedPath, useTranslations } from "@/lib/i18n/LocaleProvider";
+import { useTheme } from "@/lib/theme/ThemeProvider";
+
+const NIGHT_BG_FILTER = "invert(1) hue-rotate(180deg)";
+const NIGHT_EMPTY_ICON_FILTER = "brightness(0) invert(0.58)";
 
 type Props = {
   books: ProductDto[];
@@ -20,6 +24,9 @@ type Props = {
 export default function BookGrid({ books, userId, favorites, toggleFavorite }: Props) {
   const t = useTranslations();
   const lp = useLocalizedPath();
+  const { theme } = useTheme();
+  const isNight = theme === "ink-night";
+  const nightFilter = isNight ? { filter: NIGHT_BG_FILTER } : undefined;
   const [authors, setAuthors] = useState<AuthorDTO[]>([]);
   const [reviews, setReviews] = useState<ReviewDto[]>([]);
   const { items, addToCart } = useCart();
@@ -76,17 +83,25 @@ export default function BookGrid({ books, userId, favorites, toggleFavorite }: P
 
   if (books.length === 0) {
     return (
-      <div
-        className="flex h-[680px] relative flex-col items-center justify-center"
-        style={{
-          backgroundImage: "url('/images/userProfile/Frame 627.png')",
-          backgroundRepeat: "no-repeat",
-          backgroundSize: "100% 700px",
-          backgroundPosition: "top center",
-        }}
-      >
-        <img src="/images/userProfile/imgIko.png" alt={t("profile.emptyAlt")} className="w-[230px] h-[240px] object-contain" />
-        <p className="mt-4 text-gray-500 text-lg">{t("profile.emptyTitle")}</p>
+      <div className="flex h-[680px] relative flex-col items-center justify-center overflow-hidden">
+        <div
+          aria-hidden
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            backgroundImage: "url('/images/userProfile/Frame 627.png')",
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "100% 700px",
+            backgroundPosition: "top center",
+            ...nightFilter,
+          }}
+        />
+        <img
+          src="/images/userProfile/imgIko.png"
+          alt={t("profile.emptyAlt")}
+          className="relative z-10 w-[230px] h-[240px] object-contain"
+          style={isNight ? { filter: NIGHT_EMPTY_ICON_FILTER } : undefined}
+        />
+        <p className="relative z-10 mt-4 text-lg text-[var(--color-muted-fg)]">{t("profile.emptyTitle")}</p>
       </div>
     );
   }
@@ -110,14 +125,14 @@ export default function BookGrid({ books, userId, favorites, toggleFavorite }: P
             alt=""
             aria-hidden
             className="absolute inset-0 w-full h-full pointer-events-none"
-            style={{ objectFit: "fill", zIndex: 0 }}
+            style={{ objectFit: "fill", zIndex: 0, ...nightFilter }}
           />
           <img
             src="/images/userProfile/Group 187.png"
             alt=""
             aria-hidden
             className="absolute inset-0 w-[100vw] h-[100px] pointer-events-none"
-            style={{ objectFit: "fill", zIndex: 9 }}
+            style={{ objectFit: "fill", zIndex: 9, ...nightFilter }}
           />
           {/* Картки */}
           {row.map((book) => {
@@ -173,8 +188,8 @@ export default function BookGrid({ books, userId, favorites, toggleFavorite }: P
 
                   {/* CARD */}
                   <div
-                    style={{ boxShadow: "0px 10px 10px 0px #2424244D" }}
-                    className="w-[250px] h-[470px] bg-white rounded-b-[30px] flex flex-col items-center"
+                    style={{ boxShadow: "var(--shadow-card)" }}
+                    className="w-[250px] h-[470px] bg-[var(--background-elevated)] text-[var(--foreground-primary)] rounded-b-[30px] flex flex-col items-center"
                   >
                     {/* IMAGE */}
                     {imageSrc ? (
@@ -184,7 +199,7 @@ export default function BookGrid({ books, userId, favorites, toggleFavorite }: P
                         className="w-[150px] h-[230px] mt-[8vh] object-cover"
                       />
                     ) : (
-                      <div className="w-[150px] h-[230px] mt-8 flex items-center justify-center text-sm text-gray-400 text-center px-2">
+                      <div className="w-[150px] h-[230px] mt-8 flex items-center justify-center text-sm text-[var(--color-muted-fg)] text-center px-2">
                         {book.productName}
                       </div>
                     )}
@@ -193,15 +208,15 @@ export default function BookGrid({ books, userId, favorites, toggleFavorite }: P
                     <div className="mt-4 px-4 w-full text-left">
                       <div className="flex items-center gap-2">
                         <span className="text-[#D9A441] text-sm">{ratingToStars(rating)}</span>
-                        <span className="text-xs text-gray-500">({rating.toFixed(1)})</span>
+                        <span className="text-xs text-[var(--color-muted-fg)]">({rating.toFixed(1)})</span>
                       </div>
 
-                      <p className="font-semibold text-[15px] mt-2 line-clamp-2">{book.productName}</p>
+                      <p className="font-semibold text-[15px] mt-2 line-clamp-2 text-[var(--foreground-primary)]">{book.productName}</p>
 
-                      <p className="text-sm text-gray-500 mt-1">{authorNames || t("profile.unknownAuthor")}</p>
+                      <p className="text-sm text-[var(--color-muted-fg)] mt-1">{authorNames || t("profile.unknownAuthor")}</p>
 
                       <div>
-                        <p className="text-[20px] font-semibold text-black mt-1">
+                        <p className="text-[20px] font-semibold text-[var(--foreground-primary)] mt-1">
                           {t("cart.price").replace("{value}", String(book.price))}
                         </p>
                         <button

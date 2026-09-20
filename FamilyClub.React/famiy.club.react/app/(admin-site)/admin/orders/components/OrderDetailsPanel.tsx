@@ -29,7 +29,7 @@ export default function OrderDetailsPanel({
 }: Props) {
     if (!order) {
         return (
-            <div className="rounded-[12px] bg-white/70 px-5 py-8 shadow-[0_0_15px_rgba(0,0,0,0.08)] h-full flex items-center justify-center">
+            <div className="rounded-[12px] bg-[var(--background-elevated)]/70 px-5 py-8 shadow-[var(--shadow-card)] h-full flex items-center justify-center">
                 <p className="text-[14px] text-[#888]">
                     Оберіть замовлення зі списку
                 </p>
@@ -47,15 +47,15 @@ export default function OrderDetailsPanel({
     };
 
     return (
-        <div className="rounded-[12px] bg-[var(--color-white)] px-5 py-5 shadow-[0_0_15px_rgba(0,0,0,0.08)] flex flex-col gap-4 h-full min-h-0">
+        <div className="rounded-[12px] bg-[var(--color-white)] px-5 py-5 shadow-[var(--shadow-card)] flex flex-col gap-4 h-full min-h-0">
             <div className="flex items-start justify-between gap-3">
-                <h2 className="text-[18px] font-bold text-[#1F1F1F] leading-tight">
+                <h2 className="text-[18px] font-bold text-[var(--foreground-primary)] leading-tight">
                     Деталі замовлення {formatOrderNumber(order.id)}
                 </h2>
                 <button
                     type="button"
                     onClick={handlePrint}
-                    className="inline-flex items-center gap-2 rounded-[10px] bg-white border border-[#E0DCD3] px-3 py-2 text-[13px] font-semibold text-[#2F2F2F] hover:bg-[#F5F3EE] shrink-0"
+                    className="inline-flex items-center gap-2 rounded-[10px] bg-[var(--background-elevated)] border border-[var(--color-menu-separator)] px-3 py-2 text-[13px] font-semibold text-[var(--foreground-primary)] hover:bg-[var(--background-elevated)] shrink-0"
                 >
                     <PrinterIcon />
                     Друк
@@ -72,7 +72,7 @@ export default function OrderDetailsPanel({
                     </span>
                 </InfoRow>
                 <InfoRow label="ТТН">
-                    <span className="font-medium text-[#1F1F1F]">
+                    <span className="font-medium text-[var(--foreground-primary)]">
                         {extras.ttn}
                     </span>
                 </InfoRow>
@@ -93,7 +93,7 @@ export default function OrderDetailsPanel({
             </section>
 
             <section className="rounded-[12px] bg-[#F7F4EE] px-4 py-3 flex flex-col gap-2">
-                <h3 className="text-[14px] font-bold text-[#1F1F1F]">
+                <h3 className="text-[14px] font-bold text-[var(--foreground-primary)]">
                     Інформація про клієнта
                 </h3>
                 <div className="grid grid-cols-1 gap-1.5 text-[13px]">
@@ -114,13 +114,13 @@ export default function OrderDetailsPanel({
 
             <section className="rounded-[12px] bg-[#F7F4EE] px-4 py-3 flex flex-col gap-3 flex-1 min-h-0">
                 <div className="flex items-center justify-between gap-2">
-                    <h3 className="text-[14px] font-bold text-[#1F1F1F]">
+                    <h3 className="text-[14px] font-bold text-[var(--foreground-primary)]">
                         Товари в замовленні
                     </h3>
                     {items.length > 4 && (
                         <button
                             type="button"
-                            className="text-[12px] font-semibold text-[#005b33] hover:underline"
+                            className="text-[12px] font-semibold text-[var(--color-green)] hover:underline"
                         >
                             Переглянути все
                         </button>
@@ -150,13 +150,13 @@ export default function OrderDetailsPanel({
                                     <img
                                         src={cover}
                                         alt=""
-                                        className="w-12 h-16 object-cover rounded-[6px] bg-white shrink-0"
+                                        className="w-12 h-16 object-cover rounded-[6px] bg-[var(--background-elevated)] shrink-0"
                                     />
                                     <div className="min-w-0 flex-1">
-                                        <p className="text-[13px] font-semibold text-[#1F1F1F] truncate">
+                                        <p className="text-[13px] font-semibold text-[var(--foreground-primary)] truncate">
                                             {title}
                                         </p>
-                                        <p className="text-[12px] text-[#777] truncate">
+                                        <p className="text-[12px] text-[var(--color-muted-fg)] truncate">
                                             {item.format
                                                 ? `Формат: ${item.format}`
                                                 : "Книга"}
@@ -165,7 +165,7 @@ export default function OrderDetailsPanel({
                                             {item.quantity ?? 1} шт.
                                         </p>
                                     </div>
-                                    <span className="text-[13px] font-semibold text-[#1F1F1F] whitespace-nowrap">
+                                    <span className="text-[13px] font-semibold text-[var(--foreground-primary)] whitespace-nowrap">
                                         {formatMoney(lineTotal)}
                                     </span>
                                 </li>
@@ -174,11 +174,11 @@ export default function OrderDetailsPanel({
                     </ul>
                 )}
 
-                <div className="mt-auto pt-3 border-t border-[#E0DCD3] flex items-center justify-between">
-                    <span className="text-[14px] font-bold text-[#1F1F1F]">
+                <div className="mt-auto pt-3 border-t border-[var(--color-menu-separator)] flex items-center justify-between">
+                    <span className="text-[14px] font-bold text-[var(--foreground-primary)]">
                         Разом
                     </span>
-                    <span className="text-[16px] font-bold text-[#1F1F1F]">
+                    <span className="text-[16px] font-bold text-[var(--foreground-primary)]">
                         {formatMoney(order.totalPrice)}
                     </span>
                 </div>
@@ -196,8 +196,8 @@ function InfoRow({
 }) {
     return (
         <div className="flex gap-2 min-w-0">
-            <span className="text-[#777] shrink-0">{label}:</span>
-            <span className="text-[#2F2F2F] min-w-0 break-words">
+            <span className="text-[var(--color-muted-fg)] shrink-0">{label}:</span>
+            <span className="text-[var(--foreground-primary)] min-w-0 break-words">
                 {children}
             </span>
         </div>

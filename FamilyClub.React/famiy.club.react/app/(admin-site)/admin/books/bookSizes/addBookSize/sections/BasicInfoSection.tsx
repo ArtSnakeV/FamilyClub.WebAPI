@@ -21,26 +21,26 @@ export function BasicInfoSection({ form, setField, loading }: Props) {
       >
         <div className="flex w-[560px] flex-col gap-4">
           <div className="flex flex-col gap-1">
-            <p className="text-[var(--color-black)] font-sans-pro font-normal text-[24px] leading-[150%] tracking-[-0.011em]">
+            <p className="text-[var(--foreground-primary)] font-sans-pro font-normal text-[24px] leading-[150%] tracking-[-0.011em]">
               Назва розміру *
             </p>
             <input
               placeholder="Наприклад: A5"
               value={form.name}
               onChange={(e) => setField("name", e.target.value)}
-              className="input rounded-[9px] px-3 bg-[var(--color-white)] shadow-[0px_0px_10px_0px_#00000040] h-[44px]"
+              className="input rounded-[9px] px-3 bg-[var(--background-elevated)] text-[var(--foreground-primary)] shadow-[var(--shadow-input)] border border-[color-mix(in_srgb,var(--foreground-primary)_14%,transparent)] outline-none h-[44px]"
             />
           </div>
 
           <div className="flex flex-col gap-1">
-            <p className="text-[var(--color-black)] font-sans-pro font-normal text-[24px] leading-[150%] tracking-[-0.011em]">
+            <p className="text-[var(--foreground-primary)] font-sans-pro font-normal text-[24px] leading-[150%] tracking-[-0.011em]">
               Код розміру *
             </p>
             <input
               placeholder="Наприклад: a5"
               value={form.code}
               onChange={(e) => setField("code", e.target.value)}
-              className="input rounded-[9px] px-3 bg-[var(--color-white)] shadow-[0px_0px_10px_0px_#00000040] h-[44px]"
+              className="input rounded-[9px] px-3 bg-[var(--background-elevated)] text-[var(--foreground-primary)] shadow-[var(--shadow-input)] border border-[color-mix(in_srgb,var(--foreground-primary)_14%,transparent)] outline-none h-[44px]"
             />
           </div>
 
@@ -48,7 +48,7 @@ export function BasicInfoSection({ form, setField, loading }: Props) {
             <button
               type="submit"
               disabled={loading}
-              className="w-full h-[60px] rounded-[55px] bg-[var(--color-green)] text-[var(--color-white)] text-[20px] font-medium transition-all duration-200 hover:opacity-90 hover:shadow-[0px_0px_20px_0px_#00000080] active:scale-[0.98] disabled:opacity-50"
+              className="w-full h-[60px] rounded-[55px] bg-[var(--color-green)] text-[var(--color-cream)] text-[20px] font-medium transition-all duration-200 hover:opacity-90 hover:opacity-90 active:scale-[0.98] disabled:opacity-50"
             >
               {loading ? "Збереження..." : "Додати розмір"}
             </button>

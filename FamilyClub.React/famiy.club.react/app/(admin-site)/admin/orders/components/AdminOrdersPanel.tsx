@@ -165,7 +165,7 @@ export default function AdminOrdersPanel({
             />
 
             <div className="grid grid-cols-1 xl:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)_280px] gap-5 items-start">
-                <div className="rounded-[12px] bg-white/70 px-4 py-4 shadow-[0_0_15px_rgba(0,0,0,0.08)] min-h-[520px]">
+                <div className="rounded-[12px] bg-[var(--background-elevated)]/70 px-4 py-4 shadow-[var(--shadow-card)] min-h-[520px]">
                     <OrdersTable
                         orders={filtered}
                         members={memberMap}

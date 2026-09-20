@@ -109,7 +109,7 @@ export default function BookShelf({
 
                 <div
                   style={{ boxShadow: "0px 10px 10px 0px #2424244D" }}
-                  className="w-[250px] h-[460px] bg-white rounded-b-[30px] flex flex-col items-center"
+                  className="w-[250px] h-[460px] bg-[var(--background-elevated)] rounded-b-[30px] flex flex-col items-center"
                 >
                   {imageSrc ? (
                     <img
@@ -118,7 +118,7 @@ export default function BookShelf({
                       className="w-[150px] h-[230px] mt-[8vh] object-cover"
                     />
                   ) : (
-                    <div className="w-[150px] h-[230px] mt-8 flex items-center justify-center text-sm text-gray-400 text-center px-2">
+                    <div className="w-[150px] h-[230px] mt-8 flex items-center justify-center text-sm text-[var(--color-muted-fg)] text-center px-2">
                       {book.productName}
                     </div>
                   )}
@@ -128,7 +128,7 @@ export default function BookShelf({
                       <span className="text-[#D9A441] text-sm">
                         {ratingToStars(rating)}
                       </span>
-                      <span className="text-xs text-gray-500">
+                      <span className="text-xs text-[var(--color-muted-fg)]">
                         ({rating.toFixed(1)})
                       </span>
                     </div>
@@ -137,7 +137,7 @@ export default function BookShelf({
                       {book.productName}
                     </p>
 
-                    <p className="text-sm text-gray-500 mt-1">
+                    <p className="text-sm text-[var(--color-muted-fg)] mt-1">
                       {authorName}
                     </p>
 
@@ -149,7 +149,7 @@ export default function BookShelf({
                           <p className="text-[20px] font-semibold text-[var(--color-green)]">
                             {formatPrice(book.discountPrice)}
                           </p>
-                          <p className="text-sm text-gray-400 line-through">
+                          <p className="text-sm text-[var(--color-muted-fg)] line-through">
                             {formatPrice(book.price)}
                           </p>
                         </div>

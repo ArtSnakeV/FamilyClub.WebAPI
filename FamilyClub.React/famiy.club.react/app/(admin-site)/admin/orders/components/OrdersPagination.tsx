@@ -48,7 +48,7 @@ export default function OrdersPagination({
                         className={`w-8 h-8 rounded-full text-[13px] font-semibold transition ${
                             p === page
                                 ? "bg-[var(--color-green)] text-white"
-                                : "text-[#2F2F2F] hover:bg-[#E8E4DC]"
+                                : "text-[var(--foreground-primary)] hover:bg-[var(--color-menu-hover)]"
                         }`}
                     >
                         {p}

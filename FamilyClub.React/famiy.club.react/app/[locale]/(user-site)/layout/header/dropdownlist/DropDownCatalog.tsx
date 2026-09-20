@@ -39,7 +39,7 @@ export default function DropDownCatalog() {
             focus:outline-none
           "
         >
-          <span className="text-[var(--color-white)]">{t("nav.catalog")}</span>
+          <span className="text-[var(--color-cream)]">{t("nav.catalog")}</span>
         </Link>
       </div>
     </div>

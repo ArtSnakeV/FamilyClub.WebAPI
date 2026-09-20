@@ -15,19 +15,19 @@ type Props = {
 
 export default function BottomMetricsBar({ metrics, isLoading }: Props) {
     return (
-        <div className="rounded-[12px] bg-white px-4 py-5 shadow-[0_0_15px_rgba(0,0,0,0.12)]">
+        <div className="rounded-[12px] bg-[var(--background-elevated)] px-4 py-5 shadow-[var(--shadow-card)]">
             <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 xl:gap-0">
                 {metrics.map((m, index) => (
                     <div
                         key={m.title}
                         className={`px-4 ${
                             index > 0
-                                ? "xl:border-l xl:border-[#E8E4DC]"
+                                ? "xl:border-l xl:border-[color-mix(in_srgb,var(--foreground-primary)_18%,transparent)]"
                                 : ""
                         }`}
                     >
-                        <p className="text-[13px] text-[#555]">{m.title}</p>
-                        <p className="text-[28px] font-semibold text-[#1F1F1F] leading-tight mt-1">
+                        <p className="text-[13px] text-[var(--color-muted-fg)]">{m.title}</p>
+                        <p className="text-[28px] font-semibold text-[var(--foreground-primary)] leading-tight mt-1">
                             {isLoading ? "…" : m.value}
                         </p>
                         <p
@@ -39,7 +39,7 @@ export default function BottomMetricsBar({ metrics, isLoading }: Props) {
                         >
                             {isLoading ? "" : m.delta}
                         </p>
-                        <p className="text-[12px] text-[#888] mt-0.5">{m.subtitle}</p>
+                        <p className="text-[12px] text-[var(--color-muted-fg)] mt-0.5">{m.subtitle}</p>
                     </div>
                 ))}
             </div>

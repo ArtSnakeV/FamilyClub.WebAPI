@@ -60,11 +60,11 @@ export default function DropDownCategories() {
           }}
           className="absolute pointer-events-auto inset-0 flex justify-center items-end mb-[70px] z-10 focus:outline-none"
         >
-          <span className="text-[var(--color-white)]">{t("header.genres")}</span>
+          <span className="text-[var(--color-cream)]">{t("header.genres")}</span>
         </button>
 
         {open && (
-          <div className="absolute pointer-events-auto z-20 top-[38px] w-full flex flex-col items-center text-[var(--color-white)]">
+          <div className="absolute pointer-events-auto z-20 top-[38px] w-full flex flex-col items-center text-[var(--color-cream)]">
             {/* RIGHT PANEL */}
             <div
               className="

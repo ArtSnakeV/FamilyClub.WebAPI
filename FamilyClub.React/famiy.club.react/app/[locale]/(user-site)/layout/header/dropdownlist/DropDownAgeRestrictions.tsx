@@ -70,12 +70,12 @@ export default function DropDownAgeRestrictions() {
           }}
           className="pointer-events-auto absolute inset-0  flex justify-center items-end mb-[56px] z-10"
         >
-          <span className="text-[var(--color-white)]">{t("header.age")}</span>
+          <span className="text-[var(--color-cream)]">{t("header.age")}</span>
         </button>
 
         {/* DROPDOWN */}
         {open && (
-          <div className="absolute pointer-events-auto z-20 top-[30px] w-full flex flex-col items-center text-[var(--color-white)]">
+          <div className="absolute pointer-events-auto z-20 top-[30px] w-full flex flex-col items-center text-[var(--color-cream)]">
             <div className="relative mt-[50px] flex flex-col gap-2">
               {ageFilters.map((f) => {
                 const isSelected = selectedAge === f.id;

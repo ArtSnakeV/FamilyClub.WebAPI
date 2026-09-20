@@ -15,13 +15,13 @@ import {
 } from "@/lib/api/presenceApi";
 
 const cardClass =
-  "rounded-[12px] bg-white px-5 py-5 shadow-[0_0_15px_rgba(0,0,0,0.12)]";
+  "rounded-[12px] bg-[var(--background-elevated)] px-5 py-5 shadow-[var(--shadow-card)]";
 
 function KpiCard({
   title,
   value,
   hint,
-  valueClass = "text-[#1F1F1F]",
+  valueClass = "text-[var(--foreground-primary)]",
 }: {
   title: string;
   value: string;
@@ -31,20 +31,20 @@ function KpiCard({
   return (
     <div className={`${cardClass} relative overflow-hidden min-h-[108px]`}>
       <div className="absolute left-0 top-3 bottom-3 w-[4px] rounded-full bg-[var(--color-green)]" />
-      <p className="text-[13px] text-[#6B6B6B] pl-2">{title}</p>
+      <p className="text-[13px] text-[var(--color-muted-fg)] pl-2">{title}</p>
       <p
         className={`mt-2 text-[28px] font-bold leading-none tracking-tight pl-2 ${valueClass}`}
       >
         {value}
       </p>
-      <p className="mt-2 text-[12px] text-[#888] pl-2">{hint}</p>
+      <p className="mt-2 text-[12px] text-[var(--color-muted-fg)] pl-2">{hint}</p>
     </div>
   );
 }
 
 function EmptyList({ label }: { label: string }) {
   return (
-    <p className="text-[14px] text-[#999] py-6 text-center">{label}</p>
+    <p className="text-[14px] text-[var(--color-muted-fg)] py-6 text-center">{label}</p>
   );
 }
 
@@ -56,8 +56,8 @@ function SecurityRow({
   children: React.ReactNode;
 }) {
   return (
-    <li className="flex items-center justify-between gap-3 py-2.5 border-b border-[#F0EDE6] last:border-0">
-      <span className="text-[14px] text-[#2F2F2F]">{label}</span>
+    <li className="flex items-center justify-between gap-3 py-2.5 border-b border-[color-mix(in_srgb,var(--foreground-primary)_12%,transparent)] last:border-0">
+      <span className="text-[14px] text-[var(--foreground-primary)]">{label}</span>
       <div className="flex-shrink-0">{children}</div>
     </li>
   );
@@ -70,11 +70,11 @@ function DisabledToggle({ checked }: { checked: boolean }) {
       role="switch"
       aria-checked={checked}
       disabled
-      className={`relative h-7 w-12 rounded-full flex-shrink-0 opacity-70 cursor-not-allowed ${checked ? "bg-[var(--color-green)]" : "bg-[#D0CBC2]"
+      className={`relative h-7 w-12 rounded-full flex-shrink-0 opacity-70 cursor-not-allowed ${checked ? "bg-[var(--color-green)]" : "bg-[color-mix(in_srgb,var(--foreground-primary)_25%,transparent)]"
         }`}
     >
       <span
-        className={`absolute top-0.5 left-0.5 h-6 w-6 rounded-full bg-white shadow ${checked ? "translate-x-5" : "translate-x-0"
+        className={`absolute top-0.5 left-0.5 h-6 w-6 rounded-full bg-[var(--color-cream)] shadow ${checked ? "translate-x-5" : "translate-x-0"
           }`}
       />
     </button>
@@ -191,10 +191,10 @@ export default function SystemSecurityPanel() {
   return (
     <div className="flex flex-col gap-6">
       <div>
-        <h1 className="text-2xl font-bold text-[#1F1F1F]">
+        <h1 className="text-2xl font-bold text-[var(--foreground-primary)]">
           Система та безпека
         </h1>
-        <p className="text-[14px] text-[#6B6B6B] mt-1">
+        <p className="text-[14px] text-[var(--color-muted-fg)] mt-1">
           Моніторинг системи, заблоковані IP-адреси та онлайн користувачі
         </p>
       </div>
@@ -229,13 +229,13 @@ export default function SystemSecurityPanel() {
           title="Дисковий простір"
           value="Норма"
           hint="База даних PostgreSQL"
-          valueClass="text-[#1F1F1F]"
+          valueClass="text-[var(--foreground-primary)]"
         />
         <KpiCard
           title="Заблоковані IP"
           value={loadingBlocked ? "..." : String(blockedIps.length)}
           hint="Всього заблоковано"
-          valueClass={blockedIps.length > 0 ? "text-[#B42318]" : "text-[#1F1F1F]"}
+          valueClass={blockedIps.length > 0 ? "text-[#B42318]" : "text-[var(--foreground-primary)]"}
         />
       </section>
 
@@ -243,10 +243,10 @@ export default function SystemSecurityPanel() {
       <section className={`${cardClass}`}>
         <div className="flex items-center justify-between flex-wrap gap-4">
           <div>
-            <h2 className="text-[18px] font-bold text-[#1F1F1F]">
+            <h2 className="text-[18px] font-bold text-[var(--foreground-primary)]">
               Управління безпекою IP
             </h2>
-            <p className="text-[13px] text-[#6B6B6B]">
+            <p className="text-[13px] text-[var(--color-muted-fg)]">
               Додавання нових IP у чорний список або керування заблокованими
             </p>
           </div>
@@ -261,7 +261,7 @@ export default function SystemSecurityPanel() {
             <button
               type="button"
               onClick={() => router.push("/admin/users/blockedUsers")}
-              className="rounded-[9px] border border-[#2F2F2F]/40 bg-white px-5 py-2.5 text-[14px] font-semibold text-[#2F2F2F] hover:bg-gray-50 transition"
+              className="rounded-[9px] border border-[color-mix(in_srgb,var(--foreground-primary)_28%,transparent)] bg-[var(--background-elevated)] px-5 py-2.5 text-[14px] font-semibold text-[var(--foreground-primary)] hover:bg-[var(--color-menu-hover)] transition"
             >
               Заблоковані акаунти користувачів
             </button>
@@ -273,18 +273,18 @@ export default function SystemSecurityPanel() {
       <section className={`${cardClass} overflow-x-auto`}>
         <div className="flex items-center justify-between mb-4">
           <div>
-            <h2 className="text-[18px] font-bold text-[#1F1F1F]">
+            <h2 className="text-[18px] font-bold text-[var(--foreground-primary)]">
               Користувачі онлайн на сайті (IP-адреси)
             </h2>
           </div>
-          <span className="rounded-full bg-[#E3FEE5] px-3 py-1 text-[12px] font-semibold text-[var(--color-green)]">
+          <span className="rounded-full bg-[color-mix(in_srgb,var(--color-green)_18%,transparent)] px-3 py-1 text-[12px] font-semibold text-[var(--color-green)]">
             ● Live: {activeSessions.length} активних
           </span>
         </div>
 
         <table className="w-full min-w-[720px] text-left border-collapse">
           <thead>
-            <tr className="border-b border-[#E8E4DC] text-[12px] uppercase tracking-wide text-[#888]">
+            <tr className="border-b border-[color-mix(in_srgb,var(--foreground-primary)_18%,transparent)] text-[12px] uppercase tracking-wide text-[var(--color-muted-fg)]">
               <th className="pb-3 pr-3 font-semibold">IP-адреса</th>
               <th className="pb-3 pr-3 font-semibold">Користувач / Сесія</th>
               <th className="pb-3 pr-3 font-semibold">Пристрій / Браузер</th>
@@ -295,13 +295,13 @@ export default function SystemSecurityPanel() {
           <tbody>
             {loadingActive ? (
               <tr>
-                <td colSpan={5} className="py-8 text-center text-[14px] text-[#999]">
+                <td colSpan={5} className="py-8 text-center text-[14px] text-[var(--color-muted-fg)]">
                   Завантаження активних сесій...
                 </td>
               </tr>
             ) : activeSessions.length === 0 ? (
               <tr>
-                <td colSpan={5} className="py-8 text-center text-[14px] text-[#999]">
+                <td colSpan={5} className="py-8 text-center text-[14px] text-[var(--color-muted-fg)]">
                   Наразі немає активних користувачів на сайті
                 </td>
               </tr>
@@ -309,25 +309,25 @@ export default function SystemSecurityPanel() {
               activeSessions.map((session) => (
                 <tr
                   key={session.sessionId}
-                  className="border-b border-[#F0EDE6] last:border-0 hover:bg-[#FAF9F5] transition"
+                  className="border-b border-[color-mix(in_srgb,var(--foreground-primary)_12%,transparent)] last:border-0 hover:bg-[color-mix(in_srgb,var(--foreground-primary)_4%,transparent)] transition"
                 >
                   <td className="py-3 pr-3">
-                    <span className="font-mono font-bold text-[14px] text-[#1F1F1F]">
+                    <span className="font-mono font-bold text-[14px] text-[var(--foreground-primary)]">
                       {session.ipAddress || "127.0.0.1"}
                     </span>
                   </td>
                   <td className="py-3 pr-3">
-                    <p className="text-[14px] font-medium text-[#1F1F1F]">
+                    <p className="text-[14px] font-medium text-[var(--foreground-primary)]">
                       {session.userName || "Гість (Анонім)"}
                     </p>
-                    <p className="text-[11px] text-[#888] font-mono">
+                    <p className="text-[11px] text-[var(--color-muted-fg)] font-mono">
                       ID: {session.sessionId.slice(0, 13)}...
                     </p>
                   </td>
-                  <td className="py-3 pr-3 text-[13px] text-[#555]">
+                  <td className="py-3 pr-3 text-[13px] text-[var(--color-muted-fg)]">
                     {parseUserAgent(session.userAgent)}
                   </td>
-                  <td className="py-3 pr-3 text-[13px] text-[#555]">
+                  <td className="py-3 pr-3 text-[13px] text-[var(--color-muted-fg)]">
                     {formatDateTime(session.lastSeen)}
                   </td>
                   <td className="py-3 text-right">
@@ -350,7 +350,7 @@ export default function SystemSecurityPanel() {
       <section className="grid grid-cols-1 xl:grid-cols-2 gap-6">
         <div className={`${cardClass} overflow-x-auto`}>
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-[18px] font-bold text-[#1F1F1F]">
+            <h2 className="text-[18px] font-bold text-[var(--foreground-primary)]">
               Чорний список IP-адрес
             </h2>
             <button
@@ -364,7 +364,7 @@ export default function SystemSecurityPanel() {
 
           <table className="w-full min-w-[480px] text-left border-collapse">
             <thead>
-              <tr className="border-b border-[#E8E4DC] text-[12px] uppercase tracking-wide text-[#888]">
+              <tr className="border-b border-[color-mix(in_srgb,var(--foreground-primary)_18%,transparent)] text-[12px] uppercase tracking-wide text-[var(--color-muted-fg)]">
                 <th className="pb-3 pr-3 font-semibold">IP-адреса</th>
                 <th className="pb-3 pr-3 font-semibold">Причина</th>
                 <th className="pb-3 pr-3 font-semibold">Заблоковано</th>
@@ -374,13 +374,13 @@ export default function SystemSecurityPanel() {
             <tbody>
               {loadingBlocked ? (
                 <tr>
-                  <td colSpan={4} className="py-8 text-center text-[14px] text-[#999]">
+                  <td colSpan={4} className="py-8 text-center text-[14px] text-[var(--color-muted-fg)]">
                     Завантаження чорного списку...
                   </td>
                 </tr>
               ) : blockedIps.length === 0 ? (
                 <tr>
-                  <td colSpan={4} className="py-8 text-center text-[14px] text-[#999]">
+                  <td colSpan={4} className="py-8 text-center text-[14px] text-[var(--color-muted-fg)]">
                     Список заблокованих IP-адрес порожній
                   </td>
                 </tr>
@@ -388,22 +388,22 @@ export default function SystemSecurityPanel() {
                 blockedIps.map((row) => (
                   <tr
                     key={row.id}
-                    className="border-b border-[#F0EDE6] last:border-0 hover:bg-[#FAF9F5] transition"
+                    className="border-b border-[color-mix(in_srgb,var(--foreground-primary)_12%,transparent)] last:border-0 hover:bg-[color-mix(in_srgb,var(--foreground-primary)_4%,transparent)] transition"
                   >
-                    <td className="py-3 pr-3 font-mono font-medium text-[14px] text-[#1F1F1F]">
+                    <td className="py-3 pr-3 font-mono font-medium text-[14px] text-[var(--foreground-primary)]">
                       {row.ipAddress}
                     </td>
-                    <td className="py-3 pr-3 text-[13px] text-[#444]">
+                    <td className="py-3 pr-3 text-[13px] text-[var(--color-muted-fg)]">
                       {row.reason || "—"}
                     </td>
-                    <td className="py-3 pr-3 text-[13px] text-[#666]">
+                    <td className="py-3 pr-3 text-[13px] text-[var(--color-muted-fg)]">
                       {formatDateTime(row.createdAt)}
                     </td>
                     <td className="py-3 text-right">
                       <button
                         type="button"
                         onClick={() => handleUnblock(row.ipAddress)}
-                        className="rounded-[6px] border border-[#CCCCCC] bg-white px-2.5 py-1 text-[12px] font-semibold text-[#333] hover:bg-gray-100 transition"
+                        className="rounded-[6px] border border-[color-mix(in_srgb,var(--foreground-primary)_22%,transparent)] bg-[var(--background-elevated)] px-2.5 py-1 text-[12px] font-semibold text-[var(--foreground-primary)] hover:bg-[var(--color-menu-hover)] transition"
                       >
                         Розблокувати
                       </button>
@@ -416,10 +416,10 @@ export default function SystemSecurityPanel() {
         </div>
 
         <div className={`${cardClass}`}>
-          <h2 className="text-[18px] font-bold text-[#1F1F1F] mb-1">
+          <h2 className="text-[18px] font-bold text-[var(--foreground-primary)] mb-1">
             Параметри захисту від спаму та атак
           </h2>
-          <p className="text-[12px] text-[#888] mb-3">
+          <p className="text-[12px] text-[var(--color-muted-fg)] mb-3">
             Системні правила фільтрації IP та ліміти запитів
           </p>
           <ul className="flex flex-col">
@@ -436,20 +436,20 @@ export default function SystemSecurityPanel() {
               </div>
             </SecurityRow>
             <SecurityRow label="HTTP Response & Output Caching">
-              <span className="text-[13px] text-[#555]">Active (15-30 хв TTL з Auto-Invalidation)</span>
+              <span className="text-[13px] text-[var(--color-muted-fg)]">Active (15-30 хв TTL з Auto-Invalidation)</span>
             </SecurityRow>
             <SecurityRow label="Rate Limiter (Обмеження частоти запитів)">
-              <span className="text-[13px] text-[#555]">100 запитів / хв</span>
+              <span className="text-[13px] text-[var(--color-muted-fg)]">100 запитів / хв</span>
             </SecurityRow>
             <SecurityRow label="Двофакторна автентифікація">
               <div className="flex items-center gap-2">
-                <span className="text-[12px] text-[#999]">Вимкнено</span>
+                <span className="text-[12px] text-[var(--color-muted-fg)]">Вимкнено</span>
                 <DisabledToggle checked={false} />
               </div>
             </SecurityRow>
             <SecurityRow label="CAPTCHA для підтвердження дій">
               <div className="flex items-center gap-2">
-                <span className="text-[12px] text-[#999]">Вимкнено</span>
+                <span className="text-[12px] text-[var(--color-muted-fg)]">Вимкнено</span>
                 <DisabledToggle checked={false} />
               </div>
             </SecurityRow>
@@ -460,11 +460,11 @@ export default function SystemSecurityPanel() {
       {/* Block IP Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-          <div className="w-full max-w-md rounded-[16px] bg-white p-6 shadow-2xl animate-in fade-in zoom-in duration-150">
-            <h3 className="text-xl font-bold text-[#1F1F1F] mb-1">
+          <div className="w-full max-w-md rounded-[16px] bg-[var(--background-elevated)] p-6 shadow-2xl animate-in fade-in zoom-in duration-150">
+            <h3 className="text-xl font-bold text-[var(--foreground-primary)] mb-1">
               Блокування IP-адреси
             </h3>
-            <p className="text-[13px] text-[#666] mb-4">
+            <p className="text-[13px] text-[var(--color-muted-fg)] mb-4">
               Користувачі з цієї IP-адреси отримають помилку 403 Forbidden при спробі доступу до API.
             </p>
 
@@ -476,7 +476,7 @@ export default function SystemSecurityPanel() {
 
             <form onSubmit={handleBlockSubmit} className="flex flex-col gap-4">
               <div>
-                <label className="block text-[13px] font-semibold text-[#333] mb-1">
+                <label className="block text-[13px] font-semibold text-[var(--foreground-primary)] mb-1">
                   IP-адреса *
                 </label>
                 <input
@@ -485,12 +485,12 @@ export default function SystemSecurityPanel() {
                   placeholder="наприклад 192.168.1.100 або 203.0.113.195"
                   value={ipInput}
                   onChange={(e) => setIpInput(e.target.value)}
-                  className="w-full rounded-[9px] border border-[#D0CBC2] px-3.5 py-2 text-[14px] text-[#1F1F1F] focus:border-[var(--color-green)] focus:outline-none"
+                  className="w-full rounded-[9px] border border-[color-mix(in_srgb,var(--foreground-primary)_22%,transparent)] px-3.5 py-2 text-[14px] text-[var(--foreground-primary)] focus:border-[var(--color-green)] focus:outline-none"
                 />
               </div>
 
               <div>
-                <label className="block text-[13px] font-semibold text-[#333] mb-1">
+                <label className="block text-[13px] font-semibold text-[var(--foreground-primary)] mb-1">
                   Причина блокування (необов&apos;язково)
                 </label>
                 <textarea
@@ -498,7 +498,7 @@ export default function SystemSecurityPanel() {
                   placeholder="наприклад: Спам-активність, підозрілі спроби входу"
                   value={reasonInput}
                   onChange={(e) => setReasonInput(e.target.value)}
-                  className="w-full rounded-[9px] border border-[#D0CBC2] px-3.5 py-2 text-[14px] text-[#1F1F1F] focus:border-[var(--color-green)] focus:outline-none resize-none"
+                  className="w-full rounded-[9px] border border-[color-mix(in_srgb,var(--foreground-primary)_22%,transparent)] px-3.5 py-2 text-[14px] text-[var(--foreground-primary)] focus:border-[var(--color-green)] focus:outline-none resize-none"
                 />
               </div>
 
@@ -506,7 +506,7 @@ export default function SystemSecurityPanel() {
                 <button
                   type="button"
                   onClick={() => setIsModalOpen(false)}
-                  className="rounded-[9px] border border-[#CCCCCC] bg-white px-4 py-2 text-[14px] font-semibold text-[#444] hover:bg-gray-100 transition"
+                  className="rounded-[9px] border border-[color-mix(in_srgb,var(--foreground-primary)_22%,transparent)] bg-[var(--background-elevated)] px-4 py-2 text-[14px] font-semibold text-[var(--color-muted-fg)] hover:bg-[var(--color-menu-hover)] transition"
                 >
                   Скасувати
                 </button>

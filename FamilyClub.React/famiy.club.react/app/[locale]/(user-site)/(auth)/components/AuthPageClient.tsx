@@ -164,18 +164,18 @@ export default function AuthPageClient() {
             width: "50%",
             minWidth: "600px",
             background:
-              "linear-gradient(193.17deg, #C7A381 0%, #E0C3A9 54.33%, #B7895E 82.69%, #BF8D5D 100%)",
+              "linear-gradient(193.17deg, var(--color-wood-gradient-from) 0%, var(--color-wood-gradient-via) 54.33%, var(--color-border-warm) 82.69%, var(--color-wood-gradient-to, var(--color-border-warm)) 100%)",
             borderTopLeftRadius: `${cornerRadius}px`,
           }}
           className="relative h-screen shadow-[-20px_0_30px_rgba(0,0,0,0.3)] overflow-hidden"
         >
           <button
             onClick={() => router.back()}
-            className="absolute z-10 w-[44px] h-[44px] rounded-full flex items-center justify-center text-[20px] transition-all hover:bg-[#F5F3EE] active:scale-95"
+            className="absolute z-10 w-[44px] h-[44px] rounded-full flex items-center justify-center text-[20px] transition-all hover:bg-[var(--background-elevated)] active:scale-95"
             style={{
               top: "70px",
               left: "65px",
-              backgroundColor: "#F5F3EE80",
+              backgroundColor: "color-mix(in srgb, var(--background-elevated) 50%, transparent)",
               color: "var(--color-black)",
               opacity: 0.5,
             }}

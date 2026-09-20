@@ -420,15 +420,15 @@ export default function CatalogClient({ initialProducts = [] }: CatalogClientPro
   };
 
   return (
-    <div className="w-full min-h-screen bg-[#f5f3ee] font-sans text-[#242424] overflow-x-hidden">
+    <div className="w-full min-h-screen bg-[var(--background-main)] font-sans text-[var(--foreground-primary)] overflow-x-hidden">
       {/* MOBILE CATALOG VIEW (Figma Node 2199:3603 "Пошук" 1-to-1 spec) */}
       <div className="block md:hidden pt-[75px] pb-[100px] px-3 sm:px-4">
         <div className="flex items-center justify-between mb-4 px-1">
           <div>
-            <h1 className="font-mono text-[28px] font-bold text-[#242424] leading-tight">
+            <h1 className="font-mono text-[28px] font-bold text-[var(--foreground-primary)] leading-tight">
               {t("nav.catalog")}
             </h1>
-            <p className="text-[14px] text-[#242424]/70 font-medium">
+            <p className="text-[14px] text-[var(--color-muted-fg)] font-medium">
               {loading
                 ? t("common.loading")
                 : t("catalog.productsFound").replace("{count}", String(totalProducts))}
@@ -436,7 +436,7 @@ export default function CatalogClient({ initialProducts = [] }: CatalogClientPro
           </div>
           <Link
             href={lp("/categories")}
-            className="px-3.5 py-1.5 rounded-full bg-[#005B33] text-white font-sans text-[13px] font-semibold shadow-sm hover:bg-[#004e2b] transition-colors flex items-center gap-1"
+            className="px-3.5 py-1.5 rounded-full bg-[var(--color-green)] text-white font-sans text-[13px] font-semibold shadow-sm hover:bg-[color-mix(in_srgb,var(--color-green)_85%,black)] transition-colors flex items-center gap-1"
           >
             <span>{t("catalog.filtersButton")}</span>
             <span>⚙️</span>
@@ -445,9 +445,9 @@ export default function CatalogClient({ initialProducts = [] }: CatalogClientPro
 
         {/* Mobile Active Filter Chips */}
         {activeFilterChips.length > 0 && (
-          <div className="mb-4 flex flex-col gap-2 bg-white/90 p-3 rounded-2xl border border-gray-200 shadow-sm">
+          <div className="mb-4 flex flex-col gap-2 bg-[color-mix(in_srgb,var(--background-elevated)_92%,transparent)] p-3 rounded-2xl border border-[var(--color-border-warm)] shadow-sm">
             <div className="flex items-center justify-between">
-              <span className="text-[13px] font-semibold text-[#242424]">
+              <span className="text-[13px] font-semibold text-[var(--foreground-primary)]">
                 {t("catalog.activeFilters")}
               </span>
               <button
@@ -455,7 +455,7 @@ export default function CatalogClient({ initialProducts = [] }: CatalogClientPro
                 onClick={() => {
                   window.history.replaceState({}, "", lp("/products"));
                 }}
-                className="text-[12px] font-bold text-[#005B33] hover:underline"
+                className="text-[12px] font-bold text-[var(--color-green)] hover:underline"
               >
                 {t("catalog.clearAll")}
               </button>
@@ -464,13 +464,13 @@ export default function CatalogClient({ initialProducts = [] }: CatalogClientPro
               {activeFilterChips.map((chip) => (
                 <div
                   key={`mobile-${chip.id}`}
-                  className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#005B33]/10 border border-[#005B33]/20 rounded-full text-[12px] font-semibold text-[#005B33]"
+                  className="inline-flex items-center gap-1.5 px-3 py-1 bg-[color-mix(in_srgb,var(--color-green)_10%,transparent)] border border-[color-mix(in_srgb,var(--color-green)_20%,transparent)] rounded-full text-[12px] font-semibold text-[var(--color-green)]"
                 >
                   <span>{chip.label}</span>
                   <button
                     type="button"
                     onClick={() => handleRemoveFilterChip(chip.removeKeys)}
-                    className="text-[#005B33] hover:text-black font-bold ml-1"
+                    className="text-[var(--color-green)] hover:text-[var(--foreground-primary)] font-bold ml-1"
                   >
                     ✕
                   </button>
@@ -482,12 +482,12 @@ export default function CatalogClient({ initialProducts = [] }: CatalogClientPro
 
         {loading ? (
           <div className="text-center py-16">
-            <p className="text-[16px] text-[#242424]/70 font-mono">{t("catalog.loadingBooks")}</p>
+            <p className="text-[16px] text-[var(--color-muted-fg)] font-mono">{t("catalog.loadingBooks")}</p>
           </div>
         ) : loadError ? (
-          <div className="text-center py-16 px-4 bg-white/60 rounded-2xl border border-gray-200">
-            <h2 className="text-[20px] font-bold text-[#242424] mb-2">{t("catalog.loadErrorTitle")}</h2>
-            <p className="text-[14px] text-gray-600">{t("catalog.loadErrorText")}</p>
+          <div className="text-center py-16 px-4 bg-[color-mix(in_srgb,var(--background-elevated)_70%,transparent)] rounded-2xl border border-[var(--color-border-warm)]">
+            <h2 className="text-[20px] font-bold text-[var(--foreground-primary)] mb-2">{t("catalog.loadErrorTitle")}</h2>
+            <p className="text-[14px] text-[var(--color-muted-fg)]">{t("catalog.loadErrorText")}</p>
           </div>
         ) : paginatedProducts.length > 0 ? (
           <>
@@ -515,7 +515,7 @@ export default function CatalogClient({ initialProducts = [] }: CatalogClientPro
                     </div>
 
                     {/* 3D Wooden Bookshelf Bar (Figma Node 2199:3605 / Rectangle 194) */}
-                    <div className="relative z-0 h-[28px] w-[calc(100%+24px)] -mx-3 shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] bg-[#7e4d1e] mt-[-6px] rounded-sm overflow-hidden">
+                    <div className="relative z-0 h-[28px] w-[calc(100%+24px)] -mx-3 shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] bg-[var(--color-shelf)] mt-[-6px] rounded-sm overflow-hidden">
                       <img
                         src="/images/catalog/shelf_tex1.png"
                         className="absolute inset-0 w-full h-full object-cover mix-blend-multiply opacity-50 pointer-events-none"
@@ -546,11 +546,11 @@ export default function CatalogClient({ initialProducts = [] }: CatalogClientPro
                 <button
                   onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
                   disabled={currentPage === 1}
-                  className="px-3.5 py-1.5 rounded-lg bg-white border border-gray-300 text-[14px] font-medium shadow-sm disabled:opacity-40"
+                  className="px-3.5 py-1.5 rounded-lg bg-[var(--background-elevated)] border border-[var(--color-border-warm)] text-[14px] font-medium shadow-sm disabled:opacity-40"
                 >
                   {t("catalog.prevPage")}
                 </button>
-                <span className="text-[14px] font-semibold text-[#242424] px-2">
+                <span className="text-[14px] font-semibold text-[var(--foreground-primary)] px-2">
                   {t("catalog.pageOf")
                     .replace("{current}", String(currentPage))
                     .replace("{total}", String(totalPages))}
@@ -558,7 +558,7 @@ export default function CatalogClient({ initialProducts = [] }: CatalogClientPro
                 <button
                   onClick={() => handlePageChange(Math.min(totalPages, currentPage + 1))}
                   disabled={currentPage === totalPages}
-                  className="px-3.5 py-1.5 rounded-lg bg-white border border-gray-300 text-[14px] font-medium shadow-sm disabled:opacity-40"
+                  className="px-3.5 py-1.5 rounded-lg bg-[var(--background-elevated)] border border-[var(--color-border-warm)] text-[14px] font-medium shadow-sm disabled:opacity-40"
                 >
                   {t("catalog.nextPage")}
                 </button>
@@ -566,15 +566,15 @@ export default function CatalogClient({ initialProducts = [] }: CatalogClientPro
             )}
           </>
         ) : (
-          <div className="text-center py-16 px-4 bg-white/60 rounded-2xl border border-gray-200">
-            <h2 className="text-[20px] font-bold text-[#242424] mb-2">{t("catalog.noProductsTitle")}</h2>
-            <p className="text-[14px] text-gray-600 mb-4">{t("catalog.noProductsText")}</p>
+          <div className="text-center py-16 px-4 bg-[color-mix(in_srgb,var(--background-elevated)_70%,transparent)] rounded-2xl border border-[var(--color-border-warm)]">
+            <h2 className="text-[20px] font-bold text-[var(--foreground-primary)] mb-2">{t("catalog.noProductsTitle")}</h2>
+            <p className="text-[14px] text-[var(--color-muted-fg)] mb-4">{t("catalog.noProductsText")}</p>
             {activeFilterChips.length > 0 && (
               <button
                 onClick={() => {
                   window.history.replaceState({}, "", lp("/products"));
                 }}
-                className="px-4 py-2 rounded-full bg-[#005B33] text-white font-semibold text-[14px] shadow-sm"
+                className="px-4 py-2 rounded-full bg-[var(--color-green)] text-white font-semibold text-[14px] shadow-sm"
               >
                 {t("catalog.clearAllFilters")}
               </button>
@@ -594,14 +594,14 @@ export default function CatalogClient({ initialProducts = [] }: CatalogClientPro
             />
             <div className="flex flex-col md:flex-row justify-between items-end gap-6 md:gap-0">
               <div className="max-w-[590px] font-mono font-semibold text-[16px] tracking-[-0.176px] leading-[1.5]">
-                <p className="text-[rgba(36,36,36,0.8)] whitespace-pre-wrap">
-                  <span className="text-[#242424]">{t("catalog.introHighlight")}</span>
+                <p className="text-[var(--color-muted-fg)] whitespace-pre-wrap">
+                  <span className="text-[var(--foreground-primary)]">{t("catalog.introHighlight")}</span>
                   <br />
                   {t("catalog.introText")}
                 </p>
               </div>
 
-              <div className="text-[#242424] font-mono font-semibold text-[24px] md:text-[32px] text-right tracking-[-0.352px] leading-[1.5]">
+              <div className="text-[var(--foreground-primary)] font-mono font-semibold text-[24px] md:text-[32px] text-right tracking-[-0.352px] leading-[1.5]">
                 {loading
                   ? t("catalog.loading")
                   : t("catalog.matchesFound").replace(
@@ -613,20 +613,20 @@ export default function CatalogClient({ initialProducts = [] }: CatalogClientPro
 
             {/* Desktop Active Filter Chips */}
             {desktopActiveFilterChips.length > 0 && (
-              <div className="mt-6 flex flex-wrap items-center gap-2 bg-white/90 p-3 rounded-2xl border border-[#e5ded4] shadow-sm">
-                <span className="text-sm font-semibold text-[#242424] mr-1">
+              <div className="mt-6 flex flex-wrap items-center gap-2 bg-[color-mix(in_srgb,var(--background-elevated)_92%,transparent)] p-3 rounded-2xl border border-[var(--color-border-warm)] shadow-sm">
+                <span className="text-sm font-semibold text-[var(--foreground-primary)] mr-1">
                   {t("catalog.activeFilters")}
                 </span>
                 {desktopActiveFilterChips.map((chip) => (
                   <div
                     key={chip.id}
-                    className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#005B33]/10 border border-[#005B33]/20 rounded-full text-xs font-semibold text-[#005B33]"
+                    className="inline-flex items-center gap-2 px-3 py-1.5 bg-[color-mix(in_srgb,var(--color-green)_10%,transparent)] border border-[color-mix(in_srgb,var(--color-green)_20%,transparent)] rounded-full text-xs font-semibold text-[var(--color-green)]"
                   >
                     <span>{chip.label}</span>
                     <button
                       type="button"
                       onClick={() => handleRemoveFilterChip(chip.removeKeys, true)}
-                      className="text-[#005B33] hover:text-black font-bold ml-1 transition-colors"
+                      className="text-[var(--color-green)] hover:text-[var(--foreground-primary)] font-bold ml-1 transition-colors"
                       aria-label={t("catalog.removeFilterAria").replace("{label}", chip.label)}
                     >
                       ✕
@@ -638,7 +638,7 @@ export default function CatalogClient({ initialProducts = [] }: CatalogClientPro
                   onClick={() => {
                     window.history.replaceState({}, "", lp("/products"));
                   }}
-                  className="ml-auto text-xs font-bold text-[#005B33] hover:underline"
+                  className="ml-auto text-xs font-bold text-[var(--color-green)] hover:underline"
                 >
                   {t("catalog.clearAll")}
                 </button>
@@ -656,14 +656,14 @@ export default function CatalogClient({ initialProducts = [] }: CatalogClientPro
                 <div 
                   className="absolute inset-0"
                   style={{ 
-                    backgroundImage: "linear-gradient(180.074deg, rgba(36, 36, 36, 0.2) 0.24409%, rgba(36, 36, 36, 0) 17.892%), linear-gradient(180.074deg, rgba(36, 36, 36, 0.5) 9.5072%, rgba(36, 36, 36, 0) 49.996%), linear-gradient(90deg, rgb(245, 243, 238) 0%, rgb(245, 243, 238) 100%)" 
+                    backgroundImage: "linear-gradient(180.074deg, color-mix(in srgb, var(--foreground-primary) 12%, transparent) 0.24409%, transparent 17.892%), linear-gradient(180.074deg, color-mix(in srgb, var(--foreground-primary) 22%, transparent) 9.5072%, transparent 49.996%), linear-gradient(90deg, var(--background-main) 0%, var(--background-main) 100%)" 
                   }} 
                 />
-                <div className="absolute left-0 right-0 top-0 h-[105px] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] bg-[#7e4d1e]">
+                <div className="absolute left-0 right-0 top-0 h-[105px] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] bg-[var(--color-shelf)]">
                   <img src="/images/catalog/shelf_tex1.png" className="absolute inset-0 w-full h-full object-cover mix-blend-multiply opacity-50" alt="" />
                   <div className="absolute inset-0 bg-[rgba(0,0,0,0.27)]" />
                 </div>
-                <div className="absolute left-0 right-0 top-[35px] h-[70px] bg-[#7e4d1e]">
+                <div className="absolute left-0 right-0 top-[35px] h-[70px] bg-[var(--color-shelf)]">
                   <img src="/images/catalog/shelf_tex2.png" className="absolute inset-0 w-full h-full object-cover mix-blend-multiply" alt="" />
                   <img src="/images/catalog/shelf_tex3.png" className="absolute inset-0 w-full h-full object-cover" alt="" />
                 </div>
@@ -683,14 +683,14 @@ export default function CatalogClient({ initialProducts = [] }: CatalogClientPro
           <div className="max-w-[1220px] mx-auto px-[16px] lg:px-0 pt-[180px] pb-[100px] relative z-20">
             {loading ? (
               <div className="text-center py-[100px] relative z-20">
-                <p className="text-[18px] text-gray-600 font-mono">{t("catalog.loadingBooks")}</p>
+                <p className="text-[18px] text-[var(--color-muted-fg)] font-mono">{t("catalog.loadingBooks")}</p>
               </div>
             ) : loadError ? (
               <div className="text-center py-[100px] relative z-20">
-                <h2 className="text-[24px] font-bold text-[#242424] mb-[16px]">
+                <h2 className="text-[24px] font-bold text-[var(--foreground-primary)] mb-[16px]">
                   {t("catalog.loadErrorTitle")}
                 </h2>
-                <p className="text-[16px] text-gray-600">
+                <p className="text-[16px] text-[var(--color-muted-fg)]">
                   {t("catalog.loadErrorText")}
                 </p>
               </div>
@@ -736,8 +736,8 @@ export default function CatalogClient({ initialProducts = [] }: CatalogClientPro
                             onClick={() => handlePageChange(pageNum as number)}
                             className={`flex items-center justify-center w-[40px] h-[40px] rounded-full transition-all font-mono font-semibold text-[18px] ${
                               currentPage === pageNum
-                                ? "bg-[#242424] text-white"
-                                : "bg-transparent text-[#242424] border border-[#e0e0e0] hover:bg-[#242424] hover:text-white"
+                                ? "bg-[var(--foreground-primary)] text-[var(--background-main)]"
+                                : "bg-transparent text-[var(--foreground-primary)] border border-[var(--color-border-warm)] hover:bg-[var(--foreground-primary)] hover:text-[var(--background-main)]"
                             }`}
                           >
                             {pageNum}
@@ -757,11 +757,11 @@ export default function CatalogClient({ initialProducts = [] }: CatalogClientPro
                 )}
               </>
             ) : (
-              <div className="text-center py-[100px] relative z-20 bg-white/60 rounded-3xl border border-gray-200">
-                <h2 className="text-[24px] font-bold text-[#242424] mb-[16px]">
+              <div className="text-center py-[100px] relative z-20 bg-[color-mix(in_srgb,var(--background-elevated)_70%,transparent)] rounded-3xl border border-[var(--color-border-warm)]">
+                <h2 className="text-[24px] font-bold text-[var(--foreground-primary)] mb-[16px]">
                   {t("catalog.noProductsTitle")}
                 </h2>
-                <p className="text-[16px] text-gray-600 mb-6">
+                <p className="text-[16px] text-[var(--color-muted-fg)] mb-6">
                   {t("catalog.noProductsText")}
                 </p>
                 {Array.from(searchParams.entries()).length > 0 && (
@@ -769,7 +769,7 @@ export default function CatalogClient({ initialProducts = [] }: CatalogClientPro
                     onClick={() => {
                       window.history.replaceState({}, "", lp("/products"));
                     }}
-                    className="px-6 py-2.5 rounded-full bg-[#005B33] text-white font-semibold text-[15px] shadow-sm hover:bg-[#004e2b] transition-colors"
+                    className="px-6 py-2.5 rounded-full bg-[var(--color-green)] text-white font-semibold text-[15px] shadow-sm hover:bg-[color-mix(in_srgb,var(--color-green)_85%,black)] transition-colors"
                   >
                     {t("catalog.clearAllFilters")}
                   </button>
