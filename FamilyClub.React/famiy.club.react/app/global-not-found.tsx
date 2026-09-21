@@ -8,6 +8,7 @@ import MobileHeader from "@/app/(user-site)/layout/header/MobileHeader";
 import MobileBottomNav from "@/app/(user-site)/layout/header/MobileBottomNav";
 import MobileNotFoundView from "./MobileNotFoundView";
 import { LocaleProvider } from "@/lib/i18n/LocaleProvider";
+import { ThemeProvider } from "@/lib/theme/ThemeProvider";
 import ukDictionary from "@/messages/uk.json";
 import type { Dictionary } from "@/lib/i18n/types";
 
@@ -34,7 +35,16 @@ export default function NotFound() {
   return (
     <LocaleProvider locale="uk" dictionary={ukDictionary as Dictionary}>
     <html lang="uk" className={`${sourceSans.variable} ${robotoMono.variable}`}>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "(function(){try{var t=localStorage.getItem('librellis-theme');if(t==='ink-night')document.documentElement.setAttribute('data-theme','ink-night');}catch(e){}})();",
+          }}
+        />
+      </head>
       <body className="antialiased bg-[#F5F3EE] text-foreground font-sans m-0 p-0 flex flex-col min-h-screen">
+        <ThemeProvider>
         <MobileHeader />
         <header className="bg-[var(--background-main)] w-full hidden md:flex flex-row overflow-x-0 fixed z-30 h-[62px] shadow-[0px_0px_15px_0px_#24242499]">
           <div className="max-w-[1220px] mx-auto flex items-center lg:px-0">
@@ -257,6 +267,7 @@ export default function NotFound() {
           <Footer />
         </div>
         <MobileBottomNav />
+        </ThemeProvider>
       </body>
     </html>
     </LocaleProvider>
