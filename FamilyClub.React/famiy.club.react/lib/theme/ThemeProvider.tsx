@@ -21,6 +21,12 @@ type ThemeContextValue = {
 
 const ThemeContext = createContext<ThemeContextValue | null>(null);
 
+const FALLBACK_THEME: ThemeContextValue = {
+  theme: "light",
+  setTheme: () => {},
+  toggleTheme: () => {},
+};
+
 function readStoredTheme(): SiteTheme {
   if (typeof window === "undefined") return "light";
   const stored = window.localStorage.getItem(STORAGE_KEY);
@@ -68,9 +74,5 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 }
 
 export function useTheme() {
-  const ctx = useContext(ThemeContext);
-  if (!ctx) {
-    throw new Error("useTheme must be used within ThemeProvider");
-  }
-  return ctx;
+  return useContext(ThemeContext) ?? FALLBACK_THEME;
 }
