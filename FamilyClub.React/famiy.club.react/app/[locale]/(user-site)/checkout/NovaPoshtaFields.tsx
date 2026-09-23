@@ -160,7 +160,12 @@ export default function NovaPoshtaFields({
     fetchWarehouses(selected.ref, deliveryType, "");
   };
 
-  const fetchWarehouses = (ref: string, type: "branch" | "postbox", search: string) => {
+  const fetchWarehouses = (
+    ref: string,
+    type: "branch" | "postbox",
+    search: string,
+    coords?: { lat: number; lon: number }
+  ) => {
     if (!ref) return;
 
     if (branchDebounceRef.current) clearTimeout(branchDebounceRef.current);
@@ -168,7 +173,11 @@ export default function NovaPoshtaFields({
     branchDebounceRef.current = setTimeout(async () => {
       setLoadingWarehouses(true);
       try {
-        const url = `/api/novaposhta/warehouses?cityRef=${encodeURIComponent(ref)}&type=${type}&search=${encodeURIComponent(search.trim())}`;
+        const c = coords || userCoords;
+        let url = `/api/novaposhta/warehouses?cityRef=${encodeURIComponent(ref)}&type=${type}&search=${encodeURIComponent(search.trim())}`;
+        if (c) {
+          url += `&lat=${c.lat}&lon=${c.lon}`;
+        }
         const res = await fetch(url);
         if (res.ok) {
           const data: NovaPoshtaWarehouse[] = await res.json();
@@ -224,6 +233,11 @@ export default function NovaPoshtaFields({
     setBranch(selected.description);
     setBranchQuery(selected.description);
     setBranchRef?.(selected.ref);
+    if (selected.cityName && selected.cityRef) {
+      setCity(selected.cityName);
+      setCityQuery(selected.cityName);
+      setCityRef(selected.cityRef);
+    }
     setIsBranchOpen(false);
   };
 
@@ -243,7 +257,7 @@ export default function NovaPoshtaFields({
         setUserCoords({ lat, lon });
 
         try {
-          const geoRes = await fetch(`/api/novaposhta/geocode?lat=${lat}&lon=${lon}`);
+          const geoRes = await fetch(`/api/geocode?lat=${lat}&lon=${lon}`);
           if (!geoRes.ok) throw new Error("geocode failed");
           const geoData = await geoRes.json();
           const candidates: string[] =
@@ -282,7 +296,25 @@ export default function NovaPoshtaFields({
           setBranchQuery("");
           setSortByDistance(true);
           setIsBranchOpen(true);
-          fetchWarehouses(bestMatch.ref, deliveryType, "");
+
+          const allTargetCityRefs = new Set<string>([bestMatch.ref]);
+          const nearby = Array.isArray(geoData?.nearbySettlements) ? geoData.nearbySettlements : [];
+          for (const s of nearby.slice(0, 4)) {
+            if (s.name.toLowerCase() !== candidates[0]?.toLowerCase()) {
+              try {
+                const nRes = await fetch(`/api/novaposhta/cities?q=${encodeURIComponent(s.name)}`);
+                if (nRes.ok) {
+                  const nData: NovaPoshtaCity[] = await nRes.json();
+                  if (nData.length > 0) {
+                    allTargetCityRefs.add(nData[0].ref);
+                  }
+                }
+              } catch (e) {}
+            }
+          }
+
+          const combinedCityRefs = Array.from(allTargetCityRefs).join(",");
+          fetchWarehouses(combinedCityRefs, deliveryType, "", { lat, lon });
         } catch (err) {
           console.warn("Nearest search error", err);
           setGeoError("Не вдалося знайти найближче відділення. Спробуйте обрати місто вручну.");
