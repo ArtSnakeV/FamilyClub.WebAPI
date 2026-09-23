@@ -274,8 +274,8 @@ export async function GET(request: Request) {
                 latitude: Number.isFinite(lat) ? lat : undefined,
                 longitude: Number.isFinite(lon) ? lon : undefined,
               });
-            }
-          }
+      }
+    }
         }
       } catch (boxErr) {
         console.warn("Ukrposhta viewbox search failed", boxErr);

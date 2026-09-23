@@ -28,7 +28,7 @@ function getDistanceKm(lat1: number, lon1: number, lat2: number, lon2: number): 
     Math.sin(dLon / 2);
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   return R * c;
-}
+  }
 
 async function fetchWarehousesForCity(
   singleCityRef: string,
@@ -36,68 +36,69 @@ async function fetchWarehousesForCity(
   search: string,
   controllerSignal: AbortSignal
 ): Promise<NovaPoshtaWarehouse[]> {
-  const methodProperties: Record<string, any> = {
+    const methodProperties: Record<string, any> = {
     CityRef: singleCityRef,
-    Limit: "300",
-    Page: "1",
-  };
+      Limit: "300",
+      Page: "1",
+    };
 
-  if (search) {
-    methodProperties.FindByString = search;
-  }
+    if (search) {
+      methodProperties.FindByString = search;
+    }
 
-  if (type === "postbox") {
-    methodProperties.TypeOfWarehouseRef = POSTBOX_TYPE_REF;
-  }
+    if (type === "postbox") {
+      methodProperties.TypeOfWarehouseRef = POSTBOX_TYPE_REF;
+    }
 
-  const npRes = await fetch("https://api.novaposhta.ua/v2.0/json/", {
-    method: "POST",
-    headers: { "Content-Type": "application/json; charset=utf-8" },
-    body: JSON.stringify({
-      modelName: "AddressGeneral",
-      calledMethod: "getWarehouses",
-      methodProperties,
-    }),
+    const npRes = await fetch("https://api.novaposhta.ua/v2.0/json/", {
+      method: "POST",
+      headers: { "Content-Type": "application/json; charset=utf-8" },
+      body: JSON.stringify({
+        modelName: "AddressGeneral",
+        calledMethod: "getWarehouses",
+        methodProperties,
+      }),
     signal: controllerSignal,
-  });
-
-  if (!npRes.ok) {
-    throw new Error(`Nova Poshta getWarehouses responded with HTTP ${npRes.status}`);
-  }
-
-  const json = await npRes.json();
-  let rawList: any[] = json?.data || [];
-
-  if (type === "branch") {
-    // Filter out postboxes
-    rawList = rawList.filter((w) => {
-      if (w.TypeOfWarehouse === POSTBOX_TYPE_REF) return false;
-      const desc = (w.Description || "").toLowerCase();
-      if (desc.startsWith("поштомат") || desc.includes("поштомат")) return false;
-      return true;
     });
-  }
+    clearTimeout(timeout);
+
+    if (!npRes.ok) {
+      throw new Error(`Nova Poshta getWarehouses responded with HTTP ${npRes.status}`);
+    }
+
+    const json = await npRes.json();
+    let rawList: any[] = json?.data || [];
+
+    if (type === "branch") {
+      // Filter out postboxes
+      rawList = rawList.filter((w) => {
+        if (w.TypeOfWarehouse === POSTBOX_TYPE_REF) return false;
+        const desc = (w.Description || "").toLowerCase();
+        if (desc.startsWith("поштомат") || desc.includes("поштомат")) return false;
+        return true;
+      });
+    }
 
   return rawList.map((w) => {
-    const lat = w.Latitude ? parseFloat(w.Latitude) : undefined;
-    const lon = w.Longitude ? parseFloat(w.Longitude) : undefined;
+      const lat = w.Latitude ? parseFloat(w.Latitude) : undefined;
+      const lon = w.Longitude ? parseFloat(w.Longitude) : undefined;
     const cName = w.CityDescription || "";
     const sAddr = w.ShortAddress || w.Description;
     const fullShort = cName && !sAddr.toLowerCase().includes(cName.toLowerCase())
       ? `${cName}, ${sAddr}`
       : sAddr;
 
-    return {
-      ref: w.Ref,
-      description: w.Description,
-      number: w.Number,
+      return {
+        ref: w.Ref,
+        description: w.Description,
+        number: w.Number,
       shortAddress: fullShort,
-      latitude: Number.isFinite(lat) ? lat : undefined,
-      longitude: Number.isFinite(lon) ? lon : undefined,
+        latitude: Number.isFinite(lat) ? lat : undefined,
+        longitude: Number.isFinite(lon) ? lon : undefined,
       cityName: cName || undefined,
       cityRef: w.CityRef || singleCityRef,
-    };
-  });
+      };
+    });
 }
 
 export async function GET(request: Request) {
@@ -164,6 +165,7 @@ export async function GET(request: Request) {
     }
 
     cache.set(cacheKey, { data: warehouses, expiry: Date.now() + CACHE_TTL_MS });
+
     return Response.json(warehouses);
   } catch (error) {
     console.warn("Error fetching warehouses from Nova Poshta", error);

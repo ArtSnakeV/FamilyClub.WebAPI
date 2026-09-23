@@ -254,9 +254,9 @@ export default function UkrposhtaFields({
         setCity(match[1]);
         setCityQuery(match[1]);
       } else if (!city) {
-        setCity(selected.shortAddress);
-        setCityQuery(selected.shortAddress);
-      }
+      setCity(selected.shortAddress);
+      setCityQuery(selected.shortAddress);
+    }
     }
   };
 

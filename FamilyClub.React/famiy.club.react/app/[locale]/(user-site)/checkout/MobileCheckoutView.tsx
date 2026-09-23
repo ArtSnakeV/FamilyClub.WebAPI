@@ -435,25 +435,25 @@ export default function MobileCheckoutView({
                 className="py-3 flex flex-col gap-2 cursor-pointer"
               >
                 <div className="flex items-center justify-between gap-3">
-                  <div className="flex items-center gap-3 min-w-0">
-                    <RadioBtn
-                      active={deliveryProvider === "meest"}
+                <div className="flex items-center gap-3 min-w-0">
+                  <RadioBtn
+                    active={deliveryProvider === "meest"}
                       onClick={() => {
                         setDeliveryProvider("meest");
                         setBranch("");
                         setBranchRef?.("");
                       }}
-                    />
-                    <div className="flex flex-col leading-snug">
-                      <span className="text-[20px] font-semibold text-[var(--foreground-primary)]">Meest</span>
-                      <span className="text-[14px] text-[var(--foreground-primary)]">
-                        <span className="text-[var(--color-muted-fg)]">{t("checkout.termLabel")}</span>{t("checkout.termMeest")}
-                      </span>
-                    </div>
+                  />
+                  <div className="flex flex-col leading-snug">
+                    <span className="text-[20px] font-semibold text-[var(--foreground-primary)]">Meest</span>
+                    <span className="text-[14px] text-[var(--foreground-primary)]">
+                      <span className="text-[var(--color-muted-fg)]">{t("checkout.termLabel")}</span>{t("checkout.termMeest")}
+                    </span>
                   </div>
-                  <div className="bg-[#0066b3] text-white font-extrabold italic px-3 py-1 rounded text-[14px] tracking-wide shadow-sm shrink-0">
-                    Meest<span className="text-[#ee3338] not-italic ml-0.5">›</span>
-                  </div>
+                </div>
+                <div className="bg-[#0066b3] text-white font-extrabold italic px-3 py-1 rounded text-[14px] tracking-wide shadow-sm shrink-0">
+                  Meest<span className="text-[#ee3338] not-italic ml-0.5">›</span>
+                </div>
                 </div>
 
                 {deliveryProvider === "meest" && (
