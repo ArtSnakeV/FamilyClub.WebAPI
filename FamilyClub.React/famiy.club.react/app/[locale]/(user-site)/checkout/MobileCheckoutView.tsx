@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import type { DeliveryProvider, DeliveryType, PaymentMethod } from "./page";
 import NovaPoshtaFields from "./NovaPoshtaFields";
 import UkrposhtaFields from "./UkrposhtaFields";
+import MeestFields from "./MeestFields";
 import { useLocalizedPath, useTranslations } from "@/lib/i18n/LocaleProvider";
 
 export type MobileCheckoutViewProps = {
@@ -424,24 +425,52 @@ export default function MobileCheckoutView({
 
               {/* Meest Option */}
               <div
-                onClick={() => setDeliveryProvider("meest")}
-                className="py-3 flex items-center justify-between gap-3 cursor-pointer"
+                onClick={() => {
+                  if (deliveryProvider !== "meest") {
+                    setDeliveryProvider("meest");
+                    setBranch("");
+                    setBranchRef?.("");
+                  }
+                }}
+                className="py-3 flex flex-col gap-2 cursor-pointer"
               >
-                <div className="flex items-center gap-3 min-w-0">
-                  <RadioBtn
-                    active={deliveryProvider === "meest"}
-                    onClick={() => setDeliveryProvider("meest")}
-                  />
-                  <div className="flex flex-col leading-snug">
-                    <span className="text-[20px] font-semibold text-[var(--foreground-primary)]">Meest</span>
-                    <span className="text-[14px] text-[var(--foreground-primary)]">
-                      <span className="text-[var(--color-muted-fg)]">{t("checkout.termLabel")}</span>{t("checkout.termMeest")}
-                    </span>
+                <div className="flex items-center justify-between gap-3">
+                  <div className="flex items-center gap-3 min-w-0">
+                    <RadioBtn
+                      active={deliveryProvider === "meest"}
+                      onClick={() => {
+                        setDeliveryProvider("meest");
+                        setBranch("");
+                        setBranchRef?.("");
+                      }}
+                    />
+                    <div className="flex flex-col leading-snug">
+                      <span className="text-[20px] font-semibold text-[var(--foreground-primary)]">Meest</span>
+                      <span className="text-[14px] text-[var(--foreground-primary)]">
+                        <span className="text-[var(--color-muted-fg)]">{t("checkout.termLabel")}</span>{t("checkout.termMeest")}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="bg-[#0066b3] text-white font-extrabold italic px-3 py-1 rounded text-[14px] tracking-wide shadow-sm shrink-0">
+                    Meest<span className="text-[#ee3338] not-italic ml-0.5">›</span>
                   </div>
                 </div>
-                <div className="bg-[#0066b3] text-white font-extrabold italic px-3 py-1 rounded text-[14px] tracking-wide shadow-sm shrink-0">
-                  Meest<span className="text-[#ee3338] not-italic ml-0.5">›</span>
-                </div>
+
+                {deliveryProvider === "meest" && (
+                  <div onClick={(e) => e.stopPropagation()}>
+                    <MeestFields
+                      city={city}
+                      setCity={setCity}
+                      cityRef={cityRef}
+                      setCityRef={setCityRef}
+                      branch={branch}
+                      setBranch={setBranch}
+                      branchRef={branchRef}
+                      setBranchRef={setBranchRef}
+                      variant="mobile"
+                    />
+                  </div>
+                )}
               </div>
             </div>
           </div>
