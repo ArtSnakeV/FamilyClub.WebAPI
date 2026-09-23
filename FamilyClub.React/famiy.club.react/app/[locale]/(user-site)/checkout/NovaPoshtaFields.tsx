@@ -83,6 +83,7 @@ export default function NovaPoshtaFields({
   const containerRef = useRef<HTMLDivElement>(null);
   const cityDebounceRef = useRef<NodeJS.Timeout | null>(null);
   const branchDebounceRef = useRef<NodeJS.Timeout | null>(null);
+  const isSelectingBranchRef = useRef(false);
 
   useEffect(() => {
     setCityQuery(city);
@@ -192,6 +193,10 @@ export default function NovaPoshtaFields({
   };
 
   useEffect(() => {
+    if (isSelectingBranchRef.current) {
+      isSelectingBranchRef.current = false;
+      return;
+    }
     if (cityRef) {
       setBranch("");
       setBranchQuery("");
@@ -233,7 +238,8 @@ export default function NovaPoshtaFields({
     setBranch(selected.description);
     setBranchQuery(selected.description);
     setBranchRef?.(selected.ref);
-    if (selected.cityName && selected.cityRef) {
+    if (selected.cityName && selected.cityRef && selected.cityRef !== cityRef) {
+      isSelectingBranchRef.current = true;
       setCity(selected.cityName);
       setCityQuery(selected.cityName);
       setCityRef(selected.cityRef);
@@ -289,6 +295,7 @@ export default function NovaPoshtaFields({
             return;
           }
 
+          isSelectingBranchRef.current = true;
           setCity(bestMatch.name);
           setCityQuery(bestMatch.name);
           setCityRef(bestMatch.ref);

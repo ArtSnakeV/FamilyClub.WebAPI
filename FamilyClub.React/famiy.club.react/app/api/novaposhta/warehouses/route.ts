@@ -60,7 +60,6 @@ async function fetchWarehousesForCity(
       }),
     signal: controllerSignal,
     });
-    clearTimeout(timeout);
 
     if (!npRes.ok) {
       throw new Error(`Nova Poshta getWarehouses responded with HTTP ${npRes.status}`);
@@ -115,7 +114,7 @@ export async function GET(request: Request) {
 
   const cacheKey = `${rawCityRef}_${type}_${search.toLowerCase()}_${latStr || ""}_${lonStr || ""}`;
   const cached = cache.get(cacheKey);
-  if (cached && cached.expiry > Date.now()) {
+  if (cached && cached.expiry > Date.now() && Array.isArray(cached.data) && cached.data.length > 0) {
     return Response.json(cached.data);
   }
 
@@ -164,7 +163,9 @@ export async function GET(request: Request) {
       });
     }
 
-    cache.set(cacheKey, { data: warehouses, expiry: Date.now() + CACHE_TTL_MS });
+    if (warehouses.length > 0) {
+      cache.set(cacheKey, { data: warehouses, expiry: Date.now() + CACHE_TTL_MS });
+    }
 
     return Response.json(warehouses);
   } catch (error) {
