@@ -61,7 +61,7 @@ export default function InkHouse({
 
   return (
     <div
-      className="relative flex items-center justify-center select-none"
+      className="relative flex items-center justify-end select-none"
       style={{ width: BOX_W, height: BOX_H }}
     >
       <div className="relative" style={{ width: DISP_W, height: DISP_H }}>
@@ -102,7 +102,7 @@ export default function InkHouse({
           aria-label={t("ink.ringBellAria")}
           disabled={!interactive && !isRinging}
           onClick={interactive ? onActivate : undefined}
-          className={`absolute z-20 border-0 bg-transparent p-0 ${
+          className={`absolute z-0 border-0 bg-transparent p-0 ${
             interactive ? "cursor-pointer" : "cursor-default"
           } ${isRinging ? "ink-bell-shake" : ""}`}
           style={{

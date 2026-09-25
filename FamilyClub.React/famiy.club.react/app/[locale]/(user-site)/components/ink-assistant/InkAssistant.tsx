@@ -114,7 +114,7 @@ export default function InkAssistant() {
       )}
 
       <div
-        className={`pointer-events-none fixed bottom-6 right-2 z-40 hidden md:block lg:right-6 ${
+        className={`pointer-events-none fixed bottom-6 right-0 z-40 hidden md:block lg:right-0 ${
           phase === "playing" ? "invisible" : ""
         }`}
         aria-live="polite"

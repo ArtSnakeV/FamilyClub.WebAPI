@@ -17,11 +17,7 @@ export default function InkSection() {
             <div className="mx-auto max-w-[1504px] px-4 lg:px-0">
                 <div className="grid items-center gap-10 lg:grid-cols-[832px_590px] lg:gap-[82px]">
                     <div className="relative z-[1] flex justify-center overflow-visible lg:justify-start">
-                        {/*
-                          Frame is already in the WebP (white mat + alpha).
-                          No CSS border/box-shadow — those created a second rectangular “glass” frame.
-                          drop-shadow follows the PNG alpha instead.
-                        */}
+                        
                         <img
                             alt={ink.imageAlt}
                             className="ink-cat-photo h-auto w-full max-w-[832px] rotate-[-2.5deg] object-contain"
