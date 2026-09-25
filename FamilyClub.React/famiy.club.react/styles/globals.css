@@ -193,6 +193,40 @@
     drop-shadow(0 -8px 30px rgba(245, 243, 238, 0.45));
 }
 
+/* Home About — papyrus + home banner shadows follow PNG alpha (no box frame) */
+.about-papyrus-sheet {
+  filter: drop-shadow(0 16px 28px rgba(36, 36, 36, 0.55));
+}
+
+.about-home-banner {
+  filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.55));
+}
+
+.ink-cat-photo {
+  filter: drop-shadow(0 12px 22px rgba(0, 0, 0, 0.45));
+}
+
+[data-theme="ink-night"] .about-papyrus-sheet {
+  filter: invert(1) hue-rotate(180deg) brightness(0.82) contrast(0.88) saturate(0.55)
+    drop-shadow(0 16px 28px rgba(0, 0, 0, 0.75));
+}
+
+[data-theme="ink-night"] .about-home-banner {
+  filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.7));
+}
+
+[data-theme="ink-night"] .ink-cat-photo {
+  filter: drop-shadow(0 12px 22px rgba(0, 0, 0, 0.65));
+}
+
+.advantages-polaroid {
+  filter: drop-shadow(0 14px 22px rgba(0, 0, 0, 0.45));
+}
+
+[data-theme="ink-night"] .advantages-polaroid {
+  filter: drop-shadow(0 14px 22px rgba(0, 0, 0, 0.65));
+}
+
 /* Same gray wash for admin desktop shelf background */
 [data-theme="ink-night"] .admin-shelf-surface::before {
   content: "";
@@ -206,7 +240,8 @@
 /* Book card shelf motion — shared timing for plate + content */
 .book-card-shell {
   --book-card-motion: 1s cubic-bezier(0.22, 1, 0.36, 1);
-  --book-card-drop: 12px;
+  --book-card-scale-y: 1.055;
+  --book-card-drop: calc(440px * (var(--book-card-scale-y) - 1));
 }
 
 .book-card-bg {
@@ -216,7 +251,7 @@
 }
 
 .book-card-shell:hover .book-card-bg {
-  transform: scaleY(1.055);
+  transform: scaleY(var(--book-card-scale-y));
   box-shadow: 0px 16px 18px 0px rgba(36, 36, 36, 0.35);
 }
 

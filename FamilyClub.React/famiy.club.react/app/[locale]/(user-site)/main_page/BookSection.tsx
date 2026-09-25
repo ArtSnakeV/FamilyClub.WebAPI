@@ -66,8 +66,8 @@ export default function BookSection({ title, books, showMore = false, showMoreHr
                         </Link>
                     )}
                 </div>
-
-                <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-[60px] pb-12 pt-[75px]">
+                
+                <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-[60px] pb-12 pt-[0px]">
                     {books.map((book, index) => (
                         <BookCard key={`${book.title}-${index}`} {...book} isFavorite={isFav?.(book.productId)}
                             onToggleFavorite={onToggleFavorite} />
