@@ -7,6 +7,7 @@ import { AsYouType } from "libphonenumber-js";
 import { authService } from "@/lib/api/services";
 import { readApiErrorMessage } from "@/lib/api/readApiError";
 import { useLocalizedPath, useTranslations } from "@/lib/i18n/LocaleProvider";
+import { validatePhoneNumber } from "@/lib/validation/phoneValidation";
 
 export default function MobileRegisterView() {
   const router = useRouter();
@@ -92,7 +93,8 @@ export default function MobileRegisterView() {
       setError(t("auth.passwordComplexity"));
       return;
     }
-    if (!phone || phone.replace(/\D/g, "").length < 8) {
+    const phoneCheck = validatePhoneNumber(phone, detectedCountry);
+    if (!phoneCheck.isValid) {
       setError(t("auth.invalidPhone"));
       return;
     }
@@ -108,7 +110,7 @@ export default function MobileRegisterView() {
           name: formData.firstName.trim(),
           surname: formData.lastName.trim(),
           email: formData.email.trim(),
-          phoneNumber: phone.trim(),
+          phoneNumber: phoneCheck.normalized,
           password: formData.password,
         },
       });
