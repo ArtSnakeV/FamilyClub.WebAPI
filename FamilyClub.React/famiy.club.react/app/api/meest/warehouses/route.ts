@@ -164,7 +164,7 @@ export async function GET(request: Request) {
         if (res.ok) {
           const json = await res.json();
           for (const item of json) {
-            const parsed = parseOsmItem(item);
+            const parsed = parseOsmItem(item, cleanCity || "city");
             if (parsed && !warehouses.some((w) => w.ref === parsed.ref)) {
               warehouses.push(parsed);
             }

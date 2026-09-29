@@ -7,12 +7,15 @@ import { AsYouType } from "libphonenumber-js";
 import { authService } from "@/lib/api/services";
 import { readApiErrorMessage } from "@/lib/api/readApiError";
 import { useLocalizedPath, useTranslations } from "@/lib/i18n/LocaleProvider";
+import { useTheme } from "@/lib/theme/ThemeProvider";
 import { validatePhoneNumber } from "@/lib/validation/phoneValidation";
 
 export default function MobileRegisterView() {
   const router = useRouter();
   const t = useTranslations();
   const lp = useLocalizedPath();
+  const { theme } = useTheme();
+  const isNight = theme === "ink-night";
 
   // Password visibility
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -151,6 +154,7 @@ export default function MobileRegisterView() {
           src="/images/login register/mobile-logo.png"
           alt="LIBRELLIS"
           className="w-[240px] sm:w-[280px] h-auto object-contain pointer-events-none drop-shadow-[0px_2px_4px_rgba(0,0,0,0.15)]"
+          style={isNight ? { filter: "brightness(0) invert(0.92)" } : undefined}
         />
       </div>
 
@@ -336,7 +340,7 @@ export default function MobileRegisterView() {
                       : "/images/login register/eye-open-default.svg"
                 }
                 alt=""
-                className="w-[24px] h-[24px] object-contain"
+                className={`w-[24px] h-[24px] object-contain ${isNight ? "brightness-0 invert-[0.88]" : ""}`}
               />
             </button>
           </div>
@@ -369,7 +373,7 @@ export default function MobileRegisterView() {
                       : "/images/login register/eye-open-default.svg"
                 }
                 alt=""
-                className="w-[24px] h-[24px] object-contain"
+                className={`w-[24px] h-[24px] object-contain ${isNight ? "brightness-0 invert-[0.88]" : ""}`}
               />
             </button>
           </div>

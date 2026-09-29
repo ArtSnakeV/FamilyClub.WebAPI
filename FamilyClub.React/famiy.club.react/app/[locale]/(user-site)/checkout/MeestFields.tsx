@@ -488,11 +488,11 @@ export default function MeestFields({
               ) : filteredWarehouses.length > 0 ? (
                 filteredWarehouses.map((w) => renderWarehouseItem(w))
               ) : !city ? (
-                <div className="px-4 py-3 text-sm text-amber-800 bg-amber-50 rounded-lg m-2">
+                <div className="px-4 py-3 text-sm text-amber-800 bg-amber-50 dark:text-amber-200 dark:bg-amber-950/40 dark:border dark:border-amber-800/40 rounded-lg m-2">
                   Будь ласка, спочатку оберіть населений пункт.
                 </div>
               ) : (
-                <div className="px-4 py-3 text-sm text-amber-900 bg-amber-50 rounded-xl m-2 border border-amber-200/70 leading-relaxed">
+                <div className="px-4 py-3 text-sm text-amber-900 bg-amber-50 dark:text-amber-200 dark:bg-amber-950/40 dark:border-amber-800/40 rounded-xl m-2 border border-amber-200/70 leading-relaxed">
                   У цьому населеному пункті немає відділень або поштоматів Meest. Будь ласка, оберіть іншу службу доставки (Нова Пошта або Укрпошта) або натисніть «Знайти найближче відділення».
                 </div>
               )}
@@ -577,11 +577,11 @@ export default function MeestFields({
             ) : filteredWarehouses.length > 0 ? (
               filteredWarehouses.map((w) => renderWarehouseItem(w, true))
             ) : !city ? (
-              <div className="px-4 py-3 text-xs text-amber-800 bg-amber-50 rounded-lg m-2">
+              <div className="px-4 py-3 text-xs text-amber-800 bg-amber-50 dark:text-amber-200 dark:bg-amber-950/40 dark:border dark:border-amber-800/40 rounded-lg m-2">
                 Будь ласка, спочатку оберіть населений пункт.
               </div>
             ) : (
-              <div className="px-4 py-3 text-xs text-amber-900 bg-amber-50 rounded-xl m-2 border border-amber-200/70 leading-relaxed">
+              <div className="px-4 py-3 text-xs text-amber-900 bg-amber-50 dark:text-amber-200 dark:bg-amber-950/40 dark:border-amber-800/40 rounded-xl m-2 border border-amber-200/70 leading-relaxed">
                 У цьому населеному пункті немає відділень або поштоматів Meest. Будь ласка, оберіть іншу службу доставки (Нова Пошта або Укрпошта) або натисніть «Знайти найближче відділення».
               </div>
             )}

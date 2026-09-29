@@ -498,7 +498,7 @@ export default function MobileCheckoutView({
                 </span>
               </div>
               <div className="flex items-center gap-2 shrink-0">
-                <span className="font-extrabold text-[15px] text-[#1a1f71] italic tracking-tight">VISA</span>
+                <span className="font-extrabold text-[15px] text-[#1a1f71] dark:text-[#7ba0ff] italic tracking-tight">VISA</span>
                 <div className="flex -space-x-1.5 items-center">
                   <div className="size-[15px] rounded-full bg-[#eb001b]/90" />
                   <div className="size-[15px] rounded-full bg-[#f79e1b]/90" />
@@ -522,7 +522,7 @@ export default function MobileCheckoutView({
                 </span>
               </div>
               <div className="flex items-center gap-2 shrink-0 self-start sm:self-center mt-1 sm:mt-0">
-                <span className="font-extrabold text-[15px] text-[#1a1f71] italic tracking-tight">VISA</span>
+                <span className="font-extrabold text-[15px] text-[#1a1f71] dark:text-[#7ba0ff] italic tracking-tight">VISA</span>
                 <div className="flex -space-x-1.5 items-center">
                   <div className="size-[15px] rounded-full bg-[#eb001b]/90" />
                   <div className="size-[15px] rounded-full bg-[#f79e1b]/90" />

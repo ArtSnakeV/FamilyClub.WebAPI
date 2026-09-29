@@ -516,7 +516,7 @@ export default function UkrposhtaFields({
               ) : filteredWarehouses.length > 0 ? (
                 filteredWarehouses.map((w) => renderWarehouseItem(w))
               ) : !city ? (
-                <div className="px-4 py-3 text-sm text-amber-800 bg-amber-50 rounded-lg m-2">
+                <div className="px-4 py-3 text-sm text-amber-800 bg-amber-50 dark:text-amber-200 dark:bg-amber-950/40 dark:border dark:border-amber-800/40 rounded-lg m-2">
                   Будь ласка, спочатку оберіть населений пункт або введіть 5-значний індекс (наприклад 70-450).
                 </div>
               ) : (
@@ -605,7 +605,7 @@ export default function UkrposhtaFields({
             ) : filteredWarehouses.length > 0 ? (
               filteredWarehouses.map((w) => renderWarehouseItem(w, true))
             ) : !city ? (
-              <div className="px-4 py-3 text-xs text-amber-800 bg-amber-50 rounded-lg m-2">
+              <div className="px-4 py-3 text-xs text-amber-800 bg-amber-50 dark:text-amber-200 dark:bg-amber-950/40 dark:border dark:border-amber-800/40 rounded-lg m-2">
                 Будь ласка, спочатку оберіть населений пункт або введіть 5-значний індекс (наприклад 70-450).
               </div>
             ) : (

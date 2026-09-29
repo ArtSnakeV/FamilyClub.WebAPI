@@ -489,7 +489,7 @@ export default function NovaPoshtaFields({
           {isBranchOpen && (
             <div className="absolute top-full left-0 right-0 z-50 mt-1.5 max-h-64 overflow-y-auto rounded-xl bg-[var(--background-elevated)] shadow-2xl border border-[var(--color-border-warm)]/40 py-1.5 animate-fade-in">
               {!cityRef && !city ? (
-                <div className="px-4 py-3 text-sm text-amber-800 bg-amber-50 rounded-lg m-2">
+                <div className="px-4 py-3 text-sm text-amber-800 bg-amber-50 dark:text-amber-200 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800/40 rounded-lg m-2">
                   Будь ласка, спочатку оберіть населений пункт зі списку вище.
                 </div>
               ) : loadingWarehouses ? (
@@ -578,7 +578,7 @@ export default function NovaPoshtaFields({
         {isBranchOpen && (
           <div className="absolute top-full left-0 right-0 z-50 mt-1 max-h-60 overflow-y-auto rounded-xl bg-[var(--background-elevated)] shadow-2xl border border-[var(--color-border-warm)]/40 py-1.5">
             {!cityRef && !city ? (
-              <div className="px-4 py-3 text-xs text-amber-800 bg-amber-50 rounded-lg m-2">
+              <div className="px-4 py-3 text-xs text-amber-800 bg-amber-50 dark:text-amber-200 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800/40 rounded-lg m-2">
                 Будь ласка, спочатку оберіть населений пункт зі списку.
               </div>
             ) : loadingWarehouses ? (
