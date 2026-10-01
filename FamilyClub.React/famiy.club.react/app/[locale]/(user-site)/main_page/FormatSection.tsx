@@ -40,7 +40,7 @@ export default function FormatSection() {
                     ))}
                 </div>
 
-                <div className="flex flex-wrap items-end justify-around gap-8 pb-0 -mb-[26px]">
+                <div className="flex flex-wrap items-end justify-around gap-8 pb-0 -mb-[50px]">
                     {formats.items.map((item, index) => {
                         const assets = formatAssets[index] ?? formatAssets[0];
                         const imageOffsets = [
