@@ -78,7 +78,7 @@ export async function GET(request: Request) {
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 5500);
 
-    const parseOsmItem = (item: any, currentCity: string) => {
+    const parseOsmItem = (item: any, currentCity: string = "") => {
       const name = (item.name || "").toLowerCase();
       const displayName = (item.display_name || "").toLowerCase();
 
@@ -164,7 +164,7 @@ export async function GET(request: Request) {
         if (res.ok) {
           const json = await res.json();
           for (const item of json) {
-            const parsed = parseOsmItem(item);
+            const parsed = parseOsmItem(item, cleanCity || "city");
             if (parsed && !warehouses.some((w) => w.ref === parsed.ref)) {
               warehouses.push(parsed);
             }
