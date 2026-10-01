@@ -85,8 +85,8 @@ export default function BookSection({
             </div>
 
             {/* Контейнер книг та плашки назви */}
-            <div className="relative z-10 mx-auto max-w-[1220px] px-4 lg:px-0">
-                <div className="absolute -top-[36px] md:-top-[36px] left-0 right-0 z-30 flex flex-wrap items-start justify-between gap-4 pointer-events-none px-4 lg:px-0">
+            <div className="relative mx-auto max-w-[1220px] px-4 lg:px-0">
+                <div className="absolute top-[36px] md:top-[14px] left-0 right-0 z-30 flex flex-wrap items-start justify-between gap-4 pointer-events-none px-4 lg:px-0">
                     <div
                         className="pointer-events-auto flex h-[57px] max-w-full items-center justify-center rounded-t-none rounded-b-[30px] bg-[var(--background-elevated)] px-6 md:px-8 shadow-[0px_8px_8.5px_0px_rgba(0,0,0,0.5)] w-fit"
                         style={pillWidth ? { minWidth: `${pillWidth}px` } : undefined}
@@ -105,7 +105,7 @@ export default function BookSection({
                     )}
                 </div>
 
-                <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-[60px] pb-12 pt-[48px]">
+                <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-[60px] pb-12 -mt-[50px]">
                     {books.map((book, index) => (
                         <BookCard
                             key={`${book.title}-${index}`}
