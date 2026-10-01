@@ -78,7 +78,7 @@ export async function GET(request: Request) {
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 5500);
 
-    const parseOsmItem = (item: any, currentCity: string) => {
+    const parseOsmItem = (item: any, currentCity: string = "") => {
       const name = (item.name || "").toLowerCase();
       const displayName = (item.display_name || "").toLowerCase();
 

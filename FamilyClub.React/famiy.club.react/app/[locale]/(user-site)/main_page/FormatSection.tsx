@@ -40,7 +40,7 @@ export default function FormatSection() {
                     ))}
                 </div>
 
-                <div className="flex flex-wrap items-end justify-around gap-8 pb-4">
+                <div className="flex flex-wrap items-end justify-around gap-8 pb-0">
                     {formats.items.map((item, index) => {
                         const assets = formatAssets[index] ?? formatAssets[0];
                         const imageOffsets = [
@@ -64,15 +64,6 @@ export default function FormatSection() {
                             </div>
                         );
                     })}
-                </div>
-            </div>
-
-            <div className="relative z-20 h-[80px] w-full shadow-[0px_4px_8px_0px_rgba(0,0,0,0.35)] bg-[var(--color-shelf)]">
-                <img src="/images/catalog/shelf_tex1.png" className="absolute inset-0 w-full h-full object-cover mix-blend-multiply opacity-50 pointer-events-none" alt="" />
-                <div className="absolute inset-0 bg-[rgba(0,0,0,0.27)] pointer-events-none" />
-                <div className="absolute left-0 right-0 bottom-0 h-[60px]">
-                    <img src="/images/catalog/shelf_tex2.png" className="absolute inset-0 w-full h-full object-cover mix-blend-multiply pointer-events-none" alt="" />
-                    <img src="/images/catalog/shelf_tex3.png" className="absolute inset-0 w-full h-full object-cover pointer-events-none" alt="" />
                 </div>
             </div>
         </section>
