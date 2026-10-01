@@ -22,7 +22,7 @@ export default function FormatSection() {
     const formats = dictionary.home.formats;
 
     return (
-        <section className="relative w-full overflow-hidden pt-10 pb-0">
+        <section className="relative z-20 w-full overflow-visible pt-10 pb-0">
             <div className="mx-auto max-w-[1220px] px-4 lg:px-0">
                 <div className="flex flex-wrap justify-around text-center font-sans text-[20px] font-semibold text-[var(--foreground-primary)] mb-12">
                     {formats.items.map((item) => (
@@ -40,7 +40,7 @@ export default function FormatSection() {
                     ))}
                 </div>
 
-                <div className="flex flex-wrap items-end justify-around gap-8 pb-0">
+                <div className="flex flex-wrap items-end justify-around gap-8 pb-0 -mb-[26px]">
                     {formats.items.map((item, index) => {
                         const assets = formatAssets[index] ?? formatAssets[0];
                         const imageOffsets = [

@@ -55,7 +55,7 @@ export default function BookSection({
 
     return (
         <section
-            className="relative z-0 w-full overflow-x-clip pt-0 pb-0"
+            className="relative w-full overflow-visible pt-0 pb-0"
             style={{
                 backgroundImage:
                     "linear-gradient(180.074deg, color-mix(in srgb, var(--foreground-primary) 12%, transparent) 0.24409%, transparent 17.892%), linear-gradient(180.074deg, color-mix(in srgb, var(--foreground-primary) 22%, transparent) 9.5072%, transparent 49.996%), linear-gradient(90deg, var(--background-main) 0%, var(--background-main) 100%)",
@@ -65,18 +65,18 @@ export default function BookSection({
             <div
                 id={shelfIndex !== undefined ? `book-shelf-${shelfIndex}` : undefined}
                 data-shelf-index={shelfIndex}
-                className="relative z-10 h-[85px] md:h-[95px] w-full"
+                className="relative h-[85px] md:h-[95px] w-full overflow-visible"
             >
                 <img
                     src="/images/userProfile/Group 187.png"
                     alt=""
                     aria-hidden
-                    className="absolute inset-0 w-full h-full object-fill pointer-events-none"
+                    className="absolute inset-0 z-10 w-full h-full object-fill pointer-events-none"
                 />
 
                 {/* Кіт Інк на поличці */}
                 {hasCat && (
-                    <div className="pointer-events-none absolute inset-0 z-40 mx-auto max-w-[1220px] px-4 lg:px-0">
+                    <div className="pointer-events-none absolute inset-0 z-50 mx-auto max-w-[1220px] px-4 lg:px-0">
                         <div className="relative h-full w-full" id="shelf-cat-anchor" data-shelf-cat="true">
                             <ShelfCat />
                         </div>

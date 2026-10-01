@@ -173,7 +173,7 @@ export default function ShelfCat() {
 
   return (
     <div
-      className="absolute z-20 select-none pointer-events-auto cursor-pointer"
+      className="absolute z-50 select-none pointer-events-auto cursor-pointer"
       style={{
         left: `${reducedMotion ? 50 : xPos}%`,
         bottom: "16px",
@@ -196,7 +196,7 @@ export default function ShelfCat() {
       {/* Хмаринка слів / реакцій */}
       {(bubbleText || isHovered) && (
         <div
-          className="absolute bottom-full mb-3 left-1/2 -translate-x-1/2 z-30 whitespace-nowrap rounded-2xl bg-[var(--background-elevated)] px-3.5 py-1.5 shadow-[0px_4px_14px_rgba(0,0,0,0.35)] border border-[var(--color-green)]/30 text-[12px] font-serif font-medium text-[var(--foreground-primary)] flex flex-col items-center gap-1 animate-fade-in"
+          className="absolute bottom-full mb-3 left-1/2 -translate-x-1/2 z-50 whitespace-nowrap rounded-2xl bg-[var(--background-elevated)] px-3.5 py-1.5 shadow-[0px_4px_14px_rgba(0,0,0,0.35)] border border-[var(--color-green)]/30 text-[12px] font-serif font-medium text-[var(--foreground-primary)] flex flex-col items-center gap-1 animate-fade-in"
           style={{ animation: "ink-panel-in 0.25s ease-out both" }}
         >
           <span>{bubbleText || (isUk ? "Мурр... 🐾" : "Purr... 🐾")}</span>
@@ -265,7 +265,7 @@ export default function ShelfCat() {
 
       {/* Контейнер спрайта кота — збільшений до 195×365px */}
       <div
-        className="relative h-[195px] w-[365px] drop-shadow-[0_6px_10px_rgba(0,0,0,0.4)] transition-transform duration-200"
+        className="relative h-[225px] w-[395px] drop-shadow-[0_6px_10px_rgba(0,0,0,0.4)] transition-transform duration-200"
         style={{
           transform: spriteTransform,
         }}
