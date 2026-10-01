@@ -96,7 +96,7 @@ export default async function RootLayout({
               }}
               aria-hidden
             />
-            <div className="relative z-10 mx-auto flex h-[50px] max-w-[1220px] items-center">
+            <div className="relative z-10 mx-auto flex h-[65px] max-w-[1220px] items-center">
               <UpNavigation />
             </div>
             <div className="h-[16px]" aria-hidden />
