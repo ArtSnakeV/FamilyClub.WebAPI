@@ -110,7 +110,7 @@ export default async function RootLayout({
               {children}
             </main>
 
-            <div className="hidden md:block">
+            <div className="relative z-20 hidden md:block">
               <Footer />
             </div>
             <MobileBottomNav />
