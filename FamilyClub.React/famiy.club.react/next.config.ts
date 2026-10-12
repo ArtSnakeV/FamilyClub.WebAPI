@@ -44,20 +44,23 @@ const nextConfig: NextConfig = {
     ];
   },
   async rewrites() {
+    // const internalApi =
+    //   process.env.INTERNAL_API_URL?.replace(/\/$/, "") ||
+    //   process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, "") ||
+    //   "https://localhost:7069";
     const internalApi =
       process.env.INTERNAL_API_URL?.replace(/\/$/, "") ||
-      process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, "") ||
-      "https://localhost:7069";
+      "http://localhost:5053"; // HTTP Kestrel — Node-проксі без self-signed
 
     return [
       {
         source: "/api/:path*",
         destination: `${internalApi}/api/:path*`,
       },
-      {
-        source: "/images/:path*",
-        destination: `${internalApi}/images/:path*`,
-      },
+      // {
+      //   source: "/images/:path*",
+      //   destination: `${internalApi}/images/:path*`,
+      // },
       {
         source: "/signin-google",
         destination: `${internalApi}/signin-google`,
