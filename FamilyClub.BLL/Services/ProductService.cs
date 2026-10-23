@@ -346,7 +346,7 @@ public class ProductService : IProductService
 		await SafeLogAsync(
 			ActionLogCodes.Actions.Created,
 			ActionLogCodes.Modules.Books,
-			$"╨б╤В╨▓╨╛╤А╨╡╨╜╨╛ ╨║╨╜╨╕╨│╤Г ┬л{product.ProductName}┬╗, Id={product.Id}",
+			$"Створено книгу «{product.ProductName}», Id={product.Id}",
 			ActionLogCodes.Levels.Success,
 			cancellationToken);
 
@@ -494,10 +494,12 @@ public class ProductService : IProductService
         _productRepository.Delete(product);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
+		await InvalidateCacheAsync(cancellationToken, id);
+
 		await SafeLogAsync(
 			ActionLogCodes.Actions.Deleted,
 			ActionLogCodes.Modules.Books,
-			$"╨Т╨╕╨┤╨░╨╗╨╡╨╜╨╛ ╨║╨╜╨╕╨│╤Г ┬л{title}┬╗, Id={id}",
+			$"Видалено книгу «{title}», Id={id}",
 			ActionLogCodes.Levels.Warning,
 			cancellationToken);
 
@@ -517,7 +519,7 @@ public class ProductService : IProductService
 		}
 		catch
 		{
-			// ╨Ц╤Г╤А╨╜╨░╨╗ ╨╜╨╡ ╨┐╨╛╨▓╨╕╨╜╨╡╨╜ ╨╗╨░╨╝╨░╤В╨╕ ╨╛╤Б╨╜╨╛╨▓╨╜╤Г ╨╛╨┐╨╡╤А╨░╤Ж╤Ц╤О
+			// Журнал не повинен ламати основну операцію
 		}
 	}
 

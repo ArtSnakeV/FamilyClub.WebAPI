@@ -11,6 +11,16 @@ function getSessionId(): string {
     if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") {
       id = crypto.randomUUID();
     } else {
+      // Фоллбек для HTTP (небезпечний контекст), доступу по IP або старіших браузерів
+      id = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
+        const r = (Math.random() * 16) | 0;
+        const v = c === "x" ? r : (r & 0x3) | 0x8;
+        return v.toString(16);
+      });
+    }
+    if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") {
+      id = crypto.randomUUID();
+    } else {
       id = `${Date.now().toString(36)}-${Math.random().toString(36).substring(2, 9)}`;
     }
     localStorage.setItem("presence_session_id", id);

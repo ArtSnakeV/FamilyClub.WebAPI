@@ -122,7 +122,6 @@ export default function WriteReviewModal({
         className="bg-[var(--background-elevated)] rounded-3xl max-w-xl w-full p-6 sm:p-8 shadow-2xl border border-[var(--color-border-warm)]/40 relative overflow-hidden my-8"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Close Button */}
         <button
           onClick={onClose}
           className="absolute top-4 right-4 w-9 h-9 rounded-full bg-[var(--color-menu-hover)] hover:bg-[var(--color-menu-separator)] text-[var(--foreground-primary)] font-bold flex items-center justify-center transition"
@@ -131,7 +130,6 @@ export default function WriteReviewModal({
           ✕
         </button>
 
-        {/* Header (Figma 1324:16113) */}
         <div className="text-center mb-6">
           <span className="text-3xl mb-1 block">⭐✍️</span>
           <h2 className="text-2xl font-extrabold text-[var(--foreground-primary)]">{t("orders.reviewModal.title")}</h2>
@@ -158,7 +156,6 @@ export default function WriteReviewModal({
           </div>
         </div>
 
-        {/* Review Form */}
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Star Rating Picker */}
           <div className="flex flex-col items-center gap-2 bg-[var(--background-elevated)]/70 p-4 rounded-2xl border border-[var(--color-menu-separator)]">
@@ -185,7 +182,6 @@ export default function WriteReviewModal({
             </span>
           </div>
 
-          {/* Comment Textarea */}
           <div className="flex flex-col gap-1.5">
             <label className="text-sm font-bold text-[var(--foreground-primary)]">{t("orders.reviewModal.commentLabel")}</label>
             <textarea
@@ -207,7 +203,6 @@ export default function WriteReviewModal({
               </p>
             </div>
 
-            {/* Photo Previews */}
             {images.length > 0 && (
               <div className="flex flex-wrap gap-3 my-2">
                 {images.map((img, idx) => (
@@ -230,7 +225,6 @@ export default function WriteReviewModal({
               </div>
             )}
 
-            {/* Upload Button */}
             {images.length < 5 && (
               <label className="flex flex-col items-center justify-center p-4 border-2 border-dashed border-[var(--color-border-warm)] rounded-xl cursor-pointer hover:bg-[var(--background-elevated)] transition text-center">
                 <span className="text-2xl mb-1">📸</span>
@@ -251,7 +245,6 @@ export default function WriteReviewModal({
 
           {error && <p className="text-xs text-red-600 font-semibold text-center">{error}</p>}
 
-          {/* Form Actions */}
           <div className="flex items-center justify-end gap-3 pt-2">
             <button
               type="button"
