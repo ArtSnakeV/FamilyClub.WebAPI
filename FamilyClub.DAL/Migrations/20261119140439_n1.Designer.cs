@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace FamilyClub.DAL.Migrations
 {
     [DbContext(typeof(FamilyClubContext))]
-    [Migration("20260723110634_AddActionLogArchives")]
-    partial class AddActionLogArchives
+    [Migration("20261119140439_n1")]
+    partial class n1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -338,6 +338,33 @@ namespace FamilyClub.DAL.Migrations
                     b.ToTable("blocked_ips", (string)null);
                 });
 
+            modelBuilder.Entity("FamilyClubLibrary.BookEmbedding", b =>
+                {
+                    b.Property<int>("ProductId")
+                        .HasColumnType("integer")
+                        .HasColumnName("product_id");
+
+                    b.Property<string>("EmbeddingJson")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("embedding_json");
+
+                    b.Property<string>("SourceHash")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)")
+                        .HasColumnName("source_hash");
+
+                    b.Property<DateTimeOffset>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("updated_at");
+
+                    b.HasKey("ProductId")
+                        .HasName("pk_book_embeddings");
+
+                    b.ToTable("book_embeddings", (string)null);
+                });
+
             modelBuilder.Entity("FamilyClubLibrary.BookSize", b =>
                 {
                     b.Property<int>("Id")
@@ -458,6 +485,14 @@ namespace FamilyClub.DAL.Migrations
                     b.Property<byte[]>("AvatarData")
                         .HasColumnType("bytea")
                         .HasColumnName("avatar_data");
+
+                    b.Property<string>("AvatarStorageKey")
+                        .HasColumnType("text")
+                        .HasColumnName("avatar_storage_key");
+
+                    b.Property<string>("AvatarUrl")
+                        .HasColumnType("text")
+                        .HasColumnName("avatar_url");
 
                     b.Property<int?>("BlockReasonId")
                         .HasColumnType("integer")
@@ -631,7 +666,6 @@ namespace FamilyClub.DAL.Migrations
                         .HasColumnName("content_type");
 
                     b.Property<byte[]>("ImageData")
-                        .IsRequired()
                         .HasColumnType("bytea")
                         .HasColumnName("image_data");
 
@@ -640,6 +674,14 @@ namespace FamilyClub.DAL.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("character varying(255)")
                         .HasColumnName("image_name");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("text")
+                        .HasColumnName("image_url");
+
+                    b.Property<string>("StorageKey")
+                        .HasColumnType("text")
+                        .HasColumnName("storage_key");
 
                     b.Property<DateTime>("UploadedAt")
                         .HasColumnType("timestamp with time zone")
@@ -721,18 +763,25 @@ namespace FamilyClub.DAL.Migrations
                         .HasColumnType("boolean")
                         .HasColumnName("is_read");
 
+                    b.Property<string>("SenderId")
+                        .HasColumnType("text")
+                        .HasColumnName("sender_id");
+
                     b.Property<string>("Text")
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("text");
 
                     b.HasKey("Id")
-                        .HasName("pk_notification");
+                        .HasName("pk_notifications");
 
                     b.HasIndex("ClubMemberId")
-                        .HasDatabaseName("ix_notification_club_member_id");
+                        .HasDatabaseName("ix_notifications_club_member_id");
 
-                    b.ToTable("notification", (string)null);
+                    b.HasIndex("SenderId")
+                        .HasDatabaseName("ix_notifications_sender_id");
+
+                    b.ToTable("notifications", (string)null);
                 });
 
             modelBuilder.Entity("FamilyClubLibrary.Order", b =>
@@ -744,9 +793,62 @@ namespace FamilyClub.DAL.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("Branch")
+                        .HasColumnType("text")
+                        .HasColumnName("branch");
+
+                    b.Property<string>("BranchRef")
+                        .HasColumnType("text")
+                        .HasColumnName("branch_ref");
+
+                    b.Property<string>("City")
+                        .HasColumnType("text")
+                        .HasColumnName("city");
+
+                    b.Property<string>("CityRef")
+                        .HasColumnType("text")
+                        .HasColumnName("city_ref");
+
+                    b.Property<string>("Comment")
+                        .HasColumnType("text")
+                        .HasColumnName("comment");
+
+                    b.Property<decimal?>("DeliveryCost")
+                        .HasColumnType("numeric")
+                        .HasColumnName("delivery_cost");
+
+                    b.Property<string>("DeliveryProvider")
+                        .HasColumnType("text")
+                        .HasColumnName("delivery_provider");
+
+                    b.Property<string>("DeliveryType")
+                        .HasColumnType("text")
+                        .HasColumnName("delivery_type");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("text")
+                        .HasColumnName("email");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("text")
+                        .HasColumnName("first_name");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("text")
+                        .HasColumnName("last_name");
+
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("order_date");
+
+                    b.Property<string>("PaymentMethod")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("payment_method");
+
+                    b.Property<string>("Phone")
+                        .HasColumnType("text")
+                        .HasColumnName("phone");
 
                     b.Property<string>("Status")
                         .IsRequired()
@@ -1019,7 +1121,6 @@ namespace FamilyClub.DAL.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<byte[]>("ImageData")
-                        .IsRequired()
                         .HasColumnType("bytea")
                         .HasColumnName("image_data");
 
@@ -1029,9 +1130,17 @@ namespace FamilyClub.DAL.Migrations
                         .HasColumnType("character varying(255)")
                         .HasColumnName("image_name");
 
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("text")
+                        .HasColumnName("image_url");
+
                     b.Property<int>("ProductId")
                         .HasColumnType("integer")
                         .HasColumnName("product_id");
+
+                    b.Property<string>("StorageKey")
+                        .HasColumnType("text")
+                        .HasColumnName("storage_key");
 
                     b.HasKey("Id")
                         .HasName("pk_product_image");
@@ -1127,7 +1236,6 @@ namespace FamilyClub.DAL.Migrations
                         .HasColumnName("rating");
 
                     b.Property<string>("UserId")
-                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("user_id");
 
@@ -1139,6 +1247,9 @@ namespace FamilyClub.DAL.Migrations
 
                     b.HasIndex("ProductId")
                         .HasDatabaseName("ix_reviews_product_id");
+
+                    b.HasIndex("UserId")
+                        .HasDatabaseName("ix_reviews_user_id");
 
                     b.ToTable("reviews", (string)null);
                 });
@@ -1535,6 +1646,18 @@ namespace FamilyClub.DAL.Migrations
                     b.Navigation("ClubMember");
                 });
 
+            modelBuilder.Entity("FamilyClubLibrary.BookEmbedding", b =>
+                {
+                    b.HasOne("FamilyClubLibrary.Product", "Product")
+                        .WithOne()
+                        .HasForeignKey("FamilyClubLibrary.BookEmbedding", "ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_book_embeddings_products_product_id");
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("FamilyClubLibrary.CartItem", b =>
                 {
                     b.HasOne("FamilyClubLibrary.Cart", "Cart")
@@ -1604,11 +1727,19 @@ namespace FamilyClub.DAL.Migrations
                     b.HasOne("FamilyClubLibrary.ClubMember", "ClubMember")
                         .WithMany("Notifications")
                         .HasForeignKey("ClubMemberId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
-                        .HasConstraintName("fk_notification_asp_net_users_club_member_id");
+                        .HasConstraintName("fk_notifications_asp_net_users_club_member_id");
+
+                    b.HasOne("FamilyClubLibrary.ClubMember", "Sender")
+                        .WithMany()
+                        .HasForeignKey("SenderId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .HasConstraintName("fk_notifications_asp_net_users_sender_id");
 
                     b.Navigation("ClubMember");
+
+                    b.Navigation("Sender");
                 });
 
             modelBuilder.Entity("FamilyClubLibrary.Order", b =>
@@ -1683,10 +1814,10 @@ namespace FamilyClub.DAL.Migrations
 
             modelBuilder.Entity("FamilyClubLibrary.Review", b =>
                 {
-                    b.HasOne("FamilyClubLibrary.ClubMember", "ClubMember")
+                    b.HasOne("FamilyClubLibrary.ClubMember", null)
                         .WithMany("Reviews")
                         .HasForeignKey("ClubMemberId")
-                        .HasConstraintName("fk_reviews_users_club_member_id");
+                        .HasConstraintName("fk_reviews_asp_net_users_club_member_id");
 
                     b.HasOne("FamilyClubLibrary.Product", "Product")
                         .WithMany("Reviews")
@@ -1694,6 +1825,12 @@ namespace FamilyClub.DAL.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_reviews_products_product_id");
+
+                    b.HasOne("FamilyClubLibrary.ClubMember", "ClubMember")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.SetNull)
+                        .HasConstraintName("fk_reviews_users_user_id");
 
                     b.Navigation("ClubMember");
 
